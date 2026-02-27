@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
+#include <chrono>
 #include <unordered_set>
 
 #include <common/cbasetypes.hpp>
@@ -16,6 +17,7 @@
 #include <common/ers.hpp>
 #include <common/grfio.hpp>
 #include <common/malloc.hpp>
+#include <common/metrics.hpp>
 #include <common/nullpo.hpp>
 #include <common/random.hpp>
 #include <common/showmsg.hpp>
@@ -25762,6 +25764,7 @@ static int32 clif_parse(int32 fd)
 		sd->cryptKey = ((sd->cryptKey * clif_cryptKey[1]) + clif_cryptKey[2]) & 0xFFFFFFFF; // Update key for the next packet
 #endif
 
+	const auto packet_start = std::chrono::steady_clock::now();
 	if( packet_db[cmd].func == clif_parse_debug )
 		packet_db[cmd].func(fd, sd);
 	else if( packet_db[cmd].func != nullptr ) {
@@ -25776,7 +25779,11 @@ static int32 clif_parse(int32 fd)
 #ifdef DUMP_UNKNOWN_PACKET
 	else DumpUnknown(fd,sd,cmd,packet_len);
 #endif
+	metrics::counter_inc( "map_packets_processed" );
+	metrics::counter_inc( "map_packet_bytes", static_cast<uint64_t>( packet_len ) );
 	RFIFOSKIP(fd, packet_len);
+	const auto packet_elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>( std::chrono::steady_clock::now() - packet_start );
+	metrics::observe_duration_ns( "map_packet_process", static_cast<uint64_t>( packet_elapsed.count() ) );
 	}; // main loop end
 
 	return 0;

@@ -5,6 +5,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <chrono>
 #include <cstdlib>
 #include <map>
 #include <unordered_map>
@@ -14,6 +15,7 @@
 #include <common/db.hpp>
 #include <common/ers.hpp>
 #include <common/malloc.hpp>
+#include <common/metrics.hpp>
 #include <common/nullpo.hpp>
 #include <common/random.hpp>
 #include <common/showmsg.hpp>
@@ -2458,7 +2460,11 @@ static int32 mob_ai_sub_lazy(mob_data *md, va_list args)
  * Negligent processing for mob outside PC field of view   (interval timer function)
  *------------------------------------------*/
 static TIMER_FUNC(mob_ai_lazy){
+	const auto loop_start = std::chrono::steady_clock::now();
 	map_foreachmob(mob_ai_sub_lazy,tick);
+	const auto loop_elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>( std::chrono::steady_clock::now() - loop_start );
+	metrics::counter_inc( "map_ai_loop_cycles", 1, "loop", "lazy" );
+	metrics::observe_duration_ns( "map_ai_loop", static_cast<uint64_t>( loop_elapsed.count() ), "loop", "lazy" );
 	return 0;
 }
 
@@ -2466,11 +2472,16 @@ static TIMER_FUNC(mob_ai_lazy){
  * Serious processing for mob in PC field of view   (interval timer function)
  *------------------------------------------*/
 static TIMER_FUNC(mob_ai_hard){
+	const auto loop_start = std::chrono::steady_clock::now();
 
 	if (battle_config.mob_ai&0x20)
 		map_foreachmob(mob_ai_sub_lazy,tick);
 	else
 		map_foreachpc(mob_ai_sub_foreachclient,tick);
+
+	const auto loop_elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>( std::chrono::steady_clock::now() - loop_start );
+	metrics::counter_inc( "map_ai_loop_cycles", 1, "loop", "hard" );
+	metrics::observe_duration_ns( "map_ai_loop", static_cast<uint64_t>( loop_elapsed.count() ), "loop", "hard" );
 
 	return 0;
 }

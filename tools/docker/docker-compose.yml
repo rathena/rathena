@@ -91,5 +91,50 @@ services:
         depends_on:
             - char
 
+    node-exporter:
+        image: "prom/node-exporter:v1.8.2"
+        container_name: "rathena-node-exporter"
+        command:
+            - "--collector.disable-defaults"
+            - "--collector.textfile"
+            - "--collector.textfile.directory=/var/lib/node_exporter/textfile_collector"
+        ports:
+            - "9100:9100"
+        volumes:
+            - "../../log:/var/lib/node_exporter/textfile_collector:ro"
+
+    prometheus:
+        image: "prom/prometheus:v2.55.1"
+        container_name: "rathena-prometheus"
+        command:
+            - "--config.file=/etc/prometheus/prometheus.yml"
+            - "--storage.tsdb.path=/prometheus"
+            - "--web.enable-lifecycle"
+        ports:
+            - "9090:9090"
+        volumes:
+            - "./asset/prometheus.yml:/etc/prometheus/prometheus.yml:ro"
+            - "rathena-prometheus:/prometheus"
+        depends_on:
+            - node-exporter
+
+    grafana:
+        image: "grafana/grafana:11.2.2"
+        container_name: "rathena-grafana"
+        environment:
+            GF_SECURITY_ADMIN_USER: admin
+            GF_SECURITY_ADMIN_PASSWORD: admin
+            GF_USERS_ALLOW_SIGN_UP: "false"
+        ports:
+            - "3000:3000"
+        volumes:
+            - "./asset/grafana/provisioning:/etc/grafana/provisioning:ro"
+            - "./asset/grafana/dashboards:/var/lib/grafana/dashboards:ro"
+            - "rathena-grafana:/var/lib/grafana"
+        depends_on:
+            - prometheus
+
 volumes:
     rathenadb:
+    rathena-prometheus:
+    rathena-grafana:
