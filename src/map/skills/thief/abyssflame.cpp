@@ -27,9 +27,9 @@ void SkillAbyssFlame::calculateSkillRatio(const Damage* wd, const block_list* sr
 	const map_session_data* sd = BL_CAST(BL_PC, src);
 	const status_data* sstatus = status_get_status_data(*src);
 
-	skillratio += -100 + 500 * skill_lv;
+	skillratio += -100 + 820 * skill_lv;
 	skillratio += 10 * sstatus->spl;
-	skillratio += 15 * skill_lv * pc_checkskill(sd, ABC_MAGIC_SWORD_M);
+	skillratio += 30 * skill_lv * pc_checkskill(sd, ABC_MAGIC_SWORD_M);
 	RE_LVL_DMOD(100);
 }
 
@@ -40,16 +40,15 @@ void SkillAbyssFlameAttack::calculateSkillRatio(const Damage* wd, const block_li
 	const map_session_data* sd = BL_CAST(BL_PC, src);
 	const status_data* sstatus = status_get_status_data(*src);
 
-	skillratio += -100 + 820 * skill_lv;
+	skillratio += -100 + 500 * skill_lv;
 	skillratio += 10 * sstatus->spl;
-	skillratio += 30 * skill_lv * pc_checkskill(sd, ABC_MAGIC_SWORD_M);
+	skillratio += 15 * skill_lv * pc_checkskill(sd, ABC_MAGIC_SWORD_M);
 	RE_LVL_DMOD(100);
 }
 
 void SkillAbyssFlameAttack::splashSearch(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
 	clif_skill_damage(*src, *target, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, getSkillId(), skill_lv, DMG_SINGLE);
 	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
-	skill_attack(BF_MAGIC, src, src, target, getSkillId(), skill_lv, tick, flag);
 
 	SkillImplRecursiveDamageSplash::splashSearch(src, target, skill_lv, tick, flag);
 }
