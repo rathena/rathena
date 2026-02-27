@@ -1138,6 +1138,48 @@
     <ClInclude Include="skills/npc/wideweb.hpp" />
     <ClInclude Include="skills/npc/windattributeattack.hpp" />
     <ClInclude Include="skills/npc/windattributechange.hpp" />
+    <ClInclude Include="skills/other/baby.hpp" />
+    <ClInclude Include="skills/other/battlebuster.hpp" />
+    <ClInclude Include="skills/other/callallfamily.hpp" />
+    <ClInclude Include="skills/other/callbaby.hpp" />
+    <ClInclude Include="skills/other/callparent.hpp" />
+    <ClInclude Include="skills/other/catcry.hpp" />
+    <ClInclude Include="skills/other/cheerup.hpp" />
+    <ClInclude Include="skills/other/christmascarol.hpp" />
+    <ClInclude Include="skills/other/dualcannonfire.hpp" />
+    <ClInclude Include="skills/other/equipswitch.hpp" />
+    <ClInclude Include="skills/other/gmsandman.hpp" />
+    <ClInclude Include="skills/other/guardiansrecall.hpp" />
+    <ClInclude Include="skills/other/ilookuptoyou.hpp" />
+    <ClInclude Include="skills/other/imissyou.hpp" />
+    <ClInclude Include="skills/other/infinitybuster.hpp" />
+    <ClInclude Include="skills/other/iwillprotectyou.hpp" />
+    <ClInclude Include="skills/other/netrepair.hpp" />
+    <ClInclude Include="skills/other/netsupport.hpp" />
+    <ClInclude Include="skills/other/niflheimrecall.hpp" />
+    <ClInclude Include="skills/other/odinsrecall.hpp" />
+    <ClInclude Include="skills/other/oneforever.hpp" />
+    <ClInclude Include="skills/other/openbuyingstore.hpp" />
+    <ClInclude Include="skills/other/partyassumptio.hpp" />
+    <ClInclude Include="skills/other/partyblessing.hpp" />
+    <ClInclude Include="skills/other/partyflee.hpp" />
+    <ClInclude Include="skills/other/partyincreaseagi.hpp" />
+    <ClInclude Include="skills/other/peonymamy.hpp" />
+    <ClInclude Include="skills/other/pronterarecall.hpp" />
+    <ClInclude Include="skills/other/rayofprotection.hpp" />
+    <ClInclude Include="skills/other/returntoeclage.hpp" />
+    <ClInclude Include="skills/other/returntoeldicastes.hpp" />
+    <ClInclude Include="skills/other/returntoglastheim.hpp" />
+    <ClInclude Include="skills/other/returntolighthalzen.hpp" />
+    <ClInclude Include="skills/other/returntothanatos.hpp" />
+    <ClInclude Include="skills/other/ro20thanniversaryfirecracker.hpp" />
+    <ClInclude Include="skills/other/sadagui.hpp" />
+    <ClInclude Include="skills/other/sequoiadust.hpp" />
+    <ClInclude Include="skills/other/skill_factory_other.hpp" />
+    <ClInclude Include="skills/other/snowflip.hpp" />
+    <ClInclude Include="skills/other/summernightdream.hpp" />
+    <ClInclude Include="skills/other/throwtomahawk.hpp" />
+    <ClInclude Include="skills/other/weaponenchantment.hpp" />
     <ClInclude Include="skills/skill_factory.hpp" />
     <ClInclude Include="skills/skill_impl.hpp" />
     <ClInclude Include="skills/summoner/bite.hpp" />
@@ -4168,6 +4210,132 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/windattributechange.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/baby.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/battlebuster.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/callallfamily.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/callbaby.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/callparent.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/catcry.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/cheerup.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/christmascarol.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/dualcannonfire.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/equipswitch.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/gmsandman.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/guardiansrecall.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/ilookuptoyou.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/imissyou.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/infinitybuster.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/iwillprotectyou.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/netrepair.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/netsupport.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/niflheimrecall.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/odinsrecall.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/oneforever.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/openbuyingstore.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/partyassumptio.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/partyblessing.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/partyflee.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/partyincreaseagi.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/peonymamy.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/pronterarecall.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/rayofprotection.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/returntoeclage.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/returntoeldicastes.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/returntoglastheim.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/returntolighthalzen.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/returntothanatos.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/ro20thanniversaryfirecracker.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/sadagui.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/sequoiadust.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/skill_factory_other.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/snowflip.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/summernightdream.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/throwtomahawk.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/other/weaponenchantment.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/skill_factory.cpp">
