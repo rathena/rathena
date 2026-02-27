@@ -27793,6 +27793,26 @@ BUILDIN_FUNC(mesitemicon){
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * mesemotiontype(<emotion_id>);
+ */
+BUILDIN_FUNC(mesemotiontype){
+    int32 id = script_getnum(st, 2);
+
+	// Validates emotion range
+	if (id < ET_SURPRISE || id >= ET_MAX) {
+		ShowError("buildin_mesemotiontype: Emotion ID %d is invalid.\n", id);
+		script_pushconststr(st, "");
+		return SCRIPT_CMD_FAILURE;
+	}
+
+    char buf[32];
+    std::snprintf(buf, sizeof(buf), "^e[%d]", id);
+    script_pushstrcopy(st, buf);
+
+    return SCRIPT_CMD_SUCCESS;
+}
+
 #include <custom/script.inc>
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -28568,6 +28588,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(permission_add, "permission_remove", "i?"),
 
 	BUILDIN_DEF( mesitemicon, "v??" ),
+	BUILDIN_DEF(mesemotiontype,"i"),
 
 #include <custom/script_def.inc>
 
