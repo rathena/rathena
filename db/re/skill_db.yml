@@ -16601,6 +16601,7 @@ Body:
   - Id: 695
     Name: ALL_DREAM_SUMMERNIGHT
     Description: Summer Night Dream
+    # TODO check : skill type passive ?
     MaxLevel: 9
     Flags:
       IsNpc: true

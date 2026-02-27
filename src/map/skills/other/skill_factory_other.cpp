@@ -1,0 +1,144 @@
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
+#include "skill_factory_other.hpp"
+
+
+#include "../skill_impl.hpp"
+#include "baby.cpp"
+#include "battlebuster.cpp"
+#include "callallfamily.cpp"
+#include "callbaby.cpp"
+#include "callparent.cpp"
+#include "catcry.cpp"
+#include "cheerup.cpp"
+#include "christmascarol.cpp"
+#include "dualcannonfire.cpp"
+#include "equipswitch.cpp"
+#include "gmsandman.cpp"
+#include "guardiansrecall.cpp"
+#include "ilookuptoyou.cpp"
+#include "imissyou.cpp"
+#include "infinitybuster.cpp"
+#include "iwillprotectyou.cpp"
+#include "netrepair.cpp"
+#include "netsupport.cpp"
+#include "niflheimrecall.cpp"
+#include "odinsrecall.cpp"
+#include "oneforever.cpp"
+#include "openbuyingstore.cpp"
+#include "partyassumptio.cpp"
+#include "partyblessing.cpp"
+#include "partyflee.cpp"
+#include "partyincreaseagi.cpp"
+#include "peonymamy.cpp"
+#include "pronterarecall.cpp"
+#include "rayofprotection.cpp"
+#include "returntoeclage.cpp"
+#include "returntoeldicastes.cpp"
+#include "returntoglastheim.cpp"
+#include "returntolighthalzen.cpp"
+#include "returntothanatos.cpp"
+#include "ro20thanniversaryfirecracker.cpp"
+#include "sadagui.cpp"
+#include "sequoiadust.cpp"
+#include "snowflip.cpp"
+#include "summernightdream.cpp"
+#include "throwtomahawk.cpp"
+#include "weaponenchantment.cpp"
+
+std::unique_ptr<const SkillImpl> SkillFactoryOther::create(const e_skill skill_id) const {
+	switch( skill_id ){
+		case ABR_BATTLE_BUSTER:
+			return std::make_unique<SkillBattleBuster>();
+		case ABR_DUAL_CANNON_FIRE:
+			return std::make_unique<SkillDualCannonFire>();
+		case ABR_INFINITY_BUSTER:
+			return std::make_unique<SkillInfinityBuster>();
+		case ABR_NET_REPAIR:
+			return std::make_unique<SkillNetRepair>();
+		case ABR_NET_SUPPORT:
+			return std::make_unique<SkillNetSupport>();
+		case ALL_BUYING_STORE:
+			return std::make_unique<SkillOpenBuyingStore>();
+		case ALL_CATCRY:
+			return std::make_unique<SkillCatCry>();
+		case ALL_DREAM_SUMMERNIGHT:
+			return std::make_unique<SkillSummerNightDream>();
+		case ALL_EQSWITCH:
+			return std::make_unique<SkillEquipSwitch>();
+		case ALL_EVENT_20TH_ANNIVERSARY:
+			return std::make_unique<SkillRo20thAnniversaryFirecracker>();
+		case ALL_FULL_THROTTLE:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case ALL_GLASTHEIM_RECALL:
+			return std::make_unique<SkillReturnToGlastHeim>();
+		case ALL_GUARDIAN_RECALL:
+			return std::make_unique<SkillGuardiansRecall>();
+		case ALL_LIGHTHALZEN_RECALL:
+			return std::make_unique<SkillReturnToLighthalzen>();
+		case ALL_NIFLHEIM_RECALL:
+			return std::make_unique<SkillNiflheimRecall>();
+		case ALL_ODINS_POWER:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case ALL_ODINS_RECALL:
+			return std::make_unique<SkillOdinsRecall>();
+		case ALL_PARTYFLEE:
+			return std::make_unique<SkillPartyFlee>();
+		case ALL_PRONTERA_RECALL:
+			return std::make_unique<SkillPronteraRecall>();
+		case ALL_RAY_OF_PROTECTION:
+			return std::make_unique<SkillRayOfProtection>();
+		case ALL_REVERSEORCISH:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case ALL_THANATOS_RECALL:
+			return std::make_unique<SkillReturnToThanatos>();
+		case ALL_WEWISH:
+			return std::make_unique<SkillChristmasCarol>();
+		case CASH_ASSUMPTIO:
+			return std::make_unique<SkillPartyAssumptio>();
+		case CASH_BLESSING:
+			return std::make_unique<SkillPartyBlessing>();
+		case CASH_INCAGI:
+			return std::make_unique<SkillPartyIncreaseAgi>();
+		case ECLAGE_RECALL:
+			return std::make_unique<SkillReturnToEclage>();
+		case ECL_PEONYMAMY:
+			return std::make_unique<SkillPeonyMamy>();
+		case ECL_SADAGUI:
+			return std::make_unique<SkillSadagui>();
+		case ECL_SEQUOIADUST:
+			return std::make_unique<SkillSequoiaDust>();
+		case ECL_SNOWFLIP:
+			return std::make_unique<SkillSnowFlip>();
+		case GM_SANDMAN:
+			return std::make_unique<SkillGmSandman>();
+		case ITEM_ENCHANTARMS:
+			return std::make_unique<SkillWeaponEnchantment>();
+		case ITM_TOMAHAWK:
+			return std::make_unique<SkillThrowTomahawk>();
+		case RETURN_TO_ELDICASTES:
+			return std::make_unique<SkillReturnToEldicastes>();
+		case WE_BABY:
+			return std::make_unique<SkillBaby>();
+		case WE_CALLALLFAMILY:
+			return std::make_unique<SkillCallAllFamily>();
+		case WE_CALLBABY:
+			return std::make_unique<SkillCallBaby>();
+		case WE_CALLPARENT:
+			return std::make_unique<SkillCallParent>();
+		case WE_CALLPARTNER:
+			return std::make_unique<SkillIMissYou>();
+		case WE_CHEERUP:
+			return std::make_unique<SkillCheerUp>();
+		case WE_FEMALE:
+			return std::make_unique<SkillILookUpToYou>();
+		case WE_MALE:
+			return std::make_unique<SkillIWillProtectYou>();
+		case WE_ONEFOREVER:
+			return std::make_unique<SkillOneForever>();
+
+		default:
+			return nullptr;
+	}
+}
