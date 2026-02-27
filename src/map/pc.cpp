@@ -6521,8 +6521,10 @@ int32 pc_useitem(map_session_data *sd,int32 n)
 	run_script( script, 0, sd->id, fake_nd->id );
 
 	if( sd->st != nullptr ){
-		script_free_state( sd->st );
-		sd->st = nullptr;
+		if( sd->st->state == END ){
+			script_free_state( sd->st );
+			sd->st = nullptr;
+		}
 	}
 
 	// If an old script is present
