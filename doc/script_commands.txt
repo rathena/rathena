@@ -1,9 +1,9 @@
-//===== rAthena Documentation================================
+﻿//===== rAthena Documentation================================
 //= rAthena Script Commands
 //===== By:==================================================
 //= rAthena Dev Team
 //===== Last Updated:========================================
-//= 20250517
+//= 2026-01-05
 //===== Description:=========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
@@ -605,13 +605,27 @@ MaxWeight   - Maximum weight the character can carry.
 Sex         - 0 if female, 1 if male.
 Class       - Character's job.
 Upper       - 0 if the character is a normal class, 1 if advanced, 2 if baby.
-BaseClass   - The character's 1-1 'normal' job, regardless of Upper value.
+BaseClass   - Deprecated. Use BaseFirst.
+              The character's 1-1 'normal' job, regardless of Upper value.
               For example, this will return Job_Acolyte for Acolyte, Priest/Monk,
               High Priest/Champion, and Arch Bishop/Sura. If the character has not
               reached a 1-1 class, it will return Job_Novice.
-BaseJob     - The character's 'normal' job, regardless of Upper value.
+BaseJob     - Deprecated. Use BaseSecond.
+              The character's 'normal' job, regardless of Upper value.
               For example, this will return Job_Acolyte for Acolyte,
               Baby Acolyte, and High Acolyte.
+BaseFirst   - Checks the character's 1st job base in the job tree reguardless
+              if the character is a regular/trans/baby version of the job.
+              Mainly used to check for a character's current or predecessor job.
+BaseSecond  - Checks the character's 2nd job base in the job tree reguardless
+              if the character is a regular/trans/baby version of the job.
+              Mainly used to check for a character's current or predecessor job.
+BaseThird   - Checks the character's 3rd job base in the job tree reguardless
+              if the character is a regular/trans/baby version of the job.
+              Mainly used to check for a character's current or predecessor job.
+BaseFourth  - Checks the character's 4th job base in the job tree reguardless
+              if the character is a regular/trans/baby version of the job.
+              Mainly used to check for a character's current or predecessor job.
 Karma       - The character's karma. Karma system is not fully functional, but
               this doesn't mean this doesn't work at all. Not tested.
 Manner      - The character's manner rating. Becomes negative if the player
@@ -2516,7 +2530,7 @@ Some example parameters:
 
 StatusPoint, BaseLevel, SkillPoint, Class, Upper, Zeny, Sex, Weight, MaxWeight,
 JobLevel, BaseExp, JobExp, NextBaseExp, NextJobExp, Hp, MaxHp, Sp, MaxSp,
-BaseJob, Karma, Manner, bVit, bDex, bAgi, bStr, bInt, bLuk, Ap, MaxAp
+BaseFirst, Karma, Manner, bVit, bDex, bAgi, bStr, bInt, bLuk, Ap, MaxAp
 
 All of these also behave as variables, but don't expect to be able to just 'set'
 them - some will not work for various internal reasons.
@@ -4939,8 +4953,10 @@ raise the specified stat from (current value - <val>) to current value.
 
 Return true if player (decided by job) can enter the map, false otherwise.
 
-For optional 'JobID', see constant of Job_*, or use player's Class, BaseJob,
-and BaseClass. If no player is attached, this param must have a value.
+For optional 'JobID', see constant of Job_*, or use player's Class, BaseFirst, BaseSecond, 
+BaseThird, and BaseFourth. If no player is attached, this param must have a value.
+
+BaseJob and BaseClass is also used but is deprecated.
 
 See also db/[pre-]re/job_noenter_map.txt
 

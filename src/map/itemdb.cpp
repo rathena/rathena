@@ -4330,6 +4330,10 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 		jobs["Spirit_Handler"] << (std::stoi(str[index]) ? "true" : "false");
 	if (!str[++index].empty())
 		rootNode["Gradable"] << (std::stoi(str[index]) ? "true" : "false");
+	if (!str[++index].empty())
+		classes["Renewal_Job"] << (std::stoi(str[index]) ? "true" : "false");
+	if (!str[++index].empty())
+		classes["Trait_Job"] << (std::stoi(str[index]) ? "true" : "false");
 #endif
 
 	if( !jobs.has_children() ){
