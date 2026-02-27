@@ -322,6 +322,7 @@
     <ClInclude Include="skills/acolyte/redemptio.hpp" />
     <ClInclude Include="skills/acolyte/renovatio.hpp" />
     <ClInclude Include="skills/acolyte/reparatio.hpp" />
+    <ClInclude Include="skills/acolyte/resurrection.hpp" />
     <ClInclude Include="skills/acolyte/rideinlightening.hpp" />
     <ClInclude Include="skills/acolyte/ruwach.hpp" />
     <ClInclude Include="skills/acolyte/sanctuary.hpp" />
@@ -595,12 +596,14 @@
     <ClInclude Include="skills/homunculus/homunculus_lightofregene.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_magmaflow.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_midnightfrenzy.hpp" />
+    <ClInclude Include="skills/homunculus/homunculus_moonlight.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_needleofparalyze.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_needlestinger.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_overedboost.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_painkiller.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_poisonmist.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_pyroclastic.hpp" />
+    <ClInclude Include="skills/homunculus/homunculus_sbr44.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_silentbreeze.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_silverveinrush.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_sonicclaw.hpp" />
@@ -1722,6 +1725,9 @@
     <ClCompile Include="skills/acolyte/reparatio.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/resurrection.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/rideinlightening.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2541,6 +2547,9 @@
     <ClCompile Include="skills/homunculus/homunculus_midnightfrenzy.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_moonlight.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_needleofparalyze.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2557,6 +2566,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_pyroclastic.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_sbr44.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_silentbreeze.cpp">

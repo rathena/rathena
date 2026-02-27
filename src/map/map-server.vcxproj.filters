@@ -615,6 +615,9 @@
     <ClInclude Include="skills/acolyte/reparatio.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
+    <ClInclude Include="skills/acolyte/resurrection.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
     <ClInclude Include="skills/acolyte/rideinlightening.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
@@ -1434,6 +1437,9 @@
     <ClInclude Include="skills/homunculus/homunculus_midnightfrenzy.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
+    <ClInclude Include="skills/homunculus/homunculus_moonlight.hpp">
+      <Filter>Header Files\Skills\Homunculus</Filter>
+    </ClInclude>
     <ClInclude Include="skills/homunculus/homunculus_needleofparalyze.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
@@ -1450,6 +1456,9 @@
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
     <ClInclude Include="skills/homunculus/homunculus_pyroclastic.hpp">
+      <Filter>Header Files\Skills\Homunculus</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/homunculus/homunculus_sbr44.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
     <ClInclude Include="skills/homunculus/homunculus_silentbreeze.hpp">
@@ -4211,6 +4220,9 @@
     <ClCompile Include="skills/acolyte/reparatio.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/resurrection.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/rideinlightening.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
@@ -5030,6 +5042,9 @@
     <ClCompile Include="skills/homunculus/homunculus_midnightfrenzy.cpp">
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_moonlight.cpp">
+      <Filter>Source Files\Skills\Homunculus</Filter>
+    </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_needleofparalyze.cpp">
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
@@ -5046,6 +5061,9 @@
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_pyroclastic.cpp">
+      <Filter>Source Files\Skills\Homunculus</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_sbr44.cpp">
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_silentbreeze.cpp">

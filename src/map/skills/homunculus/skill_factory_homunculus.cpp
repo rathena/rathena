@@ -30,12 +30,14 @@
 #include "homunculus_lightofregene.cpp"
 #include "homunculus_magmaflow.cpp"
 #include "homunculus_midnightfrenzy.cpp"
+#include "homunculus_moonlight.cpp"
 #include "homunculus_needleofparalyze.cpp"
 #include "homunculus_needlestinger.cpp"
 #include "homunculus_overedboost.cpp"
 #include "homunculus_painkiller.cpp"
 #include "homunculus_poisonmist.cpp"
 #include "homunculus_pyroclastic.cpp"
+#include "homunculus_sbr44.cpp"
 #include "homunculus_silentbreeze.cpp"
 #include "homunculus_silverveinrush.cpp"
 #include "homunculus_sonicclaw.cpp"
@@ -62,9 +64,9 @@ std::unique_ptr<const SkillImpl> SkillFactoryHomunculus::create(const e_skill sk
 		case HFLI_FLEET:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case HFLI_MOON:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillMoonlight>();
 		case HFLI_SBR44:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillSBR44>();
 		case HFLI_SPEED:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case HLIF_AVOID:

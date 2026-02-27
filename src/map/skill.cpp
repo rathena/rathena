@@ -4245,11 +4245,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case ITM_TOMAHAWK:
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
-	case ALL_RESURRECTION:
-		if (!battle_check_undead(tstatus->race, tstatus->def_ele))
-			break;
-		skill_attack(BF_MAGIC,src,src,bl,skill_id,skill_lv,tick,flag);
-		break;
 
 	case 0:/* no skill - basic/normal attack */
 		if(sd) {
@@ -4492,54 +4487,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	FreeBlockLock freeLock;
 	switch(skill_id)
 	{
-	case ALL_RESURRECTION:
-		if(sd && (map_flag_gvg2(bl->m) || map_getmapflag(bl->m, MF_BATTLEGROUND)))
-		{	//No reviving in WoE grounds!
-			clif_skill_fail( *sd, skill_id );
-			break;
-		}
-		if (!status_isdead(*bl))
-			break;
-		{
-			int32 per = 0, sper = 0;
-			if (tsc && tsc->getSCE(SC_HELLPOWER)) {
-				clif_skill_nodamage(src, *bl, ALL_RESURRECTION, skill_lv);
-				break;
-			}
-
-			if (map_getmapflag(bl->m, MF_PVP) && dstsd && dstsd->pvp_point < 0)
-				break;
-
-			switch(skill_lv){
-			case 1: per=10; break;
-			case 2: per=30; break;
-			case 3: per=50; break;
-			case 4: per=80; break;
-			}
-			if(dstsd && dstsd->special_state.restart_full_recover)
-				per = sper = 100;
-			if (status_revive(bl, per, sper))
-			{
-				clif_skill_nodamage(src,*bl,ALL_RESURRECTION,skill_lv); //Both Redemptio and Res show this skill-animation.
-				if(sd && dstsd && battle_config.resurrection_exp > 0)
-				{
-					t_exp exp = 0,jexp = 0;
-					int32 lv = dstsd->status.base_level - sd->status.base_level, jlv = dstsd->status.job_level - sd->status.job_level;
-					if(lv > 0 && pc_nextbaseexp(dstsd)) {
-						exp = (t_exp)(dstsd->status.base_exp * lv * battle_config.resurrection_exp / 1000000.);
-						if (exp < 1) exp = 1;
-					}
-					if(jlv > 0 && pc_nextjobexp(dstsd)) {
-						jexp = (t_exp)(dstsd->status.job_exp * lv * battle_config.resurrection_exp / 1000000.);
-						if (jexp < 1) jexp = 1;
-					}
-					if(exp > 0 || jexp > 0)
-						pc_gainexp (sd, bl, exp, jexp, 0);
-				}
-			}
-		}
-		break;
-
 	case ITEM_ENCHANTARMS:
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_get_ele(skill_id, skill_lv), skill_get_time(skill_id, skill_lv)));
 		break;
