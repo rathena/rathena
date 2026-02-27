@@ -24,6 +24,19 @@
 
 set( CMAKE_LEGACY_CYGWIN_WIN32 0 )
 cmake_minimum_required( VERSION 3.13 )
+
+# Auto-wire vcpkg when available (env var or local clone) so configure commands
+# do not need user-specific absolute paths.
+if( NOT DEFINED CMAKE_TOOLCHAIN_FILE )
+	if( DEFINED ENV{VCPKG_ROOT} AND EXISTS "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" )
+		set( CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "vcpkg toolchain file" )
+	elseif( EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/.vcpkg/scripts/buildsystems/vcpkg.cmake" )
+		set( CMAKE_TOOLCHAIN_FILE "${CMAKE_CURRENT_SOURCE_DIR}/.vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "vcpkg toolchain file" )
+	elseif( EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake" )
+		set( CMAKE_TOOLCHAIN_FILE "${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "vcpkg toolchain file" )
+	endif()
+endif()
+
 project( rAthena )
 if( CYGWIN )
 	unset( WIN32 )
@@ -103,7 +116,7 @@ endif()
 #
 # 3rd party
 #
-set( CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/cmake  CACHE INTERNAL "" )
+list( APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/cmake" )
 include( CheckCSourceCompiles )
 include( CheckCSourceRuns )
 include( CheckIncludeFile )
@@ -482,6 +495,7 @@ option( INSTALL_COMPONENT_DEVELOPMENT "install/package files needed to build the
 option( INSTALL_TO_PATH "copy files to INSTALL_PATH" OFF )
 option( INSTALL_TO_SOURCE "copy files to source directory, skips what is already there (${CMAKE_CURRENT_SOURCE_DIR})" OFF )
 option( INSTALL_TO_SUBDIR "copy files to subdirectory (${CMAKE_CURRENT_BINARY_DIR}/install)" OFF )
+option( GENERATE_IMPORT_FILES_ON_BUILD "generate conf/import and db/import from templates during regular build" ON )
 set( INSTALL_PATH "${CMAKE_INSTALL_PREFIX}"  CACHE STRING "install path (only used when INSTALL_TO_PATH is set)" )
 mark_as_advanced( CMAKE_INSTALL_PREFIX )
 if( INSTALL_TO_PATH AND NOT ("${INSTALL_TO}" STREQUAL "path") )# changed to path
@@ -617,6 +631,16 @@ if( INSTALL_COMPONENT_RUNTIME )
 	endwhile()
 	install( SCRIPT "${INSTALL_TEMPLATES_FILE}"
 		COMPONENT Runtime_templates )
+	if( GENERATE_IMPORT_FILES_ON_BUILD )
+		# Keep legacy workflow: plain "make all" also materializes import templates.
+		add_custom_target( generate-import-files ALL
+			COMMAND "${CMAKE_COMMAND}" -E make_directory "${CMAKE_CURRENT_SOURCE_DIR}/conf/import"
+			COMMAND "${CMAKE_COMMAND}" -E make_directory "${CMAKE_CURRENT_SOURCE_DIR}/conf/msg_conf/import"
+			COMMAND "${CMAKE_COMMAND}" -E make_directory "${CMAKE_CURRENT_SOURCE_DIR}/db/import"
+			COMMAND "${CMAKE_COMMAND}" -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_SOURCE_DIR} -P "${INSTALL_TEMPLATES_FILE}"
+			COMMENT "Generating import files from template directories"
+			VERBATIM )
+	endif()
 endif( INSTALL_COMPONENT_RUNTIME )
 
 
@@ -624,7 +648,93 @@ endif( INSTALL_COMPONENT_RUNTIME )
 # sources
 #
 set( TARGET_LIST  CACHE INTERNAL "" )
-add_subdirectory( 3rdparty )
+message( STATUS "Using external dependencies (vcpkg toolchain recommended)" )
+if( NOT DEFINED CMAKE_TOOLCHAIN_FILE )
+	message( WARNING "No CMAKE_TOOLCHAIN_FILE set. For automatic dependency install/resolution, use vcpkg via VCPKG_ROOT or ./vcpkg." )
+endif()
+
+find_package( ZLIB REQUIRED )
+if( TARGET ZLIB::ZLIB )
+	set( ZLIB_LIBRARIES ZLIB::ZLIB )
+endif()
+set( WITH_ZLIB ON CACHE BOOL "use ZLIB" FORCE )
+
+find_package( PCRE )
+if( PCRE_FOUND )
+	set( WITH_PCRE ON CACHE BOOL "use PCRE" FORCE )
+else()
+	unset( WITH_PCRE CACHE )
+endif()
+
+find_package( unofficial-libmariadb CONFIG QUIET )
+if( TARGET unofficial::libmariadb )
+	set( MYSQL_LIBRARIES unofficial::libmariadb )
+	get_target_property( MYSQL_INCLUDE_DIRS unofficial::libmariadb INTERFACE_INCLUDE_DIRECTORIES )
+else()
+	find_package( MYSQL REQUIRED )
+endif()
+set( WITH_MYSQL ON CACHE BOOL "use MYSQL" FORCE )
+
+find_package( yaml-cpp CONFIG QUIET )
+if( TARGET yaml-cpp::yaml-cpp AND NOT TARGET yaml-cpp )
+	add_library( yaml-cpp INTERFACE IMPORTED )
+	target_link_libraries( yaml-cpp INTERFACE yaml-cpp::yaml-cpp )
+elseif( NOT TARGET yaml-cpp )
+	find_library( YAML_CPP_LIBRARY NAMES yaml-cpp yamlcpp REQUIRED )
+	find_path( YAML_INCLUDE_DIRS "yaml-cpp/yaml.h" REQUIRED )
+	mark_as_advanced( YAML_CPP_LIBRARY YAML_INCLUDE_DIRS )
+	add_library( yaml-cpp UNKNOWN IMPORTED )
+	set_target_properties( yaml-cpp PROPERTIES
+		IMPORTED_LOCATION "${YAML_CPP_LIBRARY}"
+		INTERFACE_INCLUDE_DIRECTORIES "${YAML_INCLUDE_DIRS}" )
+endif()
+
+find_package( ryml CONFIG QUIET )
+if( TARGET ryml::ryml AND NOT TARGET ryml )
+	add_library( ryml INTERFACE IMPORTED )
+	target_link_libraries( ryml INTERFACE ryml::ryml )
+endif()
+if( NOT TARGET ryml )
+	find_library( RYML_LIBRARY NAMES ryml rapidyaml REQUIRED )
+	find_library( C4CORE_LIBRARY NAMES c4core )
+	find_path( RYML_INCLUDE_DIRS "ryml.hpp" REQUIRED )
+	mark_as_advanced( RYML_LIBRARY C4CORE_LIBRARY RYML_INCLUDE_DIRS )
+	add_library( ryml UNKNOWN IMPORTED )
+	if( C4CORE_LIBRARY )
+		set_target_properties( ryml PROPERTIES
+			IMPORTED_LOCATION "${RYML_LIBRARY}"
+			INTERFACE_INCLUDE_DIRECTORIES "${RYML_INCLUDE_DIRS}"
+			INTERFACE_LINK_LIBRARIES "${C4CORE_LIBRARY}" )
+	else()
+		set_target_properties( ryml PROPERTIES
+			IMPORTED_LOCATION "${RYML_LIBRARY}"
+			INTERFACE_INCLUDE_DIRECTORIES "${RYML_INCLUDE_DIRS}" )
+	endif()
+endif()
+
+find_path( HTTPLIB_INCLUDE_DIRS "httplib.h" REQUIRED )
+mark_as_advanced( HTTPLIB_INCLUDE_DIRS )
+add_library( httplib INTERFACE )
+target_include_directories( httplib INTERFACE ${HTTPLIB_INCLUDE_DIRS} )
+if( NOT WIN32 )
+	target_compile_definitions( httplib INTERFACE CPPHTTPLIB_SEND_FLAGS=MSG_NOSIGNAL )
+endif()
+
+find_path( JSON_INCLUDE_DIRS "nlohmann/json.hpp" REQUIRED )
+mark_as_advanced( JSON_INCLUDE_DIRS )
+
+find_package( libconfig CONFIG QUIET )
+if( TARGET libconfig::libconfig )
+	set( LIBCONFIG_LIBRARIES libconfig::libconfig )
+	get_target_property( LIBCONFIG_INCLUDE_DIRS libconfig::libconfig INTERFACE_INCLUDE_DIRECTORIES )
+else()
+	find_library( LIBCONFIG_LIBRARY NAMES config libconfig REQUIRED )
+	find_path( LIBCONFIG_INCLUDE_DIRS "libconfig.h" REQUIRED )
+	mark_as_advanced( LIBCONFIG_LIBRARY LIBCONFIG_INCLUDE_DIRS )
+	set( LIBCONFIG_LIBRARIES ${LIBCONFIG_LIBRARY} )
+endif()
+
+set( LIBCONFIG_DEFINITIONS "" CACHE INTERNAL "libconfig definitions" )
 add_subdirectory( src )
 
 
