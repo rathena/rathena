@@ -8474,17 +8474,22 @@ int32 skill_check_pc_partner(map_session_data *sd, uint16 skill_id, uint16 *skil
 					break;//Chorus skills are not to be parsed as ensembles
 				if (skill_get_inf2(skill_id, INF2_ISENSEMBLE)) {
 					if (c > 0 && (tsd = map_id2sd(p_sd[0])) != nullptr) {
-#ifndef RENEWAL
+#ifdef RENEWAL
+						if (sd->sc.hasSCE(SC_DANCING) && skill_id == CG_MOONLIT) {
+#else
 						if (sd->sc.hasSCE(SC_DANCING)) {
+#endif
 							sd->sc.getSCE(SC_DANCING)->val4 = tsd->id;
 							sc_start4(sd, tsd, SC_DANCING, 100, skill_id, sd->sc.getSCE(SC_DANCING)->val2, *skill_lv, sd->id, skill_get_time(skill_id, *skill_lv) + 1000);
 							clif_skill_nodamage(tsd, *sd, skill_id, *skill_lv);
 							tsd->skill_id_dance = skill_id;
 							tsd->skill_lv_dance = *skill_lv;
 						}
-#else
-						sc_start(sd, sd, SC_ENSEMBLEFATIGUE, 100, 1, skill_get_time(CG_SPECIALSINGER, *skill_lv));
-						sc_start(sd, tsd, SC_ENSEMBLEFATIGUE, 100, 1, skill_get_time(CG_SPECIALSINGER, *skill_lv));
+#ifdef RENEWAL
+						else {
+							sc_start(sd, sd, SC_ENSEMBLEFATIGUE, 100, 1, skill_get_time(CG_SPECIALSINGER, *skill_lv));
+							sc_start(sd, tsd, SC_ENSEMBLEFATIGUE, 100, 1, skill_get_time(CG_SPECIALSINGER, *skill_lv));
+						}
 #endif
 					}
 				}
