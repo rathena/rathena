@@ -109,3 +109,7 @@ umbala,106,160,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#umbala	896
 veins,205,130,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#veins	896
 xmas,155,140,5	duplicate(GuildWarehouse)	Guild Warehouse Manager#xmas	896
 yuno,176,187,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#yuno	896
+prt_mk,49,27,7	duplicate(GuildWarehouse)	Guild Warehouse Manager#mk_prt01	896
+prt_mk,32,279,5	duplicate(GuildWarehouse)	Guild Warehouse Manager#mk_prt02	896
+prt_mk,278,293,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#mk_prt03	896
+prt_mk,288,41,1	duplicate(GuildWarehouse)	Guild Warehouse Manager#mk_prt04	896
