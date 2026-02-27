@@ -86,6 +86,7 @@
 #include "redemptio.cpp"
 #include "renovatio.cpp"
 #include "reparatio.cpp"
+#include "resurrection.cpp"
 #include "rideinlightening.cpp"
 #include "ruwach.cpp"
 #include "sanctuary.cpp"
@@ -158,6 +159,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillSilentium>();
 		case AB_VITUPERATUM:
 			return std::make_unique<SkillVituperatum>();
+		case ALL_RESURRECTION:
+			return std::make_unique<SkillResurrection>();
 		case AL_ANGELUS:
 			return std::make_unique<SkillAngelus>();
 		case AL_BLESSING:
