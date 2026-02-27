@@ -97257,7 +97257,7 @@ Body:
     Name: Matt Drainliar
     Level: 137
     Hp: 242246
-    Sp: 0
+    Sp: 10000
     BaseExp: 13928
     JobExp: 13769
     Attack: 1861
@@ -97272,7 +97272,7 @@ Body:
     Luk: 90
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Small
     Race: Brute
     RaceGroups:
@@ -97280,9 +97280,9 @@ Body:
     Element: Dark
     ElementLevel: 2
     WalkSpeed: 250
-    AttackDelay: 1276
-    AttackMotion: 576
-    ClientAttackMotion: 288
+    AttackDelay: 576
+    AttackMotion: 384
+    ClientAttackMotion: 384
     DamageMotion: 384
     Ai: 04
     Drops:
@@ -97304,7 +97304,7 @@ Body:
     Name: Living Dead
     Level: 139
     Hp: 253926
-    Sp: 0
+    Sp: 10000
     BaseExp: 14189
     JobExp: 13947
     Attack: 2167
@@ -97319,7 +97319,7 @@ Body:
     Luk: 14
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Medium
     Race: Undead
     RaceGroups:
@@ -97327,9 +97327,9 @@ Body:
     Element: Undead
     ElementLevel: 1
     WalkSpeed: 400
-    AttackDelay: 500
-    AttackMotion: 912
-    ClientAttackMotion: 816
+    AttackDelay: 912
+    AttackMotion: 288
+    ClientAttackMotion: 288
     DamageMotion: 288
     Ai: 04
     Drops:
@@ -97353,7 +97353,7 @@ Body:
     Name: Starving Living Dead
     Level: 139
     Hp: 240984
-    Sp: 0
+    Sp: 10000
     BaseExp: 13621
     JobExp: 13177
     Attack: 1807
@@ -97368,7 +97368,7 @@ Body:
     Luk: 7
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Medium
     Race: Undead
     RaceGroups:
@@ -97376,9 +97376,9 @@ Body:
     Element: Undead
     ElementLevel: 1
     WalkSpeed: 400
-    AttackDelay: 500
-    AttackMotion: 912
-    ClientAttackMotion: 816
+    AttackDelay: 912
+    AttackMotion: 288
+    ClientAttackMotion: 288
     DamageMotion: 288
     Ai: 04
     Drops:
@@ -97398,7 +97398,7 @@ Body:
     Name: Living Dead
     Level: 142
     Hp: 267379
-    Sp: 0
+    Sp: 10000
     BaseExp: 14422
     JobExp: 13937
     Attack: 2119
@@ -97413,7 +97413,7 @@ Body:
     Luk: 30
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Medium
     Race: Undead
     RaceGroups:
@@ -97421,9 +97421,9 @@ Body:
     Element: Undead
     ElementLevel: 2
     WalkSpeed: 250
-    AttackDelay: 2456
-    AttackMotion: 912
-    ClientAttackMotion: 408
+    AttackDelay: 912
+    AttackMotion: 504
+    ClientAttackMotion: 504
     DamageMotion: 504
     Ai: 04
     Drops:
@@ -97449,7 +97449,7 @@ Body:
     Name: Sweet Nightmare
     Level: 141
     Hp: 261334
-    Sp: 0
+    Sp: 10000
     BaseExp: 14023
     JobExp: 14022
     Attack: 1965
@@ -97464,7 +97464,7 @@ Body:
     Luk: 68
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Large
     Race: Demon
     RaceGroups:
@@ -97472,9 +97472,9 @@ Body:
     Element: Ghost
     ElementLevel: 2
     WalkSpeed: 150
-    AttackDelay: 1816
-    AttackMotion: 816
-    ClientAttackMotion: 576
+    AttackDelay: 816
+    AttackMotion: 432
+    ClientAttackMotion: 432
     DamageMotion: 432
     Ai: 04
     Modes:
@@ -97500,7 +97500,9 @@ Body:
     Name: Black Mushroom
     Level: 130
     Hp: 150000
-    Sp: 0
+    Sp: 10000
+    Attack: 500
+    Attack2: 300
     BaseExp: 2437
     JobExp: 2284
     Defense: 418
@@ -97508,15 +97510,20 @@ Body:
     Vit: 150
     Int: 103
     Luk: 88
-    SkillRange: 0
-    ChaseRange: 0
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
     Size: Small
     Race: Plant
     RaceGroups:
       Illusion_Vampire: true
     Element: Earth
     ElementLevel: 1
-    ClientAttackMotion: 576
+    WalkSpeed: 100
+    AttackDelay: 500
+    AttackMotion: 700
+    ClientAttackMotion: 700
+    DamageMotion: 700
     Ai: 06
     Drops:
       - Item: Alchol
@@ -97552,7 +97559,7 @@ Body:
     Luk: 91
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Medium
     Race: Demihuman
     RaceGroups:
@@ -97560,9 +97567,9 @@ Body:
     Element: Undead
     ElementLevel: 2
     WalkSpeed: 200
-    AttackDelay: 1000
-    AttackMotion: 864
-    ClientAttackMotion: 576
+    AttackDelay: 864
+    AttackMotion: 480
+    ClientAttackMotion: 480
     DamageMotion: 480
     Ai: 21
     Class: Boss
@@ -97606,7 +97613,7 @@ Body:
     Luk: 195
     AttackRange: 3
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Large
     Race: Demon
     RaceGroups:
@@ -97614,10 +97621,11 @@ Body:
     Element: Dark
     ElementLevel: 4
     WalkSpeed: 145
-    AttackDelay: 1290
-    AttackMotion: 1140
-    ClientAttackMotion: 780
+    AttackDelay: 1140
+    AttackMotion: 576
+    ClientAttackMotion: 576
     DamageMotion: 576
+    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -97666,7 +97674,7 @@ Body:
     Luk: 240
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Medium
     Race: Demon
     RaceGroups:
@@ -97674,9 +97682,9 @@ Body:
     Element: Fire
     ElementLevel: 3
     WalkSpeed: 150
-    AttackDelay: 1276
-    AttackMotion: 576
-    ClientAttackMotion: 120
+    AttackDelay: 576
+    AttackMotion: 288
+    ClientAttackMotion: 288
     DamageMotion: 288
     Ai: 21
     Class: Boss
@@ -97710,7 +97718,7 @@ Body:
     Name: Angry Nine Tail
     Level: 116
     Hp: 21875
-    Sp: 0
+    Sp: 10000
     BaseExp: 2315
     JobExp: 2169
     Attack: 965
@@ -97725,7 +97733,7 @@ Body:
     Luk: 100
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Medium
     Race: Brute
     RaceGroups:
@@ -97733,9 +97741,9 @@ Body:
     Element: Fire
     ElementLevel: 3
     WalkSpeed: 150
-    AttackDelay: 840
-    AttackMotion: 540
-    ClientAttackMotion: 360
+    AttackDelay: 540
+    AttackMotion: 480
+    ClientAttackMotion: 480
     DamageMotion: 480
     Ai: 21
     Drops:
@@ -97759,7 +97767,7 @@ Body:
     Name: Resentful Munak
     Level: 110
     Hp: 17728
-    Sp: 0
+    Sp: 10000
     BaseExp: 1843
     JobExp: 1876
     Attack: 637
@@ -97774,7 +97782,7 @@ Body:
     Luk: 20
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Medium
     Race: Undead
     RaceGroups:
@@ -97782,9 +97790,9 @@ Body:
     Element: Undead
     ElementLevel: 1
     WalkSpeed: 200
-    AttackDelay: 2468
-    AttackMotion: 768
-    ClientAttackMotion: 480
+    AttackDelay: 768
+    AttackMotion: 288
+    ClientAttackMotion: 288
     DamageMotion: 288
     Ai: 04
     Drops:
@@ -97815,7 +97823,7 @@ Body:
     Name: Resentful Bongun
     Level: 112
     Hp: 19077
-    Sp: 0
+    Sp: 10000
     BaseExp: 2137
     JobExp: 1869
     Attack: 826
@@ -97830,7 +97838,7 @@ Body:
     Luk: 40
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Medium
     Race: Undead
     RaceGroups:
@@ -97838,9 +97846,9 @@ Body:
     Element: Undead
     ElementLevel: 1
     WalkSpeed: 190
-    AttackDelay: 1720
-    AttackMotion: 500
-    ClientAttackMotion: 960
+    AttackDelay: 500
+    AttackMotion: 420
+    ClientAttackMotion: 420
     DamageMotion: 420
     Ai: 04
     Drops:
@@ -97864,7 +97872,7 @@ Body:
     Name: Resentful Sohee
     Level: 114
     Hp: 22414
-    Sp: 0
+    Sp: 10000
     BaseExp: 2004
     JobExp: 2373
     Attack: 779
@@ -97879,7 +97887,7 @@ Body:
     Luk: 56
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Medium
     Race: Demon
     RaceGroups:
@@ -97887,9 +97895,9 @@ Body:
     Element: Water
     ElementLevel: 2
     WalkSpeed: 250
-    AttackDelay: 912
-    AttackMotion: 2112
-    ClientAttackMotion: 360
+    AttackDelay: 2112
+    AttackMotion: 576
+    ClientAttackMotion: 576
     DamageMotion: 576
     Ai: 04
     Modes:
@@ -97917,7 +97925,7 @@ Body:
     Name: Resentful Soldier
     Level: 115
     Hp: 20843
-    Sp: 0
+    Sp: 10000
     BaseExp: 2010
     JobExp: 2570
     Attack: 767
@@ -97932,7 +97940,7 @@ Body:
     Luk: 12
     AttackRange: 9
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Medium
     Race: Undead
     RaceGroups:
@@ -97940,9 +97948,9 @@ Body:
     Element: Undead
     ElementLevel: 1
     WalkSpeed: 300
-    AttackDelay: 2864
-    AttackMotion: 864
-    ClientAttackMotion: 672
+    AttackDelay: 864
+    AttackMotion: 576
+    ClientAttackMotion: 576
     DamageMotion: 576
     Ai: 04
     Drops:
@@ -97976,7 +97984,7 @@ Body:
     Name: Wizard of the Truth
     Level: 118
     Hp: 121847
-    Sp: 0
+    Sp: 10000
     BaseExp: 8599
     JobExp: 7695
     Attack: 1977
@@ -97991,7 +97999,7 @@ Body:
     Luk: 124
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Medium
     Race: Undead
     RaceGroups:
@@ -97999,9 +98007,9 @@ Body:
     Element: Dark
     ElementLevel: 1
     WalkSpeed: 140
-    AttackDelay: 768
-    AttackMotion: 864
-    ClientAttackMotion: 672
+    AttackDelay: 864
+    AttackMotion: 288
+    ClientAttackMotion: 288
     DamageMotion: 288
     Ai: 01
     Drops:
@@ -98027,7 +98035,7 @@ Body:
     Name: Deranged Adventurer
     Level: 117
     Hp: 24078
-    Sp: 0
+    Sp: 10000
     BaseExp: 2381
     JobExp: 2288
     Attack: 837
@@ -98042,7 +98050,7 @@ Body:
     Luk: 50
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Medium
     Race: Undead
     RaceGroups:
@@ -98050,9 +98058,9 @@ Body:
     Element: Undead
     ElementLevel: 3
     WalkSpeed: 150
-    AttackDelay: 1450
-    AttackMotion: 864
-    ClientAttackMotion: 672
+    AttackDelay: 864
+    AttackMotion: 288
+    ClientAttackMotion: 288
     DamageMotion: 288
     Ai: 21
     Drops:
@@ -98260,7 +98268,7 @@ Body:
     Name: Angry Gazeti
     Level: 126
     Hp: 57541
-    Sp: 0
+    Sp: 10000
     BaseExp: 9652
     JobExp: 4103
     Attack: 1603
@@ -98275,7 +98283,7 @@ Body:
     Luk: 62
     AttackRange: 10
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Medium
     Race: Demon
     RaceGroups:
@@ -98283,9 +98291,9 @@ Body:
     Element: Water
     ElementLevel: 1
     WalkSpeed: 190
-    AttackDelay: 576
-    AttackMotion: 370
-    ClientAttackMotion: 300
+    AttackDelay: 370
+    AttackMotion: 270
+    ClientAttackMotion: 270
     DamageMotion: 270
     Ai: 20
     Modes:
@@ -98323,7 +98331,7 @@ Body:
     Luk: 71
     AttackRange: 2
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Large
     Race: Formless
     RaceGroups:
@@ -98331,9 +98339,9 @@ Body:
     Element: Water
     ElementLevel: 2
     WalkSpeed: 220
-    AttackDelay: 936
-    AttackMotion: 1020
-    ClientAttackMotion: 660
+    AttackDelay: 1020
+    AttackMotion: 420
+    ClientAttackMotion: 420
     DamageMotion: 420
     Ai: 04
     Drops:
@@ -98369,7 +98377,7 @@ Body:
     Luk: 56
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Large
     Race: Formless
     RaceGroups:
@@ -98377,9 +98385,9 @@ Body:
     Element: Water
     ElementLevel: 3
     WalkSpeed: 250
-    AttackDelay: 861
-    AttackMotion: 660
-    ClientAttackMotion: 600
+    AttackDelay: 660
+    AttackMotion: 144
+    ClientAttackMotion: 144
     DamageMotion: 144
     Ai: 04
     Drops:
@@ -98411,7 +98419,7 @@ Body:
     Dex: 244
     AttackRange: 3
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Small
     Race: Formless
     RaceGroups:
@@ -98419,8 +98427,10 @@ Body:
     Element: Water
     ElementLevel: 2
     WalkSpeed: 1000
-    AttackDelay: 1344
-    ClientAttackMotion: 1152
+    AttackDelay: 500
+    AttackMotion: 700
+    ClientAttackMotion: 700
+    DamageMotion: 700
     Ai: 10
     Drops:
       - Item: Frozen_PieceOfRock
@@ -98468,7 +98478,7 @@ Body:
     Luk: 142
     AttackRange: 3
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Large
     Race: Brute
     RaceGroups:
@@ -98476,10 +98486,11 @@ Body:
     Element: Water
     ElementLevel: 4
     WalkSpeed: 400
-    AttackDelay: 432
-    AttackMotion: 840
-    ClientAttackMotion: 660
+    AttackDelay: 840
+    AttackMotion: 216
+    ClientAttackMotion: 216
     DamageMotion: 216
+    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -98511,17 +98522,22 @@ Body:
     Name: ILL_FROZEN_KN
     Level: 1
     Hp: 100
-    Sp: 0
+    Sp: 10000
+    BaseExp: 3000000
+    JobExp: 3000000
+    Attack: 500
+    Attack2: 300
     Defense: 100
     MagicDefense: 99
-    Str: 0
-    Agi: 0
-    Vit: 0
-    Int: 0
-    Dex: 0
-    Luk: 0
+    Str: 200
+    Agi: 200
+    Vit: 200
+    Int: 200
+    Dex: 200
+    Luk: 200
+    AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Medium
     Race: Formless
     RaceGroups:
@@ -98529,7 +98545,11 @@ Body:
     Element: Neutral
     ElementLevel: 1
     WalkSpeed: 1000
-    ClientAttackMotion: 0
+    AttackDelay: 500
+    AttackMotion: 700
+    ClientAttackMotion: 700
+    DamageMotion: 700
+    DamageTaken: 100
     Ai: 06
     Class: Battlefield
     Modes:
@@ -98543,17 +98563,22 @@ Body:
     Name: ILL_FROZEN_GC
     Level: 1
     Hp: 100
-    Sp: 0
+    Sp: 10000
+    BaseExp: 3000000
+    JobExp: 3000000
+    Attack: 500
+    Attack2: 300
     Defense: 100
     MagicDefense: 99
-    Str: 0
-    Agi: 0
-    Vit: 0
-    Int: 0
-    Dex: 0
-    Luk: 0
+    Str: 200
+    Agi: 200
+    Vit: 200
+    Int: 200
+    Dex: 200
+    Luk: 200
+    AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Medium
     Race: Formless
     RaceGroups:
@@ -98561,7 +98586,10 @@ Body:
     Element: Neutral
     ElementLevel: 1
     WalkSpeed: 1000
-    ClientAttackMotion: 0
+    AttackDelay: 500
+    AttackMotion: 700
+    ClientAttackMotion: 700
+    DamageMotion: 700
     Ai: 06
     Class: Battlefield
     Modes:
@@ -98575,7 +98603,7 @@ Body:
     Name: Ominous Assulter
     Level: 160
     Hp: 592508
-    Sp: 0
+    Sp: 10000
     BaseExp: 54213
     JobExp: 48375
     Attack: 3049
@@ -98590,7 +98618,7 @@ Body:
     Luk: 30
     AttackRange: 2
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Small
     Race: Demon
     RaceGroups:
@@ -98598,9 +98626,9 @@ Body:
     Element: Wind
     ElementLevel: 2
     WalkSpeed: 200
-    AttackDelay: 512
-    AttackMotion: 780
-    ClientAttackMotion: 540
+    AttackDelay: 780
+    AttackMotion: 504
+    ClientAttackMotion: 504
     DamageMotion: 504
     Ai: 21
     Modes:
@@ -98628,7 +98656,7 @@ Body:
     Name: Ominous Permeter
     Level: 157
     Hp: 508355
-    Sp: 0
+    Sp: 10000
     BaseExp: 50806
     JobExp: 41661
     Attack: 2845
@@ -98643,7 +98671,7 @@ Body:
     Luk: 60
     AttackRange: 2
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Small
     Race: Brute
     RaceGroups:
@@ -98651,9 +98679,9 @@ Body:
     Element: Neutral
     ElementLevel: 2
     WalkSpeed: 250
-    AttackDelay: 1100
-    AttackMotion: 483
-    ClientAttackMotion: 720
+    AttackDelay: 483
+    AttackMotion: 528
+    ClientAttackMotion: 528
     DamageMotion: 528
     Ai: 21
     Drops:
@@ -98679,7 +98707,7 @@ Body:
     Name: Ominous Freezer
     Level: 159
     Hp: 549071
-    Sp: 0
+    Sp: 10000
     BaseExp: 54892
     JobExp: 43913
     Attack: 2925
@@ -98694,7 +98722,7 @@ Body:
     Luk: 60
     AttackRange: 2
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Small
     Race: Brute
     RaceGroups:
@@ -98702,9 +98730,9 @@ Body:
     Element: Water
     ElementLevel: 2
     WalkSpeed: 170
-    AttackDelay: 1260
-    AttackMotion: 960
-    ClientAttackMotion: 540
+    AttackDelay: 960
+    AttackMotion: 672
+    ClientAttackMotion: 672
     DamageMotion: 672
     Ai: 21
     Drops:
@@ -98730,7 +98758,7 @@ Body:
     Name: Ominous Solider
     Level: 161
     Hp: 592310
-    Sp: 0
+    Sp: 10000
     BaseExp: 59190
     JobExp: 49128
     Attack: 3129
@@ -98745,7 +98773,7 @@ Body:
     Luk: 50
     AttackRange: 2
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Small
     Race: Brute
     RaceGroups:
@@ -98753,9 +98781,9 @@ Body:
     Element: Earth
     ElementLevel: 2
     WalkSpeed: 250
-    AttackDelay: 1452
-    AttackMotion: 483
-    ClientAttackMotion: 1248
+    AttackDelay: 483
+    AttackMotion: 528
+    ClientAttackMotion: 528
     DamageMotion: 528
     Ai: 21
     Drops:
@@ -98796,7 +98824,7 @@ Body:
     Luk: 89
     AttackRange: 2
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Small
     Race: Brute
     RaceGroups:
@@ -98804,9 +98832,9 @@ Body:
     Element: Fire
     ElementLevel: 2
     WalkSpeed: 250
-    AttackDelay: 1452
-    AttackMotion: 483
-    ClientAttackMotion: 1200
+    AttackDelay: 483
+    AttackMotion: 528
+    ClientAttackMotion: 528
     DamageMotion: 528
     Ai: 21
     Drops:
@@ -98832,7 +98860,7 @@ Body:
     Name: Ominous Turtle General
     Level: 165
     Hp: 11628549
-    Sp: 0
+    Sp: 10000
     BaseExp: 3431854
     JobExp: 2146800
 #   MvpExp:
@@ -98848,7 +98876,7 @@ Body:
     Luk: 180
     AttackRange: 2
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Large
     Race: Brute
     RaceGroups:
@@ -98856,10 +98884,11 @@ Body:
     Element: Earth
     ElementLevel: 2
     WalkSpeed: 200
-    AttackDelay: 900
-    AttackMotion: 1000
-    ClientAttackMotion: 624
+    AttackDelay: 1000
+    AttackMotion: 500
+    ClientAttackMotion: 500
     DamageMotion: 500
+    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -100120,12 +100149,12 @@ Body:
   - Id: 20255
     AegisName: ILL_TEDDY_BEAR_R
     Name: Red Teddy Bear
-    Level: 155
-    Hp: 328072
-    BaseExp: 19972
-    JobExp: 22503
-    Attack: 2022
-    Attack2: 225
+    Level: 160
+    Hp: 578072
+    BaseExp: 56972
+    JobExp: 48503
+    Attack: 4044
+    Attack2: 450
     Defense: 212
     MagicDefense: 88
     Str: 132
@@ -100136,15 +100165,17 @@ Body:
     Luk: 132
     AttackRange: 2
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Small
     Race: Formless
+    RaceGroups:
+      Illusion_Teddy_Bear: true
     Element: Fire
     ElementLevel: 1
     WalkSpeed: 150
-    AttackDelay: 512
-    AttackMotion: 780
-    ClientAttackMotion: 600
+    AttackDelay: 780
+    AttackMotion: 504
+    ClientAttackMotion: 504
     DamageMotion: 504
     Ai: 04
     Drops:
@@ -100164,12 +100195,12 @@ Body:
   - Id: 20256
     AegisName: ILL_TEDDY_BEAR_Y
     Name: Yellow Teddy Bear
-    Level: 155
-    Hp: 294044
-    BaseExp: 19384
-    JobExp: 23165
-    Attack: 1819
-    Attack2: 202
+    Level: 160
+    Hp: 544044
+    BaseExp: 56384
+    JobExp: 48165
+    Attack: 3638
+    Attack2: 404
     Defense: 200
     MagicDefense: 112
     Str: 102
@@ -100180,15 +100211,17 @@ Body:
     Luk: 102
     AttackRange: 2
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Small
     Race: Formless
+    RaceGroups:
+      Illusion_Teddy_Bear: true
     Element: Wind
     ElementLevel: 1
     WalkSpeed: 150
-    AttackDelay: 512
-    AttackMotion: 780
-    ClientAttackMotion: 600
+    AttackDelay: 780
+    AttackMotion: 504
+    ClientAttackMotion: 504
     DamageMotion: 504
     Ai: 04
     Drops:
@@ -100208,13 +100241,12 @@ Body:
   - Id: 20257
     AegisName: ILL_TEDDY_BEAR_G
     Name: Green Teddy Bear
-    Level: 157
-    Hp: 331960
-    BaseExp: 21646
-    JobExp: 25117
-    Attack: 2113
-    Attack2: 235
-    Defense: 227
+    Level: 162
+    Hp: 581960
+    BaseExp: 58646
+    JobExp: 45117
+    Attack: 4226
+    Attack2: 470
     MagicDefense: 110
     Str: 129
     Agi: 128
@@ -100224,15 +100256,17 @@ Body:
     Luk: 129
     AttackRange: 2
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Small
     Race: Formless
+    RaceGroups:
+      Illusion_Teddy_Bear: true
     Element: Poison
     ElementLevel: 1
     WalkSpeed: 150
-    AttackDelay: 512
-    AttackMotion: 708
-    ClientAttackMotion: 600
+    AttackDelay: 708
+    AttackMotion: 504
+    ClientAttackMotion: 504
     DamageMotion: 504
     Ai: 04
     Drops:
@@ -100250,12 +100284,12 @@ Body:
   - Id: 20258
     AegisName: ILL_TEDDY_BEAR_W
     Name: White Teddy Bear
-    Level: 155
-    Hp: 311841
-    BaseExp: 20334
-    JobExp: 23595
-    Attack: 1985
-    Attack2: 221
+    Level: 160
+    Hp: 561841
+    BaseExp: 57334
+    JobExp: 49595
+    Attack: 3970
+    Attack2: 442
     Defense: 213
     MagicDefense: 103
     Str: 121
@@ -100266,15 +100300,17 @@ Body:
     Luk: 121
     AttackRange: 2
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Small
     Race: Formless
+    RaceGroups:
+      Illusion_Teddy_Bear: true
     Element: Neutral
     ElementLevel: 1
     WalkSpeed: 150
-    AttackDelay: 512
-    AttackMotion: 780
-    ClientAttackMotion: 600
+    AttackDelay: 780
+    AttackMotion: 504
+    ClientAttackMotion: 504
     DamageMotion: 504
     Ai: 04
     Drops:
@@ -100294,12 +100330,12 @@ Body:
   - Id: 20259
     AegisName: ILL_TEDDY_BEAR_B
     Name: Blue Teddy Bear
-    Level: 152
-    Hp: 280657
-    BaseExp: 18300
-    JobExp: 21235
-    Attack: 1786
-    Attack2: 198
+    Level: 157
+    Hp: 530657
+    BaseExp: 55300
+    JobExp: 47235
+    Attack: 3572
+    Attack2: 396
     Defense: 192
     MagicDefense: 93
     Str: 109
@@ -100310,15 +100346,17 @@ Body:
     Luk: 109
     AttackRange: 2
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Small
     Race: Formless
+    RaceGroups:
+      Illusion_Teddy_Bear: true
     Element: Water
     ElementLevel: 1
     WalkSpeed: 300
-    AttackDelay: 512
-    AttackMotion: 780
-    ClientAttackMotion: 600
+    AttackDelay: 780
+    AttackMotion: 504
+    ClientAttackMotion: 504
     DamageMotion: 504
     Ai: 04
     Drops:
@@ -100354,17 +100392,29 @@ Body:
     Luk: 178
     AttackRange: 2
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Large
     Race: Formless
+    RaceGroups:
+      Illusion_Teddy_Bear: true
     Element: Holy
     ElementLevel: 4
     WalkSpeed: 150
-    AttackDelay: 512
-    AttackMotion: 780
-    ClientAttackMotion: 600
+    AttackDelay: 780
+    AttackMotion: 504
+    ClientAttackMotion: 504
     DamageMotion: 504
     Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    MvpDrops:
+      - Item: Elunium
+        Rate: 3000
+      - Item: Oridecon
+        Rate: 3000
+      - Item: Gold
+        Rate: 10000
     Drops:
       - Item: Elunium
         Rate: 2000
@@ -100382,10 +100432,12 @@ Body:
   - Id: 20261
     AegisName: ILL_PITMAN
     Name: Hardworking Pitman
-    Level: 154
-    Hp: 305605
-    Attack: 1945
-    Attack2: 216
+    Level: 159
+    Hp: 555605
+    BaseExp: 55783
+    JobExp: 46559
+    Attack: 3890
+    Attack2: 432
     Defense: 209
     MagicDefense: 101
     Str: 118
@@ -100396,15 +100448,17 @@ Body:
     Luk: 118
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Large
     Race: Demon
+    RaceGroups:
+      Illusion_Teddy_Bear: true
     Element: Earth
     ElementLevel: 2
     WalkSpeed: 180
-    AttackDelay: 960
-    AttackMotion: 336
-    ClientAttackMotion: 240
+    AttackDelay: 336
+    AttackMotion: 300
+    ClientAttackMotion: 300
     DamageMotion: 300
     Ai: 04
     Drops:
@@ -100424,12 +100478,12 @@ Body:
   - Id: 20262
     AegisName: ILL_MINERAL
     Name: Soul Fragment
-    Level: 153
-    Hp: 290324
-    BaseExp: 18931
-    JobExp: 21967
-    Attack: 1847
-    Attack2: 205
+    Level: 158
+    Hp: 540324
+    BaseExp: 55931
+    JobExp: 48967
+    Attack: 3694
+    Attack2: 410
     Defense: 198
     MagicDefense: 96
     Str: 113
@@ -100440,15 +100494,17 @@ Body:
     Luk: 113
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Small
     Race: Formless
+    RaceGroups:
+      Illusion_Teddy_Bear: true
     Element: Neutral
     ElementLevel: 2
     WalkSpeed: 250
-    AttackDelay: 648
-    AttackMotion: 480
-    ClientAttackMotion: 300
+    AttackDelay: 480
+    AttackMotion: 360
+    ClientAttackMotion: 360
     DamageMotion: 360
     Ai: 04
     Drops:
@@ -100467,10 +100523,12 @@ Body:
     AegisName: ILL_OBSIDIAN
     # Name: Sinister Dwelling Obsidian
     Name: Sinister Obsidian
-    Level: 156
-    Hp: 318593
-    Attack: 2027
-    Attack2: 225
+    Level: 161
+    Hp: 568593
+    BaseExp: 56221
+    JobExp: 48115
+    Attack: 4054
+    Attack2: 450
     Defense: 217
     MagicDefense: 106
     Str: 124
@@ -100481,15 +100539,17 @@ Body:
     Luk: 124
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Small
     Race: Formless
+    RaceGroups:
+      Illusion_Teddy_Bear: true
     Element: Earth
     ElementLevel: 2
     WalkSpeed: 350
-    AttackDelay: 720
-    AttackMotion: 864
-    ClientAttackMotion: 624
+    AttackDelay: 864
+    AttackMotion: 504
+    ClientAttackMotion: 504
     DamageMotion: 504
     Ai: 04
     Drops:
@@ -100507,10 +100567,12 @@ Body:
   - Id: 20264
     AegisName: G_ILL_TEDDY_BEAR_R
     Name: Red Teddy Bear
-    Level: 155
-    Hp: 309520
-    Attack: 2022
-    Attack2: 225
+    Level: 160
+    Hp: 578072
+    BaseExp: 3000000
+    JobExp: 3000000
+    Attack: 4044
+    Attack2: 450
     Defense: 212
     MagicDefense: 88
     Str: 132
@@ -100521,24 +100583,26 @@ Body:
     Luk: 132
     AttackRange: 2
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Small
     Race: Formless
     Element: Fire
     ElementLevel: 1
     WalkSpeed: 150
-    AttackDelay: 512
-    AttackMotion: 780
-    ClientAttackMotion: 600
+    AttackDelay: 780
+    AttackMotion: 504
+    ClientAttackMotion: 504
     DamageMotion: 504
     Ai: 24
   - Id: 20265
     AegisName: G_ILL_TEDDY_BEAR_Y
     Name: Yellow Teddy Bear
-    Level: 155
-    Hp: 294044
-    Attack: 1819
-    Attack2: 202
+    Level: 160
+    Hp: 544044
+    BaseExp: 3000000
+    JobExp: 3000000
+    Attack: 3638
+    Attack2: 404
     Defense: 200
     MagicDefense: 112
     Str: 102
@@ -100549,24 +100613,26 @@ Body:
     Luk: 102
     AttackRange: 2
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Small
     Race: Formless
     Element: Wind
     ElementLevel: 1
     WalkSpeed: 150
-    AttackDelay: 512
-    AttackMotion: 780
-    ClientAttackMotion: 600
+    AttackDelay: 780
+    AttackMotion: 504
+    ClientAttackMotion: 504
     DamageMotion: 504
     Ai: 24
   - Id: 20266
     AegisName: G_ILL_TEDDY_BEAR_G
     Name: Green Teddy Bear
-    Level: 157
-    Hp: 331960
-    Attack: 2113
-    Attack2: 235
+    Level: 162
+    Hp: 581960
+    BaseExp: 3000000
+    JobExp: 3000000
+    Attack: 4226
+    Attack2: 470
     Defense: 227
     MagicDefense: 110
     Str: 129
@@ -100577,24 +100643,26 @@ Body:
     Luk: 129
     AttackRange: 2
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Small
     Race: Formless
     Element: Poison
     ElementLevel: 1
     WalkSpeed: 150
-    AttackDelay: 512
-    AttackMotion: 780
-    ClientAttackMotion: 600
+    AttackDelay: 780
+    AttackMotion: 504
+    ClientAttackMotion: 504
     DamageMotion: 504
     Ai: 24
   - Id: 20267
     AegisName: G_ILL_TEDDY_BEAR_W
     Name: White Teddy Bear
-    Level: 155
-    Hp: 311841
-    Attack: 1985
-    Attack2: 221
+    Level: 160
+    Hp: 561841
+    BaseExp: 3000000
+    JobExp: 3000000
+    Attack: 3970
+    Attack2: 442
     Defense: 213
     MagicDefense: 103
     Str: 121
@@ -100605,24 +100673,26 @@ Body:
     Luk: 121
     AttackRange: 2
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Small
     Race: Formless
     Element: Neutral
     ElementLevel: 1
     WalkSpeed: 150
-    AttackDelay: 512
-    AttackMotion: 780
-    ClientAttackMotion: 600
+    AttackDelay: 780
+    AttackMotion: 504
+    ClientAttackMotion: 504
     DamageMotion: 504
     Ai: 24
   - Id: 20268
     AegisName: G_ILL_TEDDY_BEAR_B
     Name: Blue Teddy Bear
-    Level: 152
-    Hp: 280657
-    Attack: 1786
-    Attack2: 198
+    Level: 157
+    Hp: 530657
+    BaseExp: 3000000
+    JobExp: 3000000
+    Attack: 3572
+    Attack2: 396
     Defense: 192
     MagicDefense: 93
     Str: 109
@@ -100633,15 +100703,15 @@ Body:
     Luk: 109
     AttackRange: 2
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Small
     Race: Formless
     Element: Water
     ElementLevel: 1
     WalkSpeed: 300
-    AttackDelay: 512
-    AttackMotion: 780
-    ClientAttackMotion: 600
+    AttackDelay: 780
+    AttackMotion: 504
+    ClientAttackMotion: 504
     DamageMotion: 504
     Ai: 24
   - Id: 20269
@@ -100694,7 +100764,7 @@ Body:
     Luk: 20
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Small
     Race: Insect
     RaceGroups:
@@ -100703,9 +100773,9 @@ Body:
     Element: Earth
     ElementLevel: 1
     WalkSpeed: 200
-    AttackDelay: 860
-    AttackMotion: 660
-    ClientAttackMotion: 540
+    AttackDelay: 660
+    AttackMotion: 624
+    ClientAttackMotion: 624
     DamageMotion: 624
     Ai: 07
     Modes:
@@ -100747,7 +100817,7 @@ Body:
     Luk: 55
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Large
     Race: Formless
     RaceGroups:
@@ -100756,9 +100826,9 @@ Body:
     Element: Neutral
     ElementLevel: 4
     WalkSpeed: 150
-    AttackDelay: 632
-    AttackMotion: 518
-    ClientAttackMotion: 384
+    AttackDelay: 518
+    AttackMotion: 288
+    ClientAttackMotion: 288
     DamageMotion: 288
     Ai: 04
     Drops:
@@ -100798,7 +100868,7 @@ Body:
     Luk: 42
     AttackRange: 9
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Large
     Race: Formless
     RaceGroups:
@@ -100808,8 +100878,8 @@ Body:
     ElementLevel: 4
     WalkSpeed: 200
     AttackDelay: 1332
-    AttackMotion: 1332
-    ClientAttackMotion: 900
+    AttackMotion: 672
+    ClientAttackMotion: 672
     DamageMotion: 672
     Ai: 10
     Drops:
@@ -100848,7 +100918,7 @@ Body:
     Luk: 42
     AttackRange: 2
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Large
     Race: Demon
     RaceGroups:
@@ -100856,10 +100926,11 @@ Body:
     Element: Neutral
     ElementLevel: 3
     WalkSpeed: 150
-    AttackDelay: 1020
-    AttackMotion: 288
-    ClientAttackMotion: 384
+    AttackDelay: 288
+    AttackMotion: 144
+    ClientAttackMotion: 144
     DamageMotion: 144
+    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -100908,7 +100979,7 @@ Body:
     Luk: 54
     AttackRange: 10
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Medium
     Race: Plant
     RaceGroups:
@@ -100917,9 +100988,9 @@ Body:
     Element: Fire
     ElementLevel: 3
     WalkSpeed: 175
-    AttackDelay: 2413
-    AttackMotion: 1248
-    ClientAttackMotion: 96
+    AttackDelay: 1248
+    AttackMotion: 768
+    ClientAttackMotion: 768
     DamageMotion: 768
     Ai: 04
     Drops:
@@ -100959,7 +101030,7 @@ Body:
     Luk: 45
     AttackRange: 10
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Medium
     Race: Demihuman
     RaceGroups:
@@ -100968,9 +101039,9 @@ Body:
     Element: Earth
     ElementLevel: 2
     WalkSpeed: 200
-    AttackDelay: 857
-    AttackMotion: 1056
-    ClientAttackMotion: 420
+    AttackDelay: 1056
+    AttackMotion: 576
+    ClientAttackMotion: 576
     DamageMotion: 576
     Ai: 05
     Drops:
@@ -101010,7 +101081,7 @@ Body:
     Luk: 42
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Medium
     Race: Demihuman
     RaceGroups:
@@ -101019,9 +101090,9 @@ Body:
     Element: Fire
     ElementLevel: 2
     WalkSpeed: 200
-    AttackDelay: 912
-    AttackMotion: 1344
-    ClientAttackMotion: 420
+    AttackDelay: 1344
+    AttackMotion: 480
+    ClientAttackMotion: 480
     DamageMotion: 480
     Ai: 04
     Drops:
@@ -101062,7 +101133,7 @@ Body:
     Luk: 165
     AttackRange: 2
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Large
     Race: Demihuman
     RaceGroups:
@@ -101070,10 +101141,11 @@ Body:
     Element: Fire
     ElementLevel: 4
     WalkSpeed: 150
-    AttackDelay: 1020
-    AttackMotion: 288
-    ClientAttackMotion: 288
+    AttackDelay: 288
+    AttackMotion: 144
+    ClientAttackMotion: 144
     DamageMotion: 144
+    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -101108,6 +101180,8 @@ Body:
     Name: Ancient Megalith
     Level: 166
     Hp: 708500
+    BaseExp: 3000000
+    JobExp: 3000000
     Attack: 2877
     Attack2: 511
     Defense: 188
@@ -101120,7 +101194,7 @@ Body:
     Luk: 42
     AttackRange: 9
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Large
     Race: Formless
     RaceGroups:
@@ -101129,8 +101203,8 @@ Body:
     ElementLevel: 4
     WalkSpeed: 200
     AttackDelay: 1332
-    AttackMotion: 1332
-    ClientAttackMotion: 936
+    AttackMotion: 672
+    ClientAttackMotion: 672
     DamageMotion: 672
     Ai: 24
   - Id: 20279
@@ -101138,6 +101212,8 @@ Body:
     Name: Ancient Wootan Shooter
     Level: 164
     Hp: 702100
+    BaseExp: 3000000
+    JobExp: 3000000
     Attack: 2460
     Attack2: 517
     Defense: 142
@@ -101150,7 +101226,7 @@ Body:
     Luk: 45
     AttackRange: 10
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Medium
     Race: Demihuman
     RaceGroups:
@@ -101158,9 +101234,9 @@ Body:
     Element: Earth
     ElementLevel: 2
     WalkSpeed: 200
-    AttackDelay: 857
-    AttackMotion: 1056
-    ClientAttackMotion: 420
+    AttackDelay: 1056
+    AttackMotion: 576
+    ClientAttackMotion: 576
     DamageMotion: 576
     Ai: 24
   - Id: 20280
@@ -101168,6 +101244,8 @@ Body:
     Name: Ancient Wootan Fighter
     Level: 167
     Hp: 725500
+    BaseExp: 3000000
+    JobExp: 3000000
     Attack: 3062
     Attack2: 538
     Defense: 250
@@ -101180,7 +101258,7 @@ Body:
     Luk: 42
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Medium
     Race: Demihuman
     RaceGroups:
@@ -101188,9 +101266,9 @@ Body:
     Element: Fire
     ElementLevel: 2
     WalkSpeed: 200
-    AttackDelay: 912
-    AttackMotion: 1344
-    ClientAttackMotion: 420
+    AttackDelay: 1344
+    AttackMotion: 480
+    ClientAttackMotion: 480
     DamageMotion: 480
     Ai: 24
 #  - Id: 20281
@@ -108224,7 +108302,7 @@ Body:
     Name: Deep Sea Sropho
     Level: 147
     Hp: 336823
-    Sp: 0
+    Sp: 10000
     BaseExp: 30314
     JobExp: 21220
     Attack: 2657
@@ -108239,15 +108317,17 @@ Body:
     Luk: 50
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Medium
     Race: Fish
+    RaceGroups:
+      Illusion_Underwater: true
     Element: Water
     ElementLevel: 3
     WalkSpeed: 250
-    AttackDelay: 550
-    AttackMotion: 1056
-    ClientAttackMotion: 480
+    AttackDelay: 1056
+    AttackMotion: 576
+    ClientAttackMotion: 576
     DamageMotion: 576
     Ai: 04
     Drops:
@@ -108271,7 +108351,7 @@ Body:
     Name: Deep Sea Obeaune
     Level: 149
     Hp: 340238
-    Sp: 0
+    Sp: 10000
     BaseExp: 30621
     JobExp: 21434
     Attack: 2647
@@ -108286,15 +108366,17 @@ Body:
     Luk: 50
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Medium
     Race: Fish
+    RaceGroups:
+      Illusion_Underwater: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 200
-    AttackDelay: 936
-    AttackMotion: 1155
-    ClientAttackMotion: 288
+    AttackDelay: 1155
+    AttackMotion: 672
+    ClientAttackMotion: 672
     DamageMotion: 672
     Ai: 04
     Drops:
@@ -108318,7 +108400,7 @@ Body:
     Name: Deep Sea Deviace
     Level: 150
     Hp: 348355
-    Sp: 0
+    Sp: 10000
     BaseExp: 31352
     JobExp: 21946
     Attack: 2714
@@ -108333,15 +108415,17 @@ Body:
     Luk: 58
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Medium
     Race: Fish
+    RaceGroups:
+      Illusion_Underwater: true
     Element: Water
     ElementLevel: 4
     WalkSpeed: 400
-    AttackDelay: 480
-    AttackMotion: 970
-    ClientAttackMotion: 768
+    AttackDelay: 970
+    AttackMotion: 770
+    ClientAttackMotion: 770
     DamageMotion: 770
     Ai: 04
     Drops:
@@ -108365,7 +108449,7 @@ Body:
     Name: Deep Sea Marse
     Level: 149
     Hp: 335141
-    Sp: 0
+    Sp: 10000
     BaseExp: 30163
     JobExp: 21114
     Attack: 2851
@@ -108380,15 +108464,17 @@ Body:
     Luk: 60
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Small
     Race: Fish
+    RaceGroups:
+      Illusion_Underwater: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 270
-    AttackDelay: 1070
-    AttackMotion: 1512
-    ClientAttackMotion: 936
+    AttackDelay: 1512
+    AttackMotion: 485
+    ClientAttackMotion: 485
     DamageMotion: 485
     Ai: 04
     Drops:
@@ -108414,7 +108500,7 @@ Body:
     Name: Deep Sea Merman
     Level: 148
     Hp: 337534
-    Sp: 0
+    Sp: 10000
     BaseExp: 30378
     JobExp: 21265
     Attack: 2801
@@ -108429,15 +108515,17 @@ Body:
     Luk: 48
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Illusion_Underwater: true
     Element: Water
     ElementLevel: 3
     WalkSpeed: 220
-    AttackDelay: 708
-    AttackMotion: 1225
-    ClientAttackMotion: 504
+    AttackDelay: 1225
+    AttackMotion: 675
+    ClientAttackMotion: 675
     DamageMotion: 675
     Ai: 04
     Drops:
@@ -108475,15 +108563,17 @@ Body:
     Luk: 60
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Medium
     Race: Fish
+    RaceGroups:
+      Illusion_Underwater: true
     Element: Wind
     ElementLevel: 3
     WalkSpeed: 220
-    AttackDelay: 168
-    AttackMotion: 965
-    ClientAttackMotion: 576
+    AttackDelay: 965
+    AttackMotion: 578
+    ClientAttackMotion: 578
     DamageMotion: 578
     Ai: 04
     Drops:
@@ -108509,7 +108599,7 @@ Body:
     Name: Deep Sea Swordfish
     Level: 199
     Hp: 2997411
-    Sp: 0
+    Sp: 10000
     BaseExp: 199827
     JobExp: 139879
     Attack: 6678
@@ -108524,14 +108614,16 @@ Body:
     Luk: 60
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Large
     Race: Fish
+    RaceGroups:
+      Illusion_Underwater: true
     Element: Water
     ElementLevel: 3
     WalkSpeed: 250
-    AttackDelay: 335
-    AttackMotion: 1250
+    AttackDelay: 1250
+    AttackMotion: 384
     ClientAttackMotion: 384
     DamageMotion: 384
     Ai: 04
@@ -108558,7 +108650,7 @@ Body:
     Name: Deep Sea Strouf
     Level: 201
     Hp: 2967419
-    Sp: 0
+    Sp: 10000
     BaseExp: 197828
     JobExp: 138480
     Attack: 5947
@@ -108573,15 +108665,17 @@ Body:
     Luk: 64
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Large
     Race: Fish
+    RaceGroups:
+      Illusion_Underwater: true
     Element: Water
     ElementLevel: 3
     WalkSpeed: 180
-    AttackDelay: 276
-    AttackMotion: 672
-    ClientAttackMotion: 480
+    AttackDelay: 672
+    AttackMotion: 384
+    ClientAttackMotion: 384
     DamageMotion: 384
     Ai: 04
     Drops:
@@ -108607,7 +108701,7 @@ Body:
     Name: Deep Sea Phen
     Level: 199
     Hp: 2897158
-    Sp: 0
+    Sp: 10000
     BaseExp: 193144
     JobExp: 135201
     Attack: 5844
@@ -108622,15 +108716,17 @@ Body:
     Luk: 71
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Medium
     Race: Fish
+    RaceGroups:
+      Illusion_Underwater: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 220
-    AttackDelay: 168
-    AttackMotion: 1154
-    ClientAttackMotion: 528
+    AttackDelay: 1154
+    AttackMotion: 865
+    ClientAttackMotion: 865
     DamageMotion: 865
     Ai: 04
     Drops:
@@ -108670,15 +108766,17 @@ Body:
     Luk: 80
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Large
     Race: Fish
+    RaceGroups:
+      Illusion_Underwater: true
     Element: Water
     ElementLevel: 3
     WalkSpeed: 180
-    AttackDelay: 480
-    AttackMotion: 960
-    ClientAttackMotion: 480
+    AttackDelay: 960
+    AttackMotion: 970
+    ClientAttackMotion: 970
     DamageMotion: 970
     Ai: 04
     Drops:
@@ -108717,16 +108815,19 @@ Body:
     Luk: 55
     AttackRange: 3
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Large
     Race: Fish
+    RaceGroups:
+      Illusion_Underwater: true
     Element: Water
     ElementLevel: 4
     WalkSpeed: 180
-    AttackDelay: 422
-    AttackMotion: 870
-    ClientAttackMotion: 384
+    AttackDelay: 870
+    AttackMotion: 480
+    ClientAttackMotion: 480
     DamageMotion: 480
+    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -108931,6 +109032,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Demon
+    RaceGroups:
+      Illusion_Underwater: true
     Element: Dark
     ElementLevel: 3
     WalkSpeed: 210
@@ -113207,15 +113310,17 @@ Body:
     Luk: 70
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Small
     Race: Insect
+    RaceGroups:
+      Illusion_Twins: true
     Element: Earth
     ElementLevel: 3
     WalkSpeed: 300
-    AttackDelay: 1288
-    AttackMotion: 288
-    ClientAttackMotion: 96
+    AttackDelay: 288
+    AttackMotion: 384
+    ClientAttackMotion: 384
     DamageMotion: 384
     Ai: 21
     Modes:
@@ -113257,15 +113362,17 @@ Body:
     Luk: 101
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Medium
     Race: Insect
+    RaceGroups:
+      Illusion_Twins: true
     Element: Earth
     ElementLevel: 4
     WalkSpeed: 350
-    AttackDelay: 1288
-    AttackMotion: 648
-    ClientAttackMotion: 288
+    AttackDelay: 648
+    AttackMotion: 384
+    ClientAttackMotion: 384
     DamageMotion: 384
     Ai: 21
     Modes:
@@ -113307,14 +113414,16 @@ Body:
     Luk: 108
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Small
     Race: Insect
+    RaceGroups:
+      Illusion_Twins: true
     Element: Earth
     ElementLevel: 2
     WalkSpeed: 200
-    AttackDelay: 1000
-    AttackMotion: 792
+    AttackDelay: 792
+    AttackMotion: 336
     ClientAttackMotion: 336
     DamageMotion: 336
     Ai: 21
@@ -113353,15 +113462,17 @@ Body:
     Luk: 88
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Small
     Race: Insect
+    RaceGroups:
+      Illusion_Twins: true
     Element: Earth
     ElementLevel: 3
     WalkSpeed: 250
-    AttackDelay: 1288
-    AttackMotion: 288
-    ClientAttackMotion: 96
+    AttackDelay: 288
+    AttackMotion: 576
+    ClientAttackMotion: 576
     DamageMotion: 576
     Ai: 21
     Modes:
@@ -113403,15 +113514,17 @@ Body:
     Luk: 90
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Small
     Race: Insect
+    RaceGroups:
+      Illusion_Twins: true
     Element: Earth
     ElementLevel: 3
     WalkSpeed: 250
-    AttackDelay: 1288
-    AttackMotion: 288
-    ClientAttackMotion: 96
+    AttackDelay: 288
+    AttackMotion: 576
+    ClientAttackMotion: 576
     DamageMotion: 576
     Ai: 21
     Modes:
@@ -113439,18 +113552,26 @@ Body:
     Hp: 659810
     BaseExp: 34992
     JobExp: 23555
+    Attack: 500
+    Attack2: 300
     Defense: 100
     MagicDefense: 9
     Vit: 65
     Luk: 200
-    SkillRange: 0
-    ChaseRange: 0
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
     Size: Small
     Race: Formless
+    RaceGroups:
+      Illusion_Twins: true
     Element: Neutral
     ElementLevel: 2
     WalkSpeed: 1000
-    ClientAttackMotion: 672
+    AttackDelay: 500
+    AttackMotion: 700
+    ClientAttackMotion: 700
+    DamageMotion: 700
     Ai: 06
     Drops:
       - Item: Sprint_Shoes
@@ -113489,15 +113610,17 @@ Body:
     Luk: 111
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Small
     Race: Demon
+    RaceGroups:
+      Illusion_Twins: true
     Element: Dark
     ElementLevel: 3
     WalkSpeed: 250
-    AttackDelay: 1848
-    AttackMotion: 1296
-    ClientAttackMotion: 1008
+    AttackDelay: 1296
+    AttackMotion: 432
+    ClientAttackMotion: 432
     DamageMotion: 432
     Ai: 21
     Modes:
@@ -113539,15 +113662,17 @@ Body:
     Luk: 55
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Small
     Race: Brute
+    RaceGroups:
+      Illusion_Twins: true
     Element: Dark
     ElementLevel: 2
     WalkSpeed: 150
-    AttackDelay: 1276
-    AttackMotion: 576
-    ClientAttackMotion: 288
+    AttackDelay: 576
+    AttackMotion: 384
+    ClientAttackMotion: 384
     DamageMotion: 384
     Ai: 21
     Drops:
@@ -113585,15 +113710,17 @@ Body:
     Luk: 56
     AttackRange: 3
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Small
     Race: Insect
+    RaceGroups:
+      Illusion_Twins: true
     Element: Poison
     ElementLevel: 4
     WalkSpeed: 300
-    AttackDelay: 1768
-    AttackMotion: 768
-    ClientAttackMotion: 432
+    AttackDelay: 768
+    AttackMotion: 384
+    ClientAttackMotion: 384
     DamageMotion: 384
     Ai: 21
     Modes:
@@ -113636,16 +113763,19 @@ Body:
     Luk: 248
     AttackRange: 1
     SkillRange: 10
-    ChaseRange: 12
+    ChaseRange: 10
     Size: Large
     Race: Insect
+    RaceGroups:
+      Illusion_Twins: true
     Element: Neutral
     ElementLevel: 4
     WalkSpeed: 100
-    AttackDelay: 864
-    AttackMotion: 1000
-    ClientAttackMotion: 624
+    AttackDelay: 1000
+    AttackMotion: 480
+    ClientAttackMotion: 480
     DamageMotion: 480
+    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
