@@ -1356,7 +1356,7 @@ void pc_makesavestatus(map_session_data *sd) {
 		sd->status.clothes_color = 0;
 
 	if(!battle_config.save_body_style)
-		sd->status.body = 0;
+		sd->status.body = sd->status.class_;
 
 	//Only copy the Cart/Peco/Falcon options, the rest are handled via
 	//status change load/saving. [Skotlex]
@@ -2110,10 +2110,6 @@ bool pc_authok(map_session_data *sd, uint32 login_id2, time_t expiration_time, i
 	sd->status.hair = cap_value(sd->status.hair,MIN_HAIR_STYLE,MAX_HAIR_STYLE);
 	sd->status.hair_color = cap_value(sd->status.hair_color,MIN_HAIR_COLOR,MAX_HAIR_COLOR);
 	sd->status.clothes_color = cap_value(sd->status.clothes_color,MIN_CLOTH_COLOR,MAX_CLOTH_COLOR);
-
-	if( !job_db.exists( sd->status.body ) ){
-		sd->status.body = sd->status.class_;
-	}
 
 	//Initializations to null/0 unneeded since map_session_data was filled with 0 upon allocation.
 	sd->state.connect_new = 1;
@@ -11154,10 +11150,6 @@ void pc_changelook(map_session_data *sd,int32 type,int32 val) {
 		sd->setlook_robe = val;
 		break;
 	case LOOK_BODY2:
-		if( !job_db.exists( val ) ){
-			return;
-		}
-
 		sd->status.body = val;
 		break;
 	}
