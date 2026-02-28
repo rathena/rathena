@@ -8404,49 +8404,28 @@ void clif_pet_autofeed_status( const map_session_data* sd, bool force ) {
 }
 
 /// Presents a list of skills that can be auto-spelled.
+/// Skills are dynamically built from the player's known skills that have an
+/// AutoSpell: UnlockedAtLevel entry in skill_db.yml at or below the current SA_AUTOSPELL level.
 /// 01cd { <skill id>.L }*7 (ZC_AUTOSPELLLIST)
 void clif_autospell( map_session_data& sd, uint16 skill_lv ){
-	struct s_autospell_requirement{
-		uint16 skill_id;
-		uint16 required_autospell_skill_lv;
-	};
-
-#ifdef RENEWAL
-	 const std::vector<s_autospell_requirement> autospell_skills = {
-		{ MG_FIREBOLT, 0 },
-		{ MG_COLDBOLT, 0 },
-		{ MG_LIGHTNINGBOLT, 0 },
-		{ MG_SOULSTRIKE, 3 },
-		{ MG_FIREBALL, 3 },
-		{ WZ_EARTHSPIKE, 6 },
-		{ MG_FROSTDIVER, 6 },
-		{ MG_THUNDERSTORM, 9 },
-		{ WZ_HEAVENDRIVE, 9 }
-	};
-#else
-	const std::vector<s_autospell_requirement> autospell_skills = {
-		{ MG_NAPALMBEAT, 0 },
-		{ MG_COLDBOLT, 1 },
-		{ MG_FIREBOLT, 1 },
-		{ MG_LIGHTNINGBOLT, 1 },
-		{ MG_SOULSTRIKE, 4 },
-		{ MG_FIREBALL, 7 },
-		{ MG_FROSTDIVER, 9 },
-	};
-#endif
-
 #if PACKETVER_MAIN_NUM >= 20181128 || PACKETVER_RE_NUM >= 20181031
 	PACKET_ZC_AUTOSPELLLIST* p = reinterpret_cast<PACKET_ZC_AUTOSPELLLIST*>( packet_buffer );
 
-	p->packetType = HEADER_ZC_AUTOSPELLLIST;
+	p->packetType  = HEADER_ZC_AUTOSPELLLIST;
 	p->packetLength = sizeof( *p );
 
 	size_t count = 0;
-	for( const s_autospell_requirement& requirement : autospell_skills ){
-		if( skill_lv > requirement.required_autospell_skill_lv && pc_checkskill( &sd, requirement.skill_id ) ){
-			p->skills[count++] = requirement.skill_id;
-			p->packetLength += static_cast<decltype(p->packetLength)>( sizeof( p->skills[0] ) );
-		}
+	for( size_t i = 0; i < MAX_SKILL; i++ ){
+		uint16 sid = sd.status.skill[i].id;
+		if( !sid || !sd.status.skill[i].lv )
+			continue;
+		uint8 unlocked_at = skill_get_autospell_unlocked_at( sid );
+		if( !unlocked_at || unlocked_at > skill_lv )
+			continue;
+		if( !pc_checkskill( &sd, sid ) )
+			continue;
+		p->skills[count++] = sid;
+		p->packetLength += static_cast<decltype(p->packetLength)>( sizeof( p->skills[0] ) );
 	}
 
 	clif_send( p, p->packetLength, &sd, SELF );
@@ -8456,17 +8435,22 @@ void clif_autospell( map_session_data& sd, uint16 skill_lv ){
 	p.packetType = HEADER_ZC_AUTOSPELLLIST;
 
 	size_t count = 0;
-	for( const s_autospell_requirement& requirement : autospell_skills ){
-		if( count == ARRAYLENGTH( p.skills ) ){
+	for( size_t i = 0; i < MAX_SKILL; i++ ){
+		if( count == ARRAYLENGTH( p.skills ) )
 			break;
-		}
-
-		if( skill_lv > requirement.required_autospell_skill_lv && pc_checkskill( &sd, requirement.skill_id ) ){
-			p.skills[count++] = requirement.skill_id;
-		}else{
-			p.skills[count++] = 0;
-		}
+		uint16 sid = sd.status.skill[i].id;
+		if( !sid || !sd.status.skill[i].lv )
+			continue;
+		uint8 unlocked_at = skill_get_autospell_unlocked_at( sid );
+		if( !unlocked_at || unlocked_at > skill_lv )
+			continue;
+		if( !pc_checkskill( &sd, sid ) )
+			continue;
+		p.skills[count++] = sid;
 	}
+	// Zero-pad remaining slots so the client receives a full fixed-size packet
+	while( count < ARRAYLENGTH( p.skills ) )
+		p.skills[count++] = 0;
 
 	clif_send( &p, sizeof( p ), &sd, SELF );
 #endif
