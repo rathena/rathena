@@ -11999,6 +11999,10 @@ void clif_parse_TakeItem(int32 fd, map_session_data *sd)
 {
 	flooritem_data *fitem;
 	int32 map_object_id;
+	int32 skill_greed(block_list *bl, va_list ap);
+
+	//First we declare a variable that gets the return value
+	int32 debug_i = 0;
 
 	// TODO: shuffle packet
 	map_object_id = RFIFOL(fd,packet_db[RFIFOW(fd,0)].pos[0]);
@@ -12017,9 +12021,27 @@ void clif_parse_TakeItem(int32 fd, map_session_data *sd)
 		if (pc_cant_act(sd))
 			break;
 
-		if (!pc_takeitem(sd, fitem))
-			break;
+		
+		if (sd->state.arealoot) {
+			//Config in .\conf\import\battle_conf.txt
+			int range = battle_config.arealoot_range;
 
+			//Show range value in the console if need it
+			//ShowDebug("arealoot_range: %d\n", range);
+
+			//Now we give the variable
+			debug_i = map_foreachinrange(skill_greed, &sd->bl, range, BL_ITEM, &sd->bl);
+
+			//Now we print it to the map-server console so you can see what it is while playing
+			//ShowDebug("@arealoot commands, debug_i = %d\n", debug_i);
+			
+			//Give fail packet if no item was looted
+			if (debug_i != 0)
+				break;
+		} else {
+			if (!pc_takeitem(sd, fitem))
+				break;
+		} 
 		return;
 	} while (0);
 	// Client REQUIRES a fail packet or you can no longer pick items.

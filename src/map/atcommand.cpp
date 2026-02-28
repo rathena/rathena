@@ -11464,6 +11464,21 @@ ACMD_FUNC(macrochecker){
 	return 0;
 }
 
+/*==========================================
+ * @arealoot
+ *------------------------------------------*/
+ACMD_FUNC(arealoot) {
+    if (sd->state.arealoot) {
+        sd->state.arealoot = 0;
+        clif_displaymessage(sd->fd,"Arealoot is now disabled.");
+        return 0;
+    }
+
+    sd->state.arealoot = 1;
+    clif_displaymessage(sd->fd,"Arealoot is now enabled.");
+    return 0;
+}
+
 #include <custom/atcommand.inc>
 
 /**
@@ -11689,6 +11704,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(undisguiseall),
 		ACMD_DEF(disguiseall),
 		ACMD_DEF(changelook),
+		ACMD_DEF(arealoot),
 		ACMD_DEF(autoloot),
 		ACMD_DEF(autolootitem),
 		ACMD_DEF(autoloottype),

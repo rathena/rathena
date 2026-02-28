@@ -424,6 +424,7 @@ public:
 		uint32 changemap : 1;
 		uint32 callshop : 1; // flag to indicate that a script used callshop; on a shop
 		int16 pmap; // Previous map on Map Change
+		uint16 arealoot: 1;
 		uint16 autoloot;
 		t_itemid autolootid[AUTOLOOTITEM_SIZE]; // [Zephyrus]
 		uint16 autoloottype;
