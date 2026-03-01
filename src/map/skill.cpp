@@ -1525,11 +1525,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 			block_list *tbl = (it.flag & AUTOSPELL_FORCE_TARGET) ? bl : src;
 			e_cast_type type = skill_get_casttype(skill);
 
-			// Abyss Flame must use the no-damage path so both hits trigger.
-			if (skill == ABC_ABYSS_FLAME) {
-				type = CAST_NODAMAGE;
-			}
-
 			if (type == CAST_GROUND) {
 				if (!skill_pos_maxcount_check(src, tbl->x, tbl->y, skill, autospl_skill_lv, BL_PC, false))
 					continue;
@@ -1631,11 +1626,6 @@ int32 skill_onskillusage(map_session_data *sd, block_list *bl, uint16 skill_id, 
 			skill_lv = rnd_value<uint16>( 1, skill_lv ); //random skill_lv
 
 		e_cast_type type = skill_get_casttype(skill);
-
-		// Abyss Flame must use the no-damage path so both hits trigger.
-		if (skill == ABC_ABYSS_FLAME) {
-			type = CAST_NODAMAGE;
-		}
 
 		if (type == CAST_GROUND && !skill_pos_maxcount_check(sd, tbl->x, tbl->y, skill_id, skill_lv, BL_PC, false))
 			continue;
@@ -1872,11 +1862,6 @@ int32 skill_counter_additional_effect (block_list* src, block_list *bl, uint16 s
 
 			block_list *tbl = (it.flag & AUTOSPELL_FORCE_TARGET) ? src : bl;
 			e_cast_type type = skill_get_casttype(autospl_skill_id);
-
-			// Abyss Flame must use the no-damage path so both hits trigger.
-			if (skill_id == ABC_ABYSS_FLAME) {
-				type = CAST_NODAMAGE;
-			}
 
 			if (type == CAST_GROUND && !skill_pos_maxcount_check(bl, tbl->x, tbl->y, autospl_skill_id, autospl_skill_lv, BL_PC, false))
 					continue;

@@ -12,15 +12,15 @@
 SkillAbyssFlame::SkillAbyssFlame() : SkillImpl(ABC_ABYSS_FLAME) {
 }
 
-void SkillAbyssFlame::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	map_foreachinrange(skill_area_sub, src, skill_get_splash(getSkillId(), skill_lv), BL_CHAR | BL_SKILL, src, getSkillId(), skill_lv, tick, (flag | BCT_ENEMY | SD_SPLASH) & ~BCT_SELF, skill_castend_damage_id);
-	skill_castend_damage_id(src, target, ABC_ABYSS_FLAME_ATK, skill_lv, tick, flag);
-}
-
 void SkillAbyssFlame::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
-	clif_skill_damage(*src, *target, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, getSkillId(), skill_lv, DMG_SINGLE);
-	skill_attack(BF_MAGIC, src, src, target, getSkillId(), skill_lv, tick, flag);
+	if (flag & 1) {
+		clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
+		clif_skill_damage(*src, *target, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, getSkillId(), skill_lv, DMG_SINGLE);
+		skill_attack(BF_MAGIC, src, src, target, getSkillId(), skill_lv, tick, flag);
+	} else {
+		map_foreachinrange(skill_area_sub, src, skill_get_splash(getSkillId(), skill_lv), BL_CHAR | BL_SKILL, src, getSkillId(), skill_lv, tick, (flag | BCT_ENEMY | SD_SPLASH | 1 ) & ~BCT_SELF, skill_castend_damage_id);
+		skill_castend_damage_id(src, target, ABC_ABYSS_FLAME_ATK, skill_lv, tick, flag);
+	}
 }
 
 void SkillAbyssFlame::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& skillratio, int32 mflag) const {
