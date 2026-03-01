@@ -4,6 +4,7 @@
 #include "suckingblood.hpp"
 
 #include "map/clif.hpp"
+#include "map/status.hpp"
 
 SkillSuckingBlood::SkillSuckingBlood() : SkillImpl(NPC_BLOODDRAIN) {
 }
