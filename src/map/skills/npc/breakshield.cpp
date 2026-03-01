@@ -3,6 +3,8 @@
 
 #include "breakshield.hpp"
 
+#include "map/pc.hpp"
+
 SkillBreakShield::SkillBreakShield() : WeaponSkillImpl(NPC_SHIELDBRAKE) {
 }
 

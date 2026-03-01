@@ -3,6 +3,8 @@
 
 #include "breakhelm.hpp"
 
+#include "map/pc.hpp"
+
 SkillBreakHelm::SkillBreakHelm() : WeaponSkillImpl(NPC_HELMBRAKE) {
 }
 

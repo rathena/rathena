@@ -4,6 +4,7 @@
 #include "energydrain.hpp"
 
 #include "map/clif.hpp"
+#include "map/status.hpp"
 
 SkillEnergyDrain::SkillEnergyDrain() : SkillImpl(NPC_ENERGYDRAIN) {
 }
