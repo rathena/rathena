@@ -3,6 +3,8 @@
 
 #include "comet2.hpp"
 
+#include <common/utils.hpp>
+
 #include "map/pc.hpp"
 #include "map/status.hpp"
 
