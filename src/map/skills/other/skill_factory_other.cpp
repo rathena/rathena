@@ -3,7 +3,6 @@
 
 #include "skill_factory_other.hpp"
 
-
 #include "../skill_impl.hpp"
 
 // Include .cpp files into the TU to optimize compile time
@@ -47,7 +46,6 @@
 #include "sequoiadust.cpp"
 #include "snowflip.cpp"
 #include "summernightdream.cpp"
-#include "throwtomahawk.cpp"
 #include "weaponenchantment.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryOther::create(const e_skill skill_id) const {
@@ -119,7 +117,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryOther::create(const e_skill skill_i
 		case ITEM_ENCHANTARMS:
 			return std::make_unique<SkillWeaponEnchantment>();
 		case ITM_TOMAHAWK:
-			return std::make_unique<SkillThrowTomahawk>();
+			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case RETURN_TO_ELDICASTES:
 			return std::make_unique<SkillReturnToEldicastes>();
 		case WE_BABY:

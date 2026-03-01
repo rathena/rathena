@@ -3189,9 +3189,6 @@
     <ClInclude Include="skills/other/summernightdream.hpp">
       <Filter>Header Files\Skills\Other</Filter>
     </ClInclude>
-    <ClInclude Include="skills/other/throwtomahawk.hpp">
-      <Filter>Header Files\Skills\Other</Filter>
-    </ClInclude>
     <ClInclude Include="skills/other/weaponenchantment.hpp">
       <Filter>Header Files\Skills\Other</Filter>
     </ClInclude>
@@ -6909,9 +6906,6 @@
       <Filter>Source Files\Skills\Other</Filter>
     </ClCompile>
     <ClCompile Include="skills/other/summernightdream.cpp">
-      <Filter>Source Files\Skills\Other</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/other/throwtomahawk.cpp">
       <Filter>Source Files\Skills\Other</Filter>
     </ClCompile>
     <ClCompile Include="skills/other/weaponenchantment.cpp">

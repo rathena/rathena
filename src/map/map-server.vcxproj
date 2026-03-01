@@ -1178,7 +1178,6 @@
     <ClInclude Include="skills/other/skill_factory_other.hpp" />
     <ClInclude Include="skills/other/snowflip.hpp" />
     <ClInclude Include="skills/other/summernightdream.hpp" />
-    <ClInclude Include="skills/other/throwtomahawk.hpp" />
     <ClInclude Include="skills/other/weaponenchantment.hpp" />
     <ClInclude Include="skills/skill_factory.hpp" />
     <ClInclude Include="skills/skill_impl.hpp" />
@@ -4330,9 +4329,6 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/other/summernightdream.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="skills/other/throwtomahawk.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/other/weaponenchantment.cpp">
