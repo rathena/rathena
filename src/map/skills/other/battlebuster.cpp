@@ -7,6 +7,6 @@ SkillBattleBuster::SkillBattleBuster() : WeaponSkillImpl(ABR_BATTLE_BUSTER) {
 }
 
 void SkillBattleBuster::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {
-	// Need official formula.
+	// TODO: Need official formula.
 	base_skillratio += -100 + 8000;
 }

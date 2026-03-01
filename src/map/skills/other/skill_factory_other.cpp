@@ -5,6 +5,9 @@
 
 
 #include "../skill_impl.hpp"
+
+// Include .cpp files into the TU to optimize compile time
+// For reference see unity builds or amalgamated builds
 #include "baby.cpp"
 #include "battlebuster.cpp"
 #include "callallfamily.cpp"
