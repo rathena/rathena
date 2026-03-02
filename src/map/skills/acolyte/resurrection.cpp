@@ -25,9 +25,11 @@ void SkillResurrection::castendNoDamageId(block_list* src, block_list* target, u
 	map_session_data* sd = BL_CAST(BL_PC, src);
 	map_session_data* dstsd = BL_CAST(BL_PC, target);
 
-	if(sd && (map_flag_gvg2(target->m) || map_getmapflag(target->m, MF_BATTLEGROUND)))
+	if(map_flag_gvg2(target->m) || map_getmapflag(target->m, MF_BATTLEGROUND))
 	{	//No reviving in WoE grounds!
-		clif_skill_fail( *sd, getSkillId() );
+		if( sd != nullptr ){
+			clif_skill_fail( *sd, getSkillId() );
+		}
 		return;
 	}
 	if (!status_isdead(*target))
