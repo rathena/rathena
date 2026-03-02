@@ -260,6 +260,14 @@ struct PACKET_ZC_REPUTE_INFO{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_REPUTE_INFO, 0x0b8d)
 
+struct PACKET_ZC_REPUTE_OPEN {
+	int16 packetType;
+	uint64 table;
+	uint32 type;
+	uint32 mode;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_REPUTE_OPEN, 0x0b8e)
+
 struct PACKET_ZC_UI_OPEN_V3{
 	int16 packetType;
 	uint8 type;
