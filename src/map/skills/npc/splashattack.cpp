@@ -6,8 +6,8 @@
 SkillSplashAttack::SkillSplashAttack() : SkillImplRecursiveDamageSplash(NPC_SPLASHATTACK) {
 }
 
-void SkillSplashAttack::splashSearch(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
-	int32 sflag = flag | SD_PREAMBLE; // a fake packet will be sent for the first target to be hit
+void SkillSplashAttack::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
+	flag |= SD_PREAMBLE; // a fake packet will be sent for the first target to be hit
 
-	SkillImplRecursiveDamageSplash::splashSearch(src, target, skill_lv, tick, sflag);
+	SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
 }
