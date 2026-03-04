@@ -4384,34 +4384,52 @@ ACMD_FUNC(reloadskilldb){
 ACMD_FUNC(reloadscript){
 	nullpo_retr(-1, sd);
 
-	struct s_mapiterator* iter;
-	map_session_data* pl_sd;
-	//atcommand_broadcast( fd, sd, "@broadcast", "Server is reloading scripts..." );
-	//atcommand_broadcast( fd, sd, "@broadcast", "You will feel a bit of lag at this point !" );
+	// @reloadscript full  →  legacy wipe-and-reload (guaranteed clean slate) [jezztify]
+	// @reloadscript       →  delta reload (only changed/added/removed files) [jezztify]
+	bool full_reload = ( message[0] != '\0' && strcasecmp( message, "full" ) == 0 );
 
-	iter = mapit_getallusers();
-	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) ){
-		pc_close_npc(pl_sd,1);
-		clif_cutin( *pl_sd, "", 255 );
-		pl_sd->state.block_action &= ~(PCBLOCK_ALL ^ PCBLOCK_IMMUNE);
-		bg_queue_leave(pl_sd);
+	if( full_reload ){
+		struct s_mapiterator* iter;
+		map_session_data* pl_sd;
+
+		iter = mapit_getallusers();
+		for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) ){
+			pc_close_npc(pl_sd,1);
+			clif_cutin( *pl_sd, "", 255 );
+			pl_sd->state.block_action &= ~(PCBLOCK_ALL ^ PCBLOCK_IMMUNE);
+			bg_queue_leave(pl_sd);
+		}
+		mapit_free(iter);
+
+		for (auto &bg : bg_queues) {
+			for (auto &bg_sd : bg->teama_members)
+				bg_team_leave(bg_sd, false, false); // Kick Team A from battlegrounds
+			for (auto &bg_sd : bg->teamb_members)
+				bg_team_leave(bg_sd, false, false); // Kick Team B from battlegrounds
+			bg_queue_clear(bg, true);
+		}
+
+		flush_fifos();
+		map_reloadnpc(true); // reload config files seeking for npcs
+		script_reload();
+		npc_reload();
+
+		clif_displaymessage(fd, msg_txt(sd,100)); // Scripts have been reloaded.
+	} else {
+		// Delta reload: only re-parse files that changed on disk.
+		int32 mod = 0, add = 0, rem = 0;
+		npc_delta_reload( mod, add, rem );
+
+		char output[CHAT_SIZE_MAX];
+		if( mod == 0 && add == 0 && rem == 0 ){
+			safesnprintf( output, sizeof(output), "[Delta Reload] No script files were changed." );
+		} else {
+			safesnprintf( output, sizeof(output),
+				"[Delta Reload] Scripts reloaded: %d modified, %d added, %d removed.",
+				mod, add, rem );
+		}
+		clif_displaymessage( fd, output );
 	}
-	mapit_free(iter);
-
-	for (auto &bg : bg_queues) {
-		for (auto &bg_sd : bg->teama_members)
-			bg_team_leave(bg_sd, false, false); // Kick Team A from battlegrounds
-		for (auto &bg_sd : bg->teamb_members)
-			bg_team_leave(bg_sd, false, false); // Kick Team B from battlegrounds
-		bg_queue_clear(bg, true);
-	}
-
-	flush_fifos();
-	map_reloadnpc(true); // reload config files seeking for npcs
-	script_reload();
-	npc_reload();
-
-	clif_displaymessage(fd, msg_txt(sd,100)); // Scripts have been reloaded.
 
 	return 0;
 }

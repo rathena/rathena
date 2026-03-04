@@ -4,6 +4,7 @@
 #ifndef DATABASE_HPP
 #define DATABASE_HPP
 
+#include <filesystem>
 #include <unordered_map>
 #include <vector>
 
@@ -24,6 +25,9 @@ private:
 	uint16 minimumVersion;
 	std::string currentFile;
 	bool shouldLoadGenerator{false};
+
+	bool is_delta_mode{ false };
+	std::unordered_map<std::string, std::filesystem::file_time_type> file_mtimes;
 
 	bool verifyCompatibility( const ryml::Tree& rootNode );
 	bool load( const std::string& path );
@@ -61,6 +65,8 @@ protected:
 
 	virtual void loadingFinished();
 
+	virtual void eraseByPath( const std::string& path ) {}
+
 public:
 	YamlDatabase( const std::string& type_, uint16 version_, uint16 minimumVersion_ ){
 		this->type = type_;
@@ -74,6 +80,7 @@ public:
 
 	bool load();
 	bool reload();
+	bool delta_reload();
 
 	// Functions that need to be implemented for each type
 	virtual void clear() = 0;
@@ -84,6 +91,7 @@ public:
 template <typename keytype, typename datatype> class TypesafeYamlDatabase : public YamlDatabase{
 protected:
 	std::unordered_map<keytype, std::shared_ptr<datatype>> data;
+	std::unordered_map<keytype, std::string> keySourceFile;
 
 public:
 	TypesafeYamlDatabase( const std::string& type_, uint16 version_, uint16 minimumVersion_ ) : YamlDatabase( type_, version_, minimumVersion_ ){
@@ -94,6 +102,7 @@ public:
 
 	void clear() override{
 		this->data.clear();
+		this->keySourceFile.clear();
 	}
 
 	bool empty(){
@@ -120,6 +129,19 @@ public:
 
 	virtual void put( keytype key, std::shared_ptr<datatype> ptr ){
 		this->data[key] = ptr;
+		this->keySourceFile[key] = this->getCurrentFile();
+	}
+
+	void eraseByPath( const std::string& path ) override{
+		std::vector<keytype> toRemove;
+		for( auto& [key, src] : this->keySourceFile ){
+			if( src == path )
+				toRemove.push_back( key );
+		}
+		for( auto& key : toRemove ){
+			this->erase( key );
+			this->keySourceFile.erase( key );
+		}
 	}
 
 	typename std::unordered_map<keytype, std::shared_ptr<datatype>>::iterator begin(){

@@ -4225,6 +4225,8 @@ void map_reloadnpc_sub(const char *cfgName)
 		return;
 	}
 
+	npc_record_conf_mtime( cfgName );
+
 	while( fgets(line, sizeof(line), fp) )
 	{
 		char* ptr;

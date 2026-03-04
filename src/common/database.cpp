@@ -3,6 +3,7 @@
 
 #include "database.hpp"
 
+#include <filesystem>
 #include <iostream>
 #include <sstream>
 
@@ -84,12 +85,30 @@ bool YamlDatabase::load(){
 }
 
 bool YamlDatabase::reload(){
+	this->file_mtimes.clear();
 	this->clear();
 
 	return this->load();
 }
 
 bool YamlDatabase::load(const std::string& path) {
+	// Delta-reload fast path [jezztify]
+	// If we are in delta mode, check whether this file has changed since the
+	// last time it was loaded.  If the mtime is identical, skip re-parsing
+	// entirely and return immediately so unchanged imports are also skipped.
+	if( this->is_delta_mode ){
+		auto it = this->file_mtimes.find( path );
+		if( it != this->file_mtimes.end() ){
+			std::error_code ec;
+			auto current_mtime = std::filesystem::last_write_time( path, ec );
+			if( !ec && current_mtime == it->second ){
+				return true; // Unchanged – skip entirely
+			}
+		}
+		// New file (not yet tracked): fall through to normal load
+	}
+
+
 	ShowStatus("Loading '" CL_WHITE "%s" CL_RESET "'..." CL_CLL "\r", path.c_str());
 	FILE* f = fopen(path.c_str(), "r");
 	if (f == nullptr) {
@@ -127,9 +146,14 @@ bool YamlDatabase::load(const std::string& path) {
 		return false;
 	}
 
+	// Delta-reload atomic swap [jezztify]
+	if( this->is_delta_mode ){
+		this->eraseByPath( path );
+	}
+
 	const ryml::NodeRef& header = tree["Header"];
 
-	if( this->nodeExists( header, "Clear" ) ){
+	if( !this->is_delta_mode && this->nodeExists( header, "Clear" ) ){
 		bool clear;
 
 		if( this->asBool( header, "Clear", clear ) && clear ){
@@ -137,9 +161,15 @@ bool YamlDatabase::load(const std::string& path) {
 		}
 	}
 
+
 	this->parse( tree );
 
 	this->parseImports( tree );
+
+	std::error_code ec;
+	auto mtime = std::filesystem::last_write_time( path, ec );
+	if( !ec )
+		this->file_mtimes[path] = mtime;
 
 	aFree(buf);
 	return true;
@@ -381,6 +411,61 @@ std::string YamlDatabase::getCurrentFile(){
 
 void YamlDatabase::setGenerator(bool shouldLoad) {
 	shouldLoadGenerator = shouldLoad;
+}
+
+bool YamlDatabase::delta_reload(){
+	namespace fs = std::filesystem;
+
+	// Phase 1: remove entries for files that no longer exist on disk 
+	std::vector<std::string> removed;
+	for( const auto& [path, mtime] : this->file_mtimes ){
+		std::error_code ec;
+		if( !fs::exists( path, ec ) || ec ){
+			removed.push_back( path );
+		}
+	}
+	for( const auto& path : removed ){
+		this->eraseByPath( path );
+		this->file_mtimes.erase( path );
+	}
+
+	// Phase 2: reload every modified tracked file (including imports) 
+	// We iterate file_mtimes directly rather than only starting from the root,
+	// so that a changed import whose parent file is unchanged is still caught.
+	//
+	// In delta mode, load(path) will:
+	//   a) Skip the file entirely if mtime is still current.
+	//   b) Verify the new content, then atomically swap (eraseByPath + parse).
+	//
+	// We collect modified paths before iterating to avoid invalidating the
+	// map if load() inserts new import entries into file_mtimes.
+	std::vector<std::string> to_reload;
+	to_reload.reserve( this->file_mtimes.size() );
+	for( const auto& [path, mtime] : this->file_mtimes ){
+		std::error_code ec;
+		auto curr = fs::last_write_time( path, ec );
+		if( !ec && curr != mtime )
+			to_reload.push_back( path );
+	}
+
+	this->is_delta_mode = true;
+
+	struct DeltaScope {
+		bool& flag;
+		explicit DeltaScope( bool& f ) : flag( f ) {}
+		~DeltaScope() { flag = false; }
+	} delta_scope( this->is_delta_mode );
+
+	for( const auto& path : to_reload ){
+		this->load( path );
+	}
+
+	bool ret = this->load( this->getDefaultLocation() );
+
+	this->is_delta_mode = false;
+
+	this->loadingFinished();
+	return ret;
 }
 
 void on_yaml_error( const char* msg, size_t len, ryml::Location loc, void *user_data ){

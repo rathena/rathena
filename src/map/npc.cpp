@@ -5,7 +5,9 @@
 
 #include <cerrno>
 #include <cstdlib>
+#include <filesystem>
 #include <map>
+#include <unordered_set>
 #include <vector>
 
 #include <common/cbasetypes.hpp>
@@ -41,6 +43,16 @@ npc_data* fake_nd;
 
 
 std::vector<std::string> npc_src_files;
+
+static std::unordered_map<std::string, std::filesystem::file_time_type> npc_file_mtimes;
+static std::unordered_map<std::string, std::filesystem::file_time_type> npc_conf_mtimes;
+
+void npc_record_conf_mtime( const char* path ){
+	std::error_code ec;
+	auto mtime = std::filesystem::last_write_time( path, ec );
+	if( !ec )
+		npc_conf_mtimes[path] = mtime;
+}
 
 static int32 npc_id=START_NPC_NUM;
 static int32 npc_warp=0;
@@ -5818,6 +5830,14 @@ int32 npc_parsesrcfile(const char* filepath)
 	}
 	aFree(buffer);
 
+	// Record mtime so npc_delta_reload() can detect future changes to this file. [jezztify]
+	{
+		std::error_code ec;
+		auto mtime = std::filesystem::last_write_time( filepath, ec );
+		if( !ec )
+			npc_file_mtimes[filepath] = mtime;
+	}
+
 	return 1;
 }
 
@@ -6063,6 +6083,8 @@ int32 npc_reload(void) {
 	/* clear guild flag cache */
 	guild_flags_clear();
 
+	npc_file_mtimes.clear();
+
 	npc_clear_pathlist();
 
 	db_clear(npc_path_db);
@@ -6152,27 +6174,193 @@ int32 npc_reload(void) {
 	return 0;
 }
 
-//Unload all npc in the given file
-bool npc_unloadfile( const char* path ) {
-	DBIterator * iter = db_iterator(npcname_db);
-	npc_data* nd = nullptr;
-	bool found = false;
+/**
+ * Performs an incremental reload of changed NPC source files. [jezztify]
+ *
+ * Phase 1 (Unload)
+ * Phase 2 (Reload)
+ *
+ * Note: if a file fails to parse AFTER being unloaded, the NPCs it defined
+ *   are lost until the next successful reload. For a guaranteed clean state
+ *   use npc_reload() via \@reloadscript full.
+ *
+ * @param[out] modified  Number of modified files reloaded
+ * @param[out] added     Number of new files loaded
+ * @param[out] removed   Number of removed files unloaded
+ */
+void npc_delta_reload( int32& modified, int32& added, int32& removed )
+{
+	namespace fs = std::filesystem;
+	modified = added = removed = 0;
 
-	for( nd = (npc_data*)dbi_first(iter); dbi_exists(iter); nd = (npc_data*)dbi_next(iter) ) {
-		if( nd->path && strcasecmp(nd->path,path) == 0 ) {
-			found = true;
-			npc_unload_duplicates(nd);/* unload any npcs which could duplicate this but be in a different file */
-			npc_unload(nd, true);
+	std::vector<std::string> modified_files, removed_files, added_files;
+
+	// Phase 0: Re-parse .conf files if any changed 
+	{
+		std::vector<std::string> changed_confs;
+		for( const auto& [path, mtime] : npc_conf_mtimes ){
+			std::error_code ec;
+			auto curr = fs::last_write_time( path, ec );
+			if( !ec && curr != mtime )
+				changed_confs.push_back( path );
+		}
+
+		if( !changed_confs.empty() ){
+			ShowStatus( "Script conf changed (%d file(s)) - rebuilding NPC file list:\n", (int32)changed_confs.size() );
+			for( const auto& cp : changed_confs )
+				ShowStatus( "  -- %s\n", cp.c_str() );
+
+			std::vector<std::string> old_src = npc_src_files;
+			map_reloadnpc( true );
+			for( const auto& old_path : old_src ){
+				if( !util::vector_exists( npc_src_files, old_path ) ){
+					// Only queue if the file was actually loaded and tracked.
+					if( npc_file_mtimes.find( old_path ) != npc_file_mtimes.end() )
+						removed_files.push_back( old_path );
+				}
+			}
+		}
+	}
+	// -------------------------------------------------------------------------
+
+	std::unordered_set<std::string> pre_removed( removed_files.begin(), removed_files.end() );
+
+	for( const auto& [path, mtime] : npc_file_mtimes ){
+		if( pre_removed.count( path ) ) continue;
+		std::error_code ec;
+		if( !fs::exists( path, ec ) || ec ){
+			removed_files.push_back( path );
+		} else {
+			auto current_mtime = fs::last_write_time( path, ec );
+			if( !ec && current_mtime != mtime )
+				modified_files.push_back( path );
 		}
 	}
 
-	dbi_destroy(iter);
+	// Detect files in npc_src_files not yet tracked (added since last load).
+	for( const auto& file : npc_src_files ){
+		if( npc_file_mtimes.find( file ) == npc_file_mtimes.end() &&
+		    !pre_removed.count( file ) )
+			added_files.push_back( file );
+	}
+
+	removed  = (int32)removed_files.size();
+	modified = 0;
+	added    = 0;
+
+	if( (int32)removed_files.size() == 0 && modified_files.empty() && added_files.empty() )
+		return; // Nothing changed; skip all work.
+
+	// Print a summary of what changed before doing any work.
+	if( !modified_files.empty() ){
+		ShowStatus( "Delta reload: %d modified NPC file(s):\n", (int32)modified_files.size() );
+		for( const auto& p : modified_files )
+			ShowStatus( "  M  %s\n", p.c_str() );
+	}
+	if( !added_files.empty() ){
+		ShowStatus( "Delta reload: %d added NPC file(s):\n", (int32)added_files.size() );
+		for( const auto& p : added_files )
+			ShowStatus( "  +  %s\n", p.c_str() );
+	}
+	if( !removed_files.empty() ){
+		ShowStatus( "Delta reload: %d removed NPC file(s):\n", (int32)removed_files.size() );
+		for( const auto& p : removed_files )
+			ShowStatus( "  -  %s\n", p.c_str() );
+	}
+
+	// Phase 1: UNLOAD all affected files BEFORE any reloading
+	std::vector<std::string> affected;
+	affected.insert( affected.end(), removed_files.begin(),  removed_files.end()  );
+	affected.insert( affected.end(), modified_files.begin(), modified_files.end() );
+
+	// Disconnect only players whose active NPC dialog was opened from an
+	// affected file; all other players continue uninterrupted.
+	{
+		s_mapiterator* iter = mapit_getallusers();
+		for( map_session_data* pl_sd = (TBL_PC*)mapit_first( iter );
+		     mapit_exists( iter );
+		     pl_sd = (TBL_PC*)mapit_next( iter ) )
+		{
+			if( pl_sd->npc_id == 0 )
+				continue;
+			npc_data* nd = (npc_data*)map_id2bl( pl_sd->npc_id );
+			if( nd != nullptr && nd->path != nullptr ){
+				for( const auto& ap : affected ){
+					if( strcasecmp( nd->path, ap.c_str() ) == 0 ){
+						pc_close_npc( pl_sd, 1 );
+						clif_cutin( *pl_sd, "", 255 );
+						break;
+					}
+				}
+			}
+		}
+		mapit_free( iter );
+	}
+
+	for( const auto& path : removed_files ){
+		bool r = npc_unloadfile( path.c_str(), false );
+		if( !r )
+			ShowWarning( "npc_delta_reload: remove '%s' - no NPCs matched path (already unloaded?).\n", path.c_str() );
+		npc_file_mtimes.erase( path );
+	}
+
+	for( const auto& path : modified_files ){
+		bool r = npc_unloadfile( path.c_str(), false );
+		if( !r )
+			ShowWarning( "npc_delta_reload: unload '%s' - no NPCs matched path (file may already be empty).\n", path.c_str() );
+	}
+
+	// Phase 2: RELOAD modified and added files
+	for( const auto& path : modified_files ){
+		if( check_filepath( path.c_str() ) != 2 ){
+			ShowWarning( "npc_delta_reload: '%s' disappeared before reload. NPC removed.\n", path.c_str() );
+			npc_file_mtimes.erase( path );
+			continue;
+		}
+		npc_addsrcfile( path.c_str(), false );
+		if( npc_parsesrcfile( path.c_str() ) ){
+			npc_event_doall_path( script_config.init_event_name, path.c_str() );
+			modified++;
+		} else {
+			ShowWarning( "npc_delta_reload: Failed to parse '%s'. NPCs from this file were removed.\n", path.c_str() );
+		}
+	}
+
+	for( const auto& path : added_files ){
+		if( npc_parsesrcfile( path.c_str() ) ){
+			npc_event_doall_path( script_config.init_event_name, path.c_str() );
+			added++;
+		} else {
+			ShowWarning( "npc_delta_reload: Failed to parse new file '%s'. NPC not loaded.\n", path.c_str() );
+		}
+	}
+
+	npc_read_event_script();
+}
+
+//Unload all npc in the given file
+bool npc_unloadfile( const char* path, bool rebuild_event_cache ) {
+	std::vector<npc_data*> to_unload;
+	{
+		DBIterator* iter = db_iterator(npcname_db);
+		for( npc_data* nd = (npc_data*)dbi_first(iter); dbi_exists(iter); nd = (npc_data*)dbi_next(iter) ) {
+			if( nd->path && strcasecmp(nd->path,path) == 0 )
+				to_unload.push_back(nd);
+		}
+		dbi_destroy(iter);
+	}
+
+	bool found = !to_unload.empty();
+	for( npc_data* nd : to_unload ) {
+		npc_unload_duplicates(nd);/* unload any npcs which could duplicate this but be in a different file */
+		npc_unload(nd, true);
+	}
 
 	if(npc_remove_mob_spawns( path )){
 		found = true;
 	}
 
-	if( found ) /* refresh event cache */
+	if( found && rebuild_event_cache ) /* refresh event cache */
 		npc_read_event_script();
 
 	npc_delsrcfile(path);

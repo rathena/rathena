@@ -1675,6 +1675,8 @@ int32 npc_remove_map(npc_data* nd);
 void npc_unload_duplicates (npc_data* nd);
 int32 npc_unload(npc_data* nd, bool single);
 int32 npc_reload(void);
+void npc_delta_reload( int32& modified, int32& added, int32& removed );
+void npc_record_conf_mtime( const char* path );
 void npc_read_event_script(void);
 size_t npc_script_event( map_session_data& sd, enum npce_event type );
 
@@ -1702,7 +1704,9 @@ void npc_market_delfromsql_(const char *exname, t_itemid nameid, bool clear);
 // @commands (script-based)
 int32 npc_do_atcmd_event(map_session_data* sd, const char* command, const char* message, const char* eventname);
 
-bool npc_unloadfile( const char* path );
+// Pass rebuild_event_cache=false when calling in a batch (e.g. npc_delta_reload)
+// so the event-label table is rebuilt once at the end rather than N times.
+bool npc_unloadfile( const char* path, bool rebuild_event_cache = true );
 bool npc_remove_mob_spawns(const char* path);
 
 #endif /* NPC_HPP */

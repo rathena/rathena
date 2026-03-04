@@ -1465,7 +1465,7 @@ This will also send a packet to clients causing them to close.
 @reloadmsgconf
 @reloadpcdb
 @reloadquestdb
-@reloadscript
+@reloadscript [full]
 @reloadskilldb
 @reloadstatusdb
 @reloadachievementdb
@@ -1473,6 +1473,13 @@ This will also send a packet to clients causing them to close.
 @reloadbarterdb
 
 Reloads a database or configuration file.
+
+@reloadscript performs a fast delta reload by default: only NPC script files
+  (.txt) whose on-disk modification time changed since the last load are
+  re-parsed. Only players whose active NPC dialog belongs to a changed file
+  are disconnected; other players continue unaffected.
+  Use "@reloadscript full" to force a complete wipe-and-reload of all scripts,
+  which also fires all OnInit events globally (the legacy behavior).
 
 Databases:
 -- instancedb: Instance Database
