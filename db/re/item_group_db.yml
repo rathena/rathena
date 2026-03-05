@@ -133096,6 +133096,7 @@ Body:
   - Group: SPENDID_CAPE_BR
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Mora_Mandarin
