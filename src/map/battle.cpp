@@ -4634,14 +4634,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 		case HFLI_SBR44: //[orn]
 			skillratio += 100 * (skill_lv - 1);
 			break;
-		case ABR_BATTLE_BUSTER:// Need official formula.
-		case ABR_DUAL_CANNON_FIRE:// Need official formula.
-			skillratio += -100 + 8000;
-			break;
-		case ABR_INFINITY_BUSTER:// Need official formula.
-			skillratio += -100 + 50000;
-			break;
-
 		case SKE_ALL_IN_THE_SKY:
 			// TODO: refactor
 			if (status_get_race(target) == RC_DEMIHUMAN || status_get_race(target) == RC_DEMON)
