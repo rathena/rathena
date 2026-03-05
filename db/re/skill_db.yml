@@ -45810,7 +45810,6 @@ Body:
     Type: Magic
     TargetType: Attack
     DamageFlags:
-      NoDamage: true
       Splash: true
     Range: 9
     Hit: Multi_Hit
@@ -46072,7 +46071,6 @@ Body:
     Hit: Multi_Hit
     HitCount: 5
     Element: Fire
-    GiveAp: 2
     SplashArea:
       - Level: 1
         Area: 2
