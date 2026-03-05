@@ -45,12 +45,6 @@
 
 std::unique_ptr<const SkillImpl> SkillFactoryMercenary::create(const e_skill skill_id) const {
 	switch( skill_id ){
-		case ABR_BATTLE_BUSTER:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
-		case ABR_DUAL_CANNON_FIRE:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
-		case ABR_INFINITY_BUSTER:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case MA_CHARGEARROW:
 			return std::make_unique<SkillMercenaryArrowRepel>();
 		case MA_DOUBLE:
