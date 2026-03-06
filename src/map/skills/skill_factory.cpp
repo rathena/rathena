@@ -25,6 +25,7 @@
 #include "./npc/skill_factory_npc.cpp"
 #include "./ninja/skill_factory_ninja.cpp"
 #include "./novice/skill_factory_novice.cpp"
+#include "./other/skill_factory_other.cpp"
 #include "./summoner/skill_factory_summoner.cpp"
 #include "./swordman/skill_factory_swordman.cpp"
 #include "./taekwon/skill_factory_taekwon.cpp"
@@ -46,6 +47,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryImpl::create(const e_skill skill_id
 		std::make_shared<SkillFactoryNinja>(),
 		std::make_shared<SkillFactoryNpc>(),
 		std::make_shared<SkillFactoryNovice>(),
+		std::make_shared<SkillFactoryOther>(),
 		std::make_shared<SkillFactorySummoner>(),
 		std::make_shared<SkillFactorySwordman>(),
 		std::make_shared<SkillFactoryTaekwon>(),
