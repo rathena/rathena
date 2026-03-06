@@ -4628,12 +4628,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 	}
 
 	switch(skill_id) {
-		case HFLI_MOON: //[orn]
-			skillratio += 10 + 110 * skill_lv;
-			break;
-		case HFLI_SBR44: //[orn]
-			skillratio += 100 * (skill_lv - 1);
-			break;
 		case SKE_ALL_IN_THE_SKY:
 			// TODO: refactor
 			if (status_get_race(target) == RC_DEMIHUMAN || status_get_race(target) == RC_DEMON)
@@ -6365,12 +6359,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						if (sd && ad.div_ > 0)
 							ad.div_ *= -1; //For players, damage is divided by number of hits
 						break;
-#ifdef RENEWAL
-					case HW_GRAVITATION:
-						skillratio += -100 + 100 * skill_lv;
-						RE_LVL_DMOD(100);
-						break;
-#endif
 					case HN_GROUND_GRAVITATION:
 						if (mflag & SKILL_ALTDMG_FLAG) {
 							// Initial damage
