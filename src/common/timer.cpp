@@ -5,11 +5,13 @@
 
 #include <cstdlib>
 #include <cstring>
+#include <chrono>
 #include <utility>
 
 #include "cbasetypes.hpp"
 #include "db.hpp"
 #include "malloc.hpp"
+#include "metrics.hpp"
 #include "nullpo.hpp"
 #include "showmsg.hpp"
 #include "utils.hpp"
@@ -356,6 +358,8 @@ t_tick settick_timer(int32 tid, t_tick tick)
 /// Returns the value of the smallest non-expired timer (or 1 second if there aren't any).
 t_tick do_timer(t_tick tick)
 {
+	const auto loop_start = std::chrono::steady_clock::now();
+	uint64_t callbacks = 0;
 	t_tick diff = TIMER_MAX_INTERVAL; // return value
 
 	// process all timers one by one
@@ -373,11 +377,17 @@ t_tick do_timer(t_tick tick)
 
 		if( timer_data[tid].func )
 		{
+			TimerFunc callback_func = timer_data[tid].func;
+			const auto callback_start = std::chrono::steady_clock::now();
 			if( diff < -1000 )
 				// timer was delayed for more than 1 second, use current tick instead
-				timer_data[tid].func(tid, tick, timer_data[tid].id, timer_data[tid].data);
+				callback_func(tid, tick, timer_data[tid].id, timer_data[tid].data);
 			else
-				timer_data[tid].func(tid, timer_data[tid].tick, timer_data[tid].id, timer_data[tid].data);
+				callback_func(tid, timer_data[tid].tick, timer_data[tid].id, timer_data[tid].data);
+
+			const auto callback_elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>( std::chrono::steady_clock::now() - callback_start );
+			rathena::metrics::observe_duration_ns( "server_timer_callback", static_cast<uint64_t>( callback_elapsed.count() ), "name", search_timer_func_list( callback_func ) );
+			callbacks++;
 		}
 
 		// in the case the function didn't change anything...
@@ -407,6 +417,13 @@ t_tick do_timer(t_tick tick)
 			}
 		}
 	}
+
+	rathena::metrics::counter_inc( "server_timer_cycles" );
+	if( callbacks > 0 ){
+		rathena::metrics::counter_inc( "server_timer_callbacks", callbacks );
+	}
+	const auto loop_elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>( std::chrono::steady_clock::now() - loop_start );
+	rathena::metrics::observe_duration_ns( "server_timer_process", static_cast<uint64_t>( loop_elapsed.count() ) );
 
 	return cap_value(diff, TIMER_MIN_INTERVAL, TIMER_MAX_INTERVAL);
 }
