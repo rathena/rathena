@@ -7397,6 +7397,7 @@
 	export_constant(IG_SELECT_DEC_PACK1);
 	export_constant(IG_SELECT_DEC_PACK2);
 	export_constant(IG_SELECT_DEC_PACK3);
+	export_constant(IG_SPENDID_CAPE_BR);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
