@@ -133093,3 +133093,44 @@ Body:
           - Index: 4
             Item: aegis_105836
             Amount: 10
+  - Group: SPENDID_CAPE_BR
+    SubGroups:
+      - SubGroup: 1
+        Algorithm: Random
+        List:
+          - Index: 0
+            Item: Mora_Mandarin
+            Rate: 200
+          - Index: 1
+            Item: Pingui_Berry_Juice
+            Rate: 200
+          - Index: 2
+            Item: Red_Raffle_Sap
+            Rate: 200
+          - Index: 3
+            Item: Yellow_Raffle_Sap
+            Rate: 200
+          - Index: 4
+            Item: White_Raffle_Sap
+            Rate: 200
+          - Index: 5
+            Item: Mora_Hip_Tea
+            Rate: 200
+          - Index: 6
+            Item: Rafflecino
+            Rate: 200
+          - Index: 7
+            Item: Mora_Berry
+            Rate: 200
+          - Index: 8
+            Item: Snow_Flip
+            Rate: 200
+          - Index: 9
+            Item: Peony_Mommy
+            Rate: 200
+          - Index: 10
+            Item: Slapping_Herb
+            Rate: 200
+          - Index: 11
+            Item: Yggdrasil_Dust
+            Rate: 200
