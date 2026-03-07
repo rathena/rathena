@@ -13,6 +13,15 @@
 SkillHesperusLit::SkillHesperusLit() : WeaponSkillImpl(LG_HESPERUSLIT) {
 }
 
+void SkillHesperusLit::applyCounterAdditionalEffects(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& attack_type) const {
+	if (status_change* sc = status_get_sc(src); sc != nullptr && sc->hasSCE(SC_FORCEOFVANGUARD)) {
+		map_session_data* sd = BL_CAST(BL_PC, src);
+
+		for (int32 i = 0; i < sc->getSCE(SC_FORCEOFVANGUARD)->val3; i++)
+			pc_addspiritball(sd, skill_get_time(LG_FORCEOFVANGUARD, 1), sc->getSCE(SC_FORCEOFVANGUARD)->val3);
+	}
+}
+
 void SkillHesperusLit::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& skillratio, int32 mflag) const {
 	const status_change* sc = status_get_sc(src);
 	const status_data* sstatus = status_get_status_data(*src);
