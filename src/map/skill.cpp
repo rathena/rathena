@@ -5034,52 +5034,60 @@ TIMER_FUNC(skill_castend_id){
 #endif
 		if( sd )
 		{
-			if( !skill_check_condition_castend(*sd, ud->skill_id, ud->skill_lv) )
-				break;
-			else {
-				skill_consume_requirement(sd,ud->skill_id,ud->skill_lv,1);
+			uint16 current_skill_id = ud->skill_id;
 
-				int32 add_ap = skill_get_giveap( ud->skill_id, ud->skill_lv );
+			switch (ud->skill_id) {
+				case SU_LUNATICCARROTBEAT:
+					if (skill_check_condition_castend(*sd, SU_LUNATICCARROTBEAT2, ud->skill_lv))
+						ud->skill_id = SU_LUNATICCARROTBEAT2;
+					break;
+			}
 
-				// Give AP
-				if (add_ap > 0) {
-					switch (ud->skill_id) {
-						case TR_ROSEBLOSSOM:
-						case TR_RHYTHMSHOOTING:
-						case TR_METALIC_FURY: // Don't know the official increase. For now lets do up to 50% increase.
-						case TR_SOUNDBLEND: // Retrospection does the same for song skills. [Rytech]
-							add_ap += add_ap * (10 * pc_checkskill(sd, TR_STAGE_MANNER)) / 100;
-							break;
-						case TR_GEF_NOCTURN:
-						case TR_ROKI_CAPRICCIO:
-						case TR_AIN_RHAPSODY:
-						case TR_MUSICAL_INTERLUDE:
-						case TR_JAWAII_SERENADE:
-						case TR_NIPELHEIM_REQUIEM:
-						case TR_PRON_MARCH:
-							if (sd->skill_id_old == TR_RETROSPECTION) {
-								add_ap += add_ap * 50 / 100;
-								sd->skill_id_old = ud->skill_id; // Prevents AP bonus on non Retro Spection use.
-							}
-							break;
-						case WH_CRESCIVE_BOLT:
-							if (sc && sc->getSCE(SC_CRESCIVEBOLT) && sc->getSCE(SC_CRESCIVEBOLT)->val1 >= 3) {
-								add_ap += 2;
-							}
-							break;
-						case SH_HYUN_ROK_CANNON:
-							if( pc_checkskill( sd, SH_COMMUNE_WITH_HYUN_ROK ) > 0 || ( sc != nullptr && sc->getSCE( SC_TEMPORARY_COMMUNION ) != nullptr ) )
-								add_ap += 1;
-							break;
-					}
+			if (ud->skill_id != current_skill_id) {
+				if (!skill_check_condition_castend(*sd, ud->skill_id, ud->skill_lv))
+					break;
+			}
 
-					status_heal(sd, 0, 0, add_ap, 0);
+			skill_consume_requirement(sd,ud->skill_id,ud->skill_lv,1);
+
+			// Give AP
+			if (int32 add_ap = skill_get_giveap( ud->skill_id, ud->skill_lv ); add_ap > 0) {
+				switch (ud->skill_id) {
+					case TR_ROSEBLOSSOM:
+					case TR_RHYTHMSHOOTING:
+					case TR_METALIC_FURY: // Don't know the official increase. For now lets do up to 50% increase.
+					case TR_SOUNDBLEND: // Retrospection does the same for song skills. [Rytech]
+						add_ap += add_ap * (10 * pc_checkskill(sd, TR_STAGE_MANNER)) / 100;
+						break;
+					case TR_GEF_NOCTURN:
+					case TR_ROKI_CAPRICCIO:
+					case TR_AIN_RHAPSODY:
+					case TR_MUSICAL_INTERLUDE:
+					case TR_JAWAII_SERENADE:
+					case TR_NIPELHEIM_REQUIEM:
+					case TR_PRON_MARCH:
+						if (sd->skill_id_old == TR_RETROSPECTION) {
+							add_ap += add_ap * 50 / 100;
+							sd->skill_id_old = ud->skill_id; // Prevents AP bonus on non Retro Spection use.
+						}
+						break;
+					case WH_CRESCIVE_BOLT:
+						if (sc && sc->getSCE(SC_CRESCIVEBOLT) && sc->getSCE(SC_CRESCIVEBOLT)->val1 >= 3) {
+							add_ap += 2;
+						}
+						break;
+					case SH_HYUN_ROK_CANNON:
+						if( pc_checkskill( sd, SH_COMMUNE_WITH_HYUN_ROK ) > 0 || ( sc != nullptr && sc->getSCE( SC_TEMPORARY_COMMUNION ) != nullptr ) )
+							add_ap += 1;
+						break;
 				}
 
-				if (src != target && (status_bl_has_mode(target,MD_SKILLIMMUNE) || (status_get_class(target) == MOBID_EMPERIUM && !skill_get_inf2(ud->skill_id, INF2_TARGETEMPERIUM))) && skill_get_casttype(ud->skill_id) == CAST_DAMAGE) {
-					clif_skill_fail( *sd, ud->skill_id );
-					break; // Show a skill fail message (Damage type consumes requirements)
-				}
+				status_heal(sd, 0, 0, add_ap, 0);
+			}
+
+			if (src != target && (status_bl_has_mode(target,MD_SKILLIMMUNE) || (status_get_class(target) == MOBID_EMPERIUM && !skill_get_inf2(ud->skill_id, INF2_TARGETEMPERIUM))) && skill_get_casttype(ud->skill_id) == CAST_DAMAGE) {
+				clif_skill_fail( *sd, ud->skill_id );
+				break; // Show a skill fail message (Damage type consumes requirements)
 			}
 		}
 
@@ -5324,26 +5332,36 @@ TIMER_FUNC(skill_castend_pos){
 
 		if( sd )
 		{
-			if( ud->skill_id != AL_WARP && !skill_check_condition_castend(*sd, ud->skill_id, ud->skill_lv) )
-				break;
-			else {
-				skill_consume_requirement(sd, ud->skill_id, ud->skill_lv, 1);
+			if (ud->skill_id != AL_WARP) {
+				uint16 current_skill_id = ud->skill_id;
 
-				int32 add_ap = skill_get_giveap(ud->skill_id, ud->skill_lv);
-
-				// Give AP
-				if (add_ap > 0) {
-					switch (ud->skill_id) {
-						case WH_DEEPBLINDTRAP:
-						case WH_SOLIDTRAP:
-						case WH_SWIFTTRAP:
-						case WH_FLAMETRAP:
-							if (pc_checkskill(sd, WH_ADVANCED_TRAP) >= 3)
-								add_ap += 1;
-							break;
-					}
-					status_heal(sd, 0, 0, add_ap, 0);
+				switch (ud->skill_id) {
+					case SU_CN_METEOR:
+						if (skill_check_condition_castend(*sd, SU_CN_METEOR2, ud->skill_lv))
+							ud->skill_id = SU_CN_METEOR2;
+						break;
 				}
+
+				if (ud->skill_id != current_skill_id) {
+					if (!skill_check_condition_castend(*sd, ud->skill_id, ud->skill_lv))
+						break;
+				}
+			}
+
+			skill_consume_requirement(sd, ud->skill_id, ud->skill_lv, 1);
+
+			// Give AP
+			if (int32 add_ap = skill_get_giveap(ud->skill_id, ud->skill_lv); add_ap > 0) {
+				switch (ud->skill_id) {
+					case WH_DEEPBLINDTRAP:
+					case WH_SOLIDTRAP:
+					case WH_SWIFTTRAP:
+					case WH_FLAMETRAP:
+						if (pc_checkskill(sd, WH_ADVANCED_TRAP) >= 3)
+							add_ap += 1;
+						break;
+				}
+				status_heal(sd, 0, 0, add_ap, 0);
 			}
 		}
 

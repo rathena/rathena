@@ -33866,7 +33866,7 @@ Body:
     Hit: Multi_Hit
     HitCount: -5
     SplashArea: 3
-    CastTime: 4000
+    CastTime: 2000
     AfterCastActDelay: 1000
     Duration1:
       - Level: 1
@@ -33879,19 +33879,21 @@ Body:
         Time: 4200
       - Level: 5
         Time: 4900
-    Duration2: 20000
-    FixedCastTime:
-      - Level: 1
-        Time: 3000
-      - Level: 2
-        Time: 2500
-      - Level: 3
-        Time: 2000
-      - Level: 4
-        Time: 1500
-      - Level: 5
-        Time: 1000
+    Duration2: 18000
+    Cooldown: 5000
+    FixedCastTime: 1500
     Requires:
+      SpCost:
+        - Level: 1
+          Amount: 20
+        - Level: 2
+          Amount: 35
+        - Level: 3
+          Amount: 50
+        - Level: 4
+          Amount: 65
+        - Level: 5
+          Amount: 80
       ItemCost:
         - Item: Nepeta_Cataria
           Amount: 1
@@ -33902,6 +33904,7 @@ Body:
       Target: Enemy
       Flag:
         PathCheck: true
+    Status: Curse
   - Id: 5043
     Name: SU_LUNATICCARROTBEAT2
     Description: Lunatic Carrot Beat 2
@@ -33925,11 +33928,26 @@ Body:
         Area: 2
       - Level: 5
         Area: 3
-    Duration2: 5000
+    AfterCastActDelay: 1000
+    Duration2: 4500
+    Cooldown: 6000
+    FixedCastTime: 1000
     Requires:
+      SpCost:
+        - Level: 1
+          Amount: 15
+        - Level: 2
+          Amount: 20
+        - Level: 3
+          Amount: 25
+        - Level: 4
+          Amount: 30
+        - Level: 5
+          Amount: 35
       ItemCost:
         - Item: Carrot
           Amount: 1
+    Status: Stun
   - Id: 5044
     Name: SU_SOULATTACK
     Description: Soul Attack
