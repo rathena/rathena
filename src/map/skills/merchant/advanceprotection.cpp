@@ -16,9 +16,10 @@ void SkillAdvanceProtection::castendNoDamageId(block_list* src, block_list* targ
 		if (map_session_data* sd = BL_CAST(BL_PC, src); sd != nullptr) {
 			clif_skill_fail(*sd, getSkillId());
 
-			// Don't consume item requirements
-			flag |= SKILL_NOCONSUME_REQ;
 		}
+
+		// Don't consume item requirements
+		flag |= SKILL_NOCONSUME_REQ;
 		return;
 	}
 
