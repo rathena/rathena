@@ -9,13 +9,15 @@
 SkillAdvanceProtection::SkillAdvanceProtection() : StatusSkillImpl(BO_ADVANCE_PROTECTION) {
 }
 
-void SkillAdvanceProtection::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	map_session_data* sd = BL_CAST(BL_PC, src);
+void SkillAdvanceProtection::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	map_session_data* dstsd = BL_CAST(BL_PC, target);
 
-	// TODO : Logical error if casted by non-pc
-	if( sd && ( !dstsd || pc_checkequip( dstsd, EQP_SHADOW_GEAR ) < 0 ) ){
-		clif_skill_fail( *sd, getSkillId() );
+	if (dstsd == nullptr || pc_checkequip(dstsd, EQP_SHADOW_GEAR) < 0) {
+		if (map_session_data* sd = BL_CAST(BL_PC, src); sd != nullptr) {
+			clif_skill_fail(*sd, getSkillId());
+
+		}
+
 		// Don't consume item requirements
 		flag |= SKILL_NOCONSUME_REQ;
 		return;
