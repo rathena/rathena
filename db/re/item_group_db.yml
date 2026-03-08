@@ -133137,6 +133137,7 @@ Body:
   - Group: CHEMICAL_GLOVE_ROC
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Red_Potion
