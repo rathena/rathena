@@ -133134,3 +133134,23 @@ Body:
           - Index: 11
             Item: Yggdrasil_Dust
             Rate: 200
+  - Group: CHEMICAL_GLOVE_ROC
+    SubGroups:
+      - SubGroup: 1
+        Algorithm: Random
+        List:
+          - Index: 0
+            Item: Red_Potion
+            Rate: 1
+          - Index: 1
+            Item: Orange_Potion
+            Rate: 1
+          - Index: 2
+            Item: Yellow_Potion
+            Rate: 1
+          - Index: 3
+            Item: White_Potion
+            Rate: 1
+          - Index: 4
+            Item: White_Slim_Potion
+            Rate: 1
