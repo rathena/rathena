@@ -5,7 +5,6 @@
 
 #include "map/clif.hpp"
 #include "map/homunculus.hpp"
-#include "map/pc.hpp"
 
 SkillSBR44::SkillSBR44() : WeaponSkillImpl(HFLI_SBR44) {
 }
