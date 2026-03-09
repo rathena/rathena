@@ -19,18 +19,16 @@
 
 using namespace rathena::server_core;
 
-namespace rathena{
-	namespace tool_mapcache{
-		class MapcacheTool : public Core{
-			protected:
-				bool initialize( int32 argc, char* argv[] ) override;
+namespace rathena::tool_mapcache {
+class MapcacheTool : public Core{
+	protected:
+		bool initialize( int32 argc, char* argv[] ) override;
 
-			public:
-				MapcacheTool() : Core( e_core_type::TOOL ){
+	public:
+		MapcacheTool() : Core( e_core_type::TOOL ){
 
-				}
-		};
-	}
+		}
+};
 }
 
 using namespace rathena::tool_mapcache;

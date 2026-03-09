@@ -1955,32 +1955,56 @@ ACMD_FUNC(model)
 }
 
 /*==========================================
- * @bodystyle [Rytech]
+ * @bodystyle
  *------------------------------------------*/
-ACMD_FUNC(bodystyle)
-{
-	int32 body_style = 0;
+ACMD_FUNC(bodystyle){
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	std::shared_ptr<s_job_info> job = job_db.find( sd->status.class_ );
 
-	if ( (sd->class_ & JOBL_FOURTH) || !(sd->class_ & JOBL_THIRD) || (sd->class_ & MAPID_THIRDMASK) == MAPID_SUPER_NOVICE_E || (sd->class_ & MAPID_THIRDMASK) == MAPID_STAR_EMPEROR || (sd->class_ & MAPID_THIRDMASK) == MAPID_SOUL_REAPER) {
-		clif_displaymessage(fd, msg_txt(sd,740));	// This job has no alternate body styles.
+	if( job == nullptr || job->alternate_outfits.empty() ){
+		clif_displaymessage( fd, msg_txt( sd, 740 ) ); // This job has no alternate body styles.
 		return -1;
 	}
 
-	if (!message || !*message || sscanf(message, "%d", &body_style) < 1) {
-		sprintf(atcmd_output, msg_txt(sd,739), MIN_BODY_STYLE, MAX_BODY_STYLE);		// Please enter a body style (usage: @bodystyle <body ID: %d-%d>).
-		clif_displaymessage(fd, atcmd_output);
+	if( message == nullptr || !*message ){
+		if( const char* help = atcommand_help_string( command ); help != nullptr ){
+			clif_displaymessage( fd, help );
+		}
+
 		return -1;
 	}
 
-	if (body_style >= MIN_BODY_STYLE && body_style <= MAX_BODY_STYLE) {
-		pc_changelook(sd, LOOK_BODY2, body_style);
-		clif_displaymessage(fd, msg_txt(sd,36)); // Appearence changed.
-	} else {
-		clif_displaymessage(fd, msg_txt(sd,37)); // An invalid number was specified.
+	// Handle the 'off' alias to revert to the default bodystyle
+	if (!strcasecmp(message, "off")) {
+		if (sd->vd.look[LOOK_BODY2] != sd->status.class_) {
+			pc_changelook(sd, LOOK_BODY2, sd->status.class_);
+			clif_displaymessage( fd, msg_txt( sd, 1539 ) ); // Appearance changed to default.
+		} else {
+			clif_displaymessage( fd, msg_txt( sd, 1540 ) ); // Appearance is already set to default.
+		}
+
+		return 0;
+	}
+
+	uint16 body_style = 0;
+
+	if( sscanf( message, "%hu", &body_style ) < 1 ){
+		if( const char* help = atcommand_help_string( command ); help != nullptr ){
+			clif_displaymessage( fd, help );
+		}
+
 		return -1;
+	}
+
+	if( body_style != sd->status.class_ && !util::vector_exists( job->alternate_outfits, body_style ) ){
+		clif_displaymessage( fd, msg_txt( sd, 37 ) ); // An invalid number was specified.
+		return -1;
+	}
+
+	if( body_style != sd->vd.look[LOOK_BODY2] ){
+		pc_changelook( sd, LOOK_BODY2, body_style );
+		clif_displaymessage( fd, msg_txt( sd, 36 ) ); // Appearence changed.
 	}
 
 	return 0;
@@ -2388,12 +2412,12 @@ ACMD_FUNC(monster)
 /*==========================================
  *
  *------------------------------------------*/
-static int32 atkillmonster_sub(struct block_list *bl, va_list ap)
+static int32 atkillmonster_sub(block_list *bl, va_list ap)
 {
-	struct mob_data *md;
+	mob_data *md;
 	int32 flag;
 
-	nullpo_ret(md=(struct mob_data *)bl);
+	nullpo_ret(md=(mob_data *)bl);
 	flag = va_arg(ap, int32);
 
 	if (md->guardian_data)
@@ -2939,7 +2963,7 @@ ACMD_FUNC(param)
 	if( stat < PARAM_POW ){
 		status = pc_getstat( sd, SP_STR + stat - PARAM_STR );
 	}else{
-		if( !( sd->class_ & JOBL_FOURTH ) ){
+		if( !pc_is_trait_job(sd->class_) ){
 			clif_displaymessage(fd, msg_txt(sd, 797)); // This command is unavailable to non - 4th class.
 			return -1;
 		}
@@ -3065,7 +3089,7 @@ ACMD_FUNC(trait_all) {
 	return -1;
 #endif
 
-	if( !( sd->class_ & JOBL_FOURTH ) ){
+	if( !pc_is_trait_job(sd->class_) ){
 		clif_displaymessage(fd, msg_txt(sd, 797)); // This command is unavailable to non - 4th class.
 		return -1;
 	}
@@ -3249,7 +3273,7 @@ ACMD_FUNC(hatch) {
  *------------------------------------------*/
 ACMD_FUNC(petfriendly) {
 	int32 friendly;
-	struct pet_data *pd;
+	pet_data *pd;
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message || (friendly = atoi(message)) < 0) {
@@ -3286,7 +3310,7 @@ ACMD_FUNC(petfriendly) {
 ACMD_FUNC(pethungry)
 {
 	int32 hungry;
-	struct pet_data *pd;
+	pet_data *pd;
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message || (hungry = atoi(message)) < 0) {
@@ -3320,7 +3344,7 @@ ACMD_FUNC(pethungry)
  *------------------------------------------*/
 ACMD_FUNC(petrename)
 {
-	struct pet_data *pd;
+	pet_data *pd;
 	nullpo_retr(-1, sd);
 	if (!sd->status.pet_id || !sd->pd) {
 		clif_displaymessage(fd, msg_txt(sd,184)); // Sorry, but you have no pet.
@@ -3807,7 +3831,8 @@ ACMD_FUNC(questskill)
 
 		return -1;
 	}
-	if (skill_id >= MAX_SKILL_ID) {
+
+	if( !skill_db.exists( skill_id ) ){
 		clif_displaymessage(fd, msg_txt(sd,198)); // This skill number doesn't exist.
 		return -1;
 	}
@@ -4314,6 +4339,7 @@ ACMD_FUNC(partyrecall)
  *
  *------------------------------------------*/
 void atcommand_doload();
+
 ACMD_FUNC(reloadcashdb){
 	nullpo_retr(-1, sd);
 
@@ -4542,6 +4568,69 @@ ACMD_FUNC(reloadlogconf){
 	return 0;
 }
 
+ACMD_FUNC( reload ){
+	static const struct{
+		const char* type;
+		int32 (*func)( const int32 fd, map_session_data* sd, const char* command, const char* message );
+	} types[] = {
+		{ "achievementdb", atcommand_reloadachievementdb },
+		{ "atcommand", atcommand_reloadatcommand },
+		{ "attendancedb", atcommand_reloadattendancedb },
+		{ "barterdb", atcommand_reloadbarterdb },
+		{ "battleconf", atcommand_reloadbattleconf },
+		{ "cashdb", atcommand_reloadcashdb },
+		{ "instancedb", atcommand_reloadinstancedb },
+		{ "itemdb", atcommand_reloaditemdb },
+		{ "logconf", atcommand_reloadlogconf },
+		{ "mobdb", atcommand_reloadmobdb },
+		{ "motd", atcommand_reloadmotd },
+		{ "msgconf", atcommand_reloadmsgconf },
+		{ "pcdb", atcommand_reloadpcdb },
+		{ "script", atcommand_reloadscript },
+		{ "skilldb", atcommand_reloadskilldb },
+		{ "statusdb", atcommand_reloadstatusdb },
+		{ "questdb", atcommand_reloadquestdb },
+	};
+
+	nullpo_retr(-1, sd);
+
+	if (!message || !*message) {
+		if (const char* help = atcommand_help_string(command); help != nullptr) {
+			clif_displaymessage(fd, help);
+		}
+		return -1;
+	}
+
+	// Case insensitive full string search
+	for( const auto& type : types ){
+		if( strcasecmp( type.type, message ) == 0 ){
+			if( pc_can_use_command( sd, type.type, COMMAND_ATCOMMAND ) ){
+				return type.func( fd, sd, type.type, "" );
+			}else{
+				return -1;
+			}
+		}
+	}
+
+	// Case sensitive partial string search
+	for( const auto& type : types ){
+		if( strstr( type.type, message ) != nullptr ){
+			if( pc_can_use_command( sd, type.type, COMMAND_ATCOMMAND ) ){
+				return type.func( fd, sd, type.type, "" );
+			}else{
+				return -1;
+			}
+		}
+	}
+
+	// No valid type specified
+	if( const char* help = atcommand_help_string( command ); help != nullptr ){
+		clif_displaymessage( fd, help );
+	}
+
+	return -1;
+}
+
 /*==========================================
  * @partysharelvl <share_range> [Akinari]
  * Updates char server party share level range in runtime
@@ -4578,7 +4667,7 @@ ACMD_FUNC(partysharelvl) {
 ACMD_FUNC(mapinfo) {
 	map_session_data* pl_sd;
 	struct s_mapiterator* iter;
-	struct chat_data *cd = nullptr;
+	chat_data *cd = nullptr;
 	char direction[12];
 	int32 i, m_id, chat_num = 0, list = 0, vend_num = 0;
 	uint16 m_index;
@@ -4619,7 +4708,7 @@ ACMD_FUNC(mapinfo) {
 		if( pl_sd->mapindex == m_index ) {
 			if( pl_sd->state.vending )
 				vend_num++;
-			else if( (cd = (struct chat_data*)map_id2bl(pl_sd->chatID)) != nullptr && cd->usersd[0] == pl_sd )
+			else if( (cd = (chat_data*)map_id2bl(pl_sd->chatID)) != nullptr && cd->usersd[0] == pl_sd )
 				chat_num++;
 		}
 	}
@@ -4856,7 +4945,7 @@ ACMD_FUNC(mapinfo) {
 		clif_displaymessage(fd, msg_txt(sd,482)); // ----- NPCs in Map -----
 		for (i = 0; i < mapdata->npc_num;)
 		{
-			struct npc_data *nd = mapdata->npc[i];
+			npc_data *nd = mapdata->npc[i];
 			switch(nd->ud.dir) {
 			case DIR_NORTH:		strcpy(direction, msg_txt(sd,491)); break; // North
 			case DIR_NORTHWEST:	strcpy(direction, msg_txt(sd,492)); break; // North West
@@ -4882,7 +4971,7 @@ ACMD_FUNC(mapinfo) {
 		iter = mapit_getallusers();
 		for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
 		{
-			if ((cd = (struct chat_data*)map_id2bl(pl_sd->chatID)) != nullptr &&
+			if ((cd = (chat_data*)map_id2bl(pl_sd->chatID)) != nullptr &&
 			    pl_sd->mapindex == m_index &&
 			    cd->usersd[0] == pl_sd)
 			{
@@ -5176,7 +5265,7 @@ ACMD_FUNC(nuke)
 ACMD_FUNC(tonpc)
 {
 	char npcname[NPC_NAME_LENGTH];
-	struct npc_data *nd;
+	npc_data *nd;
 
 	nullpo_retr(-1, sd);
 
@@ -5278,7 +5367,7 @@ ACMD_FUNC(loadnpc)
 
 ACMD_FUNC(unloadnpc)
 {
-	struct npc_data *nd;
+	npc_data *nd;
 	char NPCname[NPC_NAME_LENGTH];
 	nullpo_retr(-1, sd);
 
@@ -5641,7 +5730,7 @@ ACMD_FUNC(disguise)
 	}	else	{ //Acquired a Name
 		if ((id = mobdb_searchname(message)) == 0)
 		{
-			struct npc_data* nd = npc_name2id(message);
+			npc_data* nd = npc_name2id(message);
 			if (nd != nullptr)
 				id = nd->class_;
 		}
@@ -5723,7 +5812,7 @@ ACMD_FUNC(disguiseguild)
 			id = 0;
 	} else {
 		if( (id = mobdb_searchname(monster)) == 0 ) {
-			struct npc_data* nd = npc_name2id(monster);
+			npc_data* nd = npc_name2id(monster);
 			if( nd != nullptr )
 				id = nd->class_;
 		}
@@ -6013,7 +6102,7 @@ ACMD_FUNC(skilloff)
 ACMD_FUNC(npcmove)
 {
 	int16 x = 0, y = 0;
-	struct npc_data *nd = 0;
+	npc_data *nd = 0;
 	char npc_name[NPC_NAME_LENGTH];
 
 	nullpo_retr(-1, sd);
@@ -6049,7 +6138,7 @@ ACMD_FUNC(addwarp)
 	char mapname[MAP_NAME_LENGTH_EXT], warpname[NPC_NAME_LENGTH];
 	int16 x,y;
 	uint16 m;
-	struct npc_data* nd;
+	npc_data* nd;
 
 	nullpo_retr(-1, sd);
 	memset(warpname, '\0', sizeof(warpname));
@@ -6408,7 +6497,7 @@ ACMD_FUNC(skillid) {
 ACMD_FUNC(useskill)
 {
 	map_session_data* pl_sd = nullptr;
-	struct block_list *bl;
+	block_list *bl;
 	uint16 skill_id;
 	uint16 skill_lv;
 	nullpo_retr(-1, sd);
@@ -6508,9 +6597,9 @@ ACMD_FUNC(displayskillcast)
 	}
 
 	if ( target_type == 1)
-		clif_skillcasting(sd, sd->id, 0, sd->x, sd->y, skill_id, skill_lv, 0, cast_time);
+		clif_skillcasting(*sd, nullptr, sd->x, sd->y, skill_id, skill_lv, static_cast<e_element>(skill_get_ele(skill_id, skill_lv)), cast_time);
 	else
-		clif_skillcasting(sd, sd->id, sd->id, 0, 0, skill_id, skill_lv, 0, cast_time);
+		clif_skillcasting(*sd, sd, 0, 0, skill_id, skill_lv, static_cast<e_element>(skill_get_ele(skill_id, skill_lv)), cast_time);
 
 	return 0;
 }
@@ -7376,7 +7465,7 @@ ACMD_FUNC(mobsearch)
  * @cleanmap - cleans items on the ground
  * @cleanarea - cleans items on the ground within an specified area
  *------------------------------------------*/
-static int32 atcommand_cleanfloor_sub(struct block_list *bl, va_list ap)
+static int32 atcommand_cleanfloor_sub(block_list *bl, va_list ap)
 {
 	nullpo_ret(bl);
 	map_clearflooritem(bl);
@@ -7416,7 +7505,7 @@ ACMD_FUNC(cleanarea)
 ACMD_FUNC(npctalk)
 {
 	char name[NPC_NAME_LENGTH],mes[100],temp[CHAT_SIZE_MAX];
-	struct npc_data *nd;
+	npc_data *nd;
 	bool ifcolor=(*(command + 8) != 'c' && *(command + 8) != 'C')?0:1;
 	unsigned long color=0;
 
@@ -7453,7 +7542,7 @@ ACMD_FUNC(npctalk)
 ACMD_FUNC(pettalk)
 {
 	char mes[100],temp[CHAT_SIZE_MAX];
-	struct pet_data *pd;
+	pet_data *pd;
 
 	nullpo_retr(-1, sd);
 
@@ -7578,7 +7667,7 @@ ACMD_FUNC(summon)
 	char name[NAME_LENGTH];
 	int32 mob_id = 0;
 	int32 duration = 0;
-	struct mob_data *md;
+	mob_data *md;
 	t_tick tick=gettick();
 
 	nullpo_retr(-1, sd);
@@ -8402,7 +8491,7 @@ ACMD_FUNC(homtalk)
  *------------------------------------------*/
 ACMD_FUNC(hominfo)
 {
-	struct homun_data *hd;
+	homun_data *hd;
 	nullpo_retr(-1, sd);
 
 	if ( !hom_is_active(sd->hd) ) {
@@ -8437,7 +8526,7 @@ ACMD_FUNC(hominfo)
 
 ACMD_FUNC(homstats)
 {
-	struct homun_data *hd;
+	homun_data *hd;
 	std::shared_ptr<s_homunculus_db> db;
 	struct s_homunculus *hom;
 	int32 lv, min, max, evo;
@@ -8710,7 +8799,7 @@ ACMD_FUNC(version)
 /*==========================================
  * @mutearea by MouseJstr
  *------------------------------------------*/
-static int32 atcommand_mutearea_sub(struct block_list *bl,va_list ap)
+static int32 atcommand_mutearea_sub(block_list *bl,va_list ap)
 {
 
 	int32 time, id;
@@ -9449,7 +9538,7 @@ ACMD_FUNC(request)
  *------------------------------------------*/
 ACMD_FUNC(feelreset)
 {
-	if ((sd->class_&MAPID_UPPERMASK) != MAPID_STAR_GLADIATOR) {
+	if ((sd->class_&MAPID_SECONDMASK) != MAPID_STAR_GLADIATOR) {
 		clif_displaymessage(sd->fd,msg_txt(sd,35));	// You can't use this command with this class.
 		return -1;
 	}
@@ -9465,7 +9554,7 @@ ACMD_FUNC(feelreset)
  *------------------------------------------*/
 ACMD_FUNC(hatereset)
 {
-	if ((sd->class_&MAPID_UPPERMASK) != MAPID_STAR_GLADIATOR) {
+	if ((sd->class_&MAPID_SECONDMASK) != MAPID_STAR_GLADIATOR) {
 		clif_displaymessage(sd->fd,msg_txt(sd,35));	// You can't use this command with this class.
 		return -1;
 	}
@@ -10857,13 +10946,13 @@ ACMD_FUNC(clonestat) {
 		pc_resetstate(sd);
 		if (pc_has_permission(sd, PC_PERM_BYPASS_STAT_ONCLONE)) {
 			for (i = PARAM_STR; i < PARAM_MAX; i++) {
-				if (i >= PARAM_POW && !(sd->class_ & JOBL_FOURTH))
+				if (i >= PARAM_POW && !pc_is_trait_job(sd->class_))
 					continue;
 				max_status[i] = SHRT_MAX;
 			}
 		} else {
 			for (i = PARAM_STR; i < PARAM_MAX; i++) {
-				if (i >= PARAM_POW && sd->class_ & JOBL_FOURTH)
+				if (i >= PARAM_POW && pc_is_trait_job(sd->class_))
 					continue;
 				max_status[i] = pc_maxparameter(sd, static_cast<e_params>(i));
 			}
@@ -10893,7 +10982,7 @@ ACMD_FUNC(clonestat) {
 			clif_updatestatus(*sd, static_cast<_sp>( SP_USTR + i ) );
 		}
 
-		if (sd->class_ & JOBL_FOURTH) {
+		if (pc_is_trait_job(sd->class_)) {
 			clonestat_check(pow, PARAM_POW);
 			clonestat_check(sta, PARAM_STA);
 			clonestat_check(wis, PARAM_WIS);
@@ -11494,6 +11583,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(broadcast), // + /b and /nb
 		ACMD_DEF(localbroadcast), // + /lb and /nlb
 		ACMD_DEF(recallall),
+		ACMD_DEFR(reload,ATCMD_NOSCRIPT),
 		ACMD_DEF(reloaditemdb),
 		ACMD_DEF(reloadcashdb),
 		ACMD_DEF(reloadmobdb),

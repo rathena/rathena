@@ -231,7 +231,7 @@ void hom_delspiritball(TBL_HOM *hd, int32 count, int32 type) {
 * @param hd
 * @return flag &1 - Standard dead, &2 - Remove object from map, &4 - Delete object from memory
 */
-int32 hom_dead(struct homun_data *hd)
+int32 hom_dead(homun_data *hd)
 {
 	//There's no intimacy penalties on death (from Tharis)
 	map_session_data *sd = hd->master;
@@ -258,7 +258,7 @@ int32 hom_dead(struct homun_data *hd)
 */
 int32 hom_vaporize(map_session_data *sd, int32 flag)
 {
-	struct homun_data *hd;
+	homun_data *hd;
 
 	nullpo_ret(sd);
 
@@ -294,7 +294,7 @@ int32 hom_vaporize(map_session_data *sd, int32 flag)
 * Delete a homunculus, completely "killing it".
 * @param hd
 */
-int32 hom_delete(struct homun_data *hd)
+int32 hom_delete(homun_data *hd)
 {
 	map_session_data *sd;
 	nullpo_ret(hd);
@@ -385,7 +385,7 @@ void hom_calc_skilltree(homun_data *hd) {
 * @param skill_id
 * @return Skill Level or 0 if invalid or unlearned skill
 */
-int16 hom_checkskill(struct homun_data *hd,uint16 skill_id)
+int16 hom_checkskill(homun_data *hd,uint16 skill_id)
 {
 	int16 idx = hom_skill_get_index(skill_id);
 	if (idx < 0) // Invalid skill
@@ -445,7 +445,7 @@ uint16 hom_skill_get_min_level(int32 class_, uint16 skill_id) {
  * @param hd
  * @param skill_id
  */
-void hom_skillup(struct homun_data *hd, uint16 skill_id)
+void hom_skillup(homun_data *hd, uint16 skill_id)
 {
 	int16 idx = 0;
 	nullpo_retv(hd);
@@ -480,7 +480,7 @@ void hom_skillup(struct homun_data *hd, uint16 skill_id)
 * Homunculus leveled up
 * @param hd
 */
-int32 hom_levelup(struct homun_data *hd)
+int32 hom_levelup(homun_data *hd)
 {
 	int32 m_class;
 
@@ -575,7 +575,7 @@ int32 hom_levelup(struct homun_data *hd)
 * @param class_: New class
 * @reutrn Fails if the class cannot be changed, otherwise true
 */
-static bool hom_change_class(struct homun_data *hd, int32 class_) {
+static bool hom_change_class(homun_data *hd, int32 class_) {
 	std::shared_ptr<s_homunculus_db> homun = homunculus_db.homun_search(class_);
 
 	if (homun == nullptr)
@@ -592,7 +592,7 @@ static bool hom_change_class(struct homun_data *hd, int32 class_) {
  * @param hd : homonculus datas
  * @return 0:failure, 1:success
  */
-int32 hom_evolution(struct homun_data *hd)
+int32 hom_evolution(homun_data *hd)
 {
 	nullpo_ret(hd);
 
@@ -650,7 +650,7 @@ int32 hom_evolution(struct homun_data *hd)
  * @param homun_id : id to make it transform into (must be a valid homon class)
  * @return 0:failure, 1:sucess
  */
-int32 hom_mutate(struct homun_data *hd, int32 homun_id)
+int32 hom_mutate(homun_data *hd, int32 homun_id)
 {
 	struct s_homunculus *hom;
 	map_session_data *sd;
@@ -701,7 +701,7 @@ int32 hom_mutate(struct homun_data *hd, int32 homun_id)
 * @param hd
 * @param exp Added EXP
 */
-void hom_gainexp(struct homun_data *hd,t_exp exp)
+void hom_gainexp(homun_data *hd,t_exp exp)
 {
 	int32 m_class;
 
@@ -752,7 +752,7 @@ void hom_gainexp(struct homun_data *hd,t_exp exp)
 * @param value Added intimacy
 * @return New intimacy value
 */
-int32 hom_increase_intimacy(struct homun_data * hd, uint32 value)
+int32 hom_increase_intimacy(homun_data * hd, uint32 value)
 {
 	nullpo_ret(hd);
 	if (battle_config.homunculus_friendly_rate != 100)
@@ -771,7 +771,7 @@ int32 hom_increase_intimacy(struct homun_data * hd, uint32 value)
 * @param value Reduced intimacy
 * @return New intimacy value
 */
-int32 hom_decrease_intimacy(struct homun_data * hd, uint32 value)
+int32 hom_decrease_intimacy(homun_data * hd, uint32 value)
 {
 	nullpo_ret(hd);
 	if (hd->homunculus.intimacy >= value)
@@ -802,7 +802,7 @@ void hom_heal(homun_data& hd, bool hp, bool sp) {
 * Save homunculus data
 * @param hd
 */
-void hom_save(struct homun_data *hd)
+void hom_save(homun_data *hd)
 {
 	// copy data that must be saved in homunculus struct ( hp / sp )
 	TBL_PC *sd;
@@ -869,7 +869,7 @@ void hom_menu(map_session_data *sd, int32 type)
 * @param sd
 * @param hd
 */
-int32 hom_food(map_session_data *sd, struct homun_data *hd)
+int32 hom_food(map_session_data *sd, homun_data *hd)
 {
 	int32 i, foodID, emotion;
 
@@ -927,7 +927,7 @@ int32 hom_food(map_session_data *sd, struct homun_data *hd)
 */
 static TIMER_FUNC(hom_hungry){
 	map_session_data *sd;
-	struct homun_data *hd;
+	homun_data *hd;
 
 	sd = map_id2sd(id);
 	if (!sd)
@@ -976,7 +976,7 @@ static TIMER_FUNC(hom_hungry){
 * Remove hungry timer from homunculus
 * @param hd
 */
-int32 hom_hungry_timer_delete(struct homun_data *hd)
+int32 hom_hungry_timer_delete(homun_data *hd)
 {
 	nullpo_ret(hd);
 	if (hd->hungry_timer != INVALID_TIMER) {
@@ -992,7 +992,7 @@ int32 hom_hungry_timer_delete(struct homun_data *hd)
 int32 hom_change_name(map_session_data *sd,char *name)
 {
 	int32 i;
-	struct homun_data *hd;
+	homun_data *hd;
 	nullpo_retr(1, sd);
 
 	hd = sd->hd;
@@ -1017,7 +1017,7 @@ int32 hom_change_name(map_session_data *sd,char *name)
 */
 void hom_change_name_ack(map_session_data *sd, char* name, int32 flag)
 {
-	struct homun_data *hd = sd->hd;
+	homun_data *hd = sd->hd;
 	if (!hom_is_active(hd))
 		return;
 
@@ -1054,10 +1054,10 @@ void hom_alloc(map_session_data *sd, struct s_homunculus *hom)
 		return;
 	}
 
-	struct homun_data *hd;
+	homun_data *hd;
 	t_tick tick = gettick();
 
-	sd->hd = hd = (struct homun_data*)aCalloc(1,sizeof(struct homun_data));
+	sd->hd = hd = (homun_data*)aCalloc(1,sizeof(homun_data));
 	new (sd->hd) homun_data();
 
 	hd->type = BL_HOM;
@@ -1095,7 +1095,7 @@ void hom_alloc(map_session_data *sd, struct s_homunculus *hom)
 * Init homunculus timers
 * @param hd
 */
-void hom_init_timers(struct homun_data * hd)
+void hom_init_timers(homun_data * hd)
 {
 	if (hd->hungry_timer == INVALID_TIMER) {
 		int32 hunger_delay = (battle_config.homunculus_starving_rate > 0 && hd->homunculus.hunger <= battle_config.homunculus_starving_rate) ? battle_config.homunculus_starving_delay : hd->homunculusDB->hungryDelay; // Every 20 seconds if hunger <= 10
@@ -1113,7 +1113,7 @@ void hom_init_timers(struct homun_data * hd)
  */
 bool hom_call(map_session_data *sd)
 {
-	struct homun_data *hd;
+	homun_data *hd;
 
 	if (!sd->status.hom_id) //Create a new homun.
 		return hom_create_request(sd, HM_CLASS_BASE + rnd_value(0, 7)) ;
@@ -1175,7 +1175,7 @@ bool hom_call(map_session_data *sd)
 int32 hom_recv_data(uint32 account_id, struct s_homunculus *sh, int32 flag)
 {
 	map_session_data *sd;
-	struct homun_data *hd;
+	homun_data *hd;
 	bool created = false;
 
 	sd = map_id2sd(account_id);
@@ -1287,7 +1287,7 @@ bool hom_create_request(map_session_data *sd, int32 class_)
  */
 int32 hom_ressurect(map_session_data* sd, unsigned char per, int16 x, int16 y)
 {
-	struct homun_data* hd;
+	homun_data* hd;
 	nullpo_ret(sd);
 
 	if (!sd->status.hom_id)
@@ -1336,7 +1336,7 @@ int32 hom_ressurect(map_session_data* sd, unsigned char per, int16 x, int16 y)
 * @param hp
 * @param sp
 */
-void hom_revive(struct homun_data *hd, uint32 hp, uint32 sp)
+void hom_revive(homun_data *hd, uint32 hp, uint32 sp)
 {
 	map_session_data *sd = hd->master;
 	hd->homunculus.hp = hd->battle_status.hp;
@@ -1359,7 +1359,7 @@ void hom_revive(struct homun_data *hd, uint32 hp, uint32 sp)
 * Reset homunculus status
 * @param hd
 */
-void hom_reset_stats(struct homun_data *hd)
+void hom_reset_stats(homun_data *hd)
 {	//Resets a homunc stats back to zero (but doesn't touches hunger or intimacy)
 	struct s_homunculus *hom = &hd->homunculus;
 	struct s_hom_stats *base = &hd->homunculusDB->base;
@@ -1384,7 +1384,7 @@ void hom_reset_stats(struct homun_data *hd)
 * Shuffle homunculus status
 * @param hd
 */
-int32 hom_shuffle(struct homun_data *hd)
+int32 hom_shuffle(homun_data *hd)
 {
 	map_session_data *sd;
 	int32 lv, i, skillpts;
@@ -1467,7 +1467,7 @@ enum e_homun_grade hom_intimacy_intimacy2grade(uint32 intimacy) {
 * Get initmacy grade
 * @param hd
 */
-uint8 hom_get_intimacy_grade(struct homun_data *hd) {
+uint8 hom_get_intimacy_grade(homun_data *hd) {
 	return hom_intimacy_intimacy2grade(hd->homunculus.intimacy);
 }
 

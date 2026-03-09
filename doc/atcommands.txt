@@ -1047,13 +1047,10 @@ Changes Kafra Points by the specified amount.
 @hairstyle <default: 0-27>
 @haircolor <default: 0-8>
 @dye <default: 0-4>
-@bodystyle <default: 0-1>
+@bodystyle <job ID>
 
 Changes appearance based on the given parameters.
 The min/max values are set in '/conf/battle/client.conf'.
-
-Appearance changed via @bodystyle won't save unless
-'save_body_style' is enabled in '/conf/battle/client.conf'
 
 ---------------------------------------
 

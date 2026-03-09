@@ -2454,9 +2454,10 @@ an empty string will be returned for CPC_NAME, 0 for other <type>.
 
 ---------------------------------------
 
-*strnpcinfo(<type>)
+*strnpcinfo(<type>{,<npc_id>})
 
-This function will return the various parts of the name of the calling NPC.
+This function will return the various parts of the name of the calling NPC, or, if an
+NPC id is specified, of that npc.
 Whatever it returns is determined by type.
 
  0 - The NPC's display name (visible#hidden)
@@ -2464,6 +2465,7 @@ Whatever it returns is determined by type.
  2 - The hidden part of the NPC's display name
  3 - The NPC's unique name (::name)
  4 - The name of the map the NPC is in.
+ 5 - The path of the NPC file
 
 ---------------------------------------
 
@@ -11211,14 +11213,31 @@ solution rather than sending the map and the monster_id.
 
 ---------------------------------------
 
-*hateffect(<Hat Effect ID>,<State>);
+*hateffect(<hat effect id>,<state>{,<target id>});
 
-This will set a Hat Effect onto the player. The state field allows you to
-enable (true) or disable (false) the effect on the player.
-The Hat Effect constants can be found in 'src/map/script_constants.hpp' starting
-with HAT_EF_*.
+Sets a Hat Effect onto the unit specified by <target id>. If no ID is specified,
+the attached unit will be used.
+<state> can be true to enable or false to disable.
+
+The Hat Effect constants can be found in 'src/map/script_constants.hpp' starting with HAT_EF_*.
+
+Examples:
+	hateffect HAT_EF_FLUTTER_BUTTERFLY, true; // Enables the hat effect on attached player
+
+	hateffect HAT_EF_FLUTTER_BUTTERFLY, true, getcharid(3); // Enables the hat effect on attached player
+	hateffect HAT_EF_FLUTTER_BUTTERFLY, true, getnpcid(0); // Enables the hat effect on invoking NPC
+
+	monster "prontera",50,50,"--en--",1002,1;
+	hateffect HAT_EF_FLUTTER_BUTTERFLY, true, $@mobid; // Enables the hat effect on a spawned mob
 
 Requires client 2015-05-13aRagEXE or newer.
+
+---------------------------------------
+
+*has_hateffect(<hat effect id>{,<GID>});
+
+Returns true if the unit <GID> already has the hat effect enabled, and false otherwise.
+If no GID is specified, the attached unit will be used.
 
 ---------------------------------------
 

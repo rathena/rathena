@@ -24,8 +24,8 @@ bool duel_invite(const size_t did, map_session_data* sd, map_session_data* targe
 bool duel_accept(const size_t did, map_session_data* sd);
 bool duel_reject(const size_t did, map_session_data* sd);
 bool duel_leave(const size_t did, map_session_data* sd);
-void duel_showinfo(const size_t did, map_session_data* sd);
-bool duel_checktime(map_session_data* sd);
+void duel_showinfo( const size_t did, const map_session_data* sd );
+bool duel_checktime( const map_session_data* sd );
 bool duel_check_player_limit( struct duel& pDuel );
 
 void do_init_duel(void);

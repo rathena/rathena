@@ -123,7 +123,7 @@ t_tick elemental_get_lifetime(s_elemental_data *ed);
 
 int32 elemental_unlocktarget(s_elemental_data *ed);
 bool elemental_skillnotok( uint16 skill_id, s_elemental_data& ed );
-int32 elemental_set_target( map_session_data *sd, block_list *bl );
+int32 elemental_set_target( map_session_data *sd, const block_list* bl );
 int32 elemental_clean_effect(s_elemental_data *ed);
 int32 elemental_action(s_elemental_data *ed, block_list *bl, t_tick tick);
 struct s_skill_condition elemental_skill_get_requirements(uint16 skill_id, uint16 skill_lv);
