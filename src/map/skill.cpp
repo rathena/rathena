@@ -1735,45 +1735,8 @@ int32 skill_counter_additional_effect (block_list* src, block_list *bl, uint16 s
 		}
 	}
 
-	switch(skill_id) {
-	case GS_FULLBUSTER:
-		sc_start(src,src,SC_BLIND,2*skill_lv,skill_lv,skill_get_time2(skill_id,skill_lv));
-		break;
-	case HFLI_SBR44:	//[orn]
-		if(src->type == BL_HOM){
-			homun_data& hd = reinterpret_cast<homun_data&>( *src );
-
-			hd.homunculus.intimacy = hom_intimacy_grade2intimacy(HOMGRADE_HATE_WITH_PASSION);
-
-			clif_send_homdata( hd, SP_INTIMATE );
-		}
-		break;
-	case CR_GRANDCROSS:
-		if (src == bl) {
-			// Grand Cross on self specifically only triggers "When hit by physical attack" autospells and ignores everything else
-			attack_type |= BF_WEAPON;
-			attack_type &= ~BF_MAGIC;
-		}
-		break;
-	case LG_HESPERUSLIT:
-		{
-			status_change *sc = status_get_sc(src);
-
-			if( sc && sc->getSCE(SC_FORCEOFVANGUARD)) {
-				for(int32 i = 0; i < sc->getSCE(SC_FORCEOFVANGUARD)->val3; i++ )
-					pc_addspiritball(sd, skill_get_time(LG_FORCEOFVANGUARD,1),sc->getSCE(SC_FORCEOFVANGUARD)->val3);
-			}
-		}
-		break;
-	case SP_SPA:
-		sc_start(src, src, SC_USE_SKILL_SP_SPA, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-		break;
-	case SP_SHA:
-		sc_start(src, src, SC_USE_SKILL_SP_SHA, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
-		break;
-	case SP_SWHOO:
-		sc_start(src, src, SC_USE_SKILL_SP_SHA, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-		break;
+	if (std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id); skill != nullptr && skill->impl != nullptr) {
+		skill->impl->applyCounterAdditionalEffects(src, bl, skill_lv, tick, attack_type);
 	}
 
 	if(sd && (sd->class_&MAPID_SECONDMASK) == MAPID_STAR_GLADIATOR &&
