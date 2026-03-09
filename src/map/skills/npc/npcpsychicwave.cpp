@@ -6,6 +6,14 @@
 SkillNpcPsychicWave::SkillNpcPsychicWave() : SkillImpl(NPC_PSYCHIC_WAVE) {
 }
 
+void SkillNpcPsychicWave::modifyDamageData(Damage* ad, block_list* src, block_list* target, uint16 skill_lv, int32 mflag) const {
+	const map_session_data* sd = BL_CAST(BL_PC, src);
+
+	// Relevant modification for a NPC type skill ?
+	if (sd != nullptr && (sd->weapontype1 == W_STAFF || sd->weapontype1 == W_2HSTAFF || sd->weapontype1 == W_BOOK))
+		ad->div_ = 2;
+}
+
 void SkillNpcPsychicWave::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio, int32 mflag) const {
 	base_skillratio += -100 + 500 * skill_lv;
 }

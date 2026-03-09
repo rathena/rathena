@@ -12,6 +12,23 @@
 SkillTalismanOfFourBearingGod::SkillTalismanOfFourBearingGod() : SkillImplRecursiveDamageSplash(SOA_TALISMAN_OF_FOUR_BEARING_GOD) {
 }
 
+void SkillTalismanOfFourBearingGod::modifyDamageData(Damage* ad, block_list* src, block_list* target, uint16 skill_lv, int32 mflag) const {
+	const status_change *sc = status_get_sc(src);
+
+	if (sc != nullptr){
+		if (sc->hasSCE(SC_T_FIRST_GOD))
+			ad->div_ = 2;
+		else if (sc->hasSCE(SC_T_SECOND_GOD))
+			ad->div_ = 3;
+		else if (sc->hasSCE(SC_T_THIRD_GOD))
+			ad->div_ = 4;
+		else if (sc->hasSCE(SC_T_FOURTH_GOD))
+			ad->div_ = 5;
+		else if (sc->hasSCE(SC_T_FIFTH_GOD))
+			ad->div_ = 7;
+	}
+}
+
 void SkillTalismanOfFourBearingGod::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
 	const status_data* sstatus = status_get_status_data(*src);
 	const map_session_data* sd = BL_CAST( BL_PC, src );

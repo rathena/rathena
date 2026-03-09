@@ -5,11 +5,21 @@
 
 #include "map/battle.hpp"
 #include "map/clif.hpp"
+#include "map/homunculus.hpp"
 #include "map/pc.hpp"
 #include "map/status.hpp"
 #include "map/unit.hpp"
 
 SkillBlazingAndFurious::SkillBlazingAndFurious() : SkillImplRecursiveDamageSplash(MH_BLAZING_AND_FURIOUS) {
+}
+
+void SkillBlazingAndFurious::modifyDamageData(Damage* wd, block_list* src, block_list* target, uint16 skill_lv, int32 mflag) const {
+	homun_data *hd = BL_CAST(BL_HOM, src);
+
+	if (hd != nullptr) {
+		wd->div_ = hd->homunculus.spiritball;
+		hom_delspiritball(hd, MAX_SPIRITBALL, 1);
+	}
 }
 
 void SkillBlazingAndFurious::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {

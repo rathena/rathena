@@ -14,6 +14,14 @@
 SkillOverSlash::SkillOverSlash() : SkillImplRecursiveDamageSplash(IG_OVERSLASH) {
 }
 
+void SkillOverSlash::modifyDamageData(Damage* wd, block_list* src, block_list* target, uint16 skill_lv, int32 mflag) const {
+	if (wd->miscflag >= 4) {
+		wd->div_ = 7;
+	} else if (wd->miscflag >= 2) {
+		wd->div_ = 5;
+	}
+}
+
 void SkillOverSlash::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& skillratio, int32 mflag) const {
 	const map_session_data* sd = BL_CAST(BL_PC, src);
 	const status_data* sstatus = status_get_status_data(*src);

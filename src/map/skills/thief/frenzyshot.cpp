@@ -11,6 +11,12 @@
 SkillFrenzyShot::SkillFrenzyShot() : WeaponSkillImpl(ABC_FRENZY_SHOT) {
 }
 
+void SkillFrenzyShot::modifyDamageData(Damage* wd, block_list* src, block_list* target, uint16 skill_lv, int32 mflag) const {
+	if (rnd_chance(5 * skill_lv, 100)) {
+		wd->div_ = 3;
+	}
+}
+
 void SkillFrenzyShot::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
 	WeaponSkillImpl::castendDamageId(src, target, skill_lv, tick, flag);

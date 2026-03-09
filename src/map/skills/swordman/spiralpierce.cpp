@@ -13,6 +13,13 @@
 SkillSpiralPierce::SkillSpiralPierce() : WeaponSkillImpl(LK_SPIRALPIERCE) {
 }
 
+void SkillSpiralPierce::modifyDamageData(Damage* wd, block_list* src, block_list* target, uint16 skill_lv, int32 mflag) const {
+	const map_session_data* sd = BL_CAST(BL_PC, src);
+
+	if (sd == nullptr)
+		wd->flag = (wd->flag&~(BF_RANGEMASK|BF_WEAPONMASK))|BF_LONG|BF_MISC;
+}
+
 void SkillSpiralPierce::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
 #ifdef RENEWAL
 	const status_change *sc = status_get_sc(src);

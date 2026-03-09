@@ -12,6 +12,12 @@
 SkillRideInLightening::SkillRideInLightening() : SkillImplRecursiveDamageSplash(SR_RIDEINLIGHTNING) {
 }
 
+void SkillRideInLightening::modifyDamageData(Damage* wd, block_list* src, block_list* target, uint16 skill_lv, int32 mflag) const {
+	const map_session_data* sd = BL_CAST(BL_PC, src);
+
+	wd->div_ = (sd != nullptr ? max(1, skill_lv) : 1);
+}
+
 void SkillRideInLightening::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
 	const map_session_data* sd = BL_CAST(BL_PC, src);
 

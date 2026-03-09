@@ -13,6 +13,10 @@
 SkillSavageImpact::SkillSavageImpact() : SkillImplRecursiveDamageSplash(SHC_SAVAGE_IMPACT) {
 }
 
+void SkillSavageImpact::modifyDamageData(Damage* wd, block_list* src, block_list* target, uint16 skill_lv, int32 mflag) const {
+	wd->div_ = wd->div_ + wd->miscflag;
+}
+
 void SkillSavageImpact::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
 	const status_data* sstatus = status_get_status_data(*src);
 	const status_change *sc = status_get_sc(src);

@@ -3,9 +3,16 @@
 
 #include "warmthofthesun.hpp"
 
+#include <common/random.hpp>
+
 #include "map/status.hpp"
 
 SkillWarmthoftheSun::SkillWarmthoftheSun() : SkillImpl(SG_SUN_WARM) {
+}
+
+void SkillWarmthoftheSun::modifyDamageData(Damage* wd, block_list* src, block_list* target, uint16 skill_lv, int32 mflag) const {
+	// A random 0~3 knockback bonus is added to the base knockback
+	wd->blewcount += rnd_value(0, 3);
 }
 
 void SkillWarmthoftheSun::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {
