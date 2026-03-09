@@ -13,6 +13,10 @@
 SkillEspa::SkillEspa() : SkillImpl(SP_SPA) {
 }
 
+void SkillEspa::applyCounterAdditionalEffects(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& attack_type) const {
+	sc_start(src, src, SC_USE_SKILL_SP_SPA, 100, skill_lv, skill_get_time(getSkillId(), skill_lv));
+}
+
 void SkillEspa::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
 	skillratio += 400 + 250 * skill_lv;
 	RE_LVL_DMOD(100);

@@ -9,6 +9,14 @@
 SkillGrandCross::SkillGrandCross() : SkillImpl(CR_GRANDCROSS) {
 }
 
+void SkillGrandCross::applyCounterAdditionalEffects(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& attack_type) const {
+	if (src == target) {
+		// Grand Cross on self specifically only triggers "When hit by physical attack" autospells and ignores everything else
+		attack_type |= BF_WEAPON;
+		attack_type &= ~BF_MAGIC;
+	}
+}
+
 void SkillGrandCross::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {
 	//Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
 	flag|=1;
