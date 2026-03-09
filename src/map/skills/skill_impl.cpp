@@ -42,6 +42,10 @@ void SkillImpl::applyCounterAdditionalEffects(block_list*, block_list*, uint16, 
 	// no-op
 }
 
+void SkillImpl::modifyElement(int32&, const block_list&, int32) const {
+	// no-op
+}
+
 StatusSkillImpl::StatusSkillImpl(e_skill skillId, bool end_if_running) : SkillImpl(skillId) {
 	this->end_if_running = end_if_running;
 };

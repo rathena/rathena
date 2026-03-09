@@ -31,3 +31,10 @@ void SkillSpiralPierce::applyAdditionalEffects(block_list *src, block_list *targ
 	if( dstsd || ( dstmd && !status_bl_has_mode(target,MD_STATUSIMMUNE) ) ) //Does not work on status immune
 		sc_start(src,target,SC_ANKLE,100,0,skill_get_time2(getSkillId(),skill_lv));
 }
+
+void SkillSpiralPierce::modifyElement(int32& element, const block_list& src, int32 flag) const {
+	const map_session_data* sd = BL_CAST(BL_PC, &src);
+
+	if (sd == nullptr)
+		element = ELE_NEUTRAL; // forced neutral for monsters
+}

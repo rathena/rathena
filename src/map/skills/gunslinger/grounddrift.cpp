@@ -16,3 +16,7 @@ void SkillGroundDrift::castendPos2(block_list* src, int32 x, int32 y, uint16 ski
 	// Ammo should be deleted right away.
 	skill_unitsetting(src, getSkillId(), skill_lv, x, y, 0);
 }
+
+void SkillGroundDrift::modifyElement(int32& element, const block_list& src, int32 flag) const {
+	element = flag; // element comes in flag.
+}

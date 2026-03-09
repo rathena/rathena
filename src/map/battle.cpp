@@ -3464,75 +3464,12 @@ int32 battle_get_weapon_element( const Damage* wd, const block_list* src, const 
 	else if( element == ELE_RANDOM ) //Use random element
 		element = rnd()%ELE_ALL;
 
-	switch( skill_id ) {
-		case GS_GROUNDDRIFT:
-			element = wd->miscflag; //element comes in flag.
-			break;
-		case LK_SPIRALPIERCE:
-			if (!sd)
-				element = ELE_NEUTRAL; //forced neutral for monsters
-			break;
-		case RK_DRAGONBREATH:
-			if (sc) {
-				if (sc->getSCE(SC_LUXANIMA)) // Lux Anima has priority over Giant Growth
-					element = ELE_DARK;
-				else if (sc->getSCE(SC_GIANTGROWTH))
-					element = ELE_HOLY;
-			}
-			break;
-		case RK_DRAGONBREATH_WATER:
-			if (sc) {
-				if (sc->getSCE(SC_LUXANIMA)) // Lux Anima has priority over Fighting Spirit
-					element = ELE_NEUTRAL;
-				else if (sc->getSCE(SC_FIGHTINGSPIRIT))
-					element = ELE_GHOST;
-			}
-			break;
-		case LG_HESPERUSLIT:
-			if (sc && sc->getSCE(SC_BANDING) && sc->getSCE(SC_BANDING)->val2 > 4)
-				element = ELE_HOLY;
-			break;
-		case GN_CARTCANNON:
-		case NC_ARMSCANNON:
-			if (sd && sd->state.arrow_atk > 0)
-				element = sd->bonus.arrow_ele;
-			break;
-		case SJ_PROMINENCEKICK:
- 				element = ELE_FIRE;
- 			break;
-		case RL_H_MINE:
-			if (sd && sd->flicker) //Force RL_H_MINE deals fire damage if activated by RL_FLICKER
-				element = ELE_FIRE;
-			break;
-		case NW_BASIC_GRENADE:
-		case NW_HASTY_FIRE_IN_THE_HOLE:
-		case NW_GRENADES_DROPPING:
-		case NW_MISSION_BOMBARD:
-			// Night Watch Grenade Fragment elementals affecting those skills.
-			if( sc != nullptr ){
-				if( sc->getSCE( SC_GRENADE_FRAGMENT_1 ) != nullptr ){
-					element = ELE_WATER;
-				}else if( sc->getSCE( SC_GRENADE_FRAGMENT_2 ) != nullptr ){
-					element = ELE_WIND;
-				}else if( sc->getSCE( SC_GRENADE_FRAGMENT_3 ) != nullptr ){
-					element = ELE_EARTH;
-				}else if( sc->getSCE( SC_GRENADE_FRAGMENT_4 ) != nullptr ){
-					element = ELE_FIRE;
-				}else if( sc->getSCE( SC_GRENADE_FRAGMENT_5 ) != nullptr ){
-					element = ELE_DARK;
-				}else if( sc->getSCE( SC_GRENADE_FRAGMENT_6 ) != nullptr ){
-					element = ELE_HOLY;
-				}
-			}
-			break;
-		case SS_FUUMASHOUAKU:
-		case SS_FUUMAKOUCHIKU:
-			if( sd != nullptr ){
-				element = sd->bonus.arrow_ele;
-			}
-			break;
+	// Modify the element type of skill attack
+	if (std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id); skill != nullptr && skill->impl != nullptr) {
+		skill->impl->modifyElement(element, *src, wd->miscflag);
 	}
 
+	// TODO refactor
 	if (sc && sc->getSCE(SC_GOLDENE_FERSE) && ((!skill_id && (rnd() % 100 < sc->getSCE(SC_GOLDENE_FERSE)->val4)) || skill_id == MH_STAHL_HORN))
 		element = ELE_HOLY;
 
@@ -3541,6 +3478,7 @@ int32 battle_get_weapon_element( const Damage* wd, const block_list* src, const 
 		return element;
 
 #ifdef RENEWAL
+	// TODO refactor
 	if (skill_id == CR_SHIELDBOOMERANG)
 		element = ELE_NEUTRAL;
 #endif
@@ -3563,86 +3501,9 @@ int32 battle_get_magic_element(const block_list* src, const block_list* target, 
 	else if (element == ELE_RANDOM) //Use random element
 		element = rnd()%ELE_ALL;
 
-	switch(skill_id) {
-		case NPC_EARTHQUAKE:
-			element = ELE_NEUTRAL;
-			break;
-		case WL_HELLINFERNO:
-			if (mflag & 2) { // ELE_DARK
-				element = ELE_DARK;
-			}
-			break;
-		case NPC_PSYCHIC_WAVE:
-		case SO_PSYCHIC_WAVE:
-			if( sc != nullptr && !sc->empty() ) {
-				static const std::vector<sc_type> types = {
-					SC_HEATER_OPTION,
-					SC_COOLER_OPTION,
-					SC_BLAST_OPTION,
-					SC_CURSED_SOIL_OPTION,
-					SC_FLAMETECHNIC_OPTION,
-					SC_COLD_FORCE_OPTION,
-					SC_GRACE_BREEZE_OPTION,
-					SC_EARTH_CARE_OPTION,
-					SC_DEEP_POISONING_OPTION
-				};
-				for( sc_type type : types ){
-					if( sc->getSCE( type ) ){
-						element = sc->getSCE( type )->val3;
-						break;
-					}
-				}
-			}
-			break;
-		case KO_KAIHOU:
-			if(sd && sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm > 0)
-				element = sd->spiritcharm_type;
-			break;
-		case CD_DIVINUS_FLOS:
-		case AB_ADORAMUS:
-			if (sc != nullptr && sc->hasSCE(SC_ANCILLA))
-				element = ELE_NEUTRAL;
-			break;
-		case LG_RAYOFGENESIS:
-			if (sc && sc->getSCE(SC_INSPIRATION))
-				element = ELE_NEUTRAL;
-			break;
-		case IG_IMPERIAL_PRESSURE:
-			if (sc != nullptr && sc->hasSCE(SC_GUARD_STANCE))
-				element = ELE_HOLY;
-			break;
-		case WM_REVERBERATION:
-		case TR_METALIC_FURY:
-		case TR_SOUNDBLEND:
-		case TR_RHYTHMICAL_WAVE:
-			if (sd)
-				element = sd->bonus.arrow_ele;
-			break;
-		case SU_CN_METEOR:
-		case SU_CN_METEOR2:
-		case SH_HYUN_ROKS_BREEZE:
-		case SH_HYUN_ROK_CANNON:
-		case SH_HYUN_ROK_SPIRIT_POWER:
-			if( sc != nullptr && !sc->empty() ){
-				if( sc->getSCE( SC_COLORS_OF_HYUN_ROK_1 ) != nullptr ){
-					element = ELE_WATER;
-				}else if( sc->getSCE( SC_COLORS_OF_HYUN_ROK_2 ) != nullptr ){
-					element = ELE_WIND;
-				}else if( sc->getSCE( SC_COLORS_OF_HYUN_ROK_3 ) != nullptr ){
-					element = ELE_EARTH;
-				}else if( sc->getSCE( SC_COLORS_OF_HYUN_ROK_4 ) != nullptr ){
-					element = ELE_FIRE;
-				}else if( sc->getSCE( SC_COLORS_OF_HYUN_ROK_5 ) != nullptr ){
-					element = ELE_DARK;
-				}else if( sc->getSCE( SC_COLORS_OF_HYUN_ROK_6 ) != nullptr ){
-					element = ELE_HOLY;
-				}
-			}
-			break;
-		case SS_ANKOKURYUUAKUMU:
-			if (mflag & SKILL_ALTDMG_FLAG)
-				element = ELE_FIRE;
-			break;
+	// Modify the element type of skill attack
+	if (std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id); skill != nullptr && skill->impl != nullptr) {
+		skill->impl->modifyElement(element, *src, mflag);
 	}
 
 	return element;
@@ -3655,6 +3516,11 @@ int32 battle_get_misc_element( const block_list* src, const block_list* target, 
 		element = ELE_NEUTRAL;
 	else if (element == ELE_RANDOM) //Use random element
 		element = rnd()%ELE_ALL;
+
+	// Modify the element type of skill attack
+	if (std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id); skill != nullptr && skill->impl != nullptr) {
+		skill->impl->modifyElement(element, *src, mflag);
+	}
 
 	return element;
 }

@@ -27,3 +27,10 @@ void SkillImperialPressure::splashSearch(block_list* src, block_list* target, ui
 
 	SkillImplRecursiveDamageSplash::splashSearch(src, target, skill_lv, tick, flag);
 }
+
+void SkillImperialPressure::modifyElement(int32& element, const block_list& src, int32 flag) const {
+	const status_change* sc = status_get_sc(&src);
+
+	if (sc != nullptr && sc->hasSCE(SC_GUARD_STANCE))
+		element = ELE_HOLY;
+}
