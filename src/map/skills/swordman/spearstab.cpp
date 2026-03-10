@@ -8,8 +8,8 @@
 SkillSpearStab::SkillSpearStab() : SkillImpl(KN_SPEARSTAB) {
 }
 
-void SkillSpearStab::modifyDamageData(Damage* wd, block_list* src, block_list* target, uint16 skill_lv, int32 mflag) const {
-	wd->blewcount = 0;
+void SkillSpearStab::modifyDamageData(Damage& wd, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
+	wd.blewcount = 0;
 }
 
 void SkillSpearStab::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {

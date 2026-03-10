@@ -50,7 +50,7 @@ public:
 	/**
 	 * Allows modifying the damage data right after initialization.
 	 */
-	virtual void modifyDamageData(Damage* wd, block_list* src, block_list* target, uint16 skill_lv, int32 mflag) const;
+	virtual void modifyDamageData(Damage& wd, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const;
 
 protected:
 	e_skill skill_id_;

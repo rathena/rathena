@@ -14,11 +14,11 @@
 SkillChasingShot::SkillChasingShot() : SkillImplRecursiveDamageSplash(ABC_CHASING_SHOT) {
 }
 
-void SkillChasingShot::modifyDamageData(Damage* wd, block_list* src, block_list* target, uint16 skill_lv, int32 mflag) const {
-	const status_change *sc = status_get_sc(src);
+void SkillChasingShot::modifyDamageData(Damage& wd, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
+	const status_change *sc = status_get_sc(&src);
 
 	if (sc != nullptr && sc->hasSCE(SC_CHASING))
-		wd->div_ = 3;
+		wd.div_ = 3;
 }
 
 void SkillChasingShot::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& skillratio, int32 mflag) const {

@@ -10,12 +10,12 @@
 SkillRagingQuadrupleBlow::SkillRagingQuadrupleBlow() : WeaponSkillImpl(MO_CHAINCOMBO) {
 }
 
-void SkillRagingQuadrupleBlow::modifyDamageData(Damage* wd, block_list* src, block_list* target, uint16 skill_lv, int32 mflag) const {
+void SkillRagingQuadrupleBlow::modifyDamageData(Damage& wd, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
 #ifdef RENEWAL
-	const map_session_data* sd = BL_CAST(BL_PC, src);
+	const map_session_data* sd = BL_CAST(BL_PC, &src);
 
 	if (sd != nullptr && sd->status.weapon == W_KNUCKLE)
-		wd->div_ = -6;
+		wd.div_ = -6;
 #endif
 }
 

@@ -9,10 +9,10 @@
 SkillQuickDrawShot::SkillQuickDrawShot() : SkillImpl(RL_QD_SHOT) {
 }
 
-void SkillQuickDrawShot::modifyDamageData(Damage* wd, block_list* src, block_list* target, uint16 skill_lv, int32 mflag) const {
-	const map_session_data* sd = BL_CAST(BL_PC, src);
+void SkillQuickDrawShot::modifyDamageData(Damage& wd, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
+	const map_session_data* sd = BL_CAST(BL_PC, &src);
 
-	wd->div_ = 1 + (sd != nullptr ? sd->status.job_level : 1) / 20;
+	wd.div_ = 1 + (sd != nullptr ? sd->status.job_level : 1) / 20;
 }
 
 void SkillQuickDrawShot::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {

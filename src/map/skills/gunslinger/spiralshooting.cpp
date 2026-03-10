@@ -12,11 +12,11 @@
 SkillSpiralShooting::SkillSpiralShooting() : SkillImpl(NW_SPIRAL_SHOOTING) {
 }
 
-void SkillSpiralShooting::modifyDamageData(Damage* wd, block_list* src, block_list* target, uint16 skill_lv, int32 mflag) const {
-	const map_session_data* sd = BL_CAST(BL_PC, src);
+void SkillSpiralShooting::modifyDamageData(Damage& wd, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
+	const map_session_data* sd = BL_CAST(BL_PC, &src);
 
 	if (sd != nullptr && sd->weapontype1 == W_GRENADE)
-		wd->div_ += 1;
+		wd.div_ += 1;
 }
 
 void SkillSpiralShooting::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {

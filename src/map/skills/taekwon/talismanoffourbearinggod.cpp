@@ -12,20 +12,20 @@
 SkillTalismanOfFourBearingGod::SkillTalismanOfFourBearingGod() : SkillImplRecursiveDamageSplash(SOA_TALISMAN_OF_FOUR_BEARING_GOD) {
 }
 
-void SkillTalismanOfFourBearingGod::modifyDamageData(Damage* ad, block_list* src, block_list* target, uint16 skill_lv, int32 mflag) const {
-	const status_change *sc = status_get_sc(src);
+void SkillTalismanOfFourBearingGod::modifyDamageData(Damage& ad, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
+	const status_change *sc = status_get_sc(&src);
 
 	if (sc != nullptr){
 		if (sc->hasSCE(SC_T_FIRST_GOD))
-			ad->div_ = 2;
+			ad.div_ = 2;
 		else if (sc->hasSCE(SC_T_SECOND_GOD))
-			ad->div_ = 3;
+			ad.div_ = 3;
 		else if (sc->hasSCE(SC_T_THIRD_GOD))
-			ad->div_ = 4;
+			ad.div_ = 4;
 		else if (sc->hasSCE(SC_T_FOURTH_GOD))
-			ad->div_ = 5;
+			ad.div_ = 5;
 		else if (sc->hasSCE(SC_T_FIFTH_GOD))
-			ad->div_ = 7;
+			ad.div_ = 7;
 	}
 }
 

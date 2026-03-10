@@ -12,15 +12,15 @@
 SkillThrowSpiritSphere::SkillThrowSpiritSphere() : WeaponSkillImpl(MO_FINGEROFFENSIVE) {
 }
 
-void SkillThrowSpiritSphere::modifyDamageData(Damage* wd, block_list* src, block_list* target, uint16 skill_lv, int32 mflag) const {
-	const map_session_data* sd = BL_CAST(BL_PC, src);
+void SkillThrowSpiritSphere::modifyDamageData(Damage& wd, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
+	const map_session_data* sd = BL_CAST(BL_PC, &src);
 
 	if (sd != nullptr) {
 		if (battle_config.finger_offensive_type)
-			wd->div_ = 1;
+			wd.div_ = 1;
 #ifndef RENEWAL
-		else if ((sd->spiritball + sd->spiritball_old) < wd->div_)
-			wd->div_ = sd->spiritball + sd->spiritball_old;
+		else if ((sd->spiritball + sd->spiritball_old) < wd.div_)
+			wd.div_ = sd->spiritball + sd->spiritball_old;
 #endif
 	}
 }

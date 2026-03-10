@@ -10,11 +10,11 @@
 SkillVulcanArm::SkillVulcanArm() : SkillImplRecursiveDamageSplash(NC_VULCANARM) {
 }
 
-void SkillVulcanArm::modifyDamageData(Damage* wd, block_list* src, block_list* target, uint16 skill_lv, int32 mflag) const {
-	const status_change *sc = status_get_sc(src);
+void SkillVulcanArm::modifyDamageData(Damage& wd, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
+	const status_change *sc = status_get_sc(&src);
 
 	if (sc != nullptr && sc->hasSCE(SC_ABR_DUAL_CANNON))
-		wd->div_ = 2;
+		wd.div_ = 2;
 }
 
 void SkillVulcanArm::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& skillratio, int32 mflag) const {

@@ -10,8 +10,8 @@
 SkillKiExplosion::SkillKiExplosion() : SkillImpl(MO_BALKYOUNG) {
 }
 
-void SkillKiExplosion::modifyDamageData(Damage* wd, block_list* src, block_list* target, uint16 skill_lv, int32 mflag) const {
-	wd->blewcount = 0;
+void SkillKiExplosion::modifyDamageData(Damage& wd, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
+	wd.blewcount = 0;
 }
 
 void SkillKiExplosion::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {

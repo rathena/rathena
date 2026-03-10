@@ -11,12 +11,12 @@
 SkillBackStab::SkillBackStab() : SkillImpl(RG_BACKSTAP) {
 }
 
-void SkillBackStab::modifyDamageData(Damage* wd, block_list* src, block_list* target, uint16 skill_lv, int32 mflag) const {
+void SkillBackStab::modifyDamageData(Damage& wd, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
 #ifdef RENEWAL
-	const map_session_data* sd = BL_CAST(BL_PC, src);
+	const map_session_data* sd = BL_CAST(BL_PC, &src);
 
 	if (sd != nullptr && sd->status.weapon == W_DAGGER)
-		wd->div_ = 2;
+		wd.div_ = 2;
 #endif
 }
 

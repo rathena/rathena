@@ -5532,7 +5532,7 @@ static struct Damage battle_calc_weapon_attack(block_list *src, block_list *targ
 	wd = initialize_weapon_data(src, target, skill_id, skill_lv, wflag);
 
 	if (std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id); skill != nullptr && skill->impl != nullptr) {
-		skill->impl->modifyDamageData(&wd, src, target, skill_lv, wflag);
+		skill->impl->modifyDamageData(wd, *src, target, skill_lv, wflag);
 	}
 
 	right_element = battle_get_weapon_element(&wd, src, target, skill_id, skill_lv, EQI_HAND_R, false);
@@ -5978,7 +5978,7 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 	s_ele = battle_get_magic_element(src, target, skill_id, skill_lv, mflag);
 
 	if (skill != nullptr && skill->impl != nullptr) {
-		skill->impl->modifyDamageData(&ad, src, target, skill_lv, mflag);
+		skill->impl->modifyDamageData(ad, *src, target, skill_lv, mflag);
 	}
 
 	//Set miscellaneous data that needs be filled
@@ -6512,7 +6512,7 @@ struct Damage battle_calc_misc_attack(block_list *src,block_list *target,uint16 
 	md.flag |= battle_range_type(src, target, skill_id, skill_lv);
 
 	if (skill != nullptr && skill->impl != nullptr) {
-		skill->impl->modifyDamageData(&md, src, target, skill_lv, mflag);
+		skill->impl->modifyDamageData(md, *src, target, skill_lv, mflag);
 	}
 
 	switch (skill_id) {

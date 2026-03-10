@@ -11,11 +11,11 @@
 SkillEternalSlash::SkillEternalSlash() : WeaponSkillImpl(SHC_ETERNAL_SLASH) {
 }
 
-void SkillEternalSlash::modifyDamageData(Damage* wd, block_list* src, block_list* target, uint16 skill_lv, int32 mflag) const {
-	const status_change *sc = status_get_sc(src);
+void SkillEternalSlash::modifyDamageData(Damage& wd, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
+	const status_change *sc = status_get_sc(&src);
 
 	if (sc != nullptr && sc->hasSCE(SC_E_SLASH_COUNT))
-		wd->div_ = sc->getSCE(SC_E_SLASH_COUNT)->val1;
+		wd.div_ = sc->getSCE(SC_E_SLASH_COUNT)->val1;
 }
 
 void SkillEternalSlash::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {

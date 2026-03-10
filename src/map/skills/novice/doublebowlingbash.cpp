@@ -12,9 +12,9 @@
 SkillDoubleBowlingBash::SkillDoubleBowlingBash() : SkillImpl(HN_DOUBLEBOWLINGBASH) {
 }
 
-void SkillDoubleBowlingBash::modifyDamageData(Damage* wd, block_list* src, block_list* target, uint16 skill_lv, int32 mflag) const {
-	if (wd->miscflag > 1) {
-		wd->div_ += min(4, wd->miscflag);
+void SkillDoubleBowlingBash::modifyDamageData(Damage& wd, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
+	if (wd.miscflag > 1) {
+		wd.div_ += min(4, wd.miscflag);
 	}
 }
 

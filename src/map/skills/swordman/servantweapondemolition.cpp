@@ -13,11 +13,11 @@
 SkillServantWeaponDemolition::SkillServantWeaponDemolition() : SkillImplRecursiveDamageSplash(DK_SERVANT_W_DEMOL) {
 }
 
-void SkillServantWeaponDemolition::modifyDamageData(Damage* wd, block_list* src, block_list* target, uint16 skill_lv, int32 mflag) const {
-	const map_session_data* sd = BL_CAST(BL_PC, src);
+void SkillServantWeaponDemolition::modifyDamageData(Damage& wd, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
+	const map_session_data* sd = BL_CAST(BL_PC, &src);
 
-	if (sd != nullptr && (sd->servantball + sd->servantball_old) < wd->div_)
-		wd->div_ = sd->servantball + sd->servantball_old;
+	if (sd != nullptr && (sd->servantball + sd->servantball_old) < wd.div_)
+		wd.div_ = sd->servantball + sd->servantball_old;
 }
 
 void SkillServantWeaponDemolition::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {

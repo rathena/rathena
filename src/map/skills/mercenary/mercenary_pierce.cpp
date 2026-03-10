@@ -8,10 +8,10 @@
 SkillMercenaryPierce::SkillMercenaryPierce() : WeaponSkillImpl(ML_PIERCE) {
 }
 
-void SkillMercenaryPierce::modifyDamageData(Damage* wd, block_list* src, block_list* target, uint16 skill_lv, int32 mflag) const {
+void SkillMercenaryPierce::modifyDamageData(Damage& wd, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
 	const status_data* tstatus = status_get_status_data(*target);
 
-	wd->div_= (wd->div_> 0 ? tstatus->size+1 : -(tstatus->size+1));
+	wd.div_= (wd.div_> 0 ? tstatus->size+1 : -(tstatus->size+1));
 }
 
 void SkillMercenaryPierce::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio, int32 mflag) const {
