@@ -5980,17 +5980,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 	//Infinite defense (plant mode)
 	flag.infdef = is_infinite_defense(target, ad.flag)?1:0;
 
-	switch(skill_id) {
-		case MG_FIREWALL:
-			if (tstatus->def_ele == ELE_FIRE || battle_check_undead(tstatus->race, tstatus->def_ele)) {
-				ad.blewcount = 0; //No knockback
-				// Fire and undead units hit by firewall cannot be stopped for 2 seconds
-				if (unit_data* ud = unit_bl2ud(target); ud != nullptr)
-					ud->endure_tick = gettick() + 2000;
-			}
-			break;
-	}
-
 	if (!flag.infdef) { //No need to do the math for plants
 		int32 skillratio = 100; //Skill dmg modifiers.
 		if (sd != nullptr)
