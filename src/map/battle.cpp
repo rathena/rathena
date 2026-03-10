@@ -6511,6 +6511,10 @@ struct Damage battle_calc_misc_attack(block_list *src,block_list *target,uint16 
 	//Skill Range Criteria
 	md.flag |= battle_range_type(src, target, skill_id, skill_lv);
 
+	if (skill != nullptr && skill->impl != nullptr) {
+		skill->impl->modifyDamageData(&md, src, target, skill_lv, mflag);
+	}
+
 	switch (skill_id) {
 		case TF_THROWSTONE:
 			if (sd)
