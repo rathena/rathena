@@ -14584,6 +14584,7 @@ Body:
     Cooldown: 500
     Requires:
       SpCost: 8
+    Status: Hiding
   - Id: 529
     Name: NJ_SHADOWJUMP
     Description: Shadow Leap
