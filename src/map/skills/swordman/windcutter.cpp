@@ -13,15 +13,15 @@
 SkillWindCutter::SkillWindCutter() : SkillImpl(RK_WINDCUTTER) {
 }
 
-void SkillWindCutter::modifyDamageData(Damage& wd, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
+void SkillWindCutter::modifyDamageData(Damage& dmg, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
 	const map_session_data* sd = BL_CAST(BL_PC, &src);
 
 	if (sd != nullptr) {
 		if (sd->status.weapon == W_1HSPEAR || sd->status.weapon == W_2HSPEAR)
-			wd.flag |= BF_LONG;
+			dmg.flag |= BF_LONG;
 
 		if (sd->weapontype1 == W_2HSWORD)
-			wd.div_ = 2;
+			dmg.div_ = 2;
 	}
 }
 

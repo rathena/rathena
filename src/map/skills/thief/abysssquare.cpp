@@ -11,9 +11,9 @@
 SkillAbyssSquare::SkillAbyssSquare() : SkillImpl(ABC_ABYSS_SQUARE) {
 }
 
-void SkillAbyssSquare::modifyDamageData(Damage& ad, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
+void SkillAbyssSquare::modifyDamageData(Damage& dmg, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
 	if (mflag == 2)
-		ad.div_ = 2;
+		dmg.div_ = 2;
 }
 
 void SkillAbyssSquare::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {

@@ -9,9 +9,9 @@
 SkillSonicClaw::SkillSonicClaw() : SkillImpl(MH_SONIC_CRAW) {
 }
 
-void SkillSonicClaw::modifyDamageData(Damage& wd, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
+void SkillSonicClaw::modifyDamageData(Damage& dmg, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
 	if(const homun_data* hd = BL_CAST(BL_HOM, &src); hd != nullptr){
-		wd.div_ = hd->homunculus.spiritball;
+		dmg.div_ = hd->homunculus.spiritball;
 	}
 }
 

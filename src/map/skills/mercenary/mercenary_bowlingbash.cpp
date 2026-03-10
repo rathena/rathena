@@ -12,8 +12,8 @@
 SkillMercenaryBowlingBash::SkillMercenaryBowlingBash() : WeaponSkillImpl(MS_BOWLINGBASH) {
 }
 
-void SkillMercenaryBowlingBash::modifyDamageData(Damage& wd, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
-	wd.blewcount = 0;
+void SkillMercenaryBowlingBash::modifyDamageData(Damage& dmg, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
+	dmg.blewcount = 0;
 }
 
 void SkillMercenaryBowlingBash::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio, int32 mflag) const {

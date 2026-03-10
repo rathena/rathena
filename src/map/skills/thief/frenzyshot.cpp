@@ -11,9 +11,9 @@
 SkillFrenzyShot::SkillFrenzyShot() : WeaponSkillImpl(ABC_FRENZY_SHOT) {
 }
 
-void SkillFrenzyShot::modifyDamageData(Damage& wd, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
+void SkillFrenzyShot::modifyDamageData(Damage& dmg, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
 	if (rnd_chance(5 * skill_lv, 100)) {
-		wd.div_ = 3;
+		dmg.div_ = 3;
 	}
 }
 

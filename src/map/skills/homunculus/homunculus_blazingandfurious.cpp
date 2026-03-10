@@ -13,11 +13,11 @@
 SkillBlazingAndFurious::SkillBlazingAndFurious() : SkillImplRecursiveDamageSplash(MH_BLAZING_AND_FURIOUS) {
 }
 
-void SkillBlazingAndFurious::modifyDamageData(Damage& wd, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
+void SkillBlazingAndFurious::modifyDamageData(Damage& dmg, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
 	const homun_data *hd = BL_CAST(BL_HOM, &src);
 
 	if (hd != nullptr) {
-		wd.div_ = hd->homunculus.spiritball;
+		dmg.div_ = hd->homunculus.spiritball;
 		hom_delspiritball(const_cast<homun_data*>(hd), MAX_SPIRITBALL, 1);
 	}
 }

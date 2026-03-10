@@ -8,8 +8,8 @@
 SkillCounterAttack::SkillCounterAttack() : SkillImpl(KN_AUTOCOUNTER) {
 }
 
-void SkillCounterAttack::modifyDamageData(Damage& wd, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
-	wd.flag = (wd.flag&~BF_SKILLMASK)|BF_NORMAL;
+void SkillCounterAttack::modifyDamageData(Damage& dmg, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
+	dmg.flag = (dmg.flag&~BF_SKILLMASK)|BF_NORMAL;
 }
 
 void SkillCounterAttack::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {

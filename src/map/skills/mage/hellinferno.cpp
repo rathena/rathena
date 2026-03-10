@@ -11,9 +11,9 @@
 SkillHellInferno::SkillHellInferno() : SkillImpl(WL_HELLINFERNO) {
 }
 
-void SkillHellInferno::modifyDamageData(Damage& ad, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
+void SkillHellInferno::modifyDamageData(Damage& dmg, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
 	if (mflag & 2) { // ELE_DARK
-		ad.div_ = -3;
+		dmg.div_ = -3;
 	}
 }
 

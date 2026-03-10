@@ -10,9 +10,9 @@
 SkillWarmthoftheStars::SkillWarmthoftheStars() : SkillImpl(SG_STAR_WARM) {
 }
 
-void SkillWarmthoftheStars::modifyDamageData(Damage& wd, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
+void SkillWarmthoftheStars::modifyDamageData(Damage& dmg, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
 	// A random 0~3 knockback bonus is added to the base knockback
-	wd.blewcount += rnd_value(0, 3);
+	dmg.blewcount += rnd_value(0, 3);
 }
 
 void SkillWarmthoftheStars::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {

@@ -44,11 +44,11 @@ void SkillCrimsonArrow::castendDamageId(block_list *src, block_list *target, uin
 SkillCrimsonArrowAttack::SkillCrimsonArrowAttack() : SkillImplRecursiveDamageSplash(AG_CRIMSON_ARROW_ATK) {
 }
 
-void SkillCrimsonArrowAttack::modifyDamageData(Damage& ad, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
+void SkillCrimsonArrowAttack::modifyDamageData(Damage& dmg, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
 	const status_change *sc = status_get_sc(&src);
 
 	if (sc != nullptr && sc->hasSCE(SC_CLIMAX)) {
-		ad.div_ = 2;
+		dmg.div_ = 2;
 	}
 }
 

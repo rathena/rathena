@@ -10,11 +10,11 @@
 SkillGroundDrift::SkillGroundDrift() : SkillImpl(GS_GROUNDDRIFT) {
 }
 
-void SkillGroundDrift::modifyDamageData(Damage& wd, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
+void SkillGroundDrift::modifyDamageData(Damage& dmg, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
 	const status_data* sstatus = status_get_status_data(src);
 
-	wd.amotion = sstatus->amotion;
-	wd.blewcount = 0;
+	dmg.amotion = sstatus->amotion;
+	dmg.blewcount = 0;
 }
 
 void SkillGroundDrift::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio, int32 mflag) const {

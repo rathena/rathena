@@ -20,11 +20,11 @@ void SkillFireWall::calculateSkillRatio(const Damage *wd, const block_list *src,
 	base_skillratio -= 50;
 }
 
-void SkillFireWall::modifyDamageData(Damage& ad, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
+void SkillFireWall::modifyDamageData(Damage& dmg, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
 	const status_data* tstatus = status_get_status_data(*target);
 
 	if (tstatus->def_ele == ELE_FIRE || battle_check_undead(tstatus->race, tstatus->def_ele)) {
-		ad.blewcount = 0; // No knockback
+		dmg.blewcount = 0; // No knockback
 
 		// Fire and undead units hit by firewall cannot be stopped for 2 seconds
 		if (unit_data* ud = unit_bl2ud(const_cast<block_list*>(target)); ud != nullptr)

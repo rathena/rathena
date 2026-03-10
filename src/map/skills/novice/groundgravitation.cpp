@@ -69,9 +69,9 @@ void SkillGroundGravitation::castendPos2(block_list* src, int32 x, int32 y, uint
 	}
 }
 
-void SkillGroundGravitation::modifyDamageData(Damage& ad, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
+void SkillGroundGravitation::modifyDamageData(Damage& dmg, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
 	if (mflag & SKILL_ALTDMG_FLAG) {
 		// Initial damage
-		ad.div_ = -2;
+		dmg.div_ = -2;
 	}
 }

@@ -13,18 +13,18 @@
 SkillBowlingBash::SkillBowlingBash() : SkillImpl(KN_BOWLINGBASH) {
 }
 
-void SkillBowlingBash::modifyDamageData(Damage& wd, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
+void SkillBowlingBash::modifyDamageData(Damage& dmg, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
 #ifdef RENEWAL
 	const map_session_data* sd = BL_CAST(BL_PC, &src);
 
 	if (sd != nullptr && sd->status.weapon == W_2HSWORD) {
-		if (wd.miscflag >= 2 && wd.miscflag <= 3)
-			wd.div_ = 3;
-		else if (wd.miscflag >= 4)
-			wd.div_ = 4;
+		if (dmg.miscflag >= 2 && dmg.miscflag <= 3)
+			dmg.div_ = 3;
+		else if (dmg.miscflag >= 4)
+			dmg.div_ = 4;
 	}
 #else
-	wd.blewcount = 0;
+	dmg.blewcount = 0;
 #endif
 }
 
