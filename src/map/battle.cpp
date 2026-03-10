@@ -4581,13 +4581,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 		skill->impl->calculateSkillRatio(wd, src, target, skill_lv, skillratio, 0);
 	}
 
-	switch(skill_id) {
-		case SKE_ALL_IN_THE_SKY:
-			// TODO: refactor
-			if (status_get_race(target) == RC_DEMIHUMAN || status_get_race(target) == RC_DEMON)
-				wd->div_ = 3;
-			break;
-	}
 	return skillratio;
 }
 
