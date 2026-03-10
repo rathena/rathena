@@ -14486,6 +14486,7 @@ Body:
           Amount: 26
         - Level: 10
           Amount: 28
+    Status: Hiding
   - Id: 529
     Name: NJ_SHADOWJUMP
     Description: Shadow Leap
