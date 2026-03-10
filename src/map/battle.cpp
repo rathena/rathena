@@ -5425,7 +5425,7 @@ static struct Damage initialize_weapon_data(const block_list* src, const block_l
 		wd.flag |= battle_range_type(src, target, skill_id, skill_lv);
 	} else {
 		// wd.flag from basic attacks
-		if (is_skill_using_arrow(src, skill_id) || (sc && sc->getSCE(SC_SOULATTACK)))
+		if (is_skill_using_arrow(src, skill_id) || (sc != nullptr && sc->hasSCE(SC_SOULATTACK)))
 			wd.flag |= BF_LONG;
 		else
 			wd.flag |= BF_SHORT;

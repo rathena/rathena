@@ -30,7 +30,7 @@ void SkillLightningBolt::modifyDamageData(Damage& dmg, const block_list& src, co
 	const status_change* sc = status_get_sc(&src);
 
 	if (sc != nullptr) {
-		if (sc->getSCE(SC_SPELLFIST) && (mflag & BF_SHORT)) {
+		if (sc->hasSCE(SC_SPELLFIST) && (mflag & BF_SHORT)) {
 			dmg.div_ = 1; // ad mods, to make it work similar to regular hits [Xazax]
 			dmg.flag = BF_WEAPON | BF_SHORT;
 			dmg.type = DMG_NORMAL;

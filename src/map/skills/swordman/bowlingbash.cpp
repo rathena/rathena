@@ -18,10 +18,10 @@ void SkillBowlingBash::modifyDamageData(Damage& dmg, const block_list& src, cons
 	const map_session_data* sd = BL_CAST(BL_PC, &src);
 
 	if (sd != nullptr && sd->status.weapon == W_2HSWORD) {
-		if (dmg.miscflag >= 2 && dmg.miscflag <= 3)
-			dmg.div_ = 3;
-		else if (dmg.miscflag >= 4)
+		if (dmg.miscflag >= 4)
 			dmg.div_ = 4;
+		else if (dmg.miscflag >= 2)
+			dmg.div_ = 3;
 	}
 #else
 	dmg.blewcount = 0;

@@ -17,7 +17,7 @@ void SkillKoCrossSlash::modifyDamageData(Damage& dmg, const block_list& src, con
 	const status_change *tsc = status_get_sc(target);
 
 	if (tsc != nullptr && tsc->hasSCE(SC_JYUMONJIKIRI))
-		dmg.div_ = dmg.div_ * -1;// needs more info
+		dmg.div_ *= -1; // TODO: needs more info
 }
 
 void SkillKoCrossSlash::applyAdditionalEffects(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const {

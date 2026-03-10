@@ -8,6 +8,7 @@
 #include "map/clif.hpp"
 #include "map/status.hpp"
 
+// TODO: refactor to SkillImplRecursiveDamageSplash
 SkillHellInferno::SkillHellInferno() : SkillImpl(WL_HELLINFERNO) {
 }
 
