@@ -5963,11 +5963,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 	//Initialize variables that will be used afterwards
 	s_ele = battle_get_magic_element(src, target, skill_id, skill_lv, mflag);
 
-	// Update Damage data based on skill
-	if (skill != nullptr && skill->impl != nullptr) {
-		skill->impl->modifyDamageData(ad, *src, target, skill_lv, mflag);
-	}
-
 	//Set miscellaneous data that needs be filled
 	if(sd) {
 		sd->state.arrow_atk = 0;
@@ -5976,6 +5971,11 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 
 	//Skill Range Criteria
 	ad.flag |= battle_range_type(src, target, skill_id, skill_lv);
+
+	// Update Damage data based on skill
+	if (skill != nullptr && skill->impl != nullptr) {
+		skill->impl->modifyDamageData(ad, *src, target, skill_lv, mflag);
+	}
 
 	//Infinite defense (plant mode)
 	flag.infdef = is_infinite_defense(target, ad.flag)?1:0;
