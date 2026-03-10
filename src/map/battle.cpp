@@ -5421,22 +5421,14 @@ static struct Damage initialize_weapon_data(const block_list* src, const block_l
 		wd.blewcount += battle_blewcount_bonus(sd, skill_id);
 
 	if (skill_id) {
+		// wd.flag from skills
 		wd.flag |= battle_range_type(src, target, skill_id, skill_lv);
-
-		switch(skill_id)
-		{
-			case TF_DOUBLE:
-			case GS_CHAINACTION:
-				// For NPC used skill.
-				wd.type = DMG_MULTI_HIT;
-				break;
-		}
 	} else {
-		bool is_long = false;
-
+		// wd.flag from basic attacks
 		if (is_skill_using_arrow(src, skill_id) || (sc && sc->getSCE(SC_SOULATTACK)))
-			is_long = true;
-		wd.flag |= is_long ? BF_LONG : BF_SHORT;
+			wd.flag |= BF_LONG;
+		else
+			wd.flag |= BF_SHORT;
 	}
 
 	return wd;
@@ -5524,6 +5516,7 @@ static struct Damage battle_calc_weapon_attack(block_list *src, block_list *targ
 
 	wd = initialize_weapon_data(src, target, skill_id, skill_lv, wflag);
 
+	// Update Damage data based on skill
 	if (std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id); skill != nullptr && skill->impl != nullptr) {
 		skill->impl->modifyDamageData(wd, *src, target, skill_lv, wflag);
 	}
@@ -5970,6 +5963,7 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 	//Initialize variables that will be used afterwards
 	s_ele = battle_get_magic_element(src, target, skill_id, skill_lv, mflag);
 
+	// Update Damage data based on skill
 	if (skill != nullptr && skill->impl != nullptr) {
 		skill->impl->modifyDamageData(ad, *src, target, skill_lv, mflag);
 	}
@@ -6110,47 +6104,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 
 				if (skill != nullptr && skill->impl != nullptr) {
 					skill->impl->calculateSkillRatio(&ad, src, target, skill_lv, skillratio, mflag);
-				}
-
-				switch(skill_id) {
-					case MG_FIREBOLT:
-					case MG_COLDBOLT:
-					case MG_LIGHTNINGBOLT:
-						if (sc) {
-							// TODO: Refactor
-							if (sc->getSCE(SC_SPELLFIST) && mflag & BF_SHORT) {
-								ad.div_ = 1; // ad mods, to make it work similar to regular hits [Xazax]
-								ad.flag = BF_WEAPON | BF_SHORT;
-								ad.type = DMG_NORMAL;
-							}
-						}
-						break;
-					case WZ_FIREPILLAR:
-						// TODO: Refactor
-						if (sd && ad.div_ > 0)
-							ad.div_ *= -1; //For players, damage is divided by number of hits
-						break;
-					case HN_GROUND_GRAVITATION:
-						if (mflag & SKILL_ALTDMG_FLAG) {
-							// Initial damage
-							// TODO: refactor / move elsewhere
-							ad.div_ = -2;
-						}
-						break;
-					case HN_JACK_FROST_NOVA:
-						if (mflag & SKILL_ALTDMG_FLAG) {
-							// Initial damage
-							// TODO: refactor / move elsewhere
-							ad.div_ = 1;	// 1 hit
-						}
-						break;
-					case HN_METEOR_STORM_BUSTER:
-						if (mflag & SKILL_ALTDMG_FLAG) {
-							// Fall damage
-							// TODO: refactor / move elsewhere
-							ad.div_ = -3;
-						}
-						break;
 				}
 
 				if (sc) {// Insignia's increases the damage of offensive magic by a fixed percentage depending on the element.
@@ -6504,6 +6457,7 @@ struct Damage battle_calc_misc_attack(block_list *src,block_list *target,uint16 
 	//Skill Range Criteria
 	md.flag |= battle_range_type(src, target, skill_id, skill_lv);
 
+	// Update Damage data based on skill
 	if (skill != nullptr && skill->impl != nullptr) {
 		skill->impl->modifyDamageData(md, *src, target, skill_lv, mflag);
 	}

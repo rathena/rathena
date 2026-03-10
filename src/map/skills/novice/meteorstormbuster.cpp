@@ -65,3 +65,10 @@ void SkillMeteorStormBuster::castendPos2(block_list* src, int32 x, int32 y, uint
 		skill_addtimerskill(src, tick + (t_tick)i*skill_get_time2(getSkillId(), skill_lv), 0, x, y, getSkillId(), skill_lv, 0, flag);
 	}
 }
+
+void SkillMeteorStormBuster::modifyDamageData(Damage& ad, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
+	if (mflag & SKILL_ALTDMG_FLAG) {
+		// Fall damage
+		ad.div_ = -3;
+	}
+}

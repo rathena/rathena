@@ -22,7 +22,18 @@ void SkillColdBolt::calculateSkillRatio(const Damage *wd, const block_list *src,
 	}
 }
 
-
 void SkillColdBolt::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 &flag) const {
 	skill_attack(BF_MAGIC, src, src, target, getSkillId(), skill_lv, tick, flag);
+}
+
+void SkillColdBolt::modifyDamageData(Damage& ad, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
+	const status_change* sc = status_get_sc(&src);
+
+	if (sc != nullptr) {
+		if (sc->getSCE(SC_SPELLFIST) && (mflag & BF_SHORT)) {
+			ad.div_ = 1; // ad mods, to make it work similar to regular hits [Xazax]
+			ad.flag = BF_WEAPON | BF_SHORT;
+			ad.type = DMG_NORMAL;
+		}
+	}
 }
