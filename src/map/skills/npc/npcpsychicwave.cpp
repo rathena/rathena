@@ -6,7 +6,7 @@
 SkillNpcPsychicWave::SkillNpcPsychicWave() : SkillImpl(NPC_PSYCHIC_WAVE) {
 }
 
-void SkillNpcPsychicWave::modifyDamageData(Damage& dmg, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
+void SkillNpcPsychicWave::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
 	const map_session_data* sd = BL_CAST(BL_PC, &src);
 
 	// Relevant modification for a NPC type skill ?

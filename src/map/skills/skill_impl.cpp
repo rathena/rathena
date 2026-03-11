@@ -42,7 +42,7 @@ void SkillImpl::applyCounterAdditionalEffects(block_list*, block_list*, uint16, 
 	// no-op
 }
 
-void SkillImpl::modifyDamageData(Damage&, const block_list&, const block_list*, uint16, int32) const {
+void SkillImpl::modifyDamageData(Damage&, const block_list&, const block_list&, uint16) const {
 	// no-op
 }
 

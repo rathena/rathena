@@ -27,8 +27,8 @@ void SkillAllInTheSky::calculateSkillRatio(const Damage* wd, const block_list* s
 	base_skillratio += 5 * sstatus->pow;
 }
 
-void SkillAllInTheSky::modifyDamageData(Damage& dmg, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
-	switch (status_get_race(target)) {
+void SkillAllInTheSky::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
+	switch (status_get_race(&target)) {
 		case RC_DEMIHUMAN:
 		case RC_DEMON:
 			dmg.div_ = 3;

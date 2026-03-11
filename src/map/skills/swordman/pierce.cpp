@@ -8,8 +8,8 @@
 SkillPierce::SkillPierce() : WeaponSkillImpl(KN_PIERCE) {
 }
 
-void SkillPierce::modifyDamageData(Damage& dmg, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
-	const status_data* tstatus = status_get_status_data(*target);
+void SkillPierce::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
+	const status_data* tstatus = status_get_status_data(target);
 
 	dmg.div_= (dmg.div_> 0 ? tstatus->size+1 : -(tstatus->size+1));
 }

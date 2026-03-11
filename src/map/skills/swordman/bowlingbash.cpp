@@ -13,7 +13,7 @@
 SkillBowlingBash::SkillBowlingBash() : SkillImpl(KN_BOWLINGBASH) {
 }
 
-void SkillBowlingBash::modifyDamageData(Damage& dmg, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
+void SkillBowlingBash::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
 #ifdef RENEWAL
 	const map_session_data* sd = BL_CAST(BL_PC, &src);
 

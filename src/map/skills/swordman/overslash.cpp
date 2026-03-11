@@ -14,7 +14,7 @@
 SkillOverSlash::SkillOverSlash() : SkillImplRecursiveDamageSplash(IG_OVERSLASH) {
 }
 
-void SkillOverSlash::modifyDamageData(Damage& dmg, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
+void SkillOverSlash::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
 	if (dmg.miscflag >= 4) {
 		dmg.div_ = 7;
 	} else if (dmg.miscflag >= 2) {

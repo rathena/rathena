@@ -5518,7 +5518,7 @@ static struct Damage battle_calc_weapon_attack(block_list *src, block_list *targ
 
 	// Update Damage data based on skill
 	if (std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id); skill != nullptr && skill->impl != nullptr) {
-		skill->impl->modifyDamageData(wd, *src, target, skill_lv, wflag);
+		skill->impl->modifyDamageData(wd, *src, *target, skill_lv);
 	}
 
 	right_element = battle_get_weapon_element(&wd, src, target, skill_id, skill_lv, EQI_HAND_R, false);
@@ -5974,7 +5974,7 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 
 	// Update Damage data based on skill
 	if (skill != nullptr && skill->impl != nullptr) {
-		skill->impl->modifyDamageData(ad, *src, target, skill_lv, mflag);
+		skill->impl->modifyDamageData(ad, *src, *target, skill_lv);
 	}
 
 	//Infinite defense (plant mode)
@@ -6448,7 +6448,7 @@ struct Damage battle_calc_misc_attack(block_list *src,block_list *target,uint16 
 
 	// Update Damage data based on skill
 	if (skill != nullptr && skill->impl != nullptr) {
-		skill->impl->modifyDamageData(md, *src, target, skill_lv, mflag);
+		skill->impl->modifyDamageData(md, *src, *target, skill_lv);
 	}
 
 	switch (skill_id) {

@@ -11,8 +11,8 @@
 SkillAbyssSquare::SkillAbyssSquare() : SkillImpl(ABC_ABYSS_SQUARE) {
 }
 
-void SkillAbyssSquare::modifyDamageData(Damage& dmg, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
-	if (mflag == 2)
+void SkillAbyssSquare::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
+	if (dmg.miscflag == 2)
 		dmg.div_ = 2;
 }
 

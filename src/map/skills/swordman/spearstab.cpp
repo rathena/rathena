@@ -8,7 +8,7 @@
 SkillSpearStab::SkillSpearStab() : SkillImpl(KN_SPEARSTAB) {
 }
 
-void SkillSpearStab::modifyDamageData(Damage& dmg, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
+void SkillSpearStab::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
 	dmg.blewcount = 0;
 }
 

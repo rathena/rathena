@@ -11,7 +11,7 @@
 SkillMayhemicThorns::SkillMayhemicThorns() : SkillImplRecursiveDamageSplash(BO_MAYHEMIC_THORNS) {
 }
 
-void SkillMayhemicThorns::modifyDamageData(Damage& dmg, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
+void SkillMayhemicThorns::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
 	const status_change *sc = status_get_sc(&src);
 
 	if (sc != nullptr && sc->hasSCE(SC_RESEARCHREPORT))

@@ -68,8 +68,8 @@ void SkillJackFrostNova::castendPos2(block_list* src, int32 x, int32 y, uint16 s
 	}
 }
 
-void SkillJackFrostNova::modifyDamageData(Damage& dmg, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
-	if (mflag & SKILL_ALTDMG_FLAG) {
+void SkillJackFrostNova::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
+	if (dmg.miscflag & SKILL_ALTDMG_FLAG) {
 		// Initial damage
 		dmg.div_ = 1;
 	}

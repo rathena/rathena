@@ -9,5 +9,5 @@ class SkillDoubleAttack : public WeaponSkillImpl {
 public:
 	SkillDoubleAttack();
 
-	void modifyDamageData(Damage& dmg, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const override;
+	void modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const override;
 };

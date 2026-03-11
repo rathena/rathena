@@ -13,7 +13,7 @@
 SkillWindCutter::SkillWindCutter() : SkillImpl(RK_WINDCUTTER) {
 }
 
-void SkillWindCutter::modifyDamageData(Damage& dmg, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
+void SkillWindCutter::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
 	const map_session_data* sd = BL_CAST(BL_PC, &src);
 
 	if (sd != nullptr) {

@@ -10,7 +10,7 @@
 SkillGroundDrift::SkillGroundDrift() : SkillImpl(GS_GROUNDDRIFT) {
 }
 
-void SkillGroundDrift::modifyDamageData(Damage& dmg, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
+void SkillGroundDrift::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
 	const status_data* sstatus = status_get_status_data(src);
 
 	dmg.amotion = sstatus->amotion;

@@ -66,8 +66,8 @@ void SkillMeteorStormBuster::castendPos2(block_list* src, int32 x, int32 y, uint
 	}
 }
 
-void SkillMeteorStormBuster::modifyDamageData(Damage& dmg, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
-	if (mflag & SKILL_ALTDMG_FLAG) {
+void SkillMeteorStormBuster::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
+	if (dmg.miscflag & SKILL_ALTDMG_FLAG) {
 		// Fall damage
 		dmg.div_ = -3;
 	}

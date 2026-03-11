@@ -12,7 +12,7 @@
 SkillThirdFlameBomb::SkillThirdFlameBomb() : SkillImplRecursiveDamageSplash(IQ_THIRD_FLAME_BOMB) {
 }
 
-void SkillThirdFlameBomb::modifyDamageData(Damage& dmg, const block_list& src, const block_list* target, uint16 skill_lv, int32 mflag) const {
+void SkillThirdFlameBomb::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
 	dmg.div_ = min(dmg.div_ + dmg.miscflag, 3); // Number of hits doesn't go above 3.
 }
 
