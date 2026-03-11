@@ -18,7 +18,6 @@ void SkillBlazingAndFurious::modifyDamageData(Damage& dmg, const block_list& src
 
 	if (hd != nullptr) {
 		dmg.div_ = hd->homunculus.spiritball;
-		hom_delspiritball(const_cast<homun_data*>(hd), MAX_SPIRITBALL, 1);
 	}
 }
 

@@ -25,9 +25,5 @@ void SkillFireWall::modifyDamageData(Damage& dmg, const block_list& src, const b
 
 	if (tstatus->def_ele == ELE_FIRE || battle_check_undead(tstatus->race, tstatus->def_ele)) {
 		dmg.blewcount = 0; // No knockback
-
-		// Fire and undead units hit by firewall cannot be stopped for 2 seconds
-		if (unit_data* ud = unit_bl2ud(const_cast<block_list*>(&target)); ud != nullptr)
-			ud->endure_tick = gettick() + 2000;
 	}
 }
