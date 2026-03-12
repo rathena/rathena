@@ -7,6 +7,8 @@
 
 #include <common/random.hpp>
 
+#include <common/random.hpp>
+
 #include "map/clif.hpp"
 #include "map/status.hpp"
 
