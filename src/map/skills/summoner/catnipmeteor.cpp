@@ -14,7 +14,7 @@
 SkillCatnipMeteor::SkillCatnipMeteor() : SkillImpl(SU_CN_METEOR) {
 }
 
-void SkillCatnipMeteor::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& skillratio, int32 mflag) const {
+void SkillCatnipMeteor::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
 	skillratio += -100 + 200 + 100 * skill_lv;
 
 	if (status_get_lv(src) > 99) {
