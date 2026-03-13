@@ -1691,7 +1691,8 @@ int32 clif_spawn( const block_list* bl, bool walking ){
 		return 0;
 	}
 
-	if( bl->type == BL_NPC && !vd->dead_sit ){
+	npc_data* nd = BL_CAST( BL_NPC, bl );
+	if( nd != nullptr && !vd->dead_sit && nd->dynamicnpc.owner_char_id == 0 ){
 		clif_set_unit_idle( bl, walking, AREA_WOS, bl );
 	}else{
 		clif_spawn_unit( bl, AREA_WOS );
