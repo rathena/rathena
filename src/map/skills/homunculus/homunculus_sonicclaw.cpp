@@ -10,7 +10,9 @@ SkillSonicClaw::SkillSonicClaw() : SkillImpl(MH_SONIC_CRAW) {
 }
 
 void SkillSonicClaw::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
-	if(const homun_data* hd = BL_CAST(BL_HOM, &src); hd != nullptr){
+	const homun_data *hd = BL_CAST(BL_HOM, &src);
+
+	if (hd != nullptr) {
 		dmg.div_ = hd->homunculus.spiritball;
 	}
 }

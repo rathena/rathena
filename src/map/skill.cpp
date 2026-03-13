@@ -1094,7 +1094,7 @@ bool skill_isNotOk_hom(homun_data *hd, uint16 skill_id, uint16 skill_lv)
 
 		// Blazing And Furious removes all spirit balls after calculating the amount of hits
 		if (skill_id != MH_BLAZING_AND_FURIOUS)
-			hom_delspiritball(hd, spiritball, 1);
+			hom_delspiritball(hd, spiritball, 1);	// TODO: no update on the client ?
 	}
 
 	//Use master's criteria.
@@ -2969,6 +2969,12 @@ int64 skill_attack (int32 attack_type, block_list* src, block_list *dsrc, block_
 				// Fire and undead units hit by firewall cannot be stopped for 2 seconds
 				if (unit_data* ud = unit_bl2ud(bl); ud != nullptr)
 					ud->endure_tick = gettick() + 2000;
+			}
+			break;
+		case MH_BLAZING_AND_FURIOUS:
+			if (homun_data *hd = BL_CAST(BL_HOM, src); hd != nullptr) {
+				// TODO: no update on the client ?
+				hom_delspiritball(hd, MAX_SPIRITBALL, 1);
 			}
 			break;
 	}
@@ -4969,11 +4975,6 @@ TIMER_FUNC(skill_castend_id){
 				ud->skilly = target->y;
 				ud->skilltimer = tid;
 				return skill_castend_pos(tid,tick,id,data);
-			case MH_BLAZING_AND_FURIOUS:
-				if (homun_data *hd = BL_CAST(BL_HOM, src); hd != nullptr) {
-					hom_delspiritball(hd, MAX_SPIRITBALL, 1);
-				}
-				break;
 		}
 
 		// Failing

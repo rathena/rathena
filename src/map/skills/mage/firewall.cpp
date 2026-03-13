@@ -4,7 +4,6 @@
 #include "firewall.hpp"
 
 #include "map/status.hpp"
-#include "map/unit.hpp"
 
 SkillFireWall::SkillFireWall() : SkillImpl(MG_FIREWALL) {
 }
