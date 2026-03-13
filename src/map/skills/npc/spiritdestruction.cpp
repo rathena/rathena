@@ -11,13 +11,32 @@ SkillSpiritDestruction::SkillSpiritDestruction() : WeaponSkillImpl(NPC_MENTALBRE
 }
 
 void SkillSpiritDestruction::applyAdditionalEffects(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const {
-	status_data* sstatus = status_get_status_data(*src);
+	//SP Damage 12%/16%/25%/50%/100% of MaxSP
+	int32 rate;
+	switch (skill_lv) {
+		case 1:
+			rate = 12;
+			break;
+		case 2:
+			rate = 16;
+			break;
+		case 3:
+			rate = 25;
+			break;
+		case 4:
+			rate = 50;
+			break;
+		case 5:
+			rate = 100;
+			break;
+		default:
+			// For easy customization
+			rate = skill_lv;
+			break;
+	}
+	status_percent_damage(src, target, 0, -rate, false);
+}
 
-	//Based on observations by Tharis, Mental Breaker should do SP damage
-	//equal to Matk*skLevel.
-	int32 rate = sstatus->matk_min;
-	if (rate < sstatus->matk_max)
-		rate += rnd()%(sstatus->matk_max - sstatus->matk_min);
-	rate*=skill_lv;
-	status_zap(target, 0, rate);
+void SkillSpiritDestruction::modifyHitRate(int16& hit_rate, const block_list* src, const block_list* target, uint16 skill_lv) const {
+	hit_rate += hit_rate * 20 / 100;
 }
