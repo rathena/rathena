@@ -38,14 +38,12 @@ int64 SkillHowlingOfLion::splashDamage(block_list* src, block_list* target, uint
 	status_change_end(target, SC_UNLIMITEDHUMMINGVOICE);
 
 	int32 sflag = flag|SD_ANIMATION;
-	SkillImplRecursiveDamageSplash::splashDamage(src, target, skill_lv, tick, sflag);
+	return SkillImplRecursiveDamageSplash::splashDamage(src, target, skill_lv, tick, sflag);
 }
 
 void SkillHowlingOfLion::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	clif_skill_nodamage(src,*target,getSkillId(),skill_lv);
 	skill_castend_damage_id(src, target, getSkillId(), skill_lv, tick, flag);
-}
-
 }
 
 int32 SkillHowlingOfLion::getSplashTarget(block_list* src) const {
