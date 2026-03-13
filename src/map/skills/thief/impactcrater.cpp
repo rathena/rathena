@@ -3,7 +3,7 @@
 
 #include "impactcrater.hpp"
 
-#include <config/const.hpp>
+#include <config/core.hpp>
 
 #include "map/clif.hpp"
 #include "map/status.hpp"
@@ -20,12 +20,9 @@ void SkillImpactCrater::calculateSkillRatio(const Damage *wd, const block_list *
 
 void SkillImpactCrater::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	sc_type type = skill_get_sc(getSkillId());
-	int32 starget = BL_CHAR|BL_SKILL;
 
 	sc_start(src, target, type, 100, skill_lv, skill_get_time(getSkillId(), skill_lv));
 
-	skill_area_temp[1] = 0;
 	clif_skill_nodamage(src,*target,getSkillId(),skill_lv);
-	map_foreachinrange(skill_area_sub, target, skill_get_splash(getSkillId(), skill_lv), starget,
-			src, getSkillId(), skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
+	skill_castend_damage_id(src, target, getSkillId(), skill_lv, tick, flag);
 }
