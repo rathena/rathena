@@ -50,11 +50,10 @@ jobs:
           fi
 
   analyze:
-    # Temporary: disabled to isolate Windows CI while the MSVS lane is being fixed.
-    if: ${{ false }}
     needs: changes
     # Github Actions checks for '[ci skip]', '[skip ci]', '[no ci]', '[skip actions]', or '[actions skip]' but not a hyphenated version.
     # It's a catch-all incase a Pull Request has been opened and someone is on auto-pilot.
+    if: ${{ needs.changes.outputs.should_run == 'true' && !contains(github.event.head_commit.message, 'ci-skip') }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -121,10 +120,10 @@ jobs:
 
   codeql-required:
     name: CodeQL required
-    if: ${{ false }}
     needs:
       - changes
       - analyze
+    if: ${{ always() }}
     runs-on: ubuntu-latest
 
     steps:
