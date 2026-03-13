@@ -136,6 +136,12 @@
 #     Target                  Skill unit target type. (Default: All)
 #     Flag:                   Skill unit flags. (Default: None)
 #   Status                    Status Change that is associated to the skill. (Optional)
+#   AutoSpell:                SA_AUTOSPELL (Hindsight) integration. (Optional)
+#     UnlockedAtLevel         Minimum SA_AUTOSPELL level required to offer this spell to players
+#                             and for NPC/mob auto-cast eligibility.
+#     MobMaxCastLevel         Upper bound on NPC/mob AI cast level.
+#                             Actual cast level = max(1, min(SA_AUTOSPELL_lv / 2, MobMaxCastLevel)).
+#                             No effect on player characters. (Default: 0, no cap)
 ###########################################################################
 
 Header:
@@ -517,6 +523,9 @@ Body:
     Name: MG_SOULSTRIKE
     Description: Soul Strike
     MaxLevel: 10
+    AutoSpell:
+        UnlockedAtLevel: 4
+        MobMaxCastLevel: 3
     Type: Magic
     TargetType: Attack
     Flags:
@@ -578,6 +587,9 @@ Body:
     Name: MG_COLDBOLT
     Description: Cold Bolt
     MaxLevel: 10
+    AutoSpell:
+        UnlockedAtLevel: 1
+        MobMaxCastLevel: 3
     Type: Magic
     TargetType: Attack
     Flags:
@@ -679,6 +691,9 @@ Body:
     Name: MG_FROSTDIVER
     Description: Frost Diver
     MaxLevel: 10
+    AutoSpell:
+        UnlockedAtLevel: 7
+        MobMaxCastLevel: 1
     Type: Magic
     TargetType: Attack
     Flags:
@@ -786,6 +801,9 @@ Body:
     Name: MG_FIREBALL
     Description: Fire Ball
     MaxLevel: 10
+    AutoSpell:
+        UnlockedAtLevel: 4
+        MobMaxCastLevel: 3
     Type: Magic
     TargetType: Attack
     DamageFlags:
@@ -924,6 +942,9 @@ Body:
     Name: MG_FIREBOLT
     Description: Fire Bolt
     MaxLevel: 10
+    AutoSpell:
+        UnlockedAtLevel: 1
+        MobMaxCastLevel: 3
     Type: Magic
     TargetType: Attack
     Flags:
@@ -1025,6 +1046,9 @@ Body:
     Name: MG_LIGHTNINGBOLT
     Description: Lightning Bolt
     MaxLevel: 10
+    AutoSpell:
+        UnlockedAtLevel: 1
+        MobMaxCastLevel: 3
     Type: Magic
     TargetType: Attack
     Flags:
@@ -1126,6 +1150,9 @@ Body:
     Name: MG_THUNDERSTORM
     Description: Thunderstorm
     MaxLevel: 10
+    AutoSpell:
+        UnlockedAtLevel: 10
+        MobMaxCastLevel: 3
     Type: Magic
     TargetType: Ground
     Flags:
@@ -3670,6 +3697,9 @@ Body:
     Name: WZ_EARTHSPIKE
     Description: Earth Spike
     MaxLevel: 5
+    AutoSpell:
+        UnlockedAtLevel: 7
+        MobMaxCastLevel: 3
     Type: Magic
     TargetType: Attack
     Flags:
@@ -3731,6 +3761,9 @@ Body:
     Name: WZ_HEAVENDRIVE
     Description: Heaven's Drive
     MaxLevel: 5
+    AutoSpell:
+        UnlockedAtLevel: 10
+        MobMaxCastLevel: 3
     Type: Magic
     TargetType: Ground
     Flags:
