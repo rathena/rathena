@@ -4,7 +4,6 @@
 #include "spiralpierce.hpp"
 
 #include <config/core.hpp>
-#include <config/core.hpp>
 
 #include "map/mob.hpp"
 #include "map/pc.hpp"

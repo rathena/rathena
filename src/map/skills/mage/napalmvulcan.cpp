@@ -4,7 +4,6 @@
 #include "napalmvulcan.hpp"
 
 #include <config/core.hpp>
-#include <config/core.hpp>
 
 #include "map/status.hpp"
 
