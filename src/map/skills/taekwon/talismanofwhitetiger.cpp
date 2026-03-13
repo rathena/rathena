@@ -3,7 +3,7 @@
 
 #include "talismanofwhitetiger.hpp"
 
-#include <config/const.hpp>
+#include <config/core.hpp>
 
 #include "map/pc.hpp"
 #include "map/status.hpp"
