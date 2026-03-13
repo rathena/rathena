@@ -10284,6 +10284,8 @@ Body:
     Title: Time for two
   - Id: 14123
     Title: Wuharu's favor
+  - Id: 14124
+    Title: First Request
   - Id: 14125
     Title: Surveying the area
   - Id: 14126
@@ -10295,6 +10297,8 @@ Body:
   - Id: 14131
     Title: Analysis time
     TimeLimit: +5mn
+  - Id: 14132
+    Title: Our Research
   - Id: 14133
     Title: Another favor
   - Id: 14134
@@ -10379,15 +10383,231 @@ Body:
   - Id: 14273
     Title: Wind Habit
     TimeLimit: 4h
+  - Id: 14292
+    Title: Suspicious marks
+  - Id: 14293
+    Title: Suspicious marks
+  - Id: 14294
+    Title: Suspicious marks
+  - Id: 14295
+    Title: To Aldebaran
+  - Id: 14296
+    Title: Frank is over there
+  - Id: 14297
+    Title: You are in the inn
+  - Id: 14298
+    Title: Helping Hand
+  - Id: 14299
+    Title: I'm running out of nowhere
+  - Id: 14300
+    Title: Leave a place nearby!
+  - Id: 14301
+    Title: Means of Convoy
+  - Id: 14302
+    Title: Research
+  - Id: 14303
+    Title: Surrounding
+  - Id: 14304
+    Title: Report to Master
+  - Id: 14305
+    Title: document decoding
+  - Id: 14306
+    Title: Material for Experiment
+  - Id: 14307
+    Title: Material for Experiment
+  - Id: 14308
+    Title: Report to Master
+  - Id: 14309
+    Title: deliver summons
+  - Id: 14310
+    Title: Back to Aldebaran
+  - Id: 14311
+    Title: The Lost Criminal
+  - Id: 14312
+    Title: Isrudro
+  - Id: 14313
+    Title: Report to Master
+  - Id: 14314
+    Title: For research
+    Targets:
+      - Mob: C4_ANACONDAQ
+        Count: 30
+      - Mob: GALION
+        Count: 100
+  - Id: 14315
+    Targets:
+      - Mob: PINGUICULA_D
+        Count: 150
+    Title: For research
   - Id: 14316
     Title: One week break
     TimeLimit: 7d 4h
+  - Id: 14317
+    Title: Very simple delivery
+  - Id: 14318
+    Title: errand
+  - Id: 14319
+    Title: Add Delivery
+  - Id: 14320
+    Title: hat parts
+  - Id: 14321
+    Title: To Lighthalzen
+  - Id: 14322
+    Title: Parts for reassembly
+  - Id: 14323
+    Title: Parts for reassembly
+  - Id: 14324
+    Title: Box Delivery
+  - Id: 14325
+    Title: Report to Master
+  - Id: 14326
+    Title: Isrudro
+  - Id: 14327
+    Title: To Clan Master
+  - Id: 14328
+    Title: Manuscript recovery
+    Drops:
+      - Mob: TEDDY_BEAR
+        Item: Blood_Pus_Script
+        Rate: 2000
+  - Id: 14329
+    Title: Manuscript recovery
+    Drops:
+      - Mob: LICHTERN_B
+        Item: Blood_Pus_Script
+        Rate: 2000
+  - Id: 14330
+    Title: Investigate the Wall
+  - Id: 14331
+    Title: Investigate the Wall
+  - Id: 14332
+    Title: Investigate the Wall
+  - Id: 14333
+    Title: Investigate the Wall
+  - Id: 14334
+    Title: Investigate the Wall
+  - Id: 14335
+    Title: Investigate the Wall
+  - Id: 14336
+    Title: Investigate the Wall
+  - Id: 14337
+    Title: To Senior Seoksu
+  - Id: 14338
+    Title: Necessary Stone
+  - Id: 14339
+    Title: Necessary Stone
+  - Id: 14340
+    Title: To Aldebaran
+  - Id: 14341
+    Title: Material of neutralizer
+  - Id: 14342
+    Title: Material of neutralizer
+  - Id: 14343
+    Title: To Senior Seoksu
+  - Id: 14344
+    Title: Additional Materials
+  - Id: 14345
+    Title: Spray neutralizer
+  - Id: 14346
+    Title: Spray neutralizer
+  - Id: 14347
+    Title: Spray neutralizer
+  - Id: 14348
+    Title: Spray neutralizer
+  - Id: 14349
+    Title: Spray neutralizer
+  - Id: 14350
+    Title: Spray neutralizer
+  - Id: 14351
+    Title: To Sandarman
+  - Id: 14352
+    Title: Paros Lighthouse
+  - Id: 14353
+    Title: If Kim ...?
+  - Id: 14354
+    Title: To the guard again
+  - Id: 14355
+    Title: Report to Master
+  - Id: 14356
+    Title: Isrudro
+  - Id: 14357
+    Title: Report to Master
+  - Id: 14358
+    Title: Collect Stone
+    Drops:
+      - Mob: STALACTIC_GOLEM
+        Item: Very_Hard_Stone
+        Rate: 3000
+  - Id: 14359
+    Title: Collect Stone
+    Drops:
+      - Mob: BRADIUM_GOLEM
+        Item: Very_Hard_Stone
+        Rate: 3000
+  - Id: 14360
+    Title: Morroc
+  - Id: 14361
+    Title: Report to Master
+  - Id: 14362
+    Title: Comodo Road
+  - Id: 14363
+    Title: Grandfather's Will
+  - Id: 14364
+    Title: Heart Heritage
+  - Id: 14365
+    Title: Red Gem
+  - Id: 14366
+    Title: Red Jewel
+  - Id: 14367
+    Title: Yellow Gem
+  - Id: 14368
+    Title: Green Gem
+  - Id: 14369
+    Title: Transparent Gem
+  - Id: 14370
+    Title: Blue Gem
+  - Id: 14371
+    Title: Purple Gem
+  - Id: 14372
+    Title: Let's make a bunch of flowers
   - Id: 14386
     Title: 24 hours
     TimeLimit: 4h
   - Id: 14401
     Title: 24 hours
     TimeLimit: 4h
+  - Id: 14405
+    Title: Flower Delivery
+  - Id: 14406
+    Title: Tomb Street
+  - Id: 14407
+    Title: Find an order expert
+  - Id: 14408
+    Title: I need a sacrifice
+  - Id: 14409
+    Title: I need a sacrifice
+  - Id: 14410
+    Title: Your order has been released
+  - Id: 14411
+    Title: Morroc
+  - Id: 14412
+    Title: Comodo Road
+  - Id: 14413
+    Title: Report to Master
+  - Id: 14414
+    Title: Isrudro
+  - Id: 14415
+    Title: Report to Master
+  - Id: 14416
+    Title: Capture for Research
+    Targets:
+      - Mob: C4_INJUSTICE
+        Count: 50
+  - Id: 14417
+    Title: Capture for Research
+    Targets:
+      - Mob: C1_LOLI_RURI
+        Count: 50
   - Id: 14442
     Title: Classification time
     TimeLimit: 4h
