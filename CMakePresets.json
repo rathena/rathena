@@ -12,8 +12,7 @@
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build",
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release",
-        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/.vcpkg/scripts/buildsystems/vcpkg.cmake"
+        "CMAKE_BUILD_TYPE": "Release"
       }
     },
     {
@@ -28,10 +27,7 @@
       "name": "msvs",
       "displayName": "Visual Studio 2022 + vcpkg",
       "generator": "Visual Studio 17 2022",
-      "binaryDir": "${sourceDir}/build-msvs",
-      "cacheVariables": {
-        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/.vcpkg/scripts/buildsystems/vcpkg.cmake"
-      }
+      "binaryDir": "${sourceDir}/build-msvs"
     }
   ],
   "buildPresets": [
