@@ -493,6 +493,16 @@ endif()
 
 
 #
+# Enable pre-renewal mode (default=OFF)
+#
+option( ENABLE_PRERE "compile in pre-renewal mode (default=OFF)" OFF )
+if( ENABLE_PRERE )
+	set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DPRERE" )
+	message( STATUS "Enabled pre-renewal mode" )
+endif()
+
+
+#
 # Enable extra buildbot code (default=OFF)
 #
 option( ENABLE_EXTRA_BUILDBOT_CODE "enable extra buildbot code (default=OFF)" OFF )
