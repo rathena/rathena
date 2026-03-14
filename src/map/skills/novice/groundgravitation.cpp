@@ -68,3 +68,10 @@ void SkillGroundGravitation::castendPos2(block_list* src, int32 x, int32 y, uint
 		skill_addtimerskill(src, tick + (t_tick)i*skill_get_unit_interval(getSkillId()), 0, x, y, getSkillId(), skill_lv, 0, flag);
 	}
 }
+
+void SkillGroundGravitation::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
+	if (dmg.miscflag & SKILL_ALTDMG_FLAG) {
+		// Initial damage
+		dmg.div_ = -2;
+	}
+}

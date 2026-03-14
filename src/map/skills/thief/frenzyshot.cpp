@@ -3,12 +3,20 @@
 
 #include "frenzyshot.hpp"
 
+#include <common/random.hpp>
+
 #include <config/core.hpp>
 
 #include "map/clif.hpp"
 #include "map/status.hpp"
 
 SkillFrenzyShot::SkillFrenzyShot() : WeaponSkillImpl(ABC_FRENZY_SHOT) {
+}
+
+void SkillFrenzyShot::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
+	if (rnd_chance(5 * skill_lv, 100)) {
+		dmg.div_ = 3;
+	}
 }
 
 void SkillFrenzyShot::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
