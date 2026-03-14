@@ -12917,10 +12917,12 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 			case BS_ENCHANTEDSTONE:
 				// Ores & Metals Refining - skill bonuses are straight from kRO website [DracoRPG]
 				i = pc_checkskill(sd,skill_id);
-				make_per = sd->status.job_level*20 + status->dex*10 + status->luk*10; //Base chance
+				//Base chance
+				make_per = sd->status.job_level * 20 + status->dex * 10 + status->luk * 10;
+				make_per += rnd_value(1, 100) * 10;
 				switch (nameid) {
 					case ITEMID_IRON:
-						make_per += 4000+i*500; // Temper Iron bonus: +26/+32/+38/+44/+50
+						make_per += 4000+i*500; // Temper Iron bonus: +45/+50/+55/+60/+65
 						break;
 					case ITEMID_STEEL:
 						make_per += 3000+i*500; // Temper Steel bonus: +35/+40/+45/+50/+55
@@ -12984,6 +12986,9 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 				}
 				if (battle_config.pp_rate != 100)
 					make_per = make_per * battle_config.pp_rate / 100;
+				// Baby classes receive a 30% penalty for these skills
+				if (sd->class_&JOBL_BABY)
+					make_per = (make_per * 70) / 100;
 				break;
 			case SA_CREATECON: // Elemental Converter Creation
 				make_per = 100000; // should be 100% success rate
@@ -13174,8 +13179,14 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 				make_per = 5000;
 				break;
 		}
-	} else { // Weapon Forging - skill bonuses are straight from kRO website, other things from a jRO calculator [DracoRPG]
-		make_per = 5000 + ((sd->class_&JOBL_THIRD)?1400:sd->status.job_level*20) + status->dex*10 + status->luk*10; // Base
+	} else { // Weapon Forging
+		//Base chance
+		make_per = sd->status.job_level * 20 + status->dex * 10 + status->luk * 10;
+		make_per += rnd_value(1, 100) * 10;
+		// Weapon level base chance
+		if (wlv > 0 && wlv < 4) {
+			make_per += (400 / wlv) * 10; //+40/+20/+13.3/+0
+		}
 		make_per += pc_checkskill(sd,skill_id)*500; // Smithing skills bonus: +5/+10/+15
 		// Weaponry Research bonus: +1/+2/+3/+4/+5/+6/+7/+8/+9/+10
 		make_per += pc_checkskill(sd,BS_WEAPONRESEARCH)*100;
@@ -13183,26 +13194,23 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 		if( wlv >= 3 ){
 			make_per += pc_checkskill(sd, BS_ORIDEOCON) * 100;
 		}
-		// Element Stone: -20%
+		// Element Stone: -25%
 		if( ele ){
-			make_per -= 2000;
+			make_per -= 2500;
 		}
 		// Star Crumb: -15% each
 		make_per -= sc * 1500;
-		//  Weapon level malus: -0/-10/-20/-30
-		if( wlv > 1 ){
-			make_per -= ( wlv * 1000 );
-		}
+
 		if      (pc_search_inventory(sd,ITEMID_EMPERIUM_ANVIL) > -1) make_per+= 1000; // Emperium Anvil: +10
 		else if (pc_search_inventory(sd,ITEMID_GOLDEN_ANVIL) > -1)   make_per+= 500; // Golden Anvil: +5
-		else if (pc_search_inventory(sd,ITEMID_ORIDECON_ANVIL) > -1) make_per+= 300; // Oridecon Anvil: +3
-		else if (pc_search_inventory(sd,ITEMID_ANVIL) > -1)          make_per+= 0; // Anvil: +0?
+		else if (pc_search_inventory(sd,ITEMID_ORIDECON_ANVIL) > -1) make_per+= 250; // Oridecon Anvil: +2.5
+		else if (pc_search_inventory(sd,ITEMID_ANVIL) > -1)          make_per+= 0; // Anvil: +0
 		if (battle_config.wp_rate != 100)
 			make_per = make_per * battle_config.wp_rate / 100;
+		// Baby classes receive a 30% penalty when the target item is a weapon
+		if (sd->class_&JOBL_BABY)
+			make_per = (make_per * 70) / 100;
 	}
-
-	if (sd->class_&JOBL_BABY) //if it's a Baby Class
-		make_per = (make_per * 50) / 100; //Baby penalty is 50% (bugreport:4847)
 
 	if (make_per < 1) make_per = 1;
 
