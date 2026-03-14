@@ -595,6 +595,7 @@ struct Battle_Config
 	int32 feature_mesitemlink_dbname;
 	int32 feature_mesitemicon;
 	int32 feature_mesitemicon_dbname;
+	int32 feature_mesemotiontype;
 
 	// autotrade persistency
 	int32 feature_autotrade;
