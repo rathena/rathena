@@ -10,6 +10,13 @@
 SkillPsychicWave::SkillPsychicWave() : SkillImpl(SO_PSYCHIC_WAVE) {
 }
 
+void SkillPsychicWave::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
+	const map_session_data* sd = BL_CAST(BL_PC, &src);
+
+	if (sd != nullptr && (sd->weapontype1 == W_STAFF || sd->weapontype1 == W_2HSTAFF || sd->weapontype1 == W_BOOK))
+		dmg.div_ = 2;
+}
+
 void SkillPsychicWave::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
 	const status_data* sstatus = status_get_status_data(*src);
 	const status_change *sc = status_get_sc(src);
