@@ -12918,7 +12918,9 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 				// Ores & Metals Refining - skill bonuses are straight from kRO website [DracoRPG]
 				i = pc_checkskill(sd,skill_id);
 				//Base chance
-				make_per = sd->status.job_level * 20 + status->dex * 10 + status->luk * 10;
+				make_per = sd->status.job_level * 20;
+				make_per += status->dex * 10;
+				make_per += status->luk * 10;
 				make_per += rnd_value(1, 100) * 10;
 				switch (nameid) {
 					case ITEMID_IRON:
@@ -13181,11 +13183,13 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 		}
 	} else { // Weapon Forging
 		//Base chance
-		make_per = sd->status.job_level * 20 + status->dex * 10 + status->luk * 10;
+		make_per = sd->status.job_level * 20;
+		make_per += status->dex * 10;
+		make_per += status->luk * 10;
 		make_per += rnd_value(1, 100) * 10;
 		// Weapon level base chance
 		if (wlv > 0 && wlv < 4) {
-			make_per += (4 / wlv) * 1000; //+40/+20/+10/+0
+			make_per += (4 / wlv) * 1000; //+40/+20/+10
 		}
 		make_per += pc_checkskill(sd,skill_id)*500; // Smithing skills bonus: +5/+10/+15
 		// Weaponry Research bonus: +1/+2/+3/+4/+5/+6/+7/+8/+9/+10
