@@ -13190,8 +13190,10 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 		make_per += pc_checkskill(sd,skill_id)*500; // Smithing skills bonus: +5/+10/+15
 		// Weaponry Research bonus: +1/+2/+3/+4/+5/+6/+7/+8/+9/+10
 		make_per += pc_checkskill(sd,BS_WEAPONRESEARCH)*100;
-		//  Oridecon Research bonus (custom): +1/+2/+3/+4/+5
-		if( wlv >= 3 ){
+		// Oridecon Research bonus (custom)
+		if (battle_config.oridecon_research_fix == 1 && wlv == 3) {
+			// Instead of a weapon level chance of 13.3%, it will be 10%-15% depending on level
+			make_per -= 330;
 			make_per += pc_checkskill(sd, BS_ORIDEOCON) * 100;
 		}
 		// Element Stone: -25%
