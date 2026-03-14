@@ -3,7 +3,6 @@
 
 #include "spiralpierce.hpp"
 
-#include <config/const.hpp>
 #include <config/core.hpp>
 
 #include "map/mob.hpp"
