@@ -38,7 +38,7 @@ int64 SkillFallingStarAttack::splashDamage(block_list* src, block_list* target, 
 
 			ARR_FIND(0, MAX_STELLAR_MARKS, i, sd->stellar_mark[i] == target->id);
 			if (i < MAX_STELLAR_MARKS) {
-				int64 dmg = SkillFallingStarAttack::splashDamage(src, target, skill_lv, tick, flag);
+				int64 dmg = SkillImplRecursiveDamageSplash::splashDamage(src, target, skill_lv, tick, flag);
 
 				skill_castend_damage_id(src, target, SJ_FALLINGSTAR_ATK2, skill_lv, tick, 0);
 
@@ -47,7 +47,7 @@ int64 SkillFallingStarAttack::splashDamage(block_list* src, block_list* target, 
 		}
 	} else if ( tsc && tsc->getSCE(SC_FLASHKICK) && tsc->getSCE(SC_FLASHKICK)->val4 == 2 ) { // Mark placed by a monster.
 		// If a monster used the skill it will search for targets marked by any monster since they can't track their own targets.
-		int64 dmg = SkillFallingStarAttack::splashDamage(src, target, skill_lv, tick, flag);
+		int64 dmg = SkillImplRecursiveDamageSplash::splashDamage(src, target, skill_lv, tick, flag);
 
 		skill_castend_damage_id(src, target, SJ_FALLINGSTAR_ATK2, skill_lv, tick, 0);
 
