@@ -11379,7 +11379,6 @@ Examples:
 ---------------------------------------
 
 *mesemotiontype(<emotion_id>);
-*mesemotiontype("<emotion_constant>");
 
 Generates an emotion type string that can be used with an NPCs mes command.
 This allows NPC dialogue to display a client-side emotion icon inline with the message.
