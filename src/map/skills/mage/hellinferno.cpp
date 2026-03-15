@@ -36,7 +36,7 @@ void SkillHellInferno::castendDamageId(block_list *src, block_list *target, uint
 }
 
 void SkillHellInferno::modifyElement(int32& element, const block_list& src, int32 flag) const {
-	if (flag & 2) { // ELE_DARK
+	if (flag & 2) {
 		element = ELE_DARK;
 	}
 }

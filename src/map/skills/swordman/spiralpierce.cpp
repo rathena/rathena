@@ -39,8 +39,6 @@ void SkillSpiralPierce::applyAdditionalEffects(block_list *src, block_list *targ
 }
 
 void SkillSpiralPierce::modifyElement(int32& element, const block_list& src, int32 flag) const {
-	const map_session_data* sd = BL_CAST(BL_PC, &src);
-
-	if (sd == nullptr)
+	if (src.type != BL_PC)
 		element = ELE_NEUTRAL; // forced neutral for monsters
 }

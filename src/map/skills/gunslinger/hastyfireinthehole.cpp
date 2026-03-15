@@ -43,7 +43,7 @@ void SkillHastyFireInTheHole::calculateSkillRatio(const Damage* wd, const block_
 void SkillHastyFireInTheHole::modifyElement(int32& element, const block_list& src, int32 flag) const {
 	const status_change* sc = status_get_sc(&src);
 
-	// Night Watch Grenade Fragment elementals affecting those skills.
+	// Night Watch Grenade Fragment elementals
 	if( sc != nullptr ){
 		if( sc->hasSCE( SC_GRENADE_FRAGMENT_1 ) ){
 			element = ELE_WATER;
