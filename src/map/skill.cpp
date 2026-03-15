@@ -7448,7 +7448,7 @@ TIMER_FUNC(skill_castend_id){
 								add_ap += 1;
 							break;
 						case AT_ROARING_CHARGE:
-							if (sc && sc->getSCE(SC_THUNDERING_ROD_MAX))
+							if (sc != nullptr && sc->hasSCE(SC_THUNDERING_ROD_MAX))
 								add_ap += skill_get_giveap(AT_ROARING_CHARGE_S, ud->skill_lv);
 							break;
 					}
@@ -15052,7 +15052,7 @@ static int32 skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 					const int32 range = skill_get_range(group->skill_id, group->skill_lv);
 					if (range <= 0 || distance_xy(src->x, src->y, unit->x, unit->y) <= range) {
 						const t_tick buff_duration = group->interval > 0 ? group->interval : 1;
-						sc_start4(src, src, SC_GLACIER_SHEILD, 100, group->skill_lv, unit->x, unit->y, unit->m, buff_duration);
+						sc_start4(src, src, skill_get_sc(group->skill_id), 100, group->skill_lv, unit->x, unit->y, unit->m, buff_duration);
 					}
 				}
 				break;
