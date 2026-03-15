@@ -12,6 +12,13 @@
 SkillFatalMenace::SkillFatalMenace() : WeaponSkillImpl(SC_FATALMENACE) {
 }
 
+void SkillFatalMenace::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
+	const map_session_data* sd = BL_CAST(BL_PC, &src);
+
+	if (sd != nullptr && sd->weapontype1 == W_DAGGER)
+		dmg.div_++;
+}
+
 void SkillFatalMenace::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
 	const status_data* sstatus = status_get_status_data(*src);
 	const status_change *sc = status_get_sc(src);

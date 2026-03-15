@@ -3,7 +3,18 @@
 
 #include "grounddrift.hpp"
 
+#include <config/core.hpp>
+
+#include "map/status.hpp"
+
 SkillGroundDrift::SkillGroundDrift() : SkillImpl(GS_GROUNDDRIFT) {
+}
+
+void SkillGroundDrift::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
+	const status_data* sstatus = status_get_status_data(src);
+
+	dmg.amotion = sstatus->amotion;
+	dmg.blewcount = 0;
 }
 
 void SkillGroundDrift::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio, int32 mflag) const {

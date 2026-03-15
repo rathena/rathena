@@ -5,10 +5,9 @@
 
 #include "../skill_impl.hpp"
 
-class SkillWarmthoftheMoon : public SkillImpl {
+class SkillChainAction : public WeaponSkillImpl {
 public:
-	SkillWarmthoftheMoon();
+	SkillChainAction();
 
 	void modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const override;
-	void castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const override;
 };

@@ -10,6 +10,10 @@
 SkillKiExplosion::SkillKiExplosion() : SkillImpl(MO_BALKYOUNG) {
 }
 
+void SkillKiExplosion::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
+	dmg.blewcount = 0;
+}
+
 void SkillKiExplosion::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	//Passive part of the attack. Splash knock-back+stun. [Skotlex]
 	if (skill_area_temp[1] != target->id) {
@@ -41,4 +45,3 @@ void SkillKiExplosion::applyAdditionalEffects(block_list* src, block_list* targe
 	if(attack_type&BF_MISC) //70% base stun chance...
 		sc_start(src,target,SC_STUN,70,skill_lv,skill_get_time2(getSkillId(),skill_lv));
 }
-
