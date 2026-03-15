@@ -100992,6 +100992,62 @@ Body:
     Name: Phoenix Operation Footprints (Garment)    # !todo check english name
     Type: Etc
     Weight: 100
+  - Id: 1002798
+    AegisName: All_17Up_Ticket
+    Name: "[Event] All Item Refine 17Up Ticket"
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002801
+    AegisName: Tomb_of_Reaper_TH
+    Name: Tomb of Reaper
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002804
+    AegisName: Evt_ROL_Ticket
+    Name: ROL Rideword Certificate
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002805
+    AegisName: CrossEventCoin
+    Name: "[Event] Cross Event Coin"
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002806
+    AegisName: SnowPromised_Ring_Enc
+    Name: Ethernal Snow Flower
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoMail: true
+      NoAuction: true
   - Id: 1200000
     AegisName: IDTest_arrow
     Name: IDTest arrow
