@@ -17,13 +17,16 @@
 #include "./archer/skill_factory_archer.cpp"
 #include "./custom/skill_factory_custom.cpp"
 #include "./druid/skill_factory_druid.cpp"
+#include "./elemental/skill_factory_elemental.cpp"
 #include "./gunslinger/skill_factory_gunslinger.cpp"
+#include "./homunculus/skill_factory_homunculus.cpp"
 #include "./mage/skill_factory_mage.cpp"
 #include "./mercenary/skill_factory_mercenary.cpp"
 #include "./merchant/skill_factory_merchant.cpp"
 #include "./npc/skill_factory_npc.cpp"
 #include "./ninja/skill_factory_ninja.cpp"
 #include "./novice/skill_factory_novice.cpp"
+#include "./other/skill_factory_other.cpp"
 #include "./summoner/skill_factory_summoner.cpp"
 #include "./swordman/skill_factory_swordman.cpp"
 #include "./taekwon/skill_factory_taekwon.cpp"
@@ -36,13 +39,16 @@ std::unique_ptr<const SkillImpl> SkillFactoryImpl::create(const e_skill skill_id
 		// Normal Skills
 		std::make_shared<SkillFactoryAcolyte>(),
 		std::make_shared<SkillFactoryArcher>(),
+		std::make_shared<SkillFactoryElemental>(),
 		std::make_shared<SkillFactoryGunslinger>(),
+		std::make_shared<SkillFactoryHomunculus>(),
 		std::make_shared<SkillFactoryMage>(),
 		std::make_shared<SkillFactoryMercenary>(),
 		std::make_shared<SkillFactoryMerchant>(),
 		std::make_shared<SkillFactoryNinja>(),
 		std::make_shared<SkillFactoryNpc>(),
 		std::make_shared<SkillFactoryNovice>(),
+		std::make_shared<SkillFactoryOther>(),
 		std::make_shared<SkillFactorySummoner>(),
 		std::make_shared<SkillFactoryDruid>(),
 		std::make_shared<SkillFactorySwordman>(),

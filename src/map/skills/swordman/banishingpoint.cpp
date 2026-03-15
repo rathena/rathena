@@ -28,6 +28,6 @@ void SkillBanishingPoint::calculateSkillRatio(const Damage* wd, const block_list
 	RE_LVL_DMOD(100);
 }
 
-void SkillBanishingPoint::modifyHitRate(int16& hitrate, const block_list* src, const block_list* target, uint16 skill_lv) const {
-	hitrate += 5 * skill_lv;
+void SkillBanishingPoint::modifyHitRate(int16& hit_rate, const block_list* src, const block_list* target, uint16 skill_lv) const {
+	hit_rate += 5 * skill_lv;
 }

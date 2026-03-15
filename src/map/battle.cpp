@@ -3307,55 +3307,6 @@ static bool is_attack_hitting(struct Damage* wd, block_list *src, block_list *ta
 		if (skill != nullptr && skill->impl != nullptr) {
 			skill->impl->modifyHitRate(hitrate, src, target, skill_lv);
 		}
-
-		switch(skill_id) { //Hit skill modifiers
-			case MS_MAGNUM:
-				hitrate += hitrate * 10 * skill_lv / 100;
-				break;
-			case NPC_WATERATTACK:
-			case NPC_GROUNDATTACK:
-			case NPC_FIREATTACK:
-			case NPC_WINDATTACK:
-			case NPC_POISONATTACK:
-			case NPC_HOLYATTACK:
-			case NPC_DARKNESSATTACK:
-			case NPC_TELEKINESISATTACK:
-			case NPC_UNDEADATTACK:
-			case NPC_CHANGEUNDEAD:
-			case NPC_POISON:
-			case NPC_BLINDATTACK:
-			case NPC_SILENCEATTACK:
-			case NPC_STUNATTACK:
-			case NPC_PETRIFYATTACK:
-			case NPC_CURSEATTACK:
-			case NPC_SLEEPATTACK:
-			case NPC_BLEEDING:
-			case NPC_BLEEDING2:
-				hitrate += hitrate * 20 / 100;
-				break;
-			case NPC_FIREBREATH:
-			case NPC_ICEBREATH:
-			case NPC_ICEBREATH2:
-			case NPC_THUNDERBREATH:
-			case NPC_ACIDBREATH:
-			case NPC_DARKNESSBREATH:
-				hitrate *= 2;
-				break;
-			case ML_PIERCE:
-				hitrate += hitrate * 5 * skill_lv / 100;
-				break;
-			case RL_SLUGSHOT:
-				{
-					int8 dist = distance_bl(src, target);
-					if (dist > 3) {
-						// Reduce n hitrate for each cell after initial 3 cells. Different each level
-						// -10:-9:-8:-7:-6
-						dist -= 3;
-						hitrate -= ((11 - skill_lv) * dist);
-					}
-				}
-				break;
-		}
 	} else if (sd && wd->type&DMG_MULTI_HIT && wd->div_ == 2) // +1 hit per level of Double Attack on a successful double attack (making sure other multi attack skills do not trigger this) [helvetica]
 		hitrate += pc_checkskill(sd,TF_DOUBLE);
 
@@ -4530,54 +4481,11 @@ static void battle_calc_multi_attack(struct Damage* wd, block_list *src,block_li
 			sc_start(src,src,SC_QD_SHOT_READY,100,target->id,skill_get_time(RL_QD_SHOT,1));
 		}
 	}
-
+  // TODO refactor
 	switch (skill_id) {
-		case RK_WINDCUTTER:
-			if (sd && sd->weapontype1 == W_2HSWORD)
-				wd->div_ = 2;
-			break;
 		case AT_TEMPEST_FLAP:
 			if (sc && sc->hasSCE(SC_APEX_PHASE))
 				wd->div_ = 3;
-			break;
-		case SC_FATALMENACE:
-			if (sd && sd->weapontype1 == W_DAGGER)
-				wd->div_++;
-			break;
-		case SR_RIDEINLIGHTNING:
-			wd->div_ = (sd ? max(1, skill_lv) : 1);
-			break;
-		case RL_QD_SHOT:
-			wd->div_ = 1 + (sd ? sd->status.job_level : 1) / 20;
-			break;
-		case KO_JYUMONJIKIRI:
-			if( tsc && tsc->getSCE(SC_JYUMONJIKIRI) )
-				wd->div_ = wd->div_ * -1;// needs more info
-			break;
-		case MH_BLAZING_AND_FURIOUS: {
-			homun_data *hd = BL_CAST(BL_HOM, src);
-			if (hd) {
-				wd->div_ = hd->homunculus.spiritball;
-				hom_delspiritball(hd, MAX_SPIRITBALL, 1);
-			}
-			break;
-		}
-		case ABC_FRENZY_SHOT:
-			if( rnd_chance( 5 * skill_lv, 100 ) ){
-				wd->div_ = 3;
-			}
-			break;
-		case NW_SPIRAL_SHOOTING:
-			if (sd && sd->weapontype1 == W_GRENADE)
-				wd->div_ += 1;
-			break;
-		case NW_MAGAZINE_FOR_ONE:
-			if (sd && sd->weapontype1 == W_GATLING)
-				wd->div_ += 4;
-			break;
-		case NW_THE_VIGILANTE_AT_NIGHT:
-			if (sd && sd->weapontype1 == W_GATLING)
-				wd->div_ += 3;
 			break;
 	}
 }
@@ -4654,7 +4562,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 	status_data* sstatus = status_get_status_data(*src);
 	status_data* tstatus = status_get_status_data(*target);
 	int32 skillratio = 100;
-	int32 i;
 
 	//Skill damage modifiers that stack linearly
 	if(sc && skill_id != PA_SACRIFICE) {
@@ -4711,288 +4618,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 		skill->impl->calculateSkillRatio(wd, src, target, skill_lv, skillratio, 0);
 	}
 
-	switch(skill_id) {
-		case MS_MAGNUM:
-			if(wd->miscflag == 1)
-				skillratio += 20 * skill_lv; //Inner 3x3 circle takes 100%+20%*level damage [Playtester]
-			else
-				skillratio += 10 * skill_lv; //Outer 5x5 circle takes 100%+10%*level damage [Playtester]
-			break;
-		case MA_DOUBLE:
-			skillratio += 10 * (skill_lv - 1);
-			break;
-		case MA_SHOWER:
-#ifdef RENEWAL
-			skillratio += 50 + 10 * skill_lv;
-#else
-			skillratio += -25 + 5 * skill_lv;
-#endif
-			break;
-		case MA_CHARGEARROW:
-			skillratio += 50;
-			break;
-		case ML_PIERCE:
-			skillratio += 10 * skill_lv;
-			break;
-		case MER_CRASH:
-			skillratio += 10 * skill_lv;
-			break;
-		case ML_BRANDISH:
-			{
-				int32 ratio = 100 + 20 * skill_lv;
-
-				skillratio += -100 + ratio;
-				if(skill_lv > 3 && wd->miscflag == 0)
-					skillratio += ratio / 2;
-				if(skill_lv > 6 && wd->miscflag == 0)
-					skillratio += ratio / 4;
-				if(skill_lv > 9 && wd->miscflag == 0)
-					skillratio += ratio / 8;
-				if(skill_lv > 6 && wd->miscflag == 1)
-					skillratio += ratio / 2;
-				if(skill_lv > 9 && wd->miscflag == 1)
-					skillratio += ratio / 4;
-				if(skill_lv > 9 && wd->miscflag == 2)
-					skillratio += ratio / 2;
-			}
-			break;
-		case MS_BOWLINGBASH:
-			skillratio += 40 * skill_lv;
-			break;
-		case NPC_PIERCINGATT:
-			skillratio += -25; //75% base damage
-			break;
-		case NPC_COMBOATTACK:
-			skillratio += 25 * skill_lv;
-			break;
-		case NPC_RANDOMATTACK:
-		case NPC_WATERATTACK:
-		case NPC_GROUNDATTACK:
-		case NPC_FIREATTACK:
-		case NPC_WINDATTACK:
-		case NPC_POISONATTACK:
-		case NPC_HOLYATTACK:
-		case NPC_DARKNESSATTACK:
-		case NPC_UNDEADATTACK:
-		case NPC_TELEKINESISATTACK:
-		case NPC_BLOODDRAIN:
-		case NPC_ACIDBREATH:
-		case NPC_DARKNESSBREATH:
-		case NPC_FIREBREATH:
-		case NPC_ICEBREATH:
-		case NPC_ICEBREATH2:
-		case NPC_THUNDERBREATH:
-		case NPC_HELLJUDGEMENT:
-		case NPC_HELLJUDGEMENT2:
-		case NPC_PULSESTRIKE:
-			skillratio += 100 * (skill_lv - 1);
-			break;
-		case NPC_REVERBERATION_ATK:
-			skillratio += 400 + 200 * skill_lv;
-			break;
-		case NPC_DARKCROSS:
-			skillratio += 35 * skill_lv;
-			break;
-#ifdef RENEWAL
-		case ML_SPIRALPIERCE:
-			skillratio += 50 + 50 * skill_lv;
-			RE_LVL_DMOD(100);
-		break;
-#endif
-		case MA_SHARPSHOOTING:
-#ifdef RENEWAL
-			skillratio += -100 + 300 + 300 * skill_lv;
-			RE_LVL_DMOD(100);
-#else
-			skillratio += 100 + 50 * skill_lv;
-#endif
-			break;
-#ifdef RENEWAL
-		case KN_CHARGEATK:
-			skillratio += 600;
-			break;
-#else
-		case KN_CHARGEATK: { // +100% every 3 cells of distance but hard-limited to 500%
-				int32 k = (wd->miscflag-1)/3;
-				if (k < 0)
-					k = 0;
-				else if (k > 4)
-					k = 4;
-				skillratio += 100 * k;
-			}
-			break;
-#endif
-
-		case HFLI_MOON: //[orn]
-			skillratio += 10 + 110 * skill_lv;
-			break;
-		case HFLI_SBR44: //[orn]
-			skillratio += 100 * (skill_lv - 1);
-			break;
-		case NPC_VAMPIRE_GIFT:
-			skillratio += ((skill_lv - 1) % 5 + 1) * 100;
-			break;
-		case NPC_IGNITIONBREAK:
-			// 3x3 cell Damage   = 1000  1500  2000  2500  3000 %
-			// 7x7 cell Damage   = 750   1250  1750  2250  2750 %
-			// 11x11 cell Damage = 500   1000  1500  2000  2500 %
-			i = distance_bl(src,target);
-			if (i < 2)
-				skillratio += -100 + 500 * (skill_lv + 1);
-			else if (i < 4)
-				skillratio += -100 + 250 + 500 * skill_lv;
-			else
-				skillratio += -100 + 500 * skill_lv;
-			break;
-		// case NPC_PHANTOMTHRUST:	// ATK = 100% for all level
-		case NPC_ARROWSTORM:
-			if (skill_lv > 4)
-				skillratio += 1900;
-			else
-				skillratio += 900;
-			break;
-		case NPC_DRAGONBREATH:
-			if (skill_lv > 5)
-				skillratio += 500 + 500 * (skill_lv - 5);	// Level 6-10 is using water element, like RK_DRAGONBREATH_WATER
-			else
-				skillratio += 500 + 500 * skill_lv;	// Level 1-5 is using fire element, like RK_DRAGONBREATH
-			break;
-		// Physical Elemantal Spirits Attack Skills
-		case EL_CIRCLE_OF_FIRE:
-		case EL_FIRE_BOMB_ATK:
-		case EL_STONE_RAIN:
-			skillratio += 200;
-			break;
-		case EL_FIRE_WAVE_ATK:
-			skillratio += 500;
-			break;
-		case EL_TIDAL_WEAPON:
-			skillratio += 1400;
-			break;
-		case EL_WIND_SLASH:
-			skillratio += 100;
-			break;
-		case EL_HURRICANE:
-			skillratio += 600;
-			break;
-		case EL_TYPOON_MIS:
-		case EL_WATER_SCREW_ATK:
-			skillratio += 900;
-			break;
-		case EL_STONE_HAMMER:
-			skillratio += 400;
-			break;
-		case EL_ROCK_CRUSHER:
-			skillratio += 700;
-			break;
-		case MH_NEEDLE_OF_PARALYZE:
-			skillratio += -100 + 450 * skill_lv * status_get_lv(src) / 100 + sstatus->dex; // !TODO: Confirm Base Level and DEX bonus
-			break;
-		case MH_TOXIN_OF_MANDARA:
-			skillratio += -100 + 400 + 450 * skill_lv * status_get_lv(src) / 100 + sstatus->dex; // !TODO: Confirm Base Level and DEX bonus
-			break;
-		case MH_NEEDLE_STINGER:
-			skillratio += -100 + 200 + 500 * skill_lv * status_get_lv(src) / 100 + sstatus->dex; // !TODO: Confirm Base Level and DEX bonus
-			break;
-		case MH_STAHL_HORN:
-			skillratio += -100 + 1000 + 300 * skill_lv * status_get_lv(src) / 150 + sstatus->vit; // !TODO: Confirm VIT bonus
-			break;
-		case MH_GLANZEN_SPIES:
-			skillratio += -100 + 300 + 450 * skill_lv * status_get_lv(src) / 100 + sstatus->vit; // !TODO: Confirm VIT bonus
-			break;
-		case MH_LAVA_SLIDE:
-			skillratio += -100 + 50 * skill_lv;
-			break;
-		case MH_BLAST_FORGE:
-			skillratio += -100 + 70 * skill_lv * status_get_lv(src) / 100 + sstatus->str;
-			break;
-		case MH_SONIC_CRAW:
-			skillratio += -100 + 60 * skill_lv * status_get_lv(src) / 150;
-			break;
-		case MH_BLAZING_AND_FURIOUS:
-			skillratio += -100 + 80 * skill_lv * status_get_lv(src) / 100 + sstatus->str;
-			break;
-		case MH_THE_ONE_FIGHTER_RISES:
-			skillratio += -100 + 580 * skill_lv * status_get_lv(src) / 100 + sstatus->str;
-			break;
-		case MH_SILVERVEIN_RUSH:
-			skillratio += -100 + 250 * skill_lv * status_get_lv(src) / 100 + sstatus->str; // !TODO: Confirm STR bonus
-			break;
-		case MH_MIDNIGHT_FRENZY:
-			skillratio += -100 + 450 * skill_lv * status_get_lv(src) / 150 + sstatus->str; // !TODO: Confirm STR bonus
-			break;
-		case MH_MAGMA_FLOW:
-			skillratio += -100 + (100 * skill_lv + 3 * status_get_lv(src)) * status_get_lv(src) / 120;
-			break;
-		case RL_MASS_SPIRAL:
-			skillratio += -100 + 200 * skill_lv;
-			break;
-		case RL_FIREDANCE:
-			skillratio += 100 + 100 * skill_lv;
-			skillratio += (sd ? pc_checkskill(sd, GS_DESPERADO) * 20 : 0);
-			RE_LVL_DMOD(100);
-			break;
-		case RL_BANISHING_BUSTER:
-			skillratio += -100 + 1000 + 200 * skill_lv;
-			RE_LVL_DMOD(100);
-			break;
-		case RL_S_STORM:
-			skillratio += -100 + 1700 + 200 * skill_lv;
-			break;
-		case RL_SLUGSHOT:
-			if (target->type == BL_MOB)
-				skillratio += -100 + 1200 * skill_lv;
-			else
-				skillratio += -100 + 2000 * skill_lv;
-			skillratio *= 2 + tstatus->size;
-			break;
-		case RL_D_TAIL:
-			skillratio += -100 + 500 + 200 * skill_lv;
-			if (sd && (wd->miscflag & 8))
-				skillratio *= 2;
-			RE_LVL_DMOD(100);
-			break;
-		case RL_R_TRIP:
-			skillratio += -100 + 350 * skill_lv;
-			RE_LVL_DMOD(100);
-			break;
-		case RL_R_TRIP_PLUSATK:
-			skillratio += -100 + 300 + 300 * skill_lv;
-			break;
-		case RL_H_MINE:
-			if (sd && sd->flicker) // Flicker explosion damage: 500 + 300 * SkillLv
-				skillratio += -100 + 500 + 300 * skill_lv;
-			else // 200 + 200 * SkillLv
-				skillratio += -100 + 200 + 200 * skill_lv;
-			break;
-		case RL_HAMMER_OF_GOD:
-			skillratio += -100 + 100 * skill_lv;
-			if (sd) {
-				if (wd->miscflag & 8)
-					skillratio += 400 * sd->spiritball_old;
-				else
-					skillratio += 150 * sd->spiritball_old;
-			}
-			RE_LVL_DMOD(100);
-			break;
-		case RL_FIRE_RAIN:
-		case RL_AM_BLAST:
-			skillratio += -100 + 3500 + 300 * skill_lv;
-			break;
-		case ABR_BATTLE_BUSTER:// Need official formula.
-		case ABR_DUAL_CANNON_FIRE:// Need official formula.
-			skillratio += -100 + 8000;
-			break;
-		case ABR_INFINITY_BUSTER:// Need official formula.
-			skillratio += -100 + 50000;
-			break;
-
-		case SKE_ALL_IN_THE_SKY:
-			// TODO: refactor
-			if (status_get_race(target) == RC_DEMIHUMAN || status_get_race(target) == RC_DEMON)
-				wd->div_ = 3;
-			break;
-	}
 	return skillratio;
 }
 
@@ -5833,34 +5458,11 @@ static struct Damage initialize_weapon_data(const block_list* src, const block_l
 		wd.blewcount += battle_blewcount_bonus(sd, skill_id);
 
 	if (skill_id) {
+		// wd.flag from skills
 		wd.flag |= battle_range_type(src, target, skill_id, skill_lv);
+    // TODO refactor
 		switch(skill_id)
 		{
-#ifdef RENEWAL
-			case RG_BACKSTAP:
-				if (sd && sd->status.weapon == W_DAGGER)
-					wd.div_ = 2;
-				break;
-			case MO_CHAINCOMBO:
-				if (sd && sd->status.weapon == W_KNUCKLE)
-					wd.div_ = -6;
-				break;
-#endif
-			case MH_SONIC_CRAW:
-				if(const homun_data* hd = BL_CAST(BL_HOM,src); hd != nullptr){
-					wd.div_ = hd->homunculus.spiritball;
-				}
-				break;
-			case MO_FINGEROFFENSIVE:
-				if (sd) {
-					if (battle_config.finger_offensive_type)
-						wd.div_ = 1;
-#ifndef RENEWAL
-					else if ((sd->spiritball + sd->spiritball_old) < wd.div_)
-						wd.div_ = sd->spiritball + sd->spiritball_old;
-#endif
-				}
-				break;
 				case AT_FRENZY_FANG: {
 					int32 hits = 2;
 
@@ -5878,133 +5480,13 @@ static struct Damage initialize_weapon_data(const block_list* src, const block_l
 				break;
 			}
 
-			case KN_PIERCE:
-			case ML_PIERCE:
-				wd.div_= (wd.div_>0?tstatus->size+1:-(tstatus->size+1));
-				break;
-
-			case TF_DOUBLE: //For NPC used skill.
-			case GS_CHAINACTION:
-				wd.type = DMG_MULTI_HIT;
-				break;
-
-			case GS_GROUNDDRIFT:
-				wd.amotion = sstatus->amotion;
-				[[fallthrough]];
-			case KN_SPEARSTAB:
-#ifndef RENEWAL
-			case KN_BOWLINGBASH:
-#endif
-			case MS_BOWLINGBASH:
-			case MO_BALKYOUNG:
-			case TK_TURNKICK:
-				wd.blewcount = 0;
-				break;
-			case SG_SUN_WARM:
-			case SG_MOON_WARM:
-			case SG_STAR_WARM:
-				// A random 0~3 knockback bonus is added to the base knockback
-				wd.blewcount += rnd_value(0, 3);
-				break;
-#ifdef RENEWAL
-			case KN_BOWLINGBASH:
-				if (sd && sd->status.weapon == W_2HSWORD) {
-					if (wd.miscflag >= 2 && wd.miscflag <= 3)
-						wd.div_ = 3;
-					else if (wd.miscflag >= 4)
-						wd.div_ = 4;
-				}
-				break;
-#endif
-			case KN_AUTOCOUNTER:
-				wd.flag = (wd.flag&~BF_SKILLMASK)|BF_NORMAL;
-				break;
-			case LK_SPIRALPIERCE:
-				if (!sd) wd.flag = (wd.flag&~(BF_RANGEMASK|BF_WEAPONMASK))|BF_LONG|BF_MISC;
-				break;
-			case RK_WINDCUTTER:
-				if (sd && (sd->status.weapon == W_1HSPEAR || sd->status.weapon == W_2HSPEAR))
-					wd.flag |= BF_LONG;
-				break;
-			case NC_BOOSTKNUCKLE:
-			case NC_VULCANARM:
-			case NC_ARMSCANNON:
-				if (sc && sc->getSCE(SC_ABR_DUAL_CANNON))
-					wd.div_ = 2;
-				break;
-			case NC_POWERSWING:
-				if (sc && sc->getSCE(SC_ABR_BATTLE_WARIOR))
-					wd.div_ = -2;
-				break;
-			case GN_CARTCANNON:
-				if (sc && sc->getSCE(SC_BIONIC_WOODENWARRIOR))
-					wd.div_ = 2;
-				break;
-			case DK_SERVANT_W_PHANTOM:
-			case DK_SERVANT_W_DEMOL:
-				if (sd && (sd->servantball + sd->servantball_old) < wd.div_)
-					wd.div_ = sd->servantball + sd->servantball_old;
-				break;
-			case IQ_THIRD_FLAME_BOMB:
-				wd.div_ = min(wd.div_ + wd.miscflag, 3); // Number of hits doesn't go above 3.
-				break;
-			case IG_OVERSLASH:
-				if( wd.miscflag >= 4 ){
-					wd.div_ = 7;
-				}else if( wd.miscflag >= 2 ){
-					wd.div_ = 5;
-				}
-				break;
-			case SHC_ETERNAL_SLASH:
-				if (sc && sc->getSCE(SC_E_SLASH_COUNT))
-					wd.div_ = sc->getSCE(SC_E_SLASH_COUNT)->val1;
-				break;
-			case SHC_IMPACT_CRATER:
-				if (sc && sc->getSCE(SC_ROLLINGCUTTER))
-					wd.div_ = sc->getSCE(SC_ROLLINGCUTTER)->val1;
-				break;
-			case MT_AXE_STOMP:
-				if (sd && sd->status.weapon == W_2HAXE)
-					wd.div_ = 3;
-				break;
-			case SHC_SAVAGE_IMPACT:
-				wd.div_ = wd.div_ + wd.miscflag;
-				break;
-			case MT_MIGHTY_SMASH:
-				if (sc && sc->getSCE(SC_AXE_STOMP))
-					wd.div_ = 7;
-				break;
-			case BO_EXPLOSIVE_POWDER:
-				if (sc && sc->getSCE(SC_RESEARCHREPORT))
-					wd.div_ = 5;
-				break;
-			case BO_MAYHEMIC_THORNS:
-				if (sc && sc->getSCE(SC_RESEARCHREPORT))
-					wd.div_ = 4;
-				break;
-			case ABC_CHASING_BREAK:
-				if (sc != nullptr && sc->hasSCE(SC_CHASING))
-					wd.div_ = 7;
-				break;
-			case ABC_CHASING_SHOT:
-				if (sc != nullptr && sc->hasSCE(SC_CHASING))
-					wd.div_ = 3;
-				break;
-			case ABC_HIT_AND_SLIDING:
-				if (sd != nullptr && sd->status.weapon == W_BOW)
-					wd.flag |= BF_LONG;
-				break;
-			case HN_DOUBLEBOWLINGBASH:
-				if (wd.miscflag > 1)
-					wd.div_ += min(4, wd.miscflag);
-				break;
 		}
 	} else {
-		bool is_long = false;
-
-		if (is_skill_using_arrow(src, skill_id) || (sc && sc->getSCE(SC_SOULATTACK)))
-			is_long = true;
-		wd.flag |= is_long ? BF_LONG : BF_SHORT;
+		// wd.flag from basic attacks
+		if (is_skill_using_arrow(src, skill_id) || (sc != nullptr && sc->hasSCE(SC_SOULATTACK)))
+			wd.flag |= BF_LONG;
+		else
+			wd.flag |= BF_SHORT;
 	}
 
 	return wd;
@@ -6091,6 +5573,11 @@ static struct Damage battle_calc_weapon_attack(block_list *src, block_list *targ
 	}
 
 	wd = initialize_weapon_data(src, target, skill_id, skill_lv, wflag);
+
+	// Update Damage data based on skill
+	if (std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id); skill != nullptr && skill->impl != nullptr) {
+		skill->impl->modifyDamageData(wd, *src, *target, skill_lv);
+	}
 
 	right_element = battle_get_weapon_element(&wd, src, target, skill_id, skill_lv, EQI_HAND_R, false);
 	left_element = battle_get_weapon_element(&wd, src, target, skill_id, skill_lv, EQI_HAND_L, false);
@@ -6533,35 +6020,8 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 
 	//Initialize variables that will be used afterwards
 	s_ele = battle_get_magic_element(src, target, skill_id, skill_lv, mflag);
-
+	// TODO refactor
 	switch(skill_id) {
-		case WL_HELLINFERNO:
-			if (mflag & 2) { // ELE_DARK
-				ad.div_ = -3;
-			}
-			break;
-		case NPC_PSYCHIC_WAVE:
-		case SO_PSYCHIC_WAVE:
-			if (sd && (sd->weapontype1 == W_STAFF || sd->weapontype1 == W_2HSTAFF || sd->weapontype1 == W_BOOK))
-				ad.div_ = 2;
-			break;
-		case AG_DESTRUCTIVE_HURRICANE:
-			if (sc && sc->getSCE(SC_CLIMAX) && sc->getSCE(SC_CLIMAX)->val1 == 2)
-				ad.blewcount = 2;
-			break;
-		case AG_CRYSTAL_IMPACT:
-			if (sc && sc->getSCE(SC_CLIMAX) && sc->getSCE(SC_CLIMAX)->val1 == 2)
-				ad.div_ = 2;
-			break;
-		case ABC_ABYSS_SQUARE:
-			if (mflag == 2)
-				ad.div_ = 2;
-			break;
-		case AG_CRIMSON_ARROW_ATK:
-			if( sc != nullptr && sc->getSCE( SC_CLIMAX ) ){
-				ad.div_ = 2;
-			}
-			break;
 		case DR_CUTTING_WIND:
 			if (sc != nullptr && sc->hasSCE(SC_TRUTH_OF_WIND))
 				ad.div_ = 4;
@@ -6569,20 +6029,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 		case DR_WIND_BOMB:
 			if (sc != nullptr && sc->hasSCE(SC_TRUTH_OF_WIND))
 				ad.div_ = 6;
-			break;
-		case SOA_TALISMAN_OF_FOUR_BEARING_GOD:
-			if (sc != nullptr){
-				if (sc->getSCE(SC_T_FIRST_GOD) != nullptr)
-					ad.div_ = 2;
-				else if (sc->getSCE(SC_T_SECOND_GOD) != nullptr)
-					ad.div_ = 3;
-				else if (sc->getSCE(SC_T_THIRD_GOD) != nullptr)
-					ad.div_ = 4;
-				else if (sc->getSCE(SC_T_FOURTH_GOD) != nullptr)
-					ad.div_ = 5;
-				else if (sc->getSCE(SC_T_FIFTH_GOD) != nullptr)
-					ad.div_ = 7;
-			}
 			break;
 	}
 
@@ -6595,19 +6041,13 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 	//Skill Range Criteria
 	ad.flag |= battle_range_type(src, target, skill_id, skill_lv);
 
+	// Update Damage data based on skill
+	if (skill != nullptr && skill->impl != nullptr) {
+		skill->impl->modifyDamageData(ad, *src, *target, skill_lv);
+	}
+
 	//Infinite defense (plant mode)
 	flag.infdef = is_infinite_defense(target, ad.flag)?1:0;
-
-	switch(skill_id) {
-		case MG_FIREWALL:
-			if (tstatus->def_ele == ELE_FIRE || battle_check_undead(tstatus->race, tstatus->def_ele)) {
-				ad.blewcount = 0; //No knockback
-				// Fire and undead units hit by firewall cannot be stopped for 2 seconds
-				if (unit_data* ud = unit_bl2ud(target); ud != nullptr)
-					ud->endure_tick = gettick() + 2000;
-			}
-			break;
-	}
 
 	if (!flag.infdef) { //No need to do the math for plants
 		int32 skillratio = 100; //Skill dmg modifiers.
@@ -6722,144 +6162,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 
 				if (skill != nullptr && skill->impl != nullptr) {
 					skill->impl->calculateSkillRatio(&ad, src, target, skill_lv, skillratio, mflag);
-				}
-
-				switch(skill_id) {
-					case MG_FIREBOLT:
-					case MG_COLDBOLT:
-					case MG_LIGHTNINGBOLT:
-						if (sc) {
-							// TODO: Refactor
-							if (sc->getSCE(SC_SPELLFIST) && mflag & BF_SHORT) {
-								ad.div_ = 1; // ad mods, to make it work similar to regular hits [Xazax]
-								ad.flag = BF_WEAPON | BF_SHORT;
-								ad.type = DMG_NORMAL;
-							}
-						}
-						break;
-					case WZ_FIREPILLAR:
-						// TODO: Refactor
-						if (sd && ad.div_ > 0)
-							ad.div_ *= -1; //For players, damage is divided by number of hits
-						break;
-					case NPC_ENERGYDRAIN:
-						skillratio += 100 * skill_lv;
-						break;
-#ifdef RENEWAL
-					case NPC_GROUNDDRIVE:
-						skillratio += 25;
-						break;
-					case HW_GRAVITATION:
-						skillratio += -100 + 100 * skill_lv;
-						RE_LVL_DMOD(100);
-						break;
-#endif
-					case NPC_JACKFROST:
-						if (tsc && tsc->getSCE(SC_FREEZING)) {
-							skillratio += 900 + 300 * skill_lv;
-							RE_LVL_DMOD(100);
-						} else {
-							skillratio += 400 + 100 * skill_lv;
-							RE_LVL_DMOD(150);
-						}
-						break;
-					case NPC_RAYOFGENESIS:
-						skillratio += -100 + 200 * skill_lv;
-						break;
-					case NPC_FIREWALK:
-					case NPC_ELECTRICWALK:
-						skillratio += -100 + 100 * skill_lv;
-						break;
-					case NPC_POISON_BUSTER:
-						skillratio += -100 + 1500 * skill_lv;
-						break;
-					case NPC_PSYCHIC_WAVE:
-						skillratio += -100 + 500 * skill_lv;
-						break;
-					case NPC_CLOUD_KILL:
-						skillratio += -100 + 50 * skill_lv;
-						break;
-					// Magical Elemental Spirits Attack Skills
-					case EL_FIRE_MANTLE:
-					case EL_WATER_SCREW:
-						skillratio += 900;
-						break;
-					case EL_FIRE_ARROW:
-					case EL_ROCK_CRUSHER_ATK:
-						skillratio += 200;
-						break;
-					case EL_FIRE_BOMB:
-					case EL_ICE_NEEDLE:
-					case EL_HURRICANE_ATK:
-						skillratio += 400;
-						break;
-					case EL_FIRE_WAVE:
-					case EL_TYPOON_MIS_ATK:
-						skillratio += 1100;
-						break;
-					case MH_ERASER_CUTTER:
-					case MH_XENO_SLASHER:
-						skillratio += -100 + 450 * skill_lv * status_get_lv(src) / 100 + sstatus->int_; // !TODO: Confirm Base Level and INT bonus
-						break;
-					case MH_TWISTER_CUTTER:
-						skillratio += -100 + 480 * skill_lv * status_get_lv(src) / 100 + sstatus->int_; // !TODO: Confirm Base Level and INT bonus
-						break;
-					case MH_ABSOLUTE_ZEPHYR:
-						skillratio += -100 + 1000 + 450 * skill_lv * status_get_lv(src) / 100 + sstatus->int_; // !TODO: Confirm Base Level and INT bonus
-						break;
-					case MH_HEILIGE_STANGE:
-						skillratio += -100 + 1500 + 250 * skill_lv * status_get_lv(src) / 150 + sstatus->vit; // !TODO: Confirm VIT bonus
-						break;
-					case MH_HEILIGE_PFERD:
-						skillratio += -100 + 1200 + 350 * skill_lv * status_get_lv(src) / 100 + sstatus->vit; // !TODO: Confirm VIT bonus
-						break;
-					case MH_POISON_MIST:
-						skillratio += -100 + 200 * skill_lv * status_get_lv(src) / 100 + sstatus->dex; // ! TODO: Confirm DEX bonus
-						break;
-					case NPC_VENOMFOG:
-						skillratio += 600 + 100 * skill_lv;
-						break;
-					case NPC_COMET:
-						i = (sc ? distance_xy(target->x, target->y, sc->comet_x, sc->comet_y) : 8) / 2;
-						i = cap_value(i, 1, 4);
-						skillratio = 2500 + ((skill_lv - i + 1) * 500);
-						break;
-					case NPC_FIRESTORM:
-						skillratio += 200;
-						break;
-					case NPC_HELLBURNING:
-						skillratio += 900;
-						break;
-					case NPC_PULSESTRIKE2:
-						skillratio += 100;
-						break;
-					case NPC_STORMGUST2:
-						skillratio += 200 * skill_lv;
-						break;
-					case NPC_RAINOFMETEOR:
-						skillratio += 350;	// unknown ratio
-						break;
-					case HN_GROUND_GRAVITATION:
-						if (mflag & SKILL_ALTDMG_FLAG) {
-							// Initial damage
-							// TODO: refactor / move elsewhere
-							ad.div_ = -2;
-						}
-						break;
-					case HN_JACK_FROST_NOVA:
-						if (mflag & SKILL_ALTDMG_FLAG) {
-							// Initial damage
-							// TODO: refactor / move elsewhere
-							ad.div_ = 1;	// 1 hit
-						}
-						break;
-					case HN_METEOR_STORM_BUSTER:
-						if (mflag & SKILL_ALTDMG_FLAG) {
-							// Fall damage
-							// TODO: refactor / move elsewhere
-							ad.div_ = -3;
-						}
-						break;
 				}
 
 				if (sc) {// Insignia's increases the damage of offensive magic by a fixed percentage depending on the element.
@@ -7212,6 +6514,11 @@ struct Damage battle_calc_misc_attack(block_list *src,block_list *target,uint16 
 
 	//Skill Range Criteria
 	md.flag |= battle_range_type(src, target, skill_id, skill_lv);
+
+	// Update Damage data based on skill
+	if (skill != nullptr && skill->impl != nullptr) {
+		skill->impl->modifyDamageData(md, *src, *target, skill_lv);
+	}
 
 	switch (skill_id) {
 		case TF_THROWSTONE:
@@ -9781,6 +9088,7 @@ static const struct _battle_data {
 	{ "trade_count_stackable",              &battle_config.trade_count_stackable,           1,      0,      1,              },
 	{ "enable_bonus_map_drops",             &battle_config.enable_bonus_map_drops,          1,      0,      1,              },
 	{ "hide_cloaked_units",                 &battle_config.hide_cloaked_units,              0,      0,      BL_ALL,         },
+	{ "oridecon_research_fix",              &battle_config.oridecon_research_fix,           0,      0,      1,              },
 
 #include <custom/battle_config_init.inc>
 };

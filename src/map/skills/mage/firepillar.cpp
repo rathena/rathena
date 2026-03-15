@@ -22,3 +22,10 @@ void SkillFirePillar::calculateSkillRatio(const Damage* wd, const block_list* sr
 void SkillFirePillar::applyAdditionalEffects(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const {
 	unit_set_walkdelay(target, tick, skill_get_time2(getSkillId(), skill_lv), 1);
 }
+
+void SkillFirePillar::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
+	const map_session_data* sd = BL_CAST(BL_PC, &src);
+
+	if (sd != nullptr && dmg.div_ > 0)
+		dmg.div_ *= -1; // For players, damage is divided by number of hits
+}

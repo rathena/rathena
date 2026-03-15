@@ -5,7 +5,7 @@
 
 #include "../skill_impl.hpp"
 
-class SkillDawnBreak : public SkillImpl {
+class SkillDawnBreak : public SkillImplRecursiveDamageSplash {
 public:
 	SkillDawnBreak();
 

@@ -5,98 +5,507 @@
 
 #include "../skill_impl.hpp"
 
+// Include .cpp files into the TU to optimize compile time
+// For reference see unity builds or amalgamated builds
+#include "acidbreath.cpp"
+#include "agilityup.cpp"
+#include "antimagic.cpp"
+#include "attributechange.cpp"
+#include "bleeding.cpp"
+#include "bleeding2.cpp"
+#include "blindattack.cpp"
+#include "breakarmor.cpp"
+#include "breakhelm.cpp"
+#include "breakshield.cpp"
+#include "caneofevileye.cpp"
+#include "changelocation.cpp"
+#include "comet2.cpp"
+#include "criticalwounds.cpp"
+#include "crossofdarkness.cpp"
+#include "curseattack.cpp"
+#include "dancingblade.cpp"
+#include "darkblessing.cpp"
+#include "darkbreath.cpp"
+#include "darknessbreath.cpp"
+#include "darknessjupitel.cpp"
+#include "darkpiercing.cpp"
+#include "deadlycurse.cpp"
+#include "deadlycurse2.cpp"
+#include "deathsummon.cpp"
+#include "decreaseallstats.cpp"
+#include "demonshockattack.cpp"
+#include "dragonfear.cpp"
+#include "earthattributeattack.cpp"
+#include "earthattributechange.cpp"
+#include "earthquake.cpp"
+#include "emotion.cpp"
+#include "emotionon.cpp"
+#include "energydrain.cpp"
+#include "evilland.cpp"
+#include "expulsion.cpp"
+#include "fireattributeattack.cpp"
+#include "fireattributechange.cpp"
+#include "firebreath.cpp"
+#include "firestorm.cpp"
+#include "flamecross.cpp"
+#include "followersummons.cpp"
+#include "fullheal.cpp"
+#include "ghostattributeattack.cpp"
+#include "ghostattributechange.cpp"
+#include "grandcrossofdarkness.cpp"
+#include "grounddrive.cpp"
+#include "hallucination.cpp"
+#include "hellburning.cpp"
+#include "helldignity.cpp"
+#include "hellpower.cpp"
+#include "hellsjudgement.cpp"
+#include "hellsjudgement2.cpp"
+#include "holyattributeattack.cpp"
+#include "holyattributechange.cpp"
+#include "icebreath.cpp"
+#include "icebreath2.cpp"
+#include "icemine.cpp"
+#include "increasedgravity.cpp"
+#include "invincibleoff.cpp"
+#include "invisible.cpp"
+#include "jackfrost2.cpp"
+#include "leash.cpp"
+#include "lexaeterna2.cpp"
+#include "lick.cpp"
+#include "metamorphosis.cpp"
+#include "milleniumshield2.cpp"
+#include "monstersummons.cpp"
+#include "multistageattack.cpp"
+#include "npcarrowstorm.cpp"
+#include "npccloudkill.cpp"
+#include "npccoluceoheal.cpp"
+#include "npccursedcircle.cpp"
+#include "npcdragonbreath.cpp"
+#include "npcelectricwalk.cpp"
+#include "npcfatalmenace.cpp"
+#include "npcfirewalk.cpp"
+#include "npchowlingofmandragora.cpp"
+#include "npcignitionbreak.cpp"
+#include "npcmagmaeruption.cpp"
+#include "npcphantomthrust.cpp"
+#include "npcpoisonbuster.cpp"
+#include "npcpsychicwave.cpp"
+#include "npcrayofgenesis.cpp"
+#include "npcrun.cpp"
+#include "npcsuicide.cpp"
+#include "npcvenomimpress.cpp"
+#include "petrifyattack.cpp"
+#include "piercingattack.cpp"
+#include "poisonattack.cpp"
+#include "poisonattributeattack.cpp"
+#include "poisonattributechange.cpp"
+#include "powerup.cpp"
+#include "propertyimmune.cpp"
+#include "provocation.cpp"
+#include "pulsestrike.cpp"
+#include "pulsestrike2.cpp"
+#include "rainofmeteor.cpp"
+#include "randomattack.cpp"
+#include "randommove.cpp"
+#include "rebirth.cpp"
+#include "recallslaves.cpp"
+#include "revenge.cpp"
+#include "reverberation2.cpp"
+#include "shadowattributeattack.cpp"
+#include "shadowattributechange.cpp"
+#include "siegemode.cpp"
+#include "silenceattack.cpp"
+#include "sleepattack.cpp"
+#include "slowcast.cpp"
+#include "smoking.cpp"
+#include "soulstrikeofdarkness.cpp"
+#include "speedup.cpp"
+#include "spiritdestruction.cpp"
+#include "splashattack.cpp"
+#include "stoneskin.cpp"
+#include "stop.cpp"
+#include "stormgust2.cpp"
+#include "stunattack.cpp"
+#include "suckingblood.cpp"
+#include "suicidebombing.cpp"
+#include "talk.cpp"
+#include "thunderbreath.cpp"
+#include "transformation.cpp"
+#include "undeadattributechange.cpp"
+#include "undeadelementattack.cpp"
+#include "vampiregift.cpp"
+#include "venomfog.cpp"
+#include "waterattributeattack.cpp"
+#include "waterattributechange.cpp"
+#include "widebleeding.cpp"
+#include "widebleeding2.cpp"
+#include "wideconfusion.cpp"
+#include "wideconfusion2.cpp"
+#include "widecriticalwounds.cpp"
+#include "widecurse.cpp"
+#include "widecurse2.cpp"
+#include "widefreeze.cpp"
+#include "widefreeze2.cpp"
+#include "wideleash.cpp"
+#include "widepetrify.cpp"
+#include "widepetrify2.cpp"
+#include "widesight.cpp"
+#include "widesilence.cpp"
+#include "widesilence2.cpp"
+#include "widesleep.cpp"
+#include "widesleep2.cpp"
+#include "widesouldrain.cpp"
+#include "widestun.cpp"
+#include "widestun2.cpp"
+#include "widesuck.cpp"
+#include "wideweb.cpp"
+#include "windattributeattack.cpp"
+#include "windattributechange.cpp"
+
 std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id) const {
 	switch( skill_id ){
+		case NPC_ACIDBREATH:
+			return std::make_unique<SkillAcidBreath>();
+		case NPC_AGIUP:
+			return std::make_unique<SkillAgilityUp>();
+		case NPC_ALLHEAL:
+			return std::make_unique<SkillFullHeal>();
+		case NPC_ALL_STAT_DOWN:
+			return std::make_unique<SkillDecreaseAllStats>();
+		case NPC_ANTIMAGIC:
+			return std::make_unique<SkillAntiMagic>();
 		case NPC_ARMORBRAKE:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillBreakArmor>();
+		case NPC_ARROWSTORM:
+			return std::make_unique<SkillNpcArrowStorm>();
+		case NPC_ATTRICHANGE:
+			return std::make_unique<SkillAttributeChange>();
 		case NPC_BARRIER:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NPC_BLEEDING:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillBleeding>();
 		case NPC_BLEEDING2:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillBleeding2>();
 		case NPC_BLINDATTACK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillBlindAttack>();
+		case NPC_BLOODDRAIN:
+			return std::make_unique<SkillSuckingBlood>();
+		case NPC_CALLSLAVE:
+			return std::make_unique<SkillRecallSlaves>();
+		case NPC_CANE_OF_EVIL_EYE:
+			return std::make_unique<SkillCaneOfEvilEye>();
+		case NPC_CHANGEDARKNESS:
+			return std::make_unique<SkillShadowAttributeChange>();
+		case NPC_CHANGEFIRE:
+			return std::make_unique<SkillFireAttributeChange>();
+		case NPC_CHANGEGROUND:
+			return std::make_unique<SkillEarthAttributeChange>();
+		case NPC_CHANGEHOLY:
+			return std::make_unique<SkillHolyAttributeChange>();
+		case NPC_CHANGEPOISON:
+			return std::make_unique<SkillPoisonAttributeChange>();
+		case NPC_CHANGETELEKINESIS:
+			return std::make_unique<SkillGhostAttributeChange>();
 		case NPC_CHANGEUNDEAD:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillUndeadAttributeChange>();
+		case NPC_CHANGEWATER:
+			return std::make_unique<SkillWaterAttributeChange>();
+		case NPC_CHANGEWIND:
+			return std::make_unique<SkillWindAttributeChange>();
+		case NPC_CHEAL:
+			return std::make_unique<SkillNpcColuceoHeal>();
+		case NPC_CLOUD_KILL:
+			return std::make_unique<SkillNpcCloudKill>();
 		case NPC_COMBOATTACK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillMultiStageAttack>();
+		case NPC_COMET:
+			return std::make_unique<SkillComet2>();
 		case NPC_CRITICALSLASH:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NPC_CRITICALWOUND:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillCriticalWounds>();
 		case NPC_CURSEATTACK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillCurseAttack>();
 		case NPC_DAMAGE_HEAL:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case NPC_DANCINGBLADE:
+			return std::make_unique<SkillDancingBlade>();
+		case NPC_DARKBLESSING:
+			return std::make_unique<SkillDarkBlessing>();
+		case NPC_DARKBREATH:
+			return std::make_unique<SkillDarkBreath>();
 		case NPC_DARKCROSS:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillCrossOfDarkness>();
 		case NPC_DARKNESSATTACK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillShadowAttributeAttack>();
+		case NPC_DARKNESSBREATH:
+			return std::make_unique<SkillDarknessBreath>();
+		case NPC_DARKPIERCING:
+			return std::make_unique<SkillDarkPiercing>();
+		case NPC_DARKSTRIKE:
+			return std::make_unique<SkillSoulStrikeOfDarkness>();
+		case NPC_DARKTHUNDER:
+			return std::make_unique<SkillDarknessJupitel>();
+		case NPC_DEADLYCURSE:
+			return std::make_unique<SkillDeadlyCurse>();
+		case NPC_DEADLYCURSE2:
+			return std::make_unique<SkillDeadlyCurse2>();
+		case NPC_DEATHSUMMON:
+			return std::make_unique<SkillDeathSummon>();
 		case NPC_DEFENDER:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case NPC_DRAGONBREATH:
+			return std::make_unique<SkillNpcDragonBreath>();
+		case NPC_DRAGONFEAR:
+			return std::make_unique<SkillDragonFear>();
+		case NPC_EARTHQUAKE:
+			return std::make_unique<SkillEarthquake>();
+		case NPC_ELECTRICWALK:
+			return std::make_unique<SkillNpcElectricWalk>();
+		case NPC_EMOTION:
+			return std::make_unique<SkillEmotion>();
+		case NPC_EMOTION_ON:
+			return std::make_unique<SkillEmotionOn>();
+		case NPC_ENERGYDRAIN:
+			return std::make_unique<SkillEnergyDrain>();
+		case NPC_EVILLAND:
+			return std::make_unique<SkillEvilLand>();
+		case NPC_EXPULSION:
+			return std::make_unique<SkillExpulsion>();
+		case NPC_FATALMENACE:
+			return std::make_unique<SkillNpcFatalMenace>();
 		case NPC_FIREATTACK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillFireAttributeAttack>();
+		case NPC_FIREBREATH:
+			return std::make_unique<SkillFireBreath>();
+		case NPC_FIRESTORM:
+			return std::make_unique<SkillFireStorm>();
+		case NPC_FIREWALK:
+			return std::make_unique<SkillNpcFireWalk>();
+		case NPC_FLAMECROSS:
+			return std::make_unique<SkillFlameCross>();
+		case NPC_GRADUAL_GRAVITY:
+			return std::make_unique<SkillIncreasedGravity>();
+		case NPC_GRANDDARKNESS:
+			return std::make_unique<SkillGrandCrossOfDarkness>();
 		case NPC_GROUNDATTACK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillEarthAttributeAttack>();
+		case NPC_GROUNDDRIVE:
+			return std::make_unique<SkillGroundDrive>();
 		case NPC_GUIDEDATTACK:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case NPC_HALLUCINATION:
+			return std::make_unique<SkillHallucination>();
 		case NPC_HALLUCINATIONWALK:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case NPC_HELLBURNING:
+			return std::make_unique<SkillHellBurning>();
+		case NPC_HELLJUDGEMENT:
+			return std::make_unique<SkillHellsJudgement>();
+		case NPC_HELLJUDGEMENT2:
+			return std::make_unique<SkillHellsJudgement2>();
 		case NPC_HELLPOWER:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillHellPower>();
 		case NPC_HELMBRAKE:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillBreakHelm>();
 		case NPC_HOLYATTACK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillHolyAttributeAttack>();
+		case NPC_ICEBREATH:
+			return std::make_unique<SkillIceBreath>();
+		case NPC_ICEBREATH2:
+			return std::make_unique<SkillIceBreath2>();
+		case NPC_ICEMINE:
+			return std::make_unique<SkillIceMine>();
+		case NPC_IGNITIONBREAK:
+			return std::make_unique<SkillNpcIgnitionBreak>();
+		case NPC_IMMUNE_PROPERTY:
+			return std::make_unique<SkillPropertyImmune>();
 		case NPC_INVINCIBLE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case NPC_INVINCIBLEOFF:
+			return std::make_unique<SkillInvincibleOff>();
+		case NPC_INVISIBLE:
+			return std::make_unique<SkillInvisible>();
+		case NPC_JACKFROST:
+			return std::make_unique<SkillJackFrost2>();
 		case NPC_KEEPING:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NPC_KILLING_AURA:
-			return std::make_unique<StatusSkillImpl>(skill_id);
+			return std::make_unique<SkillImplRecursiveDamageSplash>(skill_id);
+		case NPC_LEASH:
+			return std::make_unique<SkillLeash>();
+		case NPC_LEX_AETERNA:
+			return std::make_unique<SkillLexAeterna2>();
+		case NPC_LICK:
+			return std::make_unique<SkillLick>();
+		case NPC_MAGICALATTACK:
+			return std::make_unique<SkillDemonShockAttack>();
 		case NPC_MAGICMIRROR:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NPC_MAGMA_ERUPTION:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillNpcMagmaEruption>();
+		case NPC_MANDRAGORA:
+			return std::make_unique<SkillNpcHowlingOfMandragora>();
 		case NPC_MAXPAIN:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case NPC_MAXPAIN_ATK:
+			return std::make_unique<SkillImplRecursiveDamageSplash>(skill_id);
 		case NPC_MENTALBREAKER:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillSpiritDestruction>();
+		case NPC_METAMORPHOSIS:
+			return std::make_unique<SkillMetamorphosis>();
+		case NPC_MILLENNIUMSHIELD:
+			return std::make_unique<SkillMilleniumShield2>();
+		case NPC_MOVE_COORDINATE:
+			return std::make_unique<SkillChangeLocation>();
 		case NPC_PETRIFYATTACK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillPetrifyAttack>();
+		case NPC_PHANTOMTHRUST:
+			return std::make_unique<SkillNpcPhantomThrust>();
 		case NPC_PIERCINGATT:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillPiercingAttack>();
 		case NPC_POISON:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillPoisonAttack>();
 		case NPC_POISONATTACK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillPoisonAttributeAttack>();
+		case NPC_POISON_BUSTER:
+			return std::make_unique<SkillNpcPoisonBuster>();
+		case NPC_POWERUP:
+			return std::make_unique<SkillPowerUp>();
+		case NPC_PROVOCATION:
+			return std::make_unique<SkillProvocation>();
+		case NPC_PSYCHIC_WAVE:
+			return std::make_unique<SkillNpcPsychicWave>();
+		case NPC_PULSESTRIKE:
+			return std::make_unique<SkillPulseStrike>();
+		case NPC_PULSESTRIKE2:
+			return std::make_unique<SkillPulseStrike2>();
+		case NPC_RAINOFMETEOR:
+			return std::make_unique<SkillRainOfMeteor>();
 		case NPC_RANDOMATTACK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillRandomAttack>();
+		case NPC_RANDOMMOVE:
+			return std::make_unique<SkillRandomMove>();
 		case NPC_RANGEATTACK:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case NPC_RAYOFGENESIS:
+			return std::make_unique<SkillNpcRayOfGenesis>();
+		case NPC_REBIRTH:
+			return std::make_unique<SkillRebirth>();
 		case NPC_RELIEVE_OFF:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NPC_RELIEVE_ON:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case NPC_REVENGE:
+			return std::make_unique<SkillRevenge>();
+		case NPC_REVERBERATION:
+			return std::make_unique<SkillReverberation2>();
+		case NPC_REVERBERATION_ATK:
+			return std::make_unique<SkillReverberationAttack>();
+		case NPC_RUN:
+			return std::make_unique<SkillNpcRun>();
+		case NPC_SELFDESTRUCTION:
+			return std::make_unique<SkillSuicideBombing>();
 		case NPC_SHIELDBRAKE:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillBreakShield>();
+		case NPC_SIEGEMODE:
+			return std::make_unique<SkillSiegeMode>();
 		case NPC_SILENCEATTACK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillSilenceAttack>();
 		case NPC_SLEEPATTACK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillSleepAttack>();
+		case NPC_SLOWCAST:
+			return std::make_unique<SkillSlowCast>();
+		case NPC_SMOKING:
+			return std::make_unique<SkillSmoking>();
+		case NPC_SPEEDUP:
+			return std::make_unique<SkillSpeedUp>();
+		case NPC_SPLASHATTACK:
+			return std::make_unique<SkillSplashAttack>();
+		case NPC_SR_CURSEDCIRCLE:
+			return std::make_unique<SkillNpcCursedCircle>();
+		case NPC_STONESKIN:
+			return std::make_unique<SkillStoneSkin>();
+		case NPC_STOP:
+			return std::make_unique<SkillStop>();
+		case NPC_STORMGUST2:
+			return std::make_unique<SkillStormGust2>();
 		case NPC_STUNATTACK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillStunAttack>();
+		case NPC_SUICIDE:
+			return std::make_unique<SkillNpcSuicide>();
+		case NPC_SUMMONMONSTER:
+			return std::make_unique<SkillMonsterSummons>();
+		case NPC_SUMMONSLAVE:
+			return std::make_unique<SkillFollowerSummons>();
+		case NPC_TALK:
+			return std::make_unique<SkillTalk>();
 		case NPC_TELEKINESISATTACK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillGhostAttributeAttack>();
+		case NPC_THUNDERBREATH:
+			return std::make_unique<SkillThunderBreath>();
+		case NPC_TRANSFORMATION:
+			return std::make_unique<SkillTransformation>();
 		case NPC_UNDEADATTACK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillUndeadElementAttack>();
+		case NPC_VAMPIRE_GIFT:
+			return std::make_unique<SkillVampireGift>();
+		case NPC_VENOMFOG:
+			return std::make_unique<SkillVenomFog>();
+		case NPC_VENOMIMPRESS:
+			return std::make_unique<SkillNpcVenomImpress>();
 		case NPC_WATERATTACK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillWaterAttributeAttack>();
 		case NPC_WEAPONBRAKER:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case NPC_WIDEBLEEDING:
+			return std::make_unique<SkillWideBleeding>();
+		case NPC_WIDEBLEEDING2:
+			return std::make_unique<SkillWideBleeding2>();
+		case NPC_WIDECONFUSE:
+			return std::make_unique<SkillWideConfusion>();
+		case NPC_WIDECONFUSE2:
+			return std::make_unique<SkillWideConfusion2>();
+		case NPC_WIDECRITICALWOUND:
+			return std::make_unique<SkillWideCriticalWounds>();
+		case NPC_WIDECURSE:
+			return std::make_unique<SkillWideCurse>();
+		case NPC_WIDECURSE2:
+			return std::make_unique<SkillWideCurse2>();
+		case NPC_WIDEFREEZE:
+			return std::make_unique<SkillWideFreeze>();
+		case NPC_WIDEFREEZE2:
+			return std::make_unique<SkillWideFreeze2>();
+		case NPC_WIDEHELLDIGNITY:
+			return std::make_unique<SkillHellDignity>();
+		case NPC_WIDELEASH:
+			return std::make_unique<SkillWideLeash>();
+		case NPC_WIDESIGHT:
+			return std::make_unique<SkillWideSight>();
+		case NPC_WIDESILENCE:
+			return std::make_unique<SkillWideSilence>();
+		case NPC_WIDESILENCE2:
+			return std::make_unique<SkillWideSilence2>();
+		case NPC_WIDESLEEP:
+			return std::make_unique<SkillWideSleep>();
+		case NPC_WIDESLEEP2:
+			return std::make_unique<SkillWideSleep2>();
+		case NPC_WIDESOULDRAIN:
+			return std::make_unique<SkillWideSoulDrain>();
+		case NPC_WIDESTONE:
+			return std::make_unique<SkillWidePetrify>();
+		case NPC_WIDESTONE2:
+			return std::make_unique<SkillWidePetrify2>();
+		case NPC_WIDESTUN:
+			return std::make_unique<SkillWideStun>();
+		case NPC_WIDESTUN2:
+			return std::make_unique<SkillWideStun2>();
+		case NPC_WIDESUCK:
+			return std::make_unique<SkillWideSuck>();
+		case NPC_WIDEWEB:
+			return std::make_unique<SkillWideWeb>();
 		case NPC_WINDATTACK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillWindAttributeAttack>();
 
 		default:
 			return nullptr;

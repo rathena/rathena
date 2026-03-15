@@ -1775,6 +1775,8 @@ Body:
     DurationLookup: BD_ENCORE
     States:
       NoMoveCond: true
+      NoAttack: true
+      NoCast: true
     CalcFlags:
       Speed: true
       Regen: true
