@@ -27839,17 +27839,40 @@ BUILDIN_FUNC(mesitemicon){
  * meshyperlink(<display_text>", "<url>)
  **/
 BUILDIN_FUNC(meshyperlink) {  
-    const char* display = script_getstr(st, 2);  
-    const char* url = script_getstr(st, 3);  
-  
-    std::string result = "<URL>";  
-    result += display;  
-    result += "<INFO>";  
-    result += url;  
-    result += "</INFO></URL>";  
-  
-    script_pushstrcopy(st, result.c_str());  
-    return SCRIPT_CMD_SUCCESS;  
+	const char* display = script_getstr(st, 2);
+	const char* url = script_getstr(st, 3);
+
+	std::string result = "<URL>";
+	result += display;
+	result += "<INFO>";
+	result += url;
+	result += "</INFO></URL>";
+
+	script_pushstrcopy(st, result.c_str());
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(mesemotion){
+#if PACKETVER >= 20230302
+	int32 id = script_getnum(st, 2);
+
+	// Validates emotion range
+	if (id < ET_SURPRISE || id >= ET_MAX) {
+		ShowError("buildin_mesemotion: Emotion ID %d is invalid.\n", id);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	char buf[32];
+	std::snprintf(buf, sizeof(buf), "^e[%d]", id);
+	script_pushstrcopy(st, buf);
+
+	return SCRIPT_CMD_SUCCESS;
+#else
+	ShowError( "buildin_mesemotion: This command requires PACKETVER 2023-03-02 or newer.\n" );
+	st->state = END;
+	return SCRIPT_CMD_FAILURE;
+#endif
 }
 
 #include <custom/script.inc>
@@ -28629,6 +28652,7 @@ struct script_function buildin_func[] = {
 
 	BUILDIN_DEF( mesitemicon, "v??" ),
 	BUILDIN_DEF(meshyperlink, "ss"),
+	BUILDIN_DEF(mesemotion,"i"),
 
 #include <custom/script_def.inc>
 

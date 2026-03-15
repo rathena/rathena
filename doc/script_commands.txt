@@ -11439,6 +11439,23 @@ Notes:
 	- The protocol (http:// or https://) is optional.
 	- This command returns a string and must be used together with mes.
 
+---------------------------------------
+
+*mesemotion(<emotion_id>);
+
+Generates an emotion type string that can be used with an NPCs mes command.
+This allows NPC dialogue to display a client-side emotion icon inline with the message.
+The emotion can be specified either by its numeric ID or by using a valid emotion
+constant name. Invalid emotion IDs or unknown emotion names will return an empty string.
+
+This command requires packet version 2023-03-02 or newer.
+
+Examples:
+
+	mes mesemotion(ET_SMILE) + " Hello there!"; // Displays an NPC message with a smile emotion icon before the text.
+
+---------------------------------------
+
 ========================
 |14.- Channel commands.|
 ========================
