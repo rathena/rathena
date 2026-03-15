@@ -11441,7 +11441,7 @@ Notes:
 
 ---------------------------------------
 
-*mesemotiontype(<emotion_id>);
+*mesemotion(<emotion_id>);
 
 Generates an emotion type string that can be used with an NPCs mes command.
 This allows NPC dialogue to display a client-side emotion icon inline with the message.
@@ -11452,8 +11452,7 @@ This command requires packet version 2023-03-02 or newer.
 
 Examples:
 
-	mes mesemotiontype(ET_SMILE) + " Hello there!"; // Displays an NPC message with a smile emotion icon before the text.
-	mes mesemotiontype(3) + " I'm angry!"; // Displays an NPC message using emotion ID 3.
+	mes mesemotion(ET_SMILE) + " Hello there!"; // Displays an NPC message with a smile emotion icon before the text.
 
 ---------------------------------------
 

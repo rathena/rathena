@@ -27859,7 +27859,7 @@ BUILDIN_FUNC(mesemotion){
 	// Validates emotion range
 	if (id < ET_SURPRISE || id >= ET_MAX) {
 		ShowError("buildin_mesemotion: Emotion ID %d is invalid.\n", id);
-		script_pushconststr(st, "");
+		st->state = END;
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -27870,6 +27870,7 @@ BUILDIN_FUNC(mesemotion){
 	return SCRIPT_CMD_SUCCESS;
 #else
 	ShowError( "buildin_mesemotion: This command requires PACKETVER 2023-03-02 or newer.\n" );
+	st->state = END;
 	return SCRIPT_CMD_FAILURE;
 #endif
 }
