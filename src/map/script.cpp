@@ -27852,13 +27852,13 @@ BUILDIN_FUNC(meshyperlink) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
-BUILDIN_FUNC(mesemotiontype){
+BUILDIN_FUNC(mesemotion){
 #if PACKETVER >= 20230302
 	int32 id = script_getnum(st, 2);
 
 	// Validates emotion range
 	if (id < ET_SURPRISE || id >= ET_MAX) {
-		ShowError("buildin_mesemotiontype: Emotion ID %d is invalid.\n", id);
+		ShowError("buildin_mesemotion: Emotion ID %d is invalid.\n", id);
 		script_pushconststr(st, "");
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -27869,7 +27869,7 @@ BUILDIN_FUNC(mesemotiontype){
 
 	return SCRIPT_CMD_SUCCESS;
 #else
-	ShowError( "buildin_mesemotiontype: This command requires PACKETVER 2023-03-02 or newer.\n" );
+	ShowError( "buildin_mesemotion: This command requires PACKETVER 2023-03-02 or newer.\n" );
 	return SCRIPT_CMD_FAILURE;
 #endif
 }
@@ -28651,7 +28651,7 @@ struct script_function buildin_func[] = {
 
 	BUILDIN_DEF( mesitemicon, "v??" ),
 	BUILDIN_DEF(meshyperlink, "ss"),
-	BUILDIN_DEF(mesemotiontype,"i"),
+	BUILDIN_DEF(mesemotion,"i"),
 
 #include <custom/script_def.inc>
 
