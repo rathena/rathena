@@ -3,30 +3,22 @@
 
 #include "terrawave.hpp"
 
+#include <config/core.hpp>
+
 #include "map/clif.hpp"
 #include "map/map.hpp"
 #include "map/pc.hpp"
-#include "map/skill.hpp"
 
-#include "skill_factory_druid.hpp"
+#include "groundbloom.hpp"
 
 constexpr int32 kTerraWaveStepMs = 150;
 
 SkillTerraWave::SkillTerraWave() : SkillImplRecursiveDamageSplash(AT_TERRA_WAVE) {
 }
 
-void SkillTerraWave::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	if (!(flag & 1)) {
-		clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
-	}
-
-	SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
-}
-
 void SkillTerraWave::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {
 	const int32 segment_count = 4;
 	const int32 segment_step = 3;
-	map_session_data *sd = BL_CAST(BL_PC, src);
 	map_data *mapdata = map_getmapdata(src->m);
 	bool blocked = false;
 
@@ -49,7 +41,7 @@ void SkillTerraWave::castendPos2(block_list* src, int32 x, int32 y, uint16 skill
 	}
 
 	if (blocked) {
-		if (sd) {
+		if (map_session_data *sd = BL_CAST(BL_PC, src); sd != nullptr) {
 			clif_skill_fail(*sd, getSkillId(), USESKILL_FAIL);
 		}
 		return;
@@ -82,21 +74,20 @@ void SkillTerraWave::castendPos2(block_list* src, int32 x, int32 y, uint16 skill
 		skill_addtimerskill(src, step_tick, 0, cx, cy, getSkillId(), skill_lv, 0, wave_flag);
 		placed++;
 	}
-	SkillFactoryDruid::try_gain_growth_stacks(src, tick, getSkillId());
+
+	// Updates growth status and casts Ground Bloom if the conditions are met
+	SkillGroundBloom::castGroundBloom(src, tick, 2);
 }
 
-void SkillTerraWave::calculateSkillRatio(const Damage*, const block_list* src, const block_list*, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {
-	const status_change* sc = status_get_sc(src);
-	const status_data* sstatus = status_get_status_data(*src);
+void SkillTerraWave::calculateSkillRatio(const Damage*, const block_list* src, const block_list*, uint16 skill_lv, int32& skillratio, int32 mflag) const {
+	skillratio += -100 + 12000 + 300 * (skill_lv - 1);
 
-	int32 skillratio = 12000 + 300 * (skill_lv - 1);
-	if (sc != nullptr && sc->hasSCE(SC_TRUTH_OF_EARTH)) {
-		skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
-		RE_LVL_DMOD(100);
+	if (const status_change* sc = status_get_sc(src); sc != nullptr && sc->hasSCE(SC_TRUTH_OF_EARTH)) {
+		const status_data* sstatus = status_get_status_data(*src);
+
+		skillratio += 15 * sstatus->spl;
 	}
-	base_skillratio += -100 + skillratio;
-}
 
-int64 SkillTerraWave::splashDamage(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
-	return skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag);
+	// Unlike what the description indicates, the BaseLevel modifier is not part of the condition on SC_TRUTH_OF_EARTH
+	RE_LVL_DMOD(100);
 }
