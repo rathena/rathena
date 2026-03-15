@@ -18,7 +18,6 @@ public:
 	virtual std::unique_ptr<const SkillImpl> create(const e_skill skill_id) const override;
 
 	static void addThunderingCharge(block_list* src, uint16 skill_id, uint16 skill_lv, int32 charge);
-	static void try_gain_growth_stacks(block_list* src, t_tick tick, e_skill skill_id);
 	static e_skill resolve_quill_spear_skill(const status_change* sc, e_skill skill_id);
 	static int32 get_madness_stage(const status_change* sc);
 	static void try_gain_madness(block_list* src);

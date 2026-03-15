@@ -166,62 +166,6 @@
 		sc_start(src, src, SC_INSANE, 100, 1, duration);
 	}
 
-	void add_growth_stacks(block_list *src, t_tick tick, int32 amount) {
-		map_session_data *sd = BL_CAST(BL_PC, src);
-		status_change *sc = status_get_sc(src);
-
-		if (sd == nullptr || sc == nullptr || amount <= 0) {
-			return;
-		}
-
-		int32 bud_lv = pc_checkskill(sd, KR_EARTH_BUD);
-		if (bud_lv <= 0) {
-			return;
-		}
-
-		status_change_entry *grow = sc->getSCE(SC_GROUND_GROW);
-		int32 current = grow != nullptr ? grow->val3 : 0;
-
-		if (current >= 12) {
-			status_change_end(src, SC_GROUND_GROW);
-			skill_castend_nodamage_id(src, src, KR_GROUND_BLOOM, bud_lv, tick, 0);
-
-			int64 heal = static_cast<int64>(status_get_max_hp(src)) * (bud_lv * 3) / 100;
-			if (heal > 0) {
-				status_heal(src, heal, 0, 0);
-			}
-			return;
-		}
-
-		int32 next = current + amount;
-		if (next > 12) {
-			next = 12;
-		}
-
-		status_change_start(src, src, SC_GROUND_GROW, 10000, 0, 0, next, 0, kGrowthDuration, SCSTART_NOAVOID);
-	}
-
-	void SkillFactoryDruid::try_gain_growth_stacks(block_list *src, t_tick tick, e_skill skill_id) {
-		int32 amount = 0;
-		switch (skill_id) {
-			case KR_EARTH_DRILL:
-			case KR_EARTH_STAMP:
-				amount = 1;
-				break;
-			case AT_TERRA_HARVEST:
-			case AT_TERRA_WAVE:
-				amount = 2;
-				break;
-			case AT_SOLID_STOMP:
-				amount = 4;
-				break;
-			default:
-				return;
-		}
-
-		add_growth_stacks(src, tick, amount);
-	}
-
 	int32 apply_splash_outer_sub(block_list *bl, va_list ap) {
 		block_list *src = va_arg(ap, block_list *);
 		uint16 skill_id = static_cast<uint16>(va_arg(ap, int));
