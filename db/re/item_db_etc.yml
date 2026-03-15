@@ -89903,15 +89903,19 @@ Body:
     Name: Blue Fighting Spirit Effect    # !todo check english name
     Type: Card
     SubType: Enchant
-#   Script: |
-#     /* TODO */
+    Script: |
+      hateffect HAT_EF_ROS_BlueSpirit,true;
+    UnEquipScript: |
+      hateffect HAT_EF_ROS_BlueSpirit,false;
   - Id: 314095
     AegisName: aegis_314095
     Name: Red Fighting Spirit Effect    # !todo check english name
     Type: Card
     SubType: Enchant
-#   Script: |
-#     /* TODO */
+    Script: |
+      hateffect HAT_EF_ROS_RedSpirit,true;
+    UnEquipScript: |
+      hateffect HAT_EF_ROS_RedSpirit,false;
   - Id: 314171
     AegisName: aegis_314171
     Name: Footprint (2D)
