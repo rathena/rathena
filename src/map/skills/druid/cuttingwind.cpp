@@ -30,3 +30,10 @@ void SkillCuttingWind::castendDamageId(block_list* src, block_list* target, uint
 
 	skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag);
 }
+
+void SkillCuttingWind::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
+	const status_change *sc = status_get_sc(&src);
+
+	if (sc != nullptr && sc->hasSCE(SC_TRUTH_OF_WIND))
+		dmg.div_ = 4;
+}

@@ -32,3 +32,21 @@ void SkillFrenzyFang::calculateSkillRatio(const Damage*, const block_list* src, 
 	RE_LVL_DMOD(100);
 	base_skillratio += -100 + skillratio;
 }
+
+void SkillFrenzyFang::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
+	const status_change *sc = status_get_sc(&src);
+
+	int32 hits = 2;
+
+	if (sc != nullptr) {
+		if (sc->hasSCE(SC_ALPHA_PHASE) || sc->hasSCE(SC_INSANE3)) {
+			hits = 7;
+		} else if (sc->hasSCE(SC_INSANE2)) {
+			hits = 5;
+		} else if (sc->hasSCE(SC_INSANE)) {
+			hits = 3;
+		}
+	}
+
+	dmg.div_ = hits;
+}

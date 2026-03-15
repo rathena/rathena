@@ -4481,13 +4481,6 @@ static void battle_calc_multi_attack(struct Damage* wd, block_list *src,block_li
 			sc_start(src,src,SC_QD_SHOT_READY,100,target->id,skill_get_time(RL_QD_SHOT,1));
 		}
 	}
-  // TODO refactor
-	switch (skill_id) {
-		case AT_TEMPEST_FLAP:
-			if (sc && sc->hasSCE(SC_APEX_PHASE))
-				wd->div_ = 3;
-			break;
-	}
 }
 
 /**
@@ -5460,27 +5453,6 @@ static struct Damage initialize_weapon_data(const block_list* src, const block_l
 	if (skill_id) {
 		// wd.flag from skills
 		wd.flag |= battle_range_type(src, target, skill_id, skill_lv);
-    // TODO refactor
-		switch(skill_id)
-		{
-				case AT_FRENZY_FANG: {
-					int32 hits = 2;
-
-					if (sc) {
-						if (sc->hasSCE(SC_ALPHA_PHASE) || sc->hasSCE(SC_INSANE3)) {
-							hits = 7;
-						} else if (sc->hasSCE(SC_INSANE2)) {
-							hits = 5;
-						} else if (sc->hasSCE(SC_INSANE)) {
-							hits = 3;
-						}
-					}
-
-				wd.div_ = hits;
-				break;
-			}
-
-		}
 	} else {
 		// wd.flag from basic attacks
 		if (is_skill_using_arrow(src, skill_id) || (sc != nullptr && sc->hasSCE(SC_SOULATTACK)))
@@ -6020,17 +5992,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 
 	//Initialize variables that will be used afterwards
 	s_ele = battle_get_magic_element(src, target, skill_id, skill_lv, mflag);
-	// TODO refactor
-	switch(skill_id) {
-		case DR_CUTTING_WIND:
-			if (sc != nullptr && sc->hasSCE(SC_TRUTH_OF_WIND))
-				ad.div_ = 4;
-			break;
-		case DR_WIND_BOMB:
-			if (sc != nullptr && sc->hasSCE(SC_TRUTH_OF_WIND))
-				ad.div_ = 6;
-			break;
-	}
 
 	//Set miscellaneous data that needs be filled
 	if(sd) {

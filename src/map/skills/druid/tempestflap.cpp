@@ -26,6 +26,13 @@ void SkillTempestFlap::calculateSkillRatio(const Damage*, const block_list* src,
 	base_skillratio += -100 + skillratio;
 }
 
+void SkillTempestFlap::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
+	const status_change *sc = status_get_sc(&src);
+
+	if (sc != nullptr && sc->hasSCE(SC_APEX_PHASE))
+		dmg.div_ = 3;
+}
+
 int64 SkillTempestFlap::splashDamage(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
 	return skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag | SD_ANIMATION);
 }
