@@ -8357,7 +8357,7 @@ placement of the illustration and takes following values:
 	4	middle of screen without the window header, but still movable
 	255	clear all displayed cutins
 
-The picture is read from data\texture\유저인터페이스\illust, from both the GRF archive
+The picture is read from data\texture\ì ì ì¸í°íì´ì¤\illust, from both the GRF archive
 and data folder, and is required to be a bitmap. The file extension .bmp can be
 omitted. Magenta color (#ff00ff) is considered transparent. There is no limit
 placed on the size of the illustrations by the client, although loading of large
@@ -8547,7 +8547,7 @@ The values given will be divided by 100 and transmitted as floating-point number
 
 	rotation	The rotation of the camera.
 				Default: 0 (0.0) when no rotation is applied
-				Maximum: 360000 (360.0°) when fully rotated
+				Maximum: 360000 (360.0Â°) when fully rotated
 
 	latitude	The angle of the camera.
 				Default: -50000 (-50.0)
@@ -11381,22 +11381,17 @@ Examples:
 *mesemotiontype(<emotion_id>);
 *mesemotiontype("<emotion_constant>");
 
-Generates an emotion type string that can be used with an NPC�s mes command.
+Generates an emotion type string that can be used with an NPCs mes command.
 This allows NPC dialogue to display a client-side emotion icon inline with the message.
-
-If the feature is disabled or the client packet version is too old, the function will
-return an empty string.
-
 The emotion can be specified either by its numeric ID or by using a valid emotion
-constant name.
+constant name. Invalid emotion IDs or unknown emotion names will return an empty string.
 
-Invalid emotion IDs or unknown emotion names will return an empty string.
+This command requires packet version 2023-03-02 or newer.
 
 Examples:
 
 	mes mesemotiontype(ET_SMILE) + " Hello there!"; // Displays an NPC message with a smile emotion icon before the text.
 	mes mesemotiontype(3) + " I'm angry!"; // Displays an NPC message using emotion ID 3.
-	mes mesemotiontype("ET_SWEAT") + " That was close..."; // Uses the emotion constant instead of a numeric ID.
 
 ---------------------------------------
 

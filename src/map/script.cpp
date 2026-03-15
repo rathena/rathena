@@ -27793,10 +27793,8 @@ BUILDIN_FUNC(mesitemicon){
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/**
- * mesemotiontype(<emotion_id>);
- */
 BUILDIN_FUNC(mesemotiontype){
+#if PACKETVER >= 20230302
     int32 id = script_getnum(st, 2);
 
 	// Validates emotion range
@@ -27811,6 +27809,10 @@ BUILDIN_FUNC(mesemotiontype){
     script_pushstrcopy(st, buf);
 
     return SCRIPT_CMD_SUCCESS;
+#else
+	ShowError( "buildin_mesemotiontype: This command requires PACKETVER 2023-03-02 or newer.\n" );
+	return SCRIPT_CMD_FAILURE;
+#endif
 }
 
 #include <custom/script.inc>
