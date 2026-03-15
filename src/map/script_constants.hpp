@@ -7397,6 +7397,8 @@
 	export_constant(IG_SELECT_DEC_PACK1);
 	export_constant(IG_SELECT_DEC_PACK2);
 	export_constant(IG_SELECT_DEC_PACK3);
+	export_constant(IG_SPENDID_CAPE_BR);
+	export_constant(IG_CHEMICAL_GLOVE_ROC);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
@@ -10193,6 +10195,14 @@
 	export_constant(FOOTPRINT_EF_FEATHER);
 	export_constant(HAT_EF_SOLID_STATE_RECOGNITION);
 	export_constant(HAT_EF_C_CURSED_SERPENT);
+	export_constant(FOOTPRINT_EF_BASIC);
+	export_constant(HAT_EF_C_GGH_ANNIVERSARY);
+	export_constant(FOOTPRINT_EF_DIVINE_BLUE);
+	export_constant(FOOTPRINT_EF_BLUESTAR);
+	export_constant(FOOTPRINT_EF_PHOENIX);
+	export_constant(HAT_EF_C_CLB_GAT_DOC);
+	export_constant(HAT_EF_C_EYE_OF_NECROMANCER);
+	export_constant(HAT_EF_C_JAOW_PIRUN);
 
 	/* pet catch */
 	export_constant(PET_CATCH_UNIVERSAL_NO_BOSS);

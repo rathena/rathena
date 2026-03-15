@@ -5431,14 +5431,12 @@ Body:
     MaxLevel: 5
     Type: Weapon
     TargetType: Attack
-    DamageFlags:
-      IgnoreFlee: true
     Flags:
       IsNpc: true
     Range: -7
     Hit: Single
     HitCount: 1
-    Element: Weapon
+    Element: Ghost
   - Id: 160
     Name: NPC_RANGEATTACK
     Description: Stand off attack
@@ -14584,6 +14582,7 @@ Body:
     Cooldown: 500
     Requires:
       SpCost: 8
+    Status: Hiding
   - Id: 529
     Name: NJ_SHADOWJUMP
     Description: Shadow Leap
@@ -16601,6 +16600,7 @@ Body:
   - Id: 695
     Name: ALL_DREAM_SUMMERNIGHT
     Description: Summer Night Dream
+    # TODO check : skill type passive ?
     MaxLevel: 9
     Flags:
       IsNpc: true
@@ -45810,7 +45810,6 @@ Body:
     Type: Magic
     TargetType: Attack
     DamageFlags:
-      NoDamage: true
       Splash: true
     Range: 9
     Hit: Multi_Hit
@@ -46072,7 +46071,6 @@ Body:
     Hit: Multi_Hit
     HitCount: 5
     Element: Fire
-    GiveAp: 2
     SplashArea:
       - Level: 1
         Area: 2

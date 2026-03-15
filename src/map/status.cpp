@@ -7726,7 +7726,7 @@ static int16 status_calc_flee2(block_list *bl, status_change *sc, int32 flee2)
 		return cap_value(flee2,10,SHRT_MAX);
 
 	if(sc->getSCE(SC_WHISTLE))
-		flee2 += sc->getSCE(SC_WHISTLE)->val3*10;
+		flee2 += sc->getSCE(SC_WHISTLE)->val3;
 	if(sc->getSCE(SC__UNLUCKY))
 		flee2 -= flee2 * sc->getSCE(SC__UNLUCKY)->val2 / 100;
 	if (sc->getSCE(SC_HISS))
@@ -11095,7 +11095,7 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 			break;
 		case SC_WHISTLE:
 			val2 = 18 + 2 * val1; // Flee increase
-			val3 = (val1 + 1) / 2; // Perfect dodge increase
+			val3 = ((val1 + 1) / 2) * 10; // Perfect dodge increase
 			break;
 		case SC_ASSNCROS:
 			val2 = val1 < 10 ? val1 * 2 - 1 : 20; // ASPD increase

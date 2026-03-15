@@ -38,12 +38,40 @@ public:
 	virtual void modifyHitRate(int16& hit_rate, const block_list* src, const block_list* target, uint16 skill_lv) const;
 
 	/**
-	 * Apply additional effects after damage - called from skill_additional_effect
+	 * Apply additional effects on the target after damage - called from skill_additional_effect
 	 */
 	virtual void applyAdditionalEffects(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const;
 
+	/**
+	 * Apply additional effects on the caster after damage - called from skill_counter_additional_effect
+	 */
+	virtual void applyCounterAdditionalEffects(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& attack_type) const;
+
+	/**
+	 * Allows modifying the damage data right after initialization.
+	 */
+	virtual void modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const;
+
 protected:
 	e_skill skill_id_;
+};
+
+class StatusSkillImpl : public SkillImpl
+{
+private:
+	bool end_if_running;
+
+public:
+	StatusSkillImpl(e_skill skillId, bool end_if_running = false);
+
+	virtual void castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const override;
+};
+
+class WeaponSkillImpl : public SkillImpl {
+public:
+	WeaponSkillImpl(e_skill skill_id);
+
+	virtual void castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const override;
 };
 
 class SkillImplRecursiveDamageSplash : public SkillImpl{
@@ -54,9 +82,9 @@ public:
 
 	virtual void castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const override;
 
-	virtual int16 getSearchSize(uint16 skill_lv) const;
+	virtual int16 getSearchSize(block_list* src, uint16 skill_lv) const;
 
-	virtual int16 getSplashSearchSize(uint16 skill_lv) const;
+	virtual int16 getSplashSearchSize(block_list* src, uint16 skill_lv) const;
 
 	virtual int32 getSplashTarget(block_list* src) const;
 
