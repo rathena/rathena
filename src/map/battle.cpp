@@ -3456,9 +3456,15 @@ int32 battle_get_weapon_element( const Damage* wd, const block_list* src, const 
 			element = sd->bonus.arrow_ele;
 		if(sd && sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm >= MAX_SPIRITCHARM)
 			element = sd->spiritcharm_type; // Summoning 10 spiritcharm will endow your weapon
-		// on official endows override all other elements [helvetica]
-		if(sc && sc->getSCE(SC_ENCHANTARMS)) // Check for endows
-			element = sc->getSCE(SC_ENCHANTARMS)->val1;
+
+		if (sc != nullptr) {
+			// on official endows override all other elements [helvetica]
+			if (sc->hasSCE(SC_ENCHANTARMS)) // Check for endows
+				element = sc->getSCE(SC_ENCHANTARMS)->val1;
+
+			if (skill_id == 0 && sc->hasSCE(SC_GOLDENE_FERSE) && (rnd() % 100 < sc->getSCE(SC_GOLDENE_FERSE)->val4))
+				element = ELE_HOLY;
+		}
 	} else if( element == ELE_ENDOWED ) //Use enchantment's element
 		element = status_get_attack_sc_element(src,sc);
 	else if( element == ELE_RANDOM ) //Use random element
@@ -3468,10 +3474,6 @@ int32 battle_get_weapon_element( const Damage* wd, const block_list* src, const 
 	if (std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id); skill != nullptr && skill->impl != nullptr) {
 		skill->impl->modifyElement(element, *src, wd->miscflag);
 	}
-
-	// TODO refactor
-	if (sc && sc->getSCE(SC_GOLDENE_FERSE) && ((!skill_id && (rnd() % 100 < sc->getSCE(SC_GOLDENE_FERSE)->val4)) || skill_id == MH_STAHL_HORN))
-		element = ELE_HOLY;
 
 // calc_flag means the element should be calculated for damage only
 	if (calc_for_damage_only)
