@@ -15,7 +15,7 @@ void SkillMug::castendNoDamageId(block_list *src, block_list *target, uint16 ski
 	mob_data *dstmd = BL_CAST(BL_MOB, target);
 
 	if(sd) {
-		if(pc_steal_coin(sd,target))
+		if(pc_steal_coin(sd, target, skill_lv))
 		{
 			dstmd->state.provoke_flag = src->id;
 			mob_target(dstmd, src, skill_get_range2(src, getSkillId(), skill_lv, true));

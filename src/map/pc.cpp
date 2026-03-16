@@ -6884,7 +6884,7 @@ bool pc_steal_item(map_session_data *sd,block_list *bl, uint16 skill_lv)
  *	0 = fail
  *	1 = success
  *------------------------------------------*/
-int32 pc_steal_coin(map_session_data *sd,block_list *target)
+int32 pc_steal_coin(map_session_data *sd, block_list *target, uint16 skill_lv)
 {
 	int32 rate, target_lv;
 	mob_data *md;
@@ -6903,8 +6903,9 @@ int32 pc_steal_coin(map_session_data *sd,block_list *target)
 	rate = sd->battle_status.dex / 2 + 2 * (sd->status.base_level - target_lv) + (10 * pc_checkskill(sd, RG_STEALCOIN)) + sd->battle_status.luk / 2;
 	if(rnd()%1000 < rate)
 	{
-		// Zeny Steal Amount: (rnd() % (10 * target_lv + 1 - 8 * target_lv)) + 8 * target_lv
-		int32 amount = (rnd() % (2 * target_lv + 1)) + 8 * target_lv; // Reduced formula
+		// Zeny Steal Amount
+		int32 amount = rnd_value(8 * target_lv, 10 * target_lv);
+		amount += (skill_lv * target_lv) / 10;
 
 		pc_getzeny(sd, amount, LOG_TYPE_STEAL);
 		md->state.steal_coin_flag = 1;
