@@ -16,10 +16,10 @@ void SkillMug::castendNoDamageId(block_list *src, block_list *target, uint16 ski
 
 	if (sd != nullptr && dstmd != nullptr) {
 		int32 target_lv = status_get_lv(target);
-		int32 rate = (10 * pc_checkskill(sd, RG_STEALCOIN));
-		rate += (sd->battle_status.dex / 2);
-		rate += (sd->battle_status.luk / 2);
-		rate += (2 * (sd->status.base_level - target_lv));
+		int32 rate = 10 * pc_checkskill(sd, RG_STEALCOIN);
+		rate += sd->battle_status.dex / 2;
+		rate += sd->battle_status.luk / 2;
+		rate += 2 * (sd->status.base_level - target_lv);
 
 		if (rnd_chance_official(rate, 1000))
 		{
