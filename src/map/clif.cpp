@@ -10336,8 +10336,14 @@ void clif_viewequip_ack( const map_session_data& sd, const map_session_data& tsd
 #endif
 	p->headpalette = tsd.vd.look[LOOK_HAIR_COLOR];
 	p->bodypalette = tsd.vd.look[LOOK_CLOTHES_COLOR];
-#if PACKETVER_MAIN_NUM >= 20180801 || PACKETVER_RE_NUM >= 20180801 || PACKETVER_ZERO_NUM >= 20180808
+#if PACKETVER >= 20231220 && !defined(PACKETVER_ZERO)
 	p->body2 = tsd.vd.look[LOOK_BODY2];
+#elif PACKETVER_MAIN_NUM >= 20180801 || PACKETVER_RE_NUM >= 20180801 || PACKETVER_ZERO_NUM >= 20180808
+	if( tsd.vd.look[LOOK_BODY2] > JOB_SECOND_JOB_START && tsd.vd.look[LOOK_BODY2] < JOB_SECOND_JOB_END ){
+		p->body2 = 1;
+	}else{
+		p->body2 = 0;
+	}
 #endif
 	p->sex = tsd.vd.sex;
 
@@ -24275,6 +24281,19 @@ void clif_reputation_list( map_session_data& sd ){
 	}
 
 	clif_send( p, p->packetLength, &sd, SELF );
+#endif
+}
+
+void clif_reputation_open( map_session_data& sd, uint64 tabID, uint64 repID ) {
+#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
+	PACKET_ZC_REPUTE_OPEN p = {};
+
+	p.packetType = HEADER_ZC_REPUTE_OPEN;
+	p.table = tabID;
+	p.type = static_cast<decltype(p.type)>(repID);
+	p.mode = (repID == 0); // 0 = red texture
+
+	clif_send(&p, sizeof(p), &sd, SELF);
 #endif
 }
 

@@ -13,6 +13,10 @@
 SkillEswhoo::SkillEswhoo() : SkillImplRecursiveDamageSplash(SP_SWHOO) {
 }
 
+void SkillEswhoo::applyCounterAdditionalEffects(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& attack_type) const {
+	sc_start(src, src, SC_USE_SKILL_SP_SHA, 100, skill_lv, skill_get_time(getSkillId(), skill_lv));
+}
+
 void SkillEswhoo::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
 	skillratio += 1000 + 200 * skill_lv;
 	RE_LVL_DMOD(100);

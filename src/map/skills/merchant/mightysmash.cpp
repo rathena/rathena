@@ -6,19 +6,21 @@
 #include <config/core.hpp>
 
 #include "map/clif.hpp"
-#include "map/pc.hpp"
 #include "map/status.hpp"
 
 SkillMightySmash::SkillMightySmash() : SkillImplRecursiveDamageSplash(MT_MIGHTY_SMASH) {
 }
 
-void SkillMightySmash::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	int32 starget = BL_CHAR|BL_SKILL;
+void SkillMightySmash::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
+	const status_change *sc = status_get_sc(&src);
 
-	skill_area_temp[1] = 0;
+	if (sc != nullptr && sc->hasSCE(SC_AXE_STOMP))
+		dmg.div_ = 7;
+}
+
+void SkillMightySmash::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	clif_skill_nodamage(src,*target,getSkillId(),skill_lv);
-	map_foreachinrange(skill_area_sub, target, skill_get_splash(getSkillId(), skill_lv), starget,
-			src, getSkillId(), skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
+	skill_castend_damage_id(src, target, getSkillId(), skill_lv, tick, flag);
 }
 
 void SkillMightySmash::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& skillratio, int32 mflag) const {

@@ -1,0 +1,15 @@
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
+#include "mercenary_mentalcure.hpp"
+
+#include "map/clif.hpp"
+#include "map/status.hpp"
+
+SkillMercenaryMentalCure::SkillMercenaryMentalCure() : SkillImpl(MER_MENTALCURE) {
+}
+
+void SkillMercenaryMentalCure::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
+	status_change_end(target, SC_CONFUSION);
+	clif_skill_nodamage(src,*target,getSkillId(),skill_lv);
+}

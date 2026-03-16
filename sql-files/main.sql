@@ -815,7 +815,7 @@ CREATE TABLE IF NOT EXISTS `mail` (
   `zeny` int(11) unsigned NOT NULL default '0',
   `type` smallint(5) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 -- ----------------------------
 -- Table structure for `mail_attachments`
@@ -851,8 +851,12 @@ CREATE TABLE IF NOT EXISTS `mail_attachments` (
   `unique_id` bigint(20) unsigned NOT NULL DEFAULT '0',
   `bound` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `enchantgrade` tinyint unsigned NOT NULL default '0',
-    PRIMARY KEY (`id`,`index`)
-) ENGINE=MyISAM;
+    PRIMARY KEY (`id`,`index`),
+    FOREIGN KEY (`id`)
+        REFERENCES `mail`(`id`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+) ENGINE=InnoDB;
 
 --
 -- Table structure for table `mapreg`
