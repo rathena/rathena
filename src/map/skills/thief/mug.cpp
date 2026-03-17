@@ -5,10 +5,10 @@
 
 #include <common/random.hpp>
 
+#include "map/battle.hpp"
 #include "map/clif.hpp"
 #include "map/mob.hpp"
 #include "map/pc.hpp"
-#include "map/battle.hpp"
 
 SkillMug::SkillMug() : SkillImpl(RG_STEALCOIN) {
 }
