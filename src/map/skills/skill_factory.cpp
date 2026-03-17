@@ -10,26 +10,24 @@
 // This will save compile time
 #ifndef MAP_GENERATOR
 
-// Include .cpp files into the TU to optimize compile time
-// For reference see unity builds or amalgamated builds
-#include "./skill_impl.cpp"
-#include "./acolyte/skill_factory_acolyte.cpp"
-#include "./archer/skill_factory_archer.cpp"
-#include "./custom/skill_factory_custom.cpp"
-#include "./elemental/skill_factory_elemental.cpp"
-#include "./gunslinger/skill_factory_gunslinger.cpp"
-#include "./homunculus/skill_factory_homunculus.cpp"
-#include "./mage/skill_factory_mage.cpp"
-#include "./mercenary/skill_factory_mercenary.cpp"
-#include "./merchant/skill_factory_merchant.cpp"
-#include "./npc/skill_factory_npc.cpp"
-#include "./ninja/skill_factory_ninja.cpp"
-#include "./novice/skill_factory_novice.cpp"
-#include "./other/skill_factory_other.cpp"
-#include "./summoner/skill_factory_summoner.cpp"
-#include "./swordman/skill_factory_swordman.cpp"
-#include "./taekwon/skill_factory_taekwon.cpp"
-#include "./thief/skill_factory_thief.cpp"
+// Include job factory headers for the create() dispatcher
+#include "./acolyte/skill_factory_acolyte.hpp"
+#include "./archer/skill_factory_archer.hpp"
+#include "./custom/skill_factory_custom.hpp"
+#include "./elemental/skill_factory_elemental.hpp"
+#include "./gunslinger/skill_factory_gunslinger.hpp"
+#include "./homunculus/skill_factory_homunculus.hpp"
+#include "./mage/skill_factory_mage.hpp"
+#include "./mercenary/skill_factory_mercenary.hpp"
+#include "./merchant/skill_factory_merchant.hpp"
+#include "./npc/skill_factory_npc.hpp"
+#include "./ninja/skill_factory_ninja.hpp"
+#include "./novice/skill_factory_novice.hpp"
+#include "./other/skill_factory_other.hpp"
+#include "./summoner/skill_factory_summoner.hpp"
+#include "./swordman/skill_factory_swordman.hpp"
+#include "./taekwon/skill_factory_taekwon.hpp"
+#include "./thief/skill_factory_thief.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryImpl::create(const e_skill skill_id) const {
 	static const std::vector<std::shared_ptr<SkillFactory>> factories = {
