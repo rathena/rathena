@@ -26,22 +26,23 @@ void SkillMug::castendNoDamageId(block_list *src, block_list *target, uint16 ski
 	rate += sd->battle_status.luk / 2;
 	rate += 2 * (sd->status.base_level - target_lv);
 
-	if (rnd_chance_official(rate, 1000))
+	if (!rnd_chance_official(rate, 1000))
 	{
-		dstmd->state.steal_coin_flag = 1;
-
-		// Zeny Steal Amount
-		int32 amount = rnd_value(8 * target_lv, 10 * target_lv);
-		amount += (skill_lv * target_lv) / 10;
-
-		pc_getzeny(sd, amount, LOG_TYPE_STEAL);
-
-		// This triggers a 0 damage event and might make the monster switch target to caster
-		battle_damage(src, target, 0, 1, skill_lv, 0, ATK_DEF, BF_WEAPON|BF_LONG|BF_NORMAL, true, tick, false);
-
-		// Client uses skill_lv to show how many Zeny were stolen
-		clif_skill_nodamage(src, *target, getSkillId(), amount);
-	}
-	else
 		clif_skill_fail(*sd, getSkillId());
+		return;
+	}
+
+	dstmd->state.steal_coin_flag = 1;
+
+	// Zeny Steal Amount
+	int32 amount = rnd_value(8 * target_lv, 10 * target_lv);
+	amount += (skill_lv * target_lv) / 10;
+
+	pc_getzeny(sd, amount, LOG_TYPE_STEAL);
+
+	// This triggers a 0 damage event and might make the monster switch target to caster
+	battle_damage(src, target, 0, 1, skill_lv, 0, ATK_DEF, BF_WEAPON|BF_LONG|BF_NORMAL, true, tick, false);
+
+	// Client uses skill_lv to show how many Zeny were stolen
+	clif_skill_nodamage(src, *target, getSkillId(), amount);		
 }
