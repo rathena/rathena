@@ -6042,6 +6042,7 @@ Body:
     Range: 1
     Hit: Single
     HitCount: 1
+    AfterCastActDelay: 500
     Requires:
       SpCost: 15
   - Id: 212
