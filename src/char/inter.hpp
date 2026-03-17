@@ -42,4 +42,7 @@ extern Sql* lsql_handle;
 
 int32 inter_accreg_fromsql(uint32 account_id, uint32 char_id, int32 fd, int32 type);
 
+#pragma once
+extern std::string log_db_database;
+
 #endif /* INTER_HPP */
