@@ -5,6 +5,7 @@
 #define LOGINLOG_HPP
 
 #include <memory>
+#include <string>
 
 #include <common/cbasetypes.hpp>
 
@@ -47,5 +48,8 @@ bool loginlog_init(void);
  * @return true success
  */
 bool loginlog_final(void);
+
+#pragma once
+extern std::string log_db_database;
 
 #endif /* LOGINLOG_HPP */
