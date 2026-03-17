@@ -89903,15 +89903,19 @@ Body:
     Name: Blue Fighting Spirit Effect    # !todo check english name
     Type: Card
     SubType: Enchant
-#   Script: |
-#     /* TODO */
+    Script: |
+      hateffect HAT_EF_ROS_BlueSpirit,true;
+    UnEquipScript: |
+      hateffect HAT_EF_ROS_BlueSpirit,false;
   - Id: 314095
     AegisName: aegis_314095
     Name: Red Fighting Spirit Effect    # !todo check english name
     Type: Card
     SubType: Enchant
-#   Script: |
-#     /* TODO */
+    Script: |
+      hateffect HAT_EF_ROS_RedSpirit,true;
+    UnEquipScript: |
+      hateffect HAT_EF_ROS_RedSpirit,false;
   - Id: 314171
     AegisName: aegis_314171
     Name: Footprint (2D)
@@ -100706,6 +100710,11 @@ Body:
     Flags:
       BuyingStore: true
       DropEffect: CLIENT
+  - Id: 1002345
+    AegisName: aegis_1002345
+    Name: Howell Megas Walter Card Fragment    # !todo check english name
+    Type: Etc
+    Weight: 10
   - Id: 1002356
     AegisName: 25_A_Ev_Photo
     Name: Landscape Photo    # !todo check english name
@@ -100719,6 +100728,22 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 1002363
+    AegisName: Conse_F_N_Hall
+    Name: Fides Nature Hall Blueprint    # !todo check english name
+    Type: Etc
+  - Id: 1002364
+    AegisName: Conse_F_N_Axe
+    Name: Fides Nature Axe Blueprint    # !todo check english name
+    Type: Etc
+  - Id: 1002381
+    AegisName: aegis_1002381
+    Name: Midga Powder
+    Type: Etc
+  - Id: 1002382
+    AegisName: aegis_1002382
+    Name: Midga Missile Button
+    Type: Etc
   - Id: 1002394
     AegisName: aegis_1002394
     Name: Yellow Butterfly Footprints (Garment)
@@ -100936,6 +100961,10 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 1002515
+    AegisName: aegis_1002515
+    Name: Job Change Map    # !todo check english name
+    Type: Etc
   - Id: 1002623
     AegisName: aegis_1002623
     Name: Blue Star Footprints (Garment)
@@ -100946,11 +100975,79 @@ Body:
     Name: Sacred Blue Light Footprints (Garment)    # !todo check english name
     Type: Etc
     Weight: 100
+  - Id: 1002640
+    AegisName: VIP_Web_Ticket
+    Name: Premium Black Ticket    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
   - Id: 1002642
     AegisName: aegis_1002642
     Name: Phoenix Operation Footprints (Garment)    # !todo check english name
     Type: Etc
     Weight: 100
+  - Id: 1002798
+    AegisName: All_17Up_Ticket
+    Name: "[Event] All Item Refine 17Up Ticket"
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002801
+    AegisName: Tomb_of_Reaper_TH
+    Name: Tomb of Reaper
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002804
+    AegisName: Evt_ROL_Ticket
+    Name: ROL Rideword Certificate
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002805
+    AegisName: CrossEventCoin
+    Name: "[Event] Cross Event Coin"
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002806
+    AegisName: SnowPromised_Ring_Enc
+    Name: Ethernal Snow Flower
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoMail: true
+      NoAuction: true
   - Id: 1200000
     AegisName: IDTest_arrow
     Name: IDTest arrow

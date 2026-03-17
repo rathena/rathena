@@ -3,13 +3,20 @@
 
 #include "destructivehurricane.hpp"
 
-#include <config/const.hpp>
+#include <config/core.hpp>
 
 #include "map/clif.hpp"
 #include "map/status.hpp"
 
 // AG_DESTRUCTIVE_HURRICANE
 SkillDestructiveHurricane::SkillDestructiveHurricane() : SkillImplRecursiveDamageSplash(AG_DESTRUCTIVE_HURRICANE) {
+}
+
+void SkillDestructiveHurricane::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
+	const status_change *sc = status_get_sc(&src);
+
+	if (sc != nullptr && sc->hasSCE(SC_CLIMAX) && sc->getSCE(SC_CLIMAX)->val1 == 2)
+		dmg.blewcount = 2;
 }
 
 void SkillDestructiveHurricane::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {

@@ -50639,16 +50639,16 @@ Body:
   - Combos:
       - Combo:
           - aegis_400676    # 400676
-          - aegis_490475    # 490475
+          - Chemical_Glove_ROC    # 490475
       - Combo:
           - aegis_400676    # 400676
-          - aegis_490476    # 490476
+          - Comp_Chemical_Glove_ROC    # 490476
       - Combo:
           - aegis_400677    # 400677
-          - aegis_490475    # 490475
+          - Chemical_Glove_ROC    # 490475
       - Combo:
           - aegis_400677    # 400677
-          - aegis_490476    # 490476
+          - Comp_Chemical_Glove_ROC    # 490476
     Script: |
       bonus2 bSkillAtk,"CR_ACIDDEMONSTRATION",100;
       bonus2 bSkillAtk,"AM_ACIDTERROR",50;

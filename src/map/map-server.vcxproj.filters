@@ -44,6 +44,9 @@
     <Filter Include="Source Files\Skills\Npc">
       <UniqueIdentifier>{242ebf78-1994-488e-b1aa-d6aa09e48d0d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Skills\Other">
+      <UniqueIdentifier>{aec1384c-8430-4f09-8a6d-a947bbdbfe78}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source Files\Skills\Summoner">
       <UniqueIdentifier>{1aab87a2-9226-480f-937d-309a89a02358}</UniqueIdentifier>
     </Filter>
@@ -98,6 +101,9 @@
     </Filter>
     <Filter Include="Header Files\Skills\Npc">
       <UniqueIdentifier>{18eed79b-2523-4ca0-ba97-a3f2c27d9efe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Skills\Other">
+      <UniqueIdentifier>{8f3b9218-0c57-4f2f-bcf2-42ed9c1e7a21}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Skills\Summoner">
       <UniqueIdentifier>{021a5c3f-56ab-45a9-a02a-f4e73e582bdc}</UniqueIdentifier>
@@ -613,6 +619,9 @@
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
     <ClInclude Include="skills/acolyte/reparatio.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/resurrection.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
     <ClInclude Include="skills/acolyte/rideinlightening.hpp">
@@ -1242,6 +1251,9 @@
     <ClInclude Include="skills/gunslinger/bullseye.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
+    <ClInclude Include="skills/gunslinger/chainaction.hpp">
+      <Filter>Header Files\Skills\Gunslinger</Filter>
+    </ClInclude>
     <ClInclude Include="skills/gunslinger/cracker.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
@@ -1434,6 +1446,9 @@
     <ClInclude Include="skills/homunculus/homunculus_midnightfrenzy.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
+    <ClInclude Include="skills/homunculus/homunculus_moonlight.hpp">
+      <Filter>Header Files\Skills\Homunculus</Filter>
+    </ClInclude>
     <ClInclude Include="skills/homunculus/homunculus_needleofparalyze.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
@@ -1450,6 +1465,9 @@
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
     <ClInclude Include="skills/homunculus/homunculus_pyroclastic.hpp">
+      <Filter>Header Files\Skills\Homunculus</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/homunculus/homunculus_sbr44.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
     <ClInclude Include="skills/homunculus/homunculus_silentbreeze.hpp">
@@ -3063,6 +3081,129 @@
     <ClInclude Include="skills/npc/windattributechange.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
+    <ClInclude Include="skills/other/baby.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/battlebuster.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/callallfamily.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/callbaby.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/callparent.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/catcry.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/cheerup.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/christmascarol.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/dualcannonfire.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/equipswitch.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/gmsandman.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/guardiansrecall.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/ilookuptoyou.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/imissyou.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/infinitybuster.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/iwillprotectyou.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/netrepair.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/netsupport.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/niflheimrecall.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/odinsrecall.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/oneforever.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/openbuyingstore.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/partyassumptio.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/partyblessing.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/partyflee.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/partyincreaseagi.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/peonymamy.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/pronterarecall.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/rayofprotection.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/returntoeclage.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/returntoeldicastes.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/returntoglastheim.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/returntolighthalzen.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/returntothanatos.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/ro20thanniversaryfirecracker.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/sadagui.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/sequoiadust.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/skill_factory_other.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/snowflip.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/summernightdream.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/other/weaponenchantment.hpp">
+      <Filter>Header Files\Skills\Other</Filter>
+    </ClInclude>
     <ClInclude Include="skills/skill_factory.hpp">
       <Filter>Header Files\Skills</Filter>
     </ClInclude>
@@ -3810,6 +3951,9 @@
     <ClInclude Include="skills/thief/divestweapon.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
+    <ClInclude Include="skills/thief/doubleattack.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
     <ClInclude Include="skills/thief/emergencyescape.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
@@ -4209,6 +4353,9 @@
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
     <ClCompile Include="skills/acolyte/reparatio.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/resurrection.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
     <ClCompile Include="skills/acolyte/rideinlightening.cpp">
@@ -4838,6 +4985,9 @@
     <ClCompile Include="skills/gunslinger/bullseye.cpp">
       <Filter>Source Files\Skills\Gunslinger</Filter>
     </ClCompile>
+    <ClCompile Include="skills/gunslinger/chainaction.cpp">
+      <Filter>Source Files\Skills\Gunslinger</Filter>
+    </ClCompile>
     <ClCompile Include="skills/gunslinger/cracker.cpp">
       <Filter>Source Files\Skills\Gunslinger</Filter>
     </ClCompile>
@@ -5030,6 +5180,9 @@
     <ClCompile Include="skills/homunculus/homunculus_midnightfrenzy.cpp">
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_moonlight.cpp">
+      <Filter>Source Files\Skills\Homunculus</Filter>
+    </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_needleofparalyze.cpp">
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
@@ -5046,6 +5199,9 @@
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_pyroclastic.cpp">
+      <Filter>Source Files\Skills\Homunculus</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_sbr44.cpp">
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_silentbreeze.cpp">
@@ -6659,6 +6815,129 @@
     <ClCompile Include="skills/npc/windattributechange.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
+    <ClCompile Include="skills/other/baby.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/battlebuster.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/callallfamily.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/callbaby.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/callparent.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/catcry.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/cheerup.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/christmascarol.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/dualcannonfire.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/equipswitch.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/gmsandman.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/guardiansrecall.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/ilookuptoyou.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/imissyou.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/infinitybuster.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/iwillprotectyou.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/netrepair.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/netsupport.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/niflheimrecall.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/odinsrecall.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/oneforever.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/openbuyingstore.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/partyassumptio.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/partyblessing.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/partyflee.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/partyincreaseagi.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/peonymamy.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/pronterarecall.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/rayofprotection.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/returntoeclage.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/returntoeldicastes.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/returntoglastheim.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/returntolighthalzen.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/returntothanatos.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/ro20thanniversaryfirecracker.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/sadagui.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/sequoiadust.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/skill_factory_other.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/snowflip.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/summernightdream.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/other/weaponenchantment.cpp">
+      <Filter>Source Files\Skills\Other</Filter>
+    </ClCompile>
     <ClCompile Include="skills/skill_factory.cpp">
       <Filter>Source Files\Skills</Filter>
     </ClCompile>
@@ -7404,6 +7683,9 @@
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/thief/divestweapon.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/thief/doubleattack.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/thief/emergencyescape.cpp">

@@ -117078,22 +117078,22 @@ Body:
         Algorithm: All
         List:
           - Index: 0
-            Item: aegis_420376
+            Item: C_Traditors_Low_Tail
           - Index: 1
-            Item: aegis_400725
+            Item: C_G_S_Captain_Hat
           - Index: 2
-            Item: aegis_430010
+            Item: C_Yorker_Hood
   - Group: EP21_COSTUME_BOX2
     SubGroups:
       - SubGroup: 0
         Algorithm: All
         List:
           - Index: 0
-            Item: aegis_420377
+            Item: C_Braids_Wave
           - Index: 1
-            Item: aegis_440017
+            Item: C_Jormun_Cape
           - Index: 2
-            Item: aegis_440018
+            Item: C_Helm_Of_Galaxia
   - Group: AEGIS_103537
     SubGroups:
       - SubGroup: 6
@@ -133093,3 +133093,64 @@ Body:
           - Index: 4
             Item: aegis_105836
             Amount: 10
+  - Group: SPENDID_CAPE_BR
+    SubGroups:
+      - SubGroup: 1
+        Algorithm: Random
+        List:
+          - Index: 0
+            Item: Mora_Mandarin
+            Rate: 200
+          - Index: 1
+            Item: Pingui_Berry_Juice
+            Rate: 200
+          - Index: 2
+            Item: Red_Raffle_Sap
+            Rate: 200
+          - Index: 3
+            Item: Yellow_Raffle_Sap
+            Rate: 200
+          - Index: 4
+            Item: White_Raffle_Sap
+            Rate: 200
+          - Index: 5
+            Item: Mora_Hip_Tea
+            Rate: 200
+          - Index: 6
+            Item: Rafflecino
+            Rate: 200
+          - Index: 7
+            Item: Mora_Berry
+            Rate: 200
+          - Index: 8
+            Item: Snow_Flip
+            Rate: 200
+          - Index: 9
+            Item: Peony_Mommy
+            Rate: 200
+          - Index: 10
+            Item: Slapping_Herb
+            Rate: 200
+          - Index: 11
+            Item: Yggdrasil_Dust
+            Rate: 200
+  - Group: CHEMICAL_GLOVE_ROC
+    SubGroups:
+      - SubGroup: 1
+        Algorithm: Random
+        List:
+          - Index: 0
+            Item: Red_Potion
+            Rate: 1
+          - Index: 1
+            Item: Orange_Potion
+            Rate: 1
+          - Index: 2
+            Item: Yellow_Potion
+            Rate: 1
+          - Index: 3
+            Item: White_Potion
+            Rate: 1
+          - Index: 4
+            Item: White_Slim_Potion
+            Rate: 1

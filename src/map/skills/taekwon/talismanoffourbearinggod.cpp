@@ -3,13 +3,30 @@
 
 #include "talismanoffourbearinggod.hpp"
 
-#include <config/const.hpp>
+#include <config/core.hpp>
 
 #include "map/clif.hpp"
 #include "map/pc.hpp"
 #include "map/status.hpp"
 
 SkillTalismanOfFourBearingGod::SkillTalismanOfFourBearingGod() : SkillImplRecursiveDamageSplash(SOA_TALISMAN_OF_FOUR_BEARING_GOD) {
+}
+
+void SkillTalismanOfFourBearingGod::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
+	const status_change *sc = status_get_sc(&src);
+
+	if (sc != nullptr){
+		if (sc->hasSCE(SC_T_FIRST_GOD))
+			dmg.div_ = 2;
+		else if (sc->hasSCE(SC_T_SECOND_GOD))
+			dmg.div_ = 3;
+		else if (sc->hasSCE(SC_T_THIRD_GOD))
+			dmg.div_ = 4;
+		else if (sc->hasSCE(SC_T_FOURTH_GOD))
+			dmg.div_ = 5;
+		else if (sc->hasSCE(SC_T_FIFTH_GOD))
+			dmg.div_ = 7;
+	}
 }
 
 void SkillTalismanOfFourBearingGod::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
