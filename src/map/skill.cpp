@@ -5015,15 +5015,17 @@ TIMER_FUNC(skill_castend_id){
 #endif
 		if( sd )
 		{
-			if( !skill_check_condition_castend(*sd, ud->skill_id, ud->skill_lv) )
+			if (ud->skill_id == SU_LUNATICCARROTBEAT && skill_check_condition_castend(*sd, SU_LUNATICCARROTBEAT2, ud->skill_lv)) {
+				ud->skill_id = SU_LUNATICCARROTBEAT2;
+			}
+
+			if( ud->skill_id != SU_LUNATICCARROTBEAT2 && !skill_check_condition_castend(*sd, ud->skill_id, ud->skill_lv) )
 				break;
 			else {
 				skill_consume_requirement(sd,ud->skill_id,ud->skill_lv,1);
 
-				int32 add_ap = skill_get_giveap( ud->skill_id, ud->skill_lv );
-
 				// Give AP
-				if (add_ap > 0) {
+				if (int32 add_ap = skill_get_giveap( ud->skill_id, ud->skill_lv ); add_ap > 0) {
 					switch (ud->skill_id) {
 						case TR_ROSEBLOSSOM:
 						case TR_RHYTHMSHOOTING:
@@ -5305,15 +5307,17 @@ TIMER_FUNC(skill_castend_pos){
 
 		if( sd )
 		{
-			if( ud->skill_id != AL_WARP && !skill_check_condition_castend(*sd, ud->skill_id, ud->skill_lv) )
+			if (ud->skill_id == SU_CN_METEOR && skill_check_condition_castend(*sd, SU_CN_METEOR2, ud->skill_lv)) {
+				ud->skill_id = SU_CN_METEOR2;
+			}
+
+			if( ud->skill_id != AL_WARP && ud->skill_id != SU_CN_METEOR2 && !skill_check_condition_castend(*sd, ud->skill_id, ud->skill_lv) )
 				break;
 			else {
 				skill_consume_requirement(sd, ud->skill_id, ud->skill_lv, 1);
 
-				int32 add_ap = skill_get_giveap(ud->skill_id, ud->skill_lv);
-
 				// Give AP
-				if (add_ap > 0) {
+				if (int32 add_ap = skill_get_giveap(ud->skill_id, ud->skill_lv); add_ap > 0) {
 					switch (ud->skill_id) {
 						case WH_DEEPBLINDTRAP:
 						case WH_SOLIDTRAP:
