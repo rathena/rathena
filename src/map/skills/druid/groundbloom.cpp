@@ -52,15 +52,21 @@ void SkillGroundBloom::castGroundBloom(block_list *src, t_tick tick, int32 stack
 	if (sc == nullptr)
 		return;
 
+	bool cast_ground_bloom = false;
+
 	if (sc->hasSCE(SC_GROUND_GROW)) {
-		stacks += sc->getSCE(SC_GROUND_GROW)->val3;
+		int32 current_stacks = sc->getSCE(SC_GROUND_GROW)->val3;
+
+		cast_ground_bloom = current_stacks >= 12;
+		stacks += current_stacks;
 	}
 
-	if (stacks < 12) {
-		// Note: official gives the status change regardless of the stacks amount then casts the skill and removes the sc when the conditions are met (same result)
-		status_change_start(src, src, SC_GROUND_GROW, 10000, 0, 0, stacks, 0, 10000, SCSTART_NOAVOID);
-		return;
-	}
+	if (stacks > 12)
+		stacks = 12;
 
-	skill_castend_nodamage_id(src, src, KR_GROUND_BLOOM, skill_lv, tick, 0);
+	// Note: official gives the status change regardless of the stacks amount then casts the skill and removes the sc when the conditions are met (same result)
+	status_change_start(src, src, SC_GROUND_GROW, 10000, 0, 0, stacks, 0, 10000, SCSTART_NOAVOID);
+
+	if (cast_ground_bloom)
+		skill_castend_nodamage_id(src, src, KR_GROUND_BLOOM, skill_lv, tick, 0);
 }
