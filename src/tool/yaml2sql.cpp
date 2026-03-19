@@ -16,7 +16,6 @@
 	#include <cstdio>
 #endif
 
-#include <yaml-cpp/yaml.h>
 #include <ryml_std.hpp>
 #include <ryml.hpp>
 
@@ -55,6 +54,8 @@
 #include <map/skill.hpp>
 #include <map/storage.hpp>
 
+#include "ryml_utils.hpp"
+
 #if defined(BUILDBOT)
 	// Force buildbot to always convert all files
 	#define CONVERT_ALL
@@ -62,6 +63,8 @@
 
 using namespace rathena;
 using namespace rathena::server_core;
+using ryml_tool::as;
+using ryml_tool::defined;
 
 namespace rathena::tool_yaml2sql {
 class Yaml2SqlTool : public Core{
@@ -101,7 +104,8 @@ static bool mob_db_yaml2sql(const std::string &file, const std::string &table);
 bool fileExists( const std::string& path );
 bool askConfirmation( const char* fmt, ... );
 
-YAML::Node inNode;
+ryml::Parser inParser;
+ryml::Tree inTree;
 std::ofstream outFile;
 
 // Implement the function instead of including the original version by linking
@@ -173,17 +177,15 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 			ShowMessage("Found the file \"%s\", converting from yml to sql.\n", from.c_str());
 #endif
 
-			inNode.reset();
-
 			try {
-				inNode = YAML::LoadFile(from);
-			} catch (YAML::Exception &e) {
-				ShowError("%s (Line %d: Column %d)\n", e.msg.c_str(), e.mark.line, e.mark.column);
+				ryml_tool::load_tree_from_file(from, inParser, inTree);
+			} catch (const std::runtime_error& e) {
+				ShowError("%s\n", e.what());
 				if (!askConfirmation("Error found in \"%s\" while attempting to load.\nPress any key to continue.\n", from.c_str()))
 					continue;
 			}
 
-			if (!inNode["Body"].IsDefined())
+			if (!defined(inTree.rootref()["Body"]))
 				continue;
 
 #ifndef CONVERT_ALL
@@ -359,14 +361,14 @@ std::string string_escape(const std::string &s) {
  * @param value: String to store node value to
  * @param string: If value is a string or not
  */
-static bool appendEntry(const YAML::Node &node, std::string &value, bool string = false) {
-	if (node.IsDefined()) {
+static bool appendEntry(const ryml::NodeRef &node, std::string &value, bool string = false) {
+	if (defined(node)) {
 		if (string) {
 			value.append("'");
-			value.append(string_trim(string_escape(node.as<std::string>())));
+			value.append(string_trim(string_escape(as<std::string>(node))));
 			value.append("',");
 		} else {
-			value.append(string_trim(node.as<std::string>()));
+			value.append(string_trim(as<std::string>(node)));
 			value.append(",");
 		}
 
@@ -381,8 +383,9 @@ static bool appendEntry(const YAML::Node &node, std::string &value, bool string 
 // Copied and adjusted from itemdb.cpp
 static bool item_db_yaml2sql(const std::string &file, const std::string &table) {
 	size_t entries = 0;
+	ryml::NodeRef bodyNode = inTree.rootref()["Body"];
 
-	for (const YAML::Node &input : inNode["Body"]) {
+	for (ryml::NodeRef input : bodyNode.children()) {
 		std::string column = "", value = "";
 
 		if (appendEntry(input["Id"], value))
@@ -414,9 +417,9 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 		if (appendEntry(input["Slots"], value))
 			column.append("`slots`,");
 
-		const YAML::Node &jobs = input["Jobs"];
+		ryml::NodeRef jobs = input["Jobs"];
 
-		if (jobs) {
+		if (defined(jobs)) {
 			if (appendEntry(jobs["All"], value))
 				column.append("`job_all`,");
 			if (appendEntry(jobs["Acolyte"], value))
@@ -487,16 +490,16 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 				column.append("`job_wizard`,");
 		}
 
-		const YAML::Node &classes = input["Classes"];
+		ryml::NodeRef classes = input["Classes"];
 
-		if (classes) {
+		if (defined(classes)) {
 			std::string str_all_upper;
 			std::string str_all_baby;
 
-			if (classes["All_Upper"].IsDefined())
-				str_all_upper = string_trim(classes["All_Upper"].as<std::string>());
-			if (classes["All_Baby"].IsDefined())
-				str_all_baby = string_trim(classes["All_Baby"].as<std::string>());
+			if (defined(classes["All_Upper"]))
+				str_all_upper = string_trim(as<std::string>(classes["All_Upper"]));
+			if (defined(classes["All_Baby"]))
+				str_all_baby = string_trim(as<std::string>(classes["All_Baby"]));
 
 			if (appendEntry(classes["All"], value))
 				column.append("`class_all`,");
@@ -519,8 +522,8 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 #ifdef RENEWAL
 			std::string str_all_third;
 
-			if (classes["All_Third"].IsDefined())
-				str_all_third = string_trim(classes["All_Third"].as<std::string>());
+			if (defined(classes["All_Third"]))
+				str_all_third = string_trim(as<std::string>(classes["All_Third"]));
 
 			if (appendEntry(classes["Third"], value))
 				column.append("`class_third`,");
@@ -557,9 +560,9 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 		if (appendEntry(input["Gender"], value, true))
 			column.append("`gender`,");
 
-		const YAML::Node &locations = input["Locations"];
+		ryml::NodeRef locations = input["Locations"];
 
-		if (locations) {
+		if (defined(locations)) {
 			if (appendEntry(locations["Head_Top"], value))
 				column.append("`location_head_top`,");
 			if (appendEntry(locations["Head_Mid"], value))
@@ -568,8 +571,8 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 				column.append("`location_head_low`,");
 			if (appendEntry(locations["Armor"], value))
 				column.append("`location_armor`,");
-			if (locations["Both_Hand"].IsDefined()) {
-				std::string tmp_value = string_trim(locations["Both_Hand"].as<std::string>());
+			if (defined(locations["Both_Hand"])) {
+				std::string tmp_value = string_trim(as<std::string>(locations["Both_Hand"]));
 				if (!appendEntry(locations["Left_Hand"], value)) {
 					value.append(tmp_value);
 					value.append(",");
@@ -592,8 +595,8 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 				column.append("`location_garment`,");
 			if (appendEntry(locations["Shoes"], value))
 				column.append("`location_shoes`,");
-			if (locations["Both_Accessory"].IsDefined()) {
-				std::string tmp_value = string_trim(locations["Both_Accessory"].as<std::string>());
+			if (defined(locations["Both_Accessory"])) {
+				std::string tmp_value = string_trim(as<std::string>(locations["Both_Accessory"]));
 				if (!appendEntry(locations["Right_Accessory"], value)) {
 					value.append(tmp_value);
 					value.append(",");
@@ -653,9 +656,9 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 		if (appendEntry(input["AliasName"], value, true))
 			column.append("`alias_name`,");
 
-		const YAML::Node &flags = input["Flags"];
+		ryml::NodeRef flags = input["Flags"];
 
-		if (flags) {
+		if (defined(flags)) {
 			if (appendEntry(flags["BuyingStore"], value))
 				column.append("`flag_buyingstore`,");
 			if (appendEntry(flags["DeadBranch"], value))
@@ -674,18 +677,18 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 				column.append("`flag_dropeffect`,");
 		}
 
-		const YAML::Node &delay = input["Delay"];
+		ryml::NodeRef delay = input["Delay"];
 
-		if (delay) {
+		if (defined(delay)) {
 			if (appendEntry(delay["Duration"], value))
 				column.append("`delay_duration`,");
 			if (appendEntry(delay["Status"], value, true))
 				column.append("`delay_status`,");
 		}
 
-		const YAML::Node &stack = input["Stack"];
+		ryml::NodeRef stack = input["Stack"];
 
-		if (stack) {
+		if (defined(stack)) {
 			if (appendEntry(stack["Amount"], value))
 				column.append("`stack_amount`,");
 			if (appendEntry(stack["Inventory"], value))
@@ -698,18 +701,18 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 				column.append("`stack_guildstorage`,");
 		}
 
-		const YAML::Node &nouse = input["NoUse"];
+		ryml::NodeRef nouse = input["NoUse"];
 
-		if (nouse) {
+		if (defined(nouse)) {
 			if (appendEntry(nouse["Override"], value))
 				column.append("`nouse_override`,");
 			if (appendEntry(nouse["Sitting"], value))
 				column.append("`nouse_sitting`,");
 		}
 
-		const YAML::Node &trade = input["Trade"];
+		ryml::NodeRef trade = input["Trade"];
 
-		if (trade) {
+		if (defined(trade)) {
 			if (appendEntry(trade["Override"], value))
 				column.append("`trade_override`,");
 			if (appendEntry(trade["NoDrop"], value))
@@ -754,8 +757,9 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 // Copied and adjusted from mob.cpp
 static bool mob_db_yaml2sql(const std::string &file, const std::string &table) {
 	size_t entries = 0;
+	ryml::NodeRef bodyNode = inTree.rootref()["Body"];
 
-	for (const YAML::Node &input : inNode["Body"]) {
+	for (ryml::NodeRef input : bodyNode.children()) {
 		std::string column = "", value = "";
 
 		if (appendEntry(input["Id"], value))
@@ -815,9 +819,9 @@ static bool mob_db_yaml2sql(const std::string &file, const std::string &table) {
 		if (appendEntry(input["Race"], value, true))
 			column.append("`race`,");
 
-		const YAML::Node &racegroups = input["RaceGroups"];
+		ryml::NodeRef racegroups = input["RaceGroups"];
 
-		if (racegroups) {
+		if (defined(racegroups)) {
 			for (uint16 i = 1; i < RC2_MAX; i++) {
 				const char* constant_ptr = constant_lookup(i, "RC2_");
 
@@ -829,7 +833,7 @@ static bool mob_db_yaml2sql(const std::string &file, const std::string &table) {
 
 				constant.erase(0, 4);
 
-				if (appendEntry(racegroups[name2Upper(constant)], value)) {
+				if (appendEntry(racegroups[c4::to_csubstr(name2Upper(constant))], value)) {
 					std::transform(constant.begin(), constant.end(), constant.begin(), ::tolower);
 					column.append("`racegroup_" + constant + "`,");
 				}
@@ -859,9 +863,9 @@ static bool mob_db_yaml2sql(const std::string &file, const std::string &table) {
 		if (appendEntry(input["Class"], value, true))
 			column.append("`class`,");
 
-		const YAML::Node &modes = input["Modes"];
+		ryml::NodeRef modes = input["Modes"];
 
-		if (modes) {
+		if (defined(modes)) {
 			if (appendEntry(modes["CanMove"], value))
 				column.append("`mode_canmove`,");
 			if (appendEntry(modes["Looter"], value))
@@ -917,12 +921,12 @@ static bool mob_db_yaml2sql(const std::string &file, const std::string &table) {
 		}
 
 		for (uint16 i = 0; i < MAX_MVP_DROP; i++) {
-			if (!input["MvpDrops"].IsDefined())
+			if (!defined(input["MvpDrops"]))
 				continue;
 
-			const YAML::Node &mvpdrops = input["MvpDrops"][i];
+			ryml::NodeRef mvpdrops = input["MvpDrops"][i];
 
-			if (mvpdrops) {
+			if (defined(mvpdrops)) {
 				if (appendEntry(mvpdrops["Item"], value, true))
 					column.append("`mvpdrop" + std::to_string(i + 1) + "_item`,");
 				if (appendEntry(mvpdrops["Rate"], value))
@@ -935,12 +939,12 @@ static bool mob_db_yaml2sql(const std::string &file, const std::string &table) {
 		}
 
 		for (uint16 i = 0; i < MAX_MOB_DROP; i++) {
-			if (!input["Drops"].IsDefined())
+			if (!defined(input["Drops"]))
 				continue;
 
-			const YAML::Node &drops = input["Drops"][i];
+			ryml::NodeRef drops = input["Drops"][i];
 
-			if (drops) {
+			if (defined(drops)) {
 				if (appendEntry(drops["Item"], value, true))
 					column.append("`drop" + std::to_string(i + 1) + "_item`,");
 				if (appendEntry(drops["Rate"], value))

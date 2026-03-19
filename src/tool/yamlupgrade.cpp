@@ -4,6 +4,10 @@
 #include "yamlupgrade.hpp"
 
 using namespace rathena::tool_yamlupgrade;
+using ryml_tool::as;
+using ryml_tool::defined;
+using ryml_tool::child;
+namespace emit = ryml_tool::emit;
 
 static bool upgrade_achievement_db(std::string file, const uint32 source_version);
 static bool upgrade_item_db(std::string file, const uint32 source_version);
@@ -22,11 +26,17 @@ bool process(const std::string &type, uint32 version, const std::vector<std::str
 		const std::string from = path + "/" + name_ext;
 		const std::string to = path + "/" + name + "-upgrade.yml";
 
-		inNode.reset();
+		inTree.clear();
 
 		if (fileExists(from)) {
-			inNode = YAML::LoadFile(from);
-			uint32 source_version = getHeaderVersion(inNode);
+			try {
+				ryml_tool::load_tree_from_file(from, inParser, inTree);
+			} catch (const std::runtime_error& e) {
+				ShowError("%s\n", e.what());
+				continue;
+			}
+
+			uint32 source_version = getHeaderVersion(inTree.rootref());
 
 			if (source_version >= version) {
 				continue;
@@ -46,8 +56,8 @@ bool process(const std::string &type, uint32 version, const std::vector<std::str
 
 			std::ofstream outFile;
 
-			body.~Emitter();
-			new (&body) YAML::Emitter();
+			body.~RymlEmitter();
+			new (&body) RymlEmitter();
 			outFile.open(to);
 
 			if (!outFile.is_open()) {
@@ -56,7 +66,7 @@ bool process(const std::string &type, uint32 version, const std::vector<std::str
 			}
 
 			prepareHeader(outFile, type, version, name);
-			if (inNode["Body"].IsDefined()) {
+			if (defined(child(inTree.rootref(), "Body"))) {
 				prepareBody();
 
 				if (!lambda(path, name_ext, source_version)) {
@@ -171,12 +181,13 @@ bool YamlUpgradeTool::initialize( int32 argc, char* argv[] ){
 // Implementation of the upgrade functions
 static bool upgrade_achievement_db(std::string file, const uint32 source_version) {
 	size_t entries = 0;
+	ryml::NodeRef bodyNode = child(inTree.rootref(), "Body");
 
-	for (const auto &input : inNode["Body"]) {
-		body << YAML::BeginMap;
-		body << YAML::Key << "Id" << YAML::Value << input["ID"];
+	for (ryml::NodeRef input : bodyNode.children()) {
+		body << emit::BeginMap;
+		body << emit::Key << "Id" << emit::Value << input["ID"];
 
-		std::string constant = input["Group"].as<std::string>();
+		std::string constant = as<std::string>(input["Group"]);
 
 		constant.erase(0, 3); // Remove "AG_"
 		if (constant.compare("Chat") == 0) // Chat -> Chatting
@@ -187,18 +198,18 @@ static bool upgrade_achievement_db(std::string file, const uint32 source_version
 			constant.erase(0, 6);
 			constant = "Enchant" + constant;
 		}
-		body << YAML::Key << "Group" << YAML::Value << name2Upper(constant);
-		body << YAML::Key << "Name" << YAML::Value << input["Name"];
+		body << emit::Key << "Group" << emit::Value << name2Upper(constant);
+		body << emit::Key << "Name" << emit::Value << input["Name"];
 
-		if (input["Target"].IsDefined()) {
-			body << YAML::Key << "Targets";
-			body << YAML::BeginSeq;
+		if (defined(input["Target"])) {
+			body << emit::Key << "Targets";
+			body << emit::BeginSeq;
 
-			for (const auto &it : input["Target"]) {
-				body << YAML::BeginMap;
-				body << YAML::Key << "Id" << YAML::Value << it["Id"];
-				if (it["MobID"].IsDefined()) {
-					uint16 mob_id = it["MobID"].as<uint16>();
+			for (ryml::NodeRef it : input["Target"].children()) {
+				body << emit::BeginMap;
+				body << emit::Key << "Id" << emit::Value << it["Id"];
+				if (defined(it["MobID"])) {
+					uint16 mob_id = as<uint16>(it["MobID"]);
 					std::string *mob_name = util::umap_find(aegis_mobnames, mob_id);
 
 					if (mob_name == nullptr) {
@@ -206,45 +217,45 @@ static bool upgrade_achievement_db(std::string file, const uint32 source_version
 						return false;
 					}
 
-					body << YAML::Key << "Mob" << YAML::Value << *mob_name;
+					body << emit::Key << "Mob" << emit::Value << *mob_name;
 				}
-				if (it["Count"].IsDefined() && it["Count"].as<int32>() > 1)
-					body << YAML::Key << "Count" << YAML::Value << it["Count"];
-				body << YAML::EndMap;
+				if (defined(it["Count"]) && as<int32>(it["Count"]) > 1)
+					body << emit::Key << "Count" << emit::Value << it["Count"];
+				body << emit::EndMap;
 			}
 
-			body << YAML::EndSeq;
+			body << emit::EndSeq;
 		}
 
-		if (input["Condition"].IsDefined())
-			body << YAML::Key << "Condition" << YAML::Value << input["Condition"];
+		if (defined(input["Condition"]))
+			body << emit::Key << "Condition" << emit::Value << input["Condition"];
 
-		if (input["Map"].IsDefined())
-			body << YAML::Key << "Map" << YAML::Value << input["Map"];
+		if (defined(input["Map"]))
+			body << emit::Key << "Map" << emit::Value << input["Map"];
 
-		if (input["Dependent"].IsDefined()) {
-			body << YAML::Key << "Dependents";
-			body << YAML::BeginMap;
+		if (defined(input["Dependent"])) {
+			body << emit::Key << "Dependents";
+			body << emit::BeginMap;
 
-			for (const auto &it : input["Dependent"]) {
-				body << YAML::Key << it["Id"] << YAML::Value << true;
+			for (ryml::NodeRef it : input["Dependent"].children()) {
+				body << emit::Key << it["Id"] << emit::Value << true;
 			}
 
-			body << YAML::EndMap;
+			body << emit::EndMap;
 		}
 
 		/**
 		 * Example usage for adding label at specific version.
 		if (source_version < ?) {
-			body << YAML::Key << "CustomLabel" << YAML::Value << "Unique";
+			body << ryml_tool::emit::Key << "CustomLabel" << ryml_tool::emit::Value << "Unique";
 		}
 		*/
 
-		if (input["Reward"].IsDefined()) {
-			body << YAML::Key << "Rewards";
-			body << YAML::BeginMap;
-			if (input["Reward"]["ItemID"].IsDefined()) {
-				t_itemid item_id = input["Reward"]["ItemID"].as<t_itemid>();
+		if (defined(input["Reward"])) {
+			body << emit::Key << "Rewards";
+			body << emit::BeginMap;
+			if (defined(input["Reward"]["ItemID"])) {
+				t_itemid item_id = as<t_itemid>(input["Reward"]["ItemID"]);
 				std::string *item_name = util::umap_find(aegis_itemnames, item_id);
 
 				if (item_name == nullptr) {
@@ -252,20 +263,20 @@ static bool upgrade_achievement_db(std::string file, const uint32 source_version
 					return false;
 				}
 
-				body << YAML::Key << "Item" << YAML::Value << *item_name;
+				body << emit::Key << "Item" << emit::Value << *item_name;
 			}
-			if (input["Reward"]["Amount"].IsDefined() && input["Reward"]["Amount"].as<uint16>() > 1)
-				body << YAML::Key << "Amount" << YAML::Value << input["Reward"]["Amount"];
-			if (input["Reward"]["Script"].IsDefined())
-				body << YAML::Key << "Script" << YAML::Value << input["Reward"]["Script"];
-			if (input["Reward"]["TitleID"].IsDefined())
-				body << YAML::Key << "TitleId" << YAML::Value << input["Reward"]["TitleID"];
-			body << YAML::EndMap;
+			if (defined(input["Reward"]["Amount"]) && as<uint16>(input["Reward"]["Amount"]) > 1)
+				body << emit::Key << "Amount" << emit::Value << input["Reward"]["Amount"];
+			if (defined(input["Reward"]["Script"]))
+				body << emit::Key << "Script" << emit::Value << input["Reward"]["Script"];
+			if (defined(input["Reward"]["TitleID"]))
+				body << emit::Key << "TitleId" << emit::Value << input["Reward"]["TitleID"];
+			body << emit::EndMap;
 		}
 
-		body << YAML::Key << "Score" << YAML::Value << input["Score"];
+		body << emit::Key << "Score" << emit::Value << input["Score"];
 
-		body << YAML::EndMap;
+		body << emit::EndMap;
 		entries++;
 	}
 
@@ -276,13 +287,14 @@ static bool upgrade_achievement_db(std::string file, const uint32 source_version
 
 static bool upgrade_item_db(std::string file, const uint32 source_version) {
 	size_t entries = 0;
+	ryml::NodeRef bodyNode = child(inTree.rootref(), "Body");
 
-	for( auto input : inNode["Body"] ){
+	for (ryml::NodeRef input : bodyNode.children()) {
 		// If under version 2
 		if( source_version < 2 ){
 			// Add armor level to all equipments
-			if( input["Type"].IsDefined() && input["Type"].as<std::string>() == "Armor" ){
-				input["ArmorLevel"] = 1;
+			if( defined(input["Type"]) && as<std::string>(input["Type"]) == "Armor" ){
+				input["ArmorLevel"] << 1;
 			}
 		}
 
@@ -298,30 +310,31 @@ static bool upgrade_item_db(std::string file, const uint32 source_version) {
 
 static bool upgrade_job_stats(std::string file, const uint32 source_version) {
 	size_t entries = 0;
+	ryml::NodeRef bodyNode = child(inTree.rootref(), "Body");
 
-	for (auto input : inNode["Body"]) {
+	for (ryml::NodeRef input : bodyNode.children()) {
 		// If under version 2
 		if (source_version < 2) {
 			// Field name changes
-			if (input["HPFactor"].IsDefined()) {
-				input["HpFactor"] = input["HPFactor"].as<uint32>();
-				input.remove("HPFactor");
+			if (defined(input["HPFactor"])) {
+				input["HpFactor"] << as<uint32>(input["HPFactor"]);
+				input.remove_child("HPFactor");
 			}
-			if (input["HpMultiplicator"].IsDefined()) {
-				input["HpIncrease"] = input["HpMultiplicator"].as<uint32>();
-				input.remove("HpMultiplicator");
+			if (defined(input["HpMultiplicator"])) {
+				input["HpIncrease"] << as<uint32>(input["HpMultiplicator"]);
+				input.remove_child("HpMultiplicator");
 			}
-			if (input["HPMultiplicator"].IsDefined()) {
-				input["HpIncrease"] = input["HPMultiplicator"].as<uint32>();
-				input.remove("HPMultiplicator");
+			if (defined(input["HPMultiplicator"])) {
+				input["HpIncrease"] << as<uint32>(input["HPMultiplicator"]);
+				input.remove_child("HPMultiplicator");
 			}
-			if (input["SpFactor"].IsDefined()) {
-				input["SpIncrease"] = input["SpFactor"].as<uint32>();
-				input.remove("SpFactor");
+			if (defined(input["SpFactor"])) {
+				input["SpIncrease"] << as<uint32>(input["SpFactor"]);
+				input.remove_child("SpFactor");
 			}
-			if (input["SPFactor"].IsDefined()) {
-				input["SpIncrease"] = input["SPFactor"].as<uint32>();
-				input.remove("SPFactor");
+			if (defined(input["SPFactor"])) {
+				input["SpIncrease"] << as<uint32>(input["SPFactor"]);
+				input.remove_child("SPFactor");
 			}
 		}
 
@@ -336,14 +349,15 @@ static bool upgrade_job_stats(std::string file, const uint32 source_version) {
 
 static bool upgrade_status_db(std::string file, const uint32 source_version) {
 	size_t entries = 0;
+	ryml::NodeRef bodyNode = child(inTree.rootref(), "Body");
 
-	for (auto input : inNode["Body"]) {
+	for (ryml::NodeRef input : bodyNode.children()) {
 		// If under version 3
 		if (source_version < 3) {
 			// Rename End to EndOnStart
-			if (input["End"].IsDefined()) {
-				input["EndOnStart"] = input["End"];
-				input.remove("End");
+			if (defined(input["End"])) {
+				input["EndOnStart"] << ryml_tool::scalar(input["End"]);
+				input.remove_child("End");
 			}
 		}
 
@@ -358,25 +372,26 @@ static bool upgrade_status_db(std::string file, const uint32 source_version) {
 
 static bool upgrade_map_drops_db(std::string file, const uint32 source_version) {
 	size_t entries = 0;
+	ryml::NodeRef bodyNode = child(inTree.rootref(), "Body");
 
-	for( auto input : inNode["Body"] ){
+	for (ryml::NodeRef input : bodyNode.children()) {
 		// If under version 2, adjust the rates from n/10000 to n/100000
 		if( source_version < 2 ){
-			if (input["GlobalDrops"].IsDefined()) {
-				for( auto GlobalDrops : input["GlobalDrops"] ){
-					if (GlobalDrops["Rate"].IsDefined()) {
-						uint32 val = GlobalDrops["Rate"].as<uint32>() * 10;
-						GlobalDrops["Rate"] = val;
+			if (defined(input["GlobalDrops"])) {
+				for (ryml::NodeRef GlobalDrops : input["GlobalDrops"].children()) {
+					if (defined(GlobalDrops["Rate"])) {
+						uint32 val = as<uint32>(GlobalDrops["Rate"]) * 10;
+						GlobalDrops["Rate"] << val;
 					}
 				}
 			}
-			if (input["SpecificDrops"].IsDefined()) {
-				for( auto SpecificDrops : input["SpecificDrops"] ){
-					if (SpecificDrops["Drops"].IsDefined()) {
-						for( auto Drops : SpecificDrops["Drops"] ){
-							if (Drops["Rate"].IsDefined()) {
-								uint32 val = Drops["Rate"].as<uint32>() * 10;
-								Drops["Rate"] = val;
+			if (defined(input["SpecificDrops"])) {
+				for (ryml::NodeRef SpecificDrops : input["SpecificDrops"].children()) {
+					if (defined(SpecificDrops["Drops"])) {
+						for (ryml::NodeRef Drops : SpecificDrops["Drops"].children()) {
+							if (defined(Drops["Rate"])) {
+								uint32 val = as<uint32>(Drops["Rate"]) * 10;
+								Drops["Rate"] << val;
 							}
 						}
 					}
@@ -395,42 +410,47 @@ static bool upgrade_map_drops_db(std::string file, const uint32 source_version) 
 
 static bool upgrade_enchantgrade_db( std::string file, const uint32 source_version ){
 	size_t entries = 0;
+	ryml::NodeRef bodyNode = child(inTree.rootref(), "Body");
 
-	for( auto input : inNode["Body"] ){
+	for (ryml::NodeRef input : bodyNode.children()) {
 		// If under version 3
 		if( source_version < 3 ){
-			if( input["Levels"].IsDefined() ){
-				for( auto levelNode : input["Levels"] ){
-					if( levelNode["Grades"].IsDefined() ){
-						for( auto gradeNode : levelNode["Grades"] ){
+			if (defined(input["Levels"])) {
+				for (ryml::NodeRef levelNode : input["Levels"].children()) {
+					if (defined(levelNode["Grades"])) {
+						for (ryml::NodeRef gradeNode : levelNode["Grades"].children()) {
 							// Convert Refine + Chance to a Chances array
-							if( gradeNode["Refine"].IsDefined() && !gradeNode["Chance"].IsDefined() ){
+							if (defined(gradeNode["Refine"]) && !defined(gradeNode["Chance"])) {
 								ShowError( "Cannot upgrade automatically, because Refine is specified, but Chance is missing" );
 								return false;
 							}
 
-							if( gradeNode["Chance"].IsDefined() && !gradeNode["Refine"].IsDefined() ){
+							if (defined(gradeNode["Chance"]) && !defined(gradeNode["Refine"])) {
 								ShowError( "Cannot upgrade automatically, because Chance is specified, but Refine is missing" );
 								return false;
 							}
 
-							uint16 refine = gradeNode["Refine"].as<uint16>();
-							uint16 chance = gradeNode["Chance"].as<uint16>();
+							uint16 refine = as<uint16>(gradeNode["Refine"]);
+							uint16 chance = as<uint16>(gradeNode["Chance"]);
 
 							auto chancesNode = gradeNode["Chances"];
+							chancesNode = ryml::SEQ;
+							chancesNode |= ryml::_WIP_STYLE_BLOCK;
 
 							for( int32 i = refine, j = 0; i <= MAX_REFINE; i++, j++ ){
 								auto chanceNode = chancesNode[j];
 
-								chanceNode["Refine"] = i;
-								chanceNode["Chance"] = chance;
+								chanceNode = ryml::MAP;
+								chanceNode |= ryml::_WIP_STYLE_BLOCK;
+								chanceNode["Refine"] << i;
+								chanceNode["Chance"] << chance;
 							}
 
 							// Remove the existing Refine entry
-							gradeNode.remove( "Refine" );
+							gradeNode.remove_child("Refine");
 
 							// Remove the existing Chance entry
-							gradeNode.remove( "Chance" );
+							gradeNode.remove_child("Chance");
 						}
 					}
 				}
@@ -448,87 +468,88 @@ static bool upgrade_enchantgrade_db( std::string file, const uint32 source_versi
 
 static bool upgrade_item_group_db( std::string file, const uint32 source_version ){
 	size_t entries = 0;
+	ryml::NodeRef bodyNode = child(inTree.rootref(), "Body");
 
-	for( const auto input : inNode["Body"] ){
+	for (ryml::NodeRef input : bodyNode.children()) {
 		// Added the "Algorithm" field based on the previous "Subgroup"
 		if( source_version < 4 ){
-			body << YAML::BeginMap;
-			body << YAML::Key << "Group" << YAML::Value << input["Group"];
+			body << emit::BeginMap;
+			body << emit::Key << "Group" << emit::Value << input["Group"];
 
-			if( input["SubGroups"].IsDefined() ){
-				body << YAML::Key << "SubGroups";
-				body << YAML::BeginSeq;
+			if (defined(input["SubGroups"])) {
+				body << emit::Key << "SubGroups";
+				body << emit::BeginSeq;
 
-				for (const auto &it : input["SubGroups"]) {
-					body << YAML::BeginMap;
-					if( !it["SubGroup"].IsDefined() ){
+				for (ryml::NodeRef it : input["SubGroups"].children()) {
+					body << emit::BeginMap;
+					if (!defined(it["SubGroup"])) {
 						ShowError( "Cannot upgrade automatically, SubGroup is missing." );
 						return false;
 					}
-					body << YAML::Key << "SubGroup" << YAML::Value << it["SubGroup"];
+					body << emit::Key << "SubGroup" << emit::Value << it["SubGroup"];
 
-					if (it["SubGroup"].as<uint16>() == 0)
-						body << YAML::Key << "Algorithm" << YAML::Value << "All";
-					else if (it["SubGroup"].as<uint16>() == 6)
-						body << YAML::Key << "Algorithm" << YAML::Value << "Random";
+					if (as<uint16>(it["SubGroup"]) == 0)
+						body << emit::Key << "Algorithm" << emit::Value << "All";
+					else if (as<uint16>(it["SubGroup"]) == 6)
+						body << emit::Key << "Algorithm" << emit::Value << "Random";
 					// else
-						// body << YAML::Key << "Algorithm" << YAML::Value << "SharedPool";
+						// body << ryml_tool::emit::Key << "Algorithm" << ryml_tool::emit::Value << "SharedPool";
 
-					if( it["List"].IsDefined() )
-						body << YAML::Key << "List";{
-						body << YAML::BeginSeq;
+					if (defined(it["List"])) {
+						body << emit::Key << "List";
+						body << emit::BeginSeq;
 
 						uint32 index = 0;
 
-						for( auto ListNode : it["List"] ){
-							if( !ListNode["Item"].IsDefined() ){
+						for (ryml::NodeRef ListNode : it["List"].children()) {
+							if (!defined(ListNode["Item"])) {
 								ShowError( "Cannot upgrade automatically, Item is missing" );
 								return false;
 							}
-							body << YAML::BeginMap;
+							body << emit::BeginMap;
 
-							body << YAML::Key << "Index" << YAML::Value << index;
-							body << YAML::Key << "Item" << YAML::Value << ListNode["Item"];
+							body << emit::Key << "Index" << emit::Value << index;
+							body << emit::Key << "Item" << emit::Value << ListNode["Item"];
 
-							if( ListNode["Rate"].IsDefined() )
-								body << YAML::Key << "Rate" << YAML::Value << ListNode["Rate"];
-							if( ListNode["Amount"].IsDefined() )
-								body << YAML::Key << "Amount" << YAML::Value << ListNode["Amount"];
-							if( ListNode["Duration"].IsDefined() )
-								body << YAML::Key << "Duration" << YAML::Value << ListNode["Duration"];
-							if( ListNode["Announced"].IsDefined() )
-								body << YAML::Key << "Announced" << YAML::Value << ListNode["Announced"];
-							if( ListNode["UniqueId"].IsDefined() )
-								body << YAML::Key << "UniqueId" << YAML::Value << ListNode["UniqueId"];
-							if( ListNode["Stacked"].IsDefined() )
-								body << YAML::Key << "Stacked" << YAML::Value << ListNode["Stacked"];
-							if( ListNode["Named"].IsDefined() )
-								body << YAML::Key << "Named" << YAML::Value << ListNode["Named"];
-							if( ListNode["Bound"].IsDefined() )
-								body << YAML::Key << "Bound" << YAML::Value << ListNode["Bound"];
-							if( ListNode["RandomOptionGroup"].IsDefined() )
-								body << YAML::Key << "RandomOptionGroup" << YAML::Value << ListNode["RandomOptionGroup"];
-							if( ListNode["RefineMinimum"].IsDefined() )
-								body << YAML::Key << "RefineMinimum" << YAML::Value << ListNode["RefineMinimum"];
-							if( ListNode["RefineMaximum"].IsDefined() )
-								body << YAML::Key << "RefineMaximum" << YAML::Value << ListNode["RefineMaximum"];
-							if( ListNode["Clear"].IsDefined() )
-								body << YAML::Key << "Clear" << YAML::Value << ListNode["Clear"];
+							if (defined(ListNode["Rate"]))
+								body << emit::Key << "Rate" << emit::Value << ListNode["Rate"];
+							if (defined(ListNode["Amount"]))
+								body << emit::Key << "Amount" << emit::Value << ListNode["Amount"];
+							if (defined(ListNode["Duration"]))
+								body << emit::Key << "Duration" << emit::Value << ListNode["Duration"];
+							if (defined(ListNode["Announced"]))
+								body << emit::Key << "Announced" << emit::Value << ListNode["Announced"];
+							if (defined(ListNode["UniqueId"]))
+								body << emit::Key << "UniqueId" << emit::Value << ListNode["UniqueId"];
+							if (defined(ListNode["Stacked"]))
+								body << emit::Key << "Stacked" << emit::Value << ListNode["Stacked"];
+							if (defined(ListNode["Named"]))
+								body << emit::Key << "Named" << emit::Value << ListNode["Named"];
+							if (defined(ListNode["Bound"]))
+								body << emit::Key << "Bound" << emit::Value << ListNode["Bound"];
+							if (defined(ListNode["RandomOptionGroup"]))
+								body << emit::Key << "RandomOptionGroup" << emit::Value << ListNode["RandomOptionGroup"];
+							if (defined(ListNode["RefineMinimum"]))
+								body << emit::Key << "RefineMinimum" << emit::Value << ListNode["RefineMinimum"];
+							if (defined(ListNode["RefineMaximum"]))
+								body << emit::Key << "RefineMaximum" << emit::Value << ListNode["RefineMaximum"];
+							if (defined(ListNode["Clear"]))
+								body << emit::Key << "Clear" << emit::Value << ListNode["Clear"];
 
 							index++;
-							body << YAML::EndMap;
+							body << emit::EndMap;
 						}
 
-						body << YAML::EndSeq;
+						body << emit::EndSeq;
 					}
-					if( it["Clear"].IsDefined() )
-						body << YAML::Key << "Clear" << YAML::Value << it["Clear"];
+					if (defined(it["Clear"]))
+						body << emit::Key << "Clear" << emit::Value << it["Clear"];
 
-					body << YAML::EndMap;
+					body << emit::EndMap;
 				}
-				body << YAML::EndSeq;
+				body << emit::EndSeq;
 			}
-			body << YAML::EndMap;
+			body << emit::EndMap;
 		}
 
 		entries++;
@@ -541,19 +562,23 @@ static bool upgrade_item_group_db( std::string file, const uint32 source_version
 
 static bool upgrade_skill_db( std::string file, const uint32 source_version ){
 	size_t entries = 0;
+	ryml::NodeRef bodyNode = child(inTree.rootref(), "Body");
 
-	for( auto input : inNode["Body"] ){
+	for (ryml::NodeRef input : bodyNode.children()) {
 		// If under version 4
 		if( source_version < 4 ){
-			if( input["CastCancel"].IsDefined() ){
+			if (defined(input["CastCancel"])) {
 				// If CastCancel was true (new default value)
-				if( input["CastCancel"].as<bool>() ){
+				if (as<bool>(input["CastCancel"])) {
 					// Remove it
-					input.remove( "CastCancel" );
+					input.remove_child("CastCancel");
 				}
 			}else{
-				if( input["CastTime"].IsDefined() || input["FixedCastTime"].IsDefined() ){
-					input.force_insert( "CastCancel", false );
+				if (defined(input["CastTime"]) || defined(input["FixedCastTime"])) {
+					if (defined(input["CastCancel"])) {
+						input.remove_child("CastCancel");
+					}
+					input["CastCancel"] << false;
 				}
 			}
 		}
@@ -569,8 +594,9 @@ static bool upgrade_skill_db( std::string file, const uint32 source_version ){
 
 static bool upgrade_item_packages_db( std::string file, const uint32 source_version ){
 	size_t entries = 0;
+	ryml::NodeRef bodyNode = child(inTree.rootref(), "Body");
 
-	for( auto input : inNode["Body"] ){
+	for (ryml::NodeRef input : bodyNode.children()) {
 		body << input;
 		entries++;
 	}

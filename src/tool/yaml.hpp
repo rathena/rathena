@@ -19,7 +19,6 @@
 	#include <cstdio>
 #endif
 
-#include <yaml-cpp/yaml.h>
 #include <ryml_std.hpp>
 #include <ryml.hpp>
 
@@ -59,7 +58,10 @@
 #include <map/storage.hpp>
 #include <map/skills/skill_impl.hpp>
 
+#include "ryml_utils.hpp"
+
 using namespace rathena;
+using ryml_tool::RymlEmitter;
 
 /// Uncomment this line to enable the ability for the conversion tools to automatically convert
 /// all files with no user interaction, whether it be from CSV to YAML or YAML to SQL.
@@ -79,8 +81,9 @@ int32 getch(void) {
 }
 #endif
 
-YAML::Node inNode;
-YAML::Emitter body;
+ryml::Parser inParser;
+ryml::Tree inTree;
+RymlEmitter body;
 
 // Constants for conversion
 std::unordered_map<t_itemid, std::string> aegis_itemnames;
@@ -168,8 +171,8 @@ bool askConfirmation(const char *fmt, ...) {
  * @param node: YAML node
  * @return Version number
  */
-uint32 getHeaderVersion(YAML::Node &node) {
-	return node["Header"]["Version"].as<uint32>();
+uint32 getHeaderVersion(const ryml::NodeRef& node) {
+	return ryml_tool::as<uint32>(ryml_tool::child(ryml_tool::child(node, "Header"), "Version"));
 }
 
 /**
@@ -208,15 +211,15 @@ void prepareHeader(std::ofstream &file, const std::string &type, uint32 version,
 	copyFileIfExists(file, "license", false);
 	copyFileIfExists(file, name, true);
 
-	YAML::Emitter header(file);
+	RymlEmitter header(file);
 
-	header << YAML::BeginMap;
-	header << YAML::Key << "Header";
-	header << YAML::BeginMap;
-	header << YAML::Key << "Type" << YAML::Value << type;
-	header << YAML::Key << "Version" << YAML::Value << version;
-	header << YAML::EndMap;
-	header << YAML::EndMap;
+	header << ryml_tool::emit::BeginMap;
+	header << ryml_tool::emit::Key << "Header";
+	header << ryml_tool::emit::BeginMap;
+	header << ryml_tool::emit::Key << "Type" << ryml_tool::emit::Value << type;
+	header << ryml_tool::emit::Key << "Version" << ryml_tool::emit::Value << version;
+	header << ryml_tool::emit::EndMap;
+	header << ryml_tool::emit::EndMap;
 
 	file << "\n";
 	file << "\n";
@@ -227,48 +230,52 @@ void prepareHeader(std::ofstream &file, const std::string &type, uint32 version,
  * @param file: File stream
  */
 void prepareFooter(std::ostream &file) {
-	if (!inNode["Footer"].IsDefined())
+	ryml::NodeRef footerNode = ryml_tool::child(inTree.rootref(), "Footer");
+	if (!ryml_tool::defined(footerNode))
 		return;
 
-	if (inNode["Body"].IsDefined()) {
+	if (ryml_tool::has_child(inTree.rootref(), "Body")) {
 		file << "\n";
 		file << "\n";
 	}
 
-	YAML::Emitter footer(file);
+	RymlEmitter footer(file);
+	ryml::NodeRef importsNode = ryml_tool::child(footerNode, "Imports");
+	if (!ryml_tool::defined(importsNode))
+		return;
 
-	footer << YAML::BeginMap;
-	footer << YAML::Key << "Footer";
-	footer << YAML::BeginMap;
-	footer << YAML::Key << "Imports";
-	footer << YAML::BeginSeq;
-	for (const YAML::Node &import : inNode["Footer"]["Imports"]) {
-		footer << YAML::BeginMap;
-		footer << YAML::Key << "Path" << YAML::Value << import["Path"];
-		if (import["Mode"].IsDefined())
-			footer << YAML::Key << "Mode" << YAML::Value << import["Mode"];
-		footer << YAML::EndMap;
+	footer << ryml_tool::emit::BeginMap;
+	footer << ryml_tool::emit::Key << "Footer";
+	footer << ryml_tool::emit::BeginMap;
+	footer << ryml_tool::emit::Key << "Imports";
+	footer << ryml_tool::emit::BeginSeq;
+	for (const ryml::NodeRef importNode : importsNode.children()) {
+		footer << ryml_tool::emit::BeginMap;
+		footer << ryml_tool::emit::Key << "Path" << ryml_tool::emit::Value << ryml_tool::child(importNode, "Path");
+		if (ryml_tool::has_child(importNode, "Mode"))
+			footer << ryml_tool::emit::Key << "Mode" << ryml_tool::emit::Value << ryml_tool::child(importNode, "Mode");
+		footer << ryml_tool::emit::EndMap;
 	}
-	footer << YAML::EndSeq;
-	footer << YAML::EndMap;
-	footer << YAML::EndMap;
+	footer << ryml_tool::emit::EndSeq;
+	footer << ryml_tool::emit::EndMap;
+	footer << ryml_tool::emit::EndMap;
 }
 
 /**
  * Prepares body for output.
  */
 void prepareBody(void) {
-	body << YAML::BeginMap;
-	body << YAML::Key << "Body";
-	body << YAML::BeginSeq;
+	body << ryml_tool::emit::BeginMap;
+	body << ryml_tool::emit::Key << "Body";
+	body << ryml_tool::emit::BeginSeq;
 }
 
 /**
  * Finalizes body's output.
  */
 void finalizeBody(void) {
-	body << YAML::EndSeq;
-	body << YAML::EndMap;
+	body << ryml_tool::emit::EndSeq;
+	body << ryml_tool::emit::EndMap;
 }
 
 /**

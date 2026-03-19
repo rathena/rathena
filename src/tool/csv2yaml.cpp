@@ -182,8 +182,8 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 
 			std::ofstream outFile;
 
-			body.~Emitter();
-			new (&body) YAML::Emitter();
+			body.~RymlEmitter();
+			new (&body) RymlEmitter();
 			outFile.open(to);
 
 			if (!outFile.is_open()) {
@@ -589,13 +589,13 @@ static bool guild_read_guildskill_tree_db( char* split[], size_t columns, size_t
 		return false;
 	}
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Id" << YAML::Value << *name;
-	body << YAML::Key << "MaxLevel" << YAML::Value << atoi(split[1]);
+	body << ryml_tool::emit::BeginMap;
+	body << ryml_tool::emit::Key << "Id" << ryml_tool::emit::Value << *name;
+	body << ryml_tool::emit::Key << "MaxLevel" << ryml_tool::emit::Value << atoi(split[1]);
 
 	if (atoi(split[2]) > 0) {
-		body << YAML::Key << "Required";
-		body << YAML::BeginSeq;
+		body << ryml_tool::emit::Key << "Required";
+		body << ryml_tool::emit::BeginSeq;
 
 		for (int32 i = 0, j = 0; i < MAX_GUILD_SKILL_REQUIRE; i++) {
 			uint16 required_skill_id = atoi(split[i * 2 + 2]);
@@ -612,16 +612,16 @@ static bool guild_read_guildskill_tree_db( char* split[], size_t columns, size_t
 				return false;
 			}
 
-			body << YAML::BeginMap;
-			body << YAML::Key << "Id" << YAML::Value << *required_name;
-			body << YAML::Key << "Level" << YAML::Value << required_skill_level;
-			body << YAML::EndMap;
+			body << ryml_tool::emit::BeginMap;
+			body << ryml_tool::emit::Key << "Id" << ryml_tool::emit::Value << *required_name;
+			body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << required_skill_level;
+			body << ryml_tool::emit::EndMap;
 		}
 
-		body << YAML::EndSeq;
+		body << ryml_tool::emit::EndSeq;
 	}
 
-	body << YAML::EndMap;
+	body << ryml_tool::emit::EndMap;
 
 	return true;
 }
@@ -705,8 +705,8 @@ static bool pet_read_db( const char* file ){
 			continue;
 		}
 
-		body << YAML::BeginMap;
-		body << YAML::Key << "Mob" << YAML::Value << *mob_name;
+		body << ryml_tool::emit::BeginMap;
+		body << ryml_tool::emit::Key << "Mob" << ryml_tool::emit::Value << *mob_name;
 
 		t_itemid tame_item_id = strtoul( str[3], nullptr, 10 );
 
@@ -718,7 +718,7 @@ static bool pet_read_db( const char* file ){
 				return false;
 			}
 
-			body << YAML::Key << "TameItem" << YAML::Value << *tame_item_name;
+			body << ryml_tool::emit::Key << "TameItem" << ryml_tool::emit::Value << *tame_item_name;
 		}
 
 		t_itemid egg_item_id = strtoul( str[4], nullptr, 10 );
@@ -729,7 +729,7 @@ static bool pet_read_db( const char* file ){
 			return false;
 		}
 
-		body << YAML::Key << "EggItem" << YAML::Value << *egg_item_name;
+		body << ryml_tool::emit::Key << "EggItem" << ryml_tool::emit::Value << *egg_item_name;
 
 		t_itemid equip_item_id = strtoul( str[5], nullptr, 10 );
 
@@ -741,7 +741,7 @@ static bool pet_read_db( const char* file ){
 				return false;
 			}
 
-			body << YAML::Key << "EquipItem" << YAML::Value << *equip_item_name;
+			body << ryml_tool::emit::Key << "EquipItem" << ryml_tool::emit::Value << *equip_item_name;
 		}
 
 		t_itemid food_item_id = strtoul( str[6], nullptr, 10 );
@@ -754,47 +754,47 @@ static bool pet_read_db( const char* file ){
 				return false;
 			}
 
-			body << YAML::Key << "FoodItem" << YAML::Value << *food_item_name;
+			body << ryml_tool::emit::Key << "FoodItem" << ryml_tool::emit::Value << *food_item_name;
 		}
 
-		body << YAML::Key << "Fullness" << YAML::Value << atoi(str[7]);
+		body << ryml_tool::emit::Key << "Fullness" << ryml_tool::emit::Value << atoi(str[7]);
 		// Default: 60
 		if( atoi( str[8] ) != 60 ){
-			body << YAML::Key << "HungryDelay" << YAML::Value << atoi(str[8]);
+			body << ryml_tool::emit::Key << "HungryDelay" << ryml_tool::emit::Value << atoi(str[8]);
 		}
 		// Default: 250
 		if( atoi( str[11] ) != 250 ){
-			body << YAML::Key << "IntimacyStart" << YAML::Value << atoi(str[11]);
+			body << ryml_tool::emit::Key << "IntimacyStart" << ryml_tool::emit::Value << atoi(str[11]);
 		}
-		body << YAML::Key << "IntimacyFed" << YAML::Value << atoi(str[9]);
+		body << ryml_tool::emit::Key << "IntimacyFed" << ryml_tool::emit::Value << atoi(str[9]);
 		// Default: -100
 		if( atoi( str[10] ) != 100 ){
-			body << YAML::Key << "IntimacyOverfed" << YAML::Value << -atoi(str[10]);
+			body << ryml_tool::emit::Key << "IntimacyOverfed" << ryml_tool::emit::Value << -atoi(str[10]);
 		}
 		// pet_hungry_friendly_decrease battle_conf
-		//body << YAML::Key << "IntimacyHungry" << YAML::Value << -5;
+		//body << ryml_tool::emit::Key << "IntimacyHungry" << ryml_tool::emit::Value << -5;
 		// Default: -20
 		if( atoi( str[12] ) != 20 ){
-			body << YAML::Key << "IntimacyOwnerDie" << YAML::Value << -atoi(str[12]);
+			body << ryml_tool::emit::Key << "IntimacyOwnerDie" << ryml_tool::emit::Value << -atoi(str[12]);
 		}
-		body << YAML::Key << "CaptureRate" << YAML::Value << atoi(str[13]);
+		body << ryml_tool::emit::Key << "CaptureRate" << ryml_tool::emit::Value << atoi(str[13]);
 		// Default: true
 		if( atoi( str[15] ) == 0 ){
-			body << YAML::Key << "SpecialPerformance" << YAML::Value << "false";
+			body << ryml_tool::emit::Key << "SpecialPerformance" << ryml_tool::emit::Value << "false";
 		}
-		body << YAML::Key << "AttackRate" << YAML::Value << atoi(str[17]);
-		body << YAML::Key << "RetaliateRate" << YAML::Value << atoi(str[18]);
-		body << YAML::Key << "ChangeTargetRate" << YAML::Value << atoi(str[19]);
+		body << ryml_tool::emit::Key << "AttackRate" << ryml_tool::emit::Value << atoi(str[17]);
+		body << ryml_tool::emit::Key << "RetaliateRate" << ryml_tool::emit::Value << atoi(str[18]);
+		body << ryml_tool::emit::Key << "ChangeTargetRate" << ryml_tool::emit::Value << atoi(str[19]);
 
 		if( *str[21] ){
-			body << YAML::Key << "Script" << YAML::Value << YAML::Literal << str[21];
+			body << ryml_tool::emit::Key << "Script" << ryml_tool::emit::Value << ryml_tool::emit::Literal << str[21];
 		}
 
 		if( *str[20] ){
-			body << YAML::Key << "SupportScript" << YAML::Value << YAML::Literal << str[20];
+			body << ryml_tool::emit::Key << "SupportScript" << ryml_tool::emit::Value << ryml_tool::emit::Literal << str[20];
 		}
 
-		body << YAML::EndMap;
+		body << ryml_tool::emit::EndMap;
 		entries++;
 	}
 
@@ -814,9 +814,9 @@ static bool skill_parse_row_magicmushroomdb( char *split[], size_t column, size_
 		return false;
 	}
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Skill" << YAML::Value << *skill_name;
-	body << YAML::EndMap;
+	body << ryml_tool::emit::BeginMap;
+	body << ryml_tool::emit::Key << "Skill" << ryml_tool::emit::Value << *skill_name;
+	body << ryml_tool::emit::EndMap;
 
 	return true;
 }
@@ -831,32 +831,32 @@ static bool skill_parse_row_abradb( char* split[], size_t columns, size_t curren
 		return false;
 	}
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Skill" << YAML::Value << *skill_name;
+	body << ryml_tool::emit::BeginMap;
+	body << ryml_tool::emit::Key << "Skill" << ryml_tool::emit::Value << *skill_name;
 
 	int32 arr[MAX_SKILL_LEVEL];
 	int32 arr_size = skill_split_atoi(split[2], arr);
 
 	if (arr_size == 1) {
 		if (arr[0] != 500)
-			body << YAML::Key << "Probability" << YAML::Value << arr[0];
+			body << ryml_tool::emit::Key << "Probability" << ryml_tool::emit::Value << arr[0];
 	} else {
-		body << YAML::Key << "Probability";
-		body << YAML::BeginSeq;
+		body << ryml_tool::emit::Key << "Probability";
+		body << ryml_tool::emit::BeginSeq;
 
 		for (int32 i = 0; i < arr_size; i++) {
 			if (arr[i] > 0) {
-				body << YAML::BeginMap;
-				body << YAML::Key << "Level" << YAML::Value << i + 1;
-				body << YAML::Key << "Probability" << YAML::Value << arr[i];
-				body << YAML::EndMap;
+				body << ryml_tool::emit::BeginMap;
+				body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << i + 1;
+				body << ryml_tool::emit::Key << "Probability" << ryml_tool::emit::Value << arr[i];
+				body << ryml_tool::emit::EndMap;
 			}
 		}
 
-		body << YAML::EndSeq;
+		body << ryml_tool::emit::EndSeq;
 	}
 
-	body << YAML::EndMap;
+	body << ryml_tool::emit::EndMap;
 
 	return true;
 }
@@ -879,11 +879,11 @@ static bool skill_parse_row_spellbookdb( char* split[], size_t columns, size_t c
 		return false;
 	}
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Skill" << YAML::Value << *skill_name;
-	body << YAML::Key << "Book" << YAML::Value << *book_name;
-	body << YAML::Key << "PreservePoints" << YAML::Value << atoi(split[1]);
-	body << YAML::EndMap;
+	body << ryml_tool::emit::BeginMap;
+	body << ryml_tool::emit::Key << "Skill" << ryml_tool::emit::Value << *skill_name;
+	body << ryml_tool::emit::Key << "Book" << ryml_tool::emit::Value << *book_name;
+	body << ryml_tool::emit::Key << "PreservePoints" << ryml_tool::emit::Value << atoi(split[1]);
+	body << ryml_tool::emit::EndMap;
 
 	return true;
 }
@@ -898,8 +898,8 @@ static bool mob_readdb_mobavail( char* str[], size_t columns, size_t current ){
 		return false;
 	}
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Mob" << YAML::Value << *mob_name;
+	body << ryml_tool::emit::BeginMap;
+	body << ryml_tool::emit::Key << "Mob" << ryml_tool::emit::Value << *mob_name;
 
 	uint16 sprite_id = atoi(str[1]);
 	std::string *sprite_name = util::umap_find(aegis_mobnames, sprite_id);
@@ -917,20 +917,20 @@ static bool mob_readdb_mobavail( char* str[], size_t columns, size_t current ){
 
 			sprite += 3; // Strip JT_ here because the script engine doesn't send this prefix for NPC.
 
-			body << YAML::Key << "Sprite" << YAML::Value << sprite;
+			body << ryml_tool::emit::Key << "Sprite" << ryml_tool::emit::Value << sprite;
 		} else
-			body << YAML::Key << "Sprite" << YAML::Value << sprite;
+			body << ryml_tool::emit::Key << "Sprite" << ryml_tool::emit::Value << sprite;
 	} else
-		body << YAML::Key << "Sprite" << YAML::Value << *sprite_name;
+		body << ryml_tool::emit::Key << "Sprite" << ryml_tool::emit::Value << *sprite_name;
 
 	if (columns == 12) {
-		body << YAML::Key << "Sex" << YAML::Value << (atoi(str[2]) ? "Male" : "Female");
+		body << ryml_tool::emit::Key << "Sex" << ryml_tool::emit::Value << (atoi(str[2]) ? "Male" : "Female");
 		if (atoi(str[3]) != 0)
-			body << YAML::Key << "HairStyle" << YAML::Value << atoi(str[3]);
+			body << ryml_tool::emit::Key << "HairStyle" << ryml_tool::emit::Value << atoi(str[3]);
 		if (atoi(str[4]) != 0)
-			body << YAML::Key << "HairColor" << YAML::Value << atoi(str[4]);
+			body << ryml_tool::emit::Key << "HairColor" << ryml_tool::emit::Value << atoi(str[4]);
 		if (atoi(str[11]) != 0)
-			body << YAML::Key << "ClothColor" << YAML::Value << atoi(str[11]);
+			body << ryml_tool::emit::Key << "ClothColor" << ryml_tool::emit::Value << atoi(str[11]);
 
 		if (strtoul(str[5], nullptr, 10) != 0) {
 			t_itemid weapon_item_id = strtoul( str[5], nullptr, 10 );
@@ -941,7 +941,7 @@ static bool mob_readdb_mobavail( char* str[], size_t columns, size_t current ){
 				return false;
 			}
 
-			body << YAML::Key << "Weapon" << YAML::Value << *weapon_item_name;
+			body << ryml_tool::emit::Key << "Weapon" << ryml_tool::emit::Value << *weapon_item_name;
 		}
 
 		if (strtoul(str[6], nullptr, 10) != 0) {
@@ -953,7 +953,7 @@ static bool mob_readdb_mobavail( char* str[], size_t columns, size_t current ){
 				return false;
 			}
 
-			body << YAML::Key << "Shield" << YAML::Value << *shield_item_name;
+			body << ryml_tool::emit::Key << "Shield" << ryml_tool::emit::Value << *shield_item_name;
 		}
 
 		if (strtoul(str[7], nullptr, 10) != 0) {
@@ -971,7 +971,7 @@ static bool mob_readdb_mobavail( char* str[], size_t columns, size_t current ){
 				return false;
 			}
 
-			body << YAML::Key << "HeadTop" << YAML::Value << *headtop_item_name;
+			body << ryml_tool::emit::Key << "HeadTop" << ryml_tool::emit::Value << *headtop_item_name;
 		}
 
 		if (strtoul(str[8], nullptr, 10) != 0) {
@@ -989,7 +989,7 @@ static bool mob_readdb_mobavail( char* str[], size_t columns, size_t current ){
 				return false;
 			}
 
-			body << YAML::Key << "HeadMid" << YAML::Value << *headmid_item_name;
+			body << ryml_tool::emit::Key << "HeadMid" << ryml_tool::emit::Value << *headmid_item_name;
 		}
 
 		if (strtoul(str[9], nullptr, 10) != 0) {
@@ -1007,98 +1007,98 @@ static bool mob_readdb_mobavail( char* str[], size_t columns, size_t current ){
 				return false;
 			}
 
-			body << YAML::Key << "HeadLow" << YAML::Value << *headlow_item_name;
+			body << ryml_tool::emit::Key << "HeadLow" << ryml_tool::emit::Value << *headlow_item_name;
 		}
 
 		if (atoi(str[10]) != 0) {
 			uint32 options = atoi(str[10]);
 
-			body << YAML::Key << "Options";
-			body << YAML::BeginMap;
+			body << ryml_tool::emit::Key << "Options";
+			body << ryml_tool::emit::BeginMap;
 
 			while (options > OPTION_NOTHING && options <= OPTION_SUMMER2) {
 				if (options & OPTION_SIGHT) {
-					body << YAML::Key << "Sight" << YAML::Value << "true";
+					body << ryml_tool::emit::Key << "Sight" << ryml_tool::emit::Value << "true";
 					options &= ~OPTION_SIGHT;
 				} else if (options & OPTION_CART1) {
-					body << YAML::Key << "Cart1" << YAML::Value << "true";
+					body << ryml_tool::emit::Key << "Cart1" << ryml_tool::emit::Value << "true";
 					options &= ~OPTION_CART1;
 				} else if (options & OPTION_FALCON) {
-					body << YAML::Key << "Falcon" << YAML::Value << "true";
+					body << ryml_tool::emit::Key << "Falcon" << ryml_tool::emit::Value << "true";
 					options &= ~OPTION_FALCON;
 				} else if (options & OPTION_RIDING) {
-					body << YAML::Key << "Riding" << YAML::Value << "true";
+					body << ryml_tool::emit::Key << "Riding" << ryml_tool::emit::Value << "true";
 					options &= ~OPTION_RIDING;
 				} else if (options & OPTION_CART2) {
-					body << YAML::Key << "Cart2" << YAML::Value << "true";
+					body << ryml_tool::emit::Key << "Cart2" << ryml_tool::emit::Value << "true";
 					options &= ~OPTION_CART2;
 				} else if (options & OPTION_CART3) {
-					body << YAML::Key << "Cart2" << YAML::Value << "true";
+					body << ryml_tool::emit::Key << "Cart2" << ryml_tool::emit::Value << "true";
 					options &= ~OPTION_CART3;
 				} else if (options & OPTION_CART4) {
-					body << YAML::Key << "Cart4" << YAML::Value << "true";
+					body << ryml_tool::emit::Key << "Cart4" << ryml_tool::emit::Value << "true";
 					options &= ~OPTION_CART4;
 				} else if (options & OPTION_CART5) {
-					body << YAML::Key << "Cart5" << YAML::Value << "true";
+					body << ryml_tool::emit::Key << "Cart5" << ryml_tool::emit::Value << "true";
 					options &= ~OPTION_CART5;
 				} else if (options & OPTION_ORCISH) {
-					body << YAML::Key << "Orcish" << YAML::Value << "true";
+					body << ryml_tool::emit::Key << "Orcish" << ryml_tool::emit::Value << "true";
 					options &= ~OPTION_ORCISH;
 				} else if (options & OPTION_WEDDING) {
-					body << YAML::Key << "Wedding" << YAML::Value << "true";
+					body << ryml_tool::emit::Key << "Wedding" << ryml_tool::emit::Value << "true";
 					options &= ~OPTION_WEDDING;
 				} else if (options & OPTION_RUWACH) {
-					body << YAML::Key << "Ruwach" << YAML::Value << "true";
+					body << ryml_tool::emit::Key << "Ruwach" << ryml_tool::emit::Value << "true";
 					options &= ~OPTION_RUWACH;
 				} else if (options & OPTION_FLYING) {
-					body << YAML::Key << "Flying" << YAML::Value << "true";
+					body << ryml_tool::emit::Key << "Flying" << ryml_tool::emit::Value << "true";
 					options &= ~OPTION_FLYING;
 				} else if (options & OPTION_XMAS) {
-					body << YAML::Key << "Xmas" << YAML::Value << "true";
+					body << ryml_tool::emit::Key << "Xmas" << ryml_tool::emit::Value << "true";
 					options &= ~OPTION_XMAS;
 				} else if (options & OPTION_TRANSFORM) {
-					body << YAML::Key << "Transform" << YAML::Value << "true";
+					body << ryml_tool::emit::Key << "Transform" << ryml_tool::emit::Value << "true";
 					options &= ~OPTION_TRANSFORM;
 				} else if (options & OPTION_SUMMER) {
-					body << YAML::Key << "Summer" << YAML::Value << "true";
+					body << ryml_tool::emit::Key << "Summer" << ryml_tool::emit::Value << "true";
 					options &= ~OPTION_SUMMER;
 				} else if (options & OPTION_DRAGON1) {
-					body << YAML::Key << "Dragon1" << YAML::Value << "true";
+					body << ryml_tool::emit::Key << "Dragon1" << ryml_tool::emit::Value << "true";
 					options &= ~OPTION_DRAGON1;
 				} else if (options & OPTION_WUG) {
-					body << YAML::Key << "Wug" << YAML::Value << "true";
+					body << ryml_tool::emit::Key << "Wug" << ryml_tool::emit::Value << "true";
 					options &= ~OPTION_WUG;
 				} else if (options & OPTION_WUGRIDER) {
-					body << YAML::Key << "WugRider" << YAML::Value << "true";
+					body << ryml_tool::emit::Key << "WugRider" << ryml_tool::emit::Value << "true";
 					options &= ~OPTION_WUGRIDER;
 				} else if (options & OPTION_MADOGEAR) {
-					body << YAML::Key << "MadoGear" << YAML::Value << "true";
+					body << ryml_tool::emit::Key << "MadoGear" << ryml_tool::emit::Value << "true";
 					options &= ~OPTION_MADOGEAR;
 				} else if (options & OPTION_DRAGON2) {
-					body << YAML::Key << "Dragon2" << YAML::Value << "true";
+					body << ryml_tool::emit::Key << "Dragon2" << ryml_tool::emit::Value << "true";
 					options &= ~OPTION_DRAGON2;
 				} else if (options & OPTION_DRAGON3) {
-					body << YAML::Key << "Dragon3" << YAML::Value << "true";
+					body << ryml_tool::emit::Key << "Dragon3" << ryml_tool::emit::Value << "true";
 					options &= ~OPTION_DRAGON3;
 				} else if (options & OPTION_DRAGON4) {
-					body << YAML::Key << "Dragon4" << YAML::Value << "true";
+					body << ryml_tool::emit::Key << "Dragon4" << ryml_tool::emit::Value << "true";
 					options &= ~OPTION_DRAGON4;
 				} else if (options & OPTION_DRAGON5) {
-					body << YAML::Key << "Dragon5" << YAML::Value << "true";
+					body << ryml_tool::emit::Key << "Dragon5" << ryml_tool::emit::Value << "true";
 					options &= ~OPTION_DRAGON5;
 				} else if (options & OPTION_HANBOK) {
-					body << YAML::Key << "Hanbok" << YAML::Value << "true";
+					body << ryml_tool::emit::Key << "Hanbok" << ryml_tool::emit::Value << "true";
 					options &= ~OPTION_HANBOK;
 				} else if (options & OPTION_OKTOBERFEST) {
-					body << YAML::Key << "Oktoberfest" << YAML::Value << "true";
+					body << ryml_tool::emit::Key << "Oktoberfest" << ryml_tool::emit::Value << "true";
 					options &= ~OPTION_OKTOBERFEST;
 				} else if (options & OPTION_SUMMER2) {
-					body << YAML::Key << "Summer2" << YAML::Value << "true";
+					body << ryml_tool::emit::Key << "Summer2" << ryml_tool::emit::Value << "true";
 					options &= ~OPTION_SUMMER2;
 				}
 			}
 
-			body << YAML::EndMap;
+			body << ryml_tool::emit::EndMap;
 		}
 	} else if (columns == 3) {
 		if (atoi(str[5]) != 0) {
@@ -1110,11 +1110,11 @@ static bool mob_readdb_mobavail( char* str[], size_t columns, size_t current ){
 				return false;
 			}
 
-			body << YAML::Key << "PetEquip" << YAML::Value << *peteq_item_name;
+			body << ryml_tool::emit::Key << "PetEquip" << ryml_tool::emit::Value << *peteq_item_name;
 		}
 	}
 
-	body << YAML::EndMap;
+	body << ryml_tool::emit::EndMap;
 
 	return true;
 }
@@ -1347,18 +1347,18 @@ static bool skill_parse_row_nonearnpcrangedb( char* split[], size_t column, size
 static bool skill_parse_row_skilldb( char* split[], size_t columns, size_t current ){
 	int32 arr[MAX_SKILL_LEVEL], arr_size, skill_id = atoi(split[0]);
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Id" << YAML::Value << skill_id;
-	body << YAML::Key << "Name" << YAML::Value << trim(split[16]);
-	body << YAML::Key << "Description" << YAML::Value << trim(split[17]);
-	body << YAML::Key << "MaxLevel" << YAML::Value << atoi(split[7]);
+	body << ryml_tool::emit::BeginMap;
+	body << ryml_tool::emit::Key << "Id" << ryml_tool::emit::Value << skill_id;
+	body << ryml_tool::emit::Key << "Name" << ryml_tool::emit::Value << trim(split[16]);
+	body << ryml_tool::emit::Key << "Description" << ryml_tool::emit::Value << trim(split[17]);
+	body << ryml_tool::emit::Key << "MaxLevel" << ryml_tool::emit::Value << atoi(split[7]);
 
 	if (strcmpi(split[13], "weapon") == 0)
-		body << YAML::Key << "Type" << YAML::Value << "Weapon";
+		body << ryml_tool::emit::Key << "Type" << ryml_tool::emit::Value << "Weapon";
 	else if (strcmpi(split[13], "magic") == 0)
-		body << YAML::Key << "Type" << YAML::Value << "Magic";
+		body << ryml_tool::emit::Key << "Type" << ryml_tool::emit::Value << "Magic";
 	else if (strcmpi(split[13], "misc") == 0)
-		body << YAML::Key << "Type" << YAML::Value << "Misc";
+		body << ryml_tool::emit::Key << "Type" << ryml_tool::emit::Value << "Misc";
 
 	std::string constant;
 
@@ -1366,121 +1366,121 @@ static bool skill_parse_row_skilldb( char* split[], size_t columns, size_t curre
 		constant = constant_lookup(atoi(split[3]), "INF_");
 		constant.erase(0, 4);
 		constant.erase(constant.size() - 6);
-		body << YAML::Key << "TargetType" << YAML::Value << name2Upper(constant);
+		body << ryml_tool::emit::Key << "TargetType" << ryml_tool::emit::Value << name2Upper(constant);
 	}
 
 	uint64 nk_val = strtol(split[5], nullptr, 0);
 
 	if (nk_val) {
-		body << YAML::Key << "DamageFlags";
-		body << YAML::BeginMap;
+		body << ryml_tool::emit::Key << "DamageFlags";
+		body << ryml_tool::emit::BeginMap;
 		if (nk_val & 0x1)
-			body << YAML::Key << "NoDamage" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "NoDamage" << ryml_tool::emit::Value << "true";
 		if (nk_val & 0x2)
-			body << YAML::Key << "Splash" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "Splash" << ryml_tool::emit::Value << "true";
 		if (nk_val & 0x4)
-			body << YAML::Key << "SplashSplit" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "SplashSplit" << ryml_tool::emit::Value << "true";
 		if (nk_val & 0x8)
-			body << YAML::Key << "IgnoreAtkCard" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "IgnoreAtkCard" << ryml_tool::emit::Value << "true";
 		if (nk_val & 0x10)
-			body << YAML::Key << "IgnoreElement" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "IgnoreElement" << ryml_tool::emit::Value << "true";
 		if (nk_val & 0x20)
-			body << YAML::Key << "IgnoreDefense" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "IgnoreDefense" << ryml_tool::emit::Value << "true";
 		if (nk_val & 0x40)
-			body << YAML::Key << "IgnoreFlee" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "IgnoreFlee" << ryml_tool::emit::Value << "true";
 		if (nk_val & 0x80)
-			body << YAML::Key << "IgnoreDefCard" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "IgnoreDefCard" << ryml_tool::emit::Value << "true";
 		if (nk_val & 0x100)
-			body << YAML::Key << "Critical" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "Critical" << ryml_tool::emit::Value << "true";
 
-		body << YAML::EndMap;
+		body << ryml_tool::emit::EndMap;
 	}
 
 	uint64 inf2_val = strtol(split[11], nullptr, 0);
 	uint64 inf3_val = strtol(split[15], nullptr, 0);
 
 	if (inf2_val || inf3_val) {
-		body << YAML::Key << "Flags";
-		body << YAML::BeginMap;
+		body << ryml_tool::emit::Key << "Flags";
+		body << ryml_tool::emit::BeginMap;
 		if (inf2_val & 0x1)
-			body << YAML::Key << "IsQuest" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "IsQuest" << ryml_tool::emit::Value << "true";
 		if (inf2_val & 0x2)
-			body << YAML::Key << "IsNpc" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "IsNpc" << ryml_tool::emit::Value << "true";
 		if (inf2_val & 0x4)
-			body << YAML::Key << "IsWedding" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "IsWedding" << ryml_tool::emit::Value << "true";
 		if (inf2_val & 0x8)
-			body << YAML::Key << "IsSpirit" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "IsSpirit" << ryml_tool::emit::Value << "true";
 		if (inf2_val & 0x10)
-			body << YAML::Key << "IsGuild" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "IsGuild" << ryml_tool::emit::Value << "true";
 		if (inf2_val & 0x20)
-			body << YAML::Key << "IsSong" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "IsSong" << ryml_tool::emit::Value << "true";
 		if (inf2_val & 0x40)
-			body << YAML::Key << "IsEnsemble" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "IsEnsemble" << ryml_tool::emit::Value << "true";
 		if (inf2_val & 0x80)
-			body << YAML::Key << "IsTrap" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "IsTrap" << ryml_tool::emit::Value << "true";
 		if (inf2_val & 0x100)
-			body << YAML::Key << "TargetSelf" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "TargetSelf" << ryml_tool::emit::Value << "true";
 		if (inf2_val & 0x200)
-			body << YAML::Key << "NoTargetSelf" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "NoTargetSelf" << ryml_tool::emit::Value << "true";
 		if (inf2_val & 0x400)
-			body << YAML::Key << "PartyOnly" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "PartyOnly" << ryml_tool::emit::Value << "true";
 		if (inf2_val & 0x800)
-			body << YAML::Key << "GuildOnly" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "GuildOnly" << ryml_tool::emit::Value << "true";
 		if (inf2_val & 0x1000)
-			body << YAML::Key << "NoTargetEnemy" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "NoTargetEnemy" << ryml_tool::emit::Value << "true";
 		if (inf2_val & 0x2000)
-			body << YAML::Key << "IsAutoShadowSpell" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "IsAutoShadowSpell" << ryml_tool::emit::Value << "true";
 		if (inf2_val & 0x4000)
-			body << YAML::Key << "IsChorus" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "IsChorus" << ryml_tool::emit::Value << "true";
 		if (inf2_val & 0x8000)
-			body << YAML::Key << "IgnoreBgReduction" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "IgnoreBgReduction" << ryml_tool::emit::Value << "true";
 		if (inf2_val & 0x10000)
-			body << YAML::Key << "IgnoreGvgReduction" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "IgnoreGvgReduction" << ryml_tool::emit::Value << "true";
 		if (inf2_val & 0x20000)
-			body << YAML::Key << "DisableNearNpc" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "DisableNearNpc" << ryml_tool::emit::Value << "true";
 		if (inf2_val & 0x40000)
-			body << YAML::Key << "TargetTrap" << YAML::Value << "true"; // ?
+			body << ryml_tool::emit::Key << "TargetTrap" << ryml_tool::emit::Value << "true"; // ?
 
 		if (inf3_val & 0x1)
-			body << YAML::Key << "IgnoreLandProtector" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "IgnoreLandProtector" << ryml_tool::emit::Value << "true";
 		if (inf3_val & 0x4)
-			body << YAML::Key << "AllowWhenHidden" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "AllowWhenHidden" << ryml_tool::emit::Value << "true";
 		if (inf3_val & 0x8)
-			body << YAML::Key << "AllowWhenPerforming" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "AllowWhenPerforming" << ryml_tool::emit::Value << "true";
 		if (inf3_val & 0x10)
-			body << YAML::Key << "TargetEmperium" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "TargetEmperium" << ryml_tool::emit::Value << "true";
 		if (inf3_val & 0x40)
-			body << YAML::Key << "IgnoreKagehumi" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "IgnoreKagehumi" << ryml_tool::emit::Value << "true";
 		if (inf3_val & 0x80)
-			body << YAML::Key << "AlterRangeVulture" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "AlterRangeVulture" << ryml_tool::emit::Value << "true";
 		if (inf3_val & 0x100)
-			body << YAML::Key << "AlterRangeSnakeEye" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "AlterRangeSnakeEye" << ryml_tool::emit::Value << "true";
 		if (inf3_val & 0x200)
-			body << YAML::Key << "AlterRangeShadowJump" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "AlterRangeShadowJump" << ryml_tool::emit::Value << "true";
 		if (inf3_val & 0x400)
-			body << YAML::Key << "AlterRangeRadius" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "AlterRangeRadius" << ryml_tool::emit::Value << "true";
 		if (inf3_val & 0x800)
-			body << YAML::Key << "AlterRangeResearchTrap" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "AlterRangeResearchTrap" << ryml_tool::emit::Value << "true";
 		if (inf3_val & 0x1000)
-			body << YAML::Key << "IgnoreHovering" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "IgnoreHovering" << ryml_tool::emit::Value << "true";
 		if (inf3_val & 0x2000)
-			body << YAML::Key << "AllowOnWarg" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "AllowOnWarg" << ryml_tool::emit::Value << "true";
 		if (inf3_val & 0x4000)
-			body << YAML::Key << "AllowOnMado" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "AllowOnMado" << ryml_tool::emit::Value << "true";
 		if (inf3_val & 0x8000)
-			body << YAML::Key << "TargetManHole" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "TargetManHole" << ryml_tool::emit::Value << "true";
 		if (inf3_val & 0x10000)
-			body << YAML::Key << "TargetHidden" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "TargetHidden" << ryml_tool::emit::Value << "true";
 		if (inf3_val & 0x40000)
-			body << YAML::Key << "IncreaseDanceWithWugDamage" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "IncreaseDanceWithWugDamage" << ryml_tool::emit::Value << "true";
 		if (inf3_val & 0x80000)
-			body << YAML::Key << "IgnoreWugBite" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "IgnoreWugBite" << ryml_tool::emit::Value << "true";
 		if (inf3_val & 0x100000)
-			body << YAML::Key << "IgnoreAutoGuard" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "IgnoreAutoGuard" << ryml_tool::emit::Value << "true";
 		if (inf3_val & 0x200000)
-			body << YAML::Key << "IgnoreCicada" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "IgnoreCicada" << ryml_tool::emit::Value << "true";
 
-		body << YAML::EndMap;
+		body << ryml_tool::emit::EndMap;
 	}
 
 	memset(arr, 0, sizeof(arr));
@@ -1489,28 +1489,28 @@ static bool skill_parse_row_skilldb( char* split[], size_t columns, size_t curre
 	if (arr_size != 0) {
 		if (arr_size == 1) {
 			if (arr[0] != 0) {
-				body << YAML::Key << "Range";
-				body << YAML::Value << arr[0];
+				body << ryml_tool::emit::Key << "Range";
+				body << ryml_tool::emit::Value << arr[0];
 			}
 		} else {
-			body << YAML::Key << "Range";
-			body << YAML::BeginSeq;
+			body << ryml_tool::emit::Key << "Range";
+			body << ryml_tool::emit::BeginSeq;
 
 			for (int32 i = 0; i < arr_size; i++) {
-				body << YAML::BeginMap;
-				body << YAML::Key << "Level" << YAML::Value << i + 1;
-				body << YAML::Key << "Size" << YAML::Value << arr[i];
-				body << YAML::EndMap;
+				body << ryml_tool::emit::BeginMap;
+				body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << i + 1;
+				body << ryml_tool::emit::Key << "Size" << ryml_tool::emit::Value << arr[i];
+				body << ryml_tool::emit::EndMap;
 			}
 
-			body << YAML::EndSeq;
+			body << ryml_tool::emit::EndSeq;
 		}
 	}
 
 	if (atoi(split[2]) != 0) {
 		constant = constant_lookup(atoi(split[2]), "DMG_");
 		constant.erase(0, 4);
-		body << YAML::Key << "Hit" << YAML::Value << name2Upper(constant);
+		body << ryml_tool::emit::Key << "Hit" << ryml_tool::emit::Value << name2Upper(constant);
 	}
 
 	memset(arr, 0, sizeof(arr));
@@ -1519,21 +1519,21 @@ static bool skill_parse_row_skilldb( char* split[], size_t columns, size_t curre
 	if (arr_size != 0) {
 		if (arr_size == 1) {
 			if (arr[0] != 0) {
-				body << YAML::Key << "HitCount";
-				body << YAML::Value << arr[0];
+				body << ryml_tool::emit::Key << "HitCount";
+				body << ryml_tool::emit::Value << arr[0];
 			}
 		} else {
-			body << YAML::Key << "HitCount";
-			body << YAML::BeginSeq;
+			body << ryml_tool::emit::Key << "HitCount";
+			body << ryml_tool::emit::BeginSeq;
 
 			for (int32 i = 0; i < arr_size; i++) {
-				body << YAML::BeginMap;
-				body << YAML::Key << "Level" << YAML::Value << i + 1;
-				body << YAML::Key << "Count" << YAML::Value << arr[i];
-				body << YAML::EndMap;
+				body << ryml_tool::emit::BeginMap;
+				body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << i + 1;
+				body << ryml_tool::emit::Key << "Count" << ryml_tool::emit::Value << arr[i];
+				body << ryml_tool::emit::EndMap;
 			}
 
-			body << YAML::EndSeq;
+			body << ryml_tool::emit::EndSeq;
 		}
 	}
 
@@ -1543,42 +1543,42 @@ static bool skill_parse_row_skilldb( char* split[], size_t columns, size_t curre
 	if (arr_size != 0) {
 		if (arr_size == 1) {
 			if (arr[0] != 0){
-				body << YAML::Key << "Element";
+				body << ryml_tool::emit::Key << "Element";
 
 				if (arr[0] == -1)
-					body << YAML::Value << "Weapon";
+					body << ryml_tool::emit::Value << "Weapon";
 				else if (arr[0] == -2)
-					body << YAML::Value << "Endowed";
+					body << ryml_tool::emit::Value << "Endowed";
 				else if (arr[0] == -3)
-					body << YAML::Value << "Random";
+					body << ryml_tool::emit::Value << "Random";
 				else {
 					constant = constant_lookup(arr[0], "ELE_");
 					constant.erase(0, 4);
-					body << YAML::Value << name2Upper(constant);
+					body << ryml_tool::emit::Value << name2Upper(constant);
 				}
 			}
 		} else {
-			body << YAML::Key << "Element";
-			body << YAML::BeginSeq;
+			body << ryml_tool::emit::Key << "Element";
+			body << ryml_tool::emit::BeginSeq;
 
 			for (int32 i = 0; i < arr_size; i++) {
-				body << YAML::BeginMap;
-				body << YAML::Key << "Level" << YAML::Value << i + 1;
+				body << ryml_tool::emit::BeginMap;
+				body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << i + 1;
 				if (arr[i] == -1)
-					body << YAML::Key << "Element" << YAML::Value << "Weapon";
+					body << ryml_tool::emit::Key << "Element" << ryml_tool::emit::Value << "Weapon";
 				else if (arr[i] == -2)
-					body << YAML::Key << "Element" << YAML::Value << "Endowed";
+					body << ryml_tool::emit::Key << "Element" << ryml_tool::emit::Value << "Endowed";
 				else if (arr[i] == -3)
-					body << YAML::Key << "Element" << YAML::Value << "Random";
+					body << ryml_tool::emit::Key << "Element" << ryml_tool::emit::Value << "Random";
 				else {
 					constant = constant_lookup(arr[i], "ELE_");
 					constant.erase(0, 4);
-					body << YAML::Key << "Element" << YAML::Value << name2Upper(constant);
+					body << ryml_tool::emit::Key << "Element" << ryml_tool::emit::Value << name2Upper(constant);
 				}
-				body << YAML::EndMap;
+				body << ryml_tool::emit::EndMap;
 			}
 
-			body << YAML::EndSeq;
+			body << ryml_tool::emit::EndSeq;
 		}
 	}
 
@@ -1588,21 +1588,21 @@ static bool skill_parse_row_skilldb( char* split[], size_t columns, size_t curre
 	if (arr_size != 0) {
 		if (arr_size == 1) {
 			if (arr[0] != 0) {
-				body << YAML::Key << "SplashArea";
-				body << YAML::Value << arr[0];
+				body << ryml_tool::emit::Key << "SplashArea";
+				body << ryml_tool::emit::Value << arr[0];
 			}
 		} else {
-			body << YAML::Key << "SplashArea";
-			body << YAML::BeginSeq;
+			body << ryml_tool::emit::Key << "SplashArea";
+			body << ryml_tool::emit::BeginSeq;
 
 			for (int32 i = 0; i < arr_size; i++) {
-				body << YAML::BeginMap;
-				body << YAML::Key << "Level" << YAML::Value << i + 1;
-				body << YAML::Key << "Area" << YAML::Value << arr[i];
-				body << YAML::EndMap;
+				body << ryml_tool::emit::BeginMap;
+				body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << i + 1;
+				body << ryml_tool::emit::Key << "Area" << ryml_tool::emit::Value << arr[i];
+				body << ryml_tool::emit::EndMap;
 			}
 
-			body << YAML::EndSeq;
+			body << ryml_tool::emit::EndSeq;
 		}
 	}
 
@@ -1612,21 +1612,21 @@ static bool skill_parse_row_skilldb( char* split[], size_t columns, size_t curre
 	if (arr_size != 0) {
 		if (arr_size == 1) {
 			if (arr[0] != 0) {
-				body << YAML::Key << "ActiveInstance";
-				body << YAML::Value << arr[0];
+				body << ryml_tool::emit::Key << "ActiveInstance";
+				body << ryml_tool::emit::Value << arr[0];
 			}
 		} else {
-			body << YAML::Key << "ActiveInstance";
-			body << YAML::BeginSeq;
+			body << ryml_tool::emit::Key << "ActiveInstance";
+			body << ryml_tool::emit::BeginSeq;
 
 			for (int32 i = 0; i < arr_size; i++) {
-				body << YAML::BeginMap;
-				body << YAML::Key << "Level" << YAML::Value << i + 1;
-				body << YAML::Key << "Max" << YAML::Value << arr[i];
-				body << YAML::EndMap;
+				body << ryml_tool::emit::BeginMap;
+				body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << i + 1;
+				body << ryml_tool::emit::Key << "Max" << ryml_tool::emit::Value << arr[i];
+				body << ryml_tool::emit::EndMap;
 			}
 
-			body << YAML::EndSeq;
+			body << ryml_tool::emit::EndSeq;
 		}
 	}
 
@@ -1636,237 +1636,237 @@ static bool skill_parse_row_skilldb( char* split[], size_t columns, size_t curre
 	if (arr_size != 0) {
 		if (arr_size == 1) {
 			if (arr[0] != 0) {
-				body << YAML::Key << "Knockback";
-				body << YAML::Value << arr[0];
+				body << ryml_tool::emit::Key << "Knockback";
+				body << ryml_tool::emit::Value << arr[0];
 			}
 		} else {
-			body << YAML::Key << "Knockback";
-			body << YAML::BeginSeq;
+			body << ryml_tool::emit::Key << "Knockback";
+			body << ryml_tool::emit::BeginSeq;
 
 			for (int32 i = 0; i < arr_size; i++) {
-				body << YAML::BeginMap;
-				body << YAML::Key << "Level" << YAML::Value << i + 1;
-				body << YAML::Key << "Amount" << YAML::Value << arr[i];
-				body << YAML::EndMap;
+				body << ryml_tool::emit::BeginMap;
+				body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << i + 1;
+				body << ryml_tool::emit::Key << "Amount" << ryml_tool::emit::Value << arr[i];
+				body << ryml_tool::emit::EndMap;
 			}
 
-			body << YAML::EndSeq;
+			body << ryml_tool::emit::EndSeq;
 		}
 	}
 
 	auto it_copyable = skill_copyable.find(skill_id);
 
 	if (it_copyable != skill_copyable.end()) {
-		body << YAML::Key << "CopyFlags";
-		body << YAML::BeginMap;
-		body << YAML::Key << "Skill";
-		body << YAML::BeginMap;
+		body << ryml_tool::emit::Key << "CopyFlags";
+		body << ryml_tool::emit::BeginMap;
+		body << ryml_tool::emit::Key << "Skill";
+		body << ryml_tool::emit::BeginMap;
 		if (it_copyable->second.option & 1)
-			body << YAML::Key << "Plagiarism" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "Plagiarism" << ryml_tool::emit::Value << "true";
 		if (it_copyable->second.option & 2)
-			body << YAML::Key << "Reproduce" << YAML::Value << "true";
-		body << YAML::EndMap;
+			body << ryml_tool::emit::Key << "Reproduce" << ryml_tool::emit::Value << "true";
+		body << ryml_tool::emit::EndMap;
 
 		if (it_copyable->second.req_opt > 0) {
-			body << YAML::Key << "RemoveRequirement";
-			body << YAML::BeginMap;
+			body << ryml_tool::emit::Key << "RemoveRequirement";
+			body << ryml_tool::emit::BeginMap;
 			if (it_copyable->second.req_opt & 0x1)
-				body << YAML::Key << "HpCost" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "HpCost" << ryml_tool::emit::Value << "true";
 			if (it_copyable->second.req_opt & 0x4)
-				body << YAML::Key << "SpCost" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "SpCost" << ryml_tool::emit::Value << "true";
 			if (it_copyable->second.req_opt & 0x8)
-				body << YAML::Key << "HpRateCost" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "HpRateCost" << ryml_tool::emit::Value << "true";
 			if (it_copyable->second.req_opt & 0x10)
-				body << YAML::Key << "SpRateCost" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "SpRateCost" << ryml_tool::emit::Value << "true";
 			if (it_copyable->second.req_opt & 0x2)
-				body << YAML::Key << "MaxHpTrigger" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "MaxHpTrigger" << ryml_tool::emit::Value << "true";
 			if (it_copyable->second.req_opt & 0x20)
-				body << YAML::Key << "ZenyCost" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "ZenyCost" << ryml_tool::emit::Value << "true";
 			if (it_copyable->second.req_opt & 0x40)
-				body << YAML::Key << "Weapon" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "Weapon" << ryml_tool::emit::Value << "true";
 			if (it_copyable->second.req_opt & 0x80)
-				body << YAML::Key << "Ammo" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "Ammo" << ryml_tool::emit::Value << "true";
 			if (it_copyable->second.req_opt & 0x100)
-				body << YAML::Key << "State" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "State" << ryml_tool::emit::Value << "true";
 			if (it_copyable->second.req_opt & 0x200)
-				body << YAML::Key << "Status" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "Status" << ryml_tool::emit::Value << "true";
 			if (it_copyable->second.req_opt & 0x400)
-				body << YAML::Key << "SpiritSphereCost" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "SpiritSphereCost" << ryml_tool::emit::Value << "true";
 			if (it_copyable->second.req_opt & 0x800)
-				body << YAML::Key << "ItemCost" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "ItemCost" << ryml_tool::emit::Value << "true";
 			if (it_copyable->second.req_opt & 0x1000)
-				body << YAML::Key << "Equipment" << YAML::Value << "true";
-			body << YAML::EndMap;
+				body << ryml_tool::emit::Key << "Equipment" << ryml_tool::emit::Value << "true";
+			body << ryml_tool::emit::EndMap;
 		}
 
-		body << YAML::EndMap;
+		body << ryml_tool::emit::EndMap;
 	}
 
 	auto it_nearnpc = skill_nearnpc.find(skill_id);
 
 	if (it_nearnpc != skill_nearnpc.end()) {
-		body << YAML::Key << "NoNearNPC";
-		body << YAML::BeginMap;
+		body << ryml_tool::emit::Key << "NoNearNPC";
+		body << ryml_tool::emit::BeginMap;
 
 		if (it_nearnpc->second.unit_nonearnpc_range > 0)
-			body << YAML::Key << "AdditionalRange" << YAML::Value << it_nearnpc->second.unit_nonearnpc_range;
+			body << ryml_tool::emit::Key << "AdditionalRange" << ryml_tool::emit::Value << it_nearnpc->second.unit_nonearnpc_range;
 		if (it_nearnpc->second.unit_nonearnpc_type > 0) {
-			body << YAML::Key << "Type";
-			body << YAML::BeginMap;
+			body << ryml_tool::emit::Key << "Type";
+			body << ryml_tool::emit::BeginMap;
 			if (it_nearnpc->second.unit_nonearnpc_type & 1)
-				body << YAML::Key << "WarpPortal" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "WarpPortal" << ryml_tool::emit::Value << "true";
 			if (it_nearnpc->second.unit_nonearnpc_type & 2)
-				body << YAML::Key << "Shop" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "Shop" << ryml_tool::emit::Value << "true";
 			if (it_nearnpc->second.unit_nonearnpc_type & 4)
-				body << YAML::Key << "Npc" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "Npc" << ryml_tool::emit::Value << "true";
 			if (it_nearnpc->second.unit_nonearnpc_type & 8)
-				body << YAML::Key << "Tomb" << YAML::Value << "true";
-			body << YAML::EndMap;
+				body << ryml_tool::emit::Key << "Tomb" << ryml_tool::emit::Value << "true";
+			body << ryml_tool::emit::EndMap;
 		}
 
-		body << YAML::EndMap;
+		body << ryml_tool::emit::EndMap;
 	}
 
 	if (strcmpi(split[9], "yes") != 0)
-		body << YAML::Key << "CastCancel" << YAML::Value << "false";
+		body << ryml_tool::emit::Key << "CastCancel" << ryml_tool::emit::Value << "false";
 	if (atoi(split[10]) != 0)
-		body << YAML::Key << "CastDefenseReduction" << YAML::Value << atoi(split[10]);
+		body << ryml_tool::emit::Key << "CastDefenseReduction" << ryml_tool::emit::Value << atoi(split[10]);
 
 	auto it_cast = skill_cast.find(skill_id);
 
 	if (it_cast != skill_cast.end()) {
 		if (!isMultiLevel(it_cast->second.cast)) {
 			if (it_cast->second.cast[0] > 0)
-				body << YAML::Key << "CastTime" << YAML::Value << it_cast->second.cast[0];
+				body << ryml_tool::emit::Key << "CastTime" << ryml_tool::emit::Value << it_cast->second.cast[0];
 		} else {
-			body << YAML::Key << "CastTime";
-			body << YAML::BeginSeq;
+			body << ryml_tool::emit::Key << "CastTime";
+			body << ryml_tool::emit::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_cast->second.cast); i++) {
 				if (it_cast->second.cast[i] > 0) {
-					body << YAML::BeginMap;
-					body << YAML::Key << "Level" << YAML::Value << i + 1;
-					body << YAML::Key << "Time" << YAML::Value << it_cast->second.cast[i];
-					body << YAML::EndMap;
+					body << ryml_tool::emit::BeginMap;
+					body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << i + 1;
+					body << ryml_tool::emit::Key << "Time" << ryml_tool::emit::Value << it_cast->second.cast[i];
+					body << ryml_tool::emit::EndMap;
 				}
 			}
 
-			body << YAML::EndSeq;
+			body << ryml_tool::emit::EndSeq;
 		}
 		
 		if (!isMultiLevel(it_cast->second.delay)) {
 			if (it_cast->second.delay[0] > 0)
-				body << YAML::Key << "AfterCastActDelay" << YAML::Value << it_cast->second.delay[0];
+				body << ryml_tool::emit::Key << "AfterCastActDelay" << ryml_tool::emit::Value << it_cast->second.delay[0];
 		} else {
-			body << YAML::Key << "AfterCastActDelay";
-			body << YAML::BeginSeq;
+			body << ryml_tool::emit::Key << "AfterCastActDelay";
+			body << ryml_tool::emit::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_cast->second.delay); i++) {
 				if (it_cast->second.delay[i] > 0) {
-					body << YAML::BeginMap;
-					body << YAML::Key << "Level" << YAML::Value << i + 1;
-					body << YAML::Key << "Time" << YAML::Value << it_cast->second.delay[i];
-					body << YAML::EndMap;
+					body << ryml_tool::emit::BeginMap;
+					body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << i + 1;
+					body << ryml_tool::emit::Key << "Time" << ryml_tool::emit::Value << it_cast->second.delay[i];
+					body << ryml_tool::emit::EndMap;
 				}
 			}
 
-			body << YAML::EndSeq;
+			body << ryml_tool::emit::EndSeq;
 		}
 		
 		if (!isMultiLevel(it_cast->second.walkdelay)) {
 			if (it_cast->second.walkdelay[0] > 0)
-				body << YAML::Key << "AfterCastWalkDelay" << YAML::Value << it_cast->second.walkdelay[0];
+				body << ryml_tool::emit::Key << "AfterCastWalkDelay" << ryml_tool::emit::Value << it_cast->second.walkdelay[0];
 		} else {
-			body << YAML::Key << "AfterCastWalkDelay";
-			body << YAML::BeginSeq;
+			body << ryml_tool::emit::Key << "AfterCastWalkDelay";
+			body << ryml_tool::emit::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_cast->second.walkdelay); i++) {
 				if (it_cast->second.walkdelay[i] > 0) {
-					body << YAML::BeginMap;
-					body << YAML::Key << "Level" << YAML::Value << i + 1;
-					body << YAML::Key << "Time" << YAML::Value << it_cast->second.walkdelay[i];
-					body << YAML::EndMap;
+					body << ryml_tool::emit::BeginMap;
+					body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << i + 1;
+					body << ryml_tool::emit::Key << "Time" << ryml_tool::emit::Value << it_cast->second.walkdelay[i];
+					body << ryml_tool::emit::EndMap;
 				}
 			}
 
-			body << YAML::EndSeq;
+			body << ryml_tool::emit::EndSeq;
 		}
 		
 		if (!isMultiLevel(it_cast->second.upkeep_time)) {
 			if (it_cast->second.upkeep_time[0] != 0)
-				body << YAML::Key << "Duration1" << YAML::Value << it_cast->second.upkeep_time[0];
+				body << ryml_tool::emit::Key << "Duration1" << ryml_tool::emit::Value << it_cast->second.upkeep_time[0];
 		} else {
-			body << YAML::Key << "Duration1";
-			body << YAML::BeginSeq;
+			body << ryml_tool::emit::Key << "Duration1";
+			body << ryml_tool::emit::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_cast->second.upkeep_time); i++) {
 				if (it_cast->second.upkeep_time[i] != 0) {
-					body << YAML::BeginMap;
-					body << YAML::Key << "Level" << YAML::Value << i + 1;
-					body << YAML::Key << "Time" << YAML::Value << it_cast->second.upkeep_time[i];
-					body << YAML::EndMap;
+					body << ryml_tool::emit::BeginMap;
+					body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << i + 1;
+					body << ryml_tool::emit::Key << "Time" << ryml_tool::emit::Value << it_cast->second.upkeep_time[i];
+					body << ryml_tool::emit::EndMap;
 				}
 			}
 
-			body << YAML::EndSeq;
+			body << ryml_tool::emit::EndSeq;
 		}
 
 		if (!isMultiLevel(it_cast->second.upkeep_time2)) {
 			if (it_cast->second.upkeep_time2[0] != 0)
-				body << YAML::Key << "Duration2" << YAML::Value << it_cast->second.upkeep_time2[0];
+				body << ryml_tool::emit::Key << "Duration2" << ryml_tool::emit::Value << it_cast->second.upkeep_time2[0];
 		} else {
-			body << YAML::Key << "Duration2";
-			body << YAML::BeginSeq;
+			body << ryml_tool::emit::Key << "Duration2";
+			body << ryml_tool::emit::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_cast->second.upkeep_time2); i++) {
 				if (it_cast->second.upkeep_time2[i] != 0) {
-					body << YAML::BeginMap;
-					body << YAML::Key << "Level" << YAML::Value << i + 1;
-					body << YAML::Key << "Time" << YAML::Value << it_cast->second.upkeep_time2[i];
-					body << YAML::EndMap;
+					body << ryml_tool::emit::BeginMap;
+					body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << i + 1;
+					body << ryml_tool::emit::Key << "Time" << ryml_tool::emit::Value << it_cast->second.upkeep_time2[i];
+					body << ryml_tool::emit::EndMap;
 				}
 			}
 
-			body << YAML::EndSeq;
+			body << ryml_tool::emit::EndSeq;
 		}
 		
 		if (!isMultiLevel(it_cast->second.cooldown)) {
 			if (it_cast->second.cooldown[0] > 0)
-				body << YAML::Key << "Cooldown" << YAML::Value << it_cast->second.cooldown[0];
+				body << ryml_tool::emit::Key << "Cooldown" << ryml_tool::emit::Value << it_cast->second.cooldown[0];
 		} else {
-			body << YAML::Key << "Cooldown";
-			body << YAML::BeginSeq;
+			body << ryml_tool::emit::Key << "Cooldown";
+			body << ryml_tool::emit::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_cast->second.cooldown); i++) {
 				if (it_cast->second.cooldown[i] > 0) {
-					body << YAML::BeginMap;
-					body << YAML::Key << "Level" << YAML::Value << i + 1;
-					body << YAML::Key << "Time" << YAML::Value << it_cast->second.cooldown[i];
-					body << YAML::EndMap;
+					body << ryml_tool::emit::BeginMap;
+					body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << i + 1;
+					body << ryml_tool::emit::Key << "Time" << ryml_tool::emit::Value << it_cast->second.cooldown[i];
+					body << ryml_tool::emit::EndMap;
 				}
 			}
 
-			body << YAML::EndSeq;
+			body << ryml_tool::emit::EndSeq;
 		}
 
 #ifdef RENEWAL_CAST
 		if (!isMultiLevel(it_cast->second.fixed_cast)) {
 			if (it_cast->second.fixed_cast[0] != 0)
-				body << YAML::Key << "FixedCastTime" << YAML::Value << it_cast->second.fixed_cast[0];
+				body << ryml_tool::emit::Key << "FixedCastTime" << ryml_tool::emit::Value << it_cast->second.fixed_cast[0];
 		} else {
-			body << YAML::Key << "FixedCastTime";
-			body << YAML::BeginSeq;
+			body << ryml_tool::emit::Key << "FixedCastTime";
+			body << ryml_tool::emit::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_cast->second.fixed_cast); i++) {
 				if (it_cast->second.fixed_cast[i] != 0) {
-					body << YAML::BeginMap;
-					body << YAML::Key << "Level" << YAML::Value << i + 1;
-					body << YAML::Key << "Time" << YAML::Value << it_cast->second.fixed_cast[i];
-					body << YAML::EndMap;
+					body << ryml_tool::emit::BeginMap;
+					body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << i + 1;
+					body << ryml_tool::emit::Key << "Time" << ryml_tool::emit::Value << it_cast->second.fixed_cast[i];
+					body << ryml_tool::emit::EndMap;
 				}
 			}
 
-			body << YAML::EndSeq;
+			body << ryml_tool::emit::EndSeq;
 		}
 #endif
 	}
@@ -1875,157 +1875,157 @@ static bool skill_parse_row_skilldb( char* split[], size_t columns, size_t curre
 
 	if (it_castdex != skill_castnodex.end()) {
 		if (it_castdex->second.castnodex > 0) {
-			body << YAML::Key << "CastTimeFlags";
-			body << YAML::BeginMap;
+			body << ryml_tool::emit::Key << "CastTimeFlags";
+			body << ryml_tool::emit::BeginMap;
 
 			if (it_castdex->second.castnodex & 1)
-				body << YAML::Key << "IgnoreDex" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "IgnoreDex" << ryml_tool::emit::Value << "true";
 			if (it_castdex->second.castnodex & 2)
-				body << YAML::Key << "IgnoreStatus" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "IgnoreStatus" << ryml_tool::emit::Value << "true";
 			if (it_castdex->second.castnodex & 4)
-				body << YAML::Key << "IgnoreItemBonus" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "IgnoreItemBonus" << ryml_tool::emit::Value << "true";
 
-			body << YAML::EndMap;
+			body << ryml_tool::emit::EndMap;
 		}
 
 		if (it_castdex->second.delaynodex > 0) {
-			body << YAML::Key << "CastDelayFlags";
-			body << YAML::BeginMap;
+			body << ryml_tool::emit::Key << "CastDelayFlags";
+			body << ryml_tool::emit::BeginMap;
 
 			if (it_castdex->second.delaynodex & 1)
-				body << YAML::Key << "IgnoreDex" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "IgnoreDex" << ryml_tool::emit::Value << "true";
 			if (it_castdex->second.delaynodex & 2)
-				body << YAML::Key << "IgnoreStatus" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "IgnoreStatus" << ryml_tool::emit::Value << "true";
 			if (it_castdex->second.delaynodex & 4)
-				body << YAML::Key << "IgnoreItemBonus" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "IgnoreItemBonus" << ryml_tool::emit::Value << "true";
 
-			body << YAML::EndMap;
+			body << ryml_tool::emit::EndMap;
 		}
 	}
 
 	auto it_req = skill_require.find(skill_id);
 
 	if (it_req != skill_require.end()) {
-		body << YAML::Key << "Requires";
-		body << YAML::BeginMap;
+		body << ryml_tool::emit::Key << "Requires";
+		body << ryml_tool::emit::BeginMap;
 		
 		if (!isMultiLevel(it_req->second.hp)) {
 			if (it_req->second.hp[0] > 0)
-				body << YAML::Key << "HpCost" << YAML::Value << it_req->second.hp[0];
+				body << ryml_tool::emit::Key << "HpCost" << ryml_tool::emit::Value << it_req->second.hp[0];
 		} else {
-			body << YAML::Key << "HpCost";
-			body << YAML::BeginSeq;
+			body << ryml_tool::emit::Key << "HpCost";
+			body << ryml_tool::emit::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_req->second.hp); i++) {
 				if (it_req->second.hp[i] > 0) {
-					body << YAML::BeginMap;
-					body << YAML::Key << "Level" << YAML::Value << i + 1;
-					body << YAML::Key << "Amount" << YAML::Value << it_req->second.hp[i];
-					body << YAML::EndMap;
+					body << ryml_tool::emit::BeginMap;
+					body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << i + 1;
+					body << ryml_tool::emit::Key << "Amount" << ryml_tool::emit::Value << it_req->second.hp[i];
+					body << ryml_tool::emit::EndMap;
 				}
 			}
 
-			body << YAML::EndSeq;
+			body << ryml_tool::emit::EndSeq;
 		}
 		
 		if (!isMultiLevel(it_req->second.sp)) {
 			if (it_req->second.sp[0] > 0)
-				body << YAML::Key << "SpCost" << YAML::Value << it_req->second.sp[0];
+				body << ryml_tool::emit::Key << "SpCost" << ryml_tool::emit::Value << it_req->second.sp[0];
 		} else {
-			body << YAML::Key << "SpCost";
-			body << YAML::BeginSeq;
+			body << ryml_tool::emit::Key << "SpCost";
+			body << ryml_tool::emit::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_req->second.sp); i++) {
 				if (it_req->second.sp[i] > 0) {
-					body << YAML::BeginMap;
-					body << YAML::Key << "Level" << YAML::Value << i + 1;
-					body << YAML::Key << "Amount" << YAML::Value << it_req->second.sp[i];
-					body << YAML::EndMap;
+					body << ryml_tool::emit::BeginMap;
+					body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << i + 1;
+					body << ryml_tool::emit::Key << "Amount" << ryml_tool::emit::Value << it_req->second.sp[i];
+					body << ryml_tool::emit::EndMap;
 				}
 			}
 
-			body << YAML::EndSeq;
+			body << ryml_tool::emit::EndSeq;
 		}
 		
 		if (!isMultiLevel(it_req->second.hp_rate)) {
 			if (it_req->second.hp_rate[0] != 0)
-				body << YAML::Key << "HpRateCost" << YAML::Value << it_req->second.hp_rate[0];
+				body << ryml_tool::emit::Key << "HpRateCost" << ryml_tool::emit::Value << it_req->second.hp_rate[0];
 		} else {
-			body << YAML::Key << "HpRateCost";
-			body << YAML::BeginSeq;
+			body << ryml_tool::emit::Key << "HpRateCost";
+			body << ryml_tool::emit::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_req->second.hp_rate); i++) {
 				if (it_req->second.hp_rate[i] != 0) {
-					body << YAML::BeginMap;
-					body << YAML::Key << "Level" << YAML::Value << i + 1;
-					body << YAML::Key << "Amount" << YAML::Value << it_req->second.hp_rate[i];
-					body << YAML::EndMap;
+					body << ryml_tool::emit::BeginMap;
+					body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << i + 1;
+					body << ryml_tool::emit::Key << "Amount" << ryml_tool::emit::Value << it_req->second.hp_rate[i];
+					body << ryml_tool::emit::EndMap;
 				}
 			}
 
-			body << YAML::EndSeq;
+			body << ryml_tool::emit::EndSeq;
 		}
 		
 		if (!isMultiLevel(it_req->second.sp_rate)) {
 			if (it_req->second.sp_rate[0] != 0)
-				body << YAML::Key << "SpRateCost" << YAML::Value << it_req->second.sp_rate[0];
+				body << ryml_tool::emit::Key << "SpRateCost" << ryml_tool::emit::Value << it_req->second.sp_rate[0];
 		} else {
-			body << YAML::Key << "SpRateCost";
-			body << YAML::BeginSeq;
+			body << ryml_tool::emit::Key << "SpRateCost";
+			body << ryml_tool::emit::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_req->second.sp_rate); i++) {
 				if (it_req->second.sp_rate[i] != 0) {
-					body << YAML::BeginMap;
-					body << YAML::Key << "Level" << YAML::Value << i + 1;
-					body << YAML::Key << "Amount" << YAML::Value << it_req->second.sp_rate[i];
-					body << YAML::EndMap;
+					body << ryml_tool::emit::BeginMap;
+					body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << i + 1;
+					body << ryml_tool::emit::Key << "Amount" << ryml_tool::emit::Value << it_req->second.sp_rate[i];
+					body << ryml_tool::emit::EndMap;
 				}
 			}
 
-			body << YAML::EndSeq;
+			body << ryml_tool::emit::EndSeq;
 		}
 		
 		if (!isMultiLevel(it_req->second.mhp)) {
 			if (it_req->second.mhp[0] > 0)
-				body << YAML::Key << "MaxHpTrigger" << YAML::Value << it_req->second.mhp[0];
+				body << ryml_tool::emit::Key << "MaxHpTrigger" << ryml_tool::emit::Value << it_req->second.mhp[0];
 		} else {
-			body << YAML::Key << "MaxHpTrigger";
-			body << YAML::BeginSeq;
+			body << ryml_tool::emit::Key << "MaxHpTrigger";
+			body << ryml_tool::emit::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_req->second.mhp); i++) {
 				if (it_req->second.mhp[i] > 0) {
-					body << YAML::BeginMap;
-					body << YAML::Key << "Level" << YAML::Value << i + 1;
-					body << YAML::Key << "Amount" << YAML::Value << it_req->second.mhp[i];
-					body << YAML::EndMap;
+					body << ryml_tool::emit::BeginMap;
+					body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << i + 1;
+					body << ryml_tool::emit::Key << "Amount" << ryml_tool::emit::Value << it_req->second.mhp[i];
+					body << ryml_tool::emit::EndMap;
 				}
 			}
 
-			body << YAML::EndSeq;
+			body << ryml_tool::emit::EndSeq;
 		}
 		
 		if (!isMultiLevel(it_req->second.zeny)) {
 			if (it_req->second.zeny[0] > 0)
-				body << YAML::Key << "ZenyCost" << YAML::Value << it_req->second.zeny[0];
+				body << ryml_tool::emit::Key << "ZenyCost" << ryml_tool::emit::Value << it_req->second.zeny[0];
 		} else {
-			body << YAML::Key << "ZenyCost";
-			body << YAML::BeginSeq;
+			body << ryml_tool::emit::Key << "ZenyCost";
+			body << ryml_tool::emit::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_req->second.zeny); i++) {
 				if (it_req->second.zeny[i] > 0) {
-					body << YAML::BeginMap;
-					body << YAML::Key << "Level" << YAML::Value << i + 1;
-					body << YAML::Key << "Amount" << YAML::Value << it_req->second.zeny[i];
-					body << YAML::EndMap;
+					body << ryml_tool::emit::BeginMap;
+					body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << i + 1;
+					body << ryml_tool::emit::Key << "Amount" << ryml_tool::emit::Value << it_req->second.zeny[i];
+					body << ryml_tool::emit::EndMap;
 				}
 			}
 
-			body << YAML::EndSeq;
+			body << ryml_tool::emit::EndSeq;
 		}
 
 		if (it_req->second.weapon != 0) {
-			body << YAML::Key << "Weapon";
-			body << YAML::BeginMap;
+			body << ryml_tool::emit::Key << "Weapon";
+			body << ryml_tool::emit::BeginMap;
 
 			int32 temp = it_req->second.weapon;
 
@@ -2037,18 +2037,18 @@ static bool skill_parse_row_skilldb( char* split[], size_t columns, size_t curre
 					if (temp & 1 << i) {
 						constant = constant_lookup(i, "W_");
 						constant.erase(0, 2);
-						body << YAML::Key << name2Upper(constant) << YAML::Value << "true";
+						body << ryml_tool::emit::Key << name2Upper(constant) << ryml_tool::emit::Value << "true";
 						temp ^= 1 << i;
 					}
 				}
 			}
 
-			body << YAML::EndMap;
+			body << ryml_tool::emit::EndMap;
 		}
 
 		if (it_req->second.ammo != 0) {
-			body << YAML::Key << "Ammo";
-			body << YAML::BeginMap;
+			body << ryml_tool::emit::Key << "Ammo";
+			body << ryml_tool::emit::BeginMap;
 
 			int32 temp = it_req->second.ammo;
 
@@ -2056,77 +2056,77 @@ static bool skill_parse_row_skilldb( char* split[], size_t columns, size_t curre
 				if (temp & 1 << i) {
 					constant = constant_lookup(i, "AMMO_");
 					constant.erase(0, 5);
-					body << YAML::Key << name2Upper(constant) << YAML::Value << "true";
+					body << ryml_tool::emit::Key << name2Upper(constant) << ryml_tool::emit::Value << "true";
 					temp ^= 1 << i;
 				}
 			}
 
-			body << YAML::EndMap;
+			body << ryml_tool::emit::EndMap;
 		}
 		if (!isMultiLevel(it_req->second.ammo_qty)) {
 			if (it_req->second.ammo_qty[0] > 0)
-				body << YAML::Key << "AmmoAmount" << YAML::Value << it_req->second.ammo_qty[0];
+				body << ryml_tool::emit::Key << "AmmoAmount" << ryml_tool::emit::Value << it_req->second.ammo_qty[0];
 		} else {
-			body << YAML::Key << "AmmoAmount";
-			body << YAML::BeginSeq;
+			body << ryml_tool::emit::Key << "AmmoAmount";
+			body << ryml_tool::emit::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_req->second.ammo_qty); i++) {
 				if (it_req->second.ammo_qty[i] > 0) {
-					body << YAML::BeginMap;
-					body << YAML::Key << "Level" << YAML::Value << i + 1;
-					body << YAML::Key << "Amount" << YAML::Value << it_req->second.ammo_qty[i];
-					body << YAML::EndMap;
+					body << ryml_tool::emit::BeginMap;
+					body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << i + 1;
+					body << ryml_tool::emit::Key << "Amount" << ryml_tool::emit::Value << it_req->second.ammo_qty[i];
+					body << ryml_tool::emit::EndMap;
 				}
 			}
 
-			body << YAML::EndSeq;
+			body << ryml_tool::emit::EndSeq;
 		}
 
 		if (it_req->second.state) {
 			constant = constant_lookup(it_req->second.state, "ST_");
 			constant.erase(0, 3);
-			body << YAML::Key << "State" << YAML::Value << name2Upper(constant);
+			body << ryml_tool::emit::Key << "State" << ryml_tool::emit::Value << name2Upper(constant);
 		}
 
 		if (it_req->second.status.size() > 0) {
-			body << YAML::Key << "Status";
-			body << YAML::BeginMap;
+			body << ryml_tool::emit::Key << "Status";
+			body << ryml_tool::emit::BeginMap;
 
 			for (const auto &it : it_req->second.status) {
 				constant = constant_lookup(it, "SC_");
 				constant.erase(0, 3);
-				body << YAML::Key << name2Upper(constant) << YAML::Value << "true";
+				body << ryml_tool::emit::Key << name2Upper(constant) << ryml_tool::emit::Value << "true";
 			}
 
-			body << YAML::EndMap;
+			body << ryml_tool::emit::EndMap;
 		}
 		
 		if (!isMultiLevel(it_req->second.spiritball)) {
 			if (it_req->second.spiritball[0] != 0)
-				body << YAML::Key << "SpiritSphereCost" << YAML::Value << it_req->second.spiritball[0];
+				body << ryml_tool::emit::Key << "SpiritSphereCost" << ryml_tool::emit::Value << it_req->second.spiritball[0];
 		} else {
-			body << YAML::Key << "SpiritSphereCost";
-			body << YAML::BeginSeq;
+			body << ryml_tool::emit::Key << "SpiritSphereCost";
+			body << ryml_tool::emit::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_req->second.spiritball); i++) {
 				if (it_req->second.spiritball[i] != 0) {
-					body << YAML::BeginMap;
-					body << YAML::Key << "Level" << YAML::Value << i + 1;
-					body << YAML::Key << "Amount" << YAML::Value << it_req->second.spiritball[i];
-					body << YAML::EndMap;
+					body << ryml_tool::emit::BeginMap;
+					body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << i + 1;
+					body << ryml_tool::emit::Key << "Amount" << ryml_tool::emit::Value << it_req->second.spiritball[i];
+					body << ryml_tool::emit::EndMap;
 				}
 			}
 
-			body << YAML::EndSeq;
+			body << ryml_tool::emit::EndSeq;
 		}
 
 		if (it_req->second.itemid[0] > 0) {
-			body << YAML::Key << "ItemCost";
-			body << YAML::BeginSeq;
+			body << ryml_tool::emit::Key << "ItemCost";
+			body << ryml_tool::emit::BeginSeq;
 
 			for (uint8 i = 0; i < ARRAYLENGTH(it_req->second.itemid); i++) {
 				if (it_req->second.itemid[i] > 0) {
-					body << YAML::BeginMap;
+					body << ryml_tool::emit::BeginMap;
 
 					std::string *item_name = util::umap_find(aegis_itemnames, it_req->second.itemid[i]);
 
@@ -2135,8 +2135,8 @@ static bool skill_parse_row_skilldb( char* split[], size_t columns, size_t curre
 						return false;
 					}
 
-					body << YAML::Key << "Item" << YAML::Value << *item_name;
-					body << YAML::Key << "Amount" << YAML::Value << it_req->second.amount[i];
+					body << ryml_tool::emit::Key << "Item" << ryml_tool::emit::Value << *item_name;
+					body << ryml_tool::emit::Key << "Amount" << ryml_tool::emit::Value << it_req->second.amount[i];
 
 					switch (skill_id) { // List of level dependent item costs
 						case WZ_FIREPILLAR:
@@ -2156,19 +2156,19 @@ static bool skill_parse_row_skilldb( char* split[], size_t columns, size_t curre
 						case SO_WIND_INSIGNIA:
 						case SO_EARTH_INSIGNIA:
 						case KO_MAKIBISHI:
-							body << YAML::Key << "Level" << YAML::Value << i;
+							body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << i;
 					}
 
-					body << YAML::EndMap;
+					body << ryml_tool::emit::EndMap;
 				}
 			}
 
-			body << YAML::EndSeq;
+			body << ryml_tool::emit::EndSeq;
 		}
 
 		if (it_req->second.eqItem.size() > 0) {
-			body << YAML::Key << "Equipment";
-			body << YAML::BeginMap;
+			body << ryml_tool::emit::Key << "Equipment";
+			body << ryml_tool::emit::BeginMap;
 
 			for (const auto &it : it_req->second.eqItem) {
 				std::string *item_name = util::umap_find(aegis_itemnames, it);
@@ -2178,140 +2178,140 @@ static bool skill_parse_row_skilldb( char* split[], size_t columns, size_t curre
 					return false;
 				}
 
-				body << YAML::Key << *item_name << YAML::Value << "true";
+				body << ryml_tool::emit::Key << *item_name << ryml_tool::emit::Value << "true";
 			}
 
-			body << YAML::EndMap;
+			body << ryml_tool::emit::EndMap;
 		}
 
-		body << YAML::EndMap;
+		body << ryml_tool::emit::EndMap;
 	}
 
 	auto it_unit = skill_unit.find(skill_id);
 
 	if (it_unit != skill_unit.end()) {
-		body << YAML::Key << "Unit";
-		body << YAML::BeginMap;
+		body << ryml_tool::emit::Key << "Unit";
+		body << ryml_tool::emit::BeginMap;
 
 		constant = constant_lookup(it_unit->second.unit_id, "UNT_");
 		constant.erase(0, 4);
-		body << YAML::Key << "Id" << YAML::Value << name2Upper(constant);
+		body << ryml_tool::emit::Key << "Id" << ryml_tool::emit::Value << name2Upper(constant);
 		if (it_unit->second.unit_id2 > 0) {
 			constant = constant_lookup(it_unit->second.unit_id2, "UNT_");
 			constant.erase(0, 4);
-			body << YAML::Key << "AlternateId" << YAML::Value << name2Upper(constant);
+			body << ryml_tool::emit::Key << "AlternateId" << ryml_tool::emit::Value << name2Upper(constant);
 		}
 		
 		if (!isMultiLevel(it_unit->second.unit_layout_type)) {
 			if (it_unit->second.unit_layout_type[0] != 0)
-				body << YAML::Key << "Layout" << YAML::Value << it_unit->second.unit_layout_type[0];
+				body << ryml_tool::emit::Key << "Layout" << ryml_tool::emit::Value << it_unit->second.unit_layout_type[0];
 		} else {
-			body << YAML::Key << "Layout";
-			body << YAML::BeginSeq;
+			body << ryml_tool::emit::Key << "Layout";
+			body << ryml_tool::emit::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_unit->second.unit_layout_type); i++) {
 				if (it_unit->second.unit_layout_type[i] == 0 && i + 1 > 5)
 					continue;
-				body << YAML::BeginMap;
-				body << YAML::Key << "Level" << YAML::Value << i + 1;
-				body << YAML::Key << "Size" << YAML::Value << it_unit->second.unit_layout_type[i];
-				body << YAML::EndMap;
+				body << ryml_tool::emit::BeginMap;
+				body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << i + 1;
+				body << ryml_tool::emit::Key << "Size" << ryml_tool::emit::Value << it_unit->second.unit_layout_type[i];
+				body << ryml_tool::emit::EndMap;
 			}
 
-			body << YAML::EndSeq;
+			body << ryml_tool::emit::EndSeq;
 		}
 		
 		if (!isMultiLevel(it_unit->second.unit_range)) {
 			if (it_unit->second.unit_range[0] != 0)
-				body << YAML::Key << "Range" << YAML::Value << it_unit->second.unit_range[0];
+				body << ryml_tool::emit::Key << "Range" << ryml_tool::emit::Value << it_unit->second.unit_range[0];
 		} else {
-			body << YAML::Key << "Range";
-			body << YAML::BeginSeq;
+			body << ryml_tool::emit::Key << "Range";
+			body << ryml_tool::emit::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_unit->second.unit_range); i++) {
 				if (it_unit->second.unit_range[i] == 0 && i + 1 > 5)
 					continue;
-				body << YAML::BeginMap;
-				body << YAML::Key << "Level" << YAML::Value << i + 1;
-				body << YAML::Key << "Size" << YAML::Value << it_unit->second.unit_range[i];
-				body << YAML::EndMap;
+				body << ryml_tool::emit::BeginMap;
+				body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << i + 1;
+				body << ryml_tool::emit::Key << "Size" << ryml_tool::emit::Value << it_unit->second.unit_range[i];
+				body << ryml_tool::emit::EndMap;
 			}
 
-			body << YAML::EndSeq;
+			body << ryml_tool::emit::EndSeq;
 		}
 
 		if (it_unit->second.unit_interval != 0)
-			body << YAML::Key << "Interval" << YAML::Value << it_unit->second.unit_interval;
+			body << ryml_tool::emit::Key << "Interval" << ryml_tool::emit::Value << it_unit->second.unit_interval;
 
 		if (it_unit->second.target_str.size() > 0) {
 			if (it_unit->second.target_str.compare("noenemy") == 0 || it_unit->second.target_str.compare("friend") == 0)
-				body << YAML::Key << "Target" << YAML::Value << "Friend";
+				body << ryml_tool::emit::Key << "Target" << ryml_tool::emit::Value << "Friend";
 			//else if (it_unit->second.target_str.compare("noenemy") == 0) // Same as Friend
-			//	body << YAML::Key << "Target" << YAML::Value << "NoEnemy";
+			//	body << ryml_tool::emit::Key << "Target" << ryml_tool::emit::Value << "NoEnemy";
 			else if (it_unit->second.target_str.compare("party") == 0)
-				body << YAML::Key << "Target" << YAML::Value << "Party";
+				body << ryml_tool::emit::Key << "Target" << ryml_tool::emit::Value << "Party";
 			else if (it_unit->second.target_str.compare("ally") == 0)
-				body << YAML::Key << "Target" << YAML::Value << "Ally";
+				body << ryml_tool::emit::Key << "Target" << ryml_tool::emit::Value << "Ally";
 			else if (it_unit->second.target_str.compare("guild") == 0)
-				body << YAML::Key << "Target" << YAML::Value << "Guild";
+				body << ryml_tool::emit::Key << "Target" << ryml_tool::emit::Value << "Guild";
 			//else if (it_unit->second.target_str.compare("all") == 0)
-			//	body << YAML::Key << "Target" << YAML::Value << "All";
+			//	body << ryml_tool::emit::Key << "Target" << ryml_tool::emit::Value << "All";
 			else if (it_unit->second.target_str.compare("enemy") == 0)
-				body << YAML::Key << "Target" << YAML::Value << "Enemy";
+				body << ryml_tool::emit::Key << "Target" << ryml_tool::emit::Value << "Enemy";
 			else if (it_unit->second.target_str.compare("self") == 0)
-				body << YAML::Key << "Target" << YAML::Value << "Self";
+				body << ryml_tool::emit::Key << "Target" << ryml_tool::emit::Value << "Self";
 			else if (it_unit->second.target_str.compare("sameguild") == 0)
-				body << YAML::Key << "Target" << YAML::Value << "SameGuild";
+				body << ryml_tool::emit::Key << "Target" << ryml_tool::emit::Value << "SameGuild";
 		}
 
 		if (it_unit->second.unit_flag_csv > 0) {
-			body << YAML::Key << "Flag";
-			body << YAML::BeginMap;
+			body << ryml_tool::emit::Key << "Flag";
+			body << ryml_tool::emit::BeginMap;
 
 			if (it_unit->second.unit_flag_csv & 0x1)
-				body << YAML::Value << "NoEnemy" << YAML::Value << "true";
+				body << ryml_tool::emit::Value << "NoEnemy" << ryml_tool::emit::Value << "true";
 			if (it_unit->second.unit_flag_csv & 0x2)
-				body << YAML::Value << "NoReiteration" << YAML::Value << "true";
+				body << ryml_tool::emit::Value << "NoReiteration" << ryml_tool::emit::Value << "true";
 			if (it_unit->second.unit_flag_csv & 0x4)
-				body << YAML::Value << "NoFootSet" << YAML::Value << "true";
+				body << ryml_tool::emit::Value << "NoFootSet" << ryml_tool::emit::Value << "true";
 			if (it_unit->second.unit_flag_csv & 0x8)
-				body << YAML::Value << "NoOverlap" << YAML::Value << "true";
+				body << ryml_tool::emit::Value << "NoOverlap" << ryml_tool::emit::Value << "true";
 			if (it_unit->second.unit_flag_csv & 0x10)
-				body << YAML::Value << "PathCheck" << YAML::Value << "true";
+				body << ryml_tool::emit::Value << "PathCheck" << ryml_tool::emit::Value << "true";
 			if (it_unit->second.unit_flag_csv & 0x20)
-				body << YAML::Value << "NoPc" << YAML::Value << "true";
+				body << ryml_tool::emit::Value << "NoPc" << ryml_tool::emit::Value << "true";
 			if (it_unit->second.unit_flag_csv & 0x40)
-				body << YAML::Value << "NoMob" << YAML::Value << "true";
+				body << ryml_tool::emit::Value << "NoMob" << ryml_tool::emit::Value << "true";
 			if (it_unit->second.unit_flag_csv & 0x80)
-				body << YAML::Value << "Skill" << YAML::Value << "true";
+				body << ryml_tool::emit::Value << "Skill" << ryml_tool::emit::Value << "true";
 			if (it_unit->second.unit_flag_csv & 0x100)
-				body << YAML::Value << "Dance" << YAML::Value << "true";
+				body << ryml_tool::emit::Value << "Dance" << ryml_tool::emit::Value << "true";
 			if (it_unit->second.unit_flag_csv & 0x200)
-				body << YAML::Value << "Ensemble" << YAML::Value << "true";
+				body << ryml_tool::emit::Value << "Ensemble" << ryml_tool::emit::Value << "true";
 			if (it_unit->second.unit_flag_csv & 0x400)
-				body << YAML::Value << "Song" << YAML::Value << "true";
+				body << ryml_tool::emit::Value << "Song" << ryml_tool::emit::Value << "true";
 			if (it_unit->second.unit_flag_csv & 0x800)
-				body << YAML::Value << "DualMode" << YAML::Value << "true";
+				body << ryml_tool::emit::Value << "DualMode" << ryml_tool::emit::Value << "true";
 			if (it_unit->second.unit_flag_csv & 0x1000)
-				body << YAML::Value << "NoKnockback" << YAML::Value << "true";
+				body << ryml_tool::emit::Value << "NoKnockback" << ryml_tool::emit::Value << "true";
 			if (it_unit->second.unit_flag_csv & 0x2000)
-				body << YAML::Value << "RangedSingleUnit" << YAML::Value << "true";
+				body << ryml_tool::emit::Value << "RangedSingleUnit" << ryml_tool::emit::Value << "true";
 			if (it_unit->second.unit_flag_csv & 0x4000)
-				body << YAML::Value << "CrazyWeedImmune" << YAML::Value << "true";
+				body << ryml_tool::emit::Value << "CrazyWeedImmune" << ryml_tool::emit::Value << "true";
 			if (it_unit->second.unit_flag_csv & 0x8000)
-				body << YAML::Value << "RemovedByFireRain" << YAML::Value << "true";
+				body << ryml_tool::emit::Value << "RemovedByFireRain" << ryml_tool::emit::Value << "true";
 			if (it_unit->second.unit_flag_csv & 0x10000)
-				body << YAML::Value << "KnockbackGroup" << YAML::Value << "true";
+				body << ryml_tool::emit::Value << "KnockbackGroup" << ryml_tool::emit::Value << "true";
 			if (it_unit->second.unit_flag_csv & 0x20000)
-				body << YAML::Value << "HiddenTrap" << YAML::Value << "true";
+				body << ryml_tool::emit::Value << "HiddenTrap" << ryml_tool::emit::Value << "true";
 
-			body << YAML::EndMap;
+			body << ryml_tool::emit::EndMap;
 		}
 
-		body << YAML::EndMap;
+		body << ryml_tool::emit::EndMap;
 	}
 
-	body << YAML::EndMap;
+	body << ryml_tool::emit::EndMap;
 
 	return true;
 }
@@ -2325,8 +2325,8 @@ static bool quest_read_db( char *split[], size_t columns, size_t current ){
 		return false;
 	}
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Id" << YAML::Value << quest_id;
+	body << ryml_tool::emit::BeginMap;
+	body << ryml_tool::emit::Key << "Id" << ryml_tool::emit::Value << quest_id;
 
 	std::string title = split[17];
 	
@@ -2340,7 +2340,7 @@ static bool quest_read_db( char *split[], size_t columns, size_t current ){
 	}
 
 	title.erase(std::remove(title.begin(), title.end(), '"'), title.end()); // Strip double quotes out
-	body << YAML::Key << "Title" << YAML::Value << title;
+	body << ryml_tool::emit::Key << "Title" << ryml_tool::emit::Value << title;
 
 	if (strchr(split[1], ':') == nullptr) {
 		uint32 time = atoi(split[1]);
@@ -2368,7 +2368,7 @@ static bool quest_read_db( char *split[], size_t columns, size_t current ){
 			if (second > 0)
 				output += std::to_string(second) + "s";
 
-			body << YAML::Key << "TimeLimit" << YAML::Value << output;
+			body << ryml_tool::emit::Key << "TimeLimit" << ryml_tool::emit::Value << output;
 		}
 	} else {
 		if (*split[1]) {
@@ -2381,13 +2381,13 @@ static bool quest_read_db( char *split[], size_t columns, size_t current ){
 			if (std::stoi(time_str) > 0)
 				output += std::to_string(std::stoi(time_str)) + "mn";
 
-			body << YAML::Key << "TimeLimit" << YAML::Value << output; // No quests in TXT format had days, default to 0
+			body << ryml_tool::emit::Key << "TimeLimit" << ryml_tool::emit::Value << output; // No quests in TXT format had days, default to 0
 		}
 	}
 
 	if (atoi(split[2]) > 0) {
-		body << YAML::Key << "Targets";
-		body << YAML::BeginSeq;
+		body << ryml_tool::emit::Key << "Targets";
+		body << ryml_tool::emit::BeginSeq;
 
 		for (size_t i = 0; i < MAX_QUEST_OBJECTIVES; i++) {
 			int32 mob_id = (int32)atoi(split[i * 2 + 2]), count = atoi(split[i * 2 + 3]);
@@ -2402,18 +2402,18 @@ static bool quest_read_db( char *split[], size_t columns, size_t current ){
 				continue;
 			}
 
-			body << YAML::BeginMap;
-			body << YAML::Key << "Mob" << YAML::Value << *mob_name;
-			body << YAML::Key << "Count" << YAML::Value << count;
-			body << YAML::EndMap;
+			body << ryml_tool::emit::BeginMap;
+			body << ryml_tool::emit::Key << "Mob" << ryml_tool::emit::Value << *mob_name;
+			body << ryml_tool::emit::Key << "Count" << ryml_tool::emit::Value << count;
+			body << ryml_tool::emit::EndMap;
 		}
 
-		body << YAML::EndSeq;
+		body << ryml_tool::emit::EndSeq;
 	}
 
 	if (atoi(split[2 * MAX_QUEST_OBJECTIVES + 2]) > 0) {
-		body << YAML::Key << "Drops";
-		body << YAML::BeginSeq;
+		body << ryml_tool::emit::Key << "Drops";
+		body << ryml_tool::emit::BeginSeq;
 
 		for (size_t i = 0; i < MAX_QUEST_DROPS; i++) {
 			int32 mob_id = (int32)atoi(split[3 * i + (2 * MAX_QUEST_OBJECTIVES + 2)]);
@@ -2436,41 +2436,41 @@ static bool quest_read_db( char *split[], size_t columns, size_t current ){
 				return false;
 			}
 
-			body << YAML::BeginMap;
-			body << YAML::Key << "Mob" << YAML::Value << *mob_name;
-			body << YAML::Key << "Item" << YAML::Value << *item_name;
-			//body << YAML::Key << "Count" << YAML::Value << 1; // Default is 1
-			body << YAML::Key << "Rate" << YAML::Value << atoi(split[3 * i + (2 * MAX_QUEST_OBJECTIVES + 4)]);
-			body << YAML::EndMap;
+			body << ryml_tool::emit::BeginMap;
+			body << ryml_tool::emit::Key << "Mob" << ryml_tool::emit::Value << *mob_name;
+			body << ryml_tool::emit::Key << "Item" << ryml_tool::emit::Value << *item_name;
+			//body << ryml_tool::emit::Key << "Count" << ryml_tool::emit::Value << 1; // Default is 1
+			body << ryml_tool::emit::Key << "Rate" << ryml_tool::emit::Value << atoi(split[3 * i + (2 * MAX_QUEST_OBJECTIVES + 4)]);
+			body << ryml_tool::emit::EndMap;
 		}
 
-		body << YAML::EndSeq;
+		body << ryml_tool::emit::EndSeq;
 	}
 
-	body << YAML::EndMap;
+	body << ryml_tool::emit::EndMap;
 
 	return true;
 }
 
 // Copied and adjusted from instance.cpp
 static bool instance_readdb_sub( char* str[], size_t columns, size_t current ){
-	body << YAML::BeginMap;
-	body << YAML::Key << "Id" << YAML::Value << atoi(str[0]);
-	body << YAML::Key << "Name" << YAML::Value << str[1];
+	body << ryml_tool::emit::BeginMap;
+	body << ryml_tool::emit::Key << "Id" << ryml_tool::emit::Value << atoi(str[0]);
+	body << ryml_tool::emit::Key << "Name" << ryml_tool::emit::Value << str[1];
 	if (atoi(str[2]) != 3600)
-		body << YAML::Key << "TimeLimit" << YAML::Value << atoi(str[2]);
+		body << ryml_tool::emit::Key << "TimeLimit" << ryml_tool::emit::Value << atoi(str[2]);
 	if (atoi(str[3]) != 300)
-		body << YAML::Key << "IdleTimeOut" << YAML::Value << atoi(str[3]);
-	body << YAML::Key << "Enter";
-	body << YAML::BeginMap;
-	body << YAML::Key << "Map" << YAML::Value << str[4];
-	body << YAML::Key << "X" << YAML::Value << atoi(str[5]);
-	body << YAML::Key << "Y" << YAML::Value << atoi(str[6]);
-	body << YAML::EndMap;
+		body << ryml_tool::emit::Key << "IdleTimeOut" << ryml_tool::emit::Value << atoi(str[3]);
+	body << ryml_tool::emit::Key << "Enter";
+	body << ryml_tool::emit::BeginMap;
+	body << ryml_tool::emit::Key << "Map" << ryml_tool::emit::Value << str[4];
+	body << ryml_tool::emit::Key << "X" << ryml_tool::emit::Value << atoi(str[5]);
+	body << ryml_tool::emit::Key << "Y" << ryml_tool::emit::Value << atoi(str[6]);
+	body << ryml_tool::emit::EndMap;
 
 	if (columns > 7) {
-		body << YAML::Key << "AdditionalMaps";
-		body << YAML::BeginMap;
+		body << ryml_tool::emit::Key << "AdditionalMaps";
+		body << ryml_tool::emit::BeginMap;
 
 		for( size_t i = 7; i < columns; i++ ){
 			if (!strlen(str[i]))
@@ -2479,13 +2479,13 @@ static bool instance_readdb_sub( char* str[], size_t columns, size_t current ){
 			if (strcmpi(str[4], str[i]) == 0)
 				continue;
 
-			body << YAML::Key << str[i] << YAML::Value << "true";
+			body << ryml_tool::emit::Key << str[i] << ryml_tool::emit::Value << "true";
 		}
 
-		body << YAML::EndMap;
+		body << ryml_tool::emit::EndMap;
 	}
 
-	body << YAML::EndMap;
+	body << ryml_tool::emit::EndMap;
 
 	return true;
 }
@@ -2726,10 +2726,10 @@ static bool itemdb_read_db(const char* file) {
 
 		t_itemid nameid = strtoul(str[0], nullptr, 10);
 
-		body << YAML::BeginMap;
-		body << YAML::Key << "Id" << YAML::Value << nameid;
-		body << YAML::Key << "AegisName" << YAML::Value << str[1];
-		body << YAML::Key << "Name" << YAML::Value << str[2];
+		body << ryml_tool::emit::BeginMap;
+		body << ryml_tool::emit::Key << "Id" << ryml_tool::emit::Value << nameid;
+		body << ryml_tool::emit::Key << "AegisName" << ryml_tool::emit::Value << str[1];
+		body << ryml_tool::emit::Key << "Name" << ryml_tool::emit::Value << str[2];
 
 		int32 type = atoi(str[3]), subtype = atoi(str[18]);
 
@@ -2740,7 +2740,7 @@ static bool itemdb_read_db(const char* file) {
 			continue;
 		}
 
-		body << YAML::Key << "Type" << YAML::Value << name2Upper( constant + 3 );
+		body << ryml_tool::emit::Key << "Type" << ryml_tool::emit::Value << name2Upper( constant + 3 );
 		if( type == IT_WEAPON && subtype ){
 			constant = constant_lookup( subtype, "W_" );
 
@@ -2749,7 +2749,7 @@ static bool itemdb_read_db(const char* file) {
 				continue;
 			}
 
-			body << YAML::Key << "SubType" << YAML::Value << name2Upper( constant + 2 );
+			body << ryml_tool::emit::Key << "SubType" << ryml_tool::emit::Value << name2Upper( constant + 2 );
 		}else if( type == IT_AMMO && subtype ){
 			constant = constant_lookup( subtype, "AMMO_" );
 
@@ -2758,36 +2758,36 @@ static bool itemdb_read_db(const char* file) {
 				continue;
 			}
 
-			body << YAML::Key << "SubType" << YAML::Value << name2Upper(constant + 5);
+			body << ryml_tool::emit::Key << "SubType" << ryml_tool::emit::Value << name2Upper(constant + 5);
 		}
 
 		if (atoi(str[4]) > 0)
-			body << YAML::Key << "Buy" << YAML::Value << atoi(str[4]);
+			body << ryml_tool::emit::Key << "Buy" << ryml_tool::emit::Value << atoi(str[4]);
 		if (atoi(str[5]) > 0) {
 			if (atoi(str[4]) / 2 != atoi(str[5]))
-				body << YAML::Key << "Sell" << YAML::Value << atoi(str[5]);
+				body << ryml_tool::emit::Key << "Sell" << ryml_tool::emit::Value << atoi(str[5]);
 		}
 		if (atoi(str[6]) > 0)
-			body << YAML::Key << "Weight" << YAML::Value << atoi(str[6]);
+			body << ryml_tool::emit::Key << "Weight" << ryml_tool::emit::Value << atoi(str[6]);
 
 #ifdef RENEWAL
 		int32 atk = 0, matk = 0;
 
 		itemdb_re_split_atoi(str[7], &atk, &matk);
 		if (atk > 0)
-			body << YAML::Key << "Attack" << YAML::Value << atk;
+			body << ryml_tool::emit::Key << "Attack" << ryml_tool::emit::Value << atk;
 		if (matk > 0)
-			body << YAML::Key << "MagicAttack" << YAML::Value << matk;
+			body << ryml_tool::emit::Key << "MagicAttack" << ryml_tool::emit::Value << matk;
 #else
 		if (atoi(str[7]) > 0)
-			body << YAML::Key << "Attack" << YAML::Value << atoi(str[7]);
+			body << ryml_tool::emit::Key << "Attack" << ryml_tool::emit::Value << atoi(str[7]);
 #endif
 		if (atoi(str[8]) > 0)
-			body << YAML::Key << "Defense" << YAML::Value << atoi(str[8]);
+			body << ryml_tool::emit::Key << "Defense" << ryml_tool::emit::Value << atoi(str[8]);
 		if (atoi(str[9]) > 0)
-			body << YAML::Key << "Range" << YAML::Value << atoi(str[9]);
+			body << ryml_tool::emit::Key << "Range" << ryml_tool::emit::Value << atoi(str[9]);
 		if (atoi(str[10]) > 0)
-			body << YAML::Key << "Slots" << YAML::Value << atoi(str[10]);
+			body << ryml_tool::emit::Key << "Slots" << ryml_tool::emit::Value << atoi(str[10]);
 
 		bool equippable = type == IT_UNKNOWN ? false : type == IT_ETC ? false : type == IT_CARD ? false : type == IT_PETEGG ? false : type == IT_PETARMOR ? false : type == IT_UNKNOWN2 ? false : true;
 
@@ -2795,109 +2795,109 @@ static bool itemdb_read_db(const char* file) {
 			uint64 temp_mask = strtoull(str[11], nullptr, 0);
 
 			if (temp_mask == 0) {
-				//body << YAML::Key << "Jobs";
-				//body << YAML::BeginMap << YAML::Key << "All" << YAML::Value << "false" << YAML::EndMap;
+				//body << ryml_tool::emit::Key << "Jobs";
+				//body << ryml_tool::emit::BeginMap << ryml_tool::emit::Key << "All" << ryml_tool::emit::Value << "false" << ryml_tool::emit::EndMap;
 			} else if (temp_mask == 0xFFFFFFFF) { // Commented out because it's the default value
-				//body << YAML::Key << "Jobs";
-				//body << YAML::BeginMap << YAML::Key << "All" << YAML::Value << "true" << YAML::EndMap;
+				//body << ryml_tool::emit::Key << "Jobs";
+				//body << ryml_tool::emit::BeginMap << ryml_tool::emit::Key << "All" << ryml_tool::emit::Value << "true" << ryml_tool::emit::EndMap;
 			} else if (temp_mask == 0xFFFFFFFE) {
-				body << YAML::Key << "Jobs";
-				body << YAML::BeginMap;
-				body << YAML::Key << "All" << YAML::Value << "true";
-				body << YAML::Key << "Novice" << YAML::Value << "false";
-				body << YAML::Key << "SuperNovice" << YAML::Value << "false";
-				body << YAML::EndMap;
+				body << ryml_tool::emit::Key << "Jobs";
+				body << ryml_tool::emit::BeginMap;
+				body << ryml_tool::emit::Key << "All" << ryml_tool::emit::Value << "true";
+				body << ryml_tool::emit::Key << "Novice" << ryml_tool::emit::Value << "false";
+				body << ryml_tool::emit::Key << "SuperNovice" << ryml_tool::emit::Value << "false";
+				body << ryml_tool::emit::EndMap;
 			} else {
-				body << YAML::Key << "Jobs";
-				body << YAML::BeginMap;
+				body << ryml_tool::emit::Key << "Jobs";
+				body << ryml_tool::emit::BeginMap;
 				for (const auto &it : um_mapid2jobname) {
 					uint64 job_mask = 1ULL << it.second;
 
 					if ((temp_mask & job_mask) == job_mask)
-						body << YAML::Key << it.first << YAML::Value << "true";
+						body << ryml_tool::emit::Key << it.first << ryml_tool::emit::Value << "true";
 				}
-				body << YAML::EndMap;
+				body << ryml_tool::emit::EndMap;
 			}
 
 			int32 temp_class = atoi(str[12]);
 
 			if (temp_class == ITEMJ_NONE) {
-				body << YAML::Key << "Classes";
-				body << YAML::BeginMap << YAML::Key << "All" << YAML::Value << "false" << YAML::EndMap;
+				body << ryml_tool::emit::Key << "Classes";
+				body << ryml_tool::emit::BeginMap << ryml_tool::emit::Key << "All" << ryml_tool::emit::Value << "false" << ryml_tool::emit::EndMap;
 			} else if (temp_class == ITEMJ_ALL) { // Commented out because it's the default value
-				//body << YAML::Key << "Classes";
-				//body << YAML::BeginMap << YAML::Key << "All" << YAML::Value << "true" << YAML::EndMap;
+				//body << ryml_tool::emit::Key << "Classes";
+				//body << ryml_tool::emit::BeginMap << ryml_tool::emit::Key << "All" << ryml_tool::emit::Value << "true" << ryml_tool::emit::EndMap;
 			} else {
-				body << YAML::Key << "Classes";
-				body << YAML::BeginMap;
+				body << ryml_tool::emit::Key << "Classes";
+				body << ryml_tool::emit::BeginMap;
 				if ((ITEMJ_THIRD & temp_class) && (ITEMJ_THIRD_UPPER & temp_class) && (ITEMJ_THIRD_BABY & temp_class)) {
 					temp_class &= ~ITEMJ_ALL_THIRD;
-					body << YAML::Key << "All_Third" << YAML::Value << "true";
+					body << ryml_tool::emit::Key << "All_Third" << ryml_tool::emit::Value << "true";
 				}
 				if ((ITEMJ_UPPER & temp_class) && (ITEMJ_THIRD_UPPER & temp_class)) {
 					temp_class &= ~ITEMJ_ALL_UPPER;
-					body << YAML::Key << "All_Upper" << YAML::Value << "true";
+					body << ryml_tool::emit::Key << "All_Upper" << ryml_tool::emit::Value << "true";
 				}
 				if ((ITEMJ_BABY & temp_class) && (ITEMJ_THIRD_BABY & temp_class)) {
 					temp_class &= ~ITEMJ_ALL_BABY;
-					body << YAML::Key << "All_Baby" << YAML::Value << "true";
+					body << ryml_tool::emit::Key << "All_Baby" << ryml_tool::emit::Value << "true";
 				}
 				for (int32 i = ITEMJ_NONE; i <= ITEMJ_THIRD_BABY; i++) {
 					if (i & temp_class) {
 						const char* class_ = constant_lookup(i, "ITEMJ_");
 
 						if (class_ != nullptr)
-							body << YAML::Key << name2Upper(class_ + 6) << YAML::Value << "true";
+							body << ryml_tool::emit::Key << name2Upper(class_ + 6) << ryml_tool::emit::Value << "true";
 					}
 				}
-				body << YAML::EndMap;
+				body << ryml_tool::emit::EndMap;
 			}
 
 			switch (atoi(str[13])) {
 				case SEX_FEMALE:
-					body << YAML::Key << "Gender" << YAML::Value << "Female";
+					body << ryml_tool::emit::Key << "Gender" << ryml_tool::emit::Value << "Female";
 					break;
 				case SEX_MALE:
-					body << YAML::Key << "Gender" << YAML::Value << "Male";
+					body << ryml_tool::emit::Key << "Gender" << ryml_tool::emit::Value << "Male";
 					break;
 				//case SEX_BOTH: // Commented out because it's the default value
-				//	body << YAML::Key << "Gender" << YAML::Value << "Both";
+				//	body << ryml_tool::emit::Key << "Gender" << ryml_tool::emit::Value << "Both";
 				//	break;
 			}
 		}
 		if (atoi(str[14]) > 0) {
 			int32 temp_loc = atoi(str[14]);
 
-			body << YAML::Key << "Locations";
-			body << YAML::BeginMap;
+			body << ryml_tool::emit::Key << "Locations";
+			body << ryml_tool::emit::BeginMap;
 			if ((EQP_HAND_R & temp_loc) && (EQP_HAND_L & temp_loc)) {
 				temp_loc &= ~EQP_ARMS;
-				body << YAML::Key << "Both_Hand" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "Both_Hand" << ryml_tool::emit::Value << "true";
 			}
 			if ((EQP_ACC_R & temp_loc) && (EQP_ACC_L & temp_loc)) {
 				temp_loc &= ~EQP_ACC_RL;
-				body << YAML::Key << "Both_Accessory" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "Both_Accessory" << ryml_tool::emit::Value << "true";
 			}
 			for (const auto &it : um_equipnames) {
 				if (it.second & temp_loc)
-					body << YAML::Key << it.first << YAML::Value << "true";
+					body << ryml_tool::emit::Key << it.first << ryml_tool::emit::Value << "true";
 			}
-			body << YAML::EndMap;
+			body << ryml_tool::emit::EndMap;
 		}
 		if (atoi(str[15]) > 0)
-			body << YAML::Key << "WeaponLevel" << YAML::Value << atoi(str[15]);
+			body << ryml_tool::emit::Key << "WeaponLevel" << ryml_tool::emit::Value << atoi(str[15]);
 
 		int32 elv = 0, elvmax = 0;
 
 		itemdb_re_split_atoi(str[16], &elv, &elvmax);
 		if (elv > 0)
-			body << YAML::Key << "EquipLevelMin" << YAML::Value << elv;
+			body << ryml_tool::emit::Key << "EquipLevelMin" << ryml_tool::emit::Value << elv;
 		if (elvmax > 0)
-			body << YAML::Key << "EquipLevelMax" << YAML::Value << elvmax;
+			body << ryml_tool::emit::Key << "EquipLevelMax" << ryml_tool::emit::Value << elvmax;
 		if (atoi(str[17]) > 0)
-			body << YAML::Key << "Refineable" << YAML::Value << "true";
+			body << ryml_tool::emit::Key << "Refineable" << ryml_tool::emit::Value << "true";
 		if (strtoul(str[18], nullptr, 10) > 0 && type != IT_WEAPON && type != IT_AMMO)
-			body << YAML::Key << "View" << YAML::Value << strtoul(str[18], nullptr, 10);
+			body << ryml_tool::emit::Key << "View" << ryml_tool::emit::Value << strtoul(str[18], nullptr, 10);
 
 		auto it_avail = item_avail.find(nameid);
 
@@ -2907,109 +2907,109 @@ static bool itemdb_read_db(const char* file) {
 			if (item_name == nullptr)
 				ShowError("Item name for item id %u is not known (item_avail).\n", it_avail->second);
 			else
-				body << YAML::Key << "AliasName" << YAML::Value << *item_name;
+				body << ryml_tool::emit::Key << "AliasName" << ryml_tool::emit::Value << *item_name;
 		}
 
 		auto it_flag = item_flag.find(nameid);
 		auto it_buying = item_buyingstore.find(nameid);
 
 		if (it_flag != item_flag.end() || it_buying != item_buyingstore.end()) {
-			body << YAML::Key << "Flags";
-			body << YAML::BeginMap;
+			body << ryml_tool::emit::Key << "Flags";
+			body << ryml_tool::emit::BeginMap;
 			if (it_buying != item_buyingstore.end())
-				body << YAML::Key << "BuyingStore" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "BuyingStore" << ryml_tool::emit::Value << "true";
 			if (it_flag != item_flag.end() && it_flag->second.dead_branch)
-				body << YAML::Key << "DeadBranch" << YAML::Value << it_flag->second.dead_branch;
+				body << ryml_tool::emit::Key << "DeadBranch" << ryml_tool::emit::Value << it_flag->second.dead_branch;
 			if (it_flag != item_flag.end() && it_flag->second.group)
-				body << YAML::Key << "Container" << YAML::Value << it_flag->second.group;
+				body << ryml_tool::emit::Key << "Container" << ryml_tool::emit::Value << it_flag->second.group;
 			if (it_flag != item_flag.end() && it_flag->second.guid)
-				body << YAML::Key << "UniqueId" << YAML::Value << it_flag->second.guid;
+				body << ryml_tool::emit::Key << "UniqueId" << ryml_tool::emit::Value << it_flag->second.guid;
 			if (it_flag != item_flag.end() && it_flag->second.bindOnEquip)
-				body << YAML::Key << "BindOnEquip" << YAML::Value << it_flag->second.bindOnEquip;
+				body << ryml_tool::emit::Key << "BindOnEquip" << ryml_tool::emit::Value << it_flag->second.bindOnEquip;
 			if (it_flag != item_flag.end() && it_flag->second.broadcast)
-				body << YAML::Key << "DropAnnounce" << YAML::Value << it_flag->second.broadcast;
+				body << ryml_tool::emit::Key << "DropAnnounce" << ryml_tool::emit::Value << it_flag->second.broadcast;
 			if (it_flag != item_flag.end() && it_flag->second.delay_consume)
-				body << YAML::Key << "NoConsume" << YAML::Value << it_flag->second.delay_consume;
+				body << ryml_tool::emit::Key << "NoConsume" << ryml_tool::emit::Value << it_flag->second.delay_consume;
 			if (it_flag != item_flag.end() && it_flag->second.dropEffect)
-				body << YAML::Key << "DropEffect" << YAML::Value << name2Upper(constant_lookup(it_flag->second.dropEffect, "DROPEFFECT_") + 11);
-			body << YAML::EndMap;
+				body << ryml_tool::emit::Key << "DropEffect" << ryml_tool::emit::Value << name2Upper(constant_lookup(it_flag->second.dropEffect, "DROPEFFECT_") + 11);
+			body << ryml_tool::emit::EndMap;
 		}
 
 		auto it_delay = item_delay.find(nameid);
 
 		if (it_delay != item_delay.end()) {
-			body << YAML::Key << "Delay";
-			body << YAML::BeginMap;
-			body << YAML::Key << "Duration" << YAML::Value << it_delay->second.delay;
+			body << ryml_tool::emit::Key << "Delay";
+			body << ryml_tool::emit::BeginMap;
+			body << ryml_tool::emit::Key << "Duration" << ryml_tool::emit::Value << it_delay->second.delay;
 			if (it_delay->second.sc.size() > 0)
-				body << YAML::Key << "Status" << YAML::Value << name2Upper(it_delay->second.sc.erase(0, 3));
-			body << YAML::EndMap;
+				body << ryml_tool::emit::Key << "Status" << ryml_tool::emit::Value << name2Upper(it_delay->second.sc.erase(0, 3));
+			body << ryml_tool::emit::EndMap;
 		}
 
 		auto it_stack = item_stack.find(nameid);
 
 		if (it_stack != item_stack.end()) {
-			body << YAML::Key << "Stack";
-			body << YAML::BeginMap;
-			body << YAML::Key << "Amount" << YAML::Value << it_stack->second.amount;
+			body << ryml_tool::emit::Key << "Stack";
+			body << ryml_tool::emit::BeginMap;
+			body << ryml_tool::emit::Key << "Amount" << ryml_tool::emit::Value << it_stack->second.amount;
 			if (it_stack->second.inventory)
-				body << YAML::Key << "Inventory" << YAML::Value << it_stack->second.inventory;
+				body << ryml_tool::emit::Key << "Inventory" << ryml_tool::emit::Value << it_stack->second.inventory;
 			if (it_stack->second.cart)
-				body << YAML::Key << "Cart" << YAML::Value << it_stack->second.cart;
+				body << ryml_tool::emit::Key << "Cart" << ryml_tool::emit::Value << it_stack->second.cart;
 			if (it_stack->second.storage)
-				body << YAML::Key << "Storage" << YAML::Value << it_stack->second.storage;
+				body << ryml_tool::emit::Key << "Storage" << ryml_tool::emit::Value << it_stack->second.storage;
 			if (it_stack->second.guild_storage)
-				body << YAML::Key << "GuildStorage" << YAML::Value << it_stack->second.guild_storage;
-			body << YAML::EndMap;
+				body << ryml_tool::emit::Key << "GuildStorage" << ryml_tool::emit::Value << it_stack->second.guild_storage;
+			body << ryml_tool::emit::EndMap;
 		}
 
 		auto it_nouse = item_nouse.find(nameid);
 
 		if (it_nouse != item_nouse.end()) {
-			body << YAML::Key << "NoUse";
-			body << YAML::BeginMap;
+			body << ryml_tool::emit::Key << "NoUse";
+			body << ryml_tool::emit::BeginMap;
 			if (it_nouse->second.override != 100)
-				body << YAML::Key << "Override" << YAML::Value << it_nouse->second.override;
-			body << YAML::Key << "Sitting" << YAML::Value << "true";
-			body << YAML::EndMap;
+				body << ryml_tool::emit::Key << "Override" << ryml_tool::emit::Value << it_nouse->second.override;
+			body << ryml_tool::emit::Key << "Sitting" << ryml_tool::emit::Value << "true";
+			body << ryml_tool::emit::EndMap;
 		}
 
 		auto it_trade = item_trade.find(nameid);
 
 		if (it_trade != item_trade.end()) {
-			body << YAML::Key << "Trade";
-			body << YAML::BeginMap;
+			body << ryml_tool::emit::Key << "Trade";
+			body << ryml_tool::emit::BeginMap;
 			if (it_trade->second.override != 100)
-				body << YAML::Key << "Override" << YAML::Value << it_trade->second.override;
+				body << ryml_tool::emit::Key << "Override" << ryml_tool::emit::Value << it_trade->second.override;
 			if (it_trade->second.drop)
-				body << YAML::Key << "NoDrop" << YAML::Value << it_trade->second.drop;
+				body << ryml_tool::emit::Key << "NoDrop" << ryml_tool::emit::Value << it_trade->second.drop;
 			if (it_trade->second.trade)
-				body << YAML::Key << "NoTrade" << YAML::Value << it_trade->second.trade;
+				body << ryml_tool::emit::Key << "NoTrade" << ryml_tool::emit::Value << it_trade->second.trade;
 			if (it_trade->second.trade_partner)
-				body << YAML::Key << "TradePartner" << YAML::Value << it_trade->second.trade_partner;
+				body << ryml_tool::emit::Key << "TradePartner" << ryml_tool::emit::Value << it_trade->second.trade_partner;
 			if (it_trade->second.sell)
-				body << YAML::Key << "NoSell" << YAML::Value << it_trade->second.sell;
+				body << ryml_tool::emit::Key << "NoSell" << ryml_tool::emit::Value << it_trade->second.sell;
 			if (it_trade->second.cart)
-				body << YAML::Key << "NoCart" << YAML::Value << it_trade->second.cart;
+				body << ryml_tool::emit::Key << "NoCart" << ryml_tool::emit::Value << it_trade->second.cart;
 			if (it_trade->second.storage)
-				body << YAML::Key << "NoStorage" << YAML::Value << it_trade->second.storage;
+				body << ryml_tool::emit::Key << "NoStorage" << ryml_tool::emit::Value << it_trade->second.storage;
 			if (it_trade->second.guild_storage)
-				body << YAML::Key << "NoGuildStorage" << YAML::Value << it_trade->second.guild_storage;
+				body << ryml_tool::emit::Key << "NoGuildStorage" << ryml_tool::emit::Value << it_trade->second.guild_storage;
 			if (it_trade->second.mail)
-				body << YAML::Key << "NoMail" << YAML::Value << it_trade->second.mail;
+				body << ryml_tool::emit::Key << "NoMail" << ryml_tool::emit::Value << it_trade->second.mail;
 			if (it_trade->second.auction)
-				body << YAML::Key << "NoAuction" << YAML::Value << it_trade->second.auction;
-			body << YAML::EndMap;
+				body << ryml_tool::emit::Key << "NoAuction" << ryml_tool::emit::Value << it_trade->second.auction;
+			body << ryml_tool::emit::EndMap;
 		}
 
 		if (*str[19])
-			body << YAML::Key << "Script" << YAML::Value << YAML::Literal << trim(str[19]);
+			body << ryml_tool::emit::Key << "Script" << ryml_tool::emit::Value << ryml_tool::emit::Literal << trim(str[19]);
 		if (*str[20])
-			body << YAML::Key << "EquipScript" << YAML::Value << YAML::Literal << trim(str[20]);
+			body << ryml_tool::emit::Key << "EquipScript" << ryml_tool::emit::Value << ryml_tool::emit::Literal << trim(str[20]);
 		if (*str[21])
-			body << YAML::Key << "UnEquipScript" << YAML::Value << YAML::Literal << trim(str[21]);
+			body << ryml_tool::emit::Key << "UnEquipScript" << ryml_tool::emit::Value << ryml_tool::emit::Literal << trim(str[21]);
 
-		body << YAML::EndMap;
+		body << ryml_tool::emit::EndMap;
 		entries++;
 	}
 
@@ -3079,11 +3079,11 @@ static bool itemdb_read_randomopt(const char* file) {
 				continue;
 			}
 
-			body << YAML::BeginMap;
-			body << YAML::Key << "Id" << YAML::Value << id;
-			body << YAML::Key << "Option" << YAML::Value << str[0] + 7;
-			body << YAML::Key << "Script" << YAML::Literal << str[1];
-			body << YAML::EndMap;
+			body << ryml_tool::emit::BeginMap;
+			body << ryml_tool::emit::Key << "Id" << ryml_tool::emit::Value << id;
+			body << ryml_tool::emit::Key << "Option" << ryml_tool::emit::Value << str[0] + 7;
+			body << ryml_tool::emit::Key << "Script" << ryml_tool::emit::Literal << str[1];
+			body << ryml_tool::emit::EndMap;
 
 			rand_opt_db.insert({ count, str[0] + 7 });
 		}
@@ -3154,47 +3154,47 @@ static bool itemdb_read_randomopt_group( char* str[], size_t columns, size_t cur
 
 static bool itemdb_randomopt_group_yaml(void) {
 	for (const auto &it : rand_opt_group) {
-		body << YAML::BeginMap;
-		body << YAML::Key << "Id" << YAML::Value << it.first;
-		body << YAML::Key << "Group" << YAML::Value << it.second.name;
-		body << YAML::Key << "Slots";
-		body << YAML::BeginSeq;
+		body << ryml_tool::emit::BeginMap;
+		body << ryml_tool::emit::Key << "Id" << ryml_tool::emit::Value << it.first;
+		body << ryml_tool::emit::Key << "Group" << ryml_tool::emit::Value << it.second.name;
+		body << ryml_tool::emit::Key << "Slots";
+		body << ryml_tool::emit::BeginSeq;
 
 		for (size_t i = 0; i < it.second.rate.size(); i++) {
-			body << YAML::BeginMap;
-			body << YAML::Key << "Slot" << YAML::Value << i + 1;
+			body << ryml_tool::emit::BeginMap;
+			body << ryml_tool::emit::Key << "Slot" << ryml_tool::emit::Value << i + 1;
 
-			body << YAML::Key << "Options";
-			body << YAML::BeginSeq;
+			body << ryml_tool::emit::Key << "Options";
+			body << ryml_tool::emit::BeginSeq;
 
 			for (size_t j = 0; j < it.second.slots.size(); j++) {
 				std::vector<std::shared_ptr<s_random_opt_group_entry>> options = it.second.slots.at(static_cast<uint16>(j));
 
 				for (const auto &opt_it : options) {
-					body << YAML::BeginMap;
+					body << ryml_tool::emit::BeginMap;
 
 					for (const auto &opt : rand_opt_db) {
 						if (opt.first == opt_it->id) {
-							body << YAML::Key << "Option" << YAML::Value << opt.second;
+							body << ryml_tool::emit::Key << "Option" << ryml_tool::emit::Value << opt.second;
 							break;
 						}
 					}
 
 					if (opt_it->min_value != 0)
-						body << YAML::Key << "MinValue" << YAML::Value << opt_it->min_value;
+						body << ryml_tool::emit::Key << "MinValue" << ryml_tool::emit::Value << opt_it->min_value;
 					if (opt_it->param != 0)
-						body << YAML::Key << "Param" << YAML::Value << opt_it->param;
-					body << YAML::Key << "Chance" << YAML::Value << it.second.rate[i];
-					body << YAML::EndMap;
+						body << ryml_tool::emit::Key << "Param" << ryml_tool::emit::Value << opt_it->param;
+					body << ryml_tool::emit::Key << "Chance" << ryml_tool::emit::Value << it.second.rate[i];
+					body << ryml_tool::emit::EndMap;
 				}
 			}
 
-			body << YAML::EndSeq;
-			body << YAML::EndMap;
+			body << ryml_tool::emit::EndSeq;
+			body << ryml_tool::emit::EndMap;
 		}
 
-		body << YAML::EndSeq;
-		body << YAML::EndMap;
+		body << ryml_tool::emit::EndSeq;
+		body << ryml_tool::emit::EndMap;
 	}
 
 	return true;
@@ -3238,20 +3238,20 @@ static bool pc_readdb_levelpenalty( char* fields[], size_t columns, size_t curre
 }
 
 void pc_levelpenalty_yaml_sub( int32 type, const std::string& name ){
-	body << YAML::BeginMap;
-	body << YAML::Key << "Type" << YAML::Value << name;
-	body << YAML::Key << "LevelDifferences";
-	body << YAML::BeginSeq;
+	body << ryml_tool::emit::BeginMap;
+	body << ryml_tool::emit::Key << "Type" << ryml_tool::emit::Value << name;
+	body << ryml_tool::emit::Key << "LevelDifferences";
+	body << ryml_tool::emit::BeginSeq;
 	for( int32 i = ARRAYLENGTH( level_penalty[type][CLASS_NORMAL] ); i >= 0; i-- ){
 		if( level_penalty[type][CLASS_NORMAL][i] > 0 && level_penalty[type][CLASS_NORMAL][i] != 100 ){
-			body << YAML::BeginMap;
-			body << YAML::Key << "Difference" << YAML::Value << ( i - MAX_LEVEL + 1 );
-			body << YAML::Key << "Rate" << YAML::Value << level_penalty[type][CLASS_NORMAL][i];
-			body << YAML::EndMap;
+			body << ryml_tool::emit::BeginMap;
+			body << ryml_tool::emit::Key << "Difference" << ryml_tool::emit::Value << ( i - MAX_LEVEL + 1 );
+			body << ryml_tool::emit::Key << "Rate" << ryml_tool::emit::Value << level_penalty[type][CLASS_NORMAL][i];
+			body << ryml_tool::emit::EndMap;
 		}
 	}
-	body << YAML::EndSeq;
-	body << YAML::EndMap;
+	body << ryml_tool::emit::EndSeq;
+	body << ryml_tool::emit::EndMap;
 }
 
 bool pc_levelpenalty_yaml(){
@@ -3345,54 +3345,54 @@ static bool mob_readdb_drop( char *str[], size_t columns, size_t current ){
 static bool mob_readdb_sub( char *fields[], size_t columns, size_t current ){
 	uint32 mob_id = strtoul(fields[0], nullptr, 10);
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Id" << YAML::Value << mob_id;
-	body << YAML::Key << "AegisName" << YAML::Value << fields[1];
-	body << YAML::Key << "Name" << YAML::Value << fields[3];
+	body << ryml_tool::emit::BeginMap;
+	body << ryml_tool::emit::Key << "Id" << ryml_tool::emit::Value << mob_id;
+	body << ryml_tool::emit::Key << "AegisName" << ryml_tool::emit::Value << fields[1];
+	body << ryml_tool::emit::Key << "Name" << ryml_tool::emit::Value << fields[3];
 	if (strcmp(fields[3], fields[2]) != 0)
-		body << YAML::Key << "JapaneseName" << YAML::Value << fields[2];
+		body << ryml_tool::emit::Key << "JapaneseName" << ryml_tool::emit::Value << fields[2];
 	if (strtol(fields[4], nullptr, 10) > 0)
-		body << YAML::Key << "Level" << YAML::Value << fields[4];
+		body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << fields[4];
 	if (strtol(fields[5], nullptr, 10) > 1)
-		body << YAML::Key << "Hp" << YAML::Value << fields[5];
+		body << ryml_tool::emit::Key << "Hp" << ryml_tool::emit::Value << fields[5];
 	if (strtol(fields[6], nullptr, 10) > 1)
-		body << YAML::Key << "Sp" << YAML::Value << fields[6];
+		body << ryml_tool::emit::Key << "Sp" << ryml_tool::emit::Value << fields[6];
 	if (strtol(fields[7], nullptr, 10) > 0)
-		body << YAML::Key << "BaseExp" << YAML::Value << fields[7];
+		body << ryml_tool::emit::Key << "BaseExp" << ryml_tool::emit::Value << fields[7];
 	if (strtol(fields[8], nullptr, 10) > 0)
-		body << YAML::Key << "JobExp" << YAML::Value << fields[8];
+		body << ryml_tool::emit::Key << "JobExp" << ryml_tool::emit::Value << fields[8];
 	if (strtol(fields[30], nullptr, 10) > 0)
-		body << YAML::Key << "MvpExp" << YAML::Value << fields[30];
+		body << ryml_tool::emit::Key << "MvpExp" << ryml_tool::emit::Value << fields[30];
 	if (strtol(fields[10], nullptr, 10) > 0)
-		body << YAML::Key << "Attack" << YAML::Value << fields[10];
+		body << ryml_tool::emit::Key << "Attack" << ryml_tool::emit::Value << fields[10];
 	if (strtol(fields[11], nullptr, 10) > 0)
-		body << YAML::Key << "Attack2" << YAML::Value << fields[11];
+		body << ryml_tool::emit::Key << "Attack2" << ryml_tool::emit::Value << fields[11];
 	if (strtol(fields[12], nullptr, 10) > 0)
-		body << YAML::Key << "Defense" << YAML::Value << cap_value(std::stoi(fields[12]), DEFTYPE_MIN, DEFTYPE_MAX);
+		body << ryml_tool::emit::Key << "Defense" << ryml_tool::emit::Value << cap_value(std::stoi(fields[12]), DEFTYPE_MIN, DEFTYPE_MAX);
 	if (strtol(fields[13], nullptr, 10) > 0)
-		body << YAML::Key << "MagicDefense" << YAML::Value << cap_value(std::stoi(fields[13]), DEFTYPE_MIN, DEFTYPE_MAX);
+		body << ryml_tool::emit::Key << "MagicDefense" << ryml_tool::emit::Value << cap_value(std::stoi(fields[13]), DEFTYPE_MIN, DEFTYPE_MAX);
 	if (strtol(fields[14], nullptr, 10) != 1)
-		body << YAML::Key << "Str" << YAML::Value << fields[14];
+		body << ryml_tool::emit::Key << "Str" << ryml_tool::emit::Value << fields[14];
 	if (strtol(fields[15], nullptr, 10) != 1)
-		body << YAML::Key << "Agi" << YAML::Value << fields[15];
+		body << ryml_tool::emit::Key << "Agi" << ryml_tool::emit::Value << fields[15];
 	if (strtol(fields[16], nullptr, 10) != 1)
-		body << YAML::Key << "Vit" << YAML::Value << fields[16];
+		body << ryml_tool::emit::Key << "Vit" << ryml_tool::emit::Value << fields[16];
 	if (strtol(fields[17], nullptr, 10) != 1)
-		body << YAML::Key << "Int" << YAML::Value << fields[17];
+		body << ryml_tool::emit::Key << "Int" << ryml_tool::emit::Value << fields[17];
 	if (strtol(fields[18], nullptr, 10) != 1)
-		body << YAML::Key << "Dex" << YAML::Value << fields[18];
+		body << ryml_tool::emit::Key << "Dex" << ryml_tool::emit::Value << fields[18];
 	if (strtol(fields[19], nullptr, 10) != 1)
-		body << YAML::Key << "Luk" << YAML::Value << fields[19];
+		body << ryml_tool::emit::Key << "Luk" << ryml_tool::emit::Value << fields[19];
 	if (strtol(fields[9], nullptr, 10) > 0)
-		body << YAML::Key << "AttackRange" << YAML::Value << fields[9];
+		body << ryml_tool::emit::Key << "AttackRange" << ryml_tool::emit::Value << fields[9];
 	if (strtol(fields[20], nullptr, 10) > 0)
-		body << YAML::Key << "SkillRange" << YAML::Value << fields[20];
+		body << ryml_tool::emit::Key << "SkillRange" << ryml_tool::emit::Value << fields[20];
 	if (strtol(fields[21], nullptr, 10) > 0)
-		body << YAML::Key << "ChaseRange" << YAML::Value << fields[21];
+		body << ryml_tool::emit::Key << "ChaseRange" << ryml_tool::emit::Value << fields[21];
 	if (fields[22])
-		body << YAML::Key << "Size" << YAML::Value << constant_lookup(strtol(fields[22], nullptr, 10), "Size_") + 5;
+		body << ryml_tool::emit::Key << "Size" << ryml_tool::emit::Value << constant_lookup(strtol(fields[22], nullptr, 10), "Size_") + 5;
 	if (fields[23])
-		body << YAML::Key << "Race" << YAML::Value << name2Upper(constant_lookup(strtol(fields[23], nullptr, 10), "RC_") + 3);
+		body << ryml_tool::emit::Key << "Race" << ryml_tool::emit::Value << name2Upper(constant_lookup(strtol(fields[23], nullptr, 10), "RC_") + 3);
 
 	std::string class_ = "Normal";
 	bool header = false;
@@ -3410,34 +3410,34 @@ static bool mob_readdb_sub( char *fields[], size_t columns, size_t current ){
 				}
 
 				if (!header) {
-					body << YAML::Key << "RaceGroups";
-					body << YAML::BeginMap;
+					body << ryml_tool::emit::Key << "RaceGroups";
+					body << ryml_tool::emit::BeginMap;
 					header = true;
 				}
 
-				body << YAML::Key << name2Upper(constant_lookup(race2.first, "RC2_") + 4) << YAML::Value << "true";
+				body << ryml_tool::emit::Key << name2Upper(constant_lookup(race2.first, "RC2_") + 4) << ryml_tool::emit::Value << "true";
 
 			}
 		}
 	}
 
 	if (header)
-		body << YAML::EndMap;
+		body << ryml_tool::emit::EndMap;
 
 	if (fields[24]) {
 		int32 ele = strtol(fields[24], nullptr, 10);
 
-		body << YAML::Key << "Element" << YAML::Value << name2Upper(constant_lookup(ele % 20, "ELE_") + 4);
-		body << YAML::Key << "ElementLevel" << YAML::Value << floor(ele / 20.);
+		body << ryml_tool::emit::Key << "Element" << ryml_tool::emit::Value << name2Upper(constant_lookup(ele % 20, "ELE_") + 4);
+		body << ryml_tool::emit::Key << "ElementLevel" << ryml_tool::emit::Value << floor(ele / 20.);
 	}
 	if (strtol(fields[26], nullptr, 10) > 0)
-		body << YAML::Key << "WalkSpeed" << YAML::Value << cap_value(std::stoi(fields[26]), MIN_WALK_SPEED, MAX_WALK_SPEED);
+		body << ryml_tool::emit::Key << "WalkSpeed" << ryml_tool::emit::Value << cap_value(std::stoi(fields[26]), MIN_WALK_SPEED, MAX_WALK_SPEED);
 	if (strtol(fields[27], nullptr, 10) > 0)
-		body << YAML::Key << "AttackDelay" << YAML::Value << fields[27];
+		body << ryml_tool::emit::Key << "AttackDelay" << ryml_tool::emit::Value << fields[27];
 	if (strtol(fields[28], nullptr, 10) > 0)
-		body << YAML::Key << "AttackMotion" << YAML::Value << fields[28];
+		body << ryml_tool::emit::Key << "AttackMotion" << ryml_tool::emit::Value << fields[28];
 	if (strtol(fields[29], nullptr, 10) > 0)
-		body << YAML::Key << "DamageMotion" << YAML::Value << fields[29];
+		body << ryml_tool::emit::Key << "DamageMotion" << ryml_tool::emit::Value << fields[29];
 
 	if (fields[25]) {
 		uint32 mode = static_cast<e_mode>(strtoul(fields[25], nullptr, 0));
@@ -3512,66 +3512,66 @@ static bool mob_readdb_sub( char *fields[], size_t columns, size_t current ){
 			ai = "06";
 
 		if (ai.compare("06") != 0)
-			body << YAML::Key << "Ai" << YAML::Value << ai;
+			body << ryml_tool::emit::Key << "Ai" << ryml_tool::emit::Value << ai;
 		if (class_.compare("Normal") != 0)
-			body << YAML::Key << "Class" << YAML::Value << class_;
+			body << ryml_tool::emit::Key << "Class" << ryml_tool::emit::Value << class_;
 
 		if (mode > 0) {
-			body << YAML::Key << "Modes";
-			body << YAML::BeginMap;
+			body << ryml_tool::emit::Key << "Modes";
+			body << ryml_tool::emit::BeginMap;
 			if (mode & 0x1)
-				body << YAML::Key << "CanMove" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "CanMove" << ryml_tool::emit::Value << "true";
 			if (mode & 0x80)
-				body << YAML::Key << "CanAttack" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "CanAttack" << ryml_tool::emit::Value << "true";
 			if (mode & 0x40)
-				body << YAML::Key << "NoCast" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "NoCast" << ryml_tool::emit::Value << "true";
 			if (mode & 0x2)
-				body << YAML::Key << "Looter" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "Looter" << ryml_tool::emit::Value << "true";
 			if (mode & 0x4)
-				body << YAML::Key << "Aggressive" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "Aggressive" << ryml_tool::emit::Value << "true";
 			if (mode & 0x8)
-				body << YAML::Key << "Assist" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "Assist" << ryml_tool::emit::Value << "true";
 			if (mode & 0x20)
-				body << YAML::Key << "NoRandomWalk" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "NoRandomWalk" << ryml_tool::emit::Value << "true";
 			if (mode & 0x200)
-				body << YAML::Key << "CastSensorChase" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "CastSensorChase" << ryml_tool::emit::Value << "true";
 			if (mode & 0x10)
-				body << YAML::Key << "CastSensorIdle" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "CastSensorIdle" << ryml_tool::emit::Value << "true";
 			if (mode & 0x800)
-				body << YAML::Key << "Angry" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "Angry" << ryml_tool::emit::Value << "true";
 			if (mode & 0x400)
-				body << YAML::Key << "ChangeChase" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "ChangeChase" << ryml_tool::emit::Value << "true";
 			if (mode & 0x1000)
-				body << YAML::Key << "ChangeTargetMelee" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "ChangeTargetMelee" << ryml_tool::emit::Value << "true";
 			if (mode & 0x2000)
-				body << YAML::Key << "ChangeTargetChase" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "ChangeTargetChase" << ryml_tool::emit::Value << "true";
 			if (mode & 0x4000)
-				body << YAML::Key << "TargetWeak" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "TargetWeak" << ryml_tool::emit::Value << "true";
 			if (mode & 0x8000)
-				body << YAML::Key << "RandomTarget" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "RandomTarget" << ryml_tool::emit::Value << "true";
 			if (mode & 0x20000)
-				body << YAML::Key << "IgnoreMagic" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "IgnoreMagic" << ryml_tool::emit::Value << "true";
 			if (mode & 0x10000)
-				body << YAML::Key << "IgnoreMelee" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "IgnoreMelee" << ryml_tool::emit::Value << "true";
 			if (mode & 0x100000)
-				body << YAML::Key << "IgnoreMisc" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "IgnoreMisc" << ryml_tool::emit::Value << "true";
 			if (mode & 0x40000)
-				body << YAML::Key << "IgnoreRanged" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "IgnoreRanged" << ryml_tool::emit::Value << "true";
 			if (mode & 0x400000)
-				body << YAML::Key << "TeleportBlock" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "TeleportBlock" << ryml_tool::emit::Value << "true";
 			if (mode & 0x1000000)
-				body << YAML::Key << "FixedItemDrop" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "FixedItemDrop" << ryml_tool::emit::Value << "true";
 			if (mode & 0x2000000)
-				body << YAML::Key << "Detector" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "Detector" << ryml_tool::emit::Value << "true";
 			if (mode & 0x200000)
-				body << YAML::Key << "KnockBackImmune" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "KnockBackImmune" << ryml_tool::emit::Value << "true";
 			if (mode & 0x4000000)
-				body << YAML::Key << "StatusImmune" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "StatusImmune" << ryml_tool::emit::Value << "true";
 			if (mode & 0x8000000)
-				body << YAML::Key << "SkillImmune" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "SkillImmune" << ryml_tool::emit::Value << "true";
 			if (mode & 0x80000)
-				body << YAML::Key << "Mvp" << YAML::Value << "true";
-			body << YAML::EndMap;
+				body << ryml_tool::emit::Key << "Mvp" << ryml_tool::emit::Value << "true";
+			body << ryml_tool::emit::EndMap;
 		}
 	}
 
@@ -3585,8 +3585,8 @@ static bool mob_readdb_sub( char *fields[], size_t columns, size_t current ){
 	}
 
 	if (has_mvp_drops) {
-		body << YAML::Key << "MvpDrops";
-		body << YAML::BeginSeq;
+		body << ryml_tool::emit::Key << "MvpDrops";
+		body << ryml_tool::emit::BeginSeq;
 
 		for (uint8 i = 0; i < MAX_MVP_DROP; i++) {
 			t_itemid nameid = strtoul(fields[31 + i * 2], nullptr, 10);
@@ -3599,10 +3599,10 @@ static bool mob_readdb_sub( char *fields[], size_t columns, size_t current ){
 					continue;
 				}
 
-				body << YAML::BeginMap;
-				body << YAML::Key << "Item" << YAML::Value << *item_name;
-				body << YAML::Key << "Rate" << YAML::Value << cap_value(std::stoi(fields[32 + i * 2]), 1, 10000);
-				body << YAML::EndMap;
+				body << ryml_tool::emit::BeginMap;
+				body << ryml_tool::emit::Key << "Item" << ryml_tool::emit::Value << *item_name;
+				body << ryml_tool::emit::Key << "Rate" << ryml_tool::emit::Value << cap_value(std::stoi(fields[32 + i * 2]), 1, 10000);
+				body << ryml_tool::emit::EndMap;
 			}
 
 			if (i < MAX_MVP_DROP - 1)
@@ -3622,17 +3622,17 @@ static bool mob_readdb_sub( char *fields[], size_t columns, size_t current ){
 							continue;
 						}
 
-						body << YAML::BeginMap;
-						body << YAML::Key << "Item" << YAML::Value << *item_name;
-						body << YAML::Key << "Rate" << YAML::Value << cap_value(drop.rate, 1, 10000);
-						body << YAML::Key << "RandomOptionGroup" << YAML::Value << drop.group_string;
-						body << YAML::EndMap;
+						body << ryml_tool::emit::BeginMap;
+						body << ryml_tool::emit::Key << "Item" << ryml_tool::emit::Value << *item_name;
+						body << ryml_tool::emit::Key << "Rate" << ryml_tool::emit::Value << cap_value(drop.rate, 1, 10000);
+						body << ryml_tool::emit::Key << "RandomOptionGroup" << ryml_tool::emit::Value << drop.group_string;
+						body << ryml_tool::emit::EndMap;
 					}
 				}
 			}
 		}
 
-		body << YAML::EndSeq;
+		body << ryml_tool::emit::EndSeq;
 	}
 
 	bool has_drops = false;
@@ -3645,8 +3645,8 @@ static bool mob_readdb_sub( char *fields[], size_t columns, size_t current ){
 	}
 
 	if (has_drops) {
-		body << YAML::Key << "Drops";
-		body << YAML::BeginSeq;
+		body << ryml_tool::emit::Key << "Drops";
+		body << ryml_tool::emit::BeginSeq;
 
 		for (uint8 i = 0; i < MAX_MOB_DROP; i++) {
 			int32 k = 31 + MAX_MVP_DROP * 2 + i * 2;
@@ -3660,12 +3660,12 @@ static bool mob_readdb_sub( char *fields[], size_t columns, size_t current ){
 					continue;
 				}
 
-				body << YAML::BeginMap;
-				body << YAML::Key << "Item" << YAML::Value << *item_name;
-				body << YAML::Key << "Rate" << YAML::Value << cap_value(std::stoi(fields[k + 1]), 1, 10000);
+				body << ryml_tool::emit::BeginMap;
+				body << ryml_tool::emit::Key << "Item" << ryml_tool::emit::Value << *item_name;
+				body << ryml_tool::emit::Key << "Rate" << ryml_tool::emit::Value << cap_value(std::stoi(fields[k + 1]), 1, 10000);
 				if (i > 6) // Slots 8, 9, and 10 are inherently protected
-					body << YAML::Key << "StealProtected" << YAML::Value << "true";
-				body << YAML::EndMap;
+					body << ryml_tool::emit::Key << "StealProtected" << ryml_tool::emit::Value << "true";
+				body << ryml_tool::emit::EndMap;
 			}
 
 			if (i < MAX_MOB_DROP - 2 || i == MAX_MOB_DROP - 1)
@@ -3685,22 +3685,22 @@ static bool mob_readdb_sub( char *fields[], size_t columns, size_t current ){
 							continue;
 						}
 
-						body << YAML::BeginMap;
-						body << YAML::Key << "Item" << YAML::Value << *item_name;
-						body << YAML::Key << "Rate" << YAML::Value << cap_value(drop.rate, 1, 10000);
-						body << YAML::Key << "RandomOptionGroup" << YAML::Value << drop.group_string;
+						body << ryml_tool::emit::BeginMap;
+						body << ryml_tool::emit::Key << "Item" << ryml_tool::emit::Value << *item_name;
+						body << ryml_tool::emit::Key << "Rate" << ryml_tool::emit::Value << cap_value(drop.rate, 1, 10000);
+						body << ryml_tool::emit::Key << "RandomOptionGroup" << ryml_tool::emit::Value << drop.group_string;
 						if (drop.steal_protected == 1)
-							body << YAML::Key << "StealProtected" << YAML::Value << "true";
-						body << YAML::EndMap;
+							body << ryml_tool::emit::Key << "StealProtected" << ryml_tool::emit::Value << "true";
+						body << ryml_tool::emit::EndMap;
 					}
 				}
 			}
 		}
 
-		body << YAML::EndSeq;
+		body << ryml_tool::emit::EndSeq;
 	}
 
-	body << YAML::EndMap;
+	body << ryml_tool::emit::EndMap;
 
 	return true;
 }
@@ -3732,12 +3732,12 @@ static bool mob_parse_row_chatdb( char* fields[], size_t columns, size_t current
 
 	msg[len] = 0;  // strip previously found EOL
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Id" << YAML::Value << msg_id;
+	body << ryml_tool::emit::BeginMap;
+	body << ryml_tool::emit::Key << "Id" << ryml_tool::emit::Value << msg_id;
 	if (strcmp(fields[1], "0xFF0000") != 0)	// default color
-		body << YAML::Key << "Color" << YAML::Value << fields[1];
-	body << YAML::Key << "Dialog" << YAML::Value << msg;
-	body << YAML::EndMap;
+		body << ryml_tool::emit::Key << "Color" << ryml_tool::emit::Value << fields[1];
+	body << ryml_tool::emit::Key << "Dialog" << ryml_tool::emit::Value << msg;
+	body << ryml_tool::emit::EndMap;
 
 	return true;
 }
@@ -3763,10 +3763,10 @@ static bool read_homunculus_expdb(const char* file) {
 		t_exp exp = strtoull(line, nullptr, 10);
 
 		if( exp > 0 ){
-			body << YAML::BeginMap;
-			body << YAML::Key << "Level" << YAML::Value << (count+1);
-			body << YAML::Key << "Exp" << YAML::Value << exp;
-			body << YAML::EndMap;
+			body << ryml_tool::emit::BeginMap;
+			body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << (count+1);
+			body << ryml_tool::emit::Key << "Exp" << ryml_tool::emit::Value << exp;
+			body << ryml_tool::emit::EndMap;
 		}
 
 		count++;
@@ -3836,19 +3836,19 @@ static bool mob_readdb_group( char* str[], size_t columns, size_t current ){
 
 static bool mob_readdb_group_yaml(void) {
 	for (const auto &it : summon_group) {
-		body << YAML::BeginMap;
-		body << YAML::Key << "Group" << YAML::Value << it.first;
-		body << YAML::Key << "Default" << YAML::Value << it.second.default_mob;
-		body << YAML::Key << "Summon";
-		body << YAML::BeginSeq;
+		body << ryml_tool::emit::BeginMap;
+		body << ryml_tool::emit::Key << "Group" << ryml_tool::emit::Value << it.first;
+		body << ryml_tool::emit::Key << "Default" << ryml_tool::emit::Value << it.second.default_mob;
+		body << ryml_tool::emit::Key << "Summon";
+		body << ryml_tool::emit::BeginSeq;
 		for (const auto &sumit : it.second.list) {
-			body << YAML::BeginMap;
-			body << YAML::Key << "Mob" << YAML::Value << sumit->mob_name;
-			body << YAML::Key << "Rate" << YAML::Value << sumit->rate;
-			body << YAML::EndMap;
+			body << ryml_tool::emit::BeginMap;
+			body << ryml_tool::emit::Key << "Mob" << ryml_tool::emit::Value << sumit->mob_name;
+			body << ryml_tool::emit::Key << "Rate" << ryml_tool::emit::Value << sumit->rate;
+			body << ryml_tool::emit::EndMap;
 		}
-		body << YAML::EndSeq;
-		body << YAML::EndMap;
+		body << ryml_tool::emit::EndSeq;
+		body << ryml_tool::emit::EndMap;
 	}
 	return true;
 }
@@ -3869,9 +3869,9 @@ static bool skill_parse_row_createarrowdb( char* split[], size_t columns, size_t
 
 	// Import just for clearing/disabling from original data
 	if (strtoul(split[1], nullptr, 10) == 0) {
-		body << YAML::BeginMap;
-		body << YAML::Key << "Remove" << YAML::Value << *material_name;
-		body << YAML::EndMap;
+		body << ryml_tool::emit::BeginMap;
+		body << ryml_tool::emit::Key << "Remove" << ryml_tool::emit::Value << *material_name;
+		body << ryml_tool::emit::EndMap;
 		return true;
 	}
 
@@ -3889,18 +3889,18 @@ static bool skill_parse_row_createarrowdb( char* split[], size_t columns, size_t
 		item_created.insert({ *item_name, strtoul(split[x+1], nullptr, 10) });
 	}
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Source" << YAML::Value << *material_name;
-	body << YAML::Key << "Make";
-	body << YAML::BeginSeq;
+	body << ryml_tool::emit::BeginMap;
+	body << ryml_tool::emit::Key << "Source" << ryml_tool::emit::Value << *material_name;
+	body << ryml_tool::emit::Key << "Make";
+	body << ryml_tool::emit::BeginSeq;
 	for (const auto &it : item_created) {
-		body << YAML::BeginMap;
-		body << YAML::Key << "Item" << YAML::Value << it.first;
-		body << YAML::Key << "Amount" << YAML::Value << it.second;
-		body << YAML::EndMap;
+		body << ryml_tool::emit::BeginMap;
+		body << ryml_tool::emit::Key << "Item" << ryml_tool::emit::Value << it.first;
+		body << ryml_tool::emit::Key << "Amount" << ryml_tool::emit::Value << it.second;
+		body << ryml_tool::emit::EndMap;
 	}
-	body << YAML::EndSeq;
-	body << YAML::EndMap;
+	body << ryml_tool::emit::EndSeq;
+	body << ryml_tool::emit::EndMap;
 
 	return true;
 }
@@ -3924,10 +3924,10 @@ static bool pc_read_statsdb(const char* file) {
 		if (line[0] == '/' && line[1] == '/') // Ignore comments
 			continue;
 
-		body << YAML::BeginMap;
-		body << YAML::Key << "Level" << YAML::Value << (count+1);
-		body << YAML::Key << "Points" << YAML::Value << static_cast<uint32>(strtoul(line, nullptr, 10));
-		body << YAML::EndMap;
+		body << ryml_tool::emit::BeginMap;
+		body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << (count+1);
+		body << ryml_tool::emit::Key << "Points" << ryml_tool::emit::Value << static_cast<uint32>(strtoul(line, nullptr, 10));
+		body << ryml_tool::emit::EndMap;
 
 		count++;
 	}
@@ -3939,12 +3939,12 @@ static bool pc_read_statsdb(const char* file) {
 
 // Copied and adjusted from guild.cpp
 static bool guild_read_castledb( char* str[], size_t columns, size_t current ){
-	body << YAML::BeginMap;
-	body << YAML::Key << "Id" << YAML::Value << str[0];
-	body << YAML::Key << "Map" << YAML::Value << str[1];
-	body << YAML::Key << "Name" << YAML::Value << trim(str[2]);
-	body << YAML::Key << "Npc" << YAML::Value << trim(str[3]);
-	body << YAML::EndMap;
+	body << ryml_tool::emit::BeginMap;
+	body << ryml_tool::emit::Key << "Id" << ryml_tool::emit::Value << str[0];
+	body << ryml_tool::emit::Key << "Map" << ryml_tool::emit::Value << str[1];
+	body << ryml_tool::emit::Key << "Name" << ryml_tool::emit::Value << trim(str[2]);
+	body << ryml_tool::emit::Key << "Npc" << ryml_tool::emit::Value << trim(str[3]);
+	body << ryml_tool::emit::EndMap;
 	return true;
 }
 
@@ -3957,10 +3957,10 @@ static bool exp_guild_parse_row( char* split[], size_t column, size_t current ){
 		return false;
 	}
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Level" << YAML::Value << (current+1);
-	body << YAML::Key << "Exp" << YAML::Value << exp;
-	body << YAML::EndMap;
+	body << ryml_tool::emit::BeginMap;
+	body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << (current+1);
+	body << ryml_tool::emit::Key << "Exp" << ryml_tool::emit::Value << exp;
+	body << ryml_tool::emit::EndMap;
 
 	return true;
 }
@@ -4076,45 +4076,45 @@ static bool itemdb_read_group( char* str[], size_t columns, size_t current ){
 
 static bool itemdb_read_group_yaml(void) {
 	for (const auto &it : item_group) {
-		body << YAML::BeginMap;
-		body << YAML::Key << "Group" << YAML::Value << it.first;
-		body << YAML::Key << "SubGroups";
-		body << YAML::BeginSeq;
+		body << ryml_tool::emit::BeginMap;
+		body << ryml_tool::emit::Key << "Group" << ryml_tool::emit::Value << it.first;
+		body << ryml_tool::emit::Key << "SubGroups";
+		body << ryml_tool::emit::BeginSeq;
 
 		for (const auto &item : it.second.item) {	// subgroup
-			body << YAML::BeginMap;
-			body << YAML::Key << "SubGroup" << YAML::Value << item.first;
+			body << ryml_tool::emit::BeginMap;
+			body << ryml_tool::emit::Key << "SubGroup" << ryml_tool::emit::Value << item.first;
 			if (item.first == 0)
-				body << YAML::Key << "Algorithm" << YAML::Value << "All";
+				body << ryml_tool::emit::Key << "Algorithm" << ryml_tool::emit::Value << "All";
 			else if (item.first == 6)
-				body << YAML::Key << "Algorithm" << YAML::Value << "Random";
-			body << YAML::Key << "List";
-			body << YAML::BeginSeq;
+				body << ryml_tool::emit::Key << "Algorithm" << ryml_tool::emit::Value << "Random";
+			body << ryml_tool::emit::Key << "List";
+			body << ryml_tool::emit::BeginSeq;
 			for (const auto &listit : item.second) {
-				body << YAML::BeginMap;
-				body << YAML::Key << "Item" << YAML::Value << listit.item_name;
+				body << ryml_tool::emit::BeginMap;
+				body << ryml_tool::emit::Key << "Item" << ryml_tool::emit::Value << listit.item_name;
 				if (listit.rate > 0)
-					body << YAML::Key << "Rate" << YAML::Value << listit.rate;
+					body << ryml_tool::emit::Key << "Rate" << ryml_tool::emit::Value << listit.rate;
 				if (listit.amount > 1)
-					body << YAML::Key << "Amount" << YAML::Value << listit.amount;
+					body << ryml_tool::emit::Key << "Amount" << ryml_tool::emit::Value << listit.amount;
 				if (listit.duration > 0)
-					body << YAML::Key << "Duration" << YAML::Value << listit.duration;
+					body << ryml_tool::emit::Key << "Duration" << ryml_tool::emit::Value << listit.duration;
 				if (listit.isAnnounced)
-					body << YAML::Key << "Announced" << YAML::Value << "true";
+					body << ryml_tool::emit::Key << "Announced" << ryml_tool::emit::Value << "true";
 				if (listit.GUID)
-					body << YAML::Key << "UniqueId" << YAML::Value << "true";
+					body << ryml_tool::emit::Key << "UniqueId" << ryml_tool::emit::Value << "true";
 				if (listit.isNamed)
-					body << YAML::Key << "Named" << YAML::Value << "true";
+					body << ryml_tool::emit::Key << "Named" << ryml_tool::emit::Value << "true";
 				if (!listit.bound.empty())
-					body << YAML::Key << "Bound" << YAML::Value << listit.bound;
-				body << YAML::EndMap;
+					body << ryml_tool::emit::Key << "Bound" << ryml_tool::emit::Value << listit.bound;
+				body << ryml_tool::emit::EndMap;
 			}
-			body << YAML::EndSeq;
-			body << YAML::EndMap;
+			body << ryml_tool::emit::EndSeq;
+			body << ryml_tool::emit::EndMap;
 		}
 
-		body << YAML::EndSeq;
-		body << YAML::EndMap;
+		body << ryml_tool::emit::EndSeq;
+		body << ryml_tool::emit::EndMap;
 	}
 	return true;
 }
@@ -4130,13 +4130,13 @@ static bool mob_readdb_itemratio( char* str[], size_t columns, size_t current ){
 		return false;
 	}
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Item" << YAML::Value << *item_name;
-	body << YAML::Key << "Ratio" << YAML::Value << strtoul(str[1], nullptr, 10);
+	body << ryml_tool::emit::BeginMap;
+	body << ryml_tool::emit::Key << "Item" << ryml_tool::emit::Value << *item_name;
+	body << ryml_tool::emit::Key << "Ratio" << ryml_tool::emit::Value << strtoul(str[1], nullptr, 10);
 
 	if (columns-2 > 0) {
-		body << YAML::Key << "List";
-		body << YAML::BeginMap;
+		body << ryml_tool::emit::Key << "List";
+		body << ryml_tool::emit::BeginMap;
 		for( size_t i = 0; i < columns - 2; i++ ){
 			uint16 mob_id = static_cast<uint16>(strtoul(str[i+2], nullptr, 10));
 			std::string* mob_name = util::umap_find( aegis_mobnames, mob_id );
@@ -4145,12 +4145,12 @@ static bool mob_readdb_itemratio( char* str[], size_t columns, size_t current ){
 				ShowWarning( "mob_readdb_itemratio: Invalid monster with ID %hu.\n", mob_id );
 				continue;
 			}
-			body << YAML::Key << *mob_name << YAML::Value << "true";
+			body << ryml_tool::emit::Key << *mob_name << ryml_tool::emit::Value << "true";
 		}
-		body << YAML::EndMap;
+		body << ryml_tool::emit::EndMap;
 	}
 
-	body << YAML::EndMap;
+	body << ryml_tool::emit::EndMap;
 	return true;
 }
 
@@ -4178,8 +4178,8 @@ static bool status_readdb_attrfix(const char* file) {
 		if (!CHK_ELEMENT_LEVEL(lv))
 			continue;
 
-		body << YAML::BeginMap;
-		body << YAML::Key << "Level" << YAML::Value << (count+1);
+		body << ryml_tool::emit::BeginMap;
+		body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << (count+1);
 
 		for (i = 0; i < ELE_ALL; ) {
 			char *p;
@@ -4190,8 +4190,8 @@ static bool status_readdb_attrfix(const char* file) {
 
 			constant = constant_lookup(i, "Ele_");
 			constant.erase(0, 4);
-			body << YAML::Key << name2Upper(constant);
-			body << YAML::BeginMap;
+			body << ryml_tool::emit::Key << name2Upper(constant);
+			body << ryml_tool::emit::BeginMap;
 
 			for (j = 0, p = line; j < ELE_ALL && p; j++) {
 				while (*p == 32) //skipping space (32=' ')
@@ -4199,17 +4199,17 @@ static bool status_readdb_attrfix(const char* file) {
 
 				constant = constant_lookup(j, "Ele_");
 				constant.erase(0, 4);
-				body << YAML::Key << name2Upper(constant) << YAML::Value << atoi(p);
+				body << ryml_tool::emit::Key << name2Upper(constant) << ryml_tool::emit::Value << atoi(p);
 	
 				p = strchr(p, ',');
 				if (p)
 					*p++=0;
 			}
-			body << YAML::EndMap;
+			body << ryml_tool::emit::EndMap;
 
 			i++;
 		}
-		body << YAML::EndMap;
+		body << ryml_tool::emit::EndMap;
 
 		count++;
 	}
@@ -4238,12 +4238,12 @@ static bool read_constdb( char* fields[], size_t columns, size_t current ){
 		}
 	}
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Name" << YAML::Value << name;
-	body << YAML::Key << "Value" << YAML::Value << val;
+	body << ryml_tool::emit::BeginMap;
+	body << ryml_tool::emit::Key << "Name" << ryml_tool::emit::Value << name;
+	body << ryml_tool::emit::Key << "Value" << ryml_tool::emit::Value << val;
 	if (type != 0)
-		body << YAML::Key << "Parameter" << YAML::Value << "true";
-	body << YAML::EndMap;
+		body << ryml_tool::emit::Key << "Parameter" << ryml_tool::emit::Value << "true";
+	body << ryml_tool::emit::EndMap;
 
 	return true;
 }
@@ -4301,36 +4301,36 @@ static bool pc_readdb_job_exp_sub( char* fields[], size_t columns, size_t curren
 static bool pc_readdb_job_exp( char* fields[], size_t columns, size_t current ){
 	int32 level = atoi(fields[0]), jobs[CLASS_COUNT], job_count = skill_split_atoi(fields[1], jobs, CLASS_COUNT), type = atoi(fields[2]);
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Jobs";
-	body << YAML::BeginMap;
+	body << ryml_tool::emit::BeginMap;
+	body << ryml_tool::emit::Key << "Jobs";
+	body << ryml_tool::emit::BeginMap;
 	for (int32 i = 0; i < job_count; i++) {
-		body << YAML::Key << name2Upper(constant_lookup(jobs[i], "JOB_") + 4) << YAML::Value << "true";
+		body << ryml_tool::emit::Key << name2Upper(constant_lookup(jobs[i], "JOB_") + 4) << ryml_tool::emit::Value << "true";
 		if (type == 0)
 			exp_base_level.insert({ jobs[i], level });
 		else
 			exp_job_level.insert({ jobs[i], level });
 	}
-	body << YAML::EndMap;
+	body << ryml_tool::emit::EndMap;
 
 	if (type == 0) {
-		body << YAML::Key << "MaxBaseLevel" << YAML::Value << level;
-		body << YAML::Key << "BaseExp";
+		body << ryml_tool::emit::Key << "MaxBaseLevel" << ryml_tool::emit::Value << level;
+		body << ryml_tool::emit::Key << "BaseExp";
 	} else {
-		body << YAML::Key << "MaxJobLevel" << YAML::Value << level;
-		body << YAML::Key << "JobExp";
+		body << ryml_tool::emit::Key << "MaxJobLevel" << ryml_tool::emit::Value << level;
+		body << ryml_tool::emit::Key << "JobExp";
 	}
-	body << YAML::BeginSeq;
+	body << ryml_tool::emit::BeginSeq;
 
 	for (int32 i = 0; i < level; i++) {
-		body << YAML::BeginMap;
-		body << YAML::Key << "Level" << YAML::Value << i + 1;
-		body << YAML::Key << "Exp" << YAML::Value << strtoll(fields[3 + i], nullptr, 10);
-		body << YAML::EndMap;
+		body << ryml_tool::emit::BeginMap;
+		body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << i + 1;
+		body << ryml_tool::emit::Key << "Exp" << ryml_tool::emit::Value << strtoll(fields[3 + i], nullptr, 10);
+		body << ryml_tool::emit::EndMap;
 	}
 
-	body << YAML::EndSeq;
-	body << YAML::EndMap;
+	body << ryml_tool::emit::EndSeq;
+	body << ryml_tool::emit::EndMap;
 
 	return true;
 }
@@ -4339,18 +4339,18 @@ static bool pc_readdb_job_exp( char* fields[], size_t columns, size_t current ){
 static bool pc_readdb_job_basehpsp( char* fields[], size_t columns, size_t current ){
 	int32 type = atoi(fields[3]), jobs[CLASS_COUNT], job_count = skill_split_atoi(fields[2], jobs, CLASS_COUNT);
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Jobs";
-	body << YAML::BeginMap;
+	body << ryml_tool::emit::BeginMap;
+	body << ryml_tool::emit::Key << "Jobs";
+	body << ryml_tool::emit::BeginMap;
 	for (int32 i = 0; i < job_count; i++)
-		body << YAML::Key << name2Upper(constant_lookup(jobs[i], "JOB_") + 4) << YAML::Value << "true";
-	body << YAML::EndMap;
+		body << ryml_tool::emit::Key << name2Upper(constant_lookup(jobs[i], "JOB_") + 4) << ryml_tool::emit::Value << "true";
+	body << ryml_tool::emit::EndMap;
 
 	if (type == 0)
-		body << YAML::Key << "BaseHp";
+		body << ryml_tool::emit::Key << "BaseHp";
 	else
-		body << YAML::Key << "BaseSp";
-	body << YAML::BeginSeq;
+		body << ryml_tool::emit::Key << "BaseSp";
+	body << ryml_tool::emit::BeginSeq;
 
 	int32 j = 0, job_id = jobs[0], endlvl = 0;
 
@@ -4377,24 +4377,24 @@ static bool pc_readdb_job_basehpsp( char* fields[], size_t columns, size_t curre
 	if (type == 0) { // HP
 		for (; j < endlvl; j++) {
 			if (atoi(fields[j + 4])) {
-				body << YAML::BeginMap;
-				body << YAML::Key << "Level" << YAML::Value << j + 1;
-				body << YAML::Key << "Hp" << YAML::Value << strtoll(fields[j + 4], nullptr, 10);
-				body << YAML::EndMap;
+				body << ryml_tool::emit::BeginMap;
+				body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << j + 1;
+				body << ryml_tool::emit::Key << "Hp" << ryml_tool::emit::Value << strtoll(fields[j + 4], nullptr, 10);
+				body << ryml_tool::emit::EndMap;
 			}
 		}
 	} else { // SP
 		for (; j < endlvl; j++) {
 			if (atoi(fields[j + 4])) {
-				body << YAML::BeginMap;
-				body << YAML::Key << "Level" << YAML::Value << j + 1;
-				body << YAML::Key << "Sp" << YAML::Value << strtoll(fields[j + 4], nullptr, 10);
-				body << YAML::EndMap;
+				body << ryml_tool::emit::BeginMap;
+				body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << j + 1;
+				body << ryml_tool::emit::Key << "Sp" << ryml_tool::emit::Value << strtoll(fields[j + 4], nullptr, 10);
+				body << ryml_tool::emit::EndMap;
 			}
 		}
 	}
-	body << YAML::EndSeq;
-	body << YAML::EndMap;
+	body << ryml_tool::emit::EndSeq;
+	body << ryml_tool::emit::EndMap;
 
 	return true;
 }
@@ -4406,22 +4406,22 @@ static bool pc_readdb_job1( char* fields[], size_t columns, size_t current ){
 	if (job_id == JOB_WEDDING)
 		return true;
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Jobs";
-	body << YAML::BeginMap;
-	body << YAML::Key << name2Upper(constant_lookup(job_id, "JOB_") + 4) << YAML::Value << "true";
-	body << YAML::EndMap;
+	body << ryml_tool::emit::BeginMap;
+	body << ryml_tool::emit::Key << "Jobs";
+	body << ryml_tool::emit::BeginMap;
+	body << ryml_tool::emit::Key << name2Upper(constant_lookup(job_id, "JOB_") + 4) << ryml_tool::emit::Value << "true";
+	body << ryml_tool::emit::EndMap;
 	if (atoi(fields[1]) != 20000)
-		body << YAML::Key << "MaxWeight" << YAML::Value << atoi(fields[1]);
+		body << ryml_tool::emit::Key << "MaxWeight" << ryml_tool::emit::Value << atoi(fields[1]);
 	if (atoi(fields[2]) != 0)
-		body << YAML::Key << "HpFactor" << YAML::Value << atoi(fields[2]);
+		body << ryml_tool::emit::Key << "HpFactor" << ryml_tool::emit::Value << atoi(fields[2]);
 	if (atoi(fields[3]) != 500)
-		body << YAML::Key << "HpIncrease" << YAML::Value << atoi(fields[3]);
+		body << ryml_tool::emit::Key << "HpIncrease" << ryml_tool::emit::Value << atoi(fields[3]);
 	if (atoi(fields[4]) != 100)
-		body << YAML::Key << "SpIncrease" << YAML::Value << atoi(fields[4]);
+		body << ryml_tool::emit::Key << "SpIncrease" << ryml_tool::emit::Value << atoi(fields[4]);
 
-	body << YAML::Key << "BaseASPD";
-	body << YAML::BeginMap;
+	body << ryml_tool::emit::Key << "BaseASPD";
+	body << ryml_tool::emit::BeginMap;
 
 #ifdef RENEWAL_ASPD
 	for (int32 i = 0; i <= MAX_WEAPON_TYPE; i++) {
@@ -4437,18 +4437,18 @@ static bool pc_readdb_job1( char* fields[], size_t columns, size_t current ){
 				continue;
 			}
 
-			body << YAML::Key << name2Upper(weapon + 2) << YAML::Value << atoi(fields[i + 5]);
+			body << ryml_tool::emit::Key << name2Upper(weapon + 2) << ryml_tool::emit::Value << atoi(fields[i + 5]);
 		}
 	}
 
-	body << YAML::EndMap;
+	body << ryml_tool::emit::EndMap;
 
 	auto job_bonus = job_db2.find(job_id);
 	auto jlvl = exp_job_level.find(job_id);
 
 	if (job_bonus != job_db2.end() && job_id != JOB_BABY) {
-		body << YAML::Key << "BonusStats";
-		body << YAML::BeginSeq;
+		body << ryml_tool::emit::Key << "BonusStats";
+		body << ryml_tool::emit::BeginSeq;
 
 		for (int32 i = 1; i <= jlvl->second; i++) {
 			auto value = job_bonus->second[i - 1];
@@ -4460,38 +4460,38 @@ static bool pc_readdb_job1( char* fields[], size_t columns, size_t current ){
 			const char *bonus = constant_lookup( value - 1, "PARAM_" );
 
 			if (bonus != nullptr) {
-				body << YAML::BeginMap;
-				body << YAML::Key << "Level" << YAML::Value << i;
-				body << YAML::Key << name2Upper(bonus + 6) << YAML::Value << "1";
-				body << YAML::EndMap;
+				body << ryml_tool::emit::BeginMap;
+				body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << i;
+				body << ryml_tool::emit::Key << name2Upper(bonus + 6) << ryml_tool::emit::Value << "1";
+				body << ryml_tool::emit::EndMap;
 			}
 		}
 
-		body << YAML::EndSeq;
+		body << ryml_tool::emit::EndSeq;
 	}
 
 	auto param = job_param.find(job_id);
 
 	if (param != job_param.end()) {
-		body << YAML::Key << "MaxStats";
-		body << YAML::BeginMap;
+		body << ryml_tool::emit::Key << "MaxStats";
+		body << ryml_tool::emit::BeginMap;
 
 		if (param->second.str > 0)
-			body << YAML::Key << "Str" << YAML::Value << param->second.str;
+			body << ryml_tool::emit::Key << "Str" << ryml_tool::emit::Value << param->second.str;
 		if (param->second.agi > 0)
-			body << YAML::Key << "Agi" << YAML::Value << param->second.agi;
+			body << ryml_tool::emit::Key << "Agi" << ryml_tool::emit::Value << param->second.agi;
 		if (param->second.vit > 0)
-			body << YAML::Key << "Vit" << YAML::Value << param->second.vit;
+			body << ryml_tool::emit::Key << "Vit" << ryml_tool::emit::Value << param->second.vit;
 		if (param->second.int_ > 0)
-			body << YAML::Key << "Int" << YAML::Value << param->second.int_;
+			body << ryml_tool::emit::Key << "Int" << ryml_tool::emit::Value << param->second.int_;
 		if (param->second.dex > 0)
-			body << YAML::Key << "Dex" << YAML::Value << param->second.dex;
+			body << ryml_tool::emit::Key << "Dex" << ryml_tool::emit::Value << param->second.dex;
 		if (param->second.luk > 0)
-			body << YAML::Key << "Luk" << YAML::Value << param->second.luk;
+			body << ryml_tool::emit::Key << "Luk" << ryml_tool::emit::Value << param->second.luk;
 
-		body << YAML::EndMap;
+		body << ryml_tool::emit::EndMap;
 	}
-	body << YAML::EndMap;
+	body << ryml_tool::emit::EndMap;
 
 	return true;
 }
@@ -4533,74 +4533,74 @@ static bool read_elemental_skilldb( char* str[], size_t columns, size_t current 
 
 // Copied and adjusted from elemental.cpp
 static bool read_elementaldb( char* str[], size_t columns, size_t current ){
-	body << YAML::BeginMap;
-	body << YAML::Key << "Id" << YAML::Value << str[0];
-	body << YAML::Key << "AegisName" << YAML::Value << str[1];
-	body << YAML::Key << "Name" << YAML::Value << str[2];
-	body << YAML::Key << "Level" << YAML::Value << str[3];
+	body << ryml_tool::emit::BeginMap;
+	body << ryml_tool::emit::Key << "Id" << ryml_tool::emit::Value << str[0];
+	body << ryml_tool::emit::Key << "AegisName" << ryml_tool::emit::Value << str[1];
+	body << ryml_tool::emit::Key << "Name" << ryml_tool::emit::Value << str[2];
+	body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << str[3];
 	if (atoi(str[4]) != 0)
-		body << YAML::Key << "Hp" << YAML::Value << str[4];
+		body << ryml_tool::emit::Key << "Hp" << ryml_tool::emit::Value << str[4];
 	if (atoi(str[5]) != 1)
-		body << YAML::Key << "Sp" << YAML::Value << str[5];
+		body << ryml_tool::emit::Key << "Sp" << ryml_tool::emit::Value << str[5];
 	if (atoi(str[7]) != 0)
-		body << YAML::Key << "Attack" << YAML::Value << str[7];
+		body << ryml_tool::emit::Key << "Attack" << ryml_tool::emit::Value << str[7];
 	if (atoi(str[8]) != 0)
-		body << YAML::Key << "Attack2" << YAML::Value << str[8];
+		body << ryml_tool::emit::Key << "Attack2" << ryml_tool::emit::Value << str[8];
 	if (atoi(str[9]) != 0)
-		body << YAML::Key << "Defense" << YAML::Value << str[9];
+		body << ryml_tool::emit::Key << "Defense" << ryml_tool::emit::Value << str[9];
 	if (atoi(str[10]) != 0)
-		body << YAML::Key << "MagicDefense" << YAML::Value << str[10];
+		body << ryml_tool::emit::Key << "MagicDefense" << ryml_tool::emit::Value << str[10];
 	if (atoi(str[11]) != 0)
-		body << YAML::Key << "Str" << YAML::Value << str[11];
+		body << ryml_tool::emit::Key << "Str" << ryml_tool::emit::Value << str[11];
 	if (atoi(str[12]) != 0)
-		body << YAML::Key << "Agi" << YAML::Value << str[12];
+		body << ryml_tool::emit::Key << "Agi" << ryml_tool::emit::Value << str[12];
 	if (atoi(str[13]) != 0)
-		body << YAML::Key << "Vit" << YAML::Value << str[13];
+		body << ryml_tool::emit::Key << "Vit" << ryml_tool::emit::Value << str[13];
 	if (atoi(str[14]) != 0)
-		body << YAML::Key << "Int" << YAML::Value << str[14];
+		body << ryml_tool::emit::Key << "Int" << ryml_tool::emit::Value << str[14];
 	if (atoi(str[15]) != 0)
-		body << YAML::Key << "Dex" << YAML::Value << str[15];
+		body << ryml_tool::emit::Key << "Dex" << ryml_tool::emit::Value << str[15];
 	if (atoi(str[16]) != 0)
-		body << YAML::Key << "Luk" << YAML::Value << str[16];
+		body << ryml_tool::emit::Key << "Luk" << ryml_tool::emit::Value << str[16];
 	if (atoi(str[6]) != 1)
-		body << YAML::Key << "AttackRange" << YAML::Value << str[6];
+		body << ryml_tool::emit::Key << "AttackRange" << ryml_tool::emit::Value << str[6];
 	if (atoi(str[17]) != 5)
-		body << YAML::Key << "SkillRange" << YAML::Value << str[17];
+		body << ryml_tool::emit::Key << "SkillRange" << ryml_tool::emit::Value << str[17];
 	if (atoi(str[18]) != 12)
-		body << YAML::Key << "ChaseRange" << YAML::Value << str[18];
-	body << YAML::Key << "Size" << YAML::Value << constant_lookup(strtol(str[19], nullptr, 10), "Size_") + 5;
+		body << ryml_tool::emit::Key << "ChaseRange" << ryml_tool::emit::Value << str[18];
+	body << ryml_tool::emit::Key << "Size" << ryml_tool::emit::Value << constant_lookup(strtol(str[19], nullptr, 10), "Size_") + 5;
 	if (atoi(str[20]) != 0)
-		body << YAML::Key << "Race" << YAML::Value << name2Upper(constant_lookup(atoi(str[20]), "RC_") + 3);
+		body << ryml_tool::emit::Key << "Race" << ryml_tool::emit::Value << name2Upper(constant_lookup(atoi(str[20]), "RC_") + 3);
 
 	int32 ele = strtol(str[21], nullptr, 10);
-	body << YAML::Key << "Element" << YAML::Value << name2Upper(constant_lookup(ele % 20, "ELE_") + 4);
-	body << YAML::Key << "ElementLevel" << YAML::Value << floor(ele / 20.);
+	body << ryml_tool::emit::Key << "Element" << ryml_tool::emit::Value << name2Upper(constant_lookup(ele % 20, "ELE_") + 4);
+	body << ryml_tool::emit::Key << "ElementLevel" << ryml_tool::emit::Value << floor(ele / 20.);
 
 	if (atoi(str[22]) != 200)
-		body << YAML::Key << "WalkSpeed" << YAML::Value << str[22];
+		body << ryml_tool::emit::Key << "WalkSpeed" << ryml_tool::emit::Value << str[22];
 	if (atoi(str[23]) != 504)
-		body << YAML::Key << "AttackDelay" << YAML::Value << str[23];
+		body << ryml_tool::emit::Key << "AttackDelay" << ryml_tool::emit::Value << str[23];
 	if (atoi(str[24]) != 1020)
-		body << YAML::Key << "AttackMotion" << YAML::Value << str[24];
+		body << ryml_tool::emit::Key << "AttackMotion" << ryml_tool::emit::Value << str[24];
 	if (atoi(str[25]) != 360)
-		body << YAML::Key << "DamageMotion" << YAML::Value << str[25];
+		body << ryml_tool::emit::Key << "DamageMotion" << ryml_tool::emit::Value << str[25];
 
 	auto list = elemental_skill_tree.find( atoi(str[0]) );
 	if (list != elemental_skill_tree.end()) {
-		body << YAML::Key << "Mode";
-			body << YAML::BeginMap;
+		body << ryml_tool::emit::Key << "Mode";
+			body << ryml_tool::emit::BeginMap;
 		for (const auto &it : list->second) {
-			body << YAML::Key << it.mode_name;
-			body << YAML::BeginMap;
-			body << YAML::Key << "Skill" << YAML::Value << it.skill_name;
+			body << ryml_tool::emit::Key << it.mode_name;
+			body << ryml_tool::emit::BeginMap;
+			body << ryml_tool::emit::Key << "Skill" << ryml_tool::emit::Value << it.skill_name;
 			if (it.lv != 1)
-				body << YAML::Key << "Level" << YAML::Value << it.lv;
-			body << YAML::EndMap;
+				body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << it.lv;
+			body << ryml_tool::emit::EndMap;
 		}
-			body << YAML::EndMap;
+			body << ryml_tool::emit::EndMap;
 	}
 
-	body << YAML::EndMap;
+	body << ryml_tool::emit::EndMap;
 
 	return true;
 }
@@ -4636,80 +4636,80 @@ static bool mercenary_read_skilldb( char* str[], size_t columns, size_t current 
 
 // Copied and adjusted from mercenary.cpp
 static bool mercenary_readdb( char* str[], size_t columns, size_t current ){
-	body << YAML::BeginMap;
-	body << YAML::Key << "Id" << YAML::Value << str[0];
-	body << YAML::Key << "AegisName" << YAML::Value << str[1];
-	body << YAML::Key << "Name" << YAML::Value << str[2];
+	body << ryml_tool::emit::BeginMap;
+	body << ryml_tool::emit::Key << "Id" << ryml_tool::emit::Value << str[0];
+	body << ryml_tool::emit::Key << "AegisName" << ryml_tool::emit::Value << str[1];
+	body << ryml_tool::emit::Key << "Name" << ryml_tool::emit::Value << str[2];
 	if (atoi(str[3]) != 1)
-		body << YAML::Key << "Level" << YAML::Value << str[3];
+		body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << str[3];
 	if (atoi(str[4]) != 1)
-		body << YAML::Key << "Hp" << YAML::Value << str[4];
+		body << ryml_tool::emit::Key << "Hp" << ryml_tool::emit::Value << str[4];
 	if (atoi(str[5]) != 1)
-		body << YAML::Key << "Sp" << YAML::Value << str[5];
+		body << ryml_tool::emit::Key << "Sp" << ryml_tool::emit::Value << str[5];
 	if (atoi(str[7]) != 0)
-		body << YAML::Key << "Attack" << YAML::Value << str[7];
+		body << ryml_tool::emit::Key << "Attack" << ryml_tool::emit::Value << str[7];
 	if (atoi(str[8]) != 0)
-		body << YAML::Key << "Attack2" << YAML::Value << str[8];
+		body << ryml_tool::emit::Key << "Attack2" << ryml_tool::emit::Value << str[8];
 	if (atoi(str[9]) != 0)
-		body << YAML::Key << "Defense" << YAML::Value << str[9];
+		body << ryml_tool::emit::Key << "Defense" << ryml_tool::emit::Value << str[9];
 	if (atoi(str[10]) != 0)
-		body << YAML::Key << "MagicDefense" << YAML::Value << str[10];
+		body << ryml_tool::emit::Key << "MagicDefense" << ryml_tool::emit::Value << str[10];
 	if (atoi(str[11]) != 1)
-		body << YAML::Key << "Str" << YAML::Value << str[11];
+		body << ryml_tool::emit::Key << "Str" << ryml_tool::emit::Value << str[11];
 	if (atoi(str[12]) != 1)
-		body << YAML::Key << "Agi" << YAML::Value << str[12];
+		body << ryml_tool::emit::Key << "Agi" << ryml_tool::emit::Value << str[12];
 	if (atoi(str[13]) != 1)
-		body << YAML::Key << "Vit" << YAML::Value << str[13];
+		body << ryml_tool::emit::Key << "Vit" << ryml_tool::emit::Value << str[13];
 	if (atoi(str[14]) != 1)
-		body << YAML::Key << "Int" << YAML::Value << str[14];
+		body << ryml_tool::emit::Key << "Int" << ryml_tool::emit::Value << str[14];
 	if (atoi(str[15]) != 1)
-		body << YAML::Key << "Dex" << YAML::Value << str[15];
+		body << ryml_tool::emit::Key << "Dex" << ryml_tool::emit::Value << str[15];
 	if (atoi(str[16]) != 1)
-		body << YAML::Key << "Luk" << YAML::Value << str[16];
+		body << ryml_tool::emit::Key << "Luk" << ryml_tool::emit::Value << str[16];
 	if (atoi(str[6]) != 0)
-		body << YAML::Key << "AttackRange" << YAML::Value << str[6];
+		body << ryml_tool::emit::Key << "AttackRange" << ryml_tool::emit::Value << str[6];
 	if (atoi(str[17]) != 0)
-		body << YAML::Key << "SkillRange" << YAML::Value << str[17];
+		body << ryml_tool::emit::Key << "SkillRange" << ryml_tool::emit::Value << str[17];
 	if (atoi(str[18]) != 0)
-		body << YAML::Key << "ChaseRange" << YAML::Value << str[18];
+		body << ryml_tool::emit::Key << "ChaseRange" << ryml_tool::emit::Value << str[18];
 	if (atoi(str[19]) != 0)
-		body << YAML::Key << "Size" << YAML::Value << constant_lookup(strtol(str[19], nullptr, 10), "Size_") + 5;
+		body << ryml_tool::emit::Key << "Size" << ryml_tool::emit::Value << constant_lookup(strtol(str[19], nullptr, 10), "Size_") + 5;
 	if (atoi(str[20]) != 0)
-		body << YAML::Key << "Race" << YAML::Value << name2Upper(constant_lookup(atoi(str[20]), "RC_") + 3);
+		body << ryml_tool::emit::Key << "Race" << ryml_tool::emit::Value << name2Upper(constant_lookup(atoi(str[20]), "RC_") + 3);
 
 	int32 ele = strtol(str[21], nullptr, 10);
 	if (atoi(str[21]) != 0)
-		body << YAML::Key << "Element" << YAML::Value << name2Upper(constant_lookup(ele % 20, "ELE_") + 4);
+		body << ryml_tool::emit::Key << "Element" << ryml_tool::emit::Value << name2Upper(constant_lookup(ele % 20, "ELE_") + 4);
 	if (atoi(str[21]) != 1)
-		body << YAML::Key << "ElementLevel" << YAML::Value << floor(ele / 20.);
+		body << ryml_tool::emit::Key << "ElementLevel" << ryml_tool::emit::Value << floor(ele / 20.);
 
 	if (atoi(str[22]) != 0)
-		body << YAML::Key << "WalkSpeed" << YAML::Value << cap_value(std::stoi(str[22]), MIN_WALK_SPEED, MAX_WALK_SPEED);
+		body << ryml_tool::emit::Key << "WalkSpeed" << ryml_tool::emit::Value << cap_value(std::stoi(str[22]), MIN_WALK_SPEED, MAX_WALK_SPEED);
 	if (atoi(str[23]) != 0)
-		body << YAML::Key << "AttackDelay" << YAML::Value << str[23];
+		body << ryml_tool::emit::Key << "AttackDelay" << ryml_tool::emit::Value << str[23];
 	if (atoi(str[24]) != 0)
-		body << YAML::Key << "AttackMotion" << YAML::Value << str[24];
+		body << ryml_tool::emit::Key << "AttackMotion" << ryml_tool::emit::Value << str[24];
 	if (atoi(str[25]) != 0)
-		body << YAML::Key << "DamageMotion" << YAML::Value << str[25];
+		body << ryml_tool::emit::Key << "DamageMotion" << ryml_tool::emit::Value << str[25];
 
 	for (const auto &skillit : mercenary_skill_tree) {
 		if (skillit.first != atoi(str[0]))
 			continue;
 
-		body << YAML::Key << "Skills";
-		body << YAML::BeginSeq;
+		body << ryml_tool::emit::Key << "Skills";
+		body << ryml_tool::emit::BeginSeq;
 
 		for (const auto &it : skillit.second) {
-			body << YAML::BeginMap;
-			body << YAML::Key << "Name" << YAML::Value << it.skill_name;
-			body << YAML::Key << "MaxLevel" << YAML::Value << it.max_lv;
-			body << YAML::EndMap;
+			body << ryml_tool::emit::BeginMap;
+			body << ryml_tool::emit::Key << "Name" << ryml_tool::emit::Value << it.skill_name;
+			body << ryml_tool::emit::Key << "MaxLevel" << ryml_tool::emit::Value << it.max_lv;
+			body << ryml_tool::emit::EndMap;
 		}
 
-		body << YAML::EndSeq;
+		body << ryml_tool::emit::EndSeq;
 	}
 
-	body << YAML::EndMap;
+	body << ryml_tool::emit::EndMap;
 
 	return true;
 }
@@ -4791,35 +4791,35 @@ static bool pc_readdb_skilltree( char* fields[], size_t columns, size_t current 
 
 static bool pc_readdb_skilltree_yaml(void) {
 	for (const auto &it : skill_tree) {
-		body << YAML::BeginMap;
+		body << ryml_tool::emit::BeginMap;
 		std::string job = constant_lookup(it.first, "JOB_");
 		job.erase( 0, 4 );
-		body << YAML::Key << "Job" << YAML::Value << name2Upper( job );
-		body << YAML::Key << "Tree";
-		body << YAML::BeginSeq;
+		body << ryml_tool::emit::Key << "Job" << ryml_tool::emit::Value << name2Upper( job );
+		body << ryml_tool::emit::Key << "Tree";
+		body << ryml_tool::emit::BeginSeq;
 		for (const auto &subit : it.second) {
-			body << YAML::BeginMap;
-			body << YAML::Key << "Name" << YAML::Value << subit.skill_name;
-			body << YAML::Key << "MaxLevel" << YAML::Value << subit.skill_lv;
+			body << ryml_tool::emit::BeginMap;
+			body << ryml_tool::emit::Key << "Name" << ryml_tool::emit::Value << subit.skill_name;
+			body << ryml_tool::emit::Key << "MaxLevel" << ryml_tool::emit::Value << subit.skill_lv;
 			if (!subit.need.empty()) {
-				body << YAML::Key << "Requires";
-				body << YAML::BeginSeq;
+				body << ryml_tool::emit::Key << "Requires";
+				body << ryml_tool::emit::BeginSeq;
 				for (const auto &terit : subit.need) {
-					body << YAML::BeginMap;
-					body << YAML::Key << "Name" << YAML::Value << terit.first;
-					body << YAML::Key << "Level" << YAML::Value << terit.second;
-					body << YAML::EndMap;
+					body << ryml_tool::emit::BeginMap;
+					body << ryml_tool::emit::Key << "Name" << ryml_tool::emit::Value << terit.first;
+					body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << terit.second;
+					body << ryml_tool::emit::EndMap;
 				}
-				body << YAML::EndSeq;
+				body << ryml_tool::emit::EndSeq;
 			}
 			if (subit.baselv > 0)
-				body << YAML::Key << "BaseLevel" << YAML::Value << subit.baselv;
+				body << ryml_tool::emit::Key << "BaseLevel" << ryml_tool::emit::Value << subit.baselv;
 			if (subit.joblv > 0)
-				body << YAML::Key << "JobLevel" << YAML::Value << subit.joblv;
-			body << YAML::EndMap;
+				body << ryml_tool::emit::Key << "JobLevel" << ryml_tool::emit::Value << subit.joblv;
+			body << ryml_tool::emit::EndMap;
 		}
-		body << YAML::EndSeq;
-		body << YAML::EndMap;
+		body << ryml_tool::emit::EndSeq;
+		body << ryml_tool::emit::EndMap;
 	}
 	return true;
 }
@@ -4913,29 +4913,29 @@ static bool itemdb_read_combos(const char* file) {
 		if (v < retcount)
 			continue;
 
-		body << YAML::BeginMap;
-		body << YAML::Key << "Combos";
-		body << YAML::BeginSeq;
+		body << ryml_tool::emit::BeginMap;
+		body << ryml_tool::emit::Key << "Combos";
+		body << ryml_tool::emit::BeginSeq;
 
-		body << YAML::BeginMap;
-		body << YAML::Key << "Combo";
-		body << YAML::BeginSeq;
+		body << ryml_tool::emit::BeginMap;
+		body << ryml_tool::emit::Key << "Combo";
+		body << ryml_tool::emit::BeginSeq;
 
 		for (v = 0; v < retcount; v++) {
-			body << YAML::BeginMap;
+			body << ryml_tool::emit::BeginMap;
 			std::string *item_name = util::umap_find(aegis_itemnames, items[v]);
-			body << YAML::Key << *item_name;
-			body << YAML::EndMap;
+			body << ryml_tool::emit::Key << *item_name;
+			body << ryml_tool::emit::EndMap;
 		}
-		body << YAML::EndSeq;
-		body << YAML::EndMap;
+		body << ryml_tool::emit::EndSeq;
+		body << ryml_tool::emit::EndMap;
 
 		str[1] = str[1] + 1;	//skip the first left curly
 		str[1][strlen(str[1])-1] = '\0';	//null the last right curly
 
-		body << YAML::EndSeq;
-		body << YAML::Key << "Script" << YAML::Literal << trim(str[1]);
-		body << YAML::EndMap;
+		body << ryml_tool::emit::EndSeq;
+		body << ryml_tool::emit::Key << "Script" << ryml_tool::emit::Literal << trim(str[1]);
+		body << ryml_tool::emit::EndMap;
 
 		count++;
 	}
@@ -4977,16 +4977,16 @@ static bool cashshop_parse_dbrow( char* fields[], size_t columns, size_t current
 	constant.erase( 0, 13 );
 	constant = name2Upper( constant );
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Tab" << YAML::Value << constant;
-	body << YAML::Key << "Items";
-	body << YAML::BeginSeq;
-	body << YAML::BeginMap;
-	body << YAML::Key << "Item" << YAML::Value << *item_name;
-	body << YAML::Key << "Price" << YAML::Value << price;
-	body << YAML::EndMap;
-	body << YAML::EndSeq;
-	body << YAML::EndMap;
+	body << ryml_tool::emit::BeginMap;
+	body << ryml_tool::emit::Key << "Tab" << ryml_tool::emit::Value << constant;
+	body << ryml_tool::emit::Key << "Items";
+	body << ryml_tool::emit::BeginSeq;
+	body << ryml_tool::emit::BeginMap;
+	body << ryml_tool::emit::Key << "Item" << ryml_tool::emit::Value << *item_name;
+	body << ryml_tool::emit::Key << "Price" << ryml_tool::emit::Value << price;
+	body << ryml_tool::emit::EndMap;
+	body << ryml_tool::emit::EndSeq;
+	body << ryml_tool::emit::EndMap;
 
 	return true;
 }
@@ -5024,121 +5024,121 @@ static bool compareHomSkillId(const s_homun_skill_tree_entry &a, const s_homun_s
 static bool read_homunculusdb( char* str[], size_t columns, size_t current ){
 	bool has_evo = false;
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Class" << YAML::Value << name2Upper(constant_lookup(atoi(str[0]), "MER_") + 4);
-	body << YAML::Key << "Name" << YAML::Value << str[2];
+	body << ryml_tool::emit::BeginMap;
+	body << ryml_tool::emit::Key << "Class" << ryml_tool::emit::Value << name2Upper(constant_lookup(atoi(str[0]), "MER_") + 4);
+	body << ryml_tool::emit::Key << "Name" << ryml_tool::emit::Value << str[2];
 	if (atoi(str[0]) != atoi(str[1])) {
-		body << YAML::Key << "EvolutionClass" << YAML::Value << name2Upper(constant_lookup(atoi(str[1]), "MER_") + 4);
+		body << ryml_tool::emit::Key << "EvolutionClass" << ryml_tool::emit::Value << name2Upper(constant_lookup(atoi(str[1]), "MER_") + 4);
 		has_evo = true;
 	}
 	if (atoi(str[3]) != ITEMID_PET_FOOD)
-		body << YAML::Key << "Food" << YAML::Value << name2Upper(*util::umap_find(aegis_itemnames, (t_itemid)atoi(str[3])));
+		body << ryml_tool::emit::Key << "Food" << ryml_tool::emit::Value << name2Upper(*util::umap_find(aegis_itemnames, (t_itemid)atoi(str[3])));
 	if (atoi(str[4]) != 60000)
-		body << YAML::Key << "HungryDelay" << YAML::Value << atoi(str[4]);
+		body << ryml_tool::emit::Key << "HungryDelay" << ryml_tool::emit::Value << atoi(str[4]);
 
 	if (atoi(str[7]) != RC_DEMIHUMAN)
-		body << YAML::Key << "Race" << YAML::Value << name2Upper(constant_lookup(atoi(str[7]), "RC_") + 3);
+		body << ryml_tool::emit::Key << "Race" << ryml_tool::emit::Value << name2Upper(constant_lookup(atoi(str[7]), "RC_") + 3);
 	if (atoi(str[8]) != ELE_NEUTRAL)
-	body << YAML::Key << "Element" << YAML::Value << name2Upper(constant_lookup(atoi(str[8]), "ELE_") + 4);
+	body << ryml_tool::emit::Key << "Element" << ryml_tool::emit::Value << name2Upper(constant_lookup(atoi(str[8]), "ELE_") + 4);
 	if (atoi(str[5]) != SZ_SMALL)
-		body << YAML::Key << "Size" << YAML::Value << name2Upper(constant_lookup(atoi(str[5]), "Size_") + 5);
+		body << ryml_tool::emit::Key << "Size" << ryml_tool::emit::Value << name2Upper(constant_lookup(atoi(str[5]), "Size_") + 5);
 	if (atoi(str[6]) != SZ_MEDIUM)
-		body << YAML::Key << "EvolutionSize" << YAML::Value << name2Upper(constant_lookup(atoi(str[6]), "Size_") + 5);
+		body << ryml_tool::emit::Key << "EvolutionSize" << ryml_tool::emit::Value << name2Upper(constant_lookup(atoi(str[6]), "Size_") + 5);
 	if (atoi(str[9]) != 700)
-		body << YAML::Key << "AttackDelay" << YAML::Value << atoi(str[9]);
+		body << ryml_tool::emit::Key << "AttackDelay" << ryml_tool::emit::Value << atoi(str[9]);
 
-	body << YAML::Key << "Status";
-	body << YAML::BeginSeq;
+	body << ryml_tool::emit::Key << "Status";
+	body << ryml_tool::emit::BeginSeq;
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Type" << YAML::Value << "Hp";
-	body << YAML::Key << "Base" << YAML::Value << atoi(str[10]);
-	body << YAML::Key << "GrowthMinimum" << YAML::Value << atoi(str[18]);
-	body << YAML::Key << "GrowthMaximum" << YAML::Value << atoi(str[19]);
+	body << ryml_tool::emit::BeginMap;
+	body << ryml_tool::emit::Key << "Type" << ryml_tool::emit::Value << "Hp";
+	body << ryml_tool::emit::Key << "Base" << ryml_tool::emit::Value << atoi(str[10]);
+	body << ryml_tool::emit::Key << "GrowthMinimum" << ryml_tool::emit::Value << atoi(str[18]);
+	body << ryml_tool::emit::Key << "GrowthMaximum" << ryml_tool::emit::Value << atoi(str[19]);
 	if (has_evo) {
-		body << YAML::Key << "EvolutionMinimum" << YAML::Value << atoi(str[34]);
-		body << YAML::Key << "EvolutionMaximum" << YAML::Value << atoi(str[35]);
+		body << ryml_tool::emit::Key << "EvolutionMinimum" << ryml_tool::emit::Value << atoi(str[34]);
+		body << ryml_tool::emit::Key << "EvolutionMaximum" << ryml_tool::emit::Value << atoi(str[35]);
 	}
-	body << YAML::EndMap;
+	body << ryml_tool::emit::EndMap;
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Type" << YAML::Value << "Sp";
-	body << YAML::Key << "Base" << YAML::Value << atoi(str[11]);
-	body << YAML::Key << "GrowthMinimum" << YAML::Value << atoi(str[20]);
-	body << YAML::Key << "GrowthMaximum" << YAML::Value << atoi(str[21]);
+	body << ryml_tool::emit::BeginMap;
+	body << ryml_tool::emit::Key << "Type" << ryml_tool::emit::Value << "Sp";
+	body << ryml_tool::emit::Key << "Base" << ryml_tool::emit::Value << atoi(str[11]);
+	body << ryml_tool::emit::Key << "GrowthMinimum" << ryml_tool::emit::Value << atoi(str[20]);
+	body << ryml_tool::emit::Key << "GrowthMaximum" << ryml_tool::emit::Value << atoi(str[21]);
 	if (has_evo) {
-		body << YAML::Key << "EvolutionMinimum" << YAML::Value << atoi(str[36]);
-		body << YAML::Key << "EvolutionMaximum" << YAML::Value << atoi(str[37]);
+		body << ryml_tool::emit::Key << "EvolutionMinimum" << ryml_tool::emit::Value << atoi(str[36]);
+		body << ryml_tool::emit::Key << "EvolutionMaximum" << ryml_tool::emit::Value << atoi(str[37]);
 	}
-	body << YAML::EndMap;
+	body << ryml_tool::emit::EndMap;
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Type" << YAML::Value << "Str";
-	body << YAML::Key << "Base" << YAML::Value << atoi(str[12]);
-	body << YAML::Key << "GrowthMinimum" << YAML::Value << atoi(str[22]);
-	body << YAML::Key << "GrowthMaximum" << YAML::Value << atoi(str[23]);
+	body << ryml_tool::emit::BeginMap;
+	body << ryml_tool::emit::Key << "Type" << ryml_tool::emit::Value << "Str";
+	body << ryml_tool::emit::Key << "Base" << ryml_tool::emit::Value << atoi(str[12]);
+	body << ryml_tool::emit::Key << "GrowthMinimum" << ryml_tool::emit::Value << atoi(str[22]);
+	body << ryml_tool::emit::Key << "GrowthMaximum" << ryml_tool::emit::Value << atoi(str[23]);
 	if (has_evo) {
-		body << YAML::Key << "EvolutionMinimum" << YAML::Value << atoi(str[38]);
-		body << YAML::Key << "EvolutionMaximum" << YAML::Value << atoi(str[39]);
+		body << ryml_tool::emit::Key << "EvolutionMinimum" << ryml_tool::emit::Value << atoi(str[38]);
+		body << ryml_tool::emit::Key << "EvolutionMaximum" << ryml_tool::emit::Value << atoi(str[39]);
 	}
-	body << YAML::EndMap;
+	body << ryml_tool::emit::EndMap;
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Type" << YAML::Value << "Agi";
-	body << YAML::Key << "Base" << YAML::Value << atoi(str[13]);
-	body << YAML::Key << "GrowthMinimum" << YAML::Value << atoi(str[24]);
-	body << YAML::Key << "GrowthMaximum" << YAML::Value << atoi(str[25]);
+	body << ryml_tool::emit::BeginMap;
+	body << ryml_tool::emit::Key << "Type" << ryml_tool::emit::Value << "Agi";
+	body << ryml_tool::emit::Key << "Base" << ryml_tool::emit::Value << atoi(str[13]);
+	body << ryml_tool::emit::Key << "GrowthMinimum" << ryml_tool::emit::Value << atoi(str[24]);
+	body << ryml_tool::emit::Key << "GrowthMaximum" << ryml_tool::emit::Value << atoi(str[25]);
 	if (has_evo) {
-		body << YAML::Key << "EvolutionMinimum" << YAML::Value << atoi(str[40]);
-		body << YAML::Key << "EvolutionMaximum" << YAML::Value << atoi(str[41]);
+		body << ryml_tool::emit::Key << "EvolutionMinimum" << ryml_tool::emit::Value << atoi(str[40]);
+		body << ryml_tool::emit::Key << "EvolutionMaximum" << ryml_tool::emit::Value << atoi(str[41]);
 	}
-	body << YAML::EndMap;
+	body << ryml_tool::emit::EndMap;
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Type" << YAML::Value << "Vit";
-	body << YAML::Key << "Base" << YAML::Value << atoi(str[14]);
-	body << YAML::Key << "GrowthMinimum" << YAML::Value << atoi(str[26]);
-	body << YAML::Key << "GrowthMaximum" << YAML::Value << atoi(str[27]);
+	body << ryml_tool::emit::BeginMap;
+	body << ryml_tool::emit::Key << "Type" << ryml_tool::emit::Value << "Vit";
+	body << ryml_tool::emit::Key << "Base" << ryml_tool::emit::Value << atoi(str[14]);
+	body << ryml_tool::emit::Key << "GrowthMinimum" << ryml_tool::emit::Value << atoi(str[26]);
+	body << ryml_tool::emit::Key << "GrowthMaximum" << ryml_tool::emit::Value << atoi(str[27]);
 	if (has_evo) {
-		body << YAML::Key << "EvolutionMinimum" << YAML::Value << atoi(str[42]);
-		body << YAML::Key << "EvolutionMaximum" << YAML::Value << atoi(str[43]);
+		body << ryml_tool::emit::Key << "EvolutionMinimum" << ryml_tool::emit::Value << atoi(str[42]);
+		body << ryml_tool::emit::Key << "EvolutionMaximum" << ryml_tool::emit::Value << atoi(str[43]);
 	}
-	body << YAML::EndMap;
+	body << ryml_tool::emit::EndMap;
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Type" << YAML::Value << "Int";
-	body << YAML::Key << "Base" << YAML::Value << atoi(str[15]);
-	body << YAML::Key << "GrowthMinimum" << YAML::Value << atoi(str[28]);
-	body << YAML::Key << "GrowthMaximum" << YAML::Value << atoi(str[29]);
+	body << ryml_tool::emit::BeginMap;
+	body << ryml_tool::emit::Key << "Type" << ryml_tool::emit::Value << "Int";
+	body << ryml_tool::emit::Key << "Base" << ryml_tool::emit::Value << atoi(str[15]);
+	body << ryml_tool::emit::Key << "GrowthMinimum" << ryml_tool::emit::Value << atoi(str[28]);
+	body << ryml_tool::emit::Key << "GrowthMaximum" << ryml_tool::emit::Value << atoi(str[29]);
 	if (has_evo) {
-		body << YAML::Key << "EvolutionMinimum" << YAML::Value << atoi(str[44]);
-		body << YAML::Key << "EvolutionMaximum" << YAML::Value << atoi(str[45]);
+		body << ryml_tool::emit::Key << "EvolutionMinimum" << ryml_tool::emit::Value << atoi(str[44]);
+		body << ryml_tool::emit::Key << "EvolutionMaximum" << ryml_tool::emit::Value << atoi(str[45]);
 	}
-	body << YAML::EndMap;
+	body << ryml_tool::emit::EndMap;
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Type" << YAML::Value << "Dex";
-	body << YAML::Key << "Base" << YAML::Value << atoi(str[16]);
-	body << YAML::Key << "GrowthMinimum" << YAML::Value << atoi(str[30]);
-	body << YAML::Key << "GrowthMaximum" << YAML::Value << atoi(str[31]);
+	body << ryml_tool::emit::BeginMap;
+	body << ryml_tool::emit::Key << "Type" << ryml_tool::emit::Value << "Dex";
+	body << ryml_tool::emit::Key << "Base" << ryml_tool::emit::Value << atoi(str[16]);
+	body << ryml_tool::emit::Key << "GrowthMinimum" << ryml_tool::emit::Value << atoi(str[30]);
+	body << ryml_tool::emit::Key << "GrowthMaximum" << ryml_tool::emit::Value << atoi(str[31]);
 	if (has_evo) {
-		body << YAML::Key << "EvolutionMinimum" << YAML::Value << atoi(str[46]);
-		body << YAML::Key << "EvolutionMaximum" << YAML::Value << atoi(str[47]);
+		body << ryml_tool::emit::Key << "EvolutionMinimum" << ryml_tool::emit::Value << atoi(str[46]);
+		body << ryml_tool::emit::Key << "EvolutionMaximum" << ryml_tool::emit::Value << atoi(str[47]);
 	}
-	body << YAML::EndMap;
+	body << ryml_tool::emit::EndMap;
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Type" << YAML::Value << "Luk";
-	body << YAML::Key << "Base" << YAML::Value << atoi(str[17]);
-	body << YAML::Key << "GrowthMinimum" << YAML::Value << atoi(str[32]);
-	body << YAML::Key << "GrowthMaximum" << YAML::Value << atoi(str[33]);
+	body << ryml_tool::emit::BeginMap;
+	body << ryml_tool::emit::Key << "Type" << ryml_tool::emit::Value << "Luk";
+	body << ryml_tool::emit::Key << "Base" << ryml_tool::emit::Value << atoi(str[17]);
+	body << ryml_tool::emit::Key << "GrowthMinimum" << ryml_tool::emit::Value << atoi(str[32]);
+	body << ryml_tool::emit::Key << "GrowthMaximum" << ryml_tool::emit::Value << atoi(str[33]);
 	if (has_evo) {
-		body << YAML::Key << "EvolutionMinimum" << YAML::Value << atoi(str[48]);
-		body << YAML::Key << "EvolutionMaximum" << YAML::Value << atoi(str[49]);
+		body << ryml_tool::emit::Key << "EvolutionMinimum" << ryml_tool::emit::Value << atoi(str[48]);
+		body << ryml_tool::emit::Key << "EvolutionMaximum" << ryml_tool::emit::Value << atoi(str[49]);
 	}
-	body << YAML::EndMap;
+	body << ryml_tool::emit::EndMap;
 
-	body << YAML::EndSeq;
+	body << ryml_tool::emit::EndSeq;
 
 	// Gather and sort skill tree data
 	std::vector<s_homun_skill_tree_entry> *skill_tree_base = nullptr, *skill_tree_evo = nullptr;
@@ -5173,8 +5173,8 @@ static bool read_homunculusdb( char* str[], size_t columns, size_t current ){
 	}
 
 	if (skill_tree_base != nullptr) {
-		body << YAML::Key << "SkillTree";
-		body << YAML::BeginSeq;
+		body << ryml_tool::emit::Key << "SkillTree";
+		body << ryml_tool::emit::BeginSeq;
 
 		for (const auto &skillit : *skill_tree_base) {
 			std::string *skill_name = util::umap_find(aegis_skillnames, skillit.id);
@@ -5184,17 +5184,17 @@ static bool read_homunculusdb( char* str[], size_t columns, size_t current ){
 				return false;
 			}
 
-			body << YAML::BeginMap;
-			body << YAML::Key << "Skill" << YAML::Value << *skill_name;
-			body << YAML::Key << "MaxLevel" << YAML::Value << (int32)skillit.max;
+			body << ryml_tool::emit::BeginMap;
+			body << ryml_tool::emit::Key << "Skill" << ryml_tool::emit::Value << *skill_name;
+			body << ryml_tool::emit::Key << "MaxLevel" << ryml_tool::emit::Value << (int32)skillit.max;
 			if (skillit.need_level > 0)
-				body << YAML::Key << "RequiredLevel" << YAML::Value << (int32)skillit.need_level;
+				body << ryml_tool::emit::Key << "RequiredLevel" << ryml_tool::emit::Value << (int32)skillit.need_level;
 			if (skillit.intimacy > 0)
-				body << YAML::Key << "RequiredIntimacy" << YAML::Value << skillit.intimacy;
+				body << ryml_tool::emit::Key << "RequiredIntimacy" << ryml_tool::emit::Value << skillit.intimacy;
 
 			if (!skillit.need.empty()) {
-				body << YAML::Key << "Required";
-				body << YAML::BeginSeq;
+				body << ryml_tool::emit::Key << "Required";
+				body << ryml_tool::emit::BeginSeq;
 
 				for (const auto &it : skillit.need) {
 					uint16 required_skill_id = it.first;
@@ -5210,16 +5210,16 @@ static bool read_homunculusdb( char* str[], size_t columns, size_t current ){
 						return false;
 					}
 
-					body << YAML::BeginMap;
-					body << YAML::Key << "Skill" << YAML::Value << *required_name;
-					body << YAML::Key << "Level" << YAML::Value << required_skill_level;
-					body << YAML::EndMap;
+					body << ryml_tool::emit::BeginMap;
+					body << ryml_tool::emit::Key << "Skill" << ryml_tool::emit::Value << *required_name;
+					body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << required_skill_level;
+					body << ryml_tool::emit::EndMap;
 				}
 
-				body << YAML::EndSeq;
+				body << ryml_tool::emit::EndSeq;
 			}
 
-			body << YAML::EndMap;
+			body << ryml_tool::emit::EndMap;
 		}
 
 		for (const auto &skillit : tree_diff) {
@@ -5230,18 +5230,18 @@ static bool read_homunculusdb( char* str[], size_t columns, size_t current ){
 				return false;
 			}
 
-			body << YAML::BeginMap;
-			body << YAML::Key << "Skill" << YAML::Value << *skill_name;
-			body << YAML::Key << "MaxLevel" << YAML::Value << (int32)skillit.max;
+			body << ryml_tool::emit::BeginMap;
+			body << ryml_tool::emit::Key << "Skill" << ryml_tool::emit::Value << *skill_name;
+			body << ryml_tool::emit::Key << "MaxLevel" << ryml_tool::emit::Value << (int32)skillit.max;
 			if (skillit.need_level > 0)
-				body << YAML::Key << "RequiredLevel" << YAML::Value << (int32)skillit.need_level;
+				body << ryml_tool::emit::Key << "RequiredLevel" << ryml_tool::emit::Value << (int32)skillit.need_level;
 			if (skillit.intimacy > 0)
-				body << YAML::Key << "RequiredIntimacy" << YAML::Value << skillit.intimacy;
-			body << YAML::Key << "RequireEvolution" << YAML::Value << "true";
+				body << ryml_tool::emit::Key << "RequiredIntimacy" << ryml_tool::emit::Value << skillit.intimacy;
+			body << ryml_tool::emit::Key << "RequireEvolution" << ryml_tool::emit::Value << "true";
 
 			if (!skillit.need.empty()) {
-				body << YAML::Key << "Required";
-				body << YAML::BeginSeq;
+				body << ryml_tool::emit::Key << "Required";
+				body << ryml_tool::emit::BeginSeq;
 
 				for (const auto &it : skillit.need) {
 					uint16 required_skill_id = it.first;
@@ -5257,22 +5257,22 @@ static bool read_homunculusdb( char* str[], size_t columns, size_t current ){
 						return false;
 					}
 
-					body << YAML::BeginMap;
-					body << YAML::Key << "Skill" << YAML::Value << *required_name;
-					body << YAML::Key << "Level" << YAML::Value << required_skill_level;
-					body << YAML::EndMap;
+					body << ryml_tool::emit::BeginMap;
+					body << ryml_tool::emit::Key << "Skill" << ryml_tool::emit::Value << *required_name;
+					body << ryml_tool::emit::Key << "Level" << ryml_tool::emit::Value << required_skill_level;
+					body << ryml_tool::emit::EndMap;
 				}
 
-				body << YAML::EndSeq;
+				body << ryml_tool::emit::EndSeq;
 			}
 
-			body << YAML::EndMap;
+			body << ryml_tool::emit::EndMap;
 		}
 
-		body << YAML::EndSeq;
+		body << ryml_tool::emit::EndSeq;
 	}
 
-	body << YAML::EndMap;
+	body << ryml_tool::emit::EndMap;
 
 	return true;
 }

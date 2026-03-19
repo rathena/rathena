@@ -113,7 +113,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>$(DefineConstants);WIN32;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;LIBCONFIG_STATIC;YAML_CPP_STATIC_DEFINE;YY_USE_CONST;MINICORE;_DEBUG;_CONSOLE;_LIB;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SolutionDir)src;$(SolutionDir)3rdparty\yaml-cpp\include\;$(SolutionDir)3rdparty\rapidyaml\src;$(SolutionDir)3rdparty\rapidyaml\ext\c4core\src;$(SolutionDir)3rdparty\libconfig\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src;$(SolutionDir)3rdparty\rapidyaml\src;$(SolutionDir)3rdparty\rapidyaml\ext\c4core\src;$(SolutionDir)3rdparty\libconfig\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -121,7 +121,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ws2_32.lib;$(SolutionDir).vs\build\common-minicore.lib;$(SolutionDir)3rdparty\zlib\lib\$(Platform)\zlib.lib;$(SolutionDir).vs\build\yaml-cpp.lib;$(SolutionDir).vs\build\ryml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ws2_32.lib;$(SolutionDir).vs\build\common-minicore.lib;$(SolutionDir)3rdparty\zlib\lib\$(Platform)\zlib.lib;$(SolutionDir).vs\build\ryml.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -134,13 +134,13 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)src;$(SolutionDir)3rdparty\yaml-cpp\include\;$(SolutionDir)3rdparty\rapidyaml\src;$(SolutionDir)3rdparty\rapidyaml\ext\c4core\src;$(SolutionDir)3rdparty\libconfig\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src;$(SolutionDir)3rdparty\rapidyaml\src;$(SolutionDir)3rdparty\rapidyaml\ext\c4core\src;$(SolutionDir)3rdparty\libconfig\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ws2_32.lib;$(SolutionDir).vs\build\common-minicore.lib;$(SolutionDir)3rdparty\zlib\lib\$(Platform)\zlib.lib;$(SolutionDir).vs\build\yaml-cpp.lib;$(SolutionDir).vs\build\ryml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ws2_32.lib;$(SolutionDir).vs\build\common-minicore.lib;$(SolutionDir)3rdparty\zlib\lib\$(Platform)\zlib.lib;$(SolutionDir).vs\build\ryml.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -155,7 +155,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)src;$(SolutionDir)3rdparty\yaml-cpp\include\;$(SolutionDir)3rdparty\rapidyaml\src;$(SolutionDir)3rdparty\rapidyaml\ext\c4core\src;$(SolutionDir)3rdparty\libconfig\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src;$(SolutionDir)3rdparty\rapidyaml\src;$(SolutionDir)3rdparty\rapidyaml\ext\c4core\src;$(SolutionDir)3rdparty\libconfig\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -163,7 +163,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>ws2_32.lib;$(SolutionDir).vs\build\common-minicore.lib;$(SolutionDir)3rdparty\zlib\lib\$(Platform)\zlib.lib;$(SolutionDir).vs\build\yaml-cpp.lib;$(SolutionDir).vs\build\ryml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ws2_32.lib;$(SolutionDir).vs\build\common-minicore.lib;$(SolutionDir)3rdparty\zlib\lib\$(Platform)\zlib.lib;$(SolutionDir).vs\build\ryml.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -178,7 +178,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)src;$(SolutionDir)3rdparty\yaml-cpp\include\;$(SolutionDir)3rdparty\rapidyaml\src;$(SolutionDir)3rdparty\rapidyaml\ext\c4core\src;$(SolutionDir)3rdparty\libconfig\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src;$(SolutionDir)3rdparty\rapidyaml\src;$(SolutionDir)3rdparty\rapidyaml\ext\c4core\src;$(SolutionDir)3rdparty\libconfig\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -186,7 +186,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>ws2_32.lib;$(SolutionDir).vs\build\common-minicore.lib;$(SolutionDir)3rdparty\zlib\lib\$(Platform)\zlib.lib;$(SolutionDir).vs\build\yaml-cpp.lib;$(SolutionDir).vs\build\ryml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ws2_32.lib;$(SolutionDir).vs\build\common-minicore.lib;$(SolutionDir)3rdparty\zlib\lib\$(Platform)\zlib.lib;$(SolutionDir).vs\build\ryml.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
