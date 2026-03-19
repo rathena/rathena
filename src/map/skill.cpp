@@ -4767,6 +4767,11 @@ static int8 skill_castend_id_check(block_list *src, block_list *target, uint16 s
 					return USESKILL_FAIL_MAX;
 			}
 			break;
+		case RG_STEALCOIN:
+			// Does not work on non-monsters, bosses and targets already mugged
+			if (target->type != BL_MOB || status_bl_has_mode(target, MD_STATUSIMMUNE) || ((TBL_MOB*)target)->state.steal_coin_flag)
+				return USESKILL_FAIL;
+			break;
 		case PR_TURNUNDEAD:
 			{
 				status_data* tstatus = status_get_status_data(*target);

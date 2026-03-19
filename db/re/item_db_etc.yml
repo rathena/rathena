@@ -89903,15 +89903,19 @@ Body:
     Name: Blue Fighting Spirit Effect    # !todo check english name
     Type: Card
     SubType: Enchant
-#   Script: |
-#     /* TODO */
+    Script: |
+      hateffect HAT_EF_ROS_BlueSpirit,true;
+    UnEquipScript: |
+      hateffect HAT_EF_ROS_BlueSpirit,false;
   - Id: 314095
     AegisName: aegis_314095
     Name: Red Fighting Spirit Effect    # !todo check english name
     Type: Card
     SubType: Enchant
-#   Script: |
-#     /* TODO */
+    Script: |
+      hateffect HAT_EF_ROS_RedSpirit,true;
+    UnEquipScript: |
+      hateffect HAT_EF_ROS_RedSpirit,false;
   - Id: 314171
     AegisName: aegis_314171
     Name: Footprint (2D)
@@ -100706,6 +100710,11 @@ Body:
     Flags:
       BuyingStore: true
       DropEffect: CLIENT
+  - Id: 1002345
+    AegisName: aegis_1002345
+    Name: Howell Megas Walter Card Fragment    # !todo check english name
+    Type: Etc
+    Weight: 10
   - Id: 1002356
     AegisName: 25_A_Ev_Photo
     Name: Landscape Photo    # !todo check english name
@@ -100719,6 +100728,22 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 1002363
+    AegisName: Conse_F_N_Hall
+    Name: Fides Nature Hall Blueprint    # !todo check english name
+    Type: Etc
+  - Id: 1002364
+    AegisName: Conse_F_N_Axe
+    Name: Fides Nature Axe Blueprint    # !todo check english name
+    Type: Etc
+  - Id: 1002381
+    AegisName: aegis_1002381
+    Name: Midga Powder
+    Type: Etc
+  - Id: 1002382
+    AegisName: aegis_1002382
+    Name: Midga Missile Button
+    Type: Etc
   - Id: 1002394
     AegisName: aegis_1002394
     Name: Yellow Butterfly Footprints (Garment)
@@ -100936,6 +100961,10 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 1002515
+    AegisName: aegis_1002515
+    Name: Job Change Map    # !todo check english name
+    Type: Etc
   - Id: 1002623
     AegisName: aegis_1002623
     Name: Blue Star Footprints (Garment)
@@ -100946,11 +100975,296 @@ Body:
     Name: Sacred Blue Light Footprints (Garment)    # !todo check english name
     Type: Etc
     Weight: 100
+  - Id: 1002640
+    AegisName: VIP_Web_Ticket
+    Name: Premium Black Ticket    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
   - Id: 1002642
     AegisName: aegis_1002642
     Name: Phoenix Operation Footprints (Garment)    # !todo check english name
     Type: Etc
     Weight: 100
+  - Id: 1002678
+    AegisName: aegis_1002678
+    Name: Crispy Yongjirak Meat    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1002679
+    AegisName: aegis_1002679
+    Name: Burning Leather    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1002680
+    AegisName: aegis_1002680
+    Name: Blazing Horn    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1002681
+    AegisName: aegis_1002681
+    Name: Old Snack    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1002682
+    AegisName: aegis_1002682
+    Name: Namungit    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1002683
+    AegisName: aegis_1002683
+    Name: Fluffy Sparks    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1002684
+    AegisName: aegis_1002684
+    Name: Flickering Flower Fire    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1002685
+    AegisName: aegis_1002685
+    Name: Hard Stone Box    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1002686
+    AegisName: aegis_1002686
+    Name: Namunjae    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1002687
+    AegisName: aegis_1002687
+    Name: Hard Hammer    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1002688
+    AegisName: aegis_1002688
+    Name: Hard Spoon    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1002689
+    AegisName: aegis_1002689
+    Name: Hard Prostate    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1002690
+    AegisName: aegis_1002690
+    Name: Sturdy Crowbar    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1002691
+    AegisName: aegis_1002691
+    Name: Clatter    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1002692
+    AegisName: aegis_1002692
+    Name: Cold Fire    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1002693
+    AegisName: aegis_1002693
+    Name: Frost Shards    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1002694
+    AegisName: aegis_1002694
+    Name: Frost Star    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1002695
+    AegisName: aegis_1002695
+    Name: Ice Jelly    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1002696
+    AegisName: aegis_1002696
+    Name: Old Watering Can    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1002697
+    AegisName: aegis_1002697
+    Name: Rusty Trowel    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1002698
+    AegisName: aegis_1002698
+    Name: Sculpture of the Wraith    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1002699
+    AegisName: aegis_1002699
+    Name: Valkyrie's Regret    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1002700
+    AegisName: Ch2_Flame_Coin
+    Name: Flame Gold Coin    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002701
+    AegisName: Ch2_Frozen_Harrban
+    Name: Frozen Harban    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002702
+    AegisName: Ch2_Ghost_Grass
+    Name: Ghost Flower    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002703
+    AegisName: Ch2_Ice_Tube
+    Name: Modified Hydraulic Tube    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002704
+    AegisName: Ch2_Ice_Screw
+    Name: Ice Screw    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002705
+    AegisName: Ch2_Puffed_Hal
+    Name: Halppeong    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002751
+    AegisName: Ch2_Kindle_Hal_B
+    Name: Blue Paper    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002752
+    AegisName: Ch2_Kindle_Hal_R
+    Name: Red Paper    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002753
+    AegisName: Ch2_Kindle_Hal_Y
+    Name: Yellow Paper    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002798
+    AegisName: All_17Up_Ticket
+    Name: "[Event] All Item Refine 17Up Ticket"
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002801
+    AegisName: Tomb_of_Reaper_TH
+    Name: Tomb of Reaper
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002804
+    AegisName: Evt_ROL_Ticket
+    Name: ROL Rideword Certificate
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002805
+    AegisName: CrossEventCoin
+    Name: "[Event] Cross Event Coin"
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002806
+    AegisName: SnowPromised_Ring_Enc
+    Name: Ethernal Snow Flower
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoMail: true
+      NoAuction: true
   - Id: 1200000
     AegisName: IDTest_arrow
     Name: IDTest arrow
