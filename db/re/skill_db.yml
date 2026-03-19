@@ -49134,7 +49134,7 @@ Body:
     Range: 7
     GiveAp: 2
     Hit: Multi_Hit
-    HitCount: 2
+    HitCount: -2
     Element: Earth
     SplashArea:
       - Level: 1
