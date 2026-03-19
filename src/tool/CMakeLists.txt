@@ -3,7 +3,6 @@
 
 add_library(tools INTERFACE)
 target_include_directories(tools INTERFACE 
-	${YAML_INCLUDE_DIRS}
 	${ZLIB_INCLUDE_DIRS}
 	${RA_INCLUDE_DIRS}
 )
@@ -23,7 +22,6 @@ target_compile_definitions(tools INTERFACE
 target_link_libraries(tools INTERFACE
 	${GLOBAL_LIBRARIES}
 	${ZLIB_LIBRARIES}
-	yaml-cpp
 	ryml
 	minicore
 )

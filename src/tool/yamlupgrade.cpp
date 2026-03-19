@@ -342,7 +342,7 @@ static bool upgrade_status_db(std::string file, const uint32 source_version) {
 		if (source_version < 3) {
 			// Rename End to EndOnStart
 			if (input["End"].IsDefined()) {
-				input["EndOnStart"] = input["End"];
+				input["EndOnStart"] = input["End"].as<bool>();
 				input.remove("End");
 			}
 		}

@@ -19,9 +19,7 @@
 	#include <cstdio>
 #endif
 
-#include <yaml-cpp/yaml.h>
-#include <ryml_std.hpp>
-#include <ryml.hpp>
+#include "yaml_compat.hpp"
 
 #include <common/cbasetypes.hpp>
 #include <common/core.hpp>
