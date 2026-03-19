@@ -10130,6 +10130,8 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    EndOnStart:
+      Thundering_Rod: true
   - Status: Thundering_Rod_Max
     Icon: EFST_THUNDERING_ROD_MAX
     Flags:
