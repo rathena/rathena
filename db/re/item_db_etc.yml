@@ -100992,6 +100992,102 @@ Body:
     Name: Phoenix Operation Footprints (Garment)    # !todo check english name
     Type: Etc
     Weight: 100
+  - Id: 1002665
+    AegisName: aegis_1002665
+    Name: Somchai's Steel Fragment
+    Type: Etc
+    Weight: 100
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002666
+    AegisName: aegis_1002666
+    Name: Nim's Shining Object
+    Type: Etc
+    Weight: 1
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002667
+    AegisName: aegis_1002667
+    Name: Mulila's Thread Fragment
+    Type: Etc
+    Weight: 1
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002668
+    AegisName: aegis_1002668
+    Name: Ratcha's Toy Part
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002669
+    AegisName: aegis_1002669
+    Name: Ancient Shrine Moving Ticket
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002670
+    AegisName: aegis_1002670
+    Name: Gray Wolf Forest Moving Ticket
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002671
+    AegisName: aegis_1002671
+    Name: Amicitia Moving Ticket
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002672
+    AegisName: aegis_1002672
+    Name: Abandoned Pit Moving Ticket
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
   - Id: 1002678
     AegisName: aegis_1002678
     Name: Crispy Yongjirak Meat    # !todo check english name
@@ -101209,6 +101305,156 @@ Body:
       NoMail: true
       NoAuction: true
       NoGuildStorage: true
+  - Id: 1002777
+    AegisName: STR_Stone_TH
+    Name: "[100%] Purified Stone Garment(STR)"
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002778
+    AegisName: AGI_Stone_TH
+    Name: "[100%] Purified Stone Garment(AGI)"
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002779
+    AegisName: LUK_Stone_TH
+    Name: "[100%] Purified Stone Garment(LUK)"
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002780
+    AegisName: DEX_Stone_TH
+    Name: "[100%] Purified Stone Garment(DEX)"
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002781
+    AegisName: INT_Stone_TH
+    Name: "[100%] Purified Stone Garment(INT)"
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002782
+    AegisName: VIT_Stone_TH
+    Name: "[100%] Purified Stone Garment(VIT)"
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002783
+    AegisName: Ulti_Stone_TH
+    Name: "[100%] Purified Stone Garment(Ultimate)"
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002784
+    AegisName: POW_Stone_TH
+    Name: "[100%] Ragnarok Festa Stone POW (Upper)"
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002785
+    AegisName: WIS_Stone_TH
+    Name: "[100%] Ragnarok Festa Stone WIS (Upper)"
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002786
+    AegisName: STA_Stone_TH
+    Name: "[100%] Ragnarok Festa Stone STA (Upper)"
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002787
+    AegisName: SPL_Stone_TH
+    Name: "[100%] Ragnarok Festa Stone SPL (Upper)"
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002788
+    AegisName: CON_Stone_TH
+    Name: "[100%] Ragnarok Festa Stone CON (Upper)"
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002789
+    AegisName: CRT_Stone_TH
+    Name: "[100%] Ragnarok Festa Stone CRT (Upper)"
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002790
+    AegisName: Supre_Stone_TH
+    Name: "[100%] Ragnarok Festa Stone Supreme (Upper)"
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002791
+    AegisName: Enchant_Trans2_TH
+    Name: Costume Enchant Transfer Ticket
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
   - Id: 1002798
     AegisName: All_17Up_Ticket
     Name: "[Event] All Item Refine 17Up Ticket"
