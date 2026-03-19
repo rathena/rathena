@@ -182,8 +182,7 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 
 			std::ofstream outFile;
 
-			body.~Emitter();
-			new (&body) YAML::Emitter();
+			body.reset();
 			outFile.open(to);
 
 			if (!outFile.is_open()) {
@@ -200,7 +199,7 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 			}
 
 			finalizeBody();
-			outFile << body.c_str();
+			outFile << body.str();
 			// Make sure there is an empty line at the end of the file for git
 			outFile << "\n";
 			outFile.close();
@@ -589,13 +588,13 @@ static bool guild_read_guildskill_tree_db( char* split[], size_t columns, size_t
 		return false;
 	}
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Id" << YAML::Value << *name;
-	body << YAML::Key << "MaxLevel" << YAML::Value << atoi(split[1]);
+	body << toolyaml::BeginMap;
+	body << toolyaml::Key << "Id" << toolyaml::Value << *name;
+	body << toolyaml::Key << "MaxLevel" << toolyaml::Value << atoi(split[1]);
 
 	if (atoi(split[2]) > 0) {
-		body << YAML::Key << "Required";
-		body << YAML::BeginSeq;
+		body << toolyaml::Key << "Required";
+		body << toolyaml::BeginSeq;
 
 		for (int32 i = 0, j = 0; i < MAX_GUILD_SKILL_REQUIRE; i++) {
 			uint16 required_skill_id = atoi(split[i * 2 + 2]);
@@ -612,16 +611,16 @@ static bool guild_read_guildskill_tree_db( char* split[], size_t columns, size_t
 				return false;
 			}
 
-			body << YAML::BeginMap;
-			body << YAML::Key << "Id" << YAML::Value << *required_name;
-			body << YAML::Key << "Level" << YAML::Value << required_skill_level;
-			body << YAML::EndMap;
+			body << toolyaml::BeginMap;
+			body << toolyaml::Key << "Id" << toolyaml::Value << *required_name;
+			body << toolyaml::Key << "Level" << toolyaml::Value << required_skill_level;
+			body << toolyaml::EndMap;
 		}
 
-		body << YAML::EndSeq;
+		body << toolyaml::EndSeq;
 	}
 
-	body << YAML::EndMap;
+	body << toolyaml::EndMap;
 
 	return true;
 }
@@ -705,8 +704,8 @@ static bool pet_read_db( const char* file ){
 			continue;
 		}
 
-		body << YAML::BeginMap;
-		body << YAML::Key << "Mob" << YAML::Value << *mob_name;
+		body << toolyaml::BeginMap;
+		body << toolyaml::Key << "Mob" << toolyaml::Value << *mob_name;
 
 		t_itemid tame_item_id = strtoul( str[3], nullptr, 10 );
 
@@ -718,7 +717,7 @@ static bool pet_read_db( const char* file ){
 				return false;
 			}
 
-			body << YAML::Key << "TameItem" << YAML::Value << *tame_item_name;
+			body << toolyaml::Key << "TameItem" << toolyaml::Value << *tame_item_name;
 		}
 
 		t_itemid egg_item_id = strtoul( str[4], nullptr, 10 );
@@ -729,7 +728,7 @@ static bool pet_read_db( const char* file ){
 			return false;
 		}
 
-		body << YAML::Key << "EggItem" << YAML::Value << *egg_item_name;
+		body << toolyaml::Key << "EggItem" << toolyaml::Value << *egg_item_name;
 
 		t_itemid equip_item_id = strtoul( str[5], nullptr, 10 );
 
@@ -741,7 +740,7 @@ static bool pet_read_db( const char* file ){
 				return false;
 			}
 
-			body << YAML::Key << "EquipItem" << YAML::Value << *equip_item_name;
+			body << toolyaml::Key << "EquipItem" << toolyaml::Value << *equip_item_name;
 		}
 
 		t_itemid food_item_id = strtoul( str[6], nullptr, 10 );
@@ -754,47 +753,47 @@ static bool pet_read_db( const char* file ){
 				return false;
 			}
 
-			body << YAML::Key << "FoodItem" << YAML::Value << *food_item_name;
+			body << toolyaml::Key << "FoodItem" << toolyaml::Value << *food_item_name;
 		}
 
-		body << YAML::Key << "Fullness" << YAML::Value << atoi(str[7]);
+		body << toolyaml::Key << "Fullness" << toolyaml::Value << atoi(str[7]);
 		// Default: 60
 		if( atoi( str[8] ) != 60 ){
-			body << YAML::Key << "HungryDelay" << YAML::Value << atoi(str[8]);
+			body << toolyaml::Key << "HungryDelay" << toolyaml::Value << atoi(str[8]);
 		}
 		// Default: 250
 		if( atoi( str[11] ) != 250 ){
-			body << YAML::Key << "IntimacyStart" << YAML::Value << atoi(str[11]);
+			body << toolyaml::Key << "IntimacyStart" << toolyaml::Value << atoi(str[11]);
 		}
-		body << YAML::Key << "IntimacyFed" << YAML::Value << atoi(str[9]);
+		body << toolyaml::Key << "IntimacyFed" << toolyaml::Value << atoi(str[9]);
 		// Default: -100
 		if( atoi( str[10] ) != 100 ){
-			body << YAML::Key << "IntimacyOverfed" << YAML::Value << -atoi(str[10]);
+			body << toolyaml::Key << "IntimacyOverfed" << toolyaml::Value << -atoi(str[10]);
 		}
 		// pet_hungry_friendly_decrease battle_conf
-		//body << YAML::Key << "IntimacyHungry" << YAML::Value << -5;
+		//body << toolyaml::Key << "IntimacyHungry" << toolyaml::Value << -5;
 		// Default: -20
 		if( atoi( str[12] ) != 20 ){
-			body << YAML::Key << "IntimacyOwnerDie" << YAML::Value << -atoi(str[12]);
+			body << toolyaml::Key << "IntimacyOwnerDie" << toolyaml::Value << -atoi(str[12]);
 		}
-		body << YAML::Key << "CaptureRate" << YAML::Value << atoi(str[13]);
+		body << toolyaml::Key << "CaptureRate" << toolyaml::Value << atoi(str[13]);
 		// Default: true
 		if( atoi( str[15] ) == 0 ){
-			body << YAML::Key << "SpecialPerformance" << YAML::Value << "false";
+			body << toolyaml::Key << "SpecialPerformance" << toolyaml::Value << "false";
 		}
-		body << YAML::Key << "AttackRate" << YAML::Value << atoi(str[17]);
-		body << YAML::Key << "RetaliateRate" << YAML::Value << atoi(str[18]);
-		body << YAML::Key << "ChangeTargetRate" << YAML::Value << atoi(str[19]);
+		body << toolyaml::Key << "AttackRate" << toolyaml::Value << atoi(str[17]);
+		body << toolyaml::Key << "RetaliateRate" << toolyaml::Value << atoi(str[18]);
+		body << toolyaml::Key << "ChangeTargetRate" << toolyaml::Value << atoi(str[19]);
 
 		if( *str[21] ){
-			body << YAML::Key << "Script" << YAML::Value << YAML::Literal << str[21];
+			body << toolyaml::Key << "Script" << toolyaml::Value << toolyaml::Literal << str[21];
 		}
 
 		if( *str[20] ){
-			body << YAML::Key << "SupportScript" << YAML::Value << YAML::Literal << str[20];
+			body << toolyaml::Key << "SupportScript" << toolyaml::Value << toolyaml::Literal << str[20];
 		}
 
-		body << YAML::EndMap;
+		body << toolyaml::EndMap;
 		entries++;
 	}
 
@@ -814,9 +813,9 @@ static bool skill_parse_row_magicmushroomdb( char *split[], size_t column, size_
 		return false;
 	}
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Skill" << YAML::Value << *skill_name;
-	body << YAML::EndMap;
+	body << toolyaml::BeginMap;
+	body << toolyaml::Key << "Skill" << toolyaml::Value << *skill_name;
+	body << toolyaml::EndMap;
 
 	return true;
 }
@@ -831,32 +830,32 @@ static bool skill_parse_row_abradb( char* split[], size_t columns, size_t curren
 		return false;
 	}
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Skill" << YAML::Value << *skill_name;
+	body << toolyaml::BeginMap;
+	body << toolyaml::Key << "Skill" << toolyaml::Value << *skill_name;
 
 	int32 arr[MAX_SKILL_LEVEL];
 	int32 arr_size = skill_split_atoi(split[2], arr);
 
 	if (arr_size == 1) {
 		if (arr[0] != 500)
-			body << YAML::Key << "Probability" << YAML::Value << arr[0];
+			body << toolyaml::Key << "Probability" << toolyaml::Value << arr[0];
 	} else {
-		body << YAML::Key << "Probability";
-		body << YAML::BeginSeq;
+		body << toolyaml::Key << "Probability";
+		body << toolyaml::BeginSeq;
 
 		for (int32 i = 0; i < arr_size; i++) {
 			if (arr[i] > 0) {
-				body << YAML::BeginMap;
-				body << YAML::Key << "Level" << YAML::Value << i + 1;
-				body << YAML::Key << "Probability" << YAML::Value << arr[i];
-				body << YAML::EndMap;
+				body << toolyaml::BeginMap;
+				body << toolyaml::Key << "Level" << toolyaml::Value << i + 1;
+				body << toolyaml::Key << "Probability" << toolyaml::Value << arr[i];
+				body << toolyaml::EndMap;
 			}
 		}
 
-		body << YAML::EndSeq;
+		body << toolyaml::EndSeq;
 	}
 
-	body << YAML::EndMap;
+	body << toolyaml::EndMap;
 
 	return true;
 }
@@ -879,11 +878,11 @@ static bool skill_parse_row_spellbookdb( char* split[], size_t columns, size_t c
 		return false;
 	}
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Skill" << YAML::Value << *skill_name;
-	body << YAML::Key << "Book" << YAML::Value << *book_name;
-	body << YAML::Key << "PreservePoints" << YAML::Value << atoi(split[1]);
-	body << YAML::EndMap;
+	body << toolyaml::BeginMap;
+	body << toolyaml::Key << "Skill" << toolyaml::Value << *skill_name;
+	body << toolyaml::Key << "Book" << toolyaml::Value << *book_name;
+	body << toolyaml::Key << "PreservePoints" << toolyaml::Value << atoi(split[1]);
+	body << toolyaml::EndMap;
 
 	return true;
 }
@@ -898,8 +897,8 @@ static bool mob_readdb_mobavail( char* str[], size_t columns, size_t current ){
 		return false;
 	}
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Mob" << YAML::Value << *mob_name;
+	body << toolyaml::BeginMap;
+	body << toolyaml::Key << "Mob" << toolyaml::Value << *mob_name;
 
 	uint16 sprite_id = atoi(str[1]);
 	std::string *sprite_name = util::umap_find(aegis_mobnames, sprite_id);
@@ -917,20 +916,20 @@ static bool mob_readdb_mobavail( char* str[], size_t columns, size_t current ){
 
 			sprite += 3; // Strip JT_ here because the script engine doesn't send this prefix for NPC.
 
-			body << YAML::Key << "Sprite" << YAML::Value << sprite;
+			body << toolyaml::Key << "Sprite" << toolyaml::Value << sprite;
 		} else
-			body << YAML::Key << "Sprite" << YAML::Value << sprite;
+			body << toolyaml::Key << "Sprite" << toolyaml::Value << sprite;
 	} else
-		body << YAML::Key << "Sprite" << YAML::Value << *sprite_name;
+		body << toolyaml::Key << "Sprite" << toolyaml::Value << *sprite_name;
 
 	if (columns == 12) {
-		body << YAML::Key << "Sex" << YAML::Value << (atoi(str[2]) ? "Male" : "Female");
+		body << toolyaml::Key << "Sex" << toolyaml::Value << (atoi(str[2]) ? "Male" : "Female");
 		if (atoi(str[3]) != 0)
-			body << YAML::Key << "HairStyle" << YAML::Value << atoi(str[3]);
+			body << toolyaml::Key << "HairStyle" << toolyaml::Value << atoi(str[3]);
 		if (atoi(str[4]) != 0)
-			body << YAML::Key << "HairColor" << YAML::Value << atoi(str[4]);
+			body << toolyaml::Key << "HairColor" << toolyaml::Value << atoi(str[4]);
 		if (atoi(str[11]) != 0)
-			body << YAML::Key << "ClothColor" << YAML::Value << atoi(str[11]);
+			body << toolyaml::Key << "ClothColor" << toolyaml::Value << atoi(str[11]);
 
 		if (strtoul(str[5], nullptr, 10) != 0) {
 			t_itemid weapon_item_id = strtoul( str[5], nullptr, 10 );
@@ -941,7 +940,7 @@ static bool mob_readdb_mobavail( char* str[], size_t columns, size_t current ){
 				return false;
 			}
 
-			body << YAML::Key << "Weapon" << YAML::Value << *weapon_item_name;
+			body << toolyaml::Key << "Weapon" << toolyaml::Value << *weapon_item_name;
 		}
 
 		if (strtoul(str[6], nullptr, 10) != 0) {
@@ -953,7 +952,7 @@ static bool mob_readdb_mobavail( char* str[], size_t columns, size_t current ){
 				return false;
 			}
 
-			body << YAML::Key << "Shield" << YAML::Value << *shield_item_name;
+			body << toolyaml::Key << "Shield" << toolyaml::Value << *shield_item_name;
 		}
 
 		if (strtoul(str[7], nullptr, 10) != 0) {
@@ -971,7 +970,7 @@ static bool mob_readdb_mobavail( char* str[], size_t columns, size_t current ){
 				return false;
 			}
 
-			body << YAML::Key << "HeadTop" << YAML::Value << *headtop_item_name;
+			body << toolyaml::Key << "HeadTop" << toolyaml::Value << *headtop_item_name;
 		}
 
 		if (strtoul(str[8], nullptr, 10) != 0) {
@@ -989,7 +988,7 @@ static bool mob_readdb_mobavail( char* str[], size_t columns, size_t current ){
 				return false;
 			}
 
-			body << YAML::Key << "HeadMid" << YAML::Value << *headmid_item_name;
+			body << toolyaml::Key << "HeadMid" << toolyaml::Value << *headmid_item_name;
 		}
 
 		if (strtoul(str[9], nullptr, 10) != 0) {
@@ -1007,98 +1006,98 @@ static bool mob_readdb_mobavail( char* str[], size_t columns, size_t current ){
 				return false;
 			}
 
-			body << YAML::Key << "HeadLow" << YAML::Value << *headlow_item_name;
+			body << toolyaml::Key << "HeadLow" << toolyaml::Value << *headlow_item_name;
 		}
 
 		if (atoi(str[10]) != 0) {
 			uint32 options = atoi(str[10]);
 
-			body << YAML::Key << "Options";
-			body << YAML::BeginMap;
+			body << toolyaml::Key << "Options";
+			body << toolyaml::BeginMap;
 
 			while (options > OPTION_NOTHING && options <= OPTION_SUMMER2) {
 				if (options & OPTION_SIGHT) {
-					body << YAML::Key << "Sight" << YAML::Value << "true";
+					body << toolyaml::Key << "Sight" << toolyaml::Value << "true";
 					options &= ~OPTION_SIGHT;
 				} else if (options & OPTION_CART1) {
-					body << YAML::Key << "Cart1" << YAML::Value << "true";
+					body << toolyaml::Key << "Cart1" << toolyaml::Value << "true";
 					options &= ~OPTION_CART1;
 				} else if (options & OPTION_FALCON) {
-					body << YAML::Key << "Falcon" << YAML::Value << "true";
+					body << toolyaml::Key << "Falcon" << toolyaml::Value << "true";
 					options &= ~OPTION_FALCON;
 				} else if (options & OPTION_RIDING) {
-					body << YAML::Key << "Riding" << YAML::Value << "true";
+					body << toolyaml::Key << "Riding" << toolyaml::Value << "true";
 					options &= ~OPTION_RIDING;
 				} else if (options & OPTION_CART2) {
-					body << YAML::Key << "Cart2" << YAML::Value << "true";
+					body << toolyaml::Key << "Cart2" << toolyaml::Value << "true";
 					options &= ~OPTION_CART2;
 				} else if (options & OPTION_CART3) {
-					body << YAML::Key << "Cart2" << YAML::Value << "true";
+					body << toolyaml::Key << "Cart2" << toolyaml::Value << "true";
 					options &= ~OPTION_CART3;
 				} else if (options & OPTION_CART4) {
-					body << YAML::Key << "Cart4" << YAML::Value << "true";
+					body << toolyaml::Key << "Cart4" << toolyaml::Value << "true";
 					options &= ~OPTION_CART4;
 				} else if (options & OPTION_CART5) {
-					body << YAML::Key << "Cart5" << YAML::Value << "true";
+					body << toolyaml::Key << "Cart5" << toolyaml::Value << "true";
 					options &= ~OPTION_CART5;
 				} else if (options & OPTION_ORCISH) {
-					body << YAML::Key << "Orcish" << YAML::Value << "true";
+					body << toolyaml::Key << "Orcish" << toolyaml::Value << "true";
 					options &= ~OPTION_ORCISH;
 				} else if (options & OPTION_WEDDING) {
-					body << YAML::Key << "Wedding" << YAML::Value << "true";
+					body << toolyaml::Key << "Wedding" << toolyaml::Value << "true";
 					options &= ~OPTION_WEDDING;
 				} else if (options & OPTION_RUWACH) {
-					body << YAML::Key << "Ruwach" << YAML::Value << "true";
+					body << toolyaml::Key << "Ruwach" << toolyaml::Value << "true";
 					options &= ~OPTION_RUWACH;
 				} else if (options & OPTION_FLYING) {
-					body << YAML::Key << "Flying" << YAML::Value << "true";
+					body << toolyaml::Key << "Flying" << toolyaml::Value << "true";
 					options &= ~OPTION_FLYING;
 				} else if (options & OPTION_XMAS) {
-					body << YAML::Key << "Xmas" << YAML::Value << "true";
+					body << toolyaml::Key << "Xmas" << toolyaml::Value << "true";
 					options &= ~OPTION_XMAS;
 				} else if (options & OPTION_TRANSFORM) {
-					body << YAML::Key << "Transform" << YAML::Value << "true";
+					body << toolyaml::Key << "Transform" << toolyaml::Value << "true";
 					options &= ~OPTION_TRANSFORM;
 				} else if (options & OPTION_SUMMER) {
-					body << YAML::Key << "Summer" << YAML::Value << "true";
+					body << toolyaml::Key << "Summer" << toolyaml::Value << "true";
 					options &= ~OPTION_SUMMER;
 				} else if (options & OPTION_DRAGON1) {
-					body << YAML::Key << "Dragon1" << YAML::Value << "true";
+					body << toolyaml::Key << "Dragon1" << toolyaml::Value << "true";
 					options &= ~OPTION_DRAGON1;
 				} else if (options & OPTION_WUG) {
-					body << YAML::Key << "Wug" << YAML::Value << "true";
+					body << toolyaml::Key << "Wug" << toolyaml::Value << "true";
 					options &= ~OPTION_WUG;
 				} else if (options & OPTION_WUGRIDER) {
-					body << YAML::Key << "WugRider" << YAML::Value << "true";
+					body << toolyaml::Key << "WugRider" << toolyaml::Value << "true";
 					options &= ~OPTION_WUGRIDER;
 				} else if (options & OPTION_MADOGEAR) {
-					body << YAML::Key << "MadoGear" << YAML::Value << "true";
+					body << toolyaml::Key << "MadoGear" << toolyaml::Value << "true";
 					options &= ~OPTION_MADOGEAR;
 				} else if (options & OPTION_DRAGON2) {
-					body << YAML::Key << "Dragon2" << YAML::Value << "true";
+					body << toolyaml::Key << "Dragon2" << toolyaml::Value << "true";
 					options &= ~OPTION_DRAGON2;
 				} else if (options & OPTION_DRAGON3) {
-					body << YAML::Key << "Dragon3" << YAML::Value << "true";
+					body << toolyaml::Key << "Dragon3" << toolyaml::Value << "true";
 					options &= ~OPTION_DRAGON3;
 				} else if (options & OPTION_DRAGON4) {
-					body << YAML::Key << "Dragon4" << YAML::Value << "true";
+					body << toolyaml::Key << "Dragon4" << toolyaml::Value << "true";
 					options &= ~OPTION_DRAGON4;
 				} else if (options & OPTION_DRAGON5) {
-					body << YAML::Key << "Dragon5" << YAML::Value << "true";
+					body << toolyaml::Key << "Dragon5" << toolyaml::Value << "true";
 					options &= ~OPTION_DRAGON5;
 				} else if (options & OPTION_HANBOK) {
-					body << YAML::Key << "Hanbok" << YAML::Value << "true";
+					body << toolyaml::Key << "Hanbok" << toolyaml::Value << "true";
 					options &= ~OPTION_HANBOK;
 				} else if (options & OPTION_OKTOBERFEST) {
-					body << YAML::Key << "Oktoberfest" << YAML::Value << "true";
+					body << toolyaml::Key << "Oktoberfest" << toolyaml::Value << "true";
 					options &= ~OPTION_OKTOBERFEST;
 				} else if (options & OPTION_SUMMER2) {
-					body << YAML::Key << "Summer2" << YAML::Value << "true";
+					body << toolyaml::Key << "Summer2" << toolyaml::Value << "true";
 					options &= ~OPTION_SUMMER2;
 				}
 			}
 
-			body << YAML::EndMap;
+			body << toolyaml::EndMap;
 		}
 	} else if (columns == 3) {
 		if (atoi(str[5]) != 0) {
@@ -1110,11 +1109,11 @@ static bool mob_readdb_mobavail( char* str[], size_t columns, size_t current ){
 				return false;
 			}
 
-			body << YAML::Key << "PetEquip" << YAML::Value << *peteq_item_name;
+			body << toolyaml::Key << "PetEquip" << toolyaml::Value << *peteq_item_name;
 		}
 	}
 
-	body << YAML::EndMap;
+	body << toolyaml::EndMap;
 
 	return true;
 }
@@ -1347,18 +1346,18 @@ static bool skill_parse_row_nonearnpcrangedb( char* split[], size_t column, size
 static bool skill_parse_row_skilldb( char* split[], size_t columns, size_t current ){
 	int32 arr[MAX_SKILL_LEVEL], arr_size, skill_id = atoi(split[0]);
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Id" << YAML::Value << skill_id;
-	body << YAML::Key << "Name" << YAML::Value << trim(split[16]);
-	body << YAML::Key << "Description" << YAML::Value << trim(split[17]);
-	body << YAML::Key << "MaxLevel" << YAML::Value << atoi(split[7]);
+	body << toolyaml::BeginMap;
+	body << toolyaml::Key << "Id" << toolyaml::Value << skill_id;
+	body << toolyaml::Key << "Name" << toolyaml::Value << trim(split[16]);
+	body << toolyaml::Key << "Description" << toolyaml::Value << trim(split[17]);
+	body << toolyaml::Key << "MaxLevel" << toolyaml::Value << atoi(split[7]);
 
 	if (strcmpi(split[13], "weapon") == 0)
-		body << YAML::Key << "Type" << YAML::Value << "Weapon";
+		body << toolyaml::Key << "Type" << toolyaml::Value << "Weapon";
 	else if (strcmpi(split[13], "magic") == 0)
-		body << YAML::Key << "Type" << YAML::Value << "Magic";
+		body << toolyaml::Key << "Type" << toolyaml::Value << "Magic";
 	else if (strcmpi(split[13], "misc") == 0)
-		body << YAML::Key << "Type" << YAML::Value << "Misc";
+		body << toolyaml::Key << "Type" << toolyaml::Value << "Misc";
 
 	std::string constant;
 
@@ -1366,121 +1365,121 @@ static bool skill_parse_row_skilldb( char* split[], size_t columns, size_t curre
 		constant = constant_lookup(atoi(split[3]), "INF_");
 		constant.erase(0, 4);
 		constant.erase(constant.size() - 6);
-		body << YAML::Key << "TargetType" << YAML::Value << name2Upper(constant);
+		body << toolyaml::Key << "TargetType" << toolyaml::Value << name2Upper(constant);
 	}
 
 	uint64 nk_val = strtol(split[5], nullptr, 0);
 
 	if (nk_val) {
-		body << YAML::Key << "DamageFlags";
-		body << YAML::BeginMap;
+		body << toolyaml::Key << "DamageFlags";
+		body << toolyaml::BeginMap;
 		if (nk_val & 0x1)
-			body << YAML::Key << "NoDamage" << YAML::Value << "true";
+			body << toolyaml::Key << "NoDamage" << toolyaml::Value << "true";
 		if (nk_val & 0x2)
-			body << YAML::Key << "Splash" << YAML::Value << "true";
+			body << toolyaml::Key << "Splash" << toolyaml::Value << "true";
 		if (nk_val & 0x4)
-			body << YAML::Key << "SplashSplit" << YAML::Value << "true";
+			body << toolyaml::Key << "SplashSplit" << toolyaml::Value << "true";
 		if (nk_val & 0x8)
-			body << YAML::Key << "IgnoreAtkCard" << YAML::Value << "true";
+			body << toolyaml::Key << "IgnoreAtkCard" << toolyaml::Value << "true";
 		if (nk_val & 0x10)
-			body << YAML::Key << "IgnoreElement" << YAML::Value << "true";
+			body << toolyaml::Key << "IgnoreElement" << toolyaml::Value << "true";
 		if (nk_val & 0x20)
-			body << YAML::Key << "IgnoreDefense" << YAML::Value << "true";
+			body << toolyaml::Key << "IgnoreDefense" << toolyaml::Value << "true";
 		if (nk_val & 0x40)
-			body << YAML::Key << "IgnoreFlee" << YAML::Value << "true";
+			body << toolyaml::Key << "IgnoreFlee" << toolyaml::Value << "true";
 		if (nk_val & 0x80)
-			body << YAML::Key << "IgnoreDefCard" << YAML::Value << "true";
+			body << toolyaml::Key << "IgnoreDefCard" << toolyaml::Value << "true";
 		if (nk_val & 0x100)
-			body << YAML::Key << "Critical" << YAML::Value << "true";
+			body << toolyaml::Key << "Critical" << toolyaml::Value << "true";
 
-		body << YAML::EndMap;
+		body << toolyaml::EndMap;
 	}
 
 	uint64 inf2_val = strtol(split[11], nullptr, 0);
 	uint64 inf3_val = strtol(split[15], nullptr, 0);
 
 	if (inf2_val || inf3_val) {
-		body << YAML::Key << "Flags";
-		body << YAML::BeginMap;
+		body << toolyaml::Key << "Flags";
+		body << toolyaml::BeginMap;
 		if (inf2_val & 0x1)
-			body << YAML::Key << "IsQuest" << YAML::Value << "true";
+			body << toolyaml::Key << "IsQuest" << toolyaml::Value << "true";
 		if (inf2_val & 0x2)
-			body << YAML::Key << "IsNpc" << YAML::Value << "true";
+			body << toolyaml::Key << "IsNpc" << toolyaml::Value << "true";
 		if (inf2_val & 0x4)
-			body << YAML::Key << "IsWedding" << YAML::Value << "true";
+			body << toolyaml::Key << "IsWedding" << toolyaml::Value << "true";
 		if (inf2_val & 0x8)
-			body << YAML::Key << "IsSpirit" << YAML::Value << "true";
+			body << toolyaml::Key << "IsSpirit" << toolyaml::Value << "true";
 		if (inf2_val & 0x10)
-			body << YAML::Key << "IsGuild" << YAML::Value << "true";
+			body << toolyaml::Key << "IsGuild" << toolyaml::Value << "true";
 		if (inf2_val & 0x20)
-			body << YAML::Key << "IsSong" << YAML::Value << "true";
+			body << toolyaml::Key << "IsSong" << toolyaml::Value << "true";
 		if (inf2_val & 0x40)
-			body << YAML::Key << "IsEnsemble" << YAML::Value << "true";
+			body << toolyaml::Key << "IsEnsemble" << toolyaml::Value << "true";
 		if (inf2_val & 0x80)
-			body << YAML::Key << "IsTrap" << YAML::Value << "true";
+			body << toolyaml::Key << "IsTrap" << toolyaml::Value << "true";
 		if (inf2_val & 0x100)
-			body << YAML::Key << "TargetSelf" << YAML::Value << "true";
+			body << toolyaml::Key << "TargetSelf" << toolyaml::Value << "true";
 		if (inf2_val & 0x200)
-			body << YAML::Key << "NoTargetSelf" << YAML::Value << "true";
+			body << toolyaml::Key << "NoTargetSelf" << toolyaml::Value << "true";
 		if (inf2_val & 0x400)
-			body << YAML::Key << "PartyOnly" << YAML::Value << "true";
+			body << toolyaml::Key << "PartyOnly" << toolyaml::Value << "true";
 		if (inf2_val & 0x800)
-			body << YAML::Key << "GuildOnly" << YAML::Value << "true";
+			body << toolyaml::Key << "GuildOnly" << toolyaml::Value << "true";
 		if (inf2_val & 0x1000)
-			body << YAML::Key << "NoTargetEnemy" << YAML::Value << "true";
+			body << toolyaml::Key << "NoTargetEnemy" << toolyaml::Value << "true";
 		if (inf2_val & 0x2000)
-			body << YAML::Key << "IsAutoShadowSpell" << YAML::Value << "true";
+			body << toolyaml::Key << "IsAutoShadowSpell" << toolyaml::Value << "true";
 		if (inf2_val & 0x4000)
-			body << YAML::Key << "IsChorus" << YAML::Value << "true";
+			body << toolyaml::Key << "IsChorus" << toolyaml::Value << "true";
 		if (inf2_val & 0x8000)
-			body << YAML::Key << "IgnoreBgReduction" << YAML::Value << "true";
+			body << toolyaml::Key << "IgnoreBgReduction" << toolyaml::Value << "true";
 		if (inf2_val & 0x10000)
-			body << YAML::Key << "IgnoreGvgReduction" << YAML::Value << "true";
+			body << toolyaml::Key << "IgnoreGvgReduction" << toolyaml::Value << "true";
 		if (inf2_val & 0x20000)
-			body << YAML::Key << "DisableNearNpc" << YAML::Value << "true";
+			body << toolyaml::Key << "DisableNearNpc" << toolyaml::Value << "true";
 		if (inf2_val & 0x40000)
-			body << YAML::Key << "TargetTrap" << YAML::Value << "true"; // ?
+			body << toolyaml::Key << "TargetTrap" << toolyaml::Value << "true"; // ?
 
 		if (inf3_val & 0x1)
-			body << YAML::Key << "IgnoreLandProtector" << YAML::Value << "true";
+			body << toolyaml::Key << "IgnoreLandProtector" << toolyaml::Value << "true";
 		if (inf3_val & 0x4)
-			body << YAML::Key << "AllowWhenHidden" << YAML::Value << "true";
+			body << toolyaml::Key << "AllowWhenHidden" << toolyaml::Value << "true";
 		if (inf3_val & 0x8)
-			body << YAML::Key << "AllowWhenPerforming" << YAML::Value << "true";
+			body << toolyaml::Key << "AllowWhenPerforming" << toolyaml::Value << "true";
 		if (inf3_val & 0x10)
-			body << YAML::Key << "TargetEmperium" << YAML::Value << "true";
+			body << toolyaml::Key << "TargetEmperium" << toolyaml::Value << "true";
 		if (inf3_val & 0x40)
-			body << YAML::Key << "IgnoreKagehumi" << YAML::Value << "true";
+			body << toolyaml::Key << "IgnoreKagehumi" << toolyaml::Value << "true";
 		if (inf3_val & 0x80)
-			body << YAML::Key << "AlterRangeVulture" << YAML::Value << "true";
+			body << toolyaml::Key << "AlterRangeVulture" << toolyaml::Value << "true";
 		if (inf3_val & 0x100)
-			body << YAML::Key << "AlterRangeSnakeEye" << YAML::Value << "true";
+			body << toolyaml::Key << "AlterRangeSnakeEye" << toolyaml::Value << "true";
 		if (inf3_val & 0x200)
-			body << YAML::Key << "AlterRangeShadowJump" << YAML::Value << "true";
+			body << toolyaml::Key << "AlterRangeShadowJump" << toolyaml::Value << "true";
 		if (inf3_val & 0x400)
-			body << YAML::Key << "AlterRangeRadius" << YAML::Value << "true";
+			body << toolyaml::Key << "AlterRangeRadius" << toolyaml::Value << "true";
 		if (inf3_val & 0x800)
-			body << YAML::Key << "AlterRangeResearchTrap" << YAML::Value << "true";
+			body << toolyaml::Key << "AlterRangeResearchTrap" << toolyaml::Value << "true";
 		if (inf3_val & 0x1000)
-			body << YAML::Key << "IgnoreHovering" << YAML::Value << "true";
+			body << toolyaml::Key << "IgnoreHovering" << toolyaml::Value << "true";
 		if (inf3_val & 0x2000)
-			body << YAML::Key << "AllowOnWarg" << YAML::Value << "true";
+			body << toolyaml::Key << "AllowOnWarg" << toolyaml::Value << "true";
 		if (inf3_val & 0x4000)
-			body << YAML::Key << "AllowOnMado" << YAML::Value << "true";
+			body << toolyaml::Key << "AllowOnMado" << toolyaml::Value << "true";
 		if (inf3_val & 0x8000)
-			body << YAML::Key << "TargetManHole" << YAML::Value << "true";
+			body << toolyaml::Key << "TargetManHole" << toolyaml::Value << "true";
 		if (inf3_val & 0x10000)
-			body << YAML::Key << "TargetHidden" << YAML::Value << "true";
+			body << toolyaml::Key << "TargetHidden" << toolyaml::Value << "true";
 		if (inf3_val & 0x40000)
-			body << YAML::Key << "IncreaseDanceWithWugDamage" << YAML::Value << "true";
+			body << toolyaml::Key << "IncreaseDanceWithWugDamage" << toolyaml::Value << "true";
 		if (inf3_val & 0x80000)
-			body << YAML::Key << "IgnoreWugBite" << YAML::Value << "true";
+			body << toolyaml::Key << "IgnoreWugBite" << toolyaml::Value << "true";
 		if (inf3_val & 0x100000)
-			body << YAML::Key << "IgnoreAutoGuard" << YAML::Value << "true";
+			body << toolyaml::Key << "IgnoreAutoGuard" << toolyaml::Value << "true";
 		if (inf3_val & 0x200000)
-			body << YAML::Key << "IgnoreCicada" << YAML::Value << "true";
+			body << toolyaml::Key << "IgnoreCicada" << toolyaml::Value << "true";
 
-		body << YAML::EndMap;
+		body << toolyaml::EndMap;
 	}
 
 	memset(arr, 0, sizeof(arr));
@@ -1489,28 +1488,28 @@ static bool skill_parse_row_skilldb( char* split[], size_t columns, size_t curre
 	if (arr_size != 0) {
 		if (arr_size == 1) {
 			if (arr[0] != 0) {
-				body << YAML::Key << "Range";
-				body << YAML::Value << arr[0];
+				body << toolyaml::Key << "Range";
+				body << toolyaml::Value << arr[0];
 			}
 		} else {
-			body << YAML::Key << "Range";
-			body << YAML::BeginSeq;
+			body << toolyaml::Key << "Range";
+			body << toolyaml::BeginSeq;
 
 			for (int32 i = 0; i < arr_size; i++) {
-				body << YAML::BeginMap;
-				body << YAML::Key << "Level" << YAML::Value << i + 1;
-				body << YAML::Key << "Size" << YAML::Value << arr[i];
-				body << YAML::EndMap;
+				body << toolyaml::BeginMap;
+				body << toolyaml::Key << "Level" << toolyaml::Value << i + 1;
+				body << toolyaml::Key << "Size" << toolyaml::Value << arr[i];
+				body << toolyaml::EndMap;
 			}
 
-			body << YAML::EndSeq;
+			body << toolyaml::EndSeq;
 		}
 	}
 
 	if (atoi(split[2]) != 0) {
 		constant = constant_lookup(atoi(split[2]), "DMG_");
 		constant.erase(0, 4);
-		body << YAML::Key << "Hit" << YAML::Value << name2Upper(constant);
+		body << toolyaml::Key << "Hit" << toolyaml::Value << name2Upper(constant);
 	}
 
 	memset(arr, 0, sizeof(arr));
@@ -1519,21 +1518,21 @@ static bool skill_parse_row_skilldb( char* split[], size_t columns, size_t curre
 	if (arr_size != 0) {
 		if (arr_size == 1) {
 			if (arr[0] != 0) {
-				body << YAML::Key << "HitCount";
-				body << YAML::Value << arr[0];
+				body << toolyaml::Key << "HitCount";
+				body << toolyaml::Value << arr[0];
 			}
 		} else {
-			body << YAML::Key << "HitCount";
-			body << YAML::BeginSeq;
+			body << toolyaml::Key << "HitCount";
+			body << toolyaml::BeginSeq;
 
 			for (int32 i = 0; i < arr_size; i++) {
-				body << YAML::BeginMap;
-				body << YAML::Key << "Level" << YAML::Value << i + 1;
-				body << YAML::Key << "Count" << YAML::Value << arr[i];
-				body << YAML::EndMap;
+				body << toolyaml::BeginMap;
+				body << toolyaml::Key << "Level" << toolyaml::Value << i + 1;
+				body << toolyaml::Key << "Count" << toolyaml::Value << arr[i];
+				body << toolyaml::EndMap;
 			}
 
-			body << YAML::EndSeq;
+			body << toolyaml::EndSeq;
 		}
 	}
 
@@ -1543,42 +1542,42 @@ static bool skill_parse_row_skilldb( char* split[], size_t columns, size_t curre
 	if (arr_size != 0) {
 		if (arr_size == 1) {
 			if (arr[0] != 0){
-				body << YAML::Key << "Element";
+				body << toolyaml::Key << "Element";
 
 				if (arr[0] == -1)
-					body << YAML::Value << "Weapon";
+					body << toolyaml::Value << "Weapon";
 				else if (arr[0] == -2)
-					body << YAML::Value << "Endowed";
+					body << toolyaml::Value << "Endowed";
 				else if (arr[0] == -3)
-					body << YAML::Value << "Random";
+					body << toolyaml::Value << "Random";
 				else {
 					constant = constant_lookup(arr[0], "ELE_");
 					constant.erase(0, 4);
-					body << YAML::Value << name2Upper(constant);
+					body << toolyaml::Value << name2Upper(constant);
 				}
 			}
 		} else {
-			body << YAML::Key << "Element";
-			body << YAML::BeginSeq;
+			body << toolyaml::Key << "Element";
+			body << toolyaml::BeginSeq;
 
 			for (int32 i = 0; i < arr_size; i++) {
-				body << YAML::BeginMap;
-				body << YAML::Key << "Level" << YAML::Value << i + 1;
+				body << toolyaml::BeginMap;
+				body << toolyaml::Key << "Level" << toolyaml::Value << i + 1;
 				if (arr[i] == -1)
-					body << YAML::Key << "Element" << YAML::Value << "Weapon";
+					body << toolyaml::Key << "Element" << toolyaml::Value << "Weapon";
 				else if (arr[i] == -2)
-					body << YAML::Key << "Element" << YAML::Value << "Endowed";
+					body << toolyaml::Key << "Element" << toolyaml::Value << "Endowed";
 				else if (arr[i] == -3)
-					body << YAML::Key << "Element" << YAML::Value << "Random";
+					body << toolyaml::Key << "Element" << toolyaml::Value << "Random";
 				else {
 					constant = constant_lookup(arr[i], "ELE_");
 					constant.erase(0, 4);
-					body << YAML::Key << "Element" << YAML::Value << name2Upper(constant);
+					body << toolyaml::Key << "Element" << toolyaml::Value << name2Upper(constant);
 				}
-				body << YAML::EndMap;
+				body << toolyaml::EndMap;
 			}
 
-			body << YAML::EndSeq;
+			body << toolyaml::EndSeq;
 		}
 	}
 
@@ -1588,21 +1587,21 @@ static bool skill_parse_row_skilldb( char* split[], size_t columns, size_t curre
 	if (arr_size != 0) {
 		if (arr_size == 1) {
 			if (arr[0] != 0) {
-				body << YAML::Key << "SplashArea";
-				body << YAML::Value << arr[0];
+				body << toolyaml::Key << "SplashArea";
+				body << toolyaml::Value << arr[0];
 			}
 		} else {
-			body << YAML::Key << "SplashArea";
-			body << YAML::BeginSeq;
+			body << toolyaml::Key << "SplashArea";
+			body << toolyaml::BeginSeq;
 
 			for (int32 i = 0; i < arr_size; i++) {
-				body << YAML::BeginMap;
-				body << YAML::Key << "Level" << YAML::Value << i + 1;
-				body << YAML::Key << "Area" << YAML::Value << arr[i];
-				body << YAML::EndMap;
+				body << toolyaml::BeginMap;
+				body << toolyaml::Key << "Level" << toolyaml::Value << i + 1;
+				body << toolyaml::Key << "Area" << toolyaml::Value << arr[i];
+				body << toolyaml::EndMap;
 			}
 
-			body << YAML::EndSeq;
+			body << toolyaml::EndSeq;
 		}
 	}
 
@@ -1612,21 +1611,21 @@ static bool skill_parse_row_skilldb( char* split[], size_t columns, size_t curre
 	if (arr_size != 0) {
 		if (arr_size == 1) {
 			if (arr[0] != 0) {
-				body << YAML::Key << "ActiveInstance";
-				body << YAML::Value << arr[0];
+				body << toolyaml::Key << "ActiveInstance";
+				body << toolyaml::Value << arr[0];
 			}
 		} else {
-			body << YAML::Key << "ActiveInstance";
-			body << YAML::BeginSeq;
+			body << toolyaml::Key << "ActiveInstance";
+			body << toolyaml::BeginSeq;
 
 			for (int32 i = 0; i < arr_size; i++) {
-				body << YAML::BeginMap;
-				body << YAML::Key << "Level" << YAML::Value << i + 1;
-				body << YAML::Key << "Max" << YAML::Value << arr[i];
-				body << YAML::EndMap;
+				body << toolyaml::BeginMap;
+				body << toolyaml::Key << "Level" << toolyaml::Value << i + 1;
+				body << toolyaml::Key << "Max" << toolyaml::Value << arr[i];
+				body << toolyaml::EndMap;
 			}
 
-			body << YAML::EndSeq;
+			body << toolyaml::EndSeq;
 		}
 	}
 
@@ -1636,237 +1635,237 @@ static bool skill_parse_row_skilldb( char* split[], size_t columns, size_t curre
 	if (arr_size != 0) {
 		if (arr_size == 1) {
 			if (arr[0] != 0) {
-				body << YAML::Key << "Knockback";
-				body << YAML::Value << arr[0];
+				body << toolyaml::Key << "Knockback";
+				body << toolyaml::Value << arr[0];
 			}
 		} else {
-			body << YAML::Key << "Knockback";
-			body << YAML::BeginSeq;
+			body << toolyaml::Key << "Knockback";
+			body << toolyaml::BeginSeq;
 
 			for (int32 i = 0; i < arr_size; i++) {
-				body << YAML::BeginMap;
-				body << YAML::Key << "Level" << YAML::Value << i + 1;
-				body << YAML::Key << "Amount" << YAML::Value << arr[i];
-				body << YAML::EndMap;
+				body << toolyaml::BeginMap;
+				body << toolyaml::Key << "Level" << toolyaml::Value << i + 1;
+				body << toolyaml::Key << "Amount" << toolyaml::Value << arr[i];
+				body << toolyaml::EndMap;
 			}
 
-			body << YAML::EndSeq;
+			body << toolyaml::EndSeq;
 		}
 	}
 
 	auto it_copyable = skill_copyable.find(skill_id);
 
 	if (it_copyable != skill_copyable.end()) {
-		body << YAML::Key << "CopyFlags";
-		body << YAML::BeginMap;
-		body << YAML::Key << "Skill";
-		body << YAML::BeginMap;
+		body << toolyaml::Key << "CopyFlags";
+		body << toolyaml::BeginMap;
+		body << toolyaml::Key << "Skill";
+		body << toolyaml::BeginMap;
 		if (it_copyable->second.option & 1)
-			body << YAML::Key << "Plagiarism" << YAML::Value << "true";
+			body << toolyaml::Key << "Plagiarism" << toolyaml::Value << "true";
 		if (it_copyable->second.option & 2)
-			body << YAML::Key << "Reproduce" << YAML::Value << "true";
-		body << YAML::EndMap;
+			body << toolyaml::Key << "Reproduce" << toolyaml::Value << "true";
+		body << toolyaml::EndMap;
 
 		if (it_copyable->second.req_opt > 0) {
-			body << YAML::Key << "RemoveRequirement";
-			body << YAML::BeginMap;
+			body << toolyaml::Key << "RemoveRequirement";
+			body << toolyaml::BeginMap;
 			if (it_copyable->second.req_opt & 0x1)
-				body << YAML::Key << "HpCost" << YAML::Value << "true";
+				body << toolyaml::Key << "HpCost" << toolyaml::Value << "true";
 			if (it_copyable->second.req_opt & 0x4)
-				body << YAML::Key << "SpCost" << YAML::Value << "true";
+				body << toolyaml::Key << "SpCost" << toolyaml::Value << "true";
 			if (it_copyable->second.req_opt & 0x8)
-				body << YAML::Key << "HpRateCost" << YAML::Value << "true";
+				body << toolyaml::Key << "HpRateCost" << toolyaml::Value << "true";
 			if (it_copyable->second.req_opt & 0x10)
-				body << YAML::Key << "SpRateCost" << YAML::Value << "true";
+				body << toolyaml::Key << "SpRateCost" << toolyaml::Value << "true";
 			if (it_copyable->second.req_opt & 0x2)
-				body << YAML::Key << "MaxHpTrigger" << YAML::Value << "true";
+				body << toolyaml::Key << "MaxHpTrigger" << toolyaml::Value << "true";
 			if (it_copyable->second.req_opt & 0x20)
-				body << YAML::Key << "ZenyCost" << YAML::Value << "true";
+				body << toolyaml::Key << "ZenyCost" << toolyaml::Value << "true";
 			if (it_copyable->second.req_opt & 0x40)
-				body << YAML::Key << "Weapon" << YAML::Value << "true";
+				body << toolyaml::Key << "Weapon" << toolyaml::Value << "true";
 			if (it_copyable->second.req_opt & 0x80)
-				body << YAML::Key << "Ammo" << YAML::Value << "true";
+				body << toolyaml::Key << "Ammo" << toolyaml::Value << "true";
 			if (it_copyable->second.req_opt & 0x100)
-				body << YAML::Key << "State" << YAML::Value << "true";
+				body << toolyaml::Key << "State" << toolyaml::Value << "true";
 			if (it_copyable->second.req_opt & 0x200)
-				body << YAML::Key << "Status" << YAML::Value << "true";
+				body << toolyaml::Key << "Status" << toolyaml::Value << "true";
 			if (it_copyable->second.req_opt & 0x400)
-				body << YAML::Key << "SpiritSphereCost" << YAML::Value << "true";
+				body << toolyaml::Key << "SpiritSphereCost" << toolyaml::Value << "true";
 			if (it_copyable->second.req_opt & 0x800)
-				body << YAML::Key << "ItemCost" << YAML::Value << "true";
+				body << toolyaml::Key << "ItemCost" << toolyaml::Value << "true";
 			if (it_copyable->second.req_opt & 0x1000)
-				body << YAML::Key << "Equipment" << YAML::Value << "true";
-			body << YAML::EndMap;
+				body << toolyaml::Key << "Equipment" << toolyaml::Value << "true";
+			body << toolyaml::EndMap;
 		}
 
-		body << YAML::EndMap;
+		body << toolyaml::EndMap;
 	}
 
 	auto it_nearnpc = skill_nearnpc.find(skill_id);
 
 	if (it_nearnpc != skill_nearnpc.end()) {
-		body << YAML::Key << "NoNearNPC";
-		body << YAML::BeginMap;
+		body << toolyaml::Key << "NoNearNPC";
+		body << toolyaml::BeginMap;
 
 		if (it_nearnpc->second.unit_nonearnpc_range > 0)
-			body << YAML::Key << "AdditionalRange" << YAML::Value << it_nearnpc->second.unit_nonearnpc_range;
+			body << toolyaml::Key << "AdditionalRange" << toolyaml::Value << it_nearnpc->second.unit_nonearnpc_range;
 		if (it_nearnpc->second.unit_nonearnpc_type > 0) {
-			body << YAML::Key << "Type";
-			body << YAML::BeginMap;
+			body << toolyaml::Key << "Type";
+			body << toolyaml::BeginMap;
 			if (it_nearnpc->second.unit_nonearnpc_type & 1)
-				body << YAML::Key << "WarpPortal" << YAML::Value << "true";
+				body << toolyaml::Key << "WarpPortal" << toolyaml::Value << "true";
 			if (it_nearnpc->second.unit_nonearnpc_type & 2)
-				body << YAML::Key << "Shop" << YAML::Value << "true";
+				body << toolyaml::Key << "Shop" << toolyaml::Value << "true";
 			if (it_nearnpc->second.unit_nonearnpc_type & 4)
-				body << YAML::Key << "Npc" << YAML::Value << "true";
+				body << toolyaml::Key << "Npc" << toolyaml::Value << "true";
 			if (it_nearnpc->second.unit_nonearnpc_type & 8)
-				body << YAML::Key << "Tomb" << YAML::Value << "true";
-			body << YAML::EndMap;
+				body << toolyaml::Key << "Tomb" << toolyaml::Value << "true";
+			body << toolyaml::EndMap;
 		}
 
-		body << YAML::EndMap;
+		body << toolyaml::EndMap;
 	}
 
 	if (strcmpi(split[9], "yes") != 0)
-		body << YAML::Key << "CastCancel" << YAML::Value << "false";
+		body << toolyaml::Key << "CastCancel" << toolyaml::Value << "false";
 	if (atoi(split[10]) != 0)
-		body << YAML::Key << "CastDefenseReduction" << YAML::Value << atoi(split[10]);
+		body << toolyaml::Key << "CastDefenseReduction" << toolyaml::Value << atoi(split[10]);
 
 	auto it_cast = skill_cast.find(skill_id);
 
 	if (it_cast != skill_cast.end()) {
 		if (!isMultiLevel(it_cast->second.cast)) {
 			if (it_cast->second.cast[0] > 0)
-				body << YAML::Key << "CastTime" << YAML::Value << it_cast->second.cast[0];
+				body << toolyaml::Key << "CastTime" << toolyaml::Value << it_cast->second.cast[0];
 		} else {
-			body << YAML::Key << "CastTime";
-			body << YAML::BeginSeq;
+			body << toolyaml::Key << "CastTime";
+			body << toolyaml::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_cast->second.cast); i++) {
 				if (it_cast->second.cast[i] > 0) {
-					body << YAML::BeginMap;
-					body << YAML::Key << "Level" << YAML::Value << i + 1;
-					body << YAML::Key << "Time" << YAML::Value << it_cast->second.cast[i];
-					body << YAML::EndMap;
+					body << toolyaml::BeginMap;
+					body << toolyaml::Key << "Level" << toolyaml::Value << i + 1;
+					body << toolyaml::Key << "Time" << toolyaml::Value << it_cast->second.cast[i];
+					body << toolyaml::EndMap;
 				}
 			}
 
-			body << YAML::EndSeq;
+			body << toolyaml::EndSeq;
 		}
 		
 		if (!isMultiLevel(it_cast->second.delay)) {
 			if (it_cast->second.delay[0] > 0)
-				body << YAML::Key << "AfterCastActDelay" << YAML::Value << it_cast->second.delay[0];
+				body << toolyaml::Key << "AfterCastActDelay" << toolyaml::Value << it_cast->second.delay[0];
 		} else {
-			body << YAML::Key << "AfterCastActDelay";
-			body << YAML::BeginSeq;
+			body << toolyaml::Key << "AfterCastActDelay";
+			body << toolyaml::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_cast->second.delay); i++) {
 				if (it_cast->second.delay[i] > 0) {
-					body << YAML::BeginMap;
-					body << YAML::Key << "Level" << YAML::Value << i + 1;
-					body << YAML::Key << "Time" << YAML::Value << it_cast->second.delay[i];
-					body << YAML::EndMap;
+					body << toolyaml::BeginMap;
+					body << toolyaml::Key << "Level" << toolyaml::Value << i + 1;
+					body << toolyaml::Key << "Time" << toolyaml::Value << it_cast->second.delay[i];
+					body << toolyaml::EndMap;
 				}
 			}
 
-			body << YAML::EndSeq;
+			body << toolyaml::EndSeq;
 		}
 		
 		if (!isMultiLevel(it_cast->second.walkdelay)) {
 			if (it_cast->second.walkdelay[0] > 0)
-				body << YAML::Key << "AfterCastWalkDelay" << YAML::Value << it_cast->second.walkdelay[0];
+				body << toolyaml::Key << "AfterCastWalkDelay" << toolyaml::Value << it_cast->second.walkdelay[0];
 		} else {
-			body << YAML::Key << "AfterCastWalkDelay";
-			body << YAML::BeginSeq;
+			body << toolyaml::Key << "AfterCastWalkDelay";
+			body << toolyaml::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_cast->second.walkdelay); i++) {
 				if (it_cast->second.walkdelay[i] > 0) {
-					body << YAML::BeginMap;
-					body << YAML::Key << "Level" << YAML::Value << i + 1;
-					body << YAML::Key << "Time" << YAML::Value << it_cast->second.walkdelay[i];
-					body << YAML::EndMap;
+					body << toolyaml::BeginMap;
+					body << toolyaml::Key << "Level" << toolyaml::Value << i + 1;
+					body << toolyaml::Key << "Time" << toolyaml::Value << it_cast->second.walkdelay[i];
+					body << toolyaml::EndMap;
 				}
 			}
 
-			body << YAML::EndSeq;
+			body << toolyaml::EndSeq;
 		}
 		
 		if (!isMultiLevel(it_cast->second.upkeep_time)) {
 			if (it_cast->second.upkeep_time[0] != 0)
-				body << YAML::Key << "Duration1" << YAML::Value << it_cast->second.upkeep_time[0];
+				body << toolyaml::Key << "Duration1" << toolyaml::Value << it_cast->second.upkeep_time[0];
 		} else {
-			body << YAML::Key << "Duration1";
-			body << YAML::BeginSeq;
+			body << toolyaml::Key << "Duration1";
+			body << toolyaml::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_cast->second.upkeep_time); i++) {
 				if (it_cast->second.upkeep_time[i] != 0) {
-					body << YAML::BeginMap;
-					body << YAML::Key << "Level" << YAML::Value << i + 1;
-					body << YAML::Key << "Time" << YAML::Value << it_cast->second.upkeep_time[i];
-					body << YAML::EndMap;
+					body << toolyaml::BeginMap;
+					body << toolyaml::Key << "Level" << toolyaml::Value << i + 1;
+					body << toolyaml::Key << "Time" << toolyaml::Value << it_cast->second.upkeep_time[i];
+					body << toolyaml::EndMap;
 				}
 			}
 
-			body << YAML::EndSeq;
+			body << toolyaml::EndSeq;
 		}
 
 		if (!isMultiLevel(it_cast->second.upkeep_time2)) {
 			if (it_cast->second.upkeep_time2[0] != 0)
-				body << YAML::Key << "Duration2" << YAML::Value << it_cast->second.upkeep_time2[0];
+				body << toolyaml::Key << "Duration2" << toolyaml::Value << it_cast->second.upkeep_time2[0];
 		} else {
-			body << YAML::Key << "Duration2";
-			body << YAML::BeginSeq;
+			body << toolyaml::Key << "Duration2";
+			body << toolyaml::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_cast->second.upkeep_time2); i++) {
 				if (it_cast->second.upkeep_time2[i] != 0) {
-					body << YAML::BeginMap;
-					body << YAML::Key << "Level" << YAML::Value << i + 1;
-					body << YAML::Key << "Time" << YAML::Value << it_cast->second.upkeep_time2[i];
-					body << YAML::EndMap;
+					body << toolyaml::BeginMap;
+					body << toolyaml::Key << "Level" << toolyaml::Value << i + 1;
+					body << toolyaml::Key << "Time" << toolyaml::Value << it_cast->second.upkeep_time2[i];
+					body << toolyaml::EndMap;
 				}
 			}
 
-			body << YAML::EndSeq;
+			body << toolyaml::EndSeq;
 		}
 		
 		if (!isMultiLevel(it_cast->second.cooldown)) {
 			if (it_cast->second.cooldown[0] > 0)
-				body << YAML::Key << "Cooldown" << YAML::Value << it_cast->second.cooldown[0];
+				body << toolyaml::Key << "Cooldown" << toolyaml::Value << it_cast->second.cooldown[0];
 		} else {
-			body << YAML::Key << "Cooldown";
-			body << YAML::BeginSeq;
+			body << toolyaml::Key << "Cooldown";
+			body << toolyaml::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_cast->second.cooldown); i++) {
 				if (it_cast->second.cooldown[i] > 0) {
-					body << YAML::BeginMap;
-					body << YAML::Key << "Level" << YAML::Value << i + 1;
-					body << YAML::Key << "Time" << YAML::Value << it_cast->second.cooldown[i];
-					body << YAML::EndMap;
+					body << toolyaml::BeginMap;
+					body << toolyaml::Key << "Level" << toolyaml::Value << i + 1;
+					body << toolyaml::Key << "Time" << toolyaml::Value << it_cast->second.cooldown[i];
+					body << toolyaml::EndMap;
 				}
 			}
 
-			body << YAML::EndSeq;
+			body << toolyaml::EndSeq;
 		}
 
 #ifdef RENEWAL_CAST
 		if (!isMultiLevel(it_cast->second.fixed_cast)) {
 			if (it_cast->second.fixed_cast[0] != 0)
-				body << YAML::Key << "FixedCastTime" << YAML::Value << it_cast->second.fixed_cast[0];
+				body << toolyaml::Key << "FixedCastTime" << toolyaml::Value << it_cast->second.fixed_cast[0];
 		} else {
-			body << YAML::Key << "FixedCastTime";
-			body << YAML::BeginSeq;
+			body << toolyaml::Key << "FixedCastTime";
+			body << toolyaml::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_cast->second.fixed_cast); i++) {
 				if (it_cast->second.fixed_cast[i] != 0) {
-					body << YAML::BeginMap;
-					body << YAML::Key << "Level" << YAML::Value << i + 1;
-					body << YAML::Key << "Time" << YAML::Value << it_cast->second.fixed_cast[i];
-					body << YAML::EndMap;
+					body << toolyaml::BeginMap;
+					body << toolyaml::Key << "Level" << toolyaml::Value << i + 1;
+					body << toolyaml::Key << "Time" << toolyaml::Value << it_cast->second.fixed_cast[i];
+					body << toolyaml::EndMap;
 				}
 			}
 
-			body << YAML::EndSeq;
+			body << toolyaml::EndSeq;
 		}
 #endif
 	}
@@ -1875,157 +1874,157 @@ static bool skill_parse_row_skilldb( char* split[], size_t columns, size_t curre
 
 	if (it_castdex != skill_castnodex.end()) {
 		if (it_castdex->second.castnodex > 0) {
-			body << YAML::Key << "CastTimeFlags";
-			body << YAML::BeginMap;
+			body << toolyaml::Key << "CastTimeFlags";
+			body << toolyaml::BeginMap;
 
 			if (it_castdex->second.castnodex & 1)
-				body << YAML::Key << "IgnoreDex" << YAML::Value << "true";
+				body << toolyaml::Key << "IgnoreDex" << toolyaml::Value << "true";
 			if (it_castdex->second.castnodex & 2)
-				body << YAML::Key << "IgnoreStatus" << YAML::Value << "true";
+				body << toolyaml::Key << "IgnoreStatus" << toolyaml::Value << "true";
 			if (it_castdex->second.castnodex & 4)
-				body << YAML::Key << "IgnoreItemBonus" << YAML::Value << "true";
+				body << toolyaml::Key << "IgnoreItemBonus" << toolyaml::Value << "true";
 
-			body << YAML::EndMap;
+			body << toolyaml::EndMap;
 		}
 
 		if (it_castdex->second.delaynodex > 0) {
-			body << YAML::Key << "CastDelayFlags";
-			body << YAML::BeginMap;
+			body << toolyaml::Key << "CastDelayFlags";
+			body << toolyaml::BeginMap;
 
 			if (it_castdex->second.delaynodex & 1)
-				body << YAML::Key << "IgnoreDex" << YAML::Value << "true";
+				body << toolyaml::Key << "IgnoreDex" << toolyaml::Value << "true";
 			if (it_castdex->second.delaynodex & 2)
-				body << YAML::Key << "IgnoreStatus" << YAML::Value << "true";
+				body << toolyaml::Key << "IgnoreStatus" << toolyaml::Value << "true";
 			if (it_castdex->second.delaynodex & 4)
-				body << YAML::Key << "IgnoreItemBonus" << YAML::Value << "true";
+				body << toolyaml::Key << "IgnoreItemBonus" << toolyaml::Value << "true";
 
-			body << YAML::EndMap;
+			body << toolyaml::EndMap;
 		}
 	}
 
 	auto it_req = skill_require.find(skill_id);
 
 	if (it_req != skill_require.end()) {
-		body << YAML::Key << "Requires";
-		body << YAML::BeginMap;
+		body << toolyaml::Key << "Requires";
+		body << toolyaml::BeginMap;
 		
 		if (!isMultiLevel(it_req->second.hp)) {
 			if (it_req->second.hp[0] > 0)
-				body << YAML::Key << "HpCost" << YAML::Value << it_req->second.hp[0];
+				body << toolyaml::Key << "HpCost" << toolyaml::Value << it_req->second.hp[0];
 		} else {
-			body << YAML::Key << "HpCost";
-			body << YAML::BeginSeq;
+			body << toolyaml::Key << "HpCost";
+			body << toolyaml::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_req->second.hp); i++) {
 				if (it_req->second.hp[i] > 0) {
-					body << YAML::BeginMap;
-					body << YAML::Key << "Level" << YAML::Value << i + 1;
-					body << YAML::Key << "Amount" << YAML::Value << it_req->second.hp[i];
-					body << YAML::EndMap;
+					body << toolyaml::BeginMap;
+					body << toolyaml::Key << "Level" << toolyaml::Value << i + 1;
+					body << toolyaml::Key << "Amount" << toolyaml::Value << it_req->second.hp[i];
+					body << toolyaml::EndMap;
 				}
 			}
 
-			body << YAML::EndSeq;
+			body << toolyaml::EndSeq;
 		}
 		
 		if (!isMultiLevel(it_req->second.sp)) {
 			if (it_req->second.sp[0] > 0)
-				body << YAML::Key << "SpCost" << YAML::Value << it_req->second.sp[0];
+				body << toolyaml::Key << "SpCost" << toolyaml::Value << it_req->second.sp[0];
 		} else {
-			body << YAML::Key << "SpCost";
-			body << YAML::BeginSeq;
+			body << toolyaml::Key << "SpCost";
+			body << toolyaml::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_req->second.sp); i++) {
 				if (it_req->second.sp[i] > 0) {
-					body << YAML::BeginMap;
-					body << YAML::Key << "Level" << YAML::Value << i + 1;
-					body << YAML::Key << "Amount" << YAML::Value << it_req->second.sp[i];
-					body << YAML::EndMap;
+					body << toolyaml::BeginMap;
+					body << toolyaml::Key << "Level" << toolyaml::Value << i + 1;
+					body << toolyaml::Key << "Amount" << toolyaml::Value << it_req->second.sp[i];
+					body << toolyaml::EndMap;
 				}
 			}
 
-			body << YAML::EndSeq;
+			body << toolyaml::EndSeq;
 		}
 		
 		if (!isMultiLevel(it_req->second.hp_rate)) {
 			if (it_req->second.hp_rate[0] != 0)
-				body << YAML::Key << "HpRateCost" << YAML::Value << it_req->second.hp_rate[0];
+				body << toolyaml::Key << "HpRateCost" << toolyaml::Value << it_req->second.hp_rate[0];
 		} else {
-			body << YAML::Key << "HpRateCost";
-			body << YAML::BeginSeq;
+			body << toolyaml::Key << "HpRateCost";
+			body << toolyaml::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_req->second.hp_rate); i++) {
 				if (it_req->second.hp_rate[i] != 0) {
-					body << YAML::BeginMap;
-					body << YAML::Key << "Level" << YAML::Value << i + 1;
-					body << YAML::Key << "Amount" << YAML::Value << it_req->second.hp_rate[i];
-					body << YAML::EndMap;
+					body << toolyaml::BeginMap;
+					body << toolyaml::Key << "Level" << toolyaml::Value << i + 1;
+					body << toolyaml::Key << "Amount" << toolyaml::Value << it_req->second.hp_rate[i];
+					body << toolyaml::EndMap;
 				}
 			}
 
-			body << YAML::EndSeq;
+			body << toolyaml::EndSeq;
 		}
 		
 		if (!isMultiLevel(it_req->second.sp_rate)) {
 			if (it_req->second.sp_rate[0] != 0)
-				body << YAML::Key << "SpRateCost" << YAML::Value << it_req->second.sp_rate[0];
+				body << toolyaml::Key << "SpRateCost" << toolyaml::Value << it_req->second.sp_rate[0];
 		} else {
-			body << YAML::Key << "SpRateCost";
-			body << YAML::BeginSeq;
+			body << toolyaml::Key << "SpRateCost";
+			body << toolyaml::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_req->second.sp_rate); i++) {
 				if (it_req->second.sp_rate[i] != 0) {
-					body << YAML::BeginMap;
-					body << YAML::Key << "Level" << YAML::Value << i + 1;
-					body << YAML::Key << "Amount" << YAML::Value << it_req->second.sp_rate[i];
-					body << YAML::EndMap;
+					body << toolyaml::BeginMap;
+					body << toolyaml::Key << "Level" << toolyaml::Value << i + 1;
+					body << toolyaml::Key << "Amount" << toolyaml::Value << it_req->second.sp_rate[i];
+					body << toolyaml::EndMap;
 				}
 			}
 
-			body << YAML::EndSeq;
+			body << toolyaml::EndSeq;
 		}
 		
 		if (!isMultiLevel(it_req->second.mhp)) {
 			if (it_req->second.mhp[0] > 0)
-				body << YAML::Key << "MaxHpTrigger" << YAML::Value << it_req->second.mhp[0];
+				body << toolyaml::Key << "MaxHpTrigger" << toolyaml::Value << it_req->second.mhp[0];
 		} else {
-			body << YAML::Key << "MaxHpTrigger";
-			body << YAML::BeginSeq;
+			body << toolyaml::Key << "MaxHpTrigger";
+			body << toolyaml::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_req->second.mhp); i++) {
 				if (it_req->second.mhp[i] > 0) {
-					body << YAML::BeginMap;
-					body << YAML::Key << "Level" << YAML::Value << i + 1;
-					body << YAML::Key << "Amount" << YAML::Value << it_req->second.mhp[i];
-					body << YAML::EndMap;
+					body << toolyaml::BeginMap;
+					body << toolyaml::Key << "Level" << toolyaml::Value << i + 1;
+					body << toolyaml::Key << "Amount" << toolyaml::Value << it_req->second.mhp[i];
+					body << toolyaml::EndMap;
 				}
 			}
 
-			body << YAML::EndSeq;
+			body << toolyaml::EndSeq;
 		}
 		
 		if (!isMultiLevel(it_req->second.zeny)) {
 			if (it_req->second.zeny[0] > 0)
-				body << YAML::Key << "ZenyCost" << YAML::Value << it_req->second.zeny[0];
+				body << toolyaml::Key << "ZenyCost" << toolyaml::Value << it_req->second.zeny[0];
 		} else {
-			body << YAML::Key << "ZenyCost";
-			body << YAML::BeginSeq;
+			body << toolyaml::Key << "ZenyCost";
+			body << toolyaml::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_req->second.zeny); i++) {
 				if (it_req->second.zeny[i] > 0) {
-					body << YAML::BeginMap;
-					body << YAML::Key << "Level" << YAML::Value << i + 1;
-					body << YAML::Key << "Amount" << YAML::Value << it_req->second.zeny[i];
-					body << YAML::EndMap;
+					body << toolyaml::BeginMap;
+					body << toolyaml::Key << "Level" << toolyaml::Value << i + 1;
+					body << toolyaml::Key << "Amount" << toolyaml::Value << it_req->second.zeny[i];
+					body << toolyaml::EndMap;
 				}
 			}
 
-			body << YAML::EndSeq;
+			body << toolyaml::EndSeq;
 		}
 
 		if (it_req->second.weapon != 0) {
-			body << YAML::Key << "Weapon";
-			body << YAML::BeginMap;
+			body << toolyaml::Key << "Weapon";
+			body << toolyaml::BeginMap;
 
 			int32 temp = it_req->second.weapon;
 
@@ -2037,18 +2036,18 @@ static bool skill_parse_row_skilldb( char* split[], size_t columns, size_t curre
 					if (temp & 1 << i) {
 						constant = constant_lookup(i, "W_");
 						constant.erase(0, 2);
-						body << YAML::Key << name2Upper(constant) << YAML::Value << "true";
+						body << toolyaml::Key << name2Upper(constant) << toolyaml::Value << "true";
 						temp ^= 1 << i;
 					}
 				}
 			}
 
-			body << YAML::EndMap;
+			body << toolyaml::EndMap;
 		}
 
 		if (it_req->second.ammo != 0) {
-			body << YAML::Key << "Ammo";
-			body << YAML::BeginMap;
+			body << toolyaml::Key << "Ammo";
+			body << toolyaml::BeginMap;
 
 			int32 temp = it_req->second.ammo;
 
@@ -2056,77 +2055,77 @@ static bool skill_parse_row_skilldb( char* split[], size_t columns, size_t curre
 				if (temp & 1 << i) {
 					constant = constant_lookup(i, "AMMO_");
 					constant.erase(0, 5);
-					body << YAML::Key << name2Upper(constant) << YAML::Value << "true";
+					body << toolyaml::Key << name2Upper(constant) << toolyaml::Value << "true";
 					temp ^= 1 << i;
 				}
 			}
 
-			body << YAML::EndMap;
+			body << toolyaml::EndMap;
 		}
 		if (!isMultiLevel(it_req->second.ammo_qty)) {
 			if (it_req->second.ammo_qty[0] > 0)
-				body << YAML::Key << "AmmoAmount" << YAML::Value << it_req->second.ammo_qty[0];
+				body << toolyaml::Key << "AmmoAmount" << toolyaml::Value << it_req->second.ammo_qty[0];
 		} else {
-			body << YAML::Key << "AmmoAmount";
-			body << YAML::BeginSeq;
+			body << toolyaml::Key << "AmmoAmount";
+			body << toolyaml::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_req->second.ammo_qty); i++) {
 				if (it_req->second.ammo_qty[i] > 0) {
-					body << YAML::BeginMap;
-					body << YAML::Key << "Level" << YAML::Value << i + 1;
-					body << YAML::Key << "Amount" << YAML::Value << it_req->second.ammo_qty[i];
-					body << YAML::EndMap;
+					body << toolyaml::BeginMap;
+					body << toolyaml::Key << "Level" << toolyaml::Value << i + 1;
+					body << toolyaml::Key << "Amount" << toolyaml::Value << it_req->second.ammo_qty[i];
+					body << toolyaml::EndMap;
 				}
 			}
 
-			body << YAML::EndSeq;
+			body << toolyaml::EndSeq;
 		}
 
 		if (it_req->second.state) {
 			constant = constant_lookup(it_req->second.state, "ST_");
 			constant.erase(0, 3);
-			body << YAML::Key << "State" << YAML::Value << name2Upper(constant);
+			body << toolyaml::Key << "State" << toolyaml::Value << name2Upper(constant);
 		}
 
 		if (it_req->second.status.size() > 0) {
-			body << YAML::Key << "Status";
-			body << YAML::BeginMap;
+			body << toolyaml::Key << "Status";
+			body << toolyaml::BeginMap;
 
 			for (const auto &it : it_req->second.status) {
 				constant = constant_lookup(it, "SC_");
 				constant.erase(0, 3);
-				body << YAML::Key << name2Upper(constant) << YAML::Value << "true";
+				body << toolyaml::Key << name2Upper(constant) << toolyaml::Value << "true";
 			}
 
-			body << YAML::EndMap;
+			body << toolyaml::EndMap;
 		}
 		
 		if (!isMultiLevel(it_req->second.spiritball)) {
 			if (it_req->second.spiritball[0] != 0)
-				body << YAML::Key << "SpiritSphereCost" << YAML::Value << it_req->second.spiritball[0];
+				body << toolyaml::Key << "SpiritSphereCost" << toolyaml::Value << it_req->second.spiritball[0];
 		} else {
-			body << YAML::Key << "SpiritSphereCost";
-			body << YAML::BeginSeq;
+			body << toolyaml::Key << "SpiritSphereCost";
+			body << toolyaml::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_req->second.spiritball); i++) {
 				if (it_req->second.spiritball[i] != 0) {
-					body << YAML::BeginMap;
-					body << YAML::Key << "Level" << YAML::Value << i + 1;
-					body << YAML::Key << "Amount" << YAML::Value << it_req->second.spiritball[i];
-					body << YAML::EndMap;
+					body << toolyaml::BeginMap;
+					body << toolyaml::Key << "Level" << toolyaml::Value << i + 1;
+					body << toolyaml::Key << "Amount" << toolyaml::Value << it_req->second.spiritball[i];
+					body << toolyaml::EndMap;
 				}
 			}
 
-			body << YAML::EndSeq;
+			body << toolyaml::EndSeq;
 		}
 
 		if (it_req->second.itemid[0] > 0) {
-			body << YAML::Key << "ItemCost";
-			body << YAML::BeginSeq;
+			body << toolyaml::Key << "ItemCost";
+			body << toolyaml::BeginSeq;
 
 			for (uint8 i = 0; i < ARRAYLENGTH(it_req->second.itemid); i++) {
 				if (it_req->second.itemid[i] > 0) {
-					body << YAML::BeginMap;
+					body << toolyaml::BeginMap;
 
 					std::string *item_name = util::umap_find(aegis_itemnames, it_req->second.itemid[i]);
 
@@ -2135,8 +2134,8 @@ static bool skill_parse_row_skilldb( char* split[], size_t columns, size_t curre
 						return false;
 					}
 
-					body << YAML::Key << "Item" << YAML::Value << *item_name;
-					body << YAML::Key << "Amount" << YAML::Value << it_req->second.amount[i];
+					body << toolyaml::Key << "Item" << toolyaml::Value << *item_name;
+					body << toolyaml::Key << "Amount" << toolyaml::Value << it_req->second.amount[i];
 
 					switch (skill_id) { // List of level dependent item costs
 						case WZ_FIREPILLAR:
@@ -2156,19 +2155,19 @@ static bool skill_parse_row_skilldb( char* split[], size_t columns, size_t curre
 						case SO_WIND_INSIGNIA:
 						case SO_EARTH_INSIGNIA:
 						case KO_MAKIBISHI:
-							body << YAML::Key << "Level" << YAML::Value << i;
+							body << toolyaml::Key << "Level" << toolyaml::Value << i;
 					}
 
-					body << YAML::EndMap;
+					body << toolyaml::EndMap;
 				}
 			}
 
-			body << YAML::EndSeq;
+			body << toolyaml::EndSeq;
 		}
 
 		if (it_req->second.eqItem.size() > 0) {
-			body << YAML::Key << "Equipment";
-			body << YAML::BeginMap;
+			body << toolyaml::Key << "Equipment";
+			body << toolyaml::BeginMap;
 
 			for (const auto &it : it_req->second.eqItem) {
 				std::string *item_name = util::umap_find(aegis_itemnames, it);
@@ -2178,140 +2177,140 @@ static bool skill_parse_row_skilldb( char* split[], size_t columns, size_t curre
 					return false;
 				}
 
-				body << YAML::Key << *item_name << YAML::Value << "true";
+				body << toolyaml::Key << *item_name << toolyaml::Value << "true";
 			}
 
-			body << YAML::EndMap;
+			body << toolyaml::EndMap;
 		}
 
-		body << YAML::EndMap;
+		body << toolyaml::EndMap;
 	}
 
 	auto it_unit = skill_unit.find(skill_id);
 
 	if (it_unit != skill_unit.end()) {
-		body << YAML::Key << "Unit";
-		body << YAML::BeginMap;
+		body << toolyaml::Key << "Unit";
+		body << toolyaml::BeginMap;
 
 		constant = constant_lookup(it_unit->second.unit_id, "UNT_");
 		constant.erase(0, 4);
-		body << YAML::Key << "Id" << YAML::Value << name2Upper(constant);
+		body << toolyaml::Key << "Id" << toolyaml::Value << name2Upper(constant);
 		if (it_unit->second.unit_id2 > 0) {
 			constant = constant_lookup(it_unit->second.unit_id2, "UNT_");
 			constant.erase(0, 4);
-			body << YAML::Key << "AlternateId" << YAML::Value << name2Upper(constant);
+			body << toolyaml::Key << "AlternateId" << toolyaml::Value << name2Upper(constant);
 		}
 		
 		if (!isMultiLevel(it_unit->second.unit_layout_type)) {
 			if (it_unit->second.unit_layout_type[0] != 0)
-				body << YAML::Key << "Layout" << YAML::Value << it_unit->second.unit_layout_type[0];
+				body << toolyaml::Key << "Layout" << toolyaml::Value << it_unit->second.unit_layout_type[0];
 		} else {
-			body << YAML::Key << "Layout";
-			body << YAML::BeginSeq;
+			body << toolyaml::Key << "Layout";
+			body << toolyaml::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_unit->second.unit_layout_type); i++) {
 				if (it_unit->second.unit_layout_type[i] == 0 && i + 1 > 5)
 					continue;
-				body << YAML::BeginMap;
-				body << YAML::Key << "Level" << YAML::Value << i + 1;
-				body << YAML::Key << "Size" << YAML::Value << it_unit->second.unit_layout_type[i];
-				body << YAML::EndMap;
+				body << toolyaml::BeginMap;
+				body << toolyaml::Key << "Level" << toolyaml::Value << i + 1;
+				body << toolyaml::Key << "Size" << toolyaml::Value << it_unit->second.unit_layout_type[i];
+				body << toolyaml::EndMap;
 			}
 
-			body << YAML::EndSeq;
+			body << toolyaml::EndSeq;
 		}
 		
 		if (!isMultiLevel(it_unit->second.unit_range)) {
 			if (it_unit->second.unit_range[0] != 0)
-				body << YAML::Key << "Range" << YAML::Value << it_unit->second.unit_range[0];
+				body << toolyaml::Key << "Range" << toolyaml::Value << it_unit->second.unit_range[0];
 		} else {
-			body << YAML::Key << "Range";
-			body << YAML::BeginSeq;
+			body << toolyaml::Key << "Range";
+			body << toolyaml::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_unit->second.unit_range); i++) {
 				if (it_unit->second.unit_range[i] == 0 && i + 1 > 5)
 					continue;
-				body << YAML::BeginMap;
-				body << YAML::Key << "Level" << YAML::Value << i + 1;
-				body << YAML::Key << "Size" << YAML::Value << it_unit->second.unit_range[i];
-				body << YAML::EndMap;
+				body << toolyaml::BeginMap;
+				body << toolyaml::Key << "Level" << toolyaml::Value << i + 1;
+				body << toolyaml::Key << "Size" << toolyaml::Value << it_unit->second.unit_range[i];
+				body << toolyaml::EndMap;
 			}
 
-			body << YAML::EndSeq;
+			body << toolyaml::EndSeq;
 		}
 
 		if (it_unit->second.unit_interval != 0)
-			body << YAML::Key << "Interval" << YAML::Value << it_unit->second.unit_interval;
+			body << toolyaml::Key << "Interval" << toolyaml::Value << it_unit->second.unit_interval;
 
 		if (it_unit->second.target_str.size() > 0) {
 			if (it_unit->second.target_str.compare("noenemy") == 0 || it_unit->second.target_str.compare("friend") == 0)
-				body << YAML::Key << "Target" << YAML::Value << "Friend";
+				body << toolyaml::Key << "Target" << toolyaml::Value << "Friend";
 			//else if (it_unit->second.target_str.compare("noenemy") == 0) // Same as Friend
-			//	body << YAML::Key << "Target" << YAML::Value << "NoEnemy";
+			//	body << toolyaml::Key << "Target" << toolyaml::Value << "NoEnemy";
 			else if (it_unit->second.target_str.compare("party") == 0)
-				body << YAML::Key << "Target" << YAML::Value << "Party";
+				body << toolyaml::Key << "Target" << toolyaml::Value << "Party";
 			else if (it_unit->second.target_str.compare("ally") == 0)
-				body << YAML::Key << "Target" << YAML::Value << "Ally";
+				body << toolyaml::Key << "Target" << toolyaml::Value << "Ally";
 			else if (it_unit->second.target_str.compare("guild") == 0)
-				body << YAML::Key << "Target" << YAML::Value << "Guild";
+				body << toolyaml::Key << "Target" << toolyaml::Value << "Guild";
 			//else if (it_unit->second.target_str.compare("all") == 0)
-			//	body << YAML::Key << "Target" << YAML::Value << "All";
+			//	body << toolyaml::Key << "Target" << toolyaml::Value << "All";
 			else if (it_unit->second.target_str.compare("enemy") == 0)
-				body << YAML::Key << "Target" << YAML::Value << "Enemy";
+				body << toolyaml::Key << "Target" << toolyaml::Value << "Enemy";
 			else if (it_unit->second.target_str.compare("self") == 0)
-				body << YAML::Key << "Target" << YAML::Value << "Self";
+				body << toolyaml::Key << "Target" << toolyaml::Value << "Self";
 			else if (it_unit->second.target_str.compare("sameguild") == 0)
-				body << YAML::Key << "Target" << YAML::Value << "SameGuild";
+				body << toolyaml::Key << "Target" << toolyaml::Value << "SameGuild";
 		}
 
 		if (it_unit->second.unit_flag_csv > 0) {
-			body << YAML::Key << "Flag";
-			body << YAML::BeginMap;
+			body << toolyaml::Key << "Flag";
+			body << toolyaml::BeginMap;
 
 			if (it_unit->second.unit_flag_csv & 0x1)
-				body << YAML::Value << "NoEnemy" << YAML::Value << "true";
+				body << toolyaml::Value << "NoEnemy" << toolyaml::Value << "true";
 			if (it_unit->second.unit_flag_csv & 0x2)
-				body << YAML::Value << "NoReiteration" << YAML::Value << "true";
+				body << toolyaml::Value << "NoReiteration" << toolyaml::Value << "true";
 			if (it_unit->second.unit_flag_csv & 0x4)
-				body << YAML::Value << "NoFootSet" << YAML::Value << "true";
+				body << toolyaml::Value << "NoFootSet" << toolyaml::Value << "true";
 			if (it_unit->second.unit_flag_csv & 0x8)
-				body << YAML::Value << "NoOverlap" << YAML::Value << "true";
+				body << toolyaml::Value << "NoOverlap" << toolyaml::Value << "true";
 			if (it_unit->second.unit_flag_csv & 0x10)
-				body << YAML::Value << "PathCheck" << YAML::Value << "true";
+				body << toolyaml::Value << "PathCheck" << toolyaml::Value << "true";
 			if (it_unit->second.unit_flag_csv & 0x20)
-				body << YAML::Value << "NoPc" << YAML::Value << "true";
+				body << toolyaml::Value << "NoPc" << toolyaml::Value << "true";
 			if (it_unit->second.unit_flag_csv & 0x40)
-				body << YAML::Value << "NoMob" << YAML::Value << "true";
+				body << toolyaml::Value << "NoMob" << toolyaml::Value << "true";
 			if (it_unit->second.unit_flag_csv & 0x80)
-				body << YAML::Value << "Skill" << YAML::Value << "true";
+				body << toolyaml::Value << "Skill" << toolyaml::Value << "true";
 			if (it_unit->second.unit_flag_csv & 0x100)
-				body << YAML::Value << "Dance" << YAML::Value << "true";
+				body << toolyaml::Value << "Dance" << toolyaml::Value << "true";
 			if (it_unit->second.unit_flag_csv & 0x200)
-				body << YAML::Value << "Ensemble" << YAML::Value << "true";
+				body << toolyaml::Value << "Ensemble" << toolyaml::Value << "true";
 			if (it_unit->second.unit_flag_csv & 0x400)
-				body << YAML::Value << "Song" << YAML::Value << "true";
+				body << toolyaml::Value << "Song" << toolyaml::Value << "true";
 			if (it_unit->second.unit_flag_csv & 0x800)
-				body << YAML::Value << "DualMode" << YAML::Value << "true";
+				body << toolyaml::Value << "DualMode" << toolyaml::Value << "true";
 			if (it_unit->second.unit_flag_csv & 0x1000)
-				body << YAML::Value << "NoKnockback" << YAML::Value << "true";
+				body << toolyaml::Value << "NoKnockback" << toolyaml::Value << "true";
 			if (it_unit->second.unit_flag_csv & 0x2000)
-				body << YAML::Value << "RangedSingleUnit" << YAML::Value << "true";
+				body << toolyaml::Value << "RangedSingleUnit" << toolyaml::Value << "true";
 			if (it_unit->second.unit_flag_csv & 0x4000)
-				body << YAML::Value << "CrazyWeedImmune" << YAML::Value << "true";
+				body << toolyaml::Value << "CrazyWeedImmune" << toolyaml::Value << "true";
 			if (it_unit->second.unit_flag_csv & 0x8000)
-				body << YAML::Value << "RemovedByFireRain" << YAML::Value << "true";
+				body << toolyaml::Value << "RemovedByFireRain" << toolyaml::Value << "true";
 			if (it_unit->second.unit_flag_csv & 0x10000)
-				body << YAML::Value << "KnockbackGroup" << YAML::Value << "true";
+				body << toolyaml::Value << "KnockbackGroup" << toolyaml::Value << "true";
 			if (it_unit->second.unit_flag_csv & 0x20000)
-				body << YAML::Value << "HiddenTrap" << YAML::Value << "true";
+				body << toolyaml::Value << "HiddenTrap" << toolyaml::Value << "true";
 
-			body << YAML::EndMap;
+			body << toolyaml::EndMap;
 		}
 
-		body << YAML::EndMap;
+		body << toolyaml::EndMap;
 	}
 
-	body << YAML::EndMap;
+	body << toolyaml::EndMap;
 
 	return true;
 }
@@ -2325,8 +2324,8 @@ static bool quest_read_db( char *split[], size_t columns, size_t current ){
 		return false;
 	}
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Id" << YAML::Value << quest_id;
+	body << toolyaml::BeginMap;
+	body << toolyaml::Key << "Id" << toolyaml::Value << quest_id;
 
 	std::string title = split[17];
 	
@@ -2340,7 +2339,7 @@ static bool quest_read_db( char *split[], size_t columns, size_t current ){
 	}
 
 	title.erase(std::remove(title.begin(), title.end(), '"'), title.end()); // Strip double quotes out
-	body << YAML::Key << "Title" << YAML::Value << title;
+	body << toolyaml::Key << "Title" << toolyaml::Value << title;
 
 	if (strchr(split[1], ':') == nullptr) {
 		uint32 time = atoi(split[1]);
@@ -2368,7 +2367,7 @@ static bool quest_read_db( char *split[], size_t columns, size_t current ){
 			if (second > 0)
 				output += std::to_string(second) + "s";
 
-			body << YAML::Key << "TimeLimit" << YAML::Value << output;
+			body << toolyaml::Key << "TimeLimit" << toolyaml::Value << output;
 		}
 	} else {
 		if (*split[1]) {
@@ -2381,13 +2380,13 @@ static bool quest_read_db( char *split[], size_t columns, size_t current ){
 			if (std::stoi(time_str) > 0)
 				output += std::to_string(std::stoi(time_str)) + "mn";
 
-			body << YAML::Key << "TimeLimit" << YAML::Value << output; // No quests in TXT format had days, default to 0
+			body << toolyaml::Key << "TimeLimit" << toolyaml::Value << output; // No quests in TXT format had days, default to 0
 		}
 	}
 
 	if (atoi(split[2]) > 0) {
-		body << YAML::Key << "Targets";
-		body << YAML::BeginSeq;
+		body << toolyaml::Key << "Targets";
+		body << toolyaml::BeginSeq;
 
 		for (size_t i = 0; i < MAX_QUEST_OBJECTIVES; i++) {
 			int32 mob_id = (int32)atoi(split[i * 2 + 2]), count = atoi(split[i * 2 + 3]);
@@ -2402,18 +2401,18 @@ static bool quest_read_db( char *split[], size_t columns, size_t current ){
 				continue;
 			}
 
-			body << YAML::BeginMap;
-			body << YAML::Key << "Mob" << YAML::Value << *mob_name;
-			body << YAML::Key << "Count" << YAML::Value << count;
-			body << YAML::EndMap;
+			body << toolyaml::BeginMap;
+			body << toolyaml::Key << "Mob" << toolyaml::Value << *mob_name;
+			body << toolyaml::Key << "Count" << toolyaml::Value << count;
+			body << toolyaml::EndMap;
 		}
 
-		body << YAML::EndSeq;
+		body << toolyaml::EndSeq;
 	}
 
 	if (atoi(split[2 * MAX_QUEST_OBJECTIVES + 2]) > 0) {
-		body << YAML::Key << "Drops";
-		body << YAML::BeginSeq;
+		body << toolyaml::Key << "Drops";
+		body << toolyaml::BeginSeq;
 
 		for (size_t i = 0; i < MAX_QUEST_DROPS; i++) {
 			int32 mob_id = (int32)atoi(split[3 * i + (2 * MAX_QUEST_OBJECTIVES + 2)]);
@@ -2436,41 +2435,41 @@ static bool quest_read_db( char *split[], size_t columns, size_t current ){
 				return false;
 			}
 
-			body << YAML::BeginMap;
-			body << YAML::Key << "Mob" << YAML::Value << *mob_name;
-			body << YAML::Key << "Item" << YAML::Value << *item_name;
-			//body << YAML::Key << "Count" << YAML::Value << 1; // Default is 1
-			body << YAML::Key << "Rate" << YAML::Value << atoi(split[3 * i + (2 * MAX_QUEST_OBJECTIVES + 4)]);
-			body << YAML::EndMap;
+			body << toolyaml::BeginMap;
+			body << toolyaml::Key << "Mob" << toolyaml::Value << *mob_name;
+			body << toolyaml::Key << "Item" << toolyaml::Value << *item_name;
+			//body << toolyaml::Key << "Count" << toolyaml::Value << 1; // Default is 1
+			body << toolyaml::Key << "Rate" << toolyaml::Value << atoi(split[3 * i + (2 * MAX_QUEST_OBJECTIVES + 4)]);
+			body << toolyaml::EndMap;
 		}
 
-		body << YAML::EndSeq;
+		body << toolyaml::EndSeq;
 	}
 
-	body << YAML::EndMap;
+	body << toolyaml::EndMap;
 
 	return true;
 }
 
 // Copied and adjusted from instance.cpp
 static bool instance_readdb_sub( char* str[], size_t columns, size_t current ){
-	body << YAML::BeginMap;
-	body << YAML::Key << "Id" << YAML::Value << atoi(str[0]);
-	body << YAML::Key << "Name" << YAML::Value << str[1];
+	body << toolyaml::BeginMap;
+	body << toolyaml::Key << "Id" << toolyaml::Value << atoi(str[0]);
+	body << toolyaml::Key << "Name" << toolyaml::Value << str[1];
 	if (atoi(str[2]) != 3600)
-		body << YAML::Key << "TimeLimit" << YAML::Value << atoi(str[2]);
+		body << toolyaml::Key << "TimeLimit" << toolyaml::Value << atoi(str[2]);
 	if (atoi(str[3]) != 300)
-		body << YAML::Key << "IdleTimeOut" << YAML::Value << atoi(str[3]);
-	body << YAML::Key << "Enter";
-	body << YAML::BeginMap;
-	body << YAML::Key << "Map" << YAML::Value << str[4];
-	body << YAML::Key << "X" << YAML::Value << atoi(str[5]);
-	body << YAML::Key << "Y" << YAML::Value << atoi(str[6]);
-	body << YAML::EndMap;
+		body << toolyaml::Key << "IdleTimeOut" << toolyaml::Value << atoi(str[3]);
+	body << toolyaml::Key << "Enter";
+	body << toolyaml::BeginMap;
+	body << toolyaml::Key << "Map" << toolyaml::Value << str[4];
+	body << toolyaml::Key << "X" << toolyaml::Value << atoi(str[5]);
+	body << toolyaml::Key << "Y" << toolyaml::Value << atoi(str[6]);
+	body << toolyaml::EndMap;
 
 	if (columns > 7) {
-		body << YAML::Key << "AdditionalMaps";
-		body << YAML::BeginMap;
+		body << toolyaml::Key << "AdditionalMaps";
+		body << toolyaml::BeginMap;
 
 		for( size_t i = 7; i < columns; i++ ){
 			if (!strlen(str[i]))
@@ -2479,13 +2478,13 @@ static bool instance_readdb_sub( char* str[], size_t columns, size_t current ){
 			if (strcmpi(str[4], str[i]) == 0)
 				continue;
 
-			body << YAML::Key << str[i] << YAML::Value << "true";
+			body << toolyaml::Key << str[i] << toolyaml::Value << "true";
 		}
 
-		body << YAML::EndMap;
+		body << toolyaml::EndMap;
 	}
 
-	body << YAML::EndMap;
+	body << toolyaml::EndMap;
 
 	return true;
 }
@@ -2726,10 +2725,10 @@ static bool itemdb_read_db(const char* file) {
 
 		t_itemid nameid = strtoul(str[0], nullptr, 10);
 
-		body << YAML::BeginMap;
-		body << YAML::Key << "Id" << YAML::Value << nameid;
-		body << YAML::Key << "AegisName" << YAML::Value << str[1];
-		body << YAML::Key << "Name" << YAML::Value << str[2];
+		body << toolyaml::BeginMap;
+		body << toolyaml::Key << "Id" << toolyaml::Value << nameid;
+		body << toolyaml::Key << "AegisName" << toolyaml::Value << str[1];
+		body << toolyaml::Key << "Name" << toolyaml::Value << str[2];
 
 		int32 type = atoi(str[3]), subtype = atoi(str[18]);
 
@@ -2740,7 +2739,7 @@ static bool itemdb_read_db(const char* file) {
 			continue;
 		}
 
-		body << YAML::Key << "Type" << YAML::Value << name2Upper( constant + 3 );
+		body << toolyaml::Key << "Type" << toolyaml::Value << name2Upper( constant + 3 );
 		if( type == IT_WEAPON && subtype ){
 			constant = constant_lookup( subtype, "W_" );
 
@@ -2749,7 +2748,7 @@ static bool itemdb_read_db(const char* file) {
 				continue;
 			}
 
-			body << YAML::Key << "SubType" << YAML::Value << name2Upper( constant + 2 );
+			body << toolyaml::Key << "SubType" << toolyaml::Value << name2Upper( constant + 2 );
 		}else if( type == IT_AMMO && subtype ){
 			constant = constant_lookup( subtype, "AMMO_" );
 
@@ -2758,36 +2757,36 @@ static bool itemdb_read_db(const char* file) {
 				continue;
 			}
 
-			body << YAML::Key << "SubType" << YAML::Value << name2Upper(constant + 5);
+			body << toolyaml::Key << "SubType" << toolyaml::Value << name2Upper(constant + 5);
 		}
 
 		if (atoi(str[4]) > 0)
-			body << YAML::Key << "Buy" << YAML::Value << atoi(str[4]);
+			body << toolyaml::Key << "Buy" << toolyaml::Value << atoi(str[4]);
 		if (atoi(str[5]) > 0) {
 			if (atoi(str[4]) / 2 != atoi(str[5]))
-				body << YAML::Key << "Sell" << YAML::Value << atoi(str[5]);
+				body << toolyaml::Key << "Sell" << toolyaml::Value << atoi(str[5]);
 		}
 		if (atoi(str[6]) > 0)
-			body << YAML::Key << "Weight" << YAML::Value << atoi(str[6]);
+			body << toolyaml::Key << "Weight" << toolyaml::Value << atoi(str[6]);
 
 #ifdef RENEWAL
 		int32 atk = 0, matk = 0;
 
 		itemdb_re_split_atoi(str[7], &atk, &matk);
 		if (atk > 0)
-			body << YAML::Key << "Attack" << YAML::Value << atk;
+			body << toolyaml::Key << "Attack" << toolyaml::Value << atk;
 		if (matk > 0)
-			body << YAML::Key << "MagicAttack" << YAML::Value << matk;
+			body << toolyaml::Key << "MagicAttack" << toolyaml::Value << matk;
 #else
 		if (atoi(str[7]) > 0)
-			body << YAML::Key << "Attack" << YAML::Value << atoi(str[7]);
+			body << toolyaml::Key << "Attack" << toolyaml::Value << atoi(str[7]);
 #endif
 		if (atoi(str[8]) > 0)
-			body << YAML::Key << "Defense" << YAML::Value << atoi(str[8]);
+			body << toolyaml::Key << "Defense" << toolyaml::Value << atoi(str[8]);
 		if (atoi(str[9]) > 0)
-			body << YAML::Key << "Range" << YAML::Value << atoi(str[9]);
+			body << toolyaml::Key << "Range" << toolyaml::Value << atoi(str[9]);
 		if (atoi(str[10]) > 0)
-			body << YAML::Key << "Slots" << YAML::Value << atoi(str[10]);
+			body << toolyaml::Key << "Slots" << toolyaml::Value << atoi(str[10]);
 
 		bool equippable = type == IT_UNKNOWN ? false : type == IT_ETC ? false : type == IT_CARD ? false : type == IT_PETEGG ? false : type == IT_PETARMOR ? false : type == IT_UNKNOWN2 ? false : true;
 
@@ -2795,109 +2794,109 @@ static bool itemdb_read_db(const char* file) {
 			uint64 temp_mask = strtoull(str[11], nullptr, 0);
 
 			if (temp_mask == 0) {
-				//body << YAML::Key << "Jobs";
-				//body << YAML::BeginMap << YAML::Key << "All" << YAML::Value << "false" << YAML::EndMap;
+				//body << toolyaml::Key << "Jobs";
+				//body << toolyaml::BeginMap << toolyaml::Key << "All" << toolyaml::Value << "false" << toolyaml::EndMap;
 			} else if (temp_mask == 0xFFFFFFFF) { // Commented out because it's the default value
-				//body << YAML::Key << "Jobs";
-				//body << YAML::BeginMap << YAML::Key << "All" << YAML::Value << "true" << YAML::EndMap;
+				//body << toolyaml::Key << "Jobs";
+				//body << toolyaml::BeginMap << toolyaml::Key << "All" << toolyaml::Value << "true" << toolyaml::EndMap;
 			} else if (temp_mask == 0xFFFFFFFE) {
-				body << YAML::Key << "Jobs";
-				body << YAML::BeginMap;
-				body << YAML::Key << "All" << YAML::Value << "true";
-				body << YAML::Key << "Novice" << YAML::Value << "false";
-				body << YAML::Key << "SuperNovice" << YAML::Value << "false";
-				body << YAML::EndMap;
+				body << toolyaml::Key << "Jobs";
+				body << toolyaml::BeginMap;
+				body << toolyaml::Key << "All" << toolyaml::Value << "true";
+				body << toolyaml::Key << "Novice" << toolyaml::Value << "false";
+				body << toolyaml::Key << "SuperNovice" << toolyaml::Value << "false";
+				body << toolyaml::EndMap;
 			} else {
-				body << YAML::Key << "Jobs";
-				body << YAML::BeginMap;
+				body << toolyaml::Key << "Jobs";
+				body << toolyaml::BeginMap;
 				for (const auto &it : um_mapid2jobname) {
 					uint64 job_mask = 1ULL << it.second;
 
 					if ((temp_mask & job_mask) == job_mask)
-						body << YAML::Key << it.first << YAML::Value << "true";
+						body << toolyaml::Key << it.first << toolyaml::Value << "true";
 				}
-				body << YAML::EndMap;
+				body << toolyaml::EndMap;
 			}
 
 			int32 temp_class = atoi(str[12]);
 
 			if (temp_class == ITEMJ_NONE) {
-				body << YAML::Key << "Classes";
-				body << YAML::BeginMap << YAML::Key << "All" << YAML::Value << "false" << YAML::EndMap;
+				body << toolyaml::Key << "Classes";
+				body << toolyaml::BeginMap << toolyaml::Key << "All" << toolyaml::Value << "false" << toolyaml::EndMap;
 			} else if (temp_class == ITEMJ_ALL) { // Commented out because it's the default value
-				//body << YAML::Key << "Classes";
-				//body << YAML::BeginMap << YAML::Key << "All" << YAML::Value << "true" << YAML::EndMap;
+				//body << toolyaml::Key << "Classes";
+				//body << toolyaml::BeginMap << toolyaml::Key << "All" << toolyaml::Value << "true" << toolyaml::EndMap;
 			} else {
-				body << YAML::Key << "Classes";
-				body << YAML::BeginMap;
+				body << toolyaml::Key << "Classes";
+				body << toolyaml::BeginMap;
 				if ((ITEMJ_THIRD & temp_class) && (ITEMJ_THIRD_UPPER & temp_class) && (ITEMJ_THIRD_BABY & temp_class)) {
 					temp_class &= ~ITEMJ_ALL_THIRD;
-					body << YAML::Key << "All_Third" << YAML::Value << "true";
+					body << toolyaml::Key << "All_Third" << toolyaml::Value << "true";
 				}
 				if ((ITEMJ_UPPER & temp_class) && (ITEMJ_THIRD_UPPER & temp_class)) {
 					temp_class &= ~ITEMJ_ALL_UPPER;
-					body << YAML::Key << "All_Upper" << YAML::Value << "true";
+					body << toolyaml::Key << "All_Upper" << toolyaml::Value << "true";
 				}
 				if ((ITEMJ_BABY & temp_class) && (ITEMJ_THIRD_BABY & temp_class)) {
 					temp_class &= ~ITEMJ_ALL_BABY;
-					body << YAML::Key << "All_Baby" << YAML::Value << "true";
+					body << toolyaml::Key << "All_Baby" << toolyaml::Value << "true";
 				}
 				for (int32 i = ITEMJ_NONE; i <= ITEMJ_THIRD_BABY; i++) {
 					if (i & temp_class) {
 						const char* class_ = constant_lookup(i, "ITEMJ_");
 
 						if (class_ != nullptr)
-							body << YAML::Key << name2Upper(class_ + 6) << YAML::Value << "true";
+							body << toolyaml::Key << name2Upper(class_ + 6) << toolyaml::Value << "true";
 					}
 				}
-				body << YAML::EndMap;
+				body << toolyaml::EndMap;
 			}
 
 			switch (atoi(str[13])) {
 				case SEX_FEMALE:
-					body << YAML::Key << "Gender" << YAML::Value << "Female";
+					body << toolyaml::Key << "Gender" << toolyaml::Value << "Female";
 					break;
 				case SEX_MALE:
-					body << YAML::Key << "Gender" << YAML::Value << "Male";
+					body << toolyaml::Key << "Gender" << toolyaml::Value << "Male";
 					break;
 				//case SEX_BOTH: // Commented out because it's the default value
-				//	body << YAML::Key << "Gender" << YAML::Value << "Both";
+				//	body << toolyaml::Key << "Gender" << toolyaml::Value << "Both";
 				//	break;
 			}
 		}
 		if (atoi(str[14]) > 0) {
 			int32 temp_loc = atoi(str[14]);
 
-			body << YAML::Key << "Locations";
-			body << YAML::BeginMap;
+			body << toolyaml::Key << "Locations";
+			body << toolyaml::BeginMap;
 			if ((EQP_HAND_R & temp_loc) && (EQP_HAND_L & temp_loc)) {
 				temp_loc &= ~EQP_ARMS;
-				body << YAML::Key << "Both_Hand" << YAML::Value << "true";
+				body << toolyaml::Key << "Both_Hand" << toolyaml::Value << "true";
 			}
 			if ((EQP_ACC_R & temp_loc) && (EQP_ACC_L & temp_loc)) {
 				temp_loc &= ~EQP_ACC_RL;
-				body << YAML::Key << "Both_Accessory" << YAML::Value << "true";
+				body << toolyaml::Key << "Both_Accessory" << toolyaml::Value << "true";
 			}
 			for (const auto &it : um_equipnames) {
 				if (it.second & temp_loc)
-					body << YAML::Key << it.first << YAML::Value << "true";
+					body << toolyaml::Key << it.first << toolyaml::Value << "true";
 			}
-			body << YAML::EndMap;
+			body << toolyaml::EndMap;
 		}
 		if (atoi(str[15]) > 0)
-			body << YAML::Key << "WeaponLevel" << YAML::Value << atoi(str[15]);
+			body << toolyaml::Key << "WeaponLevel" << toolyaml::Value << atoi(str[15]);
 
 		int32 elv = 0, elvmax = 0;
 
 		itemdb_re_split_atoi(str[16], &elv, &elvmax);
 		if (elv > 0)
-			body << YAML::Key << "EquipLevelMin" << YAML::Value << elv;
+			body << toolyaml::Key << "EquipLevelMin" << toolyaml::Value << elv;
 		if (elvmax > 0)
-			body << YAML::Key << "EquipLevelMax" << YAML::Value << elvmax;
+			body << toolyaml::Key << "EquipLevelMax" << toolyaml::Value << elvmax;
 		if (atoi(str[17]) > 0)
-			body << YAML::Key << "Refineable" << YAML::Value << "true";
+			body << toolyaml::Key << "Refineable" << toolyaml::Value << "true";
 		if (strtoul(str[18], nullptr, 10) > 0 && type != IT_WEAPON && type != IT_AMMO)
-			body << YAML::Key << "View" << YAML::Value << strtoul(str[18], nullptr, 10);
+			body << toolyaml::Key << "View" << toolyaml::Value << strtoul(str[18], nullptr, 10);
 
 		auto it_avail = item_avail.find(nameid);
 
@@ -2907,109 +2906,109 @@ static bool itemdb_read_db(const char* file) {
 			if (item_name == nullptr)
 				ShowError("Item name for item id %u is not known (item_avail).\n", it_avail->second);
 			else
-				body << YAML::Key << "AliasName" << YAML::Value << *item_name;
+				body << toolyaml::Key << "AliasName" << toolyaml::Value << *item_name;
 		}
 
 		auto it_flag = item_flag.find(nameid);
 		auto it_buying = item_buyingstore.find(nameid);
 
 		if (it_flag != item_flag.end() || it_buying != item_buyingstore.end()) {
-			body << YAML::Key << "Flags";
-			body << YAML::BeginMap;
+			body << toolyaml::Key << "Flags";
+			body << toolyaml::BeginMap;
 			if (it_buying != item_buyingstore.end())
-				body << YAML::Key << "BuyingStore" << YAML::Value << "true";
+				body << toolyaml::Key << "BuyingStore" << toolyaml::Value << "true";
 			if (it_flag != item_flag.end() && it_flag->second.dead_branch)
-				body << YAML::Key << "DeadBranch" << YAML::Value << it_flag->second.dead_branch;
+				body << toolyaml::Key << "DeadBranch" << toolyaml::Value << it_flag->second.dead_branch;
 			if (it_flag != item_flag.end() && it_flag->second.group)
-				body << YAML::Key << "Container" << YAML::Value << it_flag->second.group;
+				body << toolyaml::Key << "Container" << toolyaml::Value << it_flag->second.group;
 			if (it_flag != item_flag.end() && it_flag->second.guid)
-				body << YAML::Key << "UniqueId" << YAML::Value << it_flag->second.guid;
+				body << toolyaml::Key << "UniqueId" << toolyaml::Value << it_flag->second.guid;
 			if (it_flag != item_flag.end() && it_flag->second.bindOnEquip)
-				body << YAML::Key << "BindOnEquip" << YAML::Value << it_flag->second.bindOnEquip;
+				body << toolyaml::Key << "BindOnEquip" << toolyaml::Value << it_flag->second.bindOnEquip;
 			if (it_flag != item_flag.end() && it_flag->second.broadcast)
-				body << YAML::Key << "DropAnnounce" << YAML::Value << it_flag->second.broadcast;
+				body << toolyaml::Key << "DropAnnounce" << toolyaml::Value << it_flag->second.broadcast;
 			if (it_flag != item_flag.end() && it_flag->second.delay_consume)
-				body << YAML::Key << "NoConsume" << YAML::Value << it_flag->second.delay_consume;
+				body << toolyaml::Key << "NoConsume" << toolyaml::Value << it_flag->second.delay_consume;
 			if (it_flag != item_flag.end() && it_flag->second.dropEffect)
-				body << YAML::Key << "DropEffect" << YAML::Value << name2Upper(constant_lookup(it_flag->second.dropEffect, "DROPEFFECT_") + 11);
-			body << YAML::EndMap;
+				body << toolyaml::Key << "DropEffect" << toolyaml::Value << name2Upper(constant_lookup(it_flag->second.dropEffect, "DROPEFFECT_") + 11);
+			body << toolyaml::EndMap;
 		}
 
 		auto it_delay = item_delay.find(nameid);
 
 		if (it_delay != item_delay.end()) {
-			body << YAML::Key << "Delay";
-			body << YAML::BeginMap;
-			body << YAML::Key << "Duration" << YAML::Value << it_delay->second.delay;
+			body << toolyaml::Key << "Delay";
+			body << toolyaml::BeginMap;
+			body << toolyaml::Key << "Duration" << toolyaml::Value << it_delay->second.delay;
 			if (it_delay->second.sc.size() > 0)
-				body << YAML::Key << "Status" << YAML::Value << name2Upper(it_delay->second.sc.erase(0, 3));
-			body << YAML::EndMap;
+				body << toolyaml::Key << "Status" << toolyaml::Value << name2Upper(it_delay->second.sc.erase(0, 3));
+			body << toolyaml::EndMap;
 		}
 
 		auto it_stack = item_stack.find(nameid);
 
 		if (it_stack != item_stack.end()) {
-			body << YAML::Key << "Stack";
-			body << YAML::BeginMap;
-			body << YAML::Key << "Amount" << YAML::Value << it_stack->second.amount;
+			body << toolyaml::Key << "Stack";
+			body << toolyaml::BeginMap;
+			body << toolyaml::Key << "Amount" << toolyaml::Value << it_stack->second.amount;
 			if (it_stack->second.inventory)
-				body << YAML::Key << "Inventory" << YAML::Value << it_stack->second.inventory;
+				body << toolyaml::Key << "Inventory" << toolyaml::Value << it_stack->second.inventory;
 			if (it_stack->second.cart)
-				body << YAML::Key << "Cart" << YAML::Value << it_stack->second.cart;
+				body << toolyaml::Key << "Cart" << toolyaml::Value << it_stack->second.cart;
 			if (it_stack->second.storage)
-				body << YAML::Key << "Storage" << YAML::Value << it_stack->second.storage;
+				body << toolyaml::Key << "Storage" << toolyaml::Value << it_stack->second.storage;
 			if (it_stack->second.guild_storage)
-				body << YAML::Key << "GuildStorage" << YAML::Value << it_stack->second.guild_storage;
-			body << YAML::EndMap;
+				body << toolyaml::Key << "GuildStorage" << toolyaml::Value << it_stack->second.guild_storage;
+			body << toolyaml::EndMap;
 		}
 
 		auto it_nouse = item_nouse.find(nameid);
 
 		if (it_nouse != item_nouse.end()) {
-			body << YAML::Key << "NoUse";
-			body << YAML::BeginMap;
+			body << toolyaml::Key << "NoUse";
+			body << toolyaml::BeginMap;
 			if (it_nouse->second.override != 100)
-				body << YAML::Key << "Override" << YAML::Value << it_nouse->second.override;
-			body << YAML::Key << "Sitting" << YAML::Value << "true";
-			body << YAML::EndMap;
+				body << toolyaml::Key << "Override" << toolyaml::Value << it_nouse->second.override;
+			body << toolyaml::Key << "Sitting" << toolyaml::Value << "true";
+			body << toolyaml::EndMap;
 		}
 
 		auto it_trade = item_trade.find(nameid);
 
 		if (it_trade != item_trade.end()) {
-			body << YAML::Key << "Trade";
-			body << YAML::BeginMap;
+			body << toolyaml::Key << "Trade";
+			body << toolyaml::BeginMap;
 			if (it_trade->second.override != 100)
-				body << YAML::Key << "Override" << YAML::Value << it_trade->second.override;
+				body << toolyaml::Key << "Override" << toolyaml::Value << it_trade->second.override;
 			if (it_trade->second.drop)
-				body << YAML::Key << "NoDrop" << YAML::Value << it_trade->second.drop;
+				body << toolyaml::Key << "NoDrop" << toolyaml::Value << it_trade->second.drop;
 			if (it_trade->second.trade)
-				body << YAML::Key << "NoTrade" << YAML::Value << it_trade->second.trade;
+				body << toolyaml::Key << "NoTrade" << toolyaml::Value << it_trade->second.trade;
 			if (it_trade->second.trade_partner)
-				body << YAML::Key << "TradePartner" << YAML::Value << it_trade->second.trade_partner;
+				body << toolyaml::Key << "TradePartner" << toolyaml::Value << it_trade->second.trade_partner;
 			if (it_trade->second.sell)
-				body << YAML::Key << "NoSell" << YAML::Value << it_trade->second.sell;
+				body << toolyaml::Key << "NoSell" << toolyaml::Value << it_trade->second.sell;
 			if (it_trade->second.cart)
-				body << YAML::Key << "NoCart" << YAML::Value << it_trade->second.cart;
+				body << toolyaml::Key << "NoCart" << toolyaml::Value << it_trade->second.cart;
 			if (it_trade->second.storage)
-				body << YAML::Key << "NoStorage" << YAML::Value << it_trade->second.storage;
+				body << toolyaml::Key << "NoStorage" << toolyaml::Value << it_trade->second.storage;
 			if (it_trade->second.guild_storage)
-				body << YAML::Key << "NoGuildStorage" << YAML::Value << it_trade->second.guild_storage;
+				body << toolyaml::Key << "NoGuildStorage" << toolyaml::Value << it_trade->second.guild_storage;
 			if (it_trade->second.mail)
-				body << YAML::Key << "NoMail" << YAML::Value << it_trade->second.mail;
+				body << toolyaml::Key << "NoMail" << toolyaml::Value << it_trade->second.mail;
 			if (it_trade->second.auction)
-				body << YAML::Key << "NoAuction" << YAML::Value << it_trade->second.auction;
-			body << YAML::EndMap;
+				body << toolyaml::Key << "NoAuction" << toolyaml::Value << it_trade->second.auction;
+			body << toolyaml::EndMap;
 		}
 
 		if (*str[19])
-			body << YAML::Key << "Script" << YAML::Value << YAML::Literal << trim(str[19]);
+			body << toolyaml::Key << "Script" << toolyaml::Value << toolyaml::Literal << trim(str[19]);
 		if (*str[20])
-			body << YAML::Key << "EquipScript" << YAML::Value << YAML::Literal << trim(str[20]);
+			body << toolyaml::Key << "EquipScript" << toolyaml::Value << toolyaml::Literal << trim(str[20]);
 		if (*str[21])
-			body << YAML::Key << "UnEquipScript" << YAML::Value << YAML::Literal << trim(str[21]);
+			body << toolyaml::Key << "UnEquipScript" << toolyaml::Value << toolyaml::Literal << trim(str[21]);
 
-		body << YAML::EndMap;
+		body << toolyaml::EndMap;
 		entries++;
 	}
 
@@ -3079,11 +3078,11 @@ static bool itemdb_read_randomopt(const char* file) {
 				continue;
 			}
 
-			body << YAML::BeginMap;
-			body << YAML::Key << "Id" << YAML::Value << id;
-			body << YAML::Key << "Option" << YAML::Value << str[0] + 7;
-			body << YAML::Key << "Script" << YAML::Literal << str[1];
-			body << YAML::EndMap;
+			body << toolyaml::BeginMap;
+			body << toolyaml::Key << "Id" << toolyaml::Value << id;
+			body << toolyaml::Key << "Option" << toolyaml::Value << str[0] + 7;
+			body << toolyaml::Key << "Script" << toolyaml::Literal << str[1];
+			body << toolyaml::EndMap;
 
 			rand_opt_db.insert({ count, str[0] + 7 });
 		}
@@ -3154,47 +3153,47 @@ static bool itemdb_read_randomopt_group( char* str[], size_t columns, size_t cur
 
 static bool itemdb_randomopt_group_yaml(void) {
 	for (const auto &it : rand_opt_group) {
-		body << YAML::BeginMap;
-		body << YAML::Key << "Id" << YAML::Value << it.first;
-		body << YAML::Key << "Group" << YAML::Value << it.second.name;
-		body << YAML::Key << "Slots";
-		body << YAML::BeginSeq;
+		body << toolyaml::BeginMap;
+		body << toolyaml::Key << "Id" << toolyaml::Value << it.first;
+		body << toolyaml::Key << "Group" << toolyaml::Value << it.second.name;
+		body << toolyaml::Key << "Slots";
+		body << toolyaml::BeginSeq;
 
 		for (size_t i = 0; i < it.second.rate.size(); i++) {
-			body << YAML::BeginMap;
-			body << YAML::Key << "Slot" << YAML::Value << i + 1;
+			body << toolyaml::BeginMap;
+			body << toolyaml::Key << "Slot" << toolyaml::Value << i + 1;
 
-			body << YAML::Key << "Options";
-			body << YAML::BeginSeq;
+			body << toolyaml::Key << "Options";
+			body << toolyaml::BeginSeq;
 
 			for (size_t j = 0; j < it.second.slots.size(); j++) {
 				std::vector<std::shared_ptr<s_random_opt_group_entry>> options = it.second.slots.at(static_cast<uint16>(j));
 
 				for (const auto &opt_it : options) {
-					body << YAML::BeginMap;
+					body << toolyaml::BeginMap;
 
 					for (const auto &opt : rand_opt_db) {
 						if (opt.first == opt_it->id) {
-							body << YAML::Key << "Option" << YAML::Value << opt.second;
+							body << toolyaml::Key << "Option" << toolyaml::Value << opt.second;
 							break;
 						}
 					}
 
 					if (opt_it->min_value != 0)
-						body << YAML::Key << "MinValue" << YAML::Value << opt_it->min_value;
+						body << toolyaml::Key << "MinValue" << toolyaml::Value << opt_it->min_value;
 					if (opt_it->param != 0)
-						body << YAML::Key << "Param" << YAML::Value << opt_it->param;
-					body << YAML::Key << "Chance" << YAML::Value << it.second.rate[i];
-					body << YAML::EndMap;
+						body << toolyaml::Key << "Param" << toolyaml::Value << opt_it->param;
+					body << toolyaml::Key << "Chance" << toolyaml::Value << it.second.rate[i];
+					body << toolyaml::EndMap;
 				}
 			}
 
-			body << YAML::EndSeq;
-			body << YAML::EndMap;
+			body << toolyaml::EndSeq;
+			body << toolyaml::EndMap;
 		}
 
-		body << YAML::EndSeq;
-		body << YAML::EndMap;
+		body << toolyaml::EndSeq;
+		body << toolyaml::EndMap;
 	}
 
 	return true;
@@ -3238,20 +3237,20 @@ static bool pc_readdb_levelpenalty( char* fields[], size_t columns, size_t curre
 }
 
 void pc_levelpenalty_yaml_sub( int32 type, const std::string& name ){
-	body << YAML::BeginMap;
-	body << YAML::Key << "Type" << YAML::Value << name;
-	body << YAML::Key << "LevelDifferences";
-	body << YAML::BeginSeq;
+	body << toolyaml::BeginMap;
+	body << toolyaml::Key << "Type" << toolyaml::Value << name;
+	body << toolyaml::Key << "LevelDifferences";
+	body << toolyaml::BeginSeq;
 	for( int32 i = ARRAYLENGTH( level_penalty[type][CLASS_NORMAL] ); i >= 0; i-- ){
 		if( level_penalty[type][CLASS_NORMAL][i] > 0 && level_penalty[type][CLASS_NORMAL][i] != 100 ){
-			body << YAML::BeginMap;
-			body << YAML::Key << "Difference" << YAML::Value << ( i - MAX_LEVEL + 1 );
-			body << YAML::Key << "Rate" << YAML::Value << level_penalty[type][CLASS_NORMAL][i];
-			body << YAML::EndMap;
+			body << toolyaml::BeginMap;
+			body << toolyaml::Key << "Difference" << toolyaml::Value << ( i - MAX_LEVEL + 1 );
+			body << toolyaml::Key << "Rate" << toolyaml::Value << level_penalty[type][CLASS_NORMAL][i];
+			body << toolyaml::EndMap;
 		}
 	}
-	body << YAML::EndSeq;
-	body << YAML::EndMap;
+	body << toolyaml::EndSeq;
+	body << toolyaml::EndMap;
 }
 
 bool pc_levelpenalty_yaml(){
@@ -3345,54 +3344,54 @@ static bool mob_readdb_drop( char *str[], size_t columns, size_t current ){
 static bool mob_readdb_sub( char *fields[], size_t columns, size_t current ){
 	uint32 mob_id = strtoul(fields[0], nullptr, 10);
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Id" << YAML::Value << mob_id;
-	body << YAML::Key << "AegisName" << YAML::Value << fields[1];
-	body << YAML::Key << "Name" << YAML::Value << fields[3];
+	body << toolyaml::BeginMap;
+	body << toolyaml::Key << "Id" << toolyaml::Value << mob_id;
+	body << toolyaml::Key << "AegisName" << toolyaml::Value << fields[1];
+	body << toolyaml::Key << "Name" << toolyaml::Value << fields[3];
 	if (strcmp(fields[3], fields[2]) != 0)
-		body << YAML::Key << "JapaneseName" << YAML::Value << fields[2];
+		body << toolyaml::Key << "JapaneseName" << toolyaml::Value << fields[2];
 	if (strtol(fields[4], nullptr, 10) > 0)
-		body << YAML::Key << "Level" << YAML::Value << fields[4];
+		body << toolyaml::Key << "Level" << toolyaml::Value << fields[4];
 	if (strtol(fields[5], nullptr, 10) > 1)
-		body << YAML::Key << "Hp" << YAML::Value << fields[5];
+		body << toolyaml::Key << "Hp" << toolyaml::Value << fields[5];
 	if (strtol(fields[6], nullptr, 10) > 1)
-		body << YAML::Key << "Sp" << YAML::Value << fields[6];
+		body << toolyaml::Key << "Sp" << toolyaml::Value << fields[6];
 	if (strtol(fields[7], nullptr, 10) > 0)
-		body << YAML::Key << "BaseExp" << YAML::Value << fields[7];
+		body << toolyaml::Key << "BaseExp" << toolyaml::Value << fields[7];
 	if (strtol(fields[8], nullptr, 10) > 0)
-		body << YAML::Key << "JobExp" << YAML::Value << fields[8];
+		body << toolyaml::Key << "JobExp" << toolyaml::Value << fields[8];
 	if (strtol(fields[30], nullptr, 10) > 0)
-		body << YAML::Key << "MvpExp" << YAML::Value << fields[30];
+		body << toolyaml::Key << "MvpExp" << toolyaml::Value << fields[30];
 	if (strtol(fields[10], nullptr, 10) > 0)
-		body << YAML::Key << "Attack" << YAML::Value << fields[10];
+		body << toolyaml::Key << "Attack" << toolyaml::Value << fields[10];
 	if (strtol(fields[11], nullptr, 10) > 0)
-		body << YAML::Key << "Attack2" << YAML::Value << fields[11];
+		body << toolyaml::Key << "Attack2" << toolyaml::Value << fields[11];
 	if (strtol(fields[12], nullptr, 10) > 0)
-		body << YAML::Key << "Defense" << YAML::Value << cap_value(std::stoi(fields[12]), DEFTYPE_MIN, DEFTYPE_MAX);
+		body << toolyaml::Key << "Defense" << toolyaml::Value << cap_value(std::stoi(fields[12]), DEFTYPE_MIN, DEFTYPE_MAX);
 	if (strtol(fields[13], nullptr, 10) > 0)
-		body << YAML::Key << "MagicDefense" << YAML::Value << cap_value(std::stoi(fields[13]), DEFTYPE_MIN, DEFTYPE_MAX);
+		body << toolyaml::Key << "MagicDefense" << toolyaml::Value << cap_value(std::stoi(fields[13]), DEFTYPE_MIN, DEFTYPE_MAX);
 	if (strtol(fields[14], nullptr, 10) != 1)
-		body << YAML::Key << "Str" << YAML::Value << fields[14];
+		body << toolyaml::Key << "Str" << toolyaml::Value << fields[14];
 	if (strtol(fields[15], nullptr, 10) != 1)
-		body << YAML::Key << "Agi" << YAML::Value << fields[15];
+		body << toolyaml::Key << "Agi" << toolyaml::Value << fields[15];
 	if (strtol(fields[16], nullptr, 10) != 1)
-		body << YAML::Key << "Vit" << YAML::Value << fields[16];
+		body << toolyaml::Key << "Vit" << toolyaml::Value << fields[16];
 	if (strtol(fields[17], nullptr, 10) != 1)
-		body << YAML::Key << "Int" << YAML::Value << fields[17];
+		body << toolyaml::Key << "Int" << toolyaml::Value << fields[17];
 	if (strtol(fields[18], nullptr, 10) != 1)
-		body << YAML::Key << "Dex" << YAML::Value << fields[18];
+		body << toolyaml::Key << "Dex" << toolyaml::Value << fields[18];
 	if (strtol(fields[19], nullptr, 10) != 1)
-		body << YAML::Key << "Luk" << YAML::Value << fields[19];
+		body << toolyaml::Key << "Luk" << toolyaml::Value << fields[19];
 	if (strtol(fields[9], nullptr, 10) > 0)
-		body << YAML::Key << "AttackRange" << YAML::Value << fields[9];
+		body << toolyaml::Key << "AttackRange" << toolyaml::Value << fields[9];
 	if (strtol(fields[20], nullptr, 10) > 0)
-		body << YAML::Key << "SkillRange" << YAML::Value << fields[20];
+		body << toolyaml::Key << "SkillRange" << toolyaml::Value << fields[20];
 	if (strtol(fields[21], nullptr, 10) > 0)
-		body << YAML::Key << "ChaseRange" << YAML::Value << fields[21];
+		body << toolyaml::Key << "ChaseRange" << toolyaml::Value << fields[21];
 	if (fields[22])
-		body << YAML::Key << "Size" << YAML::Value << constant_lookup(strtol(fields[22], nullptr, 10), "Size_") + 5;
+		body << toolyaml::Key << "Size" << toolyaml::Value << constant_lookup(strtol(fields[22], nullptr, 10), "Size_") + 5;
 	if (fields[23])
-		body << YAML::Key << "Race" << YAML::Value << name2Upper(constant_lookup(strtol(fields[23], nullptr, 10), "RC_") + 3);
+		body << toolyaml::Key << "Race" << toolyaml::Value << name2Upper(constant_lookup(strtol(fields[23], nullptr, 10), "RC_") + 3);
 
 	std::string class_ = "Normal";
 	bool header = false;
@@ -3410,34 +3409,34 @@ static bool mob_readdb_sub( char *fields[], size_t columns, size_t current ){
 				}
 
 				if (!header) {
-					body << YAML::Key << "RaceGroups";
-					body << YAML::BeginMap;
+					body << toolyaml::Key << "RaceGroups";
+					body << toolyaml::BeginMap;
 					header = true;
 				}
 
-				body << YAML::Key << name2Upper(constant_lookup(race2.first, "RC2_") + 4) << YAML::Value << "true";
+				body << toolyaml::Key << name2Upper(constant_lookup(race2.first, "RC2_") + 4) << toolyaml::Value << "true";
 
 			}
 		}
 	}
 
 	if (header)
-		body << YAML::EndMap;
+		body << toolyaml::EndMap;
 
 	if (fields[24]) {
 		int32 ele = strtol(fields[24], nullptr, 10);
 
-		body << YAML::Key << "Element" << YAML::Value << name2Upper(constant_lookup(ele % 20, "ELE_") + 4);
-		body << YAML::Key << "ElementLevel" << YAML::Value << floor(ele / 20.);
+		body << toolyaml::Key << "Element" << toolyaml::Value << name2Upper(constant_lookup(ele % 20, "ELE_") + 4);
+		body << toolyaml::Key << "ElementLevel" << toolyaml::Value << floor(ele / 20.);
 	}
 	if (strtol(fields[26], nullptr, 10) > 0)
-		body << YAML::Key << "WalkSpeed" << YAML::Value << cap_value(std::stoi(fields[26]), MIN_WALK_SPEED, MAX_WALK_SPEED);
+		body << toolyaml::Key << "WalkSpeed" << toolyaml::Value << cap_value(std::stoi(fields[26]), MIN_WALK_SPEED, MAX_WALK_SPEED);
 	if (strtol(fields[27], nullptr, 10) > 0)
-		body << YAML::Key << "AttackDelay" << YAML::Value << fields[27];
+		body << toolyaml::Key << "AttackDelay" << toolyaml::Value << fields[27];
 	if (strtol(fields[28], nullptr, 10) > 0)
-		body << YAML::Key << "AttackMotion" << YAML::Value << fields[28];
+		body << toolyaml::Key << "AttackMotion" << toolyaml::Value << fields[28];
 	if (strtol(fields[29], nullptr, 10) > 0)
-		body << YAML::Key << "DamageMotion" << YAML::Value << fields[29];
+		body << toolyaml::Key << "DamageMotion" << toolyaml::Value << fields[29];
 
 	if (fields[25]) {
 		uint32 mode = static_cast<e_mode>(strtoul(fields[25], nullptr, 0));
@@ -3512,66 +3511,66 @@ static bool mob_readdb_sub( char *fields[], size_t columns, size_t current ){
 			ai = "06";
 
 		if (ai.compare("06") != 0)
-			body << YAML::Key << "Ai" << YAML::Value << ai;
+			body << toolyaml::Key << "Ai" << toolyaml::Value << ai;
 		if (class_.compare("Normal") != 0)
-			body << YAML::Key << "Class" << YAML::Value << class_;
+			body << toolyaml::Key << "Class" << toolyaml::Value << class_;
 
 		if (mode > 0) {
-			body << YAML::Key << "Modes";
-			body << YAML::BeginMap;
+			body << toolyaml::Key << "Modes";
+			body << toolyaml::BeginMap;
 			if (mode & 0x1)
-				body << YAML::Key << "CanMove" << YAML::Value << "true";
+				body << toolyaml::Key << "CanMove" << toolyaml::Value << "true";
 			if (mode & 0x80)
-				body << YAML::Key << "CanAttack" << YAML::Value << "true";
+				body << toolyaml::Key << "CanAttack" << toolyaml::Value << "true";
 			if (mode & 0x40)
-				body << YAML::Key << "NoCast" << YAML::Value << "true";
+				body << toolyaml::Key << "NoCast" << toolyaml::Value << "true";
 			if (mode & 0x2)
-				body << YAML::Key << "Looter" << YAML::Value << "true";
+				body << toolyaml::Key << "Looter" << toolyaml::Value << "true";
 			if (mode & 0x4)
-				body << YAML::Key << "Aggressive" << YAML::Value << "true";
+				body << toolyaml::Key << "Aggressive" << toolyaml::Value << "true";
 			if (mode & 0x8)
-				body << YAML::Key << "Assist" << YAML::Value << "true";
+				body << toolyaml::Key << "Assist" << toolyaml::Value << "true";
 			if (mode & 0x20)
-				body << YAML::Key << "NoRandomWalk" << YAML::Value << "true";
+				body << toolyaml::Key << "NoRandomWalk" << toolyaml::Value << "true";
 			if (mode & 0x200)
-				body << YAML::Key << "CastSensorChase" << YAML::Value << "true";
+				body << toolyaml::Key << "CastSensorChase" << toolyaml::Value << "true";
 			if (mode & 0x10)
-				body << YAML::Key << "CastSensorIdle" << YAML::Value << "true";
+				body << toolyaml::Key << "CastSensorIdle" << toolyaml::Value << "true";
 			if (mode & 0x800)
-				body << YAML::Key << "Angry" << YAML::Value << "true";
+				body << toolyaml::Key << "Angry" << toolyaml::Value << "true";
 			if (mode & 0x400)
-				body << YAML::Key << "ChangeChase" << YAML::Value << "true";
+				body << toolyaml::Key << "ChangeChase" << toolyaml::Value << "true";
 			if (mode & 0x1000)
-				body << YAML::Key << "ChangeTargetMelee" << YAML::Value << "true";
+				body << toolyaml::Key << "ChangeTargetMelee" << toolyaml::Value << "true";
 			if (mode & 0x2000)
-				body << YAML::Key << "ChangeTargetChase" << YAML::Value << "true";
+				body << toolyaml::Key << "ChangeTargetChase" << toolyaml::Value << "true";
 			if (mode & 0x4000)
-				body << YAML::Key << "TargetWeak" << YAML::Value << "true";
+				body << toolyaml::Key << "TargetWeak" << toolyaml::Value << "true";
 			if (mode & 0x8000)
-				body << YAML::Key << "RandomTarget" << YAML::Value << "true";
+				body << toolyaml::Key << "RandomTarget" << toolyaml::Value << "true";
 			if (mode & 0x20000)
-				body << YAML::Key << "IgnoreMagic" << YAML::Value << "true";
+				body << toolyaml::Key << "IgnoreMagic" << toolyaml::Value << "true";
 			if (mode & 0x10000)
-				body << YAML::Key << "IgnoreMelee" << YAML::Value << "true";
+				body << toolyaml::Key << "IgnoreMelee" << toolyaml::Value << "true";
 			if (mode & 0x100000)
-				body << YAML::Key << "IgnoreMisc" << YAML::Value << "true";
+				body << toolyaml::Key << "IgnoreMisc" << toolyaml::Value << "true";
 			if (mode & 0x40000)
-				body << YAML::Key << "IgnoreRanged" << YAML::Value << "true";
+				body << toolyaml::Key << "IgnoreRanged" << toolyaml::Value << "true";
 			if (mode & 0x400000)
-				body << YAML::Key << "TeleportBlock" << YAML::Value << "true";
+				body << toolyaml::Key << "TeleportBlock" << toolyaml::Value << "true";
 			if (mode & 0x1000000)
-				body << YAML::Key << "FixedItemDrop" << YAML::Value << "true";
+				body << toolyaml::Key << "FixedItemDrop" << toolyaml::Value << "true";
 			if (mode & 0x2000000)
-				body << YAML::Key << "Detector" << YAML::Value << "true";
+				body << toolyaml::Key << "Detector" << toolyaml::Value << "true";
 			if (mode & 0x200000)
-				body << YAML::Key << "KnockBackImmune" << YAML::Value << "true";
+				body << toolyaml::Key << "KnockBackImmune" << toolyaml::Value << "true";
 			if (mode & 0x4000000)
-				body << YAML::Key << "StatusImmune" << YAML::Value << "true";
+				body << toolyaml::Key << "StatusImmune" << toolyaml::Value << "true";
 			if (mode & 0x8000000)
-				body << YAML::Key << "SkillImmune" << YAML::Value << "true";
+				body << toolyaml::Key << "SkillImmune" << toolyaml::Value << "true";
 			if (mode & 0x80000)
-				body << YAML::Key << "Mvp" << YAML::Value << "true";
-			body << YAML::EndMap;
+				body << toolyaml::Key << "Mvp" << toolyaml::Value << "true";
+			body << toolyaml::EndMap;
 		}
 	}
 
@@ -3585,8 +3584,8 @@ static bool mob_readdb_sub( char *fields[], size_t columns, size_t current ){
 	}
 
 	if (has_mvp_drops) {
-		body << YAML::Key << "MvpDrops";
-		body << YAML::BeginSeq;
+		body << toolyaml::Key << "MvpDrops";
+		body << toolyaml::BeginSeq;
 
 		for (uint8 i = 0; i < MAX_MVP_DROP; i++) {
 			t_itemid nameid = strtoul(fields[31 + i * 2], nullptr, 10);
@@ -3599,10 +3598,10 @@ static bool mob_readdb_sub( char *fields[], size_t columns, size_t current ){
 					continue;
 				}
 
-				body << YAML::BeginMap;
-				body << YAML::Key << "Item" << YAML::Value << *item_name;
-				body << YAML::Key << "Rate" << YAML::Value << cap_value(std::stoi(fields[32 + i * 2]), 1, 10000);
-				body << YAML::EndMap;
+				body << toolyaml::BeginMap;
+				body << toolyaml::Key << "Item" << toolyaml::Value << *item_name;
+				body << toolyaml::Key << "Rate" << toolyaml::Value << cap_value(std::stoi(fields[32 + i * 2]), 1, 10000);
+				body << toolyaml::EndMap;
 			}
 
 			if (i < MAX_MVP_DROP - 1)
@@ -3622,17 +3621,17 @@ static bool mob_readdb_sub( char *fields[], size_t columns, size_t current ){
 							continue;
 						}
 
-						body << YAML::BeginMap;
-						body << YAML::Key << "Item" << YAML::Value << *item_name;
-						body << YAML::Key << "Rate" << YAML::Value << cap_value(drop.rate, 1, 10000);
-						body << YAML::Key << "RandomOptionGroup" << YAML::Value << drop.group_string;
-						body << YAML::EndMap;
+						body << toolyaml::BeginMap;
+						body << toolyaml::Key << "Item" << toolyaml::Value << *item_name;
+						body << toolyaml::Key << "Rate" << toolyaml::Value << cap_value(drop.rate, 1, 10000);
+						body << toolyaml::Key << "RandomOptionGroup" << toolyaml::Value << drop.group_string;
+						body << toolyaml::EndMap;
 					}
 				}
 			}
 		}
 
-		body << YAML::EndSeq;
+		body << toolyaml::EndSeq;
 	}
 
 	bool has_drops = false;
@@ -3645,8 +3644,8 @@ static bool mob_readdb_sub( char *fields[], size_t columns, size_t current ){
 	}
 
 	if (has_drops) {
-		body << YAML::Key << "Drops";
-		body << YAML::BeginSeq;
+		body << toolyaml::Key << "Drops";
+		body << toolyaml::BeginSeq;
 
 		for (uint8 i = 0; i < MAX_MOB_DROP; i++) {
 			int32 k = 31 + MAX_MVP_DROP * 2 + i * 2;
@@ -3660,12 +3659,12 @@ static bool mob_readdb_sub( char *fields[], size_t columns, size_t current ){
 					continue;
 				}
 
-				body << YAML::BeginMap;
-				body << YAML::Key << "Item" << YAML::Value << *item_name;
-				body << YAML::Key << "Rate" << YAML::Value << cap_value(std::stoi(fields[k + 1]), 1, 10000);
+				body << toolyaml::BeginMap;
+				body << toolyaml::Key << "Item" << toolyaml::Value << *item_name;
+				body << toolyaml::Key << "Rate" << toolyaml::Value << cap_value(std::stoi(fields[k + 1]), 1, 10000);
 				if (i > 6) // Slots 8, 9, and 10 are inherently protected
-					body << YAML::Key << "StealProtected" << YAML::Value << "true";
-				body << YAML::EndMap;
+					body << toolyaml::Key << "StealProtected" << toolyaml::Value << "true";
+				body << toolyaml::EndMap;
 			}
 
 			if (i < MAX_MOB_DROP - 2 || i == MAX_MOB_DROP - 1)
@@ -3685,22 +3684,22 @@ static bool mob_readdb_sub( char *fields[], size_t columns, size_t current ){
 							continue;
 						}
 
-						body << YAML::BeginMap;
-						body << YAML::Key << "Item" << YAML::Value << *item_name;
-						body << YAML::Key << "Rate" << YAML::Value << cap_value(drop.rate, 1, 10000);
-						body << YAML::Key << "RandomOptionGroup" << YAML::Value << drop.group_string;
+						body << toolyaml::BeginMap;
+						body << toolyaml::Key << "Item" << toolyaml::Value << *item_name;
+						body << toolyaml::Key << "Rate" << toolyaml::Value << cap_value(drop.rate, 1, 10000);
+						body << toolyaml::Key << "RandomOptionGroup" << toolyaml::Value << drop.group_string;
 						if (drop.steal_protected == 1)
-							body << YAML::Key << "StealProtected" << YAML::Value << "true";
-						body << YAML::EndMap;
+							body << toolyaml::Key << "StealProtected" << toolyaml::Value << "true";
+						body << toolyaml::EndMap;
 					}
 				}
 			}
 		}
 
-		body << YAML::EndSeq;
+		body << toolyaml::EndSeq;
 	}
 
-	body << YAML::EndMap;
+	body << toolyaml::EndMap;
 
 	return true;
 }
@@ -3732,12 +3731,12 @@ static bool mob_parse_row_chatdb( char* fields[], size_t columns, size_t current
 
 	msg[len] = 0;  // strip previously found EOL
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Id" << YAML::Value << msg_id;
+	body << toolyaml::BeginMap;
+	body << toolyaml::Key << "Id" << toolyaml::Value << msg_id;
 	if (strcmp(fields[1], "0xFF0000") != 0)	// default color
-		body << YAML::Key << "Color" << YAML::Value << fields[1];
-	body << YAML::Key << "Dialog" << YAML::Value << msg;
-	body << YAML::EndMap;
+		body << toolyaml::Key << "Color" << toolyaml::Value << fields[1];
+	body << toolyaml::Key << "Dialog" << toolyaml::Value << msg;
+	body << toolyaml::EndMap;
 
 	return true;
 }
@@ -3763,10 +3762,10 @@ static bool read_homunculus_expdb(const char* file) {
 		t_exp exp = strtoull(line, nullptr, 10);
 
 		if( exp > 0 ){
-			body << YAML::BeginMap;
-			body << YAML::Key << "Level" << YAML::Value << (count+1);
-			body << YAML::Key << "Exp" << YAML::Value << exp;
-			body << YAML::EndMap;
+			body << toolyaml::BeginMap;
+			body << toolyaml::Key << "Level" << toolyaml::Value << (count+1);
+			body << toolyaml::Key << "Exp" << toolyaml::Value << exp;
+			body << toolyaml::EndMap;
 		}
 
 		count++;
@@ -3836,19 +3835,19 @@ static bool mob_readdb_group( char* str[], size_t columns, size_t current ){
 
 static bool mob_readdb_group_yaml(void) {
 	for (const auto &it : summon_group) {
-		body << YAML::BeginMap;
-		body << YAML::Key << "Group" << YAML::Value << it.first;
-		body << YAML::Key << "Default" << YAML::Value << it.second.default_mob;
-		body << YAML::Key << "Summon";
-		body << YAML::BeginSeq;
+		body << toolyaml::BeginMap;
+		body << toolyaml::Key << "Group" << toolyaml::Value << it.first;
+		body << toolyaml::Key << "Default" << toolyaml::Value << it.second.default_mob;
+		body << toolyaml::Key << "Summon";
+		body << toolyaml::BeginSeq;
 		for (const auto &sumit : it.second.list) {
-			body << YAML::BeginMap;
-			body << YAML::Key << "Mob" << YAML::Value << sumit->mob_name;
-			body << YAML::Key << "Rate" << YAML::Value << sumit->rate;
-			body << YAML::EndMap;
+			body << toolyaml::BeginMap;
+			body << toolyaml::Key << "Mob" << toolyaml::Value << sumit->mob_name;
+			body << toolyaml::Key << "Rate" << toolyaml::Value << sumit->rate;
+			body << toolyaml::EndMap;
 		}
-		body << YAML::EndSeq;
-		body << YAML::EndMap;
+		body << toolyaml::EndSeq;
+		body << toolyaml::EndMap;
 	}
 	return true;
 }
@@ -3869,9 +3868,9 @@ static bool skill_parse_row_createarrowdb( char* split[], size_t columns, size_t
 
 	// Import just for clearing/disabling from original data
 	if (strtoul(split[1], nullptr, 10) == 0) {
-		body << YAML::BeginMap;
-		body << YAML::Key << "Remove" << YAML::Value << *material_name;
-		body << YAML::EndMap;
+		body << toolyaml::BeginMap;
+		body << toolyaml::Key << "Remove" << toolyaml::Value << *material_name;
+		body << toolyaml::EndMap;
 		return true;
 	}
 
@@ -3889,18 +3888,18 @@ static bool skill_parse_row_createarrowdb( char* split[], size_t columns, size_t
 		item_created.insert({ *item_name, strtoul(split[x+1], nullptr, 10) });
 	}
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Source" << YAML::Value << *material_name;
-	body << YAML::Key << "Make";
-	body << YAML::BeginSeq;
+	body << toolyaml::BeginMap;
+	body << toolyaml::Key << "Source" << toolyaml::Value << *material_name;
+	body << toolyaml::Key << "Make";
+	body << toolyaml::BeginSeq;
 	for (const auto &it : item_created) {
-		body << YAML::BeginMap;
-		body << YAML::Key << "Item" << YAML::Value << it.first;
-		body << YAML::Key << "Amount" << YAML::Value << it.second;
-		body << YAML::EndMap;
+		body << toolyaml::BeginMap;
+		body << toolyaml::Key << "Item" << toolyaml::Value << it.first;
+		body << toolyaml::Key << "Amount" << toolyaml::Value << it.second;
+		body << toolyaml::EndMap;
 	}
-	body << YAML::EndSeq;
-	body << YAML::EndMap;
+	body << toolyaml::EndSeq;
+	body << toolyaml::EndMap;
 
 	return true;
 }
@@ -3924,10 +3923,10 @@ static bool pc_read_statsdb(const char* file) {
 		if (line[0] == '/' && line[1] == '/') // Ignore comments
 			continue;
 
-		body << YAML::BeginMap;
-		body << YAML::Key << "Level" << YAML::Value << (count+1);
-		body << YAML::Key << "Points" << YAML::Value << static_cast<uint32>(strtoul(line, nullptr, 10));
-		body << YAML::EndMap;
+		body << toolyaml::BeginMap;
+		body << toolyaml::Key << "Level" << toolyaml::Value << (count+1);
+		body << toolyaml::Key << "Points" << toolyaml::Value << static_cast<uint32>(strtoul(line, nullptr, 10));
+		body << toolyaml::EndMap;
 
 		count++;
 	}
@@ -3939,12 +3938,12 @@ static bool pc_read_statsdb(const char* file) {
 
 // Copied and adjusted from guild.cpp
 static bool guild_read_castledb( char* str[], size_t columns, size_t current ){
-	body << YAML::BeginMap;
-	body << YAML::Key << "Id" << YAML::Value << str[0];
-	body << YAML::Key << "Map" << YAML::Value << str[1];
-	body << YAML::Key << "Name" << YAML::Value << trim(str[2]);
-	body << YAML::Key << "Npc" << YAML::Value << trim(str[3]);
-	body << YAML::EndMap;
+	body << toolyaml::BeginMap;
+	body << toolyaml::Key << "Id" << toolyaml::Value << str[0];
+	body << toolyaml::Key << "Map" << toolyaml::Value << str[1];
+	body << toolyaml::Key << "Name" << toolyaml::Value << trim(str[2]);
+	body << toolyaml::Key << "Npc" << toolyaml::Value << trim(str[3]);
+	body << toolyaml::EndMap;
 	return true;
 }
 
@@ -3957,10 +3956,10 @@ static bool exp_guild_parse_row( char* split[], size_t column, size_t current ){
 		return false;
 	}
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Level" << YAML::Value << (current+1);
-	body << YAML::Key << "Exp" << YAML::Value << exp;
-	body << YAML::EndMap;
+	body << toolyaml::BeginMap;
+	body << toolyaml::Key << "Level" << toolyaml::Value << (current+1);
+	body << toolyaml::Key << "Exp" << toolyaml::Value << exp;
+	body << toolyaml::EndMap;
 
 	return true;
 }
@@ -4076,45 +4075,45 @@ static bool itemdb_read_group( char* str[], size_t columns, size_t current ){
 
 static bool itemdb_read_group_yaml(void) {
 	for (const auto &it : item_group) {
-		body << YAML::BeginMap;
-		body << YAML::Key << "Group" << YAML::Value << it.first;
-		body << YAML::Key << "SubGroups";
-		body << YAML::BeginSeq;
+		body << toolyaml::BeginMap;
+		body << toolyaml::Key << "Group" << toolyaml::Value << it.first;
+		body << toolyaml::Key << "SubGroups";
+		body << toolyaml::BeginSeq;
 
 		for (const auto &item : it.second.item) {	// subgroup
-			body << YAML::BeginMap;
-			body << YAML::Key << "SubGroup" << YAML::Value << item.first;
+			body << toolyaml::BeginMap;
+			body << toolyaml::Key << "SubGroup" << toolyaml::Value << item.first;
 			if (item.first == 0)
-				body << YAML::Key << "Algorithm" << YAML::Value << "All";
+				body << toolyaml::Key << "Algorithm" << toolyaml::Value << "All";
 			else if (item.first == 6)
-				body << YAML::Key << "Algorithm" << YAML::Value << "Random";
-			body << YAML::Key << "List";
-			body << YAML::BeginSeq;
+				body << toolyaml::Key << "Algorithm" << toolyaml::Value << "Random";
+			body << toolyaml::Key << "List";
+			body << toolyaml::BeginSeq;
 			for (const auto &listit : item.second) {
-				body << YAML::BeginMap;
-				body << YAML::Key << "Item" << YAML::Value << listit.item_name;
+				body << toolyaml::BeginMap;
+				body << toolyaml::Key << "Item" << toolyaml::Value << listit.item_name;
 				if (listit.rate > 0)
-					body << YAML::Key << "Rate" << YAML::Value << listit.rate;
+					body << toolyaml::Key << "Rate" << toolyaml::Value << listit.rate;
 				if (listit.amount > 1)
-					body << YAML::Key << "Amount" << YAML::Value << listit.amount;
+					body << toolyaml::Key << "Amount" << toolyaml::Value << listit.amount;
 				if (listit.duration > 0)
-					body << YAML::Key << "Duration" << YAML::Value << listit.duration;
+					body << toolyaml::Key << "Duration" << toolyaml::Value << listit.duration;
 				if (listit.isAnnounced)
-					body << YAML::Key << "Announced" << YAML::Value << "true";
+					body << toolyaml::Key << "Announced" << toolyaml::Value << "true";
 				if (listit.GUID)
-					body << YAML::Key << "UniqueId" << YAML::Value << "true";
+					body << toolyaml::Key << "UniqueId" << toolyaml::Value << "true";
 				if (listit.isNamed)
-					body << YAML::Key << "Named" << YAML::Value << "true";
+					body << toolyaml::Key << "Named" << toolyaml::Value << "true";
 				if (!listit.bound.empty())
-					body << YAML::Key << "Bound" << YAML::Value << listit.bound;
-				body << YAML::EndMap;
+					body << toolyaml::Key << "Bound" << toolyaml::Value << listit.bound;
+				body << toolyaml::EndMap;
 			}
-			body << YAML::EndSeq;
-			body << YAML::EndMap;
+			body << toolyaml::EndSeq;
+			body << toolyaml::EndMap;
 		}
 
-		body << YAML::EndSeq;
-		body << YAML::EndMap;
+		body << toolyaml::EndSeq;
+		body << toolyaml::EndMap;
 	}
 	return true;
 }
@@ -4130,13 +4129,13 @@ static bool mob_readdb_itemratio( char* str[], size_t columns, size_t current ){
 		return false;
 	}
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Item" << YAML::Value << *item_name;
-	body << YAML::Key << "Ratio" << YAML::Value << strtoul(str[1], nullptr, 10);
+	body << toolyaml::BeginMap;
+	body << toolyaml::Key << "Item" << toolyaml::Value << *item_name;
+	body << toolyaml::Key << "Ratio" << toolyaml::Value << strtoul(str[1], nullptr, 10);
 
 	if (columns-2 > 0) {
-		body << YAML::Key << "List";
-		body << YAML::BeginMap;
+		body << toolyaml::Key << "List";
+		body << toolyaml::BeginMap;
 		for( size_t i = 0; i < columns - 2; i++ ){
 			uint16 mob_id = static_cast<uint16>(strtoul(str[i+2], nullptr, 10));
 			std::string* mob_name = util::umap_find( aegis_mobnames, mob_id );
@@ -4145,12 +4144,12 @@ static bool mob_readdb_itemratio( char* str[], size_t columns, size_t current ){
 				ShowWarning( "mob_readdb_itemratio: Invalid monster with ID %hu.\n", mob_id );
 				continue;
 			}
-			body << YAML::Key << *mob_name << YAML::Value << "true";
+			body << toolyaml::Key << *mob_name << toolyaml::Value << "true";
 		}
-		body << YAML::EndMap;
+		body << toolyaml::EndMap;
 	}
 
-	body << YAML::EndMap;
+	body << toolyaml::EndMap;
 	return true;
 }
 
@@ -4178,8 +4177,8 @@ static bool status_readdb_attrfix(const char* file) {
 		if (!CHK_ELEMENT_LEVEL(lv))
 			continue;
 
-		body << YAML::BeginMap;
-		body << YAML::Key << "Level" << YAML::Value << (count+1);
+		body << toolyaml::BeginMap;
+		body << toolyaml::Key << "Level" << toolyaml::Value << (count+1);
 
 		for (i = 0; i < ELE_ALL; ) {
 			char *p;
@@ -4190,8 +4189,8 @@ static bool status_readdb_attrfix(const char* file) {
 
 			constant = constant_lookup(i, "Ele_");
 			constant.erase(0, 4);
-			body << YAML::Key << name2Upper(constant);
-			body << YAML::BeginMap;
+			body << toolyaml::Key << name2Upper(constant);
+			body << toolyaml::BeginMap;
 
 			for (j = 0, p = line; j < ELE_ALL && p; j++) {
 				while (*p == 32) //skipping space (32=' ')
@@ -4199,17 +4198,17 @@ static bool status_readdb_attrfix(const char* file) {
 
 				constant = constant_lookup(j, "Ele_");
 				constant.erase(0, 4);
-				body << YAML::Key << name2Upper(constant) << YAML::Value << atoi(p);
+				body << toolyaml::Key << name2Upper(constant) << toolyaml::Value << atoi(p);
 	
 				p = strchr(p, ',');
 				if (p)
 					*p++=0;
 			}
-			body << YAML::EndMap;
+			body << toolyaml::EndMap;
 
 			i++;
 		}
-		body << YAML::EndMap;
+		body << toolyaml::EndMap;
 
 		count++;
 	}
@@ -4238,12 +4237,12 @@ static bool read_constdb( char* fields[], size_t columns, size_t current ){
 		}
 	}
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Name" << YAML::Value << name;
-	body << YAML::Key << "Value" << YAML::Value << val;
+	body << toolyaml::BeginMap;
+	body << toolyaml::Key << "Name" << toolyaml::Value << name;
+	body << toolyaml::Key << "Value" << toolyaml::Value << val;
 	if (type != 0)
-		body << YAML::Key << "Parameter" << YAML::Value << "true";
-	body << YAML::EndMap;
+		body << toolyaml::Key << "Parameter" << toolyaml::Value << "true";
+	body << toolyaml::EndMap;
 
 	return true;
 }
@@ -4301,36 +4300,36 @@ static bool pc_readdb_job_exp_sub( char* fields[], size_t columns, size_t curren
 static bool pc_readdb_job_exp( char* fields[], size_t columns, size_t current ){
 	int32 level = atoi(fields[0]), jobs[CLASS_COUNT], job_count = skill_split_atoi(fields[1], jobs, CLASS_COUNT), type = atoi(fields[2]);
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Jobs";
-	body << YAML::BeginMap;
+	body << toolyaml::BeginMap;
+	body << toolyaml::Key << "Jobs";
+	body << toolyaml::BeginMap;
 	for (int32 i = 0; i < job_count; i++) {
-		body << YAML::Key << name2Upper(constant_lookup(jobs[i], "JOB_") + 4) << YAML::Value << "true";
+		body << toolyaml::Key << name2Upper(constant_lookup(jobs[i], "JOB_") + 4) << toolyaml::Value << "true";
 		if (type == 0)
 			exp_base_level.insert({ jobs[i], level });
 		else
 			exp_job_level.insert({ jobs[i], level });
 	}
-	body << YAML::EndMap;
+	body << toolyaml::EndMap;
 
 	if (type == 0) {
-		body << YAML::Key << "MaxBaseLevel" << YAML::Value << level;
-		body << YAML::Key << "BaseExp";
+		body << toolyaml::Key << "MaxBaseLevel" << toolyaml::Value << level;
+		body << toolyaml::Key << "BaseExp";
 	} else {
-		body << YAML::Key << "MaxJobLevel" << YAML::Value << level;
-		body << YAML::Key << "JobExp";
+		body << toolyaml::Key << "MaxJobLevel" << toolyaml::Value << level;
+		body << toolyaml::Key << "JobExp";
 	}
-	body << YAML::BeginSeq;
+	body << toolyaml::BeginSeq;
 
 	for (int32 i = 0; i < level; i++) {
-		body << YAML::BeginMap;
-		body << YAML::Key << "Level" << YAML::Value << i + 1;
-		body << YAML::Key << "Exp" << YAML::Value << strtoll(fields[3 + i], nullptr, 10);
-		body << YAML::EndMap;
+		body << toolyaml::BeginMap;
+		body << toolyaml::Key << "Level" << toolyaml::Value << i + 1;
+		body << toolyaml::Key << "Exp" << toolyaml::Value << strtoll(fields[3 + i], nullptr, 10);
+		body << toolyaml::EndMap;
 	}
 
-	body << YAML::EndSeq;
-	body << YAML::EndMap;
+	body << toolyaml::EndSeq;
+	body << toolyaml::EndMap;
 
 	return true;
 }
@@ -4339,18 +4338,18 @@ static bool pc_readdb_job_exp( char* fields[], size_t columns, size_t current ){
 static bool pc_readdb_job_basehpsp( char* fields[], size_t columns, size_t current ){
 	int32 type = atoi(fields[3]), jobs[CLASS_COUNT], job_count = skill_split_atoi(fields[2], jobs, CLASS_COUNT);
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Jobs";
-	body << YAML::BeginMap;
+	body << toolyaml::BeginMap;
+	body << toolyaml::Key << "Jobs";
+	body << toolyaml::BeginMap;
 	for (int32 i = 0; i < job_count; i++)
-		body << YAML::Key << name2Upper(constant_lookup(jobs[i], "JOB_") + 4) << YAML::Value << "true";
-	body << YAML::EndMap;
+		body << toolyaml::Key << name2Upper(constant_lookup(jobs[i], "JOB_") + 4) << toolyaml::Value << "true";
+	body << toolyaml::EndMap;
 
 	if (type == 0)
-		body << YAML::Key << "BaseHp";
+		body << toolyaml::Key << "BaseHp";
 	else
-		body << YAML::Key << "BaseSp";
-	body << YAML::BeginSeq;
+		body << toolyaml::Key << "BaseSp";
+	body << toolyaml::BeginSeq;
 
 	int32 j = 0, job_id = jobs[0], endlvl = 0;
 
@@ -4377,24 +4376,24 @@ static bool pc_readdb_job_basehpsp( char* fields[], size_t columns, size_t curre
 	if (type == 0) { // HP
 		for (; j < endlvl; j++) {
 			if (atoi(fields[j + 4])) {
-				body << YAML::BeginMap;
-				body << YAML::Key << "Level" << YAML::Value << j + 1;
-				body << YAML::Key << "Hp" << YAML::Value << strtoll(fields[j + 4], nullptr, 10);
-				body << YAML::EndMap;
+				body << toolyaml::BeginMap;
+				body << toolyaml::Key << "Level" << toolyaml::Value << j + 1;
+				body << toolyaml::Key << "Hp" << toolyaml::Value << strtoll(fields[j + 4], nullptr, 10);
+				body << toolyaml::EndMap;
 			}
 		}
 	} else { // SP
 		for (; j < endlvl; j++) {
 			if (atoi(fields[j + 4])) {
-				body << YAML::BeginMap;
-				body << YAML::Key << "Level" << YAML::Value << j + 1;
-				body << YAML::Key << "Sp" << YAML::Value << strtoll(fields[j + 4], nullptr, 10);
-				body << YAML::EndMap;
+				body << toolyaml::BeginMap;
+				body << toolyaml::Key << "Level" << toolyaml::Value << j + 1;
+				body << toolyaml::Key << "Sp" << toolyaml::Value << strtoll(fields[j + 4], nullptr, 10);
+				body << toolyaml::EndMap;
 			}
 		}
 	}
-	body << YAML::EndSeq;
-	body << YAML::EndMap;
+	body << toolyaml::EndSeq;
+	body << toolyaml::EndMap;
 
 	return true;
 }
@@ -4406,22 +4405,22 @@ static bool pc_readdb_job1( char* fields[], size_t columns, size_t current ){
 	if (job_id == JOB_WEDDING)
 		return true;
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Jobs";
-	body << YAML::BeginMap;
-	body << YAML::Key << name2Upper(constant_lookup(job_id, "JOB_") + 4) << YAML::Value << "true";
-	body << YAML::EndMap;
+	body << toolyaml::BeginMap;
+	body << toolyaml::Key << "Jobs";
+	body << toolyaml::BeginMap;
+	body << toolyaml::Key << name2Upper(constant_lookup(job_id, "JOB_") + 4) << toolyaml::Value << "true";
+	body << toolyaml::EndMap;
 	if (atoi(fields[1]) != 20000)
-		body << YAML::Key << "MaxWeight" << YAML::Value << atoi(fields[1]);
+		body << toolyaml::Key << "MaxWeight" << toolyaml::Value << atoi(fields[1]);
 	if (atoi(fields[2]) != 0)
-		body << YAML::Key << "HpFactor" << YAML::Value << atoi(fields[2]);
+		body << toolyaml::Key << "HpFactor" << toolyaml::Value << atoi(fields[2]);
 	if (atoi(fields[3]) != 500)
-		body << YAML::Key << "HpIncrease" << YAML::Value << atoi(fields[3]);
+		body << toolyaml::Key << "HpIncrease" << toolyaml::Value << atoi(fields[3]);
 	if (atoi(fields[4]) != 100)
-		body << YAML::Key << "SpIncrease" << YAML::Value << atoi(fields[4]);
+		body << toolyaml::Key << "SpIncrease" << toolyaml::Value << atoi(fields[4]);
 
-	body << YAML::Key << "BaseASPD";
-	body << YAML::BeginMap;
+	body << toolyaml::Key << "BaseASPD";
+	body << toolyaml::BeginMap;
 
 #ifdef RENEWAL_ASPD
 	for (int32 i = 0; i <= MAX_WEAPON_TYPE; i++) {
@@ -4437,18 +4436,18 @@ static bool pc_readdb_job1( char* fields[], size_t columns, size_t current ){
 				continue;
 			}
 
-			body << YAML::Key << name2Upper(weapon + 2) << YAML::Value << atoi(fields[i + 5]);
+			body << toolyaml::Key << name2Upper(weapon + 2) << toolyaml::Value << atoi(fields[i + 5]);
 		}
 	}
 
-	body << YAML::EndMap;
+	body << toolyaml::EndMap;
 
 	auto job_bonus = job_db2.find(job_id);
 	auto jlvl = exp_job_level.find(job_id);
 
 	if (job_bonus != job_db2.end() && job_id != JOB_BABY) {
-		body << YAML::Key << "BonusStats";
-		body << YAML::BeginSeq;
+		body << toolyaml::Key << "BonusStats";
+		body << toolyaml::BeginSeq;
 
 		for (int32 i = 1; i <= jlvl->second; i++) {
 			auto value = job_bonus->second[i - 1];
@@ -4460,38 +4459,38 @@ static bool pc_readdb_job1( char* fields[], size_t columns, size_t current ){
 			const char *bonus = constant_lookup( value - 1, "PARAM_" );
 
 			if (bonus != nullptr) {
-				body << YAML::BeginMap;
-				body << YAML::Key << "Level" << YAML::Value << i;
-				body << YAML::Key << name2Upper(bonus + 6) << YAML::Value << "1";
-				body << YAML::EndMap;
+				body << toolyaml::BeginMap;
+				body << toolyaml::Key << "Level" << toolyaml::Value << i;
+				body << toolyaml::Key << name2Upper(bonus + 6) << toolyaml::Value << "1";
+				body << toolyaml::EndMap;
 			}
 		}
 
-		body << YAML::EndSeq;
+		body << toolyaml::EndSeq;
 	}
 
 	auto param = job_param.find(job_id);
 
 	if (param != job_param.end()) {
-		body << YAML::Key << "MaxStats";
-		body << YAML::BeginMap;
+		body << toolyaml::Key << "MaxStats";
+		body << toolyaml::BeginMap;
 
 		if (param->second.str > 0)
-			body << YAML::Key << "Str" << YAML::Value << param->second.str;
+			body << toolyaml::Key << "Str" << toolyaml::Value << param->second.str;
 		if (param->second.agi > 0)
-			body << YAML::Key << "Agi" << YAML::Value << param->second.agi;
+			body << toolyaml::Key << "Agi" << toolyaml::Value << param->second.agi;
 		if (param->second.vit > 0)
-			body << YAML::Key << "Vit" << YAML::Value << param->second.vit;
+			body << toolyaml::Key << "Vit" << toolyaml::Value << param->second.vit;
 		if (param->second.int_ > 0)
-			body << YAML::Key << "Int" << YAML::Value << param->second.int_;
+			body << toolyaml::Key << "Int" << toolyaml::Value << param->second.int_;
 		if (param->second.dex > 0)
-			body << YAML::Key << "Dex" << YAML::Value << param->second.dex;
+			body << toolyaml::Key << "Dex" << toolyaml::Value << param->second.dex;
 		if (param->second.luk > 0)
-			body << YAML::Key << "Luk" << YAML::Value << param->second.luk;
+			body << toolyaml::Key << "Luk" << toolyaml::Value << param->second.luk;
 
-		body << YAML::EndMap;
+		body << toolyaml::EndMap;
 	}
-	body << YAML::EndMap;
+	body << toolyaml::EndMap;
 
 	return true;
 }
@@ -4533,74 +4532,74 @@ static bool read_elemental_skilldb( char* str[], size_t columns, size_t current 
 
 // Copied and adjusted from elemental.cpp
 static bool read_elementaldb( char* str[], size_t columns, size_t current ){
-	body << YAML::BeginMap;
-	body << YAML::Key << "Id" << YAML::Value << str[0];
-	body << YAML::Key << "AegisName" << YAML::Value << str[1];
-	body << YAML::Key << "Name" << YAML::Value << str[2];
-	body << YAML::Key << "Level" << YAML::Value << str[3];
+	body << toolyaml::BeginMap;
+	body << toolyaml::Key << "Id" << toolyaml::Value << str[0];
+	body << toolyaml::Key << "AegisName" << toolyaml::Value << str[1];
+	body << toolyaml::Key << "Name" << toolyaml::Value << str[2];
+	body << toolyaml::Key << "Level" << toolyaml::Value << str[3];
 	if (atoi(str[4]) != 0)
-		body << YAML::Key << "Hp" << YAML::Value << str[4];
+		body << toolyaml::Key << "Hp" << toolyaml::Value << str[4];
 	if (atoi(str[5]) != 1)
-		body << YAML::Key << "Sp" << YAML::Value << str[5];
+		body << toolyaml::Key << "Sp" << toolyaml::Value << str[5];
 	if (atoi(str[7]) != 0)
-		body << YAML::Key << "Attack" << YAML::Value << str[7];
+		body << toolyaml::Key << "Attack" << toolyaml::Value << str[7];
 	if (atoi(str[8]) != 0)
-		body << YAML::Key << "Attack2" << YAML::Value << str[8];
+		body << toolyaml::Key << "Attack2" << toolyaml::Value << str[8];
 	if (atoi(str[9]) != 0)
-		body << YAML::Key << "Defense" << YAML::Value << str[9];
+		body << toolyaml::Key << "Defense" << toolyaml::Value << str[9];
 	if (atoi(str[10]) != 0)
-		body << YAML::Key << "MagicDefense" << YAML::Value << str[10];
+		body << toolyaml::Key << "MagicDefense" << toolyaml::Value << str[10];
 	if (atoi(str[11]) != 0)
-		body << YAML::Key << "Str" << YAML::Value << str[11];
+		body << toolyaml::Key << "Str" << toolyaml::Value << str[11];
 	if (atoi(str[12]) != 0)
-		body << YAML::Key << "Agi" << YAML::Value << str[12];
+		body << toolyaml::Key << "Agi" << toolyaml::Value << str[12];
 	if (atoi(str[13]) != 0)
-		body << YAML::Key << "Vit" << YAML::Value << str[13];
+		body << toolyaml::Key << "Vit" << toolyaml::Value << str[13];
 	if (atoi(str[14]) != 0)
-		body << YAML::Key << "Int" << YAML::Value << str[14];
+		body << toolyaml::Key << "Int" << toolyaml::Value << str[14];
 	if (atoi(str[15]) != 0)
-		body << YAML::Key << "Dex" << YAML::Value << str[15];
+		body << toolyaml::Key << "Dex" << toolyaml::Value << str[15];
 	if (atoi(str[16]) != 0)
-		body << YAML::Key << "Luk" << YAML::Value << str[16];
+		body << toolyaml::Key << "Luk" << toolyaml::Value << str[16];
 	if (atoi(str[6]) != 1)
-		body << YAML::Key << "AttackRange" << YAML::Value << str[6];
+		body << toolyaml::Key << "AttackRange" << toolyaml::Value << str[6];
 	if (atoi(str[17]) != 5)
-		body << YAML::Key << "SkillRange" << YAML::Value << str[17];
+		body << toolyaml::Key << "SkillRange" << toolyaml::Value << str[17];
 	if (atoi(str[18]) != 12)
-		body << YAML::Key << "ChaseRange" << YAML::Value << str[18];
-	body << YAML::Key << "Size" << YAML::Value << constant_lookup(strtol(str[19], nullptr, 10), "Size_") + 5;
+		body << toolyaml::Key << "ChaseRange" << toolyaml::Value << str[18];
+	body << toolyaml::Key << "Size" << toolyaml::Value << constant_lookup(strtol(str[19], nullptr, 10), "Size_") + 5;
 	if (atoi(str[20]) != 0)
-		body << YAML::Key << "Race" << YAML::Value << name2Upper(constant_lookup(atoi(str[20]), "RC_") + 3);
+		body << toolyaml::Key << "Race" << toolyaml::Value << name2Upper(constant_lookup(atoi(str[20]), "RC_") + 3);
 
 	int32 ele = strtol(str[21], nullptr, 10);
-	body << YAML::Key << "Element" << YAML::Value << name2Upper(constant_lookup(ele % 20, "ELE_") + 4);
-	body << YAML::Key << "ElementLevel" << YAML::Value << floor(ele / 20.);
+	body << toolyaml::Key << "Element" << toolyaml::Value << name2Upper(constant_lookup(ele % 20, "ELE_") + 4);
+	body << toolyaml::Key << "ElementLevel" << toolyaml::Value << floor(ele / 20.);
 
 	if (atoi(str[22]) != 200)
-		body << YAML::Key << "WalkSpeed" << YAML::Value << str[22];
+		body << toolyaml::Key << "WalkSpeed" << toolyaml::Value << str[22];
 	if (atoi(str[23]) != 504)
-		body << YAML::Key << "AttackDelay" << YAML::Value << str[23];
+		body << toolyaml::Key << "AttackDelay" << toolyaml::Value << str[23];
 	if (atoi(str[24]) != 1020)
-		body << YAML::Key << "AttackMotion" << YAML::Value << str[24];
+		body << toolyaml::Key << "AttackMotion" << toolyaml::Value << str[24];
 	if (atoi(str[25]) != 360)
-		body << YAML::Key << "DamageMotion" << YAML::Value << str[25];
+		body << toolyaml::Key << "DamageMotion" << toolyaml::Value << str[25];
 
 	auto list = elemental_skill_tree.find( atoi(str[0]) );
 	if (list != elemental_skill_tree.end()) {
-		body << YAML::Key << "Mode";
-			body << YAML::BeginMap;
+		body << toolyaml::Key << "Mode";
+			body << toolyaml::BeginMap;
 		for (const auto &it : list->second) {
-			body << YAML::Key << it.mode_name;
-			body << YAML::BeginMap;
-			body << YAML::Key << "Skill" << YAML::Value << it.skill_name;
+			body << toolyaml::Key << it.mode_name;
+			body << toolyaml::BeginMap;
+			body << toolyaml::Key << "Skill" << toolyaml::Value << it.skill_name;
 			if (it.lv != 1)
-				body << YAML::Key << "Level" << YAML::Value << it.lv;
-			body << YAML::EndMap;
+				body << toolyaml::Key << "Level" << toolyaml::Value << it.lv;
+			body << toolyaml::EndMap;
 		}
-			body << YAML::EndMap;
+			body << toolyaml::EndMap;
 	}
 
-	body << YAML::EndMap;
+	body << toolyaml::EndMap;
 
 	return true;
 }
@@ -4636,80 +4635,80 @@ static bool mercenary_read_skilldb( char* str[], size_t columns, size_t current 
 
 // Copied and adjusted from mercenary.cpp
 static bool mercenary_readdb( char* str[], size_t columns, size_t current ){
-	body << YAML::BeginMap;
-	body << YAML::Key << "Id" << YAML::Value << str[0];
-	body << YAML::Key << "AegisName" << YAML::Value << str[1];
-	body << YAML::Key << "Name" << YAML::Value << str[2];
+	body << toolyaml::BeginMap;
+	body << toolyaml::Key << "Id" << toolyaml::Value << str[0];
+	body << toolyaml::Key << "AegisName" << toolyaml::Value << str[1];
+	body << toolyaml::Key << "Name" << toolyaml::Value << str[2];
 	if (atoi(str[3]) != 1)
-		body << YAML::Key << "Level" << YAML::Value << str[3];
+		body << toolyaml::Key << "Level" << toolyaml::Value << str[3];
 	if (atoi(str[4]) != 1)
-		body << YAML::Key << "Hp" << YAML::Value << str[4];
+		body << toolyaml::Key << "Hp" << toolyaml::Value << str[4];
 	if (atoi(str[5]) != 1)
-		body << YAML::Key << "Sp" << YAML::Value << str[5];
+		body << toolyaml::Key << "Sp" << toolyaml::Value << str[5];
 	if (atoi(str[7]) != 0)
-		body << YAML::Key << "Attack" << YAML::Value << str[7];
+		body << toolyaml::Key << "Attack" << toolyaml::Value << str[7];
 	if (atoi(str[8]) != 0)
-		body << YAML::Key << "Attack2" << YAML::Value << str[8];
+		body << toolyaml::Key << "Attack2" << toolyaml::Value << str[8];
 	if (atoi(str[9]) != 0)
-		body << YAML::Key << "Defense" << YAML::Value << str[9];
+		body << toolyaml::Key << "Defense" << toolyaml::Value << str[9];
 	if (atoi(str[10]) != 0)
-		body << YAML::Key << "MagicDefense" << YAML::Value << str[10];
+		body << toolyaml::Key << "MagicDefense" << toolyaml::Value << str[10];
 	if (atoi(str[11]) != 1)
-		body << YAML::Key << "Str" << YAML::Value << str[11];
+		body << toolyaml::Key << "Str" << toolyaml::Value << str[11];
 	if (atoi(str[12]) != 1)
-		body << YAML::Key << "Agi" << YAML::Value << str[12];
+		body << toolyaml::Key << "Agi" << toolyaml::Value << str[12];
 	if (atoi(str[13]) != 1)
-		body << YAML::Key << "Vit" << YAML::Value << str[13];
+		body << toolyaml::Key << "Vit" << toolyaml::Value << str[13];
 	if (atoi(str[14]) != 1)
-		body << YAML::Key << "Int" << YAML::Value << str[14];
+		body << toolyaml::Key << "Int" << toolyaml::Value << str[14];
 	if (atoi(str[15]) != 1)
-		body << YAML::Key << "Dex" << YAML::Value << str[15];
+		body << toolyaml::Key << "Dex" << toolyaml::Value << str[15];
 	if (atoi(str[16]) != 1)
-		body << YAML::Key << "Luk" << YAML::Value << str[16];
+		body << toolyaml::Key << "Luk" << toolyaml::Value << str[16];
 	if (atoi(str[6]) != 0)
-		body << YAML::Key << "AttackRange" << YAML::Value << str[6];
+		body << toolyaml::Key << "AttackRange" << toolyaml::Value << str[6];
 	if (atoi(str[17]) != 0)
-		body << YAML::Key << "SkillRange" << YAML::Value << str[17];
+		body << toolyaml::Key << "SkillRange" << toolyaml::Value << str[17];
 	if (atoi(str[18]) != 0)
-		body << YAML::Key << "ChaseRange" << YAML::Value << str[18];
+		body << toolyaml::Key << "ChaseRange" << toolyaml::Value << str[18];
 	if (atoi(str[19]) != 0)
-		body << YAML::Key << "Size" << YAML::Value << constant_lookup(strtol(str[19], nullptr, 10), "Size_") + 5;
+		body << toolyaml::Key << "Size" << toolyaml::Value << constant_lookup(strtol(str[19], nullptr, 10), "Size_") + 5;
 	if (atoi(str[20]) != 0)
-		body << YAML::Key << "Race" << YAML::Value << name2Upper(constant_lookup(atoi(str[20]), "RC_") + 3);
+		body << toolyaml::Key << "Race" << toolyaml::Value << name2Upper(constant_lookup(atoi(str[20]), "RC_") + 3);
 
 	int32 ele = strtol(str[21], nullptr, 10);
 	if (atoi(str[21]) != 0)
-		body << YAML::Key << "Element" << YAML::Value << name2Upper(constant_lookup(ele % 20, "ELE_") + 4);
+		body << toolyaml::Key << "Element" << toolyaml::Value << name2Upper(constant_lookup(ele % 20, "ELE_") + 4);
 	if (atoi(str[21]) != 1)
-		body << YAML::Key << "ElementLevel" << YAML::Value << floor(ele / 20.);
+		body << toolyaml::Key << "ElementLevel" << toolyaml::Value << floor(ele / 20.);
 
 	if (atoi(str[22]) != 0)
-		body << YAML::Key << "WalkSpeed" << YAML::Value << cap_value(std::stoi(str[22]), MIN_WALK_SPEED, MAX_WALK_SPEED);
+		body << toolyaml::Key << "WalkSpeed" << toolyaml::Value << cap_value(std::stoi(str[22]), MIN_WALK_SPEED, MAX_WALK_SPEED);
 	if (atoi(str[23]) != 0)
-		body << YAML::Key << "AttackDelay" << YAML::Value << str[23];
+		body << toolyaml::Key << "AttackDelay" << toolyaml::Value << str[23];
 	if (atoi(str[24]) != 0)
-		body << YAML::Key << "AttackMotion" << YAML::Value << str[24];
+		body << toolyaml::Key << "AttackMotion" << toolyaml::Value << str[24];
 	if (atoi(str[25]) != 0)
-		body << YAML::Key << "DamageMotion" << YAML::Value << str[25];
+		body << toolyaml::Key << "DamageMotion" << toolyaml::Value << str[25];
 
 	for (const auto &skillit : mercenary_skill_tree) {
 		if (skillit.first != atoi(str[0]))
 			continue;
 
-		body << YAML::Key << "Skills";
-		body << YAML::BeginSeq;
+		body << toolyaml::Key << "Skills";
+		body << toolyaml::BeginSeq;
 
 		for (const auto &it : skillit.second) {
-			body << YAML::BeginMap;
-			body << YAML::Key << "Name" << YAML::Value << it.skill_name;
-			body << YAML::Key << "MaxLevel" << YAML::Value << it.max_lv;
-			body << YAML::EndMap;
+			body << toolyaml::BeginMap;
+			body << toolyaml::Key << "Name" << toolyaml::Value << it.skill_name;
+			body << toolyaml::Key << "MaxLevel" << toolyaml::Value << it.max_lv;
+			body << toolyaml::EndMap;
 		}
 
-		body << YAML::EndSeq;
+		body << toolyaml::EndSeq;
 	}
 
-	body << YAML::EndMap;
+	body << toolyaml::EndMap;
 
 	return true;
 }
@@ -4791,35 +4790,35 @@ static bool pc_readdb_skilltree( char* fields[], size_t columns, size_t current 
 
 static bool pc_readdb_skilltree_yaml(void) {
 	for (const auto &it : skill_tree) {
-		body << YAML::BeginMap;
+		body << toolyaml::BeginMap;
 		std::string job = constant_lookup(it.first, "JOB_");
 		job.erase( 0, 4 );
-		body << YAML::Key << "Job" << YAML::Value << name2Upper( job );
-		body << YAML::Key << "Tree";
-		body << YAML::BeginSeq;
+		body << toolyaml::Key << "Job" << toolyaml::Value << name2Upper( job );
+		body << toolyaml::Key << "Tree";
+		body << toolyaml::BeginSeq;
 		for (const auto &subit : it.second) {
-			body << YAML::BeginMap;
-			body << YAML::Key << "Name" << YAML::Value << subit.skill_name;
-			body << YAML::Key << "MaxLevel" << YAML::Value << subit.skill_lv;
+			body << toolyaml::BeginMap;
+			body << toolyaml::Key << "Name" << toolyaml::Value << subit.skill_name;
+			body << toolyaml::Key << "MaxLevel" << toolyaml::Value << subit.skill_lv;
 			if (!subit.need.empty()) {
-				body << YAML::Key << "Requires";
-				body << YAML::BeginSeq;
+				body << toolyaml::Key << "Requires";
+				body << toolyaml::BeginSeq;
 				for (const auto &terit : subit.need) {
-					body << YAML::BeginMap;
-					body << YAML::Key << "Name" << YAML::Value << terit.first;
-					body << YAML::Key << "Level" << YAML::Value << terit.second;
-					body << YAML::EndMap;
+					body << toolyaml::BeginMap;
+					body << toolyaml::Key << "Name" << toolyaml::Value << terit.first;
+					body << toolyaml::Key << "Level" << toolyaml::Value << terit.second;
+					body << toolyaml::EndMap;
 				}
-				body << YAML::EndSeq;
+				body << toolyaml::EndSeq;
 			}
 			if (subit.baselv > 0)
-				body << YAML::Key << "BaseLevel" << YAML::Value << subit.baselv;
+				body << toolyaml::Key << "BaseLevel" << toolyaml::Value << subit.baselv;
 			if (subit.joblv > 0)
-				body << YAML::Key << "JobLevel" << YAML::Value << subit.joblv;
-			body << YAML::EndMap;
+				body << toolyaml::Key << "JobLevel" << toolyaml::Value << subit.joblv;
+			body << toolyaml::EndMap;
 		}
-		body << YAML::EndSeq;
-		body << YAML::EndMap;
+		body << toolyaml::EndSeq;
+		body << toolyaml::EndMap;
 	}
 	return true;
 }
@@ -4913,29 +4912,29 @@ static bool itemdb_read_combos(const char* file) {
 		if (v < retcount)
 			continue;
 
-		body << YAML::BeginMap;
-		body << YAML::Key << "Combos";
-		body << YAML::BeginSeq;
+		body << toolyaml::BeginMap;
+		body << toolyaml::Key << "Combos";
+		body << toolyaml::BeginSeq;
 
-		body << YAML::BeginMap;
-		body << YAML::Key << "Combo";
-		body << YAML::BeginSeq;
+		body << toolyaml::BeginMap;
+		body << toolyaml::Key << "Combo";
+		body << toolyaml::BeginSeq;
 
 		for (v = 0; v < retcount; v++) {
-			body << YAML::BeginMap;
+			body << toolyaml::BeginMap;
 			std::string *item_name = util::umap_find(aegis_itemnames, items[v]);
-			body << YAML::Key << *item_name;
-			body << YAML::EndMap;
+			body << toolyaml::Key << *item_name;
+			body << toolyaml::EndMap;
 		}
-		body << YAML::EndSeq;
-		body << YAML::EndMap;
+		body << toolyaml::EndSeq;
+		body << toolyaml::EndMap;
 
 		str[1] = str[1] + 1;	//skip the first left curly
 		str[1][strlen(str[1])-1] = '\0';	//null the last right curly
 
-		body << YAML::EndSeq;
-		body << YAML::Key << "Script" << YAML::Literal << trim(str[1]);
-		body << YAML::EndMap;
+		body << toolyaml::EndSeq;
+		body << toolyaml::Key << "Script" << toolyaml::Literal << trim(str[1]);
+		body << toolyaml::EndMap;
 
 		count++;
 	}
@@ -4977,16 +4976,16 @@ static bool cashshop_parse_dbrow( char* fields[], size_t columns, size_t current
 	constant.erase( 0, 13 );
 	constant = name2Upper( constant );
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Tab" << YAML::Value << constant;
-	body << YAML::Key << "Items";
-	body << YAML::BeginSeq;
-	body << YAML::BeginMap;
-	body << YAML::Key << "Item" << YAML::Value << *item_name;
-	body << YAML::Key << "Price" << YAML::Value << price;
-	body << YAML::EndMap;
-	body << YAML::EndSeq;
-	body << YAML::EndMap;
+	body << toolyaml::BeginMap;
+	body << toolyaml::Key << "Tab" << toolyaml::Value << constant;
+	body << toolyaml::Key << "Items";
+	body << toolyaml::BeginSeq;
+	body << toolyaml::BeginMap;
+	body << toolyaml::Key << "Item" << toolyaml::Value << *item_name;
+	body << toolyaml::Key << "Price" << toolyaml::Value << price;
+	body << toolyaml::EndMap;
+	body << toolyaml::EndSeq;
+	body << toolyaml::EndMap;
 
 	return true;
 }
@@ -5024,121 +5023,121 @@ static bool compareHomSkillId(const s_homun_skill_tree_entry &a, const s_homun_s
 static bool read_homunculusdb( char* str[], size_t columns, size_t current ){
 	bool has_evo = false;
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Class" << YAML::Value << name2Upper(constant_lookup(atoi(str[0]), "MER_") + 4);
-	body << YAML::Key << "Name" << YAML::Value << str[2];
+	body << toolyaml::BeginMap;
+	body << toolyaml::Key << "Class" << toolyaml::Value << name2Upper(constant_lookup(atoi(str[0]), "MER_") + 4);
+	body << toolyaml::Key << "Name" << toolyaml::Value << str[2];
 	if (atoi(str[0]) != atoi(str[1])) {
-		body << YAML::Key << "EvolutionClass" << YAML::Value << name2Upper(constant_lookup(atoi(str[1]), "MER_") + 4);
+		body << toolyaml::Key << "EvolutionClass" << toolyaml::Value << name2Upper(constant_lookup(atoi(str[1]), "MER_") + 4);
 		has_evo = true;
 	}
 	if (atoi(str[3]) != ITEMID_PET_FOOD)
-		body << YAML::Key << "Food" << YAML::Value << name2Upper(*util::umap_find(aegis_itemnames, (t_itemid)atoi(str[3])));
+		body << toolyaml::Key << "Food" << toolyaml::Value << name2Upper(*util::umap_find(aegis_itemnames, (t_itemid)atoi(str[3])));
 	if (atoi(str[4]) != 60000)
-		body << YAML::Key << "HungryDelay" << YAML::Value << atoi(str[4]);
+		body << toolyaml::Key << "HungryDelay" << toolyaml::Value << atoi(str[4]);
 
 	if (atoi(str[7]) != RC_DEMIHUMAN)
-		body << YAML::Key << "Race" << YAML::Value << name2Upper(constant_lookup(atoi(str[7]), "RC_") + 3);
+		body << toolyaml::Key << "Race" << toolyaml::Value << name2Upper(constant_lookup(atoi(str[7]), "RC_") + 3);
 	if (atoi(str[8]) != ELE_NEUTRAL)
-	body << YAML::Key << "Element" << YAML::Value << name2Upper(constant_lookup(atoi(str[8]), "ELE_") + 4);
+	body << toolyaml::Key << "Element" << toolyaml::Value << name2Upper(constant_lookup(atoi(str[8]), "ELE_") + 4);
 	if (atoi(str[5]) != SZ_SMALL)
-		body << YAML::Key << "Size" << YAML::Value << name2Upper(constant_lookup(atoi(str[5]), "Size_") + 5);
+		body << toolyaml::Key << "Size" << toolyaml::Value << name2Upper(constant_lookup(atoi(str[5]), "Size_") + 5);
 	if (atoi(str[6]) != SZ_MEDIUM)
-		body << YAML::Key << "EvolutionSize" << YAML::Value << name2Upper(constant_lookup(atoi(str[6]), "Size_") + 5);
+		body << toolyaml::Key << "EvolutionSize" << toolyaml::Value << name2Upper(constant_lookup(atoi(str[6]), "Size_") + 5);
 	if (atoi(str[9]) != 700)
-		body << YAML::Key << "AttackDelay" << YAML::Value << atoi(str[9]);
+		body << toolyaml::Key << "AttackDelay" << toolyaml::Value << atoi(str[9]);
 
-	body << YAML::Key << "Status";
-	body << YAML::BeginSeq;
+	body << toolyaml::Key << "Status";
+	body << toolyaml::BeginSeq;
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Type" << YAML::Value << "Hp";
-	body << YAML::Key << "Base" << YAML::Value << atoi(str[10]);
-	body << YAML::Key << "GrowthMinimum" << YAML::Value << atoi(str[18]);
-	body << YAML::Key << "GrowthMaximum" << YAML::Value << atoi(str[19]);
+	body << toolyaml::BeginMap;
+	body << toolyaml::Key << "Type" << toolyaml::Value << "Hp";
+	body << toolyaml::Key << "Base" << toolyaml::Value << atoi(str[10]);
+	body << toolyaml::Key << "GrowthMinimum" << toolyaml::Value << atoi(str[18]);
+	body << toolyaml::Key << "GrowthMaximum" << toolyaml::Value << atoi(str[19]);
 	if (has_evo) {
-		body << YAML::Key << "EvolutionMinimum" << YAML::Value << atoi(str[34]);
-		body << YAML::Key << "EvolutionMaximum" << YAML::Value << atoi(str[35]);
+		body << toolyaml::Key << "EvolutionMinimum" << toolyaml::Value << atoi(str[34]);
+		body << toolyaml::Key << "EvolutionMaximum" << toolyaml::Value << atoi(str[35]);
 	}
-	body << YAML::EndMap;
+	body << toolyaml::EndMap;
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Type" << YAML::Value << "Sp";
-	body << YAML::Key << "Base" << YAML::Value << atoi(str[11]);
-	body << YAML::Key << "GrowthMinimum" << YAML::Value << atoi(str[20]);
-	body << YAML::Key << "GrowthMaximum" << YAML::Value << atoi(str[21]);
+	body << toolyaml::BeginMap;
+	body << toolyaml::Key << "Type" << toolyaml::Value << "Sp";
+	body << toolyaml::Key << "Base" << toolyaml::Value << atoi(str[11]);
+	body << toolyaml::Key << "GrowthMinimum" << toolyaml::Value << atoi(str[20]);
+	body << toolyaml::Key << "GrowthMaximum" << toolyaml::Value << atoi(str[21]);
 	if (has_evo) {
-		body << YAML::Key << "EvolutionMinimum" << YAML::Value << atoi(str[36]);
-		body << YAML::Key << "EvolutionMaximum" << YAML::Value << atoi(str[37]);
+		body << toolyaml::Key << "EvolutionMinimum" << toolyaml::Value << atoi(str[36]);
+		body << toolyaml::Key << "EvolutionMaximum" << toolyaml::Value << atoi(str[37]);
 	}
-	body << YAML::EndMap;
+	body << toolyaml::EndMap;
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Type" << YAML::Value << "Str";
-	body << YAML::Key << "Base" << YAML::Value << atoi(str[12]);
-	body << YAML::Key << "GrowthMinimum" << YAML::Value << atoi(str[22]);
-	body << YAML::Key << "GrowthMaximum" << YAML::Value << atoi(str[23]);
+	body << toolyaml::BeginMap;
+	body << toolyaml::Key << "Type" << toolyaml::Value << "Str";
+	body << toolyaml::Key << "Base" << toolyaml::Value << atoi(str[12]);
+	body << toolyaml::Key << "GrowthMinimum" << toolyaml::Value << atoi(str[22]);
+	body << toolyaml::Key << "GrowthMaximum" << toolyaml::Value << atoi(str[23]);
 	if (has_evo) {
-		body << YAML::Key << "EvolutionMinimum" << YAML::Value << atoi(str[38]);
-		body << YAML::Key << "EvolutionMaximum" << YAML::Value << atoi(str[39]);
+		body << toolyaml::Key << "EvolutionMinimum" << toolyaml::Value << atoi(str[38]);
+		body << toolyaml::Key << "EvolutionMaximum" << toolyaml::Value << atoi(str[39]);
 	}
-	body << YAML::EndMap;
+	body << toolyaml::EndMap;
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Type" << YAML::Value << "Agi";
-	body << YAML::Key << "Base" << YAML::Value << atoi(str[13]);
-	body << YAML::Key << "GrowthMinimum" << YAML::Value << atoi(str[24]);
-	body << YAML::Key << "GrowthMaximum" << YAML::Value << atoi(str[25]);
+	body << toolyaml::BeginMap;
+	body << toolyaml::Key << "Type" << toolyaml::Value << "Agi";
+	body << toolyaml::Key << "Base" << toolyaml::Value << atoi(str[13]);
+	body << toolyaml::Key << "GrowthMinimum" << toolyaml::Value << atoi(str[24]);
+	body << toolyaml::Key << "GrowthMaximum" << toolyaml::Value << atoi(str[25]);
 	if (has_evo) {
-		body << YAML::Key << "EvolutionMinimum" << YAML::Value << atoi(str[40]);
-		body << YAML::Key << "EvolutionMaximum" << YAML::Value << atoi(str[41]);
+		body << toolyaml::Key << "EvolutionMinimum" << toolyaml::Value << atoi(str[40]);
+		body << toolyaml::Key << "EvolutionMaximum" << toolyaml::Value << atoi(str[41]);
 	}
-	body << YAML::EndMap;
+	body << toolyaml::EndMap;
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Type" << YAML::Value << "Vit";
-	body << YAML::Key << "Base" << YAML::Value << atoi(str[14]);
-	body << YAML::Key << "GrowthMinimum" << YAML::Value << atoi(str[26]);
-	body << YAML::Key << "GrowthMaximum" << YAML::Value << atoi(str[27]);
+	body << toolyaml::BeginMap;
+	body << toolyaml::Key << "Type" << toolyaml::Value << "Vit";
+	body << toolyaml::Key << "Base" << toolyaml::Value << atoi(str[14]);
+	body << toolyaml::Key << "GrowthMinimum" << toolyaml::Value << atoi(str[26]);
+	body << toolyaml::Key << "GrowthMaximum" << toolyaml::Value << atoi(str[27]);
 	if (has_evo) {
-		body << YAML::Key << "EvolutionMinimum" << YAML::Value << atoi(str[42]);
-		body << YAML::Key << "EvolutionMaximum" << YAML::Value << atoi(str[43]);
+		body << toolyaml::Key << "EvolutionMinimum" << toolyaml::Value << atoi(str[42]);
+		body << toolyaml::Key << "EvolutionMaximum" << toolyaml::Value << atoi(str[43]);
 	}
-	body << YAML::EndMap;
+	body << toolyaml::EndMap;
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Type" << YAML::Value << "Int";
-	body << YAML::Key << "Base" << YAML::Value << atoi(str[15]);
-	body << YAML::Key << "GrowthMinimum" << YAML::Value << atoi(str[28]);
-	body << YAML::Key << "GrowthMaximum" << YAML::Value << atoi(str[29]);
+	body << toolyaml::BeginMap;
+	body << toolyaml::Key << "Type" << toolyaml::Value << "Int";
+	body << toolyaml::Key << "Base" << toolyaml::Value << atoi(str[15]);
+	body << toolyaml::Key << "GrowthMinimum" << toolyaml::Value << atoi(str[28]);
+	body << toolyaml::Key << "GrowthMaximum" << toolyaml::Value << atoi(str[29]);
 	if (has_evo) {
-		body << YAML::Key << "EvolutionMinimum" << YAML::Value << atoi(str[44]);
-		body << YAML::Key << "EvolutionMaximum" << YAML::Value << atoi(str[45]);
+		body << toolyaml::Key << "EvolutionMinimum" << toolyaml::Value << atoi(str[44]);
+		body << toolyaml::Key << "EvolutionMaximum" << toolyaml::Value << atoi(str[45]);
 	}
-	body << YAML::EndMap;
+	body << toolyaml::EndMap;
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Type" << YAML::Value << "Dex";
-	body << YAML::Key << "Base" << YAML::Value << atoi(str[16]);
-	body << YAML::Key << "GrowthMinimum" << YAML::Value << atoi(str[30]);
-	body << YAML::Key << "GrowthMaximum" << YAML::Value << atoi(str[31]);
+	body << toolyaml::BeginMap;
+	body << toolyaml::Key << "Type" << toolyaml::Value << "Dex";
+	body << toolyaml::Key << "Base" << toolyaml::Value << atoi(str[16]);
+	body << toolyaml::Key << "GrowthMinimum" << toolyaml::Value << atoi(str[30]);
+	body << toolyaml::Key << "GrowthMaximum" << toolyaml::Value << atoi(str[31]);
 	if (has_evo) {
-		body << YAML::Key << "EvolutionMinimum" << YAML::Value << atoi(str[46]);
-		body << YAML::Key << "EvolutionMaximum" << YAML::Value << atoi(str[47]);
+		body << toolyaml::Key << "EvolutionMinimum" << toolyaml::Value << atoi(str[46]);
+		body << toolyaml::Key << "EvolutionMaximum" << toolyaml::Value << atoi(str[47]);
 	}
-	body << YAML::EndMap;
+	body << toolyaml::EndMap;
 
-	body << YAML::BeginMap;
-	body << YAML::Key << "Type" << YAML::Value << "Luk";
-	body << YAML::Key << "Base" << YAML::Value << atoi(str[17]);
-	body << YAML::Key << "GrowthMinimum" << YAML::Value << atoi(str[32]);
-	body << YAML::Key << "GrowthMaximum" << YAML::Value << atoi(str[33]);
+	body << toolyaml::BeginMap;
+	body << toolyaml::Key << "Type" << toolyaml::Value << "Luk";
+	body << toolyaml::Key << "Base" << toolyaml::Value << atoi(str[17]);
+	body << toolyaml::Key << "GrowthMinimum" << toolyaml::Value << atoi(str[32]);
+	body << toolyaml::Key << "GrowthMaximum" << toolyaml::Value << atoi(str[33]);
 	if (has_evo) {
-		body << YAML::Key << "EvolutionMinimum" << YAML::Value << atoi(str[48]);
-		body << YAML::Key << "EvolutionMaximum" << YAML::Value << atoi(str[49]);
+		body << toolyaml::Key << "EvolutionMinimum" << toolyaml::Value << atoi(str[48]);
+		body << toolyaml::Key << "EvolutionMaximum" << toolyaml::Value << atoi(str[49]);
 	}
-	body << YAML::EndMap;
+	body << toolyaml::EndMap;
 
-	body << YAML::EndSeq;
+	body << toolyaml::EndSeq;
 
 	// Gather and sort skill tree data
 	std::vector<s_homun_skill_tree_entry> *skill_tree_base = nullptr, *skill_tree_evo = nullptr;
@@ -5173,8 +5172,8 @@ static bool read_homunculusdb( char* str[], size_t columns, size_t current ){
 	}
 
 	if (skill_tree_base != nullptr) {
-		body << YAML::Key << "SkillTree";
-		body << YAML::BeginSeq;
+		body << toolyaml::Key << "SkillTree";
+		body << toolyaml::BeginSeq;
 
 		for (const auto &skillit : *skill_tree_base) {
 			std::string *skill_name = util::umap_find(aegis_skillnames, skillit.id);
@@ -5184,17 +5183,17 @@ static bool read_homunculusdb( char* str[], size_t columns, size_t current ){
 				return false;
 			}
 
-			body << YAML::BeginMap;
-			body << YAML::Key << "Skill" << YAML::Value << *skill_name;
-			body << YAML::Key << "MaxLevel" << YAML::Value << (int32)skillit.max;
+			body << toolyaml::BeginMap;
+			body << toolyaml::Key << "Skill" << toolyaml::Value << *skill_name;
+			body << toolyaml::Key << "MaxLevel" << toolyaml::Value << (int32)skillit.max;
 			if (skillit.need_level > 0)
-				body << YAML::Key << "RequiredLevel" << YAML::Value << (int32)skillit.need_level;
+				body << toolyaml::Key << "RequiredLevel" << toolyaml::Value << (int32)skillit.need_level;
 			if (skillit.intimacy > 0)
-				body << YAML::Key << "RequiredIntimacy" << YAML::Value << skillit.intimacy;
+				body << toolyaml::Key << "RequiredIntimacy" << toolyaml::Value << skillit.intimacy;
 
 			if (!skillit.need.empty()) {
-				body << YAML::Key << "Required";
-				body << YAML::BeginSeq;
+				body << toolyaml::Key << "Required";
+				body << toolyaml::BeginSeq;
 
 				for (const auto &it : skillit.need) {
 					uint16 required_skill_id = it.first;
@@ -5210,16 +5209,16 @@ static bool read_homunculusdb( char* str[], size_t columns, size_t current ){
 						return false;
 					}
 
-					body << YAML::BeginMap;
-					body << YAML::Key << "Skill" << YAML::Value << *required_name;
-					body << YAML::Key << "Level" << YAML::Value << required_skill_level;
-					body << YAML::EndMap;
+					body << toolyaml::BeginMap;
+					body << toolyaml::Key << "Skill" << toolyaml::Value << *required_name;
+					body << toolyaml::Key << "Level" << toolyaml::Value << required_skill_level;
+					body << toolyaml::EndMap;
 				}
 
-				body << YAML::EndSeq;
+				body << toolyaml::EndSeq;
 			}
 
-			body << YAML::EndMap;
+			body << toolyaml::EndMap;
 		}
 
 		for (const auto &skillit : tree_diff) {
@@ -5230,18 +5229,18 @@ static bool read_homunculusdb( char* str[], size_t columns, size_t current ){
 				return false;
 			}
 
-			body << YAML::BeginMap;
-			body << YAML::Key << "Skill" << YAML::Value << *skill_name;
-			body << YAML::Key << "MaxLevel" << YAML::Value << (int32)skillit.max;
+			body << toolyaml::BeginMap;
+			body << toolyaml::Key << "Skill" << toolyaml::Value << *skill_name;
+			body << toolyaml::Key << "MaxLevel" << toolyaml::Value << (int32)skillit.max;
 			if (skillit.need_level > 0)
-				body << YAML::Key << "RequiredLevel" << YAML::Value << (int32)skillit.need_level;
+				body << toolyaml::Key << "RequiredLevel" << toolyaml::Value << (int32)skillit.need_level;
 			if (skillit.intimacy > 0)
-				body << YAML::Key << "RequiredIntimacy" << YAML::Value << skillit.intimacy;
-			body << YAML::Key << "RequireEvolution" << YAML::Value << "true";
+				body << toolyaml::Key << "RequiredIntimacy" << toolyaml::Value << skillit.intimacy;
+			body << toolyaml::Key << "RequireEvolution" << toolyaml::Value << "true";
 
 			if (!skillit.need.empty()) {
-				body << YAML::Key << "Required";
-				body << YAML::BeginSeq;
+				body << toolyaml::Key << "Required";
+				body << toolyaml::BeginSeq;
 
 				for (const auto &it : skillit.need) {
 					uint16 required_skill_id = it.first;
@@ -5257,22 +5256,22 @@ static bool read_homunculusdb( char* str[], size_t columns, size_t current ){
 						return false;
 					}
 
-					body << YAML::BeginMap;
-					body << YAML::Key << "Skill" << YAML::Value << *required_name;
-					body << YAML::Key << "Level" << YAML::Value << required_skill_level;
-					body << YAML::EndMap;
+					body << toolyaml::BeginMap;
+					body << toolyaml::Key << "Skill" << toolyaml::Value << *required_name;
+					body << toolyaml::Key << "Level" << toolyaml::Value << required_skill_level;
+					body << toolyaml::EndMap;
 				}
 
-				body << YAML::EndSeq;
+				body << toolyaml::EndSeq;
 			}
 
-			body << YAML::EndMap;
+			body << toolyaml::EndMap;
 		}
 
-		body << YAML::EndSeq;
+		body << toolyaml::EndSeq;
 	}
 
-	body << YAML::EndMap;
+	body << toolyaml::EndMap;
 
 	return true;
 }

@@ -1,5 +1,5 @@
-#ifndef YAML_COMPAT_HPP
-#define YAML_COMPAT_HPP
+#ifndef TOOL_YAML_HPP
+#define TOOL_YAML_HPP
 
 #include <algorithm>
 #include <cctype>
@@ -18,7 +18,7 @@
 #include <ryml_std.hpp>
 #include <ryml.hpp>
 
-namespace YAML {
+namespace toolyaml {
 
 struct Mark {
 	int line = 0;
@@ -109,7 +109,7 @@ inline T parseScalar(const std::string& value) {
 	} else if constexpr (std::is_integral_v<T> && std::is_unsigned_v<T>) {
 		return static_cast<T>(std::stoull(value));
 	} else {
-		static_assert(std::is_same_v<T, void>, "Unsupported YAML scalar conversion");
+		static_assert(std::is_same_v<T, void>, "Unsupported toolyaml scalar conversion");
 	}
 }
 
@@ -379,7 +379,7 @@ private:
 			const char* literal = value;
 			node_ << std::string(literal != nullptr ? literal : "");
 		} else {
-			static_assert(std::is_same_v<std::decay_t<T>, void>, "Unsupported YAML assignment type");
+			static_assert(std::is_same_v<std::decay_t<T>, void>, "Unsupported toolyaml assignment type");
 		}
 	}
 
@@ -440,7 +440,7 @@ inline Node::iterator Node::end() const {
 	return { doc_, ryml::NONE };
 }
 
-inline Node LoadFile(const std::string& path) {
+inline Node loadFile(const std::string& path) {
 	const std::string contents = detail::readFile(path);
 	auto document = std::make_shared<detail::ParsedDocument>();
 
@@ -476,60 +476,66 @@ inline constexpr _KeyTag Key{};
 inline constexpr _ValueTag Value{};
 inline constexpr _LiteralTag Literal{};
 
-class Emitter {
+class Writer {
 public:
-	Emitter() = default;
+	Writer() = default;
 
-	explicit Emitter(std::ostream& output)
+	explicit Writer(std::ostream& output)
 	: output_(&output) {
 	}
 
-	Emitter(const Emitter&) = delete;
-	Emitter& operator=(const Emitter&) = delete;
-	Emitter(Emitter&&) noexcept = default;
-	Emitter& operator=(Emitter&&) noexcept = default;
+	Writer(const Writer&) = delete;
+	Writer& operator=(const Writer&) = delete;
+	Writer(Writer&&) noexcept = default;
+	Writer& operator=(Writer&&) noexcept = default;
 
-	const char* c_str() const {
-		return buffer_.c_str();
+	const std::string& str() const {
+		return buffer_;
 	}
 
-	Emitter& operator<<(const _BeginMapTag&) {
+	void reset() {
+		buffer_.clear();
+		stack_.clear();
+		literal_next_ = false;
+	}
+
+	Writer& operator<<(const _BeginMapTag&) {
 		startContainer(ContainerType::Map);
 		return *this;
 	}
 
-	Emitter& operator<<(const _EndMapTag&) {
+	Writer& operator<<(const _EndMapTag&) {
 		endContainer(ContainerType::Map);
 		return *this;
 	}
 
-	Emitter& operator<<(const _BeginSeqTag&) {
+	Writer& operator<<(const _BeginSeqTag&) {
 		startContainer(ContainerType::Seq);
 		return *this;
 	}
 
-	Emitter& operator<<(const _EndSeqTag&) {
+	Writer& operator<<(const _EndSeqTag&) {
 		endContainer(ContainerType::Seq);
 		return *this;
 	}
 
-	Emitter& operator<<(const _KeyTag&) {
+	Writer& operator<<(const _KeyTag&) {
 		if (!stack_.empty() && stack_.back().type == ContainerType::Map) {
 			stack_.back().expecting_key = true;
 		}
 		return *this;
 	}
 
-	Emitter& operator<<(const _ValueTag&) {
+	Writer& operator<<(const _ValueTag&) {
 		return *this;
 	}
 
-	Emitter& operator<<(const _LiteralTag&) {
+	Writer& operator<<(const _LiteralTag&) {
 		literal_next_ = true;
 		return *this;
 	}
 
-	Emitter& operator<<(const Node& node) {
+	Writer& operator<<(const Node& node) {
 		if (!node.IsDefined()) {
 			return *this;
 		}
@@ -543,25 +549,25 @@ public:
 		return *this;
 	}
 
-	Emitter& operator<<(const std::string& value) {
+	Writer& operator<<(const std::string& value) {
 		writeScalar(value, literal_next_, false);
 		return *this;
 	}
 
-	Emitter& operator<<(const char* value) {
+	Writer& operator<<(const char* value) {
 		writeScalar(value != nullptr ? std::string(value) : std::string(), literal_next_, false);
 		return *this;
 	}
 
 	template <typename T, typename = std::enable_if_t<std::is_arithmetic_v<T> && !std::is_same_v<T, bool>>>
-	Emitter& operator<<(T value) {
+	Writer& operator<<(T value) {
 		std::ostringstream stream;
 		stream << value;
 		writeScalar(stream.str(), false, true);
 		return *this;
 	}
 
-	Emitter& operator<<(bool value) {
+	Writer& operator<<(bool value) {
 		writeScalar(value ? "true" : "false", false, true);
 		return *this;
 	}
@@ -789,6 +795,6 @@ private:
 	bool literal_next_ = false;
 };
 
-} // namespace YAML
+} // namespace toolyaml
 
-#endif // YAML_COMPAT_HPP
+#endif // TOOL_YAML_HPP

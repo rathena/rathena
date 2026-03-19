@@ -19,7 +19,7 @@
 	#include <cstdio>
 #endif
 
-#include "yaml_compat.hpp"
+#include "tool_yaml.hpp"
 
 #include <common/cbasetypes.hpp>
 #include <common/core.hpp>
@@ -77,8 +77,8 @@ int32 getch(void) {
 }
 #endif
 
-YAML::Node inNode;
-YAML::Emitter body;
+toolyaml::Node inNode;
+toolyaml::Writer body;
 
 // Constants for conversion
 std::unordered_map<t_itemid, std::string> aegis_itemnames;
@@ -166,7 +166,7 @@ bool askConfirmation(const char *fmt, ...) {
  * @param node: YAML node
  * @return Version number
  */
-uint32 getHeaderVersion(YAML::Node &node) {
+uint32 getHeaderVersion(toolyaml::Node &node) {
 	return node["Header"]["Version"].as<uint32>();
 }
 
@@ -206,15 +206,15 @@ void prepareHeader(std::ofstream &file, const std::string &type, uint32 version,
 	copyFileIfExists(file, "license", false);
 	copyFileIfExists(file, name, true);
 
-	YAML::Emitter header(file);
+	toolyaml::Writer header(file);
 
-	header << YAML::BeginMap;
-	header << YAML::Key << "Header";
-	header << YAML::BeginMap;
-	header << YAML::Key << "Type" << YAML::Value << type;
-	header << YAML::Key << "Version" << YAML::Value << version;
-	header << YAML::EndMap;
-	header << YAML::EndMap;
+	header << toolyaml::BeginMap;
+	header << toolyaml::Key << "Header";
+	header << toolyaml::BeginMap;
+	header << toolyaml::Key << "Type" << toolyaml::Value << type;
+	header << toolyaml::Key << "Version" << toolyaml::Value << version;
+	header << toolyaml::EndMap;
+	header << toolyaml::EndMap;
 
 	file << "\n";
 	file << "\n";
@@ -233,40 +233,40 @@ void prepareFooter(std::ostream &file) {
 		file << "\n";
 	}
 
-	YAML::Emitter footer(file);
+	toolyaml::Writer footer(file);
 
-	footer << YAML::BeginMap;
-	footer << YAML::Key << "Footer";
-	footer << YAML::BeginMap;
-	footer << YAML::Key << "Imports";
-	footer << YAML::BeginSeq;
-	for (const YAML::Node &import : inNode["Footer"]["Imports"]) {
-		footer << YAML::BeginMap;
-		footer << YAML::Key << "Path" << YAML::Value << import["Path"];
+	footer << toolyaml::BeginMap;
+	footer << toolyaml::Key << "Footer";
+	footer << toolyaml::BeginMap;
+	footer << toolyaml::Key << "Imports";
+	footer << toolyaml::BeginSeq;
+	for (const toolyaml::Node &import : inNode["Footer"]["Imports"]) {
+		footer << toolyaml::BeginMap;
+		footer << toolyaml::Key << "Path" << toolyaml::Value << import["Path"];
 		if (import["Mode"].IsDefined())
-			footer << YAML::Key << "Mode" << YAML::Value << import["Mode"];
-		footer << YAML::EndMap;
+			footer << toolyaml::Key << "Mode" << toolyaml::Value << import["Mode"];
+		footer << toolyaml::EndMap;
 	}
-	footer << YAML::EndSeq;
-	footer << YAML::EndMap;
-	footer << YAML::EndMap;
+	footer << toolyaml::EndSeq;
+	footer << toolyaml::EndMap;
+	footer << toolyaml::EndMap;
 }
 
 /**
  * Prepares body for output.
  */
 void prepareBody(void) {
-	body << YAML::BeginMap;
-	body << YAML::Key << "Body";
-	body << YAML::BeginSeq;
+	body << toolyaml::BeginMap;
+	body << toolyaml::Key << "Body";
+	body << toolyaml::BeginSeq;
 }
 
 /**
  * Finalizes body's output.
  */
 void finalizeBody(void) {
-	body << YAML::EndSeq;
-	body << YAML::EndMap;
+	body << toolyaml::EndSeq;
+	body << toolyaml::EndMap;
 }
 
 /**

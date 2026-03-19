@@ -25,7 +25,7 @@ bool process(const std::string &type, uint32 version, const std::vector<std::str
 		inNode.reset();
 
 		if (fileExists(from)) {
-			inNode = YAML::LoadFile(from);
+			inNode = toolyaml::loadFile(from);
 			uint32 source_version = getHeaderVersion(inNode);
 
 			if (source_version >= version) {
@@ -46,8 +46,7 @@ bool process(const std::string &type, uint32 version, const std::vector<std::str
 
 			std::ofstream outFile;
 
-			body.~Emitter();
-			new (&body) YAML::Emitter();
+			body.reset();
 			outFile.open(to);
 
 			if (!outFile.is_open()) {
@@ -65,7 +64,7 @@ bool process(const std::string &type, uint32 version, const std::vector<std::str
 				}
 
 				finalizeBody();
-				outFile << body.c_str();
+				outFile << body.str();
 			}
 			prepareFooter(outFile);
 			// Make sure there is an empty line at the end of the file for git
@@ -173,8 +172,8 @@ static bool upgrade_achievement_db(std::string file, const uint32 source_version
 	size_t entries = 0;
 
 	for (const auto &input : inNode["Body"]) {
-		body << YAML::BeginMap;
-		body << YAML::Key << "Id" << YAML::Value << input["ID"];
+		body << toolyaml::BeginMap;
+		body << toolyaml::Key << "Id" << toolyaml::Value << input["ID"];
 
 		std::string constant = input["Group"].as<std::string>();
 
@@ -187,16 +186,16 @@ static bool upgrade_achievement_db(std::string file, const uint32 source_version
 			constant.erase(0, 6);
 			constant = "Enchant" + constant;
 		}
-		body << YAML::Key << "Group" << YAML::Value << name2Upper(constant);
-		body << YAML::Key << "Name" << YAML::Value << input["Name"];
+		body << toolyaml::Key << "Group" << toolyaml::Value << name2Upper(constant);
+		body << toolyaml::Key << "Name" << toolyaml::Value << input["Name"];
 
 		if (input["Target"].IsDefined()) {
-			body << YAML::Key << "Targets";
-			body << YAML::BeginSeq;
+			body << toolyaml::Key << "Targets";
+			body << toolyaml::BeginSeq;
 
 			for (const auto &it : input["Target"]) {
-				body << YAML::BeginMap;
-				body << YAML::Key << "Id" << YAML::Value << it["Id"];
+				body << toolyaml::BeginMap;
+				body << toolyaml::Key << "Id" << toolyaml::Value << it["Id"];
 				if (it["MobID"].IsDefined()) {
 					uint16 mob_id = it["MobID"].as<uint16>();
 					std::string *mob_name = util::umap_find(aegis_mobnames, mob_id);
@@ -206,43 +205,43 @@ static bool upgrade_achievement_db(std::string file, const uint32 source_version
 						return false;
 					}
 
-					body << YAML::Key << "Mob" << YAML::Value << *mob_name;
+					body << toolyaml::Key << "Mob" << toolyaml::Value << *mob_name;
 				}
 				if (it["Count"].IsDefined() && it["Count"].as<int32>() > 1)
-					body << YAML::Key << "Count" << YAML::Value << it["Count"];
-				body << YAML::EndMap;
+					body << toolyaml::Key << "Count" << toolyaml::Value << it["Count"];
+				body << toolyaml::EndMap;
 			}
 
-			body << YAML::EndSeq;
+			body << toolyaml::EndSeq;
 		}
 
 		if (input["Condition"].IsDefined())
-			body << YAML::Key << "Condition" << YAML::Value << input["Condition"];
+			body << toolyaml::Key << "Condition" << toolyaml::Value << input["Condition"];
 
 		if (input["Map"].IsDefined())
-			body << YAML::Key << "Map" << YAML::Value << input["Map"];
+			body << toolyaml::Key << "Map" << toolyaml::Value << input["Map"];
 
 		if (input["Dependent"].IsDefined()) {
-			body << YAML::Key << "Dependents";
-			body << YAML::BeginMap;
+			body << toolyaml::Key << "Dependents";
+			body << toolyaml::BeginMap;
 
 			for (const auto &it : input["Dependent"]) {
-				body << YAML::Key << it["Id"] << YAML::Value << true;
+				body << toolyaml::Key << it["Id"] << toolyaml::Value << true;
 			}
 
-			body << YAML::EndMap;
+			body << toolyaml::EndMap;
 		}
 
 		/**
 		 * Example usage for adding label at specific version.
 		if (source_version < ?) {
-			body << YAML::Key << "CustomLabel" << YAML::Value << "Unique";
+			body << toolyaml::Key << "CustomLabel" << toolyaml::Value << "Unique";
 		}
 		*/
 
 		if (input["Reward"].IsDefined()) {
-			body << YAML::Key << "Rewards";
-			body << YAML::BeginMap;
+			body << toolyaml::Key << "Rewards";
+			body << toolyaml::BeginMap;
 			if (input["Reward"]["ItemID"].IsDefined()) {
 				t_itemid item_id = input["Reward"]["ItemID"].as<t_itemid>();
 				std::string *item_name = util::umap_find(aegis_itemnames, item_id);
@@ -252,20 +251,20 @@ static bool upgrade_achievement_db(std::string file, const uint32 source_version
 					return false;
 				}
 
-				body << YAML::Key << "Item" << YAML::Value << *item_name;
+				body << toolyaml::Key << "Item" << toolyaml::Value << *item_name;
 			}
 			if (input["Reward"]["Amount"].IsDefined() && input["Reward"]["Amount"].as<uint16>() > 1)
-				body << YAML::Key << "Amount" << YAML::Value << input["Reward"]["Amount"];
+				body << toolyaml::Key << "Amount" << toolyaml::Value << input["Reward"]["Amount"];
 			if (input["Reward"]["Script"].IsDefined())
-				body << YAML::Key << "Script" << YAML::Value << input["Reward"]["Script"];
+				body << toolyaml::Key << "Script" << toolyaml::Value << input["Reward"]["Script"];
 			if (input["Reward"]["TitleID"].IsDefined())
-				body << YAML::Key << "TitleId" << YAML::Value << input["Reward"]["TitleID"];
-			body << YAML::EndMap;
+				body << toolyaml::Key << "TitleId" << toolyaml::Value << input["Reward"]["TitleID"];
+			body << toolyaml::EndMap;
 		}
 
-		body << YAML::Key << "Score" << YAML::Value << input["Score"];
+		body << toolyaml::Key << "Score" << toolyaml::Value << input["Score"];
 
-		body << YAML::EndMap;
+		body << toolyaml::EndMap;
 		entries++;
 	}
 
@@ -452,31 +451,31 @@ static bool upgrade_item_group_db( std::string file, const uint32 source_version
 	for( const auto input : inNode["Body"] ){
 		// Added the "Algorithm" field based on the previous "Subgroup"
 		if( source_version < 4 ){
-			body << YAML::BeginMap;
-			body << YAML::Key << "Group" << YAML::Value << input["Group"];
+			body << toolyaml::BeginMap;
+			body << toolyaml::Key << "Group" << toolyaml::Value << input["Group"];
 
 			if( input["SubGroups"].IsDefined() ){
-				body << YAML::Key << "SubGroups";
-				body << YAML::BeginSeq;
+				body << toolyaml::Key << "SubGroups";
+				body << toolyaml::BeginSeq;
 
 				for (const auto &it : input["SubGroups"]) {
-					body << YAML::BeginMap;
+					body << toolyaml::BeginMap;
 					if( !it["SubGroup"].IsDefined() ){
 						ShowError( "Cannot upgrade automatically, SubGroup is missing." );
 						return false;
 					}
-					body << YAML::Key << "SubGroup" << YAML::Value << it["SubGroup"];
+					body << toolyaml::Key << "SubGroup" << toolyaml::Value << it["SubGroup"];
 
 					if (it["SubGroup"].as<uint16>() == 0)
-						body << YAML::Key << "Algorithm" << YAML::Value << "All";
+						body << toolyaml::Key << "Algorithm" << toolyaml::Value << "All";
 					else if (it["SubGroup"].as<uint16>() == 6)
-						body << YAML::Key << "Algorithm" << YAML::Value << "Random";
+						body << toolyaml::Key << "Algorithm" << toolyaml::Value << "Random";
 					// else
-						// body << YAML::Key << "Algorithm" << YAML::Value << "SharedPool";
+						// body << toolyaml::Key << "Algorithm" << toolyaml::Value << "SharedPool";
 
 					if( it["List"].IsDefined() )
-						body << YAML::Key << "List";{
-						body << YAML::BeginSeq;
+						body << toolyaml::Key << "List";{
+						body << toolyaml::BeginSeq;
 
 						uint32 index = 0;
 
@@ -485,50 +484,50 @@ static bool upgrade_item_group_db( std::string file, const uint32 source_version
 								ShowError( "Cannot upgrade automatically, Item is missing" );
 								return false;
 							}
-							body << YAML::BeginMap;
+							body << toolyaml::BeginMap;
 
-							body << YAML::Key << "Index" << YAML::Value << index;
-							body << YAML::Key << "Item" << YAML::Value << ListNode["Item"];
+							body << toolyaml::Key << "Index" << toolyaml::Value << index;
+							body << toolyaml::Key << "Item" << toolyaml::Value << ListNode["Item"];
 
 							if( ListNode["Rate"].IsDefined() )
-								body << YAML::Key << "Rate" << YAML::Value << ListNode["Rate"];
+								body << toolyaml::Key << "Rate" << toolyaml::Value << ListNode["Rate"];
 							if( ListNode["Amount"].IsDefined() )
-								body << YAML::Key << "Amount" << YAML::Value << ListNode["Amount"];
+								body << toolyaml::Key << "Amount" << toolyaml::Value << ListNode["Amount"];
 							if( ListNode["Duration"].IsDefined() )
-								body << YAML::Key << "Duration" << YAML::Value << ListNode["Duration"];
+								body << toolyaml::Key << "Duration" << toolyaml::Value << ListNode["Duration"];
 							if( ListNode["Announced"].IsDefined() )
-								body << YAML::Key << "Announced" << YAML::Value << ListNode["Announced"];
+								body << toolyaml::Key << "Announced" << toolyaml::Value << ListNode["Announced"];
 							if( ListNode["UniqueId"].IsDefined() )
-								body << YAML::Key << "UniqueId" << YAML::Value << ListNode["UniqueId"];
+								body << toolyaml::Key << "UniqueId" << toolyaml::Value << ListNode["UniqueId"];
 							if( ListNode["Stacked"].IsDefined() )
-								body << YAML::Key << "Stacked" << YAML::Value << ListNode["Stacked"];
+								body << toolyaml::Key << "Stacked" << toolyaml::Value << ListNode["Stacked"];
 							if( ListNode["Named"].IsDefined() )
-								body << YAML::Key << "Named" << YAML::Value << ListNode["Named"];
+								body << toolyaml::Key << "Named" << toolyaml::Value << ListNode["Named"];
 							if( ListNode["Bound"].IsDefined() )
-								body << YAML::Key << "Bound" << YAML::Value << ListNode["Bound"];
+								body << toolyaml::Key << "Bound" << toolyaml::Value << ListNode["Bound"];
 							if( ListNode["RandomOptionGroup"].IsDefined() )
-								body << YAML::Key << "RandomOptionGroup" << YAML::Value << ListNode["RandomOptionGroup"];
+								body << toolyaml::Key << "RandomOptionGroup" << toolyaml::Value << ListNode["RandomOptionGroup"];
 							if( ListNode["RefineMinimum"].IsDefined() )
-								body << YAML::Key << "RefineMinimum" << YAML::Value << ListNode["RefineMinimum"];
+								body << toolyaml::Key << "RefineMinimum" << toolyaml::Value << ListNode["RefineMinimum"];
 							if( ListNode["RefineMaximum"].IsDefined() )
-								body << YAML::Key << "RefineMaximum" << YAML::Value << ListNode["RefineMaximum"];
+								body << toolyaml::Key << "RefineMaximum" << toolyaml::Value << ListNode["RefineMaximum"];
 							if( ListNode["Clear"].IsDefined() )
-								body << YAML::Key << "Clear" << YAML::Value << ListNode["Clear"];
+								body << toolyaml::Key << "Clear" << toolyaml::Value << ListNode["Clear"];
 
 							index++;
-							body << YAML::EndMap;
+							body << toolyaml::EndMap;
 						}
 
-						body << YAML::EndSeq;
+						body << toolyaml::EndSeq;
 					}
 					if( it["Clear"].IsDefined() )
-						body << YAML::Key << "Clear" << YAML::Value << it["Clear"];
+						body << toolyaml::Key << "Clear" << toolyaml::Value << it["Clear"];
 
-					body << YAML::EndMap;
+					body << toolyaml::EndMap;
 				}
-				body << YAML::EndSeq;
+				body << toolyaml::EndSeq;
 			}
-			body << YAML::EndMap;
+			body << toolyaml::EndMap;
 		}
 
 		entries++;

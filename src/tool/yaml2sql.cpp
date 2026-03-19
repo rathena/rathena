@@ -16,7 +16,7 @@
 	#include <cstdio>
 #endif
 
-#include "yaml_compat.hpp"
+#include "tool_yaml.hpp"
 
 #include <common/cbasetypes.hpp>
 #include <common/core.hpp>
@@ -99,7 +99,7 @@ static bool mob_db_yaml2sql(const std::string &file, const std::string &table);
 bool fileExists( const std::string& path );
 bool askConfirmation( const char* fmt, ... );
 
-YAML::Node inNode;
+toolyaml::Node inNode;
 std::ofstream outFile;
 
 // Implement the function instead of including the original version by linking
@@ -174,8 +174,8 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 			inNode.reset();
 
 			try {
-				inNode = YAML::LoadFile(from);
-			} catch (YAML::Exception &e) {
+				inNode = toolyaml::loadFile(from);
+			} catch (toolyaml::Exception &e) {
 				ShowError("%s (Line %d: Column %d)\n", e.msg.c_str(), e.mark.line, e.mark.column);
 				if (!askConfirmation("Error found in \"%s\" while attempting to load.\nPress any key to continue.\n", from.c_str()))
 					continue;
@@ -357,7 +357,7 @@ std::string string_escape(const std::string &s) {
  * @param value: String to store node value to
  * @param string: If value is a string or not
  */
-static bool appendEntry(const YAML::Node &node, std::string &value, bool string = false) {
+static bool appendEntry(const toolyaml::Node &node, std::string &value, bool string = false) {
 	if (node.IsDefined()) {
 		if (string) {
 			value.append("'");
@@ -380,7 +380,7 @@ static bool appendEntry(const YAML::Node &node, std::string &value, bool string 
 static bool item_db_yaml2sql(const std::string &file, const std::string &table) {
 	size_t entries = 0;
 
-	for (const YAML::Node &input : inNode["Body"]) {
+	for (const toolyaml::Node &input : inNode["Body"]) {
 		std::string column = "", value = "";
 
 		if (appendEntry(input["Id"], value))
@@ -412,7 +412,7 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 		if (appendEntry(input["Slots"], value))
 			column.append("`slots`,");
 
-		const YAML::Node &jobs = input["Jobs"];
+		const toolyaml::Node &jobs = input["Jobs"];
 
 		if (jobs) {
 			if (appendEntry(jobs["All"], value))
@@ -485,7 +485,7 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 				column.append("`job_wizard`,");
 		}
 
-		const YAML::Node &classes = input["Classes"];
+		const toolyaml::Node &classes = input["Classes"];
 
 		if (classes) {
 			std::string str_all_upper;
@@ -555,7 +555,7 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 		if (appendEntry(input["Gender"], value, true))
 			column.append("`gender`,");
 
-		const YAML::Node &locations = input["Locations"];
+		const toolyaml::Node &locations = input["Locations"];
 
 		if (locations) {
 			if (appendEntry(locations["Head_Top"], value))
@@ -651,7 +651,7 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 		if (appendEntry(input["AliasName"], value, true))
 			column.append("`alias_name`,");
 
-		const YAML::Node &flags = input["Flags"];
+		const toolyaml::Node &flags = input["Flags"];
 
 		if (flags) {
 			if (appendEntry(flags["BuyingStore"], value))
@@ -672,7 +672,7 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 				column.append("`flag_dropeffect`,");
 		}
 
-		const YAML::Node &delay = input["Delay"];
+		const toolyaml::Node &delay = input["Delay"];
 
 		if (delay) {
 			if (appendEntry(delay["Duration"], value))
@@ -681,7 +681,7 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 				column.append("`delay_status`,");
 		}
 
-		const YAML::Node &stack = input["Stack"];
+		const toolyaml::Node &stack = input["Stack"];
 
 		if (stack) {
 			if (appendEntry(stack["Amount"], value))
@@ -696,7 +696,7 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 				column.append("`stack_guildstorage`,");
 		}
 
-		const YAML::Node &nouse = input["NoUse"];
+		const toolyaml::Node &nouse = input["NoUse"];
 
 		if (nouse) {
 			if (appendEntry(nouse["Override"], value))
@@ -705,7 +705,7 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 				column.append("`nouse_sitting`,");
 		}
 
-		const YAML::Node &trade = input["Trade"];
+		const toolyaml::Node &trade = input["Trade"];
 
 		if (trade) {
 			if (appendEntry(trade["Override"], value))
@@ -753,7 +753,7 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 static bool mob_db_yaml2sql(const std::string &file, const std::string &table) {
 	size_t entries = 0;
 
-	for (const YAML::Node &input : inNode["Body"]) {
+	for (const toolyaml::Node &input : inNode["Body"]) {
 		std::string column = "", value = "";
 
 		if (appendEntry(input["Id"], value))
@@ -813,7 +813,7 @@ static bool mob_db_yaml2sql(const std::string &file, const std::string &table) {
 		if (appendEntry(input["Race"], value, true))
 			column.append("`race`,");
 
-		const YAML::Node &racegroups = input["RaceGroups"];
+		const toolyaml::Node &racegroups = input["RaceGroups"];
 
 		if (racegroups) {
 			for (uint16 i = 1; i < RC2_MAX; i++) {
@@ -857,7 +857,7 @@ static bool mob_db_yaml2sql(const std::string &file, const std::string &table) {
 		if (appendEntry(input["Class"], value, true))
 			column.append("`class`,");
 
-		const YAML::Node &modes = input["Modes"];
+		const toolyaml::Node &modes = input["Modes"];
 
 		if (modes) {
 			if (appendEntry(modes["CanMove"], value))
@@ -918,7 +918,7 @@ static bool mob_db_yaml2sql(const std::string &file, const std::string &table) {
 			if (!input["MvpDrops"].IsDefined())
 				continue;
 
-			const YAML::Node &mvpdrops = input["MvpDrops"][i];
+			const toolyaml::Node &mvpdrops = input["MvpDrops"][i];
 
 			if (mvpdrops) {
 				if (appendEntry(mvpdrops["Item"], value, true))
@@ -936,7 +936,7 @@ static bool mob_db_yaml2sql(const std::string &file, const std::string &table) {
 			if (!input["Drops"].IsDefined())
 				continue;
 
-			const YAML::Node &drops = input["Drops"][i];
+			const toolyaml::Node &drops = input["Drops"][i];
 
 			if (drops) {
 				if (appendEntry(drops["Item"], value, true))
