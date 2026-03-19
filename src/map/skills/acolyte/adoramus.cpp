@@ -3,7 +3,7 @@
 
 #include "adoramus.hpp"
 
-#include <config/const.hpp>
+#include <config/core.hpp>
 
 #include "map/map.hpp"
 #include "map/pc.hpp"

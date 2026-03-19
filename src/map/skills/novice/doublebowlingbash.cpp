@@ -3,13 +3,19 @@
 
 #include "doublebowlingbash.hpp"
 
-#include <config/const.hpp>
+#include <config/core.hpp>
 
 #include "map/clif.hpp"
 #include "map/pc.hpp"
 #include "map/status.hpp"
 
 SkillDoubleBowlingBash::SkillDoubleBowlingBash() : SkillImpl(HN_DOUBLEBOWLINGBASH) {
+}
+
+void SkillDoubleBowlingBash::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
+	if (dmg.miscflag > 1) {
+		dmg.div_ += min(4, dmg.miscflag);
+	}
 }
 
 void SkillDoubleBowlingBash::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {

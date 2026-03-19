@@ -3,7 +3,7 @@
 
 #include "crimsonarrow.hpp"
 
-#include <config/const.hpp>
+#include <config/core.hpp>
 
 #include "map/clif.hpp"
 #include "map/status.hpp"
@@ -42,6 +42,14 @@ void SkillCrimsonArrow::castendDamageId(block_list *src, block_list *target, uin
 
 // AG_CRIMSON_ARROW_ATK
 SkillCrimsonArrowAttack::SkillCrimsonArrowAttack() : SkillImplRecursiveDamageSplash(AG_CRIMSON_ARROW_ATK) {
+}
+
+void SkillCrimsonArrowAttack::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
+	const status_change *sc = status_get_sc(&src);
+
+	if (sc != nullptr && sc->hasSCE(SC_CLIMAX)) {
+		dmg.div_ = 2;
+	}
 }
 
 void SkillCrimsonArrowAttack::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {

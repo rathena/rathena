@@ -3,9 +3,16 @@
 
 #include "warmthofthestars.hpp"
 
+#include <common/random.hpp>
+
 #include "map/status.hpp"
 
 SkillWarmthoftheStars::SkillWarmthoftheStars() : SkillImpl(SG_STAR_WARM) {
+}
+
+void SkillWarmthoftheStars::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
+	// A random 0~3 knockback bonus is added to the base knockback
+	dmg.blewcount += rnd_value(0, 3);
 }
 
 void SkillWarmthoftheStars::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {

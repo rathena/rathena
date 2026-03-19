@@ -5,7 +5,7 @@
 
 #include "../skill_impl.hpp"
 
-class SkillRisingMoon : public WeaponSkillImpl {
+class SkillRisingMoon : public SkillImplRecursiveDamageSplash {
 public:
 	SkillRisingMoon();
 

@@ -24284,6 +24284,19 @@ void clif_reputation_list( map_session_data& sd ){
 #endif
 }
 
+void clif_reputation_open( map_session_data& sd, uint64 tabID, uint64 repID ) {
+#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
+	PACKET_ZC_REPUTE_OPEN p = {};
+
+	p.packetType = HEADER_ZC_REPUTE_OPEN;
+	p.table = tabID;
+	p.type = static_cast<decltype(p.type)>(repID);
+	p.mode = (repID == 0); // 0 = red texture
+
+	clif_send(&p, sizeof(p), &sd, SELF);
+#endif
+}
+
 void clif_item_reform_open( map_session_data& sd, t_itemid item ){
 #if PACKETVER_MAIN_NUM >= 20201118 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024
 	PACKET_ZC_OPEN_REFORM_UI p = {};

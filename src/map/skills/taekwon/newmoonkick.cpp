@@ -4,7 +4,6 @@
 #include "newmoonkick.hpp"
 
 #include "map/clif.hpp"
-#include "map/map.hpp"
 #include "map/status.hpp"
 
 SkillNewMoonKick::SkillNewMoonKick() : SkillImplRecursiveDamageSplash(SJ_NEWMOONKICK) {
@@ -19,18 +18,13 @@ void SkillNewMoonKick::castendNoDamageId(block_list *src, block_list *target, ui
 	status_change *tsc = status_get_sc(target);
 	status_change_entry *tsce = (tsc != nullptr && type != SC_NONE) ? tsc->getSCE(type) : nullptr;
 
-	int32 starget = BL_CHAR|BL_SKILL;
+	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
 
 	if (tsce) {
 		status_change_end(target, type);
-		clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
 		return;
 	} else
 		sc_start(src, target, type, 100, skill_lv, skill_get_time(getSkillId(), skill_lv));
 
-	skill_area_temp[1] = 0;
-	clif_skill_nodamage(src,*target,getSkillId(),skill_lv);
-
-	map_foreachinrange(skill_area_sub, target, skill_get_splash(getSkillId(), skill_lv), starget,
-		src, getSkillId(), skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
+	skill_castend_damage_id(src, target, getSkillId(), skill_lv, tick, flag);
 }

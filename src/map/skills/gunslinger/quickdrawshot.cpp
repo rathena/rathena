@@ -9,6 +9,16 @@
 SkillQuickDrawShot::SkillQuickDrawShot() : SkillImpl(RL_QD_SHOT) {
 }
 
+void SkillQuickDrawShot::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
+	const map_session_data* sd = BL_CAST(BL_PC, &src);
+
+	dmg.div_ = 1;
+	
+	if (sd != nullptr) {
+		dmg.div_ += sd->status.job_level / 20;
+	}
+}
+
 void SkillQuickDrawShot::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	// Remember main target as it will always be hit by this skill
 	skill_area_temp[1] = target->id;

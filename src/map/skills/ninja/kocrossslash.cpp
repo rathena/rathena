@@ -13,6 +13,13 @@
 SkillKoCrossSlash::SkillKoCrossSlash() : WeaponSkillImpl(KO_JYUMONJIKIRI) {
 }
 
+void SkillKoCrossSlash::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
+	const status_change *tsc = status_get_sc(&target);
+
+	if (tsc != nullptr && tsc->hasSCE(SC_JYUMONJIKIRI))
+		dmg.div_ *= -1; // TODO: needs more info
+}
+
 void SkillKoCrossSlash::applyAdditionalEffects(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const {
 	sc_start(src,target,SC_JYUMONJIKIRI,100,skill_lv,skill_get_time(getSkillId(),skill_lv));
 }

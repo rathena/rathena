@@ -5,10 +5,24 @@
 
 #include <config/core.hpp>
 
+#include "map/battle.hpp"
 #include "map/pc.hpp"
 #include "map/status.hpp"
 
 SkillThrowSpiritSphere::SkillThrowSpiritSphere() : WeaponSkillImpl(MO_FINGEROFFENSIVE) {
+}
+
+void SkillThrowSpiritSphere::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
+	const map_session_data* sd = BL_CAST(BL_PC, &src);
+
+	if (sd != nullptr) {
+		if (battle_config.finger_offensive_type)
+			dmg.div_ = 1;
+#ifndef RENEWAL
+		else if ((sd->spiritball + sd->spiritball_old) < dmg.div_)
+			dmg.div_ = sd->spiritball + sd->spiritball_old;
+#endif
+	}
 }
 
 void SkillThrowSpiritSphere::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {

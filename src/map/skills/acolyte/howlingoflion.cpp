@@ -6,10 +6,9 @@
 #include <config/core.hpp>
 
 #include "map/clif.hpp"
-#include "map/map.hpp"
 #include "map/status.hpp"
 
-SkillHowlingOfLion::SkillHowlingOfLion() : WeaponSkillImpl(SR_HOWLINGOFLION) {
+SkillHowlingOfLion::SkillHowlingOfLion() : SkillImplRecursiveDamageSplash(SR_HOWLINGOFLION) {
 }
 
 void SkillHowlingOfLion::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
@@ -17,7 +16,7 @@ void SkillHowlingOfLion::calculateSkillRatio(const Damage *wd, const block_list 
 	RE_LVL_DMOD(100);
 }
 
-void SkillHowlingOfLion::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
+int64 SkillHowlingOfLion::splashDamage(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
 	status_change_end(target, SC_SWINGDANCE);
 	status_change_end(target, SC_SYMPHONYOFLOVER);
 	status_change_end(target, SC_MOONLITSERENADE);
@@ -39,15 +38,14 @@ void SkillHowlingOfLion::castendDamageId(block_list *src, block_list *target, ui
 	status_change_end(target, SC_UNLIMITEDHUMMINGVOICE);
 
 	int32 sflag = flag|SD_ANIMATION;
-	WeaponSkillImpl::castendDamageId(src, target, skill_lv, tick, sflag);
+	return SkillImplRecursiveDamageSplash::splashDamage(src, target, skill_lv, tick, sflag);
 }
 
 void SkillHowlingOfLion::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	int32 starget = splash_target(src);
-
-	skill_area_temp[1] = 0;
 	clif_skill_nodamage(src,*target,getSkillId(),skill_lv);
+	skill_castend_damage_id(src, target, getSkillId(), skill_lv, tick, flag);
+}
 
-	map_foreachinrange(skill_area_sub, target, skill_get_splash(getSkillId(), skill_lv), starget,
-		src, getSkillId(), skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
+int32 SkillHowlingOfLion::getSplashTarget(block_list* src) const {
+	return splash_target(src);
 }

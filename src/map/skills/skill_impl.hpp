@@ -47,6 +47,11 @@ public:
 	 */
 	virtual void applyCounterAdditionalEffects(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& attack_type) const;
 
+	/**
+	 * Allows modifying the damage data right after initialization.
+	 */
+	virtual void modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const;
+
 protected:
 	e_skill skill_id_;
 };

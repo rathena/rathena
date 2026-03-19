@@ -780,6 +780,7 @@ struct Battle_Config
 	int32 trade_count_stackable;
 	int32 enable_bonus_map_drops;
 	int32 hide_cloaked_units;
+	int32 oridecon_research_fix;
 
 #include <custom/battle_config_struct.inc>
 };

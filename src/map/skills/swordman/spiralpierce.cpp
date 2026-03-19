@@ -3,7 +3,6 @@
 
 #include "spiralpierce.hpp"
 
-#include <config/const.hpp>
 #include <config/core.hpp>
 
 #include "map/mob.hpp"
@@ -11,6 +10,13 @@
 #include "map/status.hpp"
 
 SkillSpiralPierce::SkillSpiralPierce() : WeaponSkillImpl(LK_SPIRALPIERCE) {
+}
+
+void SkillSpiralPierce::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
+	const map_session_data* sd = BL_CAST(BL_PC, &src);
+
+	if (sd == nullptr)
+		dmg.flag = (dmg.flag&~(BF_RANGEMASK|BF_WEAPONMASK))|BF_LONG|BF_MISC;
 }
 
 void SkillSpiralPierce::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {

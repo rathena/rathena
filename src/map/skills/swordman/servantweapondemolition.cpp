@@ -6,20 +6,22 @@
 #include <config/core.hpp>
 
 #include "map/clif.hpp"
-#include "map/map.hpp"
 #include "map/pc.hpp"
 #include "map/status.hpp"
 
 SkillServantWeaponDemolition::SkillServantWeaponDemolition() : SkillImplRecursiveDamageSplash(DK_SERVANT_W_DEMOL) {
 }
 
-void SkillServantWeaponDemolition::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	int32 starget = BL_CHAR|BL_SKILL;
+void SkillServantWeaponDemolition::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
+	const map_session_data* sd = BL_CAST(BL_PC, &src);
 
-	skill_area_temp[1] = 0;
+	if (sd != nullptr && (sd->servantball + sd->servantball_old) < dmg.div_)
+		dmg.div_ = sd->servantball + sd->servantball_old;
+}
+
+void SkillServantWeaponDemolition::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	clif_skill_nodamage(src,*target,getSkillId(),skill_lv);
-	map_foreachinrange(skill_area_sub, target, skill_get_splash(getSkillId(), skill_lv), starget,
-			src, getSkillId(), skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
+	skill_castend_damage_id(src, target, getSkillId(), skill_lv, tick, flag);
 }
 
 void SkillServantWeaponDemolition::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& skillratio, int32 mflag) const {
