@@ -34,3 +34,9 @@ void SkillHellInferno::castendDamageId(block_list *src, block_list *target, uint
 		map_foreachinrange(skill_area_sub, target, skill_get_splash(getSkillId(), skill_lv), BL_CHAR, src, getSkillId(), skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
 	}
 }
+
+void SkillHellInferno::modifyElement(int32& element, const block_list& src, int32 flag) const {
+	if (flag & 2) {
+		element = ELE_DARK;
+	}
+}

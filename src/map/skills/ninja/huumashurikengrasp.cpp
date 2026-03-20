@@ -29,3 +29,11 @@ void SkillHuumaShurikenGrasp::castendPos2(block_list* src, int32 x, int32 y, uin
 	// Ammo should be deleted right away.
 	skill_unitsetting(src,getSkillId(),skill_lv,x,y,0);
 }
+
+void SkillHuumaShurikenGrasp::modifyElement(int32& element, const block_list& src, int32 flag) const {
+	const map_session_data* sd = BL_CAST(BL_PC, &src);
+
+	if( sd != nullptr ){
+		element = sd->bonus.arrow_ele;
+	}
+}

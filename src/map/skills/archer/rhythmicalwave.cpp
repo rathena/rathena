@@ -40,3 +40,10 @@ void SkillRhythmicalWave::calculateSkillRatio(const Damage* wd, const block_list
 
 	RE_LVL_DMOD(100);
 }
+
+void SkillRhythmicalWave::modifyElement(int32& element, const block_list& src, int32 flag) const {
+	const map_session_data* sd = BL_CAST(BL_PC, &src);
+
+	if (sd != nullptr)
+		element = sd->bonus.arrow_ele;
+}
