@@ -9577,6 +9577,7 @@ static int32 status_get_sc_interval(enum sc_type type)
 		case SC_GRADUAL_GRAVITY:
 		case SC_KILLING_AURA:
 		case SC_BOSSMAPINFO:
+		case SC_LOCKON_LASER:
 			return 1000;
 		case SC_WINKCHARM:
 		case SC_VOICEOFSIREN:
@@ -13019,6 +13020,10 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 			val2 = 3 * val1;
 			val3 = 15000 * val1;
 			break;
+		case SC_LOCKON_LASER:
+			tick_time = status_get_sc_interval(type);
+			val4 = tick - tick_time; // Remaining time
+			break;
 
 		default:
 			if (calc_flag.none() && scdb->skill_id == 0 && scdb->icon == EFST_BLANK && scdb->opt1 == OPT1_NONE && scdb->opt2 == OPT2_NONE && scdb->state.none() && scdb->flag.none() && scdb->endonstart.empty() && scdb->endreturn.empty() && scdb->fail.empty() && scdb->endonend.empty()) {
@@ -15223,6 +15228,18 @@ TIMER_FUNC(status_change_timer){
 			}
 		}
 		break;
+
+	case SC_LOCKON_LASER: {
+		block_list* src = map_id2bl(sce->val2);
+
+		if (src == nullptr) {
+			// End the status change
+			sce->val4 = 0;
+			break;
+		}
+
+		skill_castend_damage_id(src, bl, NPC_LOCKON_LASER_ATK, sce->val1, tick, 0);
+		} break;
 	}
 
 	// If status has an interval and there is at least 100ms remaining time, wait for next interval
