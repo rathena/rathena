@@ -4348,6 +4348,14 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	base_status->eatk = sd->bonus.eatk;
 #endif
 
+	// Druid/Karnos passive bonuses affecting max HP/SP and SP recovery.
+	if (!(sc->hasSCE(SC_WEREWOLF) || sc->hasSCE(SC_WERERAPTOR)) && (skill = pc_checkskill(sd, KR_EARTH_BUD)) > 0)
+		sd->hprate += skill * 2;
+	if ((skill = pc_checkskill(sd, KR_NATURE_VIGOUR)) > 0) {
+		sd->sprate += skill * 2;
+		sd->sprecov_rate += skill * 10;
+	}
+
 // ----- HP MAX CALCULATION -----
 	base_status->max_hp = sd->status.max_hp = status_calc_maxhp_pc( *sd, base_status->vit );
 
@@ -4509,6 +4517,8 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 
 	if ((skill = pc_checkskill(sd, SU_SOULATTACK)) > 0)
 		base_status->rhw.range += skill_get_range2(sd, SU_SOULATTACK, skill, true);
+	if (sc->hasSCE(SC_WERERAPTOR) && (skill = pc_checkskill(sd, DR_SHARPE_EYES)) > 0)
+		base_status->hit += skill * 5;
 
 // ----- FLEE CALCULATION -----
 
@@ -4538,6 +4548,8 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		else if (sd->status.weapon == W_KATAR)
 			base_status->cri += 50 + skill * 20;
 	}
+	if ((skill = pc_checkskill(sd, AT_SIXTH_SENSE)) > 0)
+		base_status->cri += skill * 20;
 
 // ----- P.Atk/S.Matk CALCULATION -----
 	if ((skill = pc_checkskill(sd, TR_STAGE_MANNER)) > 0 && (sd->status.weapon == W_BOW || sd->status.weapon == W_MUSICAL || sd->status.weapon == W_WHIP)) {
@@ -4554,6 +4566,12 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		base_status->smatk += skill;
 	if (sd->status.weapon == W_BOOK && (skill = pc_checkskill(sd, SKE_WAR_BOOK_MASTERY)) > 0)
 		base_status->patk += skill+2;
+	if ((skill = pc_checkskill(sd, DR_NATURE_LOGIC)) > 0)
+		sd->bonus.ematk += 20 + skill * 5;
+	if ((skill = pc_checkskill(sd, AT_SIXTH_SENSE)) > 0)
+		base_status->patk += skill * 2;
+	if ((skill = pc_checkskill(sd, AT_NATURE_AID)) > 0)
+		base_status->smatk += skill * 4;
 
 	// 2-Handed Staff Mastery
 	if( sd->status.weapon == W_2HSTAFF && ( skill = pc_checkskill( sd, AG_TWOHANDSTAFF ) ) > 0 ){
@@ -4633,6 +4651,13 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	else if(pc_isridingdragon(sd))
 		base_status->aspd_rate += 250-50*pc_checkskill(sd,RK_DRAGONTRAINING);
 #endif
+	if (sc->hasSCE(SC_WEREWOLF) && (skill = pc_checkskill(sd, DR_BEASTY_NOSE)) > 0) {
+#ifndef RENEWAL_ASPD
+		base_status->aspd_rate -= 10 * skill;
+#else
+		base_status->aspd_rate2 += skill;
+#endif
+	}
 	base_status->adelay = AMOTION_DIVIDER_PC * base_status->amotion;
 
 
@@ -4792,6 +4817,44 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		sd->indexed_bonus.magic_atk_ele[ELE_FIRE] += skill;
 		sd->indexed_bonus.magic_atk_ele[ELE_WIND] += skill;
 		sd->indexed_bonus.magic_atk_ele[ELE_POISON] += skill;
+	}
+	if (sc->hasSCE(SC_WEREWOLF) && (skill = pc_checkskill(sd, KR_WOLF_INSTINCT)) > 0) {
+		static const int16 wolf_instinct_bonus[10][3] = {
+			{ 1, 1, 1 },
+			{ 2, 1, 1 },
+			{ 3, 3, 2 },
+			{ 4, 3, 2 },
+			{ 5, 5, 3 },
+			{ 6, 5, 3 },
+			{ 7, 7, 4 },
+			{ 8, 7, 4 },
+			{ 9, 8, 5 },
+			{ 10, 8, 5 }
+		};
+		const int32 idx = cap_value(skill, 1, 10) - 1;
+
+		pc_bonus2(sd, SP_ADDSIZE, SZ_SMALL, wolf_instinct_bonus[idx][0]);
+		pc_bonus2(sd, SP_ADDSIZE, SZ_MEDIUM, wolf_instinct_bonus[idx][1]);
+		pc_bonus2(sd, SP_ADDSIZE, SZ_BIG, wolf_instinct_bonus[idx][2]);
+	}
+	if (sc->hasSCE(SC_WERERAPTOR) && (skill = pc_checkskill(sd, KR_RAPTORIAL_INSTINCT)) > 0) {
+		static const int16 raptorial_instinct_bonus[10][3] = {
+			{ 1, 1, 1 },
+			{ 1, 1, 2 },
+			{ 2, 3, 3 },
+			{ 2, 3, 4 },
+			{ 3, 5, 5 },
+			{ 3, 5, 6 },
+			{ 4, 7, 7 },
+			{ 4, 7, 8 },
+			{ 5, 8, 9 },
+			{ 5, 8, 10 }
+		};
+		const int32 idx = cap_value(skill, 1, 10) - 1;
+
+		pc_bonus2(sd, SP_ADDSIZE, SZ_SMALL, raptorial_instinct_bonus[idx][0]);
+		pc_bonus2(sd, SP_ADDSIZE, SZ_MEDIUM, raptorial_instinct_bonus[idx][1]);
+		pc_bonus2(sd, SP_ADDSIZE, SZ_BIG, raptorial_instinct_bonus[idx][2]);
 	}
 
 	if(!sc->empty()) {
@@ -13164,6 +13227,18 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 			break;
 	}
 
+	//TODO - check if needed: workaround for correct display of SC_WEREWOLF/SC_WERERAPTOR for self in char select / char screen and for others when moving. Maybe something is missing for the transformation to work correctly without this. [munkrej]
+	int32 saved_body_style = 0;
+	bool save_body_style = false;
+	if (sd != nullptr && vd != nullptr && (type == SC_WEREWOLF || type == SC_WERERAPTOR)) {
+		if (!sc->hasSCE(type)) {
+			saved_body_style = sd->vd.look[LOOK_BODY2];
+			save_body_style = true;
+		}
+		sd->vd.look[LOOK_BODY2] = 0;
+		clif_sprite_change(bl, bl->id, LOOK_BODY2, 0, 0, AREA_WOS);
+	}
+
 	// On Aegis, when turning on a status change, first goes the option packet, then the sc packet.
 	if (!disable_opt_flag && (opt_flag[SCF_SENDOPTION] || opt_flag[SCF_ONTOUCH] || opt_flag[SCF_UNITMOVE] || opt_flag[SCF_NONPLAYER] || opt_flag[SCF_SENDLOOK])) {
 		clif_changeoption(bl);
@@ -13209,10 +13284,19 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 		// New sc
 		sce = sc->createSCE(type);
 	}
+
 	sce->val1 = val1;
 	sce->val2 = val2;
 	sce->val3 = val3;
-	sce->val4 = val4;
+
+	//TODO - check if needed: workaround for correct display of SC_WEREWOLF/SC_WERERAPTOR for self in char select / char screen and for others when moving. Maybe something is missing for the transformation to work correctly without this. [munkrej]
+	const bool preserve_body_style = (!sc_isnew && (type == SC_WEREWOLF || type == SC_WERERAPTOR));
+	if (!preserve_body_style) {
+		sce->val4 = val4;
+	}
+	if (save_body_style) {
+		sce->val4 = saved_body_style;
+	}
 	if (tick >= 0)
 		sce->timer = add_timer(gettick() + tick, status_change_timer, bl->id, type);
 	else
@@ -13537,6 +13621,22 @@ int32 status_change_end( block_list* bl, enum sc_type type, int32 tid ){
 					damage = status->hp-1;
 				status_damage(nullptr,bl,damage,0,0,1,0);
 			}
+			break;
+
+		//TODO - check if needed: workaround for correct display of SC_WEREWOLF/SC_WERERAPTOR for self in char select / char screen and for others when moving. Maybe something is missing for the transformation to work correctly without this. [munkrej]
+		case SC_WEREWOLF:
+		case SC_WERERAPTOR: {
+			int32 restore_body_style = 0;
+			if (sd != nullptr && vd != nullptr) {
+				restore_body_style = val4;
+				sd->vd.look[LOOK_BODY2] = restore_body_style;
+				clif_sprite_change(bl, bl->id, LOOK_BODY2, restore_body_style, 0, AREA_WOS);
+				clif_sprite_change(bl, bl->id, LOOK_BODY2, restore_body_style, 0, SELF);
+			}
+			if (!status_isdead(*bl)) {
+				sc_start(bl, bl, SC_TRANSFORM_DELAY, 100, 1, 3000);
+			}
+		}
 			break;
 		case SC_RUN:
 		{
