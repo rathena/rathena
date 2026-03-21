@@ -305,7 +305,7 @@ struct PACKET_HC_NOTIFY_ZONESVR{
 	uint32 ip;
 	uint16 port;
 } __attribute__((packed));
-DEFINE_PACKET_HEADER( HC_NOTIFY_ZONESVR, 0x81 );
+DEFINE_PACKET_HEADER(HC_NOTIFY_ZONESVR, 0x71);
 #endif
 
 struct PACKET_SC_NOTIFY_BAN{

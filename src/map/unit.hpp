@@ -136,7 +136,7 @@ void unit_stop_walking_soon(block_list& bl, t_tick tick = gettick());
 // Causes the target object to stop moving.
 bool unit_stop_walking( block_list* bl, int32 type, t_tick canmove_delay = 0 );
 bool unit_can_move(block_list *bl);
-int32 unit_is_walking(block_list *bl);
+int32 unit_is_walking( const block_list* bl );
 
 // Delay functions
 void unit_set_attackdelay(block_list& bl, t_tick tick, e_delay_event event);
@@ -149,20 +149,20 @@ t_tick unit_escape(block_list *bl, block_list *target, int16 dist, uint8 flag = 
 bool unit_movepos(block_list *bl, int16 dst_x, int16 dst_y, int32 easy, bool checkpath);
 int32 unit_warp(block_list *bl, int16 map, int16 x, int16 y, clr_type type);
 bool unit_setdir(block_list *bl, uint8 dir, bool send_update = true);
-uint8 unit_getdir(block_list *bl);
+uint8 unit_getdir( const block_list* bl );
 int32 unit_blown(block_list* bl, int32 dx, int32 dy, int32 count, enum e_skill_blown flag);
-enum e_unit_blown unit_blown_immune(block_list* bl, uint8 flag);
+enum e_unit_blown unit_blown_immune( const block_list* bl, uint8 flag );
 
 // Can-reach checks
-bool unit_can_reach_pos(block_list *bl,int32 x,int32 y,int32 easy);
-bool unit_can_reach_bl(block_list *bl,block_list *tbl, int32 range, int32 easy, int16 *x, int16 *y);
+bool unit_can_reach_pos( const block_list* bl, int32 x, int32 y, int32 easy );
+bool unit_can_reach_bl( const block_list* bl, const block_list* tbl, int32 range, int32 easy, int16* x, int16* y );
 
 // Unit attack functions
 int32 unit_stopattack(block_list *bl, va_list ap);
 void unit_stop_attack(block_list *bl);
 int32 unit_attack(block_list *src,int32 target_id,int32 continuous);
 int32 unit_cancel_combo(block_list *bl);
-bool unit_can_attack(block_list *bl, int32 target_id);
+bool unit_can_attack( const block_list* bl, int32 target_id );
 
 // Cast on a unit
 int32 unit_skilluse_id(block_list *src, int32 target_id, uint16 skill_id, uint16 skill_lv);
@@ -177,17 +177,18 @@ void unit_stop_stepaction(block_list *bl);
 // Cancel unit cast
 int32 unit_skillcastcancel(block_list *bl, char type);
 
-int32 unit_counttargeted(block_list *bl);
-int32 unit_set_target(struct unit_data* ud, int32 target_id);
+int32 unit_counttargeted( const block_list* bl );
+int32 unit_set_target( unit_data* ud, int32 target_id );
 
 // unit_data
-void unit_dataset(block_list *bl);
-void unit_skillunit_maxcount(unit_data& ud, uint16 skill_id, int& maxcount);
+void unit_dataset(block_list* bl);
+void unit_skillunit_maxcount( const unit_data& ud, uint16 skill_id, int& maxcount );
 
 // Remove unit
 struct unit_data* unit_bl2ud(block_list *bl);
+const unit_data* unit_bl2ud( const block_list* bl );
 void unit_remove_map_pc(map_session_data *sd, clr_type clrtype);
-void unit_refresh(block_list *bl, bool walking = false);
+void unit_refresh( const block_list* bl, bool walking = false );
 void unit_free_pc(map_session_data *sd);
 #define unit_remove_map(bl,clrtype) unit_remove_map_(bl,clrtype,__FILE__,__LINE__,__func__)
 int32 unit_remove_map_(block_list *bl, clr_type clrtype, const char* file, int32 line, const char* func);

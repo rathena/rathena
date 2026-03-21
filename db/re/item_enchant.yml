@@ -35193,6 +35193,13 @@ Body:
                 Amount: 50
               - Material: Ch1_Mana_Ring
                 Amount: 75
+          - Item: Ch01_1_Fighter
+            Price: 4000000
+            Materials:
+              - Material: Ch1_Root_Coin
+                Amount: 50
+              - Material: Ch1_Mana_Ring
+                Amount: 75
       - Slot: 2
         PerfectEnchants:
           - Item: Ch01_2_War2
@@ -35232,6 +35239,15 @@ Body:
               - Material: Frontier_M_Stone
                 Amount: 5
           - Item: Ch01_2_Assassin2
+            Price: 6000000
+            Materials:
+              - Material: Ch1_Root_Coin
+                Amount: 100
+              - Material: Ch1_Mana_Ring
+                Amount: 125
+              - Material: Frontier_M_Stone
+                Amount: 5
+          - Item: Ch01_2_Fighter2
             Price: 6000000
             Materials:
               - Material: Ch1_Root_Coin
@@ -35361,6 +35377,15 @@ Body:
                 Amount: 175
               - Material: Frontier_M_Stone
                 Amount: 15
+          - Item: Ch01_3_Hit_Attack
+            Price: 8000000
+            Materials:
+              - Material: Ch1_Root_Coin
+                Amount: 150
+              - Material: Ch1_Mana_Ring
+                Amount: 175
+              - Material: Frontier_M_Stone
+                Amount: 15
   - Id: 162
     TargetItems:
       Entwined_Boots: true
@@ -35445,6 +35470,15 @@ Body:
               - Material: Frontier_M_Stone
                 Amount: 15
           - Item: Ch01_3_Lukcy_Strike
+            Price: 8000000
+            Materials:
+              - Material: Ch1_Root_Coin
+                Amount: 150
+              - Material: Ch1_Mana_Ring
+                Amount: 175
+              - Material: Frontier_M_Stone
+                Amount: 15
+          - Item: Ch01_3_Special_Agent
             Price: 8000000
             Materials:
               - Material: Ch1_Root_Coin
@@ -35621,3 +35655,859 @@ Body:
 #                Amount: 40
 #              - Material: Frontier_M_Stone
 #                Amount: 45
+#  - Id: 164  # Skipped (some fields are not supported on rAthena for now)
+#    TargetItems:
+#      Time_DM_R_Crown_DK: true
+#      Time_DM_R_Crown_IG: true
+#      Time_DM_R_Crown_MT: true
+#      Time_DM_R_Crown_BO: true
+#      Time_DM_R_Crown_SHC: true
+#      Time_DM_R_Crown_ABC: true
+#      Time_DM_R_Crown_AG: true
+#      Time_DM_R_Crown_EM: true
+#      Time_DM_R_Crown_CD: true
+#      Time_DM_R_Crown_IQ: true
+#      Time_DM_R_Crown_WH: true
+#      Time_DM_R_Crown_TR: true
+#      Time_DM_R_Crown_SS: true
+#      Time_DM_R_Crown_NW: true
+#      Time_DM_R_Crown_SKE: true
+#      Time_DM_R_Crown_SOA: true
+#      Time_DM_R_Crown_HN: true
+#      Time_DM_R_Crown_SH: true
+#      Frontier_R_Crown_DK: true
+#      Frontier_R_Crown_IG: true
+#      Frontier_R_Crown_MT: true
+#      Frontier_R_Crown_BO: true
+#      Frontier_R_Crown_SHC: true
+#      Frontier_R_Crown_ABC: true
+#      Frontier_R_Crown_AG: true
+#      Frontier_R_Crown_EM: true
+#      Frontier_R_Crown_CD: true
+#      Frontier_R_Crown_IQ: true
+#      Frontier_R_Crown_WH: true
+#      Frontier_R_Crown_TR: true
+#      Frontier_R_Crown_SS: true
+#      Frontier_R_Crown_NW: true
+#      Frontier_R_Crown_SKE: true
+#      Frontier_R_Crown_SOA: true
+#      Frontier_R_Crown_HN: true
+#      Frontier_R_Crown_SH: true
+#    Reset:
+#      Chance: 100000
+#      Price: 1000000
+#      Materials:
+#        - Material: Zelunium
+#          Amount: 5
+#        - Material: Shadowdecon
+#          Amount: 5
+#        - Material: Ch1_Mana_Ring
+#          Amount: 15
+#    Order:
+#      - Slot: 3
+#      - Slot: 2
+#      - Slot: 1
+#    Slots:
+#      - Slot: 3
+#        Price: 500000
+#        Materials:
+#          - Material: Frontier_Magic_Dust
+#            Amount: 10
+#          - Material: Abyss_Rune
+#            Amount: 2
+#        Enchants:
+#          - Enchantgrade: 0
+#            Items:
+#              - Item: Strength2
+#                Chance: 8000
+#              - Item: Inteligence2
+#                Chance: 8000
+#              - Item: Vitality2
+#                Chance: 8000
+#              - Item: Luck2
+#                Chance: 8000
+#              - Item: Strength1
+#                Chance: 11500
+#              - Item: Inteligence1
+#                Chance: 11500
+#              - Item: Vitality1
+#                Chance: 11500
+#              - Item: Luck1
+#                Chance: 11500
+#              - Item: Strength3
+#                Chance: 3500
+#              - Item: Inteligence3
+#                Chance: 3500
+#              - Item: Vitality3
+#                Chance: 3500
+#              - Item: Luck3
+#                Chance: 3500
+#              - Item: Strength5
+#                Chance: 500
+#              - Item: Inteligence5
+#                Chance: 500
+#              - Item: Vitality5
+#                Chance: 500
+#              - Item: Luck5
+#                Chance: 500
+#              - Item: Strength4
+#                Chance: 1500
+#              - Item: Inteligence4
+#                Chance: 1500
+#              - Item: Vitality4
+#                Chance: 1500
+#              - Item: Luck4
+#                Chance: 1500
+#          - Enchantgrade: 1
+#            Items:
+#              - Item: Strength2
+#                Chance: 8000
+#              - Item: Inteligence2
+#                Chance: 8000
+#              - Item: Vitality2
+#                Chance: 8000
+#              - Item: Luck2
+#                Chance: 8000
+#              - Item: Strength1
+#                Chance: 11500
+#              - Item: Inteligence1
+#                Chance: 11500
+#              - Item: Vitality1
+#                Chance: 11500
+#              - Item: Luck1
+#                Chance: 11500
+#              - Item: Strength3
+#                Chance: 3500
+#              - Item: Inteligence3
+#                Chance: 3500
+#              - Item: Vitality3
+#                Chance: 3500
+#              - Item: Luck3
+#                Chance: 3500
+#              - Item: Strength5
+#                Chance: 500
+#              - Item: Inteligence5
+#                Chance: 500
+#              - Item: Vitality5
+#                Chance: 500
+#              - Item: Luck5
+#                Chance: 500
+#              - Item: Strength4
+#                Chance: 1500
+#              - Item: Inteligence4
+#                Chance: 1500
+#              - Item: Vitality4
+#                Chance: 1500
+#              - Item: Luck4
+#                Chance: 1500
+#          - Enchantgrade: 2
+#            Items:
+#              - Item: Strength2
+#                Chance: 8000
+#              - Item: Inteligence2
+#                Chance: 8000
+#              - Item: Vitality2
+#                Chance: 8000
+#              - Item: Luck2
+#                Chance: 8000
+#              - Item: Strength1
+#                Chance: 11500
+#              - Item: Inteligence1
+#                Chance: 11500
+#              - Item: Vitality1
+#                Chance: 11500
+#              - Item: Luck1
+#                Chance: 11500
+#              - Item: Strength3
+#                Chance: 3500
+#              - Item: Inteligence3
+#                Chance: 3500
+#              - Item: Vitality3
+#                Chance: 3500
+#              - Item: Luck3
+#                Chance: 3500
+#              - Item: Strength5
+#                Chance: 500
+#              - Item: Inteligence5
+#                Chance: 500
+#              - Item: Vitality5
+#                Chance: 500
+#              - Item: Luck5
+#                Chance: 500
+#              - Item: Strength4
+#                Chance: 1500
+#              - Item: Inteligence4
+#                Chance: 1500
+#              - Item: Vitality4
+#                Chance: 1500
+#              - Item: Luck4
+#                Chance: 1500
+#          - Enchantgrade: 3
+#            Items:
+#              - Item: Strength2
+#                Chance: 8000
+#              - Item: Inteligence2
+#                Chance: 8000
+#              - Item: Vitality2
+#                Chance: 8000
+#              - Item: Luck2
+#                Chance: 8000
+#              - Item: Strength1
+#                Chance: 11500
+#              - Item: Inteligence1
+#                Chance: 11500
+#              - Item: Vitality1
+#                Chance: 11500
+#              - Item: Luck1
+#                Chance: 11500
+#              - Item: Strength3
+#                Chance: 3500
+#              - Item: Inteligence3
+#                Chance: 3500
+#              - Item: Vitality3
+#                Chance: 3500
+#              - Item: Luck3
+#                Chance: 3500
+#              - Item: Strength5
+#                Chance: 500
+#              - Item: Inteligence5
+#                Chance: 500
+#              - Item: Vitality5
+#                Chance: 500
+#              - Item: Luck5
+#                Chance: 500
+#              - Item: Strength4
+#                Chance: 1500
+#              - Item: Inteligence4
+#                Chance: 1500
+#              - Item: Vitality4
+#                Chance: 1500
+#              - Item: Luck4
+#                Chance: 1500
+#          - Enchantgrade: 4
+#            Items:
+#              - Item: Strength2
+#                Chance: 8000
+#              - Item: Inteligence2
+#                Chance: 8000
+#              - Item: Vitality2
+#                Chance: 8000
+#              - Item: Luck2
+#                Chance: 8000
+#              - Item: Strength1
+#                Chance: 11500
+#              - Item: Inteligence1
+#                Chance: 11500
+#              - Item: Vitality1
+#                Chance: 11500
+#              - Item: Luck1
+#                Chance: 11500
+#              - Item: Strength3
+#                Chance: 3500
+#              - Item: Inteligence3
+#                Chance: 3500
+#              - Item: Vitality3
+#                Chance: 3500
+#              - Item: Luck3
+#                Chance: 3500
+#              - Item: Strength5
+#                Chance: 500
+#              - Item: Inteligence5
+#                Chance: 500
+#              - Item: Vitality5
+#                Chance: 500
+#              - Item: Luck5
+#                Chance: 500
+#              - Item: Strength4
+#                Chance: 1500
+#              - Item: Inteligence4
+#                Chance: 1500
+#              - Item: Vitality4
+#                Chance: 1500
+#              - Item: Luck4
+#                Chance: 1500
+#      - Slot: 2
+#        Price: 1500000
+#        Materials:
+#          - Material: Frontier_M_Stone
+#            Amount: 3
+#          - Material: Chaotic_Rune
+#            Amount: 3
+#          - Material: Disparate_Rune
+#        Enchants:
+#          - Enchantgrade: 0
+#            Items:
+#              - Item: T_D_Jewel_STR_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_AGI_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_DEX_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_VIT_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_INT_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_SPR_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_WIS_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_LUK_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_POW_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_CON_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_STR_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_AGI_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_DEX_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_VIT_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_INT_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_SPR_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_WIS_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_LUK_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_POW_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_CON_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_STR_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_AGI_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_DEX_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_VIT_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_INT_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_SPR_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_WIS_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_LUK_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_POW_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_CON_2
+#                Chance: 2960
+#          - Enchantgrade: 1
+#            Items:
+#              - Item: T_D_Jewel_STR_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_AGI_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_DEX_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_VIT_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_INT_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_SPR_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_WIS_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_LUK_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_POW_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_CON_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_STR_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_AGI_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_DEX_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_VIT_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_INT_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_SPR_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_WIS_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_LUK_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_POW_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_CON_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_STR_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_AGI_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_DEX_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_VIT_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_INT_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_SPR_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_WIS_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_LUK_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_POW_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_CON_2
+#                Chance: 2960
+#          - Enchantgrade: 2
+#            Items:
+#              - Item: T_D_Jewel_STR_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_AGI_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_DEX_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_VIT_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_INT_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_SPR_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_WIS_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_LUK_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_POW_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_CON_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_STR_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_AGI_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_DEX_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_VIT_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_INT_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_SPR_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_WIS_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_LUK_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_POW_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_CON_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_STR_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_AGI_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_DEX_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_VIT_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_INT_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_SPR_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_WIS_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_LUK_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_POW_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_CON_2
+#                Chance: 2960
+#          - Enchantgrade: 3
+#            Items:
+#              - Item: T_D_Jewel_STR_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_AGI_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_DEX_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_VIT_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_INT_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_SPR_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_WIS_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_LUK_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_POW_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_CON_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_STR_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_AGI_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_DEX_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_VIT_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_INT_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_SPR_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_WIS_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_LUK_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_POW_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_CON_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_STR_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_AGI_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_DEX_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_VIT_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_INT_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_SPR_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_WIS_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_LUK_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_POW_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_CON_2
+#                Chance: 2960
+#          - Enchantgrade: 4
+#            Items:
+#              - Item: T_D_Jewel_STR_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_AGI_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_DEX_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_VIT_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_INT_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_SPR_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_WIS_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_LUK_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_POW_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_CON_1
+#                Chance: 5600
+#              - Item: T_D_Jewel_STR_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_AGI_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_DEX_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_VIT_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_INT_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_SPR_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_WIS_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_LUK_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_POW_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_CON_3
+#                Chance: 1440
+#              - Item: T_D_Jewel_STR_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_AGI_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_DEX_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_VIT_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_INT_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_SPR_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_WIS_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_LUK_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_POW_2
+#                Chance: 2960
+#              - Item: T_D_Jewel_CON_2
+#                Chance: 2960
+#      - Slot: 1
+#        PerfectEnchants:
+#          - Item: Acute_Jewel_1
+#            Price: 100000000
+#            Materials:
+#              - Material: Disparate_Rune
+#                Amount: 85
+#              - Material: Chaotic_Essence
+#                Amount: 100
+#          - Item: Mettle_Jewel_1
+#            Price: 100000000
+#            Materials:
+#              - Material: Disparate_Rune
+#                Amount: 85
+#              - Material: Chaotic_Essence
+#                Amount: 100
+#          - Item: Tenacity_Jewel_1
+#            Price: 100000000
+#            Materials:
+#              - Material: Disparate_Rune
+#                Amount: 85
+#              - Material: Chaotic_Essence
+#                Amount: 100
+#          - Item: Master_A_Jewel_1
+#            Price: 100000000
+#            Materials:
+#              - Material: Disparate_Rune
+#                Amount: 85
+#              - Material: Chaotic_Essence
+#                Amount: 100
+#          - Item: Magic_E_Jewel_1
+#            Price: 100000000
+#            Materials:
+#              - Material: Disparate_Rune
+#                Amount: 85
+#              - Material: Chaotic_Essence
+#                Amount: 100
+#          - Item: Spell_Jewel_1
+#            Price: 100000000
+#            Materials:
+#              - Material: Disparate_Rune
+#                Amount: 85
+#              - Material: Chaotic_Essence
+#                Amount: 100
+#          - Item: Adamatine_Jewel_1
+#            Price: 100000000
+#            Materials:
+#              - Material: Disparate_Rune
+#                Amount: 85
+#              - Material: Chaotic_Essence
+#                Amount: 100
+#          - Item: Affection_Jewel_1
+#            Price: 100000000
+#            Materials:
+#              - Material: Disparate_Rune
+#                Amount: 85
+#              - Material: Chaotic_Essence
+#                Amount: 100
+#          - Item: Fierce_A_Jewel_1
+#            Price: 100000000
+#            Materials:
+#              - Material: Disparate_Rune
+#                Amount: 85
+#              - Material: Chaotic_Essence
+#                Amount: 100
+#          - Item: Great_C_Jewel_1
+#            Price: 100000000
+#            Materials:
+#              - Material: Disparate_Rune
+#                Amount: 85
+#              - Material: Chaotic_Essence
+#                Amount: 100
+  - Id: 165
+    TargetItems:
+      Stardust_Crown_SV: true
+      Sky_Rune_Crown_IG: true
+      Sky_Rune_Crown_ABC: true
+      Sky_Rune_Crown_SH: true
+      Stardust_Crown_SC: true
+      Stardust_Crown_VI: true
+      Sky_Rune_Crown_MS: true
+      Sky_Rune_Crown_WH: true
+      Sky_Rune_Crown_HN: true
+      Sky_Rune_Crown_CD: true
+      Sky_Rune_Crown_IQ: true
+      Sky_Rune_Crown_SKE: true
+    Reset:
+      Chance: 100000
+      Materials:
+        - Material: Enchant_Ticket
+    Order:
+      - Slot: 3
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Mettle_Jewel_1
+            Price: 30000000
+            Materials:
+              - Material: Enchant_Ticket
+                Amount: 2
+          - Item: Acute_Jewel_1
+            Price: 30000000
+            Materials:
+              - Material: Enchant_Ticket
+                Amount: 2
+          - Item: Tenacity_Jewel_1
+            Price: 30000000
+            Materials:
+              - Material: Enchant_Ticket
+                Amount: 2
+          - Item: Master_A_Jewel_1
+            Price: 30000000
+            Materials:
+              - Material: Enchant_Ticket
+                Amount: 2
+          - Item: Magic_E_Jewel_1
+            Price: 30000000
+            Materials:
+              - Material: Enchant_Ticket
+                Amount: 2
+          - Item: Spell_Jewel_1
+            Price: 30000000
+            Materials:
+              - Material: Enchant_Ticket
+                Amount: 2
+          - Item: Adamatine_Jewel_1
+            Price: 30000000
+            Materials:
+              - Material: Enchant_Ticket
+                Amount: 2
+          - Item: Affection_Jewel_1
+            Price: 30000000
+            Materials:
+              - Material: Enchant_Ticket
+                Amount: 2
+          - Item: Fierce_A_Jewel_1
+            Price: 30000000
+            Materials:
+              - Material: Enchant_Ticket
+                Amount: 2
+          - Item: Great_C_Jewel_1
+            Price: 30000000
+            Materials:
+              - Material: Enchant_Ticket
+                Amount: 2
+        Upgrades:
+          - Enchant: Mettle_Jewel_1
+            Upgrade: Mettle_Jewel_2
+            Price: 30000000
+            Materials:
+              - Material: Enchant_Ticket
+                Amount: 3
+          - Enchant: Acute_Jewel_1
+            Upgrade: Acute_Jewel_2
+            Price: 30000000
+            Materials:
+              - Material: Enchant_Ticket
+                Amount: 3
+          - Enchant: Tenacity_Jewel_1
+            Upgrade: Tenacity_Jewel_2
+            Price: 30000000
+            Materials:
+              - Material: Enchant_Ticket
+                Amount: 3
+          - Enchant: Master_A_Jewel_1
+            Upgrade: Master_A_Jewel_2
+            Price: 30000000
+            Materials:
+              - Material: Enchant_Ticket
+                Amount: 3
+          - Enchant: Magic_E_Jewel_1
+            Upgrade: Magic_E_Jewel_2
+            Price: 30000000
+            Materials:
+              - Material: Enchant_Ticket
+                Amount: 3
+          - Enchant: Spell_Jewel_1
+            Upgrade: Spell_Jewel_2
+            Price: 30000000
+            Materials:
+              - Material: Enchant_Ticket
+                Amount: 3
+          - Enchant: Adamatine_Jewel_1
+            Upgrade: Adamatine_Jewel_2
+            Price: 30000000
+            Materials:
+              - Material: Enchant_Ticket
+                Amount: 3
+          - Enchant: Affection_Jewel_1
+            Upgrade: Affection_Jewel_2
+            Price: 30000000
+            Materials:
+              - Material: Enchant_Ticket
+                Amount: 3
+          - Enchant: Fierce_A_Jewel_1
+            Upgrade: Fierce_A_Jewel_2
+            Price: 30000000
+            Materials:
+              - Material: Enchant_Ticket
+                Amount: 3
+          - Enchant: Great_C_Jewel_1
+            Upgrade: Great_C_Jewel_2
+            Price: 30000000
+            Materials:
+              - Material: Enchant_Ticket
+                Amount: 3
+          - Enchant: Mettle_Jewel_2
+            Upgrade: Mettle_Jewel_3
+            Price: 40000000
+            Materials:
+              - Material: Enchant_Ticket
+                Amount: 4
+          - Enchant: Acute_Jewel_2
+            Upgrade: Acute_Jewel_3
+            Price: 40000000
+            Materials:
+              - Material: Enchant_Ticket
+                Amount: 4
+          - Enchant: Tenacity_Jewel_2
+            Upgrade: Tenacity_Jewel_3
+            Price: 40000000
+            Materials:
+              - Material: Enchant_Ticket
+                Amount: 4
+          - Enchant: Master_A_Jewel_2
+            Upgrade: Master_A_Jewel_3
+            Price: 40000000
+            Materials:
+              - Material: Enchant_Ticket
+                Amount: 4
+          - Enchant: Magic_E_Jewel_2
+            Upgrade: Magic_E_Jewel_3
+            Price: 40000000
+            Materials:
+              - Material: Enchant_Ticket
+                Amount: 4
+          - Enchant: Spell_Jewel_2
+            Upgrade: Spell_Jewel_3
+            Price: 40000000
+            Materials:
+              - Material: Enchant_Ticket
+                Amount: 4
+          - Enchant: Adamatine_Jewel_2
+            Upgrade: Adamatine_Jewel_3
+            Price: 40000000
+            Materials:
+              - Material: Enchant_Ticket
+                Amount: 4
+          - Enchant: Affection_Jewel_2
+            Upgrade: Affection_Jewel_3
+            Price: 40000000
+            Materials:
+              - Material: Enchant_Ticket
+                Amount: 4
+          - Enchant: Fierce_A_Jewel_2
+            Upgrade: Fierce_A_Jewel_3
+            Price: 40000000
+            Materials:
+              - Material: Enchant_Ticket
+                Amount: 4
+          - Enchant: Great_C_Jewel_2
+            Upgrade: Great_C_Jewel_3
+            Price: 40000000
+            Materials:
+              - Material: Enchant_Ticket
+                Amount: 4

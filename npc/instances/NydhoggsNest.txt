@@ -1849,7 +1849,7 @@ OnTouch:
 }
 
 2@nyd,199,268,0	script	nyd_2f_boss_enter	-1,8,8,{
-OnTouch_:
+OnTouch:	// !Fix me: official script uses OnTouch_
 	if (is_party_leader() == true) {
 		donpcevent instance_npcname("nyd_2f_boss_enter_call")+"::OnEnable";
 		disablenpc instance_npcname("nyd_2f_boss_enter");

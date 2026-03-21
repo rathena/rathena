@@ -31,12 +31,13 @@
 #                              To remove an item via import set amount to 0.
 #           RentalHours        Rental time in hours. (Default: 0)
 #           Refine             Refine level of the item. (Default: 0)
+#           Grade              Grade level of the item. (None, D, C, B or A. Default: None)
 #           RandomOptionGroup  Name of the random option group that will be applied. (Default: none)
 ###########################################################################
 
 Header:
   Type: ITEM_PACKAGE_DB
-  Version: 1
+  Version: 2
 
 Footer:
   Imports:

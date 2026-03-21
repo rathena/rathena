@@ -934,7 +934,7 @@ void* db_data2ptr(DBData *data);
  * @return Integer(64-bit signed) value of the data.
  * @public
  */
-int64 db_data2i64(DBData *data);
+int64 db_data2i64( const DBData* data );
 
 /**
  * Initialize the database system.

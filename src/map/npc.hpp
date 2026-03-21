@@ -1639,8 +1639,8 @@ npc_data* npc_duplicate_npc_for_player( npc_data& nd, map_session_data& sd );
 void npc_setcells(npc_data* nd);
 void npc_unsetcells(npc_data* nd);
 bool npc_movenpc(npc_data* nd, int16 x, int16 y);
-bool npc_is_cloaked(npc_data* nd, map_session_data* sd);
-bool npc_is_hidden_dynamicnpc( npc_data& nd, map_session_data& tsd );
+bool npc_is_cloaked( const npc_data* nd, const map_session_data* sd);
+bool npc_is_hidden_dynamicnpc( const npc_data& nd, const map_session_data& tsd );
 bool npc_enable_target(npc_data& nd, uint32 char_id, e_npcv_status flag);
 #define npc_enable(nd, flag) npc_enable_target(nd, 0, flag)
 void npc_setdisplayname(npc_data* nd, const char* newname);
@@ -1683,12 +1683,12 @@ int32 npc_instanceinit(npc_data* nd);
 int32 npc_instancedestroy(npc_data* nd);
 int32 npc_cashshop_buy(map_session_data *sd, t_itemid nameid, int32 amount, int32 points);
 
-void npc_shop_currency_type(map_session_data *sd, npc_data *nd, int32 cost[2], bool display);
+void npc_shop_currency_type( const map_session_data* sd, const npc_data* nd, int32 cost[2], bool display );
 
 extern npc_data* fake_nd;
 
 int32 npc_cashshop_buylist( map_session_data *sd, int32 points, std::vector<s_npc_buy_list>& item_list );
-bool npc_shop_discount(npc_data* nd);
+bool npc_shop_discount(const npc_data* nd);
 
 #if PACKETVER >= 20131223
 void npc_market_tosql(const char *exname, struct npc_item_list *list);

@@ -2777,7 +2777,7 @@ void* db_data2ptr(DBData *data)
  * @return Integer(64-bit signed) value of the data.
  * @public
  */
-int64 db_data2i64(DBData *data)
+int64 db_data2i64( const DBData* data )
 {
 	DB_COUNTSTAT(db_data2i64);
 	if (data && DB_DATA_I64 == data->type)

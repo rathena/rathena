@@ -451,6 +451,10 @@ map_session_data* bg_getavailablesd(s_battleground_data *bg)
 	return nullptr;
 }
 
+const map_session_data* bg_getavailablesd( const s_battleground_data* bg ){
+	return bg_getavailablesd(const_cast<s_battleground_data*>(bg));
+}
+
 /**
  * Delete a Battleground team from the db
  * @param bg_id: Battleground ID
@@ -679,36 +683,38 @@ int32 bg_create(uint16 mapindex, s_battleground_team* team)
  * @param bl: Object
  * @return Battleground ID
  */
-int32 bg_team_get_id(block_list *bl)
+int32 bg_team_get_id( const block_list* bl )
 {
 	nullpo_ret(bl);
 
 	switch( bl->type ) {
 		case BL_PC:
-			return ((TBL_PC*)bl)->bg_id;
+			return static_cast<const map_session_data*>(bl)->bg_id;
 		case BL_PET:
-			if( ((TBL_PET*)bl)->master )
-				return ((TBL_PET*)bl)->master->bg_id;
+			if(const pet_data* pd = static_cast<const pet_data*>(bl); pd->master != nullptr)
+				return pd->master->bg_id;
 			break;
 		case BL_MOB: {
-			map_session_data *msd;
-			mob_data *md = (TBL_MOB*)bl;
-
-			if( md->special_state.ai && (msd = map_id2sd(md->master_id)) != nullptr )
-				return msd->bg_id;
-
+			const mob_data* md = static_cast<const mob_data*>(bl);
+			if( md->special_state.ai && md->master_id != 0 ){
+				if( const block_list* mbl = map_id2bl( md->master_id ); mbl != nullptr ){
+					return bg_team_get_id( mbl );
+				}
+			}
 			return md->bg_id;
 		}
 		case BL_HOM:
-			if( ((TBL_HOM*)bl)->master )
-				return ((TBL_HOM*)bl)->master->bg_id;
+			if(const homun_data* hd = static_cast<const homun_data*>(bl); hd->master != nullptr)
+				return hd->master->bg_id;
 			break;
 		case BL_MER:
-			if( ((TBL_MER*)bl)->master )
-				return ((TBL_MER*)bl)->master->bg_id;
+			if(const s_mercenary_data* md = static_cast<const s_mercenary_data*>(bl); md->master != nullptr )
+				return md->master->bg_id;
 			break;
 		case BL_SKILL:
-			return ((TBL_SKILL*)bl)->group->bg_id;
+			if(const skill_unit* su = static_cast<const skill_unit*>(bl); su->group != nullptr)
+				return su->group->bg_id;
+			break;
 	}
 
 	return 0;
@@ -720,7 +726,7 @@ int32 bg_team_get_id(block_list *bl)
  * @param mes: Message
  * @param len: Message length
  */
-void bg_send_message(map_session_data *sd, const char *mes, size_t len)
+void bg_send_message( const map_session_data* sd, const char *mes, size_t len )
 {
 	nullpo_retv(sd);
 
@@ -860,7 +866,7 @@ static TIMER_FUNC(bg_on_ready_start)
  * @param sd: Player data
  * @return True if in a battleground or false otherwise
  */
-bool bg_player_is_in_bg_map(map_session_data *sd)
+bool bg_player_is_in_bg_map( const map_session_data* sd )
 {
 	nullpo_retr(false, sd);
 

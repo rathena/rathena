@@ -1291,7 +1291,7 @@ bool chclif_parse_createnewchar( int32 fd, struct char_session_data& sd ){
 	dex = 1;
 	luk = 1;
 	start_job = JOB_NOVICE;
-	sex = sd->sex;
+	sex = sd.sex;
 #else
 	// Sent values
 	str = p->str;
@@ -1303,7 +1303,7 @@ bool chclif_parse_createnewchar( int32 fd, struct char_session_data& sd ){
 
 	// Default values
 	start_job = JOB_NOVICE;
-	sex = sd->sex;
+	sex = sd.sex;
 #endif
 
 	int char_id = char_make_new_char( &sd, name, str, agi, vit, int_, dex, luk, slot, hair_color, hair_style, start_job, sex );

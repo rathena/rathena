@@ -1,0 +1,19 @@
+###########################################################################
+# Item Package Database
+###########################################################################
+#
+# Item Package Settings
+#
+###########################################################################
+# - Item                       Item that triggers Item Package Selection.
+#   Groups:                    Groups that can be selected.
+#     - Group                  Group ID that can be selected (has to match the client's LUA file).
+#       Items:                 Items that will be given out.
+#         - Item               Item that will be given out.
+#           Amount             Amount of the item. (Default: 1)
+#                              To remove an item via import set amount to 0.
+#           RentalHours        Rental time in hours. (Default: 0)
+#           Refine             Refine level of the item. (Default: 0)
+#           Grade              Grade level of the item. (None, D, C, B or A. Default: None)
+#           RandomOptionGroup  Name of the random option group that will be applied. (Default: none)
+###########################################################################

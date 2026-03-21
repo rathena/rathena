@@ -2872,6 +2872,29 @@ uint64 ItemPackageDatabase::parseBodyNode( const ryml::NodeRef& node ){
 					}
 				}
 
+				if (this->nodeExists(itemNode, "Grade")) {
+					std::string enchantgrade;
+
+					if (!this->asString(itemNode, "Grade", enchantgrade)) {
+						return 0;
+					}
+
+					std::string grade_constant = "ENCHANTGRADE_" + enchantgrade;
+					int64 constant;
+
+					if (!script_get_constant(grade_constant.c_str(), &constant) || constant < ENCHANTGRADE_NONE ||	constant > MAX_ENCHANTGRADE) {
+						this->invalidWarning(itemNode["Grade"], "Invalid enchantgrade %s, defaulting to None.\n", enchantgrade.c_str());
+						constant = ENCHANTGRADE_NONE;
+					}
+
+					package_item->grade = static_cast<decltype(package_item->grade)>(constant);
+				}
+				else {
+					if (!package_item_exists) {
+						package_item->grade = static_cast<decltype(package_item->grade)>(ENCHANTGRADE_NONE);
+					}
+				}
+
 				if( !package_item_exists ){
 					group->items[package_item->item_id] = package_item;
 				}
@@ -3181,7 +3204,7 @@ static void itemdb_jobid2mapid(uint64 bclass[3], e_mapid jobmask, bool active)
 
 	if (jobmask != MAPID_ALL) {
 		// Calculate the required bit to set
-		uint64 job = 1ULL << ( jobmask & MAPID_BASEMASK );
+		uint64 job = 1ULL << ( jobmask & MAPID_FIRSTMASK );
 
 		// 2-1
 		if( ( jobmask & JOBL_2_1 ) != 0 ){
@@ -3227,7 +3250,7 @@ struct item_data* itemdb_search(t_itemid nameid) {
 * @param id Item data
 * @return True if item is equip, false otherwise
 */
-bool itemdb_isequip2(struct item_data *id) {
+bool itemdb_isequip2( const item_data *id ) {
 	nullpo_ret(id);
 	switch (id->type) {
 		case IT_WEAPON:
@@ -3244,7 +3267,7 @@ bool itemdb_isequip2(struct item_data *id) {
 * @param id Item data
 * @return True if item is stackable, false otherwise
 */
-bool itemdb_isstackable2(struct item_data *id)
+bool itemdb_isstackable2( const item_data *id )
 {
 	nullpo_ret(id);
 	return id->isStackable();
@@ -3253,45 +3276,45 @@ bool itemdb_isstackable2(struct item_data *id)
 /*==========================================
  * Trade Restriction functions [Skotlex]
  *------------------------------------------*/
-bool itemdb_isdropable_sub(struct item_data *item, int32 gmlv, int32 unused) {
+bool itemdb_isdropable_sub( const item_data *item, int32 gmlv, int32 unused ) {
 	return (item && (!(item->flag.trade_restriction.drop) || gmlv >= item->gm_lv_trade_override));
 }
 
-bool itemdb_cantrade_sub(struct item_data* item, int32 gmlv, int32 gmlv2) {
+bool itemdb_cantrade_sub( const item_data* item, int32 gmlv, int32 gmlv2 ) {
 	return (item && (!(item->flag.trade_restriction.trade) || gmlv >= item->gm_lv_trade_override || gmlv2 >= item->gm_lv_trade_override));
 }
 
-bool itemdb_canpartnertrade_sub(struct item_data* item, int32 gmlv, int32 gmlv2) {
+bool itemdb_canpartnertrade_sub( const item_data* item, int32 gmlv, int32 gmlv2 ) {
 	return (item && (item->flag.trade_restriction.trade_partner || gmlv >= item->gm_lv_trade_override || gmlv2 >= item->gm_lv_trade_override));
 }
 
-bool itemdb_cansell_sub(struct item_data* item, int32 gmlv, int32 unused) {
+bool itemdb_cansell_sub( const item_data* item, int32 gmlv, int32 unused ) {
 	return (item && (!(item->flag.trade_restriction.sell) || gmlv >= item->gm_lv_trade_override));
 }
 
-bool itemdb_cancartstore_sub(struct item_data* item, int32 gmlv, int32 unused) {
+bool itemdb_cancartstore_sub( const item_data* item, int32 gmlv, int32 unused ) {
 	return (item && (!(item->flag.trade_restriction.cart) || gmlv >= item->gm_lv_trade_override));
 }
 
-bool itemdb_canstore_sub(struct item_data* item, int32 gmlv, int32 unused) {
+bool itemdb_canstore_sub( const item_data* item, int32 gmlv, int32 unused ) {
 	return (item && (!(item->flag.trade_restriction.storage) || gmlv >= item->gm_lv_trade_override));
 }
 
-bool itemdb_canguildstore_sub(struct item_data* item, int32 gmlv, int32 unused) {
+bool itemdb_canguildstore_sub( const item_data* item, int32 gmlv, int32 unused ) {
 	return (item && (!(item->flag.trade_restriction.guild_storage) || gmlv >= item->gm_lv_trade_override));
 }
 
-bool itemdb_canmail_sub(struct item_data* item, int32 gmlv, int32 unused) {
+bool itemdb_canmail_sub( const item_data* item, int32 gmlv, int32 unused ) {
 	return (item && (!(item->flag.trade_restriction.mail) || gmlv >= item->gm_lv_trade_override));
 }
 
-bool itemdb_canauction_sub(struct item_data* item, int32 gmlv, int32 unused) {
+bool itemdb_canauction_sub( const item_data* item, int32 gmlv, int32 unused ) {
 	return (item && (!(item->flag.trade_restriction.auction) || gmlv >= item->gm_lv_trade_override));
 }
 
-bool itemdb_isrestricted(struct item* item, int32 gmlv, int32 gmlv2, bool (*func)(struct item_data*, int32, int32))
+bool itemdb_isrestricted( const item* item, int32 gmlv, int32 gmlv2, bool (*func)(const item_data*, int32, int32) )
 {
-	struct item_data* item_data = itemdb_search(item->nameid);
+	const item_data* item_data = itemdb_search(item->nameid);
 	int32 i;
 
 	if (!func(item_data, gmlv, gmlv2))
@@ -3308,7 +3331,7 @@ bool itemdb_isrestricted(struct item* item, int32 gmlv, int32 gmlv2, bool (*func
 	return true;
 }
 
-bool itemdb_ishatched_egg(struct item* item) {
+bool itemdb_ishatched_egg( const item* item ) {
 	if (item && item->card[0] == CARD0_PET && item->attribute == 1)
 		return true;
 	return false;
@@ -3658,10 +3681,10 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 					}
 				}
 
-				if (this->nodeExists(listit, "MinimumEnchantgrade")) {
+				if (this->nodeExists(listit, "GradeMinimum")) {
 					std::string enchantgrade;
 
-					if (!this->asString(listit, "MinimumEnchantgrade", enchantgrade)) {
+					if (!this->asString(listit, "GradeMinimum", enchantgrade)) {
 						return 0;
 					}
 
@@ -3669,7 +3692,7 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 					int64 constant;
 
 					if (!script_get_constant(grade_constant.c_str(), &constant) || constant < ENCHANTGRADE_NONE || constant > MAX_ENCHANTGRADE) {
-						this->invalidWarning(listit["MinimumEnchantgrade"], "Invalid enchantgrade %s, defaulting to None.\n", enchantgrade.c_str());
+						this->invalidWarning(listit["GradeMinimum"], "Invalid enchantgrade %s, defaulting to None.\n", enchantgrade.c_str());
 						constant = ENCHANTGRADE_NONE;
 					}
 
@@ -3681,10 +3704,10 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 					}
 				}
 
-				if (this->nodeExists(listit, "MaximumEnchantgrade")) {
+				if (this->nodeExists(listit, "GradeMaximum")) {
 					std::string enchantgrade;
 
-					if (!this->asString(listit, "MaximumEnchantgrade", enchantgrade)) {
+					if (!this->asString(listit, "GradeMaximum", enchantgrade)) {
 						return 0;
 					}
 
@@ -3692,7 +3715,7 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 					int64 constant;
 
 					if (!script_get_constant(grade_constant.c_str(), &constant) || constant < ENCHANTGRADE_NONE || constant > MAX_ENCHANTGRADE) {
-						this->invalidWarning(listit["MaximumEnchantgrade"], "Invalid enchantgrade %s, defaulting to None.\n", enchantgrade.c_str());
+						this->invalidWarning(listit["GradeMaximum"], "Invalid enchantgrade %s, defaulting to None.\n", enchantgrade.c_str());
 						constant = ENCHANTGRADE_NONE;
 					}
 
@@ -4416,7 +4439,7 @@ static int32 itemdb_read_sqldb(void) {
 * @param m Map ID
 * @return true: can't be used; false: can be used
 */
-bool itemdb_isNoEquip(struct item_data *id, uint16 m) {
+bool itemdb_isNoEquip( const item_data *id, uint16 m ) {
 	if (!id->flag.no_equip)
 		return false;
 	
@@ -4906,8 +4929,7 @@ static void itemdb_read(void) {
  * Initialize / Finalize
  *------------------------------------------*/
 
-bool item_data::isStackable()
-{
+bool item_data::isStackable() const{
 	switch (this->type) {
 		case IT_WEAPON:
 		case IT_ARMOR:

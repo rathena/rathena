@@ -96,6 +96,10 @@ struct unit_data* unit_bl2ud(block_list *bl)
 	}
 }
 
+const unit_data* unit_bl2ud( const block_list* bl ){
+	return unit_bl2ud(const_cast<block_list*>(bl));
+}
+
 /**
  * Updates chase depending on situation:
  * If target in attack range -> attack
@@ -1269,9 +1273,9 @@ bool unit_setdir(block_list *bl, uint8 dir, bool send_update)
  * @param bl: Object to get direction
  * @return direction (0-7)
  */
-uint8 unit_getdir(block_list *bl)
+uint8 unit_getdir(const block_list* bl)
 {
-	struct unit_data *ud;
+	const struct unit_data *ud;
 
 	nullpo_ret(bl);
 
@@ -1369,7 +1373,7 @@ int32 unit_blown(block_list* bl, int32 dx, int32 dy, int32 count, enum e_skill_b
  *		UB_TARGET_NO_KNOCKBACK - target has 'special_state.no_knockback'
  *		UB_TARGET_TRAP - target is trap that cannot be knocked back
  */
-enum e_unit_blown unit_blown_immune(block_list* bl, uint8 flag)
+enum e_unit_blown unit_blown_immune(const block_list* bl, uint8 flag)
 {
 	if ((flag&0x1)
 		&& (map_flag_gvg2(bl->m) || map_getmapflag(bl->m, MF_BATTLEGROUND))
@@ -1384,7 +1388,7 @@ enum e_unit_blown unit_blown_immune(block_list* bl, uint8 flag)
 				return UB_MD_KNOCKBACK_IMMUNE;
 			break;
 		case BL_PC: {
-				map_session_data *sd = BL_CAST(BL_PC, bl);
+				const map_session_data* sd = static_cast<const map_session_data*>(bl);
 
 #ifndef RENEWAL
 				// Basilica caster can't be knocked-back by normal monsters.
@@ -1397,7 +1401,7 @@ enum e_unit_blown unit_blown_immune(block_list* bl, uint8 flag)
 			}
 			break;
 		case BL_SKILL: {
-				skill_unit* su = (skill_unit *)bl;
+				const skill_unit* su = static_cast<const skill_unit*>(bl);
 				// Trap cannot be knocked back
 				if (su && su->group && skill_get_unit_flag(su->group->skill_id, UF_NOKNOCKBACK))
 					return UB_TARGET_TRAP;
@@ -1772,9 +1776,9 @@ int32 unit_skilluse_id(block_list *src, int32 target_id, uint16 skill_id, uint16
  * @param bl: Object to check walk status
  * @return Walking(1); Not Walking(0)
  */
-int32 unit_is_walking(block_list *bl)
+int32 unit_is_walking(const block_list* bl)
 {
-	struct unit_data *ud = unit_bl2ud(bl);
+	const unit_data* ud = unit_bl2ud(bl);
 
 	nullpo_ret(bl);
 
@@ -2775,7 +2779,7 @@ int32 unit_skilluse_pos2( block_list *src, int16 skill_x, int16 skill_y, uint16 
  * @param target_id: Target ID (bl->id)
  * @return 0
  */
-int32 unit_set_target(struct unit_data* ud, int32 target_id)
+int32 unit_set_target( unit_data* ud, int32 target_id )
 {
 	nullpo_ret(ud);
 
@@ -3017,7 +3021,7 @@ int32 unit_cancel_combo(block_list *bl)
  * @param easy: Easy(1) or Hard(0) path check (hard attempts to go around obstacles)
  * @return true or false
  */
-bool unit_can_reach_pos(block_list *bl,int32 x,int32 y, int32 easy)
+bool unit_can_reach_pos( const block_list* bl, int32 x, int32 y, int32 easy )
 {
 	nullpo_retr(false, bl);
 
@@ -3037,7 +3041,7 @@ bool unit_can_reach_pos(block_list *bl,int32 x,int32 y, int32 easy)
  * @param y: Pointer storing a valid Y coordinate around tbl that can be reached
  * @return true or false
  */
-bool unit_can_reach_bl(block_list *bl,block_list *tbl, int32 range, int32 easy, int16 *x, int16 *y)
+bool unit_can_reach_bl( const block_list* bl, const block_list* tbl, int32 range, int32 easy, int16* x, int16* y )
 {
 	struct walkpath_data wpd;
 	int16 dx, dy;
@@ -3369,17 +3373,17 @@ static TIMER_FUNC(unit_attack_timer){
  * Called from unit_attack and unit_attack_timer_sub
  * @retval true Can attack
  **/
-bool unit_can_attack(block_list *bl, int32 target_id) {
+bool unit_can_attack( const block_list* bl, int32 target_id ) {
 	nullpo_retr(false, bl);
 
 	if (bl->type == BL_PC) {
-		map_session_data *sd = ((TBL_PC *)bl);
+		const map_session_data* sd = static_cast<const map_session_data*>(bl);
 
 		if (sd && ((sd->state.block_action & PCBLOCK_ATTACK) || pc_isridingwug(sd)))
 			return false;
 	}
 
-	status_change *sc;
+	const status_change *sc;
 
 	if (!(sc = status_get_sc(bl)))
 		return true;
@@ -3497,7 +3501,7 @@ void unit_dataset(block_list *bl)
  * @param skill_id: Skill to search for
  * @param maxcount: Maximum amount of placeable units
  */
-void unit_skillunit_maxcount(unit_data& ud, uint16 skill_id, int& maxcount) {
+void unit_skillunit_maxcount( const unit_data& ud, uint16 skill_id, int& maxcount ) {
 	for (const auto su : ud.skillunits) {
 		if (su->skill_id == skill_id && --maxcount == 0 )
 			break;
@@ -3509,11 +3513,10 @@ void unit_skillunit_maxcount(unit_data& ud, uint16 skill_id, int& maxcount) {
  * @param bl: Object to check amount of targets
  * @return number of targets or 0
  */
-int32 unit_counttargeted(block_list* bl)
-{
-	struct unit_data* ud;
+int32 unit_counttargeted( const block_list* bl ) {
+	const unit_data* ud = unit_bl2ud(bl);
 
-	if( bl && (ud = unit_bl2ud(bl)) )
+	if( ud != nullptr )
 		return ud->target_count;
 
 	return 0;
@@ -3835,13 +3838,13 @@ int32 unit_remove_map_(block_list *bl, clr_type clrtype, const char* file, int32
  * Refresh the area with a change in display of a unit.
  * @bl: Object to update
  */
-void unit_refresh(block_list *bl, bool walking) {
+void unit_refresh( const block_list* bl, bool walking ) {
 	nullpo_retv(bl);
 
 	if (bl->m < 0)
 		return;
 
-	struct map_data *mapdata = map_getmapdata(bl->m);
+	map_data *mapdata = map_getmapdata(bl->m);
 
 	// Using CLR_TRICKDEAD because other flags show effects
 	// Probably need to use another flag or other way to refresh it
