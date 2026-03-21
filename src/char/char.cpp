@@ -9,8 +9,6 @@
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
-#include <memory>
-#include <unordered_map>
 
 #include <common/cbasetypes.hpp>
 #include <common/cli.hpp>
@@ -48,6 +46,7 @@ using namespace rathena::server_character;
 int32 login_fd=-1; //login file descriptor
 int32 char_fd=-1; //char file descriptor
 struct Schema_Config schema_config;
+struct Log_Schema_Config log_schema_config;
 struct CharServ_Config charserv_config;
 struct mmo_map_server map_server[MAX_MAP_SERVERS];
 //Custom limits for the fame lists. [Skotlex]
@@ -466,14 +465,14 @@ int32 char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 
 	if(diff == 1)
 	{	//Save friends
-		if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id`='%d'", schema_config.friend_db, char_id) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id`='%d'", schema_config.friends_db, char_id) )
 		{
 			Sql_ShowDebug(sql_handle);
 			errors++;
 		}
 
 		StringBuf_Clear(&buf);
-		StringBuf_Printf(&buf, "INSERT INTO `%s` (`char_id`, `friend_id`) VALUES ", schema_config.friend_db);
+		StringBuf_Printf(&buf, "INSERT INTO `%s` (`char_id`, `friend_id`) VALUES ", schema_config.friends_db);
 		for( i = 0, count = 0; i < MAX_FRIENDS; ++i )
 		{
 			if( p->friends[i].char_id > 0 )
@@ -547,7 +546,7 @@ int32 char_memitemdata_to_sql(const struct item items[], int32 max, int32 id, en
 			break;
 		case TABLE_CART:
 			printname = "Cart";
-			tablename = schema_config.cart_db;
+			tablename = schema_config.cart_inventory_db;
 			selectoption = "char_id";
 			break;
 		case TABLE_STORAGE: {
@@ -765,7 +764,7 @@ bool char_memitemdata_from_sql(struct s_storage* p, int32 max, int32 id, enum st
 			break;
 		case TABLE_CART:
 			printname = "Cart";
-			tablename = schema_config.cart_db;
+			tablename = schema_config.cart_inventory_db;
 			selectoption = "char_id";
 			storage = p->u.items_cart;
 			max2 = MAX_CART;
@@ -1190,7 +1189,7 @@ int32 char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_
 
 	//read friends
 	//`friends` (`char_id`, `friend_id`)
-	if( SQL_ERROR == stmt.Prepare("SELECT c.`account_id`, c.`char_id`, c.`name` FROM `%s` c LEFT JOIN `%s` f ON f.`friend_id` = c.`char_id` WHERE f.`char_id`=? LIMIT %d", schema_config.char_db, schema_config.friend_db, MAX_FRIENDS)
+	if( SQL_ERROR == stmt.Prepare("SELECT c.`account_id`, c.`char_id`, c.`name` FROM `%s` c LEFT JOIN `%s` f ON f.`friend_id` = c.`char_id` WHERE f.`char_id`=? LIMIT %d", schema_config.char_db, schema_config.friends_db, MAX_FRIENDS)
 	||	SQL_ERROR == stmt.BindParam(0, SQLDT_INT32, &char_id, 0)
 	||	SQL_ERROR == stmt.Execute()
 	||	SQL_ERROR == stmt.BindColumn(0, SQLDT_INT32,    &tmp_friend.account_id, 0, nullptr, nullptr)
@@ -1322,9 +1321,9 @@ int32 char_rename_char_sql(struct char_session_data *sd, uint32 char_id)
 	// log change
 	if( charserv_config.log_char )
 	{
-		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`time`, `char_msg`,`account_id`,`char_num`,`name`,`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hair`,`hair_color`)"
+		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s`.`%s` (`time`, `char_msg`,`account_id`,`char_num`,`name`,`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hair`,`hair_color`)"
 			"VALUES (NOW(), '%s', '%d', '%d', '%s', '0', '0', '0', '0', '0', '0', '0', '0')",
-			schema_config.charlog_db, "change char name", sd->account_id, char_dat.slot, esc_name) )
+			log_db_database.c_str(), log_schema_config.charlog_db, "change char name", sd->account_id, char_dat.slot, esc_name) )
 			Sql_ShowDebug(sql_handle);
 	}
 
@@ -1479,9 +1478,9 @@ int32 char_make_new_char( struct char_session_data* sd, char* name_, int32 str, 
 
 	// validation success, log result
 	if (charserv_config.log_char) {
-		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`time`, `char_msg`,`account_id`,`char_num`,`name`,`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hair`,`hair_color`)"
+		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s`.`%s` (`time`, `char_msg`,`account_id`,`char_num`,`name`,`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hair`,`hair_color`)"
 			"VALUES (NOW(), '%s', '%d', '%d', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
-			schema_config.charlog_db, "make new char", sd->account_id, slot, esc_name, str, agi, vit, int_, dex, luk, hair_style, hair_color) )
+			log_db_database.c_str(), log_schema_config.charlog_db, "make new char", sd->account_id, slot, esc_name, str, agi, vit, int_, dex, luk, hair_style, hair_color) )
 			Sql_ShowDebug(sql_handle);
 	}
 
@@ -1645,7 +1644,7 @@ enum e_char_del_response char_delete(struct char_session_data* sd, uint32 char_i
 	//Delete all pets that are stored in eggs (inventory + cart)
 	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` USING `%s` JOIN `%s` ON `pet_id` = `card1`|`card2`<<16 WHERE `%s`.char_id = '%d' AND card0 = 256", schema_config.pet_db, schema_config.pet_db, schema_config.inventory_db, schema_config.inventory_db, char_id) )
 		Sql_ShowDebug(sql_handle);
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` USING `%s` JOIN `%s` ON `pet_id` = `card1`|`card2`<<16 WHERE `%s`.char_id = '%d' AND card0 = 256", schema_config.pet_db, schema_config.pet_db, schema_config.cart_db, schema_config.cart_db, char_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` USING `%s` JOIN `%s` ON `pet_id` = `card1`|`card2`<<16 WHERE `%s`.char_id = '%d' AND card0 = 256", schema_config.pet_db, schema_config.pet_db, schema_config.cart_inventory_db, schema_config.cart_inventory_db, char_id) )
 		Sql_ShowDebug(sql_handle);
 
 	/* remove homunculus */
@@ -1660,12 +1659,12 @@ enum e_char_del_response char_delete(struct char_session_data* sd, uint32 char_i
 	mercenary_owner_delete(char_id);
 
 	/* delete char's friends list */
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id` = '%d'", schema_config.friend_db, char_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id` = '%d'", schema_config.friends_db, char_id) )
 		Sql_ShowDebug(sql_handle);
 
 	/* delete char from other's friend list */
 	//NOTE: Won't this cause problems for people who are already online? [Skotlex]
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `friend_id` = '%d'", schema_config.friend_db, char_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `friend_id` = '%d'", schema_config.friends_db, char_id) )
 		Sql_ShowDebug(sql_handle);
 
 #ifdef HOTKEY_SAVING
@@ -1679,7 +1678,7 @@ enum e_char_del_response char_delete(struct char_session_data* sd, uint32 char_i
 		Sql_ShowDebug(sql_handle);
 
 	/* delete cart inventory */
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id`='%d'", schema_config.cart_db, char_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id`='%d'", schema_config.cart_inventory_db, char_id) )
 		Sql_ShowDebug(sql_handle);
 
 	/* delete memo areas */
@@ -1706,7 +1705,7 @@ enum e_char_del_response char_delete(struct char_session_data* sd, uint32 char_i
 
 #ifdef ENABLE_SC_SAVING
 	/* status changes */
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id` = '%d' AND `char_id`='%d'", schema_config.scdata_db, account_id, char_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id` = '%d' AND `char_id`='%d'", schema_config.sc_data_db, account_id, char_id) )
 		Sql_ShowDebug(sql_handle);
 #endif
 
@@ -1723,8 +1722,8 @@ enum e_char_del_response char_delete(struct char_session_data* sd, uint32 char_i
 		Sql_ShowDebug(sql_handle);
 
 	if (charserv_config.log_char) {
-		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s`(`time`, `account_id`,`char_num`,`char_msg`,`name`) VALUES (NOW(), '%d', '%d', 'Deleted char (CID %d)', '%s')",
-			schema_config.charlog_db, account_id, 0, char_id, esc_name) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s`.`%s`(`time`, `account_id`,`char_num`,`char_msg`,`name`) VALUES (NOW(), '%d', '%d', 'Deleted char (CID %d)', '%s')",
+			log_db_database.c_str(), log_schema_config.charlog_db, account_id, 0, char_id, esc_name) )
 			Sql_ShowDebug(sql_handle);
 	}
 
@@ -2292,19 +2291,33 @@ int32 char_lan_config_read(const char *lancfgName) {
 bool char_checkdb(void){
 	int32 i;
 	const char* sqltable[] = {
-		schema_config.char_db, schema_config.hotkey_db, schema_config.scdata_db, schema_config.cart_db, 
-                schema_config.inventory_db, schema_config.charlog_db,
-                schema_config.char_reg_str_table, schema_config.char_reg_num_table, schema_config.acc_reg_str_table,
-                schema_config.acc_reg_num_table, schema_config.skill_db, schema_config.interlog_db, schema_config.memo_db,
-		schema_config.guild_db, schema_config.guild_alliance_db, schema_config.guild_castle_db, 
-                schema_config.guild_expulsion_db, schema_config.guild_member_db, 
-                schema_config.guild_skill_db, schema_config.guild_position_db, schema_config.guild_storage_db,
-		schema_config.party_db, schema_config.pet_db, schema_config.friend_db, schema_config.mail_db, 
-                schema_config.auction_db, schema_config.quest_db,
-                schema_config.homunculus_db, schema_config.skill_homunculus_db, schema_config.skillcooldown_homunculus_db,
-                schema_config.mercenary_db, schema_config.mercenary_owner_db, schema_config.skillcooldown_mercenary_db,
-		schema_config.elemental_db, schema_config.skillcooldown_db, schema_config.bonus_script_db,
-		schema_config.clan_table, schema_config.clan_alliance_table, schema_config.mail_attachment_db, schema_config.achievement_table
+		schema_config.acc_reg_num_table, schema_config.acc_reg_str_table, schema_config.achievement_table, schema_config.auction_db, schema_config.barter_db, schema_config.bonus_script_db, schema_config.buyingstores_db,
+		schema_config.buyingstores_items_db, schema_config.cart_inventory_db, schema_config.char_db, schema_config.char_configs_db, schema_config.char_reg_num_table, schema_config.char_reg_str_table, schema_config.clan_table,
+		schema_config.clan_alliance_table, schema_config.elemental_db, schema_config.friends_db, schema_config.global_acc_reg_num_table, schema_config.global_acc_reg_str_table, schema_config.guild_db, schema_config.guild_alliance_db,
+		schema_config.guild_castle_db, schema_config.guild_emblems_db, schema_config.guild_expulsion_db, schema_config.guild_member_db, schema_config.guild_position_db, schema_config.guild_skill_db, schema_config.guild_storage_db,
+		schema_config.homunculus_db, schema_config.hotkey_db, schema_config.inventory_db, schema_config.ipbanlist_db,
+#ifndef RENEWAL
+		schema_config.item_db_db, schema_config.item_db2_db,
+#else
+		schema_config.item_db_re_db, schema_config.item_db2_re_db,
+#endif
+		schema_config.login_db, schema_config.mail_db, schema_config.mail_attachments_db, schema_config.mapreg_db, schema_config.market_db, schema_config.memo_db, schema_config.mercenary_db, schema_config.mercenary_owner_db,
+#ifndef RENEWAL
+		schema_config.mob_db_db,
+		schema_config.mob_db2_db,
+		schema_config.mob_skill_db_db,
+		schema_config.mob_skill_db2_db,
+#else
+		schema_config.mob_db_re_db,
+		schema_config.mob_db2_re_db,
+		schema_config.mob_skill_db_re_db,
+		schema_config.mob_skill_db2_re_db,
+#endif
+		schema_config.party_db, schema_config.party_bookings_db, schema_config.pet_db, schema_config.quest_db, schema_config.sales_db, schema_config.sc_data_db, schema_config.skill_db, schema_config.skillcooldown_db,
+		schema_config.skillcooldown_homunculus_db, schema_config.skillcooldown_mercenary_db, schema_config.skill_homunculus_db, schema_config.storage_db, schema_config.user_configs_db, schema_config.vendings_db, schema_config.vending_items_db,
+#ifdef VIP_ENABLE
+		schema_config.vip_storage_db,
+#endif
 	};
 	ShowInfo("Start checking DB integrity\n");
 	for (i=0; i<ARRAYLENGTH(sqltable); i++){ //check if they all exist and we can acces them in sql-server
@@ -2313,6 +2326,19 @@ bool char_checkdb(void){
 			return false;
 		}
 	}
+
+	const char* logSqltable[] = {
+		log_schema_config.atcommandlog_db, log_schema_config.branchlog_db, log_schema_config.cashlog_db, log_schema_config.charlog_db, log_schema_config.chatlog_db, log_schema_config.feedinglog_db, log_schema_config.guildstoragelog_db,
+		log_schema_config.interlog_db, log_schema_config.loginlog_db, log_schema_config.mvplog_db, log_schema_config.npclog_db, log_schema_config.picklog_db, log_schema_config.zenylog_db,
+	};
+	ShowInfo("Start checking logs DB integrity\n");
+    for (i = 0; i < ARRAYLENGTH(logSqltable); i++) {
+        if (SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s`.`%s` LIMIT 1;", log_db_database.c_str(), logSqltable[i])) {
+            Sql_ShowDebug(sql_handle);
+            return false;
+        }
+    }
+
 	//checking char_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`,`account_id`,`char_num`,`name`,`class`,"
 		"`base_level`,`job_level`,`base_exp`,`job_exp`,`zeny`,`str`,`agi`,`vit`,`int`,`dex`,`luk`,"
@@ -2331,7 +2357,7 @@ bool char_checkdb(void){
 	//checking charlog_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `time`,`char_msg`,`account_id`,`char_num`,`name`,"
 		"`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hair`,`hair_color`"
-		" FROM `%s` LIMIT 1;", schema_config.charlog_db) ){
+		" FROM `%s`.`%s` LIMIT 1;", log_db_database.c_str(), log_schema_config.charlog_db)) {
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
@@ -2361,9 +2387,9 @@ bool char_checkdb(void){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
-	//checking scdata_db
+	//checking sc_data_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `account_id`,`char_id`,`type`,`tick`,`val1`,`val2`,`val3`,`val4`"
-		" FROM `%s` LIMIT 1;", schema_config.scdata_db) ){
+		" FROM `%s` LIMIT 1;", schema_config.sc_data_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
@@ -2373,7 +2399,7 @@ bool char_checkdb(void){
 		return false;
 	}
 	//checking interlog_db
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `time`,`log` FROM `%s` LIMIT 1;", schema_config.interlog_db) ){
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `time`,`log` FROM `%s`.`%s` LIMIT 1;", log_db_database.c_str(), log_schema_config.interlog_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
@@ -2435,8 +2461,8 @@ bool char_checkdb(void){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
-	//checking friend_db
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `char_id`,`friend_id` FROM `%s` LIMIT 1;", schema_config.friend_db) ){
+	//checking friends_db
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `char_id`,`friend_id` FROM `%s` LIMIT 1;", schema_config.friends_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
@@ -2447,10 +2473,10 @@ bool char_checkdb(void){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
-	//checking mail_attachment_db
+	//checking mail_attachments_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `id`,`index`,`nameid`,`amount`,`refine`,`attribute`,`identify`,"
 			"`card0`,`card1`,`card2`,`card3`,`option_id0`,`option_val0`,`option_parm0`,`option_id1`,`option_val1`,`option_parm1`,`option_id2`,`option_val2`,`option_parm2`,`option_id3`,`option_val3`,`option_parm3`,`option_id4`,`option_val4`,`option_parm4`,`unique_id`, `bound`, `enchantgrade`"
-			" FROM `%s` LIMIT 1;", schema_config.mail_attachment_db) ){
+			" FROM `%s` LIMIT 1;", schema_config.mail_attachments_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
@@ -2519,10 +2545,10 @@ bool char_checkdb(void){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
-	//checking cart_db
+	//checking cart_inventory_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `id`,`char_id`,`nameid`,`amount`,`equip`,`identify`,`refine`,"
 		"`attribute`,`card0`,`card1`,`card2`,`card3`,`option_id0`,`option_val0`,`option_parm0`,`option_id1`,`option_val1`,`option_parm1`,`option_id2`,`option_val2`,`option_parm2`,`option_id3`,`option_val3`,`option_parm3`,`option_id4`,`option_val4`,`option_parm4`,`expire_time`,`bound`,`unique_id`,`enchantgrade`"
-		" FROM `%s` LIMIT 1;", schema_config.cart_db) ){
+		" FROM `%s` LIMIT 1;", schema_config.cart_inventory_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
@@ -2573,93 +2599,189 @@ void char_sql_config_read(const char* cfgName) {
 		return;
 	}
 
-	while(fgets(line, sizeof(line), fp)) {
-		if(line[0] == '/' && line[1] == '/')
-			continue;
+	while (fgets(line, sizeof(line), fp)) {
+		if (line[0] == '/' && line[1] == '/') continue;
 
-		if (sscanf(line, "%1023[^:]: %1023[^\r\n]", w1, w2) != 2)
-			continue;
+		if (sscanf(line, "%1023[^:]: %1023[^\r\n]", w1, w2) != 2) continue;
 
-		if(!strcmpi(w1,"char_db"))
+		if (!strcmpi(w1, "acc_reg_num_table"))
+			safestrncpy(schema_config.acc_reg_num_table, w2, sizeof(schema_config.acc_reg_num_table));
+		else if (!strcmpi(w1, "acc_reg_str_table"))
+			safestrncpy(schema_config.acc_reg_str_table, w2, sizeof(schema_config.acc_reg_str_table));
+		else if (!strcmpi(w1, "achievement_table"))
+			safestrncpy(schema_config.achievement_table, w2, sizeof(schema_config.achievement_table));
+		else if (!strcmpi(w1, "auction_db"))
+			safestrncpy(schema_config.auction_db, w2, sizeof(schema_config.auction_db));
+		else if (!strcmpi(w1, "barter_table"))
+			safestrncpy(schema_config.barter_db, w2, sizeof(schema_config.barter_db));
+		else if (!strcmpi(w1, "bonus_script_db"))
+			safestrncpy(schema_config.bonus_script_db, w2, sizeof(schema_config.bonus_script_db));
+		else if (!strcmpi(w1, "buyingstore_table"))
+			safestrncpy(schema_config.buyingstores_db, w2, sizeof(schema_config.buyingstores_db));
+		else if (!strcmpi(w1, "buyingstore_items_table"))
+			safestrncpy(schema_config.buyingstores_items_db, w2, sizeof(schema_config.buyingstores_items_db));
+		else if (!strcmpi(w1, "cart_db"))
+			safestrncpy(schema_config.cart_inventory_db, w2, sizeof(schema_config.cart_inventory_db));
+		else if (!strcmpi(w1, "char_db"))
 			safestrncpy(schema_config.char_db, w2, sizeof(schema_config.char_db));
-		else if(!strcmpi(w1,"scdata_db"))
-			safestrncpy(schema_config.scdata_db, w2, sizeof(schema_config.scdata_db));
-		else if(!strcmpi(w1,"cart_db"))
-			safestrncpy(schema_config.cart_db, w2, sizeof(schema_config.cart_db));
-		else if(!strcmpi(w1,"inventory_db"))
-			safestrncpy(schema_config.inventory_db, w2, sizeof(schema_config.inventory_db));
-		else if(!strcmpi(w1,"charlog_db"))
-			safestrncpy(schema_config.charlog_db, w2, sizeof(schema_config.charlog_db));
-		else if(!strcmpi(w1,"skill_db"))
-			safestrncpy(schema_config.skill_db, w2, sizeof(schema_config.skill_db));
-		else if(!strcmpi(w1,"interlog_db"))
-			safestrncpy(schema_config.interlog_db, w2, sizeof(schema_config.interlog_db));
-		else if(!strcmpi(w1,"memo_db"))
-			safestrncpy(schema_config.memo_db, w2, sizeof(schema_config.memo_db));
-		else if(!strcmpi(w1,"guild_db"))
+		else if (!strcmpi(w1, "char_configs_db"))
+			safestrncpy(schema_config.char_configs_db, w2, sizeof(schema_config.char_configs_db));
+		else if (!strcmpi(w1, "char_reg_num_table"))
+			safestrncpy(schema_config.char_reg_num_table, w2, sizeof(schema_config.char_reg_num_table));
+		else if (!strcmpi(w1, "char_reg_str_table"))
+			safestrncpy(schema_config.char_reg_str_table, w2, sizeof(schema_config.char_reg_str_table));
+		else if (!strcmpi(w1, "clan_table"))
+			safestrncpy(schema_config.clan_table, w2, sizeof(schema_config.clan_table));
+		else if (!strcmpi(w1, "clan_alliance_table"))
+			safestrncpy(schema_config.clan_alliance_table, w2, sizeof(schema_config.clan_alliance_table));
+		else if (!strcmpi(w1, "roulette_table"))
+			safestrncpy(schema_config.db_roulette_db, w2, sizeof(schema_config.db_roulette_db));
+		else if (!strcmpi(w1, "elemental_db"))
+			safestrncpy(schema_config.elemental_db, w2, sizeof(schema_config.elemental_db));
+		else if (!strcmpi(w1, "friend_db"))
+			safestrncpy(schema_config.friends_db, w2, sizeof(schema_config.friends_db));
+		else if (!strcmpi(w1, "global_acc_reg_num_table"))
+			safestrncpy(schema_config.global_acc_reg_num_table, w2, sizeof(schema_config.global_acc_reg_num_table));
+		else if (!strcmpi(w1, "global_acc_reg_str_table"))
+			safestrncpy(schema_config.global_acc_reg_str_table, w2, sizeof(schema_config.global_acc_reg_str_table));
+		else if (!strcmpi(w1, "guild_db"))
 			safestrncpy(schema_config.guild_db, w2, sizeof(schema_config.guild_db));
-		else if(!strcmpi(w1,"guild_alliance_db"))
+		else if (!strcmpi(w1, "guild_alliance_db"))
 			safestrncpy(schema_config.guild_alliance_db, w2, sizeof(schema_config.guild_alliance_db));
-		else if(!strcmpi(w1,"guild_castle_db"))
+		else if (!strcmpi(w1, "guild_castle_db"))
 			safestrncpy(schema_config.guild_castle_db, w2, sizeof(schema_config.guild_castle_db));
-		else if(!strcmpi(w1,"guild_expulsion_db"))
+		else if (!strcmpi(w1, "guild_emblems"))
+			safestrncpy(schema_config.guild_emblems_db, w2, sizeof(schema_config.guild_emblems_db));
+		else if (!strcmpi(w1, "guild_expulsion_db"))
 			safestrncpy(schema_config.guild_expulsion_db, w2, sizeof(schema_config.guild_expulsion_db));
-		else if(!strcmpi(w1,"guild_member_db"))
+		else if (!strcmpi(w1, "guild_member_db"))
 			safestrncpy(schema_config.guild_member_db, w2, sizeof(schema_config.guild_member_db));
-		else if(!strcmpi(w1,"guild_skill_db"))
-			safestrncpy(schema_config.guild_skill_db, w2, sizeof(schema_config.guild_skill_db));
-		else if(!strcmpi(w1,"guild_position_db"))
+		else if (!strcmpi(w1, "guild_position_db"))
 			safestrncpy(schema_config.guild_position_db, w2, sizeof(schema_config.guild_position_db));
-		else if(!strcmpi(w1,"guild_storage_db"))
+		else if (!strcmpi(w1, "guild_skill_db"))
+			safestrncpy(schema_config.guild_skill_db, w2, sizeof(schema_config.guild_skill_db));
+		else if (!strcmpi(w1, "guild_storage_db"))
 			safestrncpy(schema_config.guild_storage_db, w2, sizeof(schema_config.guild_storage_db));
-		else if(!strcmpi(w1,"party_db"))
-			safestrncpy(schema_config.party_db, w2, sizeof(schema_config.party_db));
-		else if(!strcmpi(w1,"pet_db"))
-			safestrncpy(schema_config.pet_db, w2, sizeof(schema_config.pet_db));
-		else if(!strcmpi(w1,"mail_db"))
+		else if (!strcmpi(w1, "homunculus_db"))
+			safestrncpy(schema_config.homunculus_db, w2, sizeof(schema_config.homunculus_db));
+		else if (!strcmpi(w1, "hotkey_db"))
+			safestrncpy(schema_config.hotkey_db, w2, sizeof(schema_config.hotkey_db));
+		else if (!strcmpi(w1, "interlog_db"))
+			safestrncpy(log_schema_config.interlog_db, w2, sizeof(log_schema_config.interlog_db));
+		else if (!strcmpi(w1, "inventory_db"))
+			safestrncpy(schema_config.inventory_db, w2, sizeof(schema_config.inventory_db));
+		else if (!strcmpi(w1, "ipban_table"))
+			safestrncpy(schema_config.ipbanlist_db, w2, sizeof(schema_config.ipbanlist_db));
+#ifndef RENEWAL
+		else if (!strcmpi(w1, "item_table"))
+			safestrncpy(schema_config.item_db_db, w2, sizeof(schema_config.item_db_db));
+		else if (!strcmpi(w1, "item2_table"))
+			safestrncpy(schema_config.item_db2_db, w2, sizeof(schema_config.item_db2_db));
+#else
+		else if (!strcmpi(w1, "renewal-item_table"))
+			safestrncpy(schema_config.item_db_re_db, w2, sizeof(schema_config.item_db_re_db));
+		else if (!strcmpi(w1, "renewal-item2_table"))
+			safestrncpy(schema_config.item_db2_re_db, w2, sizeof(schema_config.item_db2_re_db));
+#endif
+		else if (!strcmpi(w1, "login_server_account_db"))
+			safestrncpy(schema_config.login_db, w2, sizeof(schema_config.login_db));
+		else if (!strcmpi(w1, "mail_db"))
 			safestrncpy(schema_config.mail_db, w2, sizeof(schema_config.mail_db));
 		else if (!strcmpi(w1, "mail_attachment_db"))
-			safestrncpy(schema_config.mail_attachment_db, w2, sizeof(schema_config.mail_attachment_db));
-		else if(!strcmpi(w1,"auction_db"))
-			safestrncpy(schema_config.auction_db, w2, sizeof(schema_config.auction_db));
-		else if(!strcmpi(w1,"friend_db"))
-			safestrncpy(schema_config.friend_db, w2, sizeof(schema_config.friend_db));
-		else if(!strcmpi(w1,"hotkey_db"))
-			safestrncpy(schema_config.hotkey_db, w2, sizeof(schema_config.hotkey_db));
-		else if(!strcmpi(w1,"quest_db"))
-			safestrncpy(schema_config.quest_db,w2,sizeof(schema_config.quest_db));
-		else if(!strcmpi(w1,"homunculus_db"))
-			safestrncpy(schema_config.homunculus_db,w2,sizeof(schema_config.homunculus_db));
-		else if(!strcmpi(w1,"skill_homunculus_db"))
-			safestrncpy(schema_config.skill_homunculus_db,w2,sizeof(schema_config.skill_homunculus_db));
+			safestrncpy(schema_config.mail_attachments_db, w2, sizeof(schema_config.mail_attachments_db));
+		else if (!strcmpi(w1, "mapreg_table"))
+			safestrncpy(schema_config.mapreg_db, w2, sizeof(schema_config.mapreg_db));
+		else if (!strcmpi(w1, "market_table"))
+			safestrncpy(schema_config.market_db, w2, sizeof(schema_config.market_db));
+		else if (!strcmpi(w1, "memo_db"))
+			safestrncpy(schema_config.memo_db, w2, sizeof(schema_config.memo_db));
+		else if (!strcmpi(w1, "mercenary_db"))
+			safestrncpy(schema_config.mercenary_db, w2, sizeof(schema_config.mercenary_db));
+		else if (!strcmpi(w1, "mercenary_owner_db"))
+			safestrncpy(schema_config.mercenary_owner_db, w2, sizeof(schema_config.mercenary_owner_db));
+		else if (!strcmpi(w1, "merchant_configs"))
+			safestrncpy(schema_config.merchant_configs_db, w2, sizeof(schema_config.merchant_configs_db));
+#ifndef RENEWAL
+		else if (!strcmpi(w1, "mob_table"))
+			safestrncpy(schema_config.mob_db_db, w2, sizeof(schema_config.mob_db_db));
+		else if (!strcmpi(w1, "mob2_table"))
+			safestrncpy(schema_config.mob_db2_db, w2, sizeof(schema_config.mob_db2_db));
+		else if (!strcmpi(w1, "mob_skill_table"))
+			safestrncpy(schema_config.mob_skill_db_db, w2, sizeof(schema_config.mob_skill_db_db));
+		else if (!strcmpi(w1, "mob_skill2_table"))
+			safestrncpy(schema_config.mob_skill_db2_db, w2, sizeof(schema_config.mob_skill_db2_db));
+#else
+		else if (!strcmpi(w1, "renewal-mob_table"))
+			safestrncpy(schema_config.mob_db_re_db, w2, sizeof(schema_config.mob_db_re_db));
+		else if (!strcmpi(w1, "renewal-mob2_table"))
+			safestrncpy(schema_config.mob_db2_re_db, w2, sizeof(schema_config.mob_db2_re_db));
+		else if (!strcmpi(w1, "renewal-mob_skill_table"))
+			safestrncpy(schema_config.mob_skill_db_re_db, w2, sizeof(schema_config.mob_skill_db_re_db));
+		else if (!strcmpi(w1, "renewal-mob_skill2_table"))
+			safestrncpy(schema_config.mob_skill_db2_re_db, w2, sizeof(schema_config.mob_skill_db2_re_db));
+#endif
+		else if (!strcmpi(w1, "party_db"))
+			safestrncpy(schema_config.party_db, w2, sizeof(schema_config.party_db));
+		else if (!strcmpi(w1, "partybookings_table"))
+			safestrncpy(schema_config.party_bookings_db, w2, sizeof(schema_config.party_bookings_db));
+		else if (!strcmpi(w1, "pet_db"))
+			safestrncpy(schema_config.pet_db, w2, sizeof(schema_config.pet_db));
+		else if (!strcmpi(w1, "quest_db"))
+			safestrncpy(schema_config.quest_db, w2, sizeof(schema_config.quest_db));
+		else if (!strcmpi(w1, "sales_table"))
+			safestrncpy(schema_config.sales_db, w2, sizeof(schema_config.sales_db));
+		else if (!strcmpi(w1, "scdata_db"))
+			safestrncpy(schema_config.sc_data_db, w2, sizeof(schema_config.sc_data_db));
+		else if (!strcmpi(w1, "skill_db"))
+			safestrncpy(schema_config.skill_db, w2, sizeof(schema_config.skill_db));
+		else if (!strcmpi(w1, "skillcooldown_db"))
+			safestrncpy(schema_config.skillcooldown_db, w2, sizeof(schema_config.skillcooldown_db));
 		else if (!strcmpi(w1, "skillcooldown_homunculus_db"))
 			safestrncpy(schema_config.skillcooldown_homunculus_db, w2, sizeof(schema_config.skillcooldown_homunculus_db));
-		else if(!strcmpi(w1,"mercenary_db"))
-			safestrncpy(schema_config.mercenary_db,w2,sizeof(schema_config.mercenary_db));
-		else if(!strcmpi(w1,"mercenary_owner_db"))
-			safestrncpy(schema_config.mercenary_owner_db,w2,sizeof(schema_config.mercenary_owner_db));
 		else if (!strcmpi(w1, "skillcooldown_mercenary_db"))
 			safestrncpy(schema_config.skillcooldown_mercenary_db, w2, sizeof(schema_config.skillcooldown_mercenary_db));
-		else if(!strcmpi(w1,"elemental_db"))
-			safestrncpy(schema_config.elemental_db,w2,sizeof(schema_config.elemental_db));
-		else if(!strcmpi(w1,"skillcooldown_db"))
-			safestrncpy(schema_config.skillcooldown_db, w2, sizeof(schema_config.skillcooldown_db));
-		else if(!strcmpi(w1,"bonus_script_db"))
-			safestrncpy(schema_config.bonus_script_db, w2, sizeof(schema_config.bonus_script_db));
-		else if(!strcmpi(w1,"char_reg_num_table"))
-			safestrncpy(schema_config.char_reg_num_table, w2, sizeof(schema_config.char_reg_num_table));
-		else if(!strcmpi(w1,"char_reg_str_table"))
-			safestrncpy(schema_config.char_reg_str_table, w2, sizeof(schema_config.char_reg_str_table));
-		else if(!strcmpi(w1,"acc_reg_str_table"))
-			safestrncpy(schema_config.acc_reg_str_table, w2, sizeof(schema_config.acc_reg_str_table));
-		else if(!strcmpi(w1,"acc_reg_num_table"))
-			safestrncpy(schema_config.acc_reg_num_table, w2, sizeof(schema_config.acc_reg_num_table));
-		else if(!strcmpi(w1,"clan_table"))
-			safestrncpy(schema_config.clan_table, w2, sizeof(schema_config.clan_table));
-		else if(!strcmpi(w1,"clan_alliance_table"))
-			safestrncpy(schema_config.clan_alliance_table, w2, sizeof(schema_config.clan_alliance_table));
-		else if(!strcmpi(w1,"achievement_table"))
-			safestrncpy(schema_config.achievement_table, w2, sizeof(schema_config.achievement_table));
+		else if (!strcmpi(w1, "skill_homunculus_db"))
+			safestrncpy(schema_config.skill_homunculus_db, w2, sizeof(schema_config.skill_homunculus_db));
+		else if (!strcmpi(w1, "storage_table"))
+			safestrncpy(schema_config.storage_db, w2, sizeof(schema_config.storage_db));
+		else if (!strcmpi(w1, "user_configs"))
+			safestrncpy(schema_config.user_configs_db, w2, sizeof(schema_config.user_configs_db));
+		else if (!strcmpi(w1, "vending_table"))
+			safestrncpy(schema_config.vendings_db, w2, sizeof(schema_config.vendings_db));
+		else if (!strcmpi(w1, "vending_items_table"))
+			safestrncpy(schema_config.vending_items_db, w2, sizeof(schema_config.vending_items_db));
+#ifdef VIP_ENABLE
+		else if (!strcmpi(w1, "vip_storage_table"))
+			safestrncpy(schema_config.vip_storage_db, w2, sizeof(schema_config.vip_storage_db));
+#endif
+
+		else if (!strcmpi(w1, "atcommandlog_table"))
+			safestrncpy(log_schema_config.atcommandlog_db, w2, sizeof(log_schema_config.atcommandlog_db));
+		else if (!strcmpi(w1, "branchlog_table"))
+			safestrncpy(log_schema_config.branchlog_db, w2, sizeof(log_schema_config.branchlog_db));
+		else if (!strcmpi(w1, "cashlog_table"))
+			safestrncpy(log_schema_config.cashlog_db, w2, sizeof(log_schema_config.cashlog_db));
+		else if (!strcmpi(w1, "charlog_db"))
+			safestrncpy(log_schema_config.charlog_db, w2, sizeof(log_schema_config.charlog_db));
+		else if (!strcmpi(w1, "chatlog_table"))
+			safestrncpy(log_schema_config.chatlog_db, w2, sizeof(log_schema_config.chatlog_db));
+		else if (!strcmpi(w1, "feedinglog_table"))
+			safestrncpy(log_schema_config.feedinglog_db, w2, sizeof(log_schema_config.feedinglog_db));
+		else if (!strcmpi(w1, "guild_storage_log"))
+			safestrncpy(log_schema_config.guildstoragelog_db, w2, sizeof(log_schema_config.guildstoragelog_db));
+		else if (!strcmpi(w1, "interlog_db"))
+			safestrncpy(log_schema_config.interlog_db, w2, sizeof(log_schema_config.interlog_db));
+		else if (!strcmpi(w1, "log_login_db"))
+			safestrncpy(log_schema_config.loginlog_db, w2, sizeof(log_schema_config.loginlog_db));
+		else if (!strcmpi(w1, "mvplog_table"))
+			safestrncpy(log_schema_config.mvplog_db, w2, sizeof(log_schema_config.mvplog_db));
+		else if (!strcmpi(w1, "npclog_table"))
+			safestrncpy(log_schema_config.npclog_db, w2, sizeof(log_schema_config.npclog_db));
+		else if (!strcmpi(w1, "picklog_table"))
+			safestrncpy(log_schema_config.picklog_db, w2, sizeof(log_schema_config.picklog_db));
+		else if (!strcmpi(w1,"zenylog_table"))
+			safestrncpy(log_schema_config.zenylog_db, w2, sizeof(log_schema_config.zenylog_db));
+
 		else if(!strcmpi(w1, "start_status_points"))
 			charserv_config.start_status_points = atoi(w2);
 		//support the import command, just like any other config
@@ -2672,48 +2794,98 @@ void char_sql_config_read(const char* cfgName) {
 
 
 void char_set_default_sql(){
-//	schema_config.db_use_sqldbs;
-	safestrncpy(schema_config.db_path,"db",sizeof(schema_config.db_path));
-	safestrncpy(schema_config.char_db,"char",sizeof(schema_config.char_db));
-	safestrncpy(schema_config.scdata_db,"sc_data",sizeof(schema_config.scdata_db));
-	safestrncpy(schema_config.cart_db,"cart_inventory",sizeof(schema_config.cart_db));
-	safestrncpy(schema_config.inventory_db,"inventory",sizeof(schema_config.inventory_db));
-	safestrncpy(schema_config.charlog_db,"charlog",sizeof(schema_config.charlog_db));
-	safestrncpy(schema_config.storage_db,"storage",sizeof(schema_config.storage_db));
-	safestrncpy(schema_config.interlog_db,"interlog",sizeof(schema_config.interlog_db));
-	safestrncpy(schema_config.skill_db,"skill",sizeof(schema_config.skill_db));
-	safestrncpy(schema_config.memo_db,"memo",sizeof(schema_config.memo_db));
-	safestrncpy(schema_config.guild_db,"guild",sizeof(schema_config.guild_db));
-	safestrncpy(schema_config.guild_alliance_db,"guild_alliance",sizeof(schema_config.guild_alliance_db));
-	safestrncpy(schema_config.guild_castle_db,"guild_castle",sizeof(schema_config.guild_castle_db));
-	safestrncpy(schema_config.guild_expulsion_db,"guild_expulsion",sizeof(schema_config.guild_expulsion_db));
-	safestrncpy(schema_config.guild_member_db,"guild_member",sizeof(schema_config.guild_member_db));
-	safestrncpy(schema_config.guild_position_db,"guild_position",sizeof(schema_config.guild_position_db));
-	safestrncpy(schema_config.guild_skill_db,"guild_skill",sizeof(schema_config.guild_skill_db));
-	safestrncpy(schema_config.guild_storage_db,"guild_storage",sizeof(schema_config.guild_storage_db));
-	safestrncpy(schema_config.party_db,"party",sizeof(schema_config.party_db));
-	safestrncpy(schema_config.pet_db,"pet",sizeof(schema_config.pet_db));
-	safestrncpy(schema_config.mail_db,"mail",sizeof(schema_config.mail_db)); // MAIL SYSTEM
-	safestrncpy(schema_config.mail_attachment_db,"mail_attachments",sizeof(schema_config.mail_attachment_db));
-	safestrncpy(schema_config.auction_db,"auction",sizeof(schema_config.auction_db)); // Auctions System
-	safestrncpy(schema_config.friend_db,"friends",sizeof(schema_config.friend_db));
-	safestrncpy(schema_config.hotkey_db,"hotkey",sizeof(schema_config.hotkey_db));
-	safestrncpy(schema_config.quest_db,"quest",sizeof(schema_config.quest_db));
-	safestrncpy(schema_config.homunculus_db,"homunculus",sizeof(schema_config.homunculus_db));
-	safestrncpy(schema_config.skill_homunculus_db,"skill_homunculus",sizeof(schema_config.skill_homunculus_db));
-	safestrncpy(schema_config.skillcooldown_homunculus_db,"skillcooldown_homunculus",sizeof(schema_config.skillcooldown_homunculus_db));
-	safestrncpy(schema_config.mercenary_db,"mercenary",sizeof(schema_config.mercenary_db));
-	safestrncpy(schema_config.mercenary_owner_db,"mercenary_owner",sizeof(schema_config.mercenary_owner_db));
-	safestrncpy(schema_config.skillcooldown_mercenary_db, "skillcooldown_mercenary", sizeof(schema_config.skillcooldown_mercenary_db));
-	safestrncpy(schema_config.skillcooldown_db,"skillcooldown",sizeof(schema_config.skillcooldown_db));
-	safestrncpy(schema_config.bonus_script_db,"bonus_script",sizeof(schema_config.bonus_script_db));
-	safestrncpy(schema_config.char_reg_num_table,"char_reg_num",sizeof(schema_config.char_reg_num_table));
-	safestrncpy(schema_config.char_reg_str_table,"char_reg_str",sizeof(schema_config.char_reg_str_table));
-	safestrncpy(schema_config.acc_reg_str_table,"acc_reg_str",sizeof(schema_config.acc_reg_str_table));
+	safestrncpy(schema_config.db_path, "db", sizeof(schema_config.db_path));
+
 	safestrncpy(schema_config.acc_reg_num_table,"acc_reg_num",sizeof(schema_config.acc_reg_num_table));
-	safestrncpy(schema_config.clan_table,"clan",sizeof(schema_config.clan_table));
-	safestrncpy(schema_config.clan_table,"clan_alliance",sizeof(schema_config.clan_alliance_table));
+	safestrncpy(schema_config.acc_reg_str_table,"acc_reg_str",sizeof(schema_config.acc_reg_str_table));
 	safestrncpy(schema_config.achievement_table,"achievement",sizeof(schema_config.achievement_table));
+	safestrncpy(schema_config.auction_db,"auction",sizeof(schema_config.auction_db));
+	safestrncpy(schema_config.barter_db, "barter", sizeof(schema_config.barter_db));
+	safestrncpy(schema_config.bonus_script_db,"bonus_script",sizeof(schema_config.bonus_script_db));
+	safestrncpy(schema_config.buyingstores_db, "buyingstores", sizeof(schema_config.buyingstores_db));
+	safestrncpy(schema_config.buyingstores_items_db, "buyingstores_items", sizeof(schema_config.buyingstores_items_db));
+	safestrncpy(schema_config.cart_inventory_db,"cart_inventory",sizeof(schema_config.cart_inventory_db));
+	safestrncpy(schema_config.char_db, "char", sizeof(schema_config.char_db));
+	safestrncpy(schema_config.char_configs_db, "char_configs", sizeof(schema_config.char_configs_db));
+	safestrncpy(schema_config.char_reg_num_table, "char_reg_num", sizeof(schema_config.char_reg_num_table));
+	safestrncpy(schema_config.char_reg_str_table, "char_reg_str", sizeof(schema_config.char_reg_str_table));
+	safestrncpy(schema_config.clan_table, "clan", sizeof(schema_config.clan_table));
+	safestrncpy(schema_config.clan_table, "clan_alliance", sizeof(schema_config.clan_alliance_table));
+	safestrncpy(schema_config.db_roulette_db, "db_roulette", sizeof(schema_config.db_roulette_db));
+	safestrncpy(schema_config.elemental_db, "elemental", sizeof(schema_config.elemental_db));
+	safestrncpy(schema_config.friends_db,"friends",sizeof(schema_config.friends_db));
+	safestrncpy(schema_config.global_acc_reg_num_table, "global_acc_reg_num", sizeof(schema_config.global_acc_reg_num_table));
+	safestrncpy(schema_config.global_acc_reg_str_table, "global_acc_reg_str", sizeof(schema_config.global_acc_reg_str_table));
+	safestrncpy(schema_config.guild_db, "guild", sizeof(schema_config.guild_db));
+	safestrncpy(schema_config.guild_alliance_db, "guild_alliance", sizeof(schema_config.guild_alliance_db));
+	safestrncpy(schema_config.guild_castle_db, "guild_castle", sizeof(schema_config.guild_castle_db));
+	safestrncpy(schema_config.guild_emblems_db, "guild_emblems", sizeof(schema_config.guild_emblems_db));
+	safestrncpy(schema_config.guild_expulsion_db, "guild_expulsion", sizeof(schema_config.guild_expulsion_db));
+	safestrncpy(schema_config.guild_member_db, "guild_member", sizeof(schema_config.guild_member_db));
+	safestrncpy(schema_config.guild_position_db, "guild_position", sizeof(schema_config.guild_position_db));
+	safestrncpy(schema_config.guild_skill_db, "guild_skill", sizeof(schema_config.guild_skill_db));
+	safestrncpy(schema_config.guild_storage_db, "guild_storage", sizeof(schema_config.guild_storage_db));
+	safestrncpy(schema_config.homunculus_db, "homunculus", sizeof(schema_config.homunculus_db));
+	safestrncpy(schema_config.hotkey_db, "hotkey", sizeof(schema_config.hotkey_db));
+	safestrncpy(schema_config.inventory_db,"inventory",sizeof(schema_config.inventory_db));
+	safestrncpy(schema_config.ipbanlist_db, "ipbanlist", sizeof(schema_config.ipbanlist_db));
+#ifndef RENEWAL
+	safestrncpy(schema_config.item_db_db, "item_db", sizeof(schema_config.item_db_db));
+	safestrncpy(schema_config.item_db2_db, "item_db2", sizeof(schema_config.item_db2_db));
+#else
+	safestrncpy(schema_config.item_db_re_db, "item_db_re", sizeof(schema_config.item_db_re_db));
+	safestrncpy(schema_config.item_db2_re_db, "item_db2_re", sizeof(schema_config.item_db2_re_db));
+#endif
+	safestrncpy(schema_config.login_db, "login", sizeof(schema_config.login_db));
+	safestrncpy(schema_config.mail_db, "mail", sizeof(schema_config.mail_db));
+	safestrncpy(schema_config.mail_attachments_db, "mail_attachments", sizeof(schema_config.mail_attachments_db));
+	safestrncpy(schema_config.memo_db, "memo", sizeof(schema_config.memo_db));
+	safestrncpy(schema_config.mercenary_db, "mercenary", sizeof(schema_config.mercenary_db));
+	safestrncpy(schema_config.mercenary_owner_db, "mercenary_owner", sizeof(schema_config.mercenary_owner_db));
+	safestrncpy(schema_config.merchant_configs_db, "merchant_configs", sizeof(schema_config.merchant_configs_db));
+#ifndef RENEWAL
+	safestrncpy(schema_config.mob_db_db, "mob_db", sizeof(schema_config.mob_db_db));
+	safestrncpy(schema_config.mob_db2_db, "mob_db2", sizeof(schema_config.mob_db2_db));
+	safestrncpy(schema_config.mob_skill_db_db, "mob_skill_db", sizeof(schema_config.mob_skill_db_db));
+	safestrncpy(schema_config.mob_skill_db2_db, "mob_skill_db2", sizeof(schema_config.mob_skill_db2_db));
+#else
+	safestrncpy(schema_config.mob_db_re_db, "mob_db_re", sizeof(schema_config.mob_db_re_db));
+	safestrncpy(schema_config.mob_db2_re_db, "mob_db2_re", sizeof(schema_config.mob_db2_re_db));
+	safestrncpy(schema_config.mob_skill_db_re_db, "mob_skill_db_re", sizeof(schema_config.mob_skill_db_re_db));
+	safestrncpy(schema_config.mob_skill_db2_re_db, "mob_skill_db2_re", sizeof(schema_config.mob_skill_db2_re_db));
+#endif
+	safestrncpy(schema_config.party_db, "party", sizeof(schema_config.party_db));
+	safestrncpy(schema_config.party_bookings_db, "party_bookings", sizeof(schema_config.party_bookings_db));
+	safestrncpy(schema_config.pet_db, "pet", sizeof(schema_config.pet_db));
+	safestrncpy(schema_config.quest_db, "quest", sizeof(schema_config.quest_db));
+	safestrncpy(schema_config.sales_db, "sales", sizeof(schema_config.sales_db));
+	safestrncpy(schema_config.sc_data_db, "sc_data", sizeof(schema_config.sc_data_db));
+	safestrncpy(schema_config.skill_db, "skill", sizeof(schema_config.skill_db));
+	safestrncpy(schema_config.skillcooldown_db, "skillcooldown", sizeof(schema_config.skillcooldown_db));
+	safestrncpy(schema_config.skillcooldown_homunculus_db, "skillcooldown_homunculus", sizeof(schema_config.skillcooldown_homunculus_db));
+	safestrncpy(schema_config.skillcooldown_mercenary_db, "skillcooldown_mercenary", sizeof(schema_config.skillcooldown_mercenary_db));
+	safestrncpy(schema_config.skill_homunculus_db, "skill_homunculus", sizeof(schema_config.skill_homunculus_db));
+	safestrncpy(schema_config.storage_db, "storage", sizeof(schema_config.storage_db));
+	safestrncpy(schema_config.user_configs_db, "user_configs", sizeof(schema_config.user_configs_db));
+	safestrncpy(schema_config.vendings_db, "vendings", sizeof(schema_config.vendings_db));
+	safestrncpy(schema_config.vending_items_db, "vending_items", sizeof(schema_config.vending_items_db));
+#ifdef VIP_ENABLE
+	safestrncpy(schema_config.vip_storage_db, "vip_storage", sizeof(schema_config.vip_storage_db));
+#endif
+
+	safestrncpy(log_schema_config.atcommandlog_db, "atcommandlog_table", sizeof(log_schema_config.atcommandlog_db));
+	safestrncpy(log_schema_config.branchlog_db, "branchlog_table", sizeof(log_schema_config.branchlog_db));
+	safestrncpy(log_schema_config.cashlog_db, "cashlog_table", sizeof(log_schema_config.cashlog_db));
+	safestrncpy(log_schema_config.charlog_db, "charlog_db", sizeof(log_schema_config.charlog_db));
+	safestrncpy(log_schema_config.chatlog_db, "chatlog_table", sizeof(log_schema_config.chatlog_db));
+	safestrncpy(log_schema_config.feedinglog_db, "feedinglog_table", sizeof(log_schema_config.feedinglog_db));
+	safestrncpy(log_schema_config.guildstoragelog_db, "guild_storage_log", sizeof(log_schema_config.guildstoragelog_db));
+	safestrncpy(log_schema_config.interlog_db, "interlog_db", sizeof(log_schema_config.interlog_db));
+	safestrncpy(log_schema_config.loginlog_db, "log_login_db", sizeof(log_schema_config.loginlog_db));
+	safestrncpy(log_schema_config.mvplog_db, "mvplog_table", sizeof(log_schema_config.mvplog_db));
+	safestrncpy(log_schema_config.npclog_db, "npclog_table", sizeof(log_schema_config.npclog_db));
+	safestrncpy(log_schema_config.picklog_db, "picklog_table", sizeof(log_schema_config.picklog_db));
+	safestrncpy(log_schema_config.zenylog_db, "zenylog_table", sizeof(log_schema_config.zenylog_db));
 }
 
 //set default config

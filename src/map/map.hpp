@@ -1341,4 +1341,7 @@ extern char guild_storage_log_table[32];
 
 void do_shutdown(void);
 
+#pragma once
+extern std::string log_db_database;
+
 #endif /* MAP_HPP */
