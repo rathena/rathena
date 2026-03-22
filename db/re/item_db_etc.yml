@@ -89934,6 +89934,20 @@ Body:
       hateffect FOOTPRINT_EF_DRAGON_FACE_3D,true;
     UnEquipScript: |
       hateffect FOOTPRINT_EF_DRAGON_FACE_3D,false;
+  - Id: 314175
+    AegisName: Greed_T
+    Name: Greed
+    Type: Card
+    SubType: Enchant
+    Script: |
+      skill "BS_GREED",1;
+  - Id: 314176
+    AegisName: Greed_M
+    Name: Greed
+    Type: Card
+    SubType: Enchant
+    Script: |
+      skill "BS_GREED",1;
   - Id: 314181
     AegisName: aegis_314181
     Name: Archbishop Stone II (Upper)
@@ -100549,6 +100563,20 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 1002255
+    AegisName: Greed_Stone_T
+    Name: Greed Stone (Upper)
+    Type: Etc
+    Weight: 100
+    Trade:
+      NoDrop: true
+  - Id: 1002256
+    AegisName: Greed_Stone_M
+    Name: Greed Stone (Middle)
+    Type: Etc
+    Weight: 100
+    Trade:
+      NoDrop: true
   - Id: 1002273
     AegisName: aegis_1002273
     Name: Archbishop Stone II (Upper)
