@@ -222,7 +222,7 @@ void elemental_summon_init(s_elemental_data *ed) {
  * Inter-serv has sent us the elemental data from sql, fill it in map-serv memory
  * @param ele : The elemental data received from char-serv
  * @param flag : 0:not created, 1:was saved/loaded
- * @return 0:failed, 1:sucess
+ * @return 0:failed, 1:success
  */
 int32 elemental_data_received(s_elemental *ele, bool flag) {
 	map_session_data *sd;

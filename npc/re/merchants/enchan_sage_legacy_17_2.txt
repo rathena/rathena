@@ -130,7 +130,7 @@ ba_in01,87,370,3	script	Lisa#ep172_merchant	20698,{
 	}
 	if (.@module_id < 1000105 || .@module_id == 1000150 || .@module_id == 1000151 || (.@module_id >= 1000203 && .@module_id != 1000207 && .@module_id != 1000208)) {
 		mes "[Lisa]";
-		mes "Unknown error has occured.";
+		mes "Unknown error has occurred.";
 		close;
 	}
 
@@ -184,7 +184,7 @@ ba_in01,87,370,3	script	Lisa#ep172_merchant	20698,{
 	.@enchant_id = .@auto_module[.@module_id];
 	if (.@enchant_id == 0) {
 		mes "[Lisa]";
-		mes "Unknown error has occured.";
+		mes "Unknown error has occurred.";
 		close;
 	}
 	if (countinarray(.@card[0], .@enchant_id) >= .@max_module) {

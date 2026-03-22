@@ -1413,7 +1413,7 @@ DBData* dbit_obj_prev(DBIterator* self, DBKey* out_key)
 
 /**
  * Returns true if the fetched entry exists.
- * The databases entries might have nullptr data, so use this to to test if
+ * The databases entries might have nullptr data, so use this to test if
  * the iterator is done.
  * @param self Iterator
  * @return true if the entry exists

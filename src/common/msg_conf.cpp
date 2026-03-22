@@ -13,7 +13,7 @@
 
 /*
  * Return the message string of the specified number by [Yor]
- * (read in table msg_table, with specified lenght table in size)
+ * (read in table msg_table, with specified length table in size)
  */
 const char* _msg_txt(int32 msg_number,int32 size, char ** msg_table)
 {

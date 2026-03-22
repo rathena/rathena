@@ -695,7 +695,7 @@ void achievement_get_reward(map_session_data *sd, int32 achievement_id, time_t r
 }
 
 /**
- * Check if player has recieved an achievement's reward
+ * Check if player has received an achievement's reward
  * @param sd: Player to get reward
  * @param achievement_id: Achievement to get reward data
  */

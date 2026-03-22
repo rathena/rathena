@@ -1121,7 +1121,7 @@ Some options can be found in '/conf/battle/misc.conf'.
 @heal {<hp> {<sp>}}
 
 Heals the specified amount of HP and SP.
-If no paramters are given, the character will be fully healed.
+If no parameters are given, the character will be fully healed.
 
 ---------------------------------------
 

@@ -44,7 +44,7 @@
 //=     Added missing quest, "Oridecon/Mineral Quest"
 //=     Full overhual of the Uwe Kleine quest.
 //= 2.2a Fixed typos in var names from EIN_LOVERQRQ to EIN_LOVERQ. (bugreport:2464) [Paradox924X]
-//= 2.3 Removed occurance of PcName. [L0ne_W0lf]
+//= 2.3 Removed occurrence of PcName. [L0ne_W0lf]
 //= 2.4 Added missing remove cutin. [Kisuka]
 //= 2.5 Added quest log entries for:
 //=     - Factory Quest

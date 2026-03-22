@@ -752,7 +752,7 @@ size_t instance_addmap( int32 instance_id ){
 
 	// Add extra maps (if any)
 	for (const auto &it : db->maplist) {
-		if ((m = map_addinstancemap(it, instance_id, db->nomapflag)) < 0) { // An error occured adding a map
+		if ((m = map_addinstancemap(it, instance_id, db->nomapflag)) < 0) { // An error occurred adding a map
 			ShowError("instance_addmap: No maps added to instance '%s' (%d).\n", db->name.c_str(), instance_id);
 			return 0;
 		} else {
@@ -929,7 +929,7 @@ void instance_destroy_command(map_session_data *sd) {
 /**
  * Removes an instance, all its maps, and NPCs.
  * @param instance_id: Instance to remove
- * @return True on sucess or false on failure
+ * @return True on success or false on failure
  */
 bool instance_destroy(int32 instance_id)
 {

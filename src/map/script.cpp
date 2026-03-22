@@ -712,7 +712,7 @@ int32 add_str(const char* p)
 		str_hash[h] = str_num;
 	}
 	else
-	{// scan for end of list, or occurence of identical string
+	{// scan for end of list, or occurrence of identical string
 		int32 i;
 		for( i = str_hash[h]; ; i = str_data[i].next )
 		{
@@ -726,7 +726,7 @@ int32 add_str(const char* p)
 		str_data[i].next = str_num;
 	}
 
-	// grow list if neccessary
+	// grow list if necessary
 	if( str_num >= str_data_size )
 	{
 		str_data_size += 128;
@@ -736,7 +736,7 @@ int32 add_str(const char* p)
 
 	len=(int32)strlen(p);
 
-	// grow string buffer if neccessary
+	// grow string buffer if necessary
 	while( str_pos+len+1 >= str_size )
 	{
 		str_size += 256;
@@ -16093,7 +16093,7 @@ BUILDIN_FUNC(getmercinfo)
 }
 
 /*==========================================
- * Shows wether your inventory(and equips) contain
+ * Shows whether your inventory(and equips) contain
    selected card or not.
 	checkequipedcard(4001);
  *------------------------------------------*/
@@ -26192,7 +26192,7 @@ static inline bool mail_sub( struct script_state *st, struct script_data *data, 
 	return true;
 }
 
-// mail <destination id>,"<sender name>","<title>","<body>"{,<zeny>{,<item id array>,<item amount array>{,refine{,bound{,<item card0 array>{,<item card1 array>{,<item card2 array>{,<item card3 array>{,<random option id0 array>, <random option value0 array>, <random option paramter0 array>{,<random option id1 array>, <random option value1 array>, <random option paramter1 array>{,<random option id2 array>, <random option value2 array>, <random option paramter2 array>{,<random option id3 array>, <random option value3 array>, <random option paramter3 array>{,<random option id4 array>, <random option value4 array>, <random option paramter4 array>}}}}}}}}};
+// mail <destination id>,"<sender name>","<title>","<body>"{,<zeny>{,<item id array>,<item amount array>{,refine{,bound{,<item card0 array>{,<item card1 array>{,<item card2 array>{,<item card3 array>{,<random option id0 array>, <random option value0 array>, <random option parameter0 array>{,<random option id1 array>, <random option value1 array>, <random option parameter1 array>{,<random option id2 array>, <random option value2 array>, <random option parameter2 array>{,<random option id3 array>, <random option value3 array>, <random option parameter3 array>{,<random option id4 array>, <random option value4 array>, <random option parameter4 array>}}}}}}}}};
 BUILDIN_FUNC(mail){
 	const char *sender, *title, *body, *name;
 	struct mail_message msg;
