@@ -11048,7 +11048,7 @@ bool pc_jobchange(map_session_data *sd,int32 job, char upper)
 }
 
 /*==========================================
- * Tell client player sd has change equipement
+ * Tell client player sd has change equipment
  *------------------------------------------*/
 void pc_equiplookall(map_session_data *sd)
 {

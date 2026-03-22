@@ -1642,7 +1642,7 @@ void npc_timerevent_quit(map_session_data* sd)
 	npc_data* nd;
 	struct timer_event_data *ted;
 
-	// Check timer existance
+	// Check timer existence
 	if( sd->npc_timer_id == INVALID_TIMER )
 		return;
 	if( !(td = get_timer(sd->npc_timer_id)) )

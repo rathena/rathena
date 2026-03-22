@@ -436,7 +436,7 @@ int32 intif_saveregistry(map_session_data *sd)
 		lValid = script_check_RegistryVariableLength(0,varname,&len);
 		++len;
 
-		if (!lValid) { //this is sql colum size, must be retrive from config
+		if (!lValid) { //this is sql colum size, must be retrieve from config
 			ShowError("intif_saveregistry: Variable name length is too long (aid: %d, cid: %d): '%s' sz=%" PRIuPTR "\n", sd->status.account_id, sd->status.char_id, varname, len);
 			continue;
 		}

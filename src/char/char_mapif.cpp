@@ -237,8 +237,8 @@ void chmapif_send_maps( int32 fd, int32 map_id, size_t count, unsigned char* map
  * This function is called when the map-serv initialise is chrif interface.
  * Map-serv sent us his map indexes so we can transfert a player from a map-serv to another when necessary
  * We reply by sending back the char_serv_wisp_name  fame list and
- * @param fd: wich fd to parse from
- * @param id: wich map_serv id
+ * @param fd: which fd to parse from
+ * @param id: which map_serv id
  * @return : 0 not enough data received, 1 success
  */
 int32 chmapif_parse_getmapname(int32 fd, int32 id){
@@ -276,7 +276,7 @@ int32 chmapif_parse_getmapname(int32 fd, int32 id){
 /**
  * Map-serv requesting to send the list of sc_data the player has saved
  * @author [Skotlex]
- * @param fd: wich fd to parse from
+ * @param fd: which fd to parse from
  * @return : 0 not enough data received, 1 success
  */
 int32 chmapif_parse_askscdata(int32 fd){
@@ -339,8 +339,8 @@ int32 chmapif_parse_askscdata(int32 fd){
 
 /**
  * Map-serv sent us his new users count, updating info
- * @param fd: wich fd to parse from
- * @param id: wich map_serv id
+ * @param fd: which fd to parse from
+ * @param id: which map_serv id
  * @return : 0 not enough data received, 1 success
  */
 int32 chmapif_parse_getusercount(int32 fd, int32 id){
@@ -356,8 +356,8 @@ int32 chmapif_parse_getusercount(int32 fd, int32 id){
 
 /**
  * Map-serv sent us all his users info, (aid and cid) so we can update online_char_db
- * @param fd: wich fd to parse from
- * @param id: wich map_serv id
+ * @param fd: which fd to parse from
+ * @param id: which map_serv id
  * @return : 0 not enough data received, 1 success
  */
 int32 chmapif_parse_regmapuser(int32 fd, int32 id){
@@ -401,8 +401,8 @@ int32 chmapif_parse_regmapuser(int32 fd, int32 id){
 /**
  * Map-serv request to save mmo_char_status in sql
  * Receive character data from map-server for saving
- * @param fd: wich fd to parse from
- * @param id: wich map_serv id
+ * @param fd: which fd to parse from
+ * @param id: which map_serv id
  * @return : 0 not enough data received, 1 success
  */
 int32 chmapif_parse_reqsavechar(int32 fd, int32 id){
@@ -461,7 +461,7 @@ void chmapif_charselres(int32 fd, uint32 aid, uint8 res){
 
 /**
  * Player Requesting char-select from map_serv
- * @param fd: wich fd to parse from
+ * @param fd: which fd to parse from
  * @return : 0 not enough data received, 1 success
  */
 int32 chmapif_parse_authok(int32 fd){
@@ -603,7 +603,7 @@ void chmapif_changemapserv_ack(int32 fd, bool nok){
 
 /**
  * Player requesting to change map-serv
- * @param fd: wich fd to parse from
+ * @param fd: which fd to parse from
  * @return : 0 not enough data received, 1 success
  */
 int32 chmapif_parse_reqchangemapserv(int32 fd){
@@ -681,7 +681,7 @@ int32 chmapif_parse_reqchangemapserv(int32 fd){
  * Player requesting to remove friend from list
  * Remove RFIFOL(fd,6) (friend_id) from RFIFOL(fd,2) (char_id) friend list
  * @author [Ind]
- * @param fd: wich fd to parse from
+ * @param fd: which fd to parse from
  * @return : 0 not enough data received, 1 success
  */
 int32 chmapif_parse_askrmfriend(int32 fd){
@@ -704,7 +704,7 @@ int32 chmapif_parse_askrmfriend(int32 fd){
 /**
  * Lookup to search if that char_id correspond to a name.
  * Comming from map-serv to search on other map-serv
- * @param fd: wich fd to parse from
+ * @param fd: which fd to parse from
  * @return : 0 not enough data received, 1 success
  */
 int32 chmapif_parse_reqcharname(int32 fd){
@@ -724,7 +724,7 @@ int32 chmapif_parse_reqcharname(int32 fd){
 /**
  * Forward an email update request to login-serv
  * Map server send information to change an email of an account -> login-server
- * @param fd: wich fd to parse from
+ * @param fd: which fd to parse from
  * @return : 0 not enough data received, 1 success
  */
 int32 chmapif_parse_reqnewemail(int32 fd){
@@ -867,7 +867,7 @@ void chmapif_send_ackdivorce(int32 partner_id1, int32 partner_id2){
 
 /**
  * Received a divorce request
- * @param fd: wich fd to parse from
+ * @param fd: which fd to parse from
  * @return : 0 not enough data received, 1 success
  */
 int32 chmapif_parse_reqdivorce(int32 fd){
@@ -881,7 +881,7 @@ int32 chmapif_parse_reqdivorce(int32 fd){
 /**
  *  Character disconnected set online 0
  * @author [Wizputer]
- * @param fd: wich fd to parse from
+ * @param fd: which fd to parse from
  * @return : 0 not enough data received, 1 success
  */
 int32 chmapif_parse_setcharoffline(int32 fd){
@@ -896,8 +896,8 @@ int32 chmapif_parse_setcharoffline(int32 fd){
 /**
  * Reset all chars to offline
  * @author [Wizputer]
- * @param fd: wich fd to parse from
- * @param id: wich map_serv id
+ * @param fd: which fd to parse from
+ * @param id: which map_serv id
  * @return : 0 not enough data received, 1 success
  */
 int32 chmapif_parse_setalloffline(int32 fd, int32 id){
@@ -909,8 +909,8 @@ int32 chmapif_parse_setalloffline(int32 fd, int32 id){
 /**
  * Character set online
  * @author [Wizputer]
- * @param fd: wich fd to parse from
- * @param id: wich map_serv id
+ * @param fd: which fd to parse from
+ * @param id: which map_serv id
  * @return : 0 not enough data received, 1 success
  */
 int32 chmapif_parse_setcharonline(int32 fd, int32 id){
@@ -924,8 +924,8 @@ int32 chmapif_parse_setcharonline(int32 fd, int32 id){
 /**
  * Build and send fame ranking lists
  * @author [DracoRPG]
- * @param fd: wich fd to parse from
- * @param id: wich map_serv id
+ * @param fd: which fd to parse from
+ * @param id: which map_serv id
  * @return : 0 not enough data received, 1 success
  */
 int32 chmapif_parse_reqfamelist(int32 fd){
@@ -940,7 +940,7 @@ int32 chmapif_parse_reqfamelist(int32 fd){
 /**
  * Request to save status change data.s
  * @author [Skotlex]
- * @param fd: wich fd to parse from
+ * @param fd: which fd to parse from
  * @return : 0 not enough data received, 1 success
  */
 int32 chmapif_parse_save_scdata(int32 fd){
@@ -985,7 +985,7 @@ int32 chmapif_parse_save_scdata(int32 fd){
 
 /**
  * map-server keep alive packet, awnser back map that we alive as well
- * @param fd: wich fd to parse from
+ * @param fd: which fd to parse from
  * @return : 0 not enough data received, 1 success
  */
 int32 chmapif_parse_keepalive(int32 fd){
@@ -998,7 +998,7 @@ int32 chmapif_parse_keepalive(int32 fd){
 
 /**
  * auth request from map-server
- * @param fd: wich fd to parse from
+ * @param fd: which fd to parse from
  * @return : 0 not enough data received, 1 success
  */
 int32 chmapif_parse_reqauth(int32 fd, int32 id){
@@ -1091,7 +1091,7 @@ int32 chmapif_parse_reqauth(int32 fd, int32 id){
 
 /**
  * ip address update
- * @param fd: wich fd to parse from
+ * @param fd: which fd to parse from
  * @return : 0 not enough data received, 1 success
  */
 int32 chmapif_parse_updmapip(int32 fd, int32 id){
@@ -1106,7 +1106,7 @@ int32 chmapif_parse_updmapip(int32 fd, int32 id){
 /**
  * Received an update of fame point  for char_id cid
  * Update the list associated and transmit the new ranking
- * @param fd: wich fd to parse from
+ * @param fd: which fd to parse from
  * @return : 0 not enough data received, 1 success
  */
 int32 chmapif_parse_updfamelist(int32 fd){

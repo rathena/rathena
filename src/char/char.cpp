@@ -2307,7 +2307,7 @@ bool char_checkdb(void){
 		schema_config.clan_table, schema_config.clan_alliance_table, schema_config.mail_attachment_db, schema_config.achievement_table
 	};
 	ShowInfo("Start checking DB integrity\n");
-	for (i=0; i<ARRAYLENGTH(sqltable); i++){ //check if they all exist and we can acces them in sql-server
+	for (i=0; i<ARRAYLENGTH(sqltable); i++){ //check if they all exist and we can access them in sql-server
 		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` LIMIT 1;", sqltable[i]) ){
 			Sql_ShowDebug(sql_handle);
 			return false;
