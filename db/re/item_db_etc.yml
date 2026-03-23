@@ -100993,6 +100993,15 @@ Body:
     AegisName: aegis_1002515
     Name: Job Change Map    # !todo check english name
     Type: Etc
+  - Id: 1002607
+    AegisName: Hero_Will_TH
+    Name: Will of the Hero
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
   - Id: 1002623
     AegisName: aegis_1002623
     Name: Blue Star Footprints (Garment)
@@ -101003,6 +101012,28 @@ Body:
     Name: Sacred Blue Light Footprints (Garment)    # !todo check english name
     Type: Etc
     Weight: 100
+  - Id: 1002637
+    AegisName: ZenyLucky_Coin
+    Name: Zeny Lucky Coin
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002638
+    AegisName: Lucky_Diamond
+    Name: Lucky Diamond
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
   - Id: 1002640
     AegisName: VIP_Web_Ticket
     Name: Premium Black Ticket    # !todo check english name
@@ -101116,6 +101147,27 @@ Body:
       NoMail: true
       NoAuction: true
       NoGuildStorage: true
+  - Id: 1002673
+    AegisName: Scroll_Ticket_TW
+    Name: Gacha Ticket Stub    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002677
+    AegisName: Issgard_Snow_TH
+    Name: Issgard Snow Crystal
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
   - Id: 1002678
     AegisName: aegis_1002678
     Name: Crispy Yongjirak Meat    # !todo check english name
@@ -101297,6 +101349,41 @@ Body:
       NoMail: true
       NoAuction: true
       NoGuildStorage: true
+  - Id: 1002713
+    AegisName: Herosria_Coupon
+    Name: Herosria Certificate
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002714
+    AegisName: Herosria_Coin_TH
+    Name: Herosria Coin
+    Type: Etc
+    Trade:
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002727
+    AegisName: Cos_Enchant_C_Ticket
+    Name: Clothing Enchantment Transfer Ticket    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+  - Id: 1002741
+    AegisName: Phantom_Fragment
+    Name: Phantom Fragment
+    Type: Etc
+    Trade:
+      NoMail: true
+      NoAuction: true
   - Id: 1002751
     AegisName: Ch2_Kindle_Hal_B
     Name: Blue Paper    # !todo check english name
@@ -101333,6 +101420,13 @@ Body:
       NoMail: true
       NoAuction: true
       NoGuildStorage: true
+  - Id: 1002760
+    AegisName: Energy_Xtal_CM_TW
+    Name: Energy Crystal (Variable Magic)    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
   - Id: 1002777
     AegisName: STR_Stone_TH
     Name: "[100%] Purified Stone Garment(STR)"
@@ -101539,6 +101633,13 @@ Body:
       NoDrop: true
       NoMail: true
       NoAuction: true
+  - Id: 1002827
+    AegisName: Energy_Xtal_RR_TW
+    Name: Energy Crystal (Ring of Restoration)    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
   - Id: 1200000
     AegisName: IDTest_arrow
     Name: IDTest arrow
