@@ -47252,16 +47252,16 @@ Body:
   - Combos:
       - Combo:
           - aegis_400512    # 400512
-          - aegis_420248    # 420248
+          - ThirdEyeGod_ROC    # 420248
       - Combo:
           - aegis_400513    # 400513
-          - aegis_420248    # 420248
+          - ThirdEyeGod_ROC    # 420248
       - Combo:
           - aegis_400512    # 400512
-          - aegis_420249    # 420249
+          - Comp_ThirdEyeGod_ROC    # 420249
       - Combo:
           - aegis_400513    # 400513
-          - aegis_420249    # 420249
+          - Comp_ThirdEyeGod_ROC    # 420249
     Script: |
       bonus2 bDropAddRace,RC_All,getequiprefinerycnt(EQI_HEAD_TOP);
   - Combos:
