@@ -7399,6 +7399,7 @@
 	export_constant(IG_SELECT_DEC_PACK3);
 	export_constant(IG_SPENDID_CAPE_BR);
 	export_constant(IG_CHEMICAL_GLOVE_ROC);
+	export_constant(IG_THIRDEYEGOD_ROC);
 	export_constant(IG_RT_CH01_BULGASARI_A);
 	export_constant(IG_RT_CH01_BULGASARI_C);
 	export_constant(IG_RT_CH01_GLUTTO_A);
