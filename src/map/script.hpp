@@ -4,6 +4,9 @@
 #ifndef SCRIPT_HPP
 #define SCRIPT_HPP
 
+#include <atomic>
+#include <functional>
+
 #include <ryml_std.hpp>
 #include <ryml.hpp>
 
@@ -81,6 +84,8 @@
 #define data_isstring(data) ( (data)->type == C_STR || (data)->type == C_CONSTSTR )
 /// Returns if the script data is an int
 #define data_isint(data) ( (data)->type == C_INT )
+/// Returns if the script data is a table
+#define data_istable(data) ( (data)->type == C_TABLE )
 /// Returns if the script data is a reference
 #define data_isreference(data) ( (data)->type == C_NAME )
 /// Returns if the script data is a label
@@ -125,6 +130,7 @@
 
 #define not_server_variable(prefix) ( (prefix) != '$' && (prefix) != '.' && (prefix) != '\'')
 #define is_string_variable(name) ( (name)[strlen(name) - 1] == '$' )
+#define is_table_variable(name) ( (name)[strlen(name) - 1] == '%' )
 
 #define FETCH(n, t) \
 		if( script_hasdata(st,n) ) \
@@ -234,6 +240,7 @@ typedef enum c_op {
 	C_USERFUNC, // internal script function
 	C_USERFUNC_POS, // internal script function label
 	C_REF, // the next call to c_op2 should push back a ref to the left operand
+	C_TABLE, // table value (ref-counted)
 
 	// operators
 	C_OP3, // a ? b : c
@@ -264,12 +271,34 @@ typedef enum c_op {
 	C_SUB_PRE, // --a
 } c_op;
 
+// Table value stored inside a script_table field
+struct script_table_value {
+	enum ValueType { VT_INT, VT_STR, VT_TABLE } type;
+	int64 num;
+	std::string str;
+	struct script_table* table;
+
+	script_table_value() : type(VT_INT), num(0), table(nullptr) {}
+};
+
+// Script table — ref-counted associative container (string key → value)
+struct script_table {
+	std::unordered_map<std::string, struct script_table_value> fields;
+	std::atomic<uint32> refcount;
+};
+
+struct script_table* script_table_create();
+void script_table_addref(struct script_table* t);
+void script_table_release(struct script_table* t);
+struct script_table* script_table_deep_copy(const struct script_table* src);
+
 /**
  * Generic reg database abstraction to be used with various types of regs/script variables.
  */
 struct reg_db {
 	struct DBMap *vars;
 	struct DBMap *arrays;
+	struct DBMap *table_vars; // table variables (no DB_OPT_RELEASE_DATA, manually released)
 };
 
 struct script_retinfo {
@@ -286,6 +315,7 @@ struct script_data {
 		int64 num;
 		char *str;
 		struct script_retinfo* ri;
+		struct script_table* table;
 	} u;
 	struct reg_db *ref;
 };
@@ -2309,6 +2339,8 @@ void run_script(struct script_code *rootscript,int32 pos,int32 rid,int32 oid);
 
 bool set_reg_num(struct script_state* st, map_session_data* sd, int64 num, const char* name, const int64 value, struct reg_db *ref);
 bool set_reg_str(struct script_state* st, map_session_data* sd, int64 num, const char* name, const char* value, struct reg_db* ref);
+bool set_reg_table(struct script_state* st, map_session_data* sd, int64 num, const char* name, struct script_table* value, struct reg_db* ref);
+struct script_data* push_table(struct script_stack* stack, struct script_table* t);
 bool set_var_str(map_session_data *sd, const char* name, const char* val);
 bool clear_reg( struct script_state* st, map_session_data* sd, int64 num, const char* name, struct reg_db *ref );
 int64 conv_num64(struct script_state *st, struct script_data *data);
@@ -2325,6 +2357,12 @@ void run_script_main(struct script_state *st);
 void script_stop_scriptinstances(struct script_code *code);
 void script_free_code(struct script_code* code);
 void script_free_vars(struct DBMap *storage);
+void script_free_table_vars(struct DBMap *storage);
+
+// Helpers for C++ builtins to build tables
+void script_table_set_int(struct script_table* t, const char* key, int64 val);
+void script_table_set_str(struct script_table* t, const char* key, const char* val);
+void script_table_set_table(struct script_table* t, const char* key, struct script_table* val);
 struct script_state* script_alloc_state(struct script_code* rootscript, int32 pos, int32 rid, int32 oid);
 void script_free_state(struct script_state* st);
 
