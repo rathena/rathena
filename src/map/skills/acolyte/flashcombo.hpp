@@ -5,7 +5,7 @@
 
 #include "../skill_impl.hpp"
 
-class SkillFlashCombo : public StatusSkillImpl {
+class SkillFlashCombo : public SkillImpl {
 public:
 	SkillFlashCombo();
 
