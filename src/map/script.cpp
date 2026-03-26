@@ -926,7 +926,7 @@ static const char* skip_word(const char* p)
 	// postfix
 	if( *p == '$' )// string
 		p++;
-	else if( *p == '%' )// table
+	else if( *p == '@' )// table
 		p++;
 
 	return p;
@@ -1127,10 +1127,10 @@ const char* parse_variable(const char* p) {
 	// skip the variable where applicable
 	p = skip_word(p);
 
-	// Table chain assignment: .@t%.field = value -> table_set(.@t%, "field", value)
-	// .@t%.a%.b = value -> table_set(table_get(.@t%, "a"), "b", value)
-	if( type == C_NOP && p > var && *(p-1) == '%' && *p == '.' ) {
-		// Collect chain: parse .field1%.field2%.field3 ...
+	// Table chain assignment: .@t@.field = value -> table_set(.@t@, "field", value)
+	// .@t@.a@.b = value -> table_set(table_get(.@t@, "a"), "b", value)
+	if( type == C_NOP && p > var && *(p-1) == '@' && *p == '.' ) {
+		// Collect chain: parse .field1@.field2@.field3 ...
 		struct chain_entry { std::string name; char postfix; };
 		std::vector<chain_entry> chain;
 		const char* cp = p;
@@ -1142,9 +1142,9 @@ const char* parse_variable(const char* p) {
 			if (fs == cp) return nullptr; // not a valid chain
 			std::string fname(fs, cp - fs);
 			char postfix = 0;
-			if (*cp == '%' || *cp == '$') { postfix = *cp; cp++; }
+			if (*cp == '@' || *cp == '$') { postfix = *cp; cp++; }
 			chain.push_back({fname, postfix});
-			if (postfix != '%') break; // chain ends
+			if (postfix != '@') break; // chain ends
 		}
 
 		const char* after_chain = skip_space(cp);
@@ -1381,7 +1381,7 @@ const char* parse_simpleexpr(const char *p)
 			const char* key_end = p;
 
 			// skip optional type postfix ($ or %)
-			if (*p == '$' || *p == '%') p++;
+			if (*p == '$' || *p == '@') p++;
 
 			// push key as C_STR (without postfix)
 			add_scriptc(C_STR);
@@ -1529,9 +1529,9 @@ const char* parse_simpleexpr(const char *p)
 						if (fs == cp) break;
 						std::string fname(fs, cp - fs);
 						char postfix = 0;
-						if (*cp == '%' || *cp == '$') { postfix = *cp; cp++; }
+						if (*cp == '@' || *cp == '$') { postfix = *cp; cp++; }
 						arr_chain.push_back({fname, postfix});
-						if (postfix != '%') break;
+						if (postfix != '@') break;
 					}
 					if (!arr_chain.empty())
 						arr_chain_end = cp;
@@ -1584,9 +1584,9 @@ const char* parse_simpleexpr(const char *p)
 					disp_error_message("parse_simpleexpr: empty field name in table chain access", cp);
 				std::string fname(fs, cp - fs);
 				char postfix = 0;
-				if (*cp == '%' || *cp == '$') { postfix = *cp; cp++; }
+				if (*cp == '@' || *cp == '$') { postfix = *cp; cp++; }
 				chain.push_back({fname, postfix});
-				if (postfix != '%') break; // chain ends (not a table, can't go deeper)
+				if (postfix != '@') break; // chain ends (not a table, can't go deeper)
 			}
 
 			// Generate nested table_get/table_get$ bytecode
@@ -2917,7 +2917,7 @@ struct script_data *get_val_(struct script_state* st, struct script_data* data, 
 		}
 	}
 
-	if( postfix == '%' ) {// table variable
+	if( postfix == '@' ) {// table variable
 		struct script_table* t = nullptr;
 		struct reg_db* n_db = nullptr;
 

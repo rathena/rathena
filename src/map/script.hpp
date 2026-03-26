@@ -130,7 +130,7 @@
 
 #define not_server_variable(prefix) ( (prefix) != '$' && (prefix) != '.' && (prefix) != '\'')
 #define is_string_variable(name) ( (name)[strlen(name) - 1] == '$' )
-#define is_table_variable(name) ( (name)[strlen(name) - 1] == '%' )
+#define is_table_variable(name) ( (name)[strlen(name) - 1] == '@' )
 
 #define FETCH(n, t) \
 		if( script_hasdata(st,n) ) \
