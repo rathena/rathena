@@ -133171,3 +133171,220 @@ Body:
           - Index: 3
             Item: Coffee
             Rate: 100
+  - Group: RT_CH01_BULGASARI_A
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 200
+  - Group: RT_CH01_BULGASARI_C
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+            Amount: 3
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 500
+          - Index: 2
+            Item: Brown_Dia
+            Amount: 3
+  - Group: RT_CH01_GLUTTO_A
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 200
+  - Group: RT_CH01_GLUTTO_C
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+            Amount: 3
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 500
+          - Index: 2
+            Item: Brown_Dia
+            Amount: 3
+  - Group: RT_CH01_UNCANNY_A
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 100
+  - Group: RT_CH01_UNCANNY_C
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Imperfect_Rune
+            Amount: 150
+          - Index: 1
+            Item: Cubic_Dia
+            Amount: 3
+  - Group: RT_CH01_UNCANNY_2
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Imperfect_Rune
+            Amount: 80
+          - Index: 1
+            Item: Cubic_Dia
+            Amount: 2
+  - Group: RT_CH01_CHUNK_A
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 100
+  - Group: RT_CH01_CHUNK_C
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Imperfect_Rune
+            Amount: 150
+          - Index: 1
+            Item: Cubic_Dia
+            Amount: 3
+  - Group: RT_CH01_NOISE_A
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 100
+  - Group: RT_CH01_NOISE_C
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Imperfect_Rune
+            Amount: 150
+          - Index: 1
+            Item: Cubic_Dia
+            Amount: 3
+  - Group: RT_CH01_NOISE_2
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Imperfect_Rune
+            Amount: 80
+          - Index: 1
+            Item: Cubic_Dia
+            Amount: 2
+  - Group: RT_CH01_FLOWERS_A
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 100
+  - Group: RT_CH01_FLOWERS_C
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Imperfect_Rune
+            Amount: 150
+          - Index: 1
+            Item: Cubic_Dia
+            Amount: 3
+  - Group: RT_CH01_TOXIC_A
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 100
+  - Group: RT_CH01_TOXIC_C
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Imperfect_Rune
+            Amount: 150
+          - Index: 1
+            Item: Cubic_Dia
+            Amount: 3
+  - Group: RT_CH01_TOXIC_3
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Imperfect_Rune
+            Amount: 100
+          - Index: 1
+            Item: Cubic_Dia
+            Amount: 2
+  - Group: RT_CH01_YGGLEAF_A
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 100
+  - Group: RT_CH01_YGGLEAF_C
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Imperfect_Rune
+            Amount: 150
+          - Index: 1
+            Item: Cubic_Dia
+            Amount: 2
+  - Group: RT_CH01_YGGLEAF_3
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Imperfect_Rune
+            Amount: 100
+          - Index: 1
+            Item: Cubic_Dia
