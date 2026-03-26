@@ -90542,6 +90542,45 @@ Body:
       hateffect FOOTPRINT_EF_DIVINE_BLUE,true;
     UnEquipScript: |
       hateffect FOOTPRINT_EF_DIVINE_BLUE,false;
+  - Id: 314889
+    AegisName: BP9_Snow_Melee
+    Name: Snow Flower of Melee
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bAllStats,.@r/2;
+      if(.@r>=10){
+         bonus bShortAtkRate,5;
+         bonus2 bExpAddRace,RC_All,5;
+         bonus2 bDropAddRace,RC_All,5;
+      }
+  - Id: 314890
+    AegisName: BP9_Snow_Range
+    Name: Snow Flower of Range
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bAllStats,.@r/2;
+      if(.@r>=10){
+         bonus bLongAtkRate,5;
+         bonus2 bExpAddRace,RC_All,5;
+         bonus2 bDropAddRace,RC_All,5;
+      }
+  - Id: 314891
+    AegisName: BP9_Snow_Magic
+    Name: Snow Flower of Magic
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bAllStats,.@r/2;
+      if(.@r>=10){
+         bonus bMatkRate,5;
+         bonus2 bExpAddRace,RC_All,5;
+         bonus2 bDropAddRace,RC_All,5;
+      }
   - Id: 1000000
     AegisName: IDTest_event
     Name: IDTest event
