@@ -9565,7 +9565,7 @@ bool skill_check_condition_castend( map_session_data& sd, uint16 skill_id, uint1
 			else if( require.itemid[i] == ITEMID_BLUE_GEMSTONE )
 				clif_skill_fail( sd, skill_id, USESKILL_FAIL_BLUEJAMSTONE ); //Blue gemstone is required.
 			else if( require.itemid[i] == ITEMID_PAINT_BRUSH )
-				clif_skill_fail( sd, skill_id, USESKILL_FAIL_PAINTBRUSH ); //Paint32 brush is required.
+				clif_skill_fail( sd, skill_id, USESKILL_FAIL_PAINTBRUSH ); //Paint brush is required.
 			else if( require.itemid[i] == ITEMID_ANCILLA )
 				clif_skill_fail( sd, skill_id, USESKILL_FAIL_ANCILLA ); //Ancilla is required.
 			else
