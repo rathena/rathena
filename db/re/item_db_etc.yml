@@ -56141,6 +56141,27 @@ Body:
       bonus bMaxHPrate,25;
       bonus bMaxSPrate,-25;
       bonus2 bAddItemHealRate,517,150;
+  - Id: 300682
+    AegisName: ROS2025_Card
+    Name: Ragnarok Stars 2025 Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Both_Accessory: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bAllStats,5;
+      skill "AL_TELEPORT",1;
   - Id: 300715
     AegisName: aegis_300715
     Name: As Card    # !todo check english name
