@@ -472,7 +472,7 @@ void chclif_mmo_send099d( int32 fd, struct char_session_data& sd ){
 
 
 /*
- * Function to choose wich kind of charlist to send to client depending on his version
+ * Function to choose which kind of charlist to send to client depending on his version
  */
 void chclif_mmo_char_send( int32 fd, char_session_data& sd ){
 #if PACKETVER >= 20130000

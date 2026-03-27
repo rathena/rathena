@@ -344,18 +344,18 @@
 	// Output results.
 	mes "-- Result of Card Separation --";
 	if (.@equip_safe) {
-		mes "Crack has not occured during the card separation process.";
+		mes "Crack has not occurred during the card separation process.";
 		mes "^0000FFEquipment separation is normal.^000000";
 	} else {
-		mes "Crack has occured during the card separation process.";
+		mes "Crack has occurred during the card separation process.";
 		mes "Equipment has been damaged. ^ff0000Unrecoverable.^000000";
 	}
 	mes "-------------------";
 	if (!.@card_break) {
-		mes "Erosion of surface has not occured during the card separation process.";
+		mes "Erosion of surface has not occurred during the card separation process.";
 		mes "^0000ffCard separation has succeeded.^000000";
 	} else {
-		mes "Erosion of surface has occured during the card separation process.";
+		mes "Erosion of surface has occurred during the card separation process.";
 		mes "Card has been damaged. ^ff0000Unrecoverable.^000000";
 	}
 	next;

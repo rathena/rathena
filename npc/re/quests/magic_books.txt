@@ -201,7 +201,7 @@ geffen_in,176,105,4	script	Master Velofos	1_M_WIZARD,{
 		mes "It's like water that needs a bowl to stay in place.";
 		next;
 		mes "[Master Velofos]";
-		mes "The problem is when you try to forcefully cast a spell that you haven't learned. It'll definately backfire on you.";
+		mes "The problem is when you try to forcefully cast a spell that you haven't learned. It'll definitely backfire on you.";
 		next;
 		mes "[Master Velofos]";
 		mes "Of course, the damage won't be severe: you'll fall asleep or be thrown into confusion. This is all because there's a conflict between your Magic Book and the force of Magic Binding when you're trying to summon and hold a unlearned spell.";

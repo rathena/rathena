@@ -18,7 +18,7 @@
 //std::recursive_mutex> duel_list_mutex; //preparation for multithread
 std::unordered_map<size_t,struct duel> duel_list;
 
-std::unordered_map<size_t,struct duel> duel_get_list() { return duel_list; } //this could be exposed but not really necessarly, (hiden impl)
+std::unordered_map<size_t,struct duel> duel_get_list() { return duel_list; } //this could be exposed but not really necessarily, (hiden impl)
 bool duel_exist( size_t did ) { return duel_list.find( did ) != duel_list.end(); }
 duel& duel_get_duelid(size_t did) { return duel_list.at(did); }
 

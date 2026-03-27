@@ -107,7 +107,7 @@ enum e_inventory_type{
 * @return item type. For IT_PETEGG will be displayed as IT_ARMOR. If Shadow Weapon of IT_SHADOWGEAR as IT_WEAPON and else as IT_ARMOR
 */
 static inline int32 itemtype(t_itemid nameid) {
-	struct item_data* id = itemdb_search(nameid); //Use itemdb_search, so non-existance item will use dummy data and won't crash the server. bugreport:8468
+	struct item_data* id = itemdb_search(nameid); //Use itemdb_search, so non-existence item will use dummy data and won't crash the server. bugreport:8468
 	int32 type = id->type;
 	if( type == IT_SHADOWGEAR ) {
 		if( id->equip&EQP_SHADOW_WEAPON )
@@ -5422,9 +5422,9 @@ static void clif_graffiti( skill_unit& unit, send_target target, block_list& bl 
 
 /// Notifies the client of a skill unit.
 /// 011f <id>.L <creator id>.L <x>.W <y>.W <unit id>.B <visible>.B (ZC_SKILL_ENTRY)
-/// 08c7 <lenght>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.B <range>.W <visible>.B (ZC_SKILL_ENTRY3)
-/// 099f <lenght>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.L <range>.W <visible>.B (ZC_SKILL_ENTRY4)
-/// 09ca <lenght>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.L <range>.B <visible>.B <skill level>.B (ZC_SKILL_ENTRY5)
+/// 08c7 <length>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.B <range>.W <visible>.B (ZC_SKILL_ENTRY3)
+/// 099f <length>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.L <range>.W <visible>.B (ZC_SKILL_ENTRY4)
+/// 09ca <length>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.L <range>.B <visible>.B <skill level>.B (ZC_SKILL_ENTRY5)
 void clif_getareachar_skillunit(block_list *bl, skill_unit *unit, enum send_target target, bool visible) {
 	int32 header = 0, unit_id = 0, pos = 0, fd = 0, len = -1;
 	unsigned char buf[128];
@@ -5505,7 +5505,7 @@ void clif_getareachar_skillunit(block_list *bl, skill_unit *unit, enum send_targ
 		clif_changemapcell( unit->m, unit->x, unit->y, 5, SELF, bl );
 }
 
-/// 09ca <lenght>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.L <range>.B <visible>.B <skill level>.B (ZC_SKILL_ENTRY5)
+/// 09ca <length>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.L <range>.B <visible>.B <skill level>.B (ZC_SKILL_ENTRY5)
 void clif_skill_unit_test(block_list *bl, int16 x, int16 y, int32 unit_id, int16 range, int16 skill_lv) {
 	unsigned char buf[128];
 
@@ -6215,7 +6215,7 @@ void clif_skill_poseffect( block_list& bl, uint16 skill_id, uint16 skill_lv, uin
 
 /// Presents a list of available warp destinations.
 /// 011c <skill id>.W { <map name>.16B }*4 (ZC_WARPLIST)
-/// 0abe <lenght>.W <skill id>.W { <map name>.16B }*? (ZC_WARPLIST2)
+/// 0abe <length>.W <skill id>.W { <map name>.16B }*? (ZC_WARPLIST2)
 void clif_skill_warppoint( map_session_data& sd, uint16 skill_id, uint16 skill_lv, std::vector<std::string>& maps ){
 	if(maps.empty())
 		return;
@@ -8628,7 +8628,7 @@ void clif_mvp_noitem( const map_session_data& sd ){
 ///     0 = "Guild has been created."
 ///     1 = "You are already in a Guild."
 ///     2 = "That Guild Name already exists."
-///     3 = "You need the neccessary item to create a Guild."
+///     3 = "You need the necessary item to create a Guild."
 void clif_guild_created( const map_session_data& sd, int32 flag ){
 	PACKET_ZC_RESULT_MAKE_GUILD p = {};
 
@@ -10438,7 +10438,7 @@ void clif_msg_color( const map_session_data& sd, e_clif_messages msg_id, uint32 
 /// Formats: false - <packet id>.w <packet len>.w (<name> : <message>).?B 00
 ///          true - <packet id>.w <packet len>.w <name>.24B <message>.?B 00
 static bool clif_process_message(map_session_data* sd, bool whisperFormat, char* out_name, char* out_message, char* out_full_message ){
-	const char* seperator = " : ";
+	const char* separator = " : ";
 	int32 fd;
 	struct s_packet_db* info;
 	uint16 packetLength, inputLength;
@@ -10483,12 +10483,12 @@ static bool clif_process_message(map_session_data* sd, bool whisperFormat, char*
 		messageLength = inputLength - NAME_LENGTH;		
 	}else{
 		// name and message are separated by ' : '
-		size_t seperatorLength = strnlen( seperator, NAME_LENGTH );
+		size_t separatorLength = strnlen( separator, NAME_LENGTH );
 
 		nameLength = strnlen( sd->status.name, NAME_LENGTH - 1 ); // name length (w/o zero byte)
 		
 		// check if there's enough data provided
-		if( inputLength < nameLength + seperatorLength + 1 ){
+		if( inputLength < nameLength + separatorLength + 1 ){
 			ShowWarning("clif_process_message: Received malformed packet from player '%s' (no username data)!\n", sd->status.name);
 			return false;
 		}
@@ -10497,7 +10497,7 @@ static bool clif_process_message(map_session_data* sd, bool whisperFormat, char*
 
 		// validate name
 		if( strncmp( name, sd->status.name, nameLength ) || // the text must start with the speaker's name
-			strncmp( name + nameLength, seperator, seperatorLength ) ) // followed by the seperator
+			strncmp( name + nameLength, separator, separatorLength ) ) // followed by the separator
 		{
 			//Hacked message, or infamous "client desynch" issue where they pick one char while loading another.
 			ShowWarning("clif_process_message: Player '%s' sent a message using an incorrect name! Forcing a relog...\n", sd->status.name);
@@ -10505,8 +10505,8 @@ static bool clif_process_message(map_session_data* sd, bool whisperFormat, char*
 			return false;
 		}
 
-		message = input + nameLength + seperatorLength;
-		messageLength = inputLength - nameLength - seperatorLength;
+		message = input + nameLength + separatorLength;
+		messageLength = inputLength - nameLength - separatorLength;
 	}
 
 #if PACKETVER < 20151001
@@ -10548,7 +10548,7 @@ static bool clif_process_message(map_session_data* sd, bool whisperFormat, char*
 		sprintf( out_full_message, "%-24s%s", out_name, out_message );
 		out_full_message[nameLength] = '\0';
 	}else{
-		sprintf( out_full_message, "%s%s%s", out_name, seperator, out_message );
+		sprintf( out_full_message, "%s%s%s", out_name, separator, out_message );
 	}
 
 	if( is_atcommand( fd, sd, out_message, 1 )  )
@@ -12473,7 +12473,7 @@ void clif_parse_ChatLeave(int32 fd, map_session_data* sd)
 	chat_leavechat(sd,0);
 }
 
-// Handles notifying asker and rejecter of what has just ocurred.
+// Handles notifying asker and rejecter of what has just occurred.
 // Type is used to determine the correct msg_txt to use
 void clif_noask_sub( const map_session_data& sd, const map_session_data& tsd, int32 type ){
 	char output[CHAT_SIZE_MAX];
@@ -19669,7 +19669,7 @@ void clif_parse_debug(int32 fd,map_session_data *sd)
 }
 /*==========================================
  * Server tells client to display a window similar to Magnifier (item) one
- * Server populates the window with avilable elemental converter options according to player's inventory
+ * Server populates the window with available elemental converter options according to player's inventory
  *------------------------------------------*/
 void clif_elementalconverter_list( map_session_data& sd ){
 	PACKET_ZC_MAKINGARROW_LIST* p = reinterpret_cast<PACKET_ZC_MAKINGARROW_LIST*>( packet_buffer );

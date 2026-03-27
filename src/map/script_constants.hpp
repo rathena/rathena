@@ -66,7 +66,7 @@
 	export_constant(JOB_CRUSADER2);
 	export_constant(JOB_WEDDING);
 	export_constant(JOB_SUPER_NOVICE);
-	// For backwards compatability
+	// For backwards compatibility
 	export_constant2("Job_SuperNovice",JOB_SUPER_NOVICE); // TODO: Refactor NPCs to use the new constant
 	export_constant(JOB_GUNSLINGER);
 	export_constant(JOB_NINJA);
@@ -935,7 +935,7 @@
 	// TODO: check why we didnt have floor and enable it
 	//export_constant(LOOK_FLOOR);
 
-	// For backwards compatability - might be removed in the near future
+	// For backwards compatibility - might be removed in the near future
 	export_constant2("VAR_HEAD",LOOK_HAIR);
 	export_constant2("VAR_WEAPON",LOOK_WEAPON);
 	export_constant2("VAR_HEAD_TOP",LOOK_HEAD_TOP); // This one was actually pointing to LOOK_HEAD_BOTTOM until now, so we might be safe to remove them anyway(since we got no bug report until today)
@@ -3872,7 +3872,7 @@
 	export_constant(PETINFO_EGGID);
 	export_constant(PETINFO_FOODID);
 
-	// For backwards compatability - might be removed in the near future
+	// For backwards compatibility - might be removed in the near future
 	export_constant2("PET_ID",PETINFO_ID);
 	export_constant2("PET_CLASS",PETINFO_CLASS);
 	export_constant2("PET_NAME",PETINFO_NAME);

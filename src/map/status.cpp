@@ -13787,7 +13787,7 @@ int32 status_change_end( block_list* bl, enum sc_type type, int32 tid ){
 			vending_closevending(sd);
 			map_quit(sd);
 			// Because map_quit calls status_change_end with tid -1
-			// from here it's not neccesary to continue
+			// from here it's not necessary to continue
 			return 1;
 			break;
 		case SC_STOP:

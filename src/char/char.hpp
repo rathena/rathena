@@ -185,7 +185,7 @@ struct CharServ_Config {
 	int32 save_log; // show loading/saving messages
 	int32 log_char;	// loggin char or not [devil]
 	int32 log_inter;	// loggin inter or not [devil]
-	int32 char_check_db;	///cheking sql-table at begining ?
+	int32 char_check_db;	///checking sql-table at beginning ?
 
 	struct s_point_str start_point[MAX_STARTPOINT], start_point_doram[MAX_STARTPOINT]; // Initial position the player will spawn on the server
 	int16 start_point_count, start_point_count_doram; // Number of positions read

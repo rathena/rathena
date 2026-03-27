@@ -1202,7 +1202,7 @@ struct s_skill_unit_layout *skill_get_unit_layout(uint16 skill_id, uint16 skill_
 int32 skill_area_temp[8];
 
 /*==========================================
- * Add effect to skill when hit succesfully target
+ * Add effect to skill when hit successfully target
  *------------------------------------------*/
 int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id, uint16 skill_lv, int32 attack_type, enum damage_lv dmg_lv, t_tick tick ){
 	nullpo_ret(src);

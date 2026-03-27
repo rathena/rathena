@@ -16,7 +16,7 @@ void SkillSongOfMana::castendNoDamageId(block_list *src, block_list *target, uin
 	sc_type type = skill_get_sc(getSkillId());
 	map_session_data* sd = BL_CAST(BL_PC, src);
 
-	if( flag&1 ) {	// These affect to to all party members near the caster.
+	if( flag&1 ) {	// These affect all party members near the caster.
 		if( sc && sc->getSCE(type) ) {
 			sc_start2(src,target,type,100,skill_lv,pc_checkskill(sd, WM_LESSON),skill_get_time(getSkillId(),skill_lv));
 		}
