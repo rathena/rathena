@@ -1,0 +1,18 @@
+[Unit]
+Description=Rathena Map Server
+After=network-online.target remote-fs.target nss-lookup.target
+Wants=network-online.target
+#You might wanna edit the next line if your units are running in different servers instead of all in a single server.
+Requires=char-rathena.service login-rathena.service
+
+[Service]  
+Type=single
+PIDFile=/run/map-serv.pid
+User=rathena
+ExecStart=${replacewithpath}/map-server
+Restart=always
+RestartSec=3
+LimitCORE=infinity
+
+[Install]
+WantedBy=multi-user.target
