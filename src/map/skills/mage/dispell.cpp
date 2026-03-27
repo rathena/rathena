@@ -23,7 +23,7 @@ void SkillDispell::castendNoDamageId(block_list *src, block_list *target, uint16
 			return; // Outside PvP it should only affect party members and no skill fail message
 		clif_skill_nodamage(src,*target,getSkillId(),skill_lv);
 		if((dstsd && (dstsd->class_&MAPID_SECONDMASK) == MAPID_SOUL_LINKER)
-			|| (tsc && tsc->getSCE(SC_SPIRIT) && tsc->getSCE(SC_SPIRIT)->val2 == SL_ROGUE) //Rogue's spirit defends againt32 dispel.
+			|| (tsc && tsc->getSCE(SC_SPIRIT) && tsc->getSCE(SC_SPIRIT)->val2 == SL_ROGUE) //Rogue's spirit defends against dispel.
 			|| rnd()%100 >= 50+10*skill_lv)
 		{
 			if (sd)
