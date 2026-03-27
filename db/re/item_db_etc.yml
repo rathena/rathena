@@ -90542,6 +90542,45 @@ Body:
       hateffect FOOTPRINT_EF_DIVINE_BLUE,true;
     UnEquipScript: |
       hateffect FOOTPRINT_EF_DIVINE_BLUE,false;
+  - Id: 314889
+    AegisName: BP9_Snow_Melee
+    Name: Snow Flower of Melee
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bAllStats,.@r/2;
+      if(.@r>=10){
+         bonus bShortAtkRate,5;
+         bonus2 bExpAddRace,RC_All,5;
+         bonus2 bDropAddRace,RC_All,5;
+      }
+  - Id: 314890
+    AegisName: BP9_Snow_Range
+    Name: Snow Flower of Range
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bAllStats,.@r/2;
+      if(.@r>=10){
+         bonus bLongAtkRate,5;
+         bonus2 bExpAddRace,RC_All,5;
+         bonus2 bDropAddRace,RC_All,5;
+      }
+  - Id: 314891
+    AegisName: BP9_Snow_Magic
+    Name: Snow Flower of Magic
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bAllStats,.@r/2;
+      if(.@r>=10){
+         bonus bMatkRate,5;
+         bonus2 bExpAddRace,RC_All,5;
+         bonus2 bDropAddRace,RC_All,5;
+      }
   - Id: 1000000
     AegisName: IDTest_event
     Name: IDTest event
@@ -99545,6 +99584,16 @@ Body:
     Name: Spirit Handler Stone II (Garment)
     Type: Etc
     Weight: 100
+  - Id: 1001971
+    AegisName: DF_Wish_Coin
+    Name: Ding Ding Wish Coin
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
   - Id: 1001972
     AegisName: Ch1_Root_Coin
     Name: Root Gold Coin    # !todo check english name
@@ -99965,6 +100014,18 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+  - Id: 1002022
+    AegisName: Extended_Test_Pass
+    Name: Extended Test Pass
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
   - Id: 1002034
     AegisName: Dimension_Energy_BL
     Name: Azure Dimensional Energy    # !todo check english name
@@ -100057,6 +100118,101 @@ Body:
     AegisName: aegis_1002069
     Name: Munch Coin    # !todo check english name
     Type: Etc
+  - Id: 1002051
+    AegisName: E_EP18_Enc_Acc_3
+    Name: "[Event] EP18 Enchant Selection Accessory Slot 3"
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002052
+    AegisName: E_EP18_Enc_Armor_3
+    Name: "[Event] EP18 Enchant Selection Armor Slot 3"
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002053
+    AegisName: E_Pray_Wish_Ticket
+    Name: "[Event] Prayer Wish Ticket"
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002054
+    AegisName: H_Extended_Evt_Ticket
+    Name: Welcome 2nd High Extended Classes Ticket
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002055
+    AegisName: E_Amet_Fragment
+    Name: "[Event] Purified Amethyst Fragment"
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002059
+    AegisName: Farmhouse_Coin
+    Name: "[Event] Farmhouse Coin"
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002060
+    AegisName: E_Chicken_Egg
+    Name: "[Event] Chicken Egg"
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002093
+    AegisName: E_H_Enchant_Ticket_TH2
+    Name: "[Event] High Enchant Ticket"
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
   - Id: 1002094
     AegisName: aegis_1002094
     Name: Fresh Meat    # !todo check english name
@@ -100248,6 +100404,42 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 1002120
+    AegisName: 5th_Gem_Pick_Pass
+    Name: "[5th] Gem Pick Ticket"
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002121
+    AegisName: 5th_Gem_Shop_Pass
+    Name: "[5th] Gem Pick Shop Ticket"
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002122
+    AegisName: 5th_Gem_Shop_S_Pass
+    Name: "[5th] Gem Pick Shop Special Ticket"
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
   - Id: 1002137
     AegisName: Pow_Meteor_Extract
     Name: Power Meteorite Extract    # !todo check english name
@@ -100993,6 +101185,15 @@ Body:
     AegisName: aegis_1002515
     Name: Job Change Map    # !todo check english name
     Type: Etc
+  - Id: 1002607
+    AegisName: Hero_Will_TH
+    Name: Will of the Hero
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
   - Id: 1002623
     AegisName: aegis_1002623
     Name: Blue Star Footprints (Garment)
@@ -101003,6 +101204,28 @@ Body:
     Name: Sacred Blue Light Footprints (Garment)    # !todo check english name
     Type: Etc
     Weight: 100
+  - Id: 1002637
+    AegisName: ZenyLucky_Coin
+    Name: Zeny Lucky Coin
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002638
+    AegisName: Lucky_Diamond
+    Name: Lucky Diamond
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
   - Id: 1002640
     AegisName: VIP_Web_Ticket
     Name: Premium Black Ticket    # !todo check english name
@@ -101116,6 +101339,27 @@ Body:
       NoMail: true
       NoAuction: true
       NoGuildStorage: true
+  - Id: 1002673
+    AegisName: Scroll_Ticket_TW
+    Name: Gacha Ticket Stub    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002677
+    AegisName: Issgard_Snow_TH
+    Name: Issgard Snow Crystal
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
   - Id: 1002678
     AegisName: aegis_1002678
     Name: Crispy Yongjirak Meat    # !todo check english name
@@ -101297,6 +101541,41 @@ Body:
       NoMail: true
       NoAuction: true
       NoGuildStorage: true
+  - Id: 1002713
+    AegisName: Herosria_Coupon
+    Name: Herosria Certificate
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002714
+    AegisName: Herosria_Coin_TH
+    Name: Herosria Coin
+    Type: Etc
+    Trade:
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002727
+    AegisName: Cos_Enchant_C_Ticket
+    Name: Clothing Enchantment Transfer Ticket    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+  - Id: 1002741
+    AegisName: Phantom_Fragment
+    Name: Phantom Fragment
+    Type: Etc
+    Trade:
+      NoMail: true
+      NoAuction: true
   - Id: 1002751
     AegisName: Ch2_Kindle_Hal_B
     Name: Blue Paper    # !todo check english name
@@ -101333,6 +101612,13 @@ Body:
       NoMail: true
       NoAuction: true
       NoGuildStorage: true
+  - Id: 1002760
+    AegisName: Energy_Xtal_CM_TW
+    Name: Energy Crystal (Variable Magic)    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
   - Id: 1002777
     AegisName: STR_Stone_TH
     Name: "[100%] Purified Stone Garment(STR)"
@@ -101539,6 +101825,13 @@ Body:
       NoDrop: true
       NoMail: true
       NoAuction: true
+  - Id: 1002827
+    AegisName: Energy_Xtal_RR_TW
+    Name: Energy Crystal (Ring of Restoration)    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
   - Id: 1200000
     AegisName: IDTest_arrow
     Name: IDTest arrow
