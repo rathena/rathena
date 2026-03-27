@@ -59311,3 +59311,10 @@ Body:
       if (getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
          bonus2 bMagicAddEle,Ele_All,10;
       }
+  - Combos:
+      - Combo:
+          - ROS2025_Ring_TH   # 490801
+          - ROS2025_Card   # 300682
+    Script: |
+      bonus2 bExpAddRace,RC_All,5;
+      bonus bFixedCast,-200;
