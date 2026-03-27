@@ -18,3 +18,7 @@ int64 SkillProminenceKick::splashDamage(block_list* src, block_list* target, uin
 
 	return dmg;
 }
+
+void SkillProminenceKick::modifyElement(int32& element, const block_list& src, int32 flag) const {
+	element = ELE_FIRE;
+}
