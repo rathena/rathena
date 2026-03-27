@@ -6,7 +6,7 @@
 #include "map/pc.hpp"
 #include "map/status.hpp"
 
-SkillFlashCombo::SkillFlashCombo() : StatusSkillImpl(SR_FLASHCOMBO) {
+SkillFlashCombo::SkillFlashCombo() : SkillImpl(SR_FLASHCOMBO) {
 }
 
 void SkillFlashCombo::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
@@ -18,7 +18,8 @@ void SkillFlashCombo::castendNoDamageId(block_list *src, block_list *target, uin
 	if (sd) // Disable attacking/acting/moving for skill's duration.
 		sd->ud.attackabletime = sd->canuseitem_tick = sd->ud.canact_tick = tick + delay[2];
 
-	StatusSkillImpl::castendNoDamageId(src, target, skill_lv, tick, flag);
+	clif_skill_nodamage(src, *target, getSkillId(), skill_lv,
+		sc_start(src, src, skill_get_sc(getSkillId()), 100, skill_lv, skill_get_time(getSkillId(), skill_lv)));
 
 	for (int32 i = 0; i < ARRAYLENGTH(combo); i++)
 		skill_addtimerskill(src,tick + delay[i],target->id,0,0,combo[i],skill_lv,BF_WEAPON,flag|SD_LEVEL);
