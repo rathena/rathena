@@ -9968,16 +9968,16 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
     EndOnEnd:
-      ENRAGE_WOLF: true
-      BLOOD_HOWLING: true
-      IRON_HOWLING: true
-      ALPHA_PHASE: true
-      PULSE_OF_MADNESS: true
-      PRIMAL_CLAW: true
-      FERAL_CLAW: true
-      INSANE: true
-      INSANE2: true
-      INSANE3: true
+      Enrage_Wolf: true
+      Blood_Howling: true
+      Iron_Howling: true
+      Alpha_Phase: true
+      Pulse_Of_Madness: true
+      Primal_Claw: true
+      Feral_Claw: true
+      Insane: true
+      Insane2: true
+      Insane3: true
     Script: |
       bonus bMaxHPrate, 10;
   - Status: Enrage_Wolf
@@ -10002,13 +10002,13 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
     EndOnEnd:
-      ENRAGE_RAPTOR: true
-      PREENING: true
-      WIND_VEIL: true
-      FLIP_FLAP: true
-      APEX_PHASE: true
-      ZEPHYR_CHARGE: true
-      ZEPHYR_LINK: true
+      Enrage_Raptor: true
+      Preening: true
+      Wind_Veil: true
+      Flip_Flap: true
+      Apex_Phase: true
+      Zephyr_Charge: true
+      Zephyr_Link: true
     Script: |
       bonus bSpeedRate, 25;
   - Status: Enrage_Raptor
@@ -10192,7 +10192,7 @@ Body:
       bonus bLongAtkRate, .@lv * 6;
       bonus bCritical, .@lv * 3;
     EndOnStart:
-      FLIP_FLAP_TARGET: true
+      Flip_Flap_Target: true
   - Status: Flip_Flap_Target
     Icon: EFST_FLIP_FLAP_TARGET
     Script: |
@@ -10200,7 +10200,7 @@ Body:
       bonus bLongAtkRate, .@lv * 6;
       bonus bCritical, .@lv * 3;
     Fail:
-      FLIP_FLAP: true
+      Flip_Flap: true
   - Status: Apex_Phase
     Icon: EFST_APEX_PHASE
     Flags:

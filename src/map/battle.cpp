@@ -3139,26 +3139,26 @@ static bool is_attack_critical(struct Damage* wd, block_list *src, const block_l
 			case AT_FERAL_CLAW:
 			case AT_ALPHA_CLAW:
 			case AT_SAVAGE_LUNGE:
-				case AT_FRENZY_FANG:
-					if( sc == nullptr ){
-						return false;
-					}
-					if( !sc->hasSCE( SC_ALPHA_PHASE ) && !sc->hasSCE( SC_INSANE3 ) ){
-						return false;
-					}
-					break;
+			case AT_FRENZY_FANG:
+				if( sc == nullptr ){
+					return false;
+				}
+				if( !sc->hasSCE( SC_ALPHA_PHASE ) && !sc->hasSCE( SC_INSANE3 ) ){
+					return false;
+				}
+				break;
 
 			case AT_PINION_SHOT:
 			case AT_QUILL_SPEAR:
 			case AT_QUILL_SPEAR_S:
-				case AT_TEMPEST_FLAP:
-					if( sc == nullptr ){
-						return false;
-					}
-					if( !sc->hasSCE( SC_APEX_PHASE ) ){
-						return false;
-					}
-					break;
+			case AT_TEMPEST_FLAP:
+				if( sc == nullptr ){
+					return false;
+				}
+				if( !sc->hasSCE( SC_APEX_PHASE ) ){
+					return false;
+				}
+				break;
 		}
 		if(tsd && tsd->bonus.critical_def)
 			cri = cri * ( 100 - tsd->bonus.critical_def ) / 100;
