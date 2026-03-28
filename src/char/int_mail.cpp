@@ -112,7 +112,7 @@ int32 mail_savemessage(struct mail_message* msg)
 		msg->id = (int32)stmt.LastInsertId();
 	
 	StringBuf_Clear(&buf);
-	StringBuf_Printf(&buf,"INSERT INTO `%s` (`id`, `index`, `amount`, `nameid`, `refine`, `attribute`, `identify`, `unique_id`, `bound`, `enchantgrade`", schema_config.mail_attachment_db);
+	StringBuf_Printf(&buf,"INSERT INTO `%s` (`id`, `index`, `amount`, `nameid`, `refine`, `attribute`, `identify`, `unique_id`, `bound`, `enchantgrade`", schema_config.mail_attachments_db);
 	for (j = 0; j < MAX_SLOTS; j++)
 		StringBuf_Printf(&buf, ", `card%d`", j);
 	for (j = 0; j < MAX_ITEM_RDM_OPT; ++j) {
@@ -204,7 +204,7 @@ bool mail_loadmessage(int32 mail_id, struct mail_message* msg)
 		StringBuf_Printf(&buf, ", `option_val%d`", j);
 		StringBuf_Printf(&buf, ", `option_parm%d`", j);
 	}
-	StringBuf_Printf(&buf, " FROM `%s`", schema_config.mail_attachment_db);
+	StringBuf_Printf(&buf, " FROM `%s`", schema_config.mail_attachments_db);
 	StringBuf_Printf(&buf, " WHERE `id` = '%d'", mail_id);
 	StringBuf_AppendStr(&buf, " ORDER BY `index` ASC");
 	StringBuf_Printf(&buf, " LIMIT %d", MAIL_MAX_ITEM);
@@ -360,7 +360,7 @@ void mapif_parse_Mail_read(int32 fd)
  * Client Attachment Request
  *------------------------------------------*/
 bool mail_DeleteAttach(int32 mail_id){
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `id` = '%d'", schema_config.mail_attachment_db, mail_id ) ){
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `id` = '%d'", schema_config.mail_attachments_db, mail_id ) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}

@@ -288,7 +288,7 @@ int32 chmapif_parse_askscdata(int32 fd){
 		aid = RFIFOL(fd,2);
 		cid = RFIFOL(fd,6);
 		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT type, tick, val1, val2, val3, val4 from `%s` WHERE `account_id` = '%d' AND `char_id`='%d'",
-			schema_config.scdata_db, aid, cid) )
+			schema_config.sc_data_db, aid, cid) )
 		{
 			Sql_ShowDebug(sql_handle);
 			return 1;
@@ -692,7 +692,7 @@ int32 chmapif_parse_askrmfriend(int32 fd){
 		char_id = RFIFOL(fd,2);
 		friend_id = RFIFOL(fd,6);
 		if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id`='%d' AND `friend_id`='%d' LIMIT 1",
-			schema_config.friend_db, char_id, friend_id) ) {
+			schema_config.friends_db, char_id, friend_id) ) {
 			Sql_ShowDebug(sql_handle);
 			return 1;
 		}
@@ -955,7 +955,7 @@ int32 chmapif_parse_save_scdata(int32 fd){
 		count = RFIFOW(fd, 12);
 
 		// Whatever comes from the mapserver, now is the time to drop previous entries
-		if( Sql_Query( sql_handle, "DELETE FROM `%s` where `account_id` = %d and `char_id` = %d;", schema_config.scdata_db, aid, cid ) != SQL_SUCCESS ){
+		if( Sql_Query( sql_handle, "DELETE FROM `%s` where `account_id` = %d and `char_id` = %d;", schema_config.sc_data_db, aid, cid ) != SQL_SUCCESS ){
 			Sql_ShowDebug( sql_handle );
 		}
 		else if( count > 0 )
@@ -965,7 +965,7 @@ int32 chmapif_parse_save_scdata(int32 fd){
 			int32 i;
 
 			StringBuf_Init(&buf);
-			StringBuf_Printf(&buf, "INSERT INTO `%s` (`account_id`, `char_id`, `type`, `tick`, `val1`, `val2`, `val3`, `val4`) VALUES ", schema_config.scdata_db);
+			StringBuf_Printf(&buf, "INSERT INTO `%s` (`account_id`, `char_id`, `type`, `tick`, `val1`, `val2`, `val3`, `val4`) VALUES ", schema_config.sc_data_db);
 			for( i = 0; i < count; ++i )
 			{
 				memcpy (&data, RFIFOP(fd, 14+i*sizeof(struct status_change_data)), sizeof(struct status_change_data));
