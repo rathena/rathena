@@ -3551,6 +3551,10 @@
 	export_constant(RC2_GLAST_HEIM_ABYSS);
 	export_constant(RC2_DESTROYED_VALKYRIE_REALM);
 	export_constant(RC2_ENCROACHED_GEPHENIA);
+	export_constant(RC2_ILLUSION_TEDDY_BEAR);
+	export_constant(RC2_ILLUSION_TWINS);
+	export_constant(RC2_ILLUSION_UNDERWATER);
+	export_constant(RC2_ILLUSION_LABYRINTH);
 	export_deprecated_constant(RC2_MAX);	// Mar. 2025
 
 	/* monster ai */
