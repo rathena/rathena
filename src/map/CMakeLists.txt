@@ -13,6 +13,13 @@ file(GLOB_RECURSE MAP_HEADERS ${MAP_SOURCE_DIR}/*.hpp)
 list(FILTER MAP_HEADERS EXCLUDE REGEX ".*/skills/.*")
 file(GLOB_RECURSE MAP_SOURCES ${MAP_SOURCE_DIR}/*.cpp)
 list(FILTER MAP_SOURCES EXCLUDE REGEX ".*/skills/.*")
+# Add skill factory/impl files as separate translation units per job category
+# Individual skill files are NOT compiled directly - they are #included by their job factory TUs
+file(GLOB SKILL_FACTORY_SOURCES ${MAP_SOURCE_DIR}/skills/skill_factory.cpp ${MAP_SOURCE_DIR}/skills/skill_impl.cpp)
+file(GLOB SKILL_JOB_FACTORY_SOURCES ${MAP_SOURCE_DIR}/skills/*/skill_factory_*.cpp)
+list(APPEND MAP_SOURCES ${SKILL_FACTORY_SOURCES} ${SKILL_JOB_FACTORY_SOURCES})
+file(GLOB_RECURSE SKILL_HEADERS ${MAP_SOURCE_DIR}/skills/*.hpp)
+list(APPEND MAP_HEADERS ${SKILL_HEADERS})
 set( DEPENDENCIES common ryml)
 set( LIBRARIES ${GLOBAL_LIBRARIES} ${MYSQL_LIBRARIES} )
 set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${COMMON_BASE_INCLUDE_DIRS} ${RA_INCLUDE_DIRS} ${MYSQL_INCLUDE_DIRS} )
