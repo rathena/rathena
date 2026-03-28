@@ -18072,6 +18072,34 @@ Body:
     HitCount: 1
     Duration1: 60000
     Status: Relieve_off
+  - Id: 773
+    Name: NPC_LOCKON_LASER
+    Description: Lockon Laser
+    MaxLevel: 5
+    TargetType: Attack
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsNpc: true
+    HitCount: 1
+    Duration1: 12000
+    Status: Lockon_Laser
+  - Id: 774
+    Name: NPC_LOCKON_LASER_ATK
+    Description: Lockon Laser Attack
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Attack
+    DamageFlags:
+      IgnoreFlee: true
+      IgnoreDefense: true
+      IgnoreDefCard: true
+      IgnoreMres: true
+    Flags:
+      IsNpc: true
+    Hit: Single
+    HitCount: 1
+    SplashArea: 3
   - Id: 776
     Name: NPC_DEADLYCURSE
     Description: Deadly Curse
