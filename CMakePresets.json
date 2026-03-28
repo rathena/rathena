@@ -1,0 +1,48 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 13,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "dev",
+      "displayName": "Default (external deps)",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "dev-vcpkg",
+      "displayName": "Default + vcpkg (manifest mode)",
+      "inherits": "dev",
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+      }
+    },
+    {
+      "name": "msvs",
+      "displayName": "Visual Studio 2022 + vcpkg",
+      "generator": "Visual Studio 17 2022",
+      "binaryDir": "${sourceDir}/build-msvs"
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "build",
+      "configurePreset": "dev"
+    },
+    {
+      "name": "build-vcpkg",
+      "configurePreset": "dev-vcpkg"
+    },
+    {
+      "name": "build-msvs",
+      "configurePreset": "msvs",
+      "configuration": "Release"
+    }
+  ]
+}
