@@ -504,7 +504,7 @@ void mapif_parse_accinfo(int32 fd) {
 				inter_to_fd(fd, u_fd, u_aid, (char *)msg_txt(212) ,query); // No matches were found for your criteria, '%s'
 			} else {
 				Sql_ShowDebug(sql_handle);
-				inter_to_fd(fd, u_fd, u_aid, (char *)msg_txt(213)); // An error occured, bother your admin about it.
+				inter_to_fd(fd, u_fd, u_aid, (char *)msg_txt(213)); // An error occurred, bother your admin about it.
 			}
 			Sql_FreeResult(sql_handle);
 			return;
@@ -537,7 +537,7 @@ void mapif_parse_accinfo(int32 fd) {
 
 	/* it will only get here if we have a single match then ask login-server to fetch the `login` record */
 	if (!account_id || chlogif_req_accinfo(fd, u_fd, u_aid, account_id) != 1) {
-		inter_to_fd(fd, u_fd, u_aid, (char *)msg_txt(213)); // An error occured, bother your admin about it.
+		inter_to_fd(fd, u_fd, u_aid, (char *)msg_txt(213)); // An error occurred, bother your admin about it.
 	}
 	return;
 }
@@ -568,7 +568,7 @@ void mapif_accinfo_ack( bool success, int32 map_fd, int32 u_fd, int32 u_aid, int
 		if( Sql_NumRows(sql_handle) == 0 )
 			inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(226)); // This account doesn't have characters.
 		else {
-			inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(213)); // An error occured, bother your admin about it.
+			inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(213)); // An error occurred, bother your admin about it.
 			Sql_ShowDebug(sql_handle);
 		}
 	} else {

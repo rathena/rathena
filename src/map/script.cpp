@@ -712,7 +712,7 @@ int32 add_str(const char* p)
 		str_hash[h] = str_num;
 	}
 	else
-	{// scan for end of list, or occurence of identical string
+	{// scan for end of list, or occurrence of identical string
 		int32 i;
 		for( i = str_hash[h]; ; i = str_data[i].next )
 		{
@@ -726,7 +726,7 @@ int32 add_str(const char* p)
 		str_data[i].next = str_num;
 	}
 
-	// grow list if neccessary
+	// grow list if necessary
 	if( str_num >= str_data_size )
 	{
 		str_data_size += 128;
@@ -736,7 +736,7 @@ int32 add_str(const char* p)
 
 	len=(int32)strlen(p);
 
-	// grow string buffer if neccessary
+	// grow string buffer if necessary
 	while( str_pos+len+1 >= str_size )
 	{
 		str_size += 256;
@@ -4776,9 +4776,9 @@ void do_final_script() {
 			for(i=0; i<SCRIPT_HASH_SIZE; i++) {
 				fprintf(fp,"  hash %3d = %d\n",i,count[i]);
 				if(min > count[i])
-					min = count[i];		// minimun count of collision
+					min = count[i];		// minimum count of collision
 				if(max < count[i])
-					max = count[i];		// maximun count of collision
+					max = count[i];		// maximum count of collision
 				if(count[i] == 0)
 					zero++;
 				++count2[count[i]];
@@ -9376,7 +9376,7 @@ BUILDIN_FUNC(getequipuniqueid)
 }
 
 /*==========================================
- * Get the equipement name at pos
+ * Get the equipment name at pos
  * return item jname or ""
  * getequipname(<equipment slot>{,<char_id>})
  *------------------------------------------*/
@@ -16093,7 +16093,7 @@ BUILDIN_FUNC(getmercinfo)
 }
 
 /*==========================================
- * Shows wether your inventory(and equips) contain
+ * Shows whether your inventory(and equips) contain
    selected card or not.
 	checkequipedcard(4001);
  *------------------------------------------*/
@@ -22011,14 +22011,14 @@ BUILDIN_FUNC(instance_announce) {
  * party_id : Party ID of the invoking character. [Required Parameter]
  * amount : Amount of needed Partymembers for the Instance. [Optional Parameter]
  * min : Minimum Level needed to join the Instance. [Optional Parameter]
- * max : Maxium Level allowed to join the Instance. [Optional Parameter]
+ * max : Maximum Level allowed to join the Instance. [Optional Parameter]
  * Example: instance_check_party (getcharid(1){,amount}{,min}{,max});
  * Example 2: instance_check_party (getcharid(1),1,1,99);
  *------------------------------------------*/
 BUILDIN_FUNC(instance_check_party)
 {
 	int32 min;	// Minimum Level needed to join the Instance.
-	int32 max;	// Maxium Level allowed to join the Instance.
+	int32 max;	// Maximum Level allowed to join the Instance.
 	int32 amount;	// Amount of needed Partymembers for the Instance.
 
 	if (!script_hasdata(st, 3))
@@ -22097,7 +22097,7 @@ BUILDIN_FUNC(instance_check_party)
  * guild_id : Guild ID of the invoking character. [Required Parameter]
  * amount : Amount of needed Guild members for the Instance. [Optional Parameter]
  * min : Minimum Level needed to join the Instance. [Optional Parameter]
- * max : Maxium Level allowed to join the Instance. [Optional Parameter]
+ * max : Maximum Level allowed to join the Instance. [Optional Parameter]
  * Example: instance_check_guild (getcharid(2){,amount}{,min}{,max});
  * Example 2: instance_check_guild (getcharid(2),1,1,99);
  *------------------------------------------*/
@@ -22107,7 +22107,7 @@ BUILDIN_FUNC(instance_check_guild)
 
 	amount = script_hasdata(st,3) ? script_getnum(st,3) : 1; // Amount of needed Guild members for the Instance.
 	min = script_hasdata(st,4) ? script_getnum(st,4) : 1; // Minimum Level needed to join the Instance.
-	max  = script_hasdata(st,5) ? script_getnum(st,5) : MAX_LEVEL; // Maxium Level allowed to join the Instance.
+	max  = script_hasdata(st,5) ? script_getnum(st,5) : MAX_LEVEL; // Maximum Level allowed to join the Instance.
 
 	if (min < 1 || min > MAX_LEVEL) {
 		ShowError("buildin_instance_check_guild: Invalid min level, %d\n", min);
@@ -22159,7 +22159,7 @@ BUILDIN_FUNC(instance_check_guild)
  * clan_id : Clan ID of the invoking character. [Required Parameter]
  * amount : Amount of needed Clan members for the Instance. [Optional Parameter]
  * min : Minimum Level needed to join the Instance. [Optional Parameter]
- * max : Maxium Level allowed to join the Instance. [Optional Parameter]
+ * max : Maximum Level allowed to join the Instance. [Optional Parameter]
  * Example: instance_check_clan (getcharid(5){,amount}{,min}{,max});
  * Example 2: instance_check_clan (getcharid(5),1,1,99);
  *------------------------------------------*/
@@ -22170,7 +22170,7 @@ BUILDIN_FUNC(instance_check_clan)
 
 	amount = script_hasdata(st,3) ? script_getnum(st,3) : 1; // Amount of needed Clan members for the Instance.
 	min = script_hasdata(st,4) ? script_getnum(st,4) : 1; // Minimum Level needed to join the Instance.
-	max  = script_hasdata(st,5) ? script_getnum(st,5) : MAX_LEVEL; // Maxium Level allowed to join the Instance.
+	max  = script_hasdata(st,5) ? script_getnum(st,5) : MAX_LEVEL; // Maximum Level allowed to join the Instance.
 
 	if (min < 1 || min > MAX_LEVEL) {
 		ShowError("buildin_instance_check_clan: Invalid min level, %d\n", min);
@@ -26192,7 +26192,7 @@ static inline bool mail_sub( struct script_state *st, struct script_data *data, 
 	return true;
 }
 
-// mail <destination id>,"<sender name>","<title>","<body>"{,<zeny>{,<item id array>,<item amount array>{,refine{,bound{,<item card0 array>{,<item card1 array>{,<item card2 array>{,<item card3 array>{,<random option id0 array>, <random option value0 array>, <random option paramter0 array>{,<random option id1 array>, <random option value1 array>, <random option paramter1 array>{,<random option id2 array>, <random option value2 array>, <random option paramter2 array>{,<random option id3 array>, <random option value3 array>, <random option paramter3 array>{,<random option id4 array>, <random option value4 array>, <random option paramter4 array>}}}}}}}}};
+// mail <destination id>,"<sender name>","<title>","<body>"{,<zeny>{,<item id array>,<item amount array>{,refine{,bound{,<item card0 array>{,<item card1 array>{,<item card2 array>{,<item card3 array>{,<random option id0 array>, <random option value0 array>, <random option parameter0 array>{,<random option id1 array>, <random option value1 array>, <random option parameter1 array>{,<random option id2 array>, <random option value2 array>, <random option parameter2 array>{,<random option id3 array>, <random option value3 array>, <random option parameter3 array>{,<random option id4 array>, <random option value4 array>, <random option parameter4 array>}}}}}}}}};
 BUILDIN_FUNC(mail){
 	const char *sender, *title, *body, *name;
 	struct mail_message msg;

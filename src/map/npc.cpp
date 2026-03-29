@@ -1642,7 +1642,7 @@ void npc_timerevent_quit(map_session_data* sd)
 	npc_data* nd;
 	struct timer_event_data *ted;
 
-	// Check timer existance
+	// Check timer existence
 	if( sd->npc_timer_id == INVALID_TIMER )
 		return;
 	if( !(td = get_timer(sd->npc_timer_id)) )
@@ -3600,7 +3600,7 @@ int32 npc_unload(npc_data* nd, bool single) {
  * Adds a npc source file (or removes all)
  * @param name : file to add
  * @param loadscript : flag to parse the script immediately after adding the src file
- * @return 0=error, 1=sucess
+ * @return 0=error, 1=success
  */
 int32 npc_addsrcfile(const char* name, bool loadscript)
 {
@@ -3826,8 +3826,8 @@ npc_data *npc_create_npc(int16 m, int16 x, int16 y){
  * @param from_mapid : mapid to warp from
  * @param from_x : x coordinate of warp
  * @param from_y : y coordinate of warp
- * @param xs : x lenght of warp (for trigger activation)
- * @param ys : y lenght of warp (for trigger activation)
+ * @param xs : x length of warp (for trigger activation)
+ * @param ys : y length of warp (for trigger activation)
  * @param to_mapindex : mapid to warp to
  * @param to_x : x coordinate to warp to
  * @param to_y : y coordinate to warp to

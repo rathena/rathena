@@ -40,7 +40,7 @@ void SkillViolentQuake::castendPos2(block_list* src, int32 x, int32 y, uint16 sk
 	if (climax_lv == 4) { // Deals no damage and instead inflicts a status on the enemys in range.
 		i = skill_get_splash(getSkillId(), skill_lv);
 		map_foreachinallarea(skill_area_sub, src->m, x - i, y - i, x + i, y + i, BL_CHAR, src, getSkillId(), skill_lv, tick, flag | BCT_ENEMY | 1, skill_castend_nodamage_id);
-	} else for (i = 1; i <= unit_time / unit_interval; i++) { // Spawn the rising rocks on random spots at seperate intervals
+	} else for (i = 1; i <= unit_time / unit_interval; i++) { // Spawn the rising rocks on random spots at separate intervals
 		tmpx = x - area + rnd() % (area * 2 + 1);
 		tmpy = y - area + rnd() % (area * 2 + 1);
 		skill_unitsetting(src, AG_VIOLENT_QUAKE_ATK, skill_lv, tmpx, tmpy, flag + i * unit_interval);

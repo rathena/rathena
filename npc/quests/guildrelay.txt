@@ -2325,7 +2325,7 @@
 		mes "Your songs bolster your";
 		mes "guild's morale, and will";
 		mes "help them stand and fight,";
-		mes "no matter how deseperate";
+		mes "no matter how desperate";
 		mes "the situation may seem.";
 		mes "Your voice can make miracles.";
 		next;
@@ -2350,7 +2350,7 @@
 		mes "Your dances bolster your";
 		mes "guild's morale, and will";
 		mes "help them stand and fight,";
-		mes "no matter how deseperate";
+		mes "no matter how desperate";
 		mes "the situation may seem.";
 		mes "Your voice can make miracles.";
 		next;

@@ -1241,7 +1241,7 @@ static int32 mob_can_changetarget(mob_data* md, block_list* target, int32 mode)
 		case MSS_BERSERK:
 			if (!(mode&MD_CHANGETARGETMELEE))
 				return 0;
-			// If the special normal attacked event occured, always change target in berserk state
+			// If the special normal attacked event occurred, always change target in berserk state
 			if (md->norm_attacked_id == target->id)
 				return 1;
 			// If the special setting to switch target even on skills is set, we need to verify the range here
@@ -1339,7 +1339,7 @@ static int32 mob_ai_sub_hard_activesearch(block_list *bl,va_list ap)
 
 	if (battle_config.hom_setting&HOMSET_FIRST_TARGET &&
 		(*target) != nullptr && (*target)->type == BL_HOM && bl->type != BL_HOM)
-		return 0; //For some reason Homun targets are never overriden.
+		return 0; //For some reason Homun targets are never overridden.
 
 	dist = distance_bl(md, bl);
 	if(
@@ -4821,7 +4821,7 @@ static uint32 mob_drop_adjust(int32 baserate, int32 rate_adjust, uint16 rate_min
 }
 
 /**
- * Check if global item drop rate is overriden for given item
+ * Check if global item drop rate is overridden for given item
  * in db/mob_item_ratio.yml
  * @param nameid ID of the item
  * @param mob_id ID of the monster
