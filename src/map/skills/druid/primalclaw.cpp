@@ -3,69 +3,72 @@
 
 #include "primalclaw.hpp"
 
+#include <config/core.hpp>
+
 #include "map/clif.hpp"
 #include "map/pc.hpp"
 #include "map/status.hpp"
 #include "map/unit.hpp"
 
-#include "skill_factory_druid.hpp"
+#include "pulseofmadness.hpp"
 
 SkillPrimalClaw::SkillPrimalClaw() : SkillImplRecursiveDamageSplash(AT_PRIMAL_CLAW) {
 }
 
-void SkillPrimalClaw::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	status_change* sc = status_get_sc(src);
+void SkillPrimalClaw::applyCounterAdditionalEffects(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& attack_type) const {
+	// Update madness if the skill hits at least one target
+	if (skill_area_temp[3] == 0) {
+		skill_area_temp[3] = 1;
 
-	if (!(flag & 1)) {
-		clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
-	}
-
-	if (!(flag & 1)) {
-		if (!unit_movepos(src, target->x, target->y, 2, true)) {
-			map_session_data* sd = BL_CAST(BL_PC, src);
-			if (sd) {
-				clif_skill_fail(*sd, getSkillId(), USESKILL_FAIL);
-			}
-			return;
-		}
-		clif_blown(src);
-	}
-
-	SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
-
-	if (!(flag & 1)) {
-		status_change_end(src, SC_FERAL_CLAW);
-		sc_start(src, src, SC_PRIMAL_CLAW, 100, skill_lv, kClawChainDuration);
-
-		const int32 madness_stage = SkillFactoryDruid::get_madness_stage(sc);
-		if (madness_stage >= 2) {
-			int32 base_radius = skill_get_splash(getSkillId(), skill_lv);
-			int32 ring_radius = base_radius + 1;
-			if (ring_radius > base_radius) {
-				map_foreachinrange(apply_splash_outer_sub, target, ring_radius, BL_CHAR, src, getSkillId(), skill_lv, tick, flag,
-					target->x, target->y, base_radius, target->id);
-			}
-		}
-
-		SkillFactoryDruid::try_gain_madness(src);
+		SkillPulseOfMadness::updateMadness(src);
 	}
 }
 
-void SkillPrimalClaw::calculateSkillRatio(const Damage*, const block_list* src, const block_list*, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {
+void SkillPrimalClaw::splashSearch(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
+	// Move the src 1 cell near the target, between the src and the target
+	uint8 dir = map_calc_dir(target, src->x, src->y);
+
+	if (!unit_movepos(src, target->x+dirx[dir], target->y+diry[dir], 2, true)) {
+		if (map_session_data* sd = BL_CAST(BL_PC, src); sd != nullptr) {
+			clif_skill_fail(*sd, getSkillId(), USESKILL_FAIL);
+		}
+		return;
+	}
+
+	clif_blown(src);
+
+	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
+
+	// Updates the status (even when the attack misses)
+	sc_start4(src, src, skill_get_sc(getSkillId()), 100, getSkillId(), skill_lv, 0, 0, skill_get_time(getSkillId(), skill_lv));
+
+	// Whether the skill hits at least one target
+	skill_area_temp[3] = 0;
+
+	SkillImplRecursiveDamageSplash::splashSearch(src, target, skill_lv, tick, flag);
+}
+
+int16 SkillPrimalClaw::getSplashSearchSize(block_list* src, uint16 skill_lv) const {
+	const status_change* sc = status_get_sc(src);
+
+	// Madness (at least level 2) : changes area of effect to 7 x 7 cells.
+	if (sc != nullptr && (sc->hasSCE(SC_ALPHA_PHASE) || sc->hasSCE(SC_INSANE2) || sc->hasSCE(SC_INSANE3))) {
+		return 3;
+	}
+
+	return skill_get_splash( this->getSkillId(), skill_lv );
+}
+
+void SkillPrimalClaw::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& skillratio, int32 mflag) const {
 	const status_change* sc = status_get_sc(src);
 	const status_data* sstatus = status_get_status_data(*src);
 
-	const bool madness = sc != nullptr && (sc->hasSCE(SC_ALPHA_PHASE) || sc->hasSCE(SC_INSANE) || sc->hasSCE(SC_INSANE2) || sc->hasSCE(SC_INSANE3));
+	skillratio += -100 + 1100 + 950 * (skill_lv - 1);
 
-	int32 skillratio = 1100 + 950 * (skill_lv - 1);
-	if (madness) {
+	if (sc != nullptr && (sc->hasSCE(SC_ALPHA_PHASE) || sc->hasSCE(SC_INSANE) || sc->hasSCE(SC_INSANE2) || sc->hasSCE(SC_INSANE3))) {
 		skillratio += 800;
 	}
-	skillratio += sstatus->pow * 5; // TODO - unknown scaling [munkrej]
-	RE_LVL_DMOD(100);
-	base_skillratio += -100 + skillratio;
-}
+	skillratio += sstatus->pow * 5;
 
-int64 SkillPrimalClaw::splashDamage(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
-	return skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag | SD_ANIMATION);
+	RE_LVL_DMOD(100);
 }

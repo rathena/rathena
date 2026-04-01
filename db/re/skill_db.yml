@@ -48085,6 +48085,7 @@ Body:
     Element: Weapon
     SplashArea: 2
     AfterCastActDelay: 500
+    Duration1: 5000
     Cooldown: 300
     Requires:
       SpCost:
@@ -48100,6 +48101,7 @@ Body:
           Amount: 60
       Status:
         Werewolf: true
+    Status: Primal_Claw
   - Id: 6579
     Name: AT_FERAL_CLAW
     Description: Feral Claw
