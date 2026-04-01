@@ -48488,7 +48488,7 @@ Body:
     Hit: Multi_Hit
     HitCount: 1
     Element: Weapon
-    SplashArea: 2
+    SplashArea: 1
     CastTime: 1000
     FixedCastTime: 500
     Cooldown: 1000

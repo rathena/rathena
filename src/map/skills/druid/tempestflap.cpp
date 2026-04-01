@@ -3,27 +3,27 @@
 
 #include "tempestflap.hpp"
 
+#include <config/core.hpp>
+
 #include "map/clif.hpp"
 #include "map/status.hpp"
 
 SkillTempestFlap::SkillTempestFlap() : SkillImplRecursiveDamageSplash(AT_TEMPEST_FLAP) {
 }
 
-void SkillTempestFlap::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	if (!(flag & 1)) {
-		clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
-	}
+void SkillTempestFlap::splashSearch(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
+	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
 
-	SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
+	SkillImplRecursiveDamageSplash::splashSearch(src, target, skill_lv, tick, flag);
 }
 
-void SkillTempestFlap::calculateSkillRatio(const Damage*, const block_list* src, const block_list*, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {
+void SkillTempestFlap::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& skillratio, int32 mflag) const {
 	const status_data* sstatus = status_get_status_data(*src);
 
-	int32 skillratio = 1250 * skill_lv;
-	skillratio += sstatus->con * 5; // TODO - unknown scaling [munkrej]
+	skillratio += -100 + 1250 * skill_lv;
+	skillratio += sstatus->con * 10;
+
 	RE_LVL_DMOD(100);
-	base_skillratio += -100 + skillratio;
 }
 
 void SkillTempestFlap::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
@@ -31,8 +31,4 @@ void SkillTempestFlap::modifyDamageData(Damage& dmg, const block_list& src, cons
 
 	if (sc != nullptr && sc->hasSCE(SC_APEX_PHASE))
 		dmg.div_ = 3;
-}
-
-int64 SkillTempestFlap::splashDamage(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
-	return skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag | SD_ANIMATION);
 }
