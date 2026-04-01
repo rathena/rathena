@@ -52,6 +52,7 @@
 #include "nomercyclaw.cpp"
 #include "pinionshot.cpp"
 #include "primalclaw.cpp"
+#include "pulseofmadness.cpp"
 #include "quillspear.cpp"
 #include "roaringcharge.cpp"
 #include "roaringpiercer.cpp"
@@ -315,7 +316,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case AT_PRIMAL_CLAW:
 			return std::make_unique<SkillPrimalClaw>();
 		case AT_PULSE_OF_MADNESS:
-			return std::make_unique<StatusSkillImpl>(skill_id);
+			return std::make_unique<SkillPulseOfMadness>();
 		case AT_QUILL_SPEAR:
 			return std::make_unique<SkillQuillSpear>();
 		case AT_QUILL_SPEAR_S:

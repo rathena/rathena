@@ -10172,11 +10172,16 @@ Body:
     Flags:
       BlEffect: true
       DisplayPc: true
+    EndOnStart:
+      Insane: true
   - Status: Insane3
     Icon: EFST_INSANE3
     Flags:
       BlEffect: true
       DisplayPc: true
+    EndOnStart:
+      Insane2: true
+      Insane3: true
   - Status: Alpha_Phase
     Icon: EFST_ALPHA_PHASE
     Flags:

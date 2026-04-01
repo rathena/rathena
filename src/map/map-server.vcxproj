@@ -509,6 +509,7 @@
     <ClInclude Include="skills/druid/nomercyclaw.hpp" />
     <ClInclude Include="skills/druid/pinionshot.hpp" />
     <ClInclude Include="skills/druid/primalclaw.hpp" />
+    <ClInclude Include="skills/druid/pulseofmadness.hpp" />
     <ClInclude Include="skills/druid/quillspear.hpp" />
     <ClInclude Include="skills/druid/roaringcharge.hpp" />
     <ClInclude Include="skills/druid/roaringpiercer.hpp" />
@@ -2378,6 +2379,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/druid/primalclaw.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/pulseofmadness.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/druid/quillspear.cpp">
