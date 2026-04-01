@@ -9193,6 +9193,10 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 		case DR_TRUTH_OF_ICE:
 		case DR_TRUTH_OF_WIND:
 		case DR_TRUTH_OF_EARTH:
+		case AT_CHILLING_BLAST:
+		case AT_FURIOS_STORM:
+		case AT_GRAVITY_HOLE:
+		case AT_SOLID_STOMP:
 			if (sc != nullptr  && (sc->hasSCE(SC_WEREWOLF) || sc->hasSCE(SC_WERERAPTOR))) {
 				clif_skill_fail( sd, skill_id, USESKILL_FAIL );
 				return false;
