@@ -9202,6 +9202,24 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 				return false;
 			}
 			break;
+		case AT_FERAL_CLAW:
+			if (sc == nullptr || !sc->hasSCE(SC_PRIMAL_CLAW)) {
+				clif_skill_fail( sd, skill_id, USESKILL_FAIL );
+				return false;
+			}
+			break;
+		case AT_ALPHA_CLAW:
+			if (sc == nullptr || !sc->hasSCE(SC_FERAL_CLAW)) {
+				clif_skill_fail( sd, skill_id, USESKILL_FAIL );
+				return false;
+			}
+			break;
+		case AT_AERO_SYNC:
+			if (sc != nullptr && sc->hasSCE(SC_FLIP_FLAP_TARGET)) {
+				clif_skill_fail( sd, skill_id, USESKILL_FAIL );
+				return false;
+			}
+			break;
 	}
 
 	/* check state required */

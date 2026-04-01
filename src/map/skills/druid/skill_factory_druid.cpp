@@ -72,24 +72,6 @@
 
 	constexpr int32 kGrowthDuration = 10000;
 
-	int32 SkillFactoryDruid::get_madness_stage(const status_change *sc) {
-		if (sc == nullptr) {
-			return 0;
-		}
-
-		if (sc->hasSCE(SC_ALPHA_PHASE) || sc->hasSCE(SC_INSANE3)) {
-			return 3;
-		}
-		if (sc->hasSCE(SC_INSANE2)) {
-			return 2;
-		}
-		if (sc->hasSCE(SC_INSANE)) {
-			return 1;
-		}
-
-		return 0;
-	}
-
 	void SkillFactoryDruid::addThunderingCharge(block_list *src, uint16 skill_id, uint16 skill_lv, int32 charge) {
 		if (charge <= 0)
 			return;
@@ -129,67 +111,6 @@
 		}
 
 		return skill_id;
-	}
-
-	void SkillFactoryDruid::try_gain_madness(block_list *src) {
-		status_change *sc = status_get_sc(src);
-		status_change_entry *pulse = sc != nullptr ? sc->getSCE(SC_PULSE_OF_MADNESS) : nullptr;
-
-		if (pulse == nullptr) {
-			return;
-		}
-
-		int32 chance = 20 + 10 * (pulse->val1 - 1);
-		if (!rnd_chance(chance, 100)) {
-			return;
-		}
-
-		t_tick duration = skill_get_time2(AT_PULSE_OF_MADNESS, pulse->val1);
-
-		if (sc->hasSCE(SC_INSANE3)) {
-			sc_start(src, src, SC_INSANE3, 100, 1, duration);
-			return;
-		}
-
-		if (sc->hasSCE(SC_INSANE2)) {
-			status_change_end(src, SC_INSANE2);
-			sc_start(src, src, SC_INSANE3, 100, 1, duration);
-			return;
-		}
-
-		if (sc->hasSCE(SC_INSANE)) {
-			status_change_end(src, SC_INSANE);
-			sc_start(src, src, SC_INSANE2, 100, 1, duration);
-			return;
-		}
-
-		sc_start(src, src, SC_INSANE, 100, 1, duration);
-	}
-
-	int32 apply_splash_outer_sub(block_list *bl, va_list ap) {
-		block_list *src = va_arg(ap, block_list *);
-		uint16 skill_id = static_cast<uint16>(va_arg(ap, int));
-		uint16 skill_lv = static_cast<uint16>(va_arg(ap, int));
-		t_tick tick = va_arg(ap, t_tick);
-		int32 flag = va_arg(ap, int32);
-		int32 x = va_arg(ap, int32);
-		int32 y = va_arg(ap, int32);
-		int32 min_distance = va_arg(ap, int32);
-		int32 exclude_id = va_arg(ap, int32);
-
-		if (bl->id == exclude_id) {
-			return 0;
-		}
-
-		if (distance_xy(x, y, bl->x, bl->y) <= min_distance) {
-			return 0;
-		}
-
-		if (battle_check_target(src, bl, BCT_ENEMY) <= 0) {
-			return 0;
-		}
-
-		return static_cast<int32>(skill_attack(skill_get_type(static_cast<e_skill>(skill_id)), src, src, bl, skill_id, skill_lv, tick, flag | SD_ANIMATION));
 	}
 
 std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_id) const {

@@ -10214,7 +10214,6 @@ Body:
       NoClearance: true
     Script: |
       bonus2 bSkillAtk, "AT_PINION_SHOT", 30;
-      bonus2 bSkillAtk, "AT_QUILL_SPEAR", 30;
       bonus2 bSkillAtk, "AT_QUILL_SPEAR_S", 30;
       bonus2 bSkillAtk, "AT_TEMPEST_FLAP", 30;
   - Status: Zephyr_Charge
@@ -10223,6 +10222,8 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    EndOnStart:
+      Zephyr_Charge: true
   - Status: Zephyr_Link
     Icon: EFST_ZEPHYR_LINK
     Script: |
