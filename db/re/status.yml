@@ -10260,3 +10260,5 @@ Body:
     Icon: EFST_PRIMAL_CLAW
   - Status: Feral_Claw
     Icon: EFST_FERAL_CLAW
+    EndOnStart:
+      Primal_Claw: true

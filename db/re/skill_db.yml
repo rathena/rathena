@@ -48117,6 +48117,7 @@ Body:
     Element: Weapon
     SplashArea: 3
     AfterCastActDelay: 500
+    Duration1: 5000
     Cooldown: 300
     Requires:
       SpCost:
@@ -48133,6 +48134,7 @@ Body:
       Status:
         Werewolf: true
         Primal_Claw: true
+    Status: Feral_Claw
   - Id: 6580
     Name: AT_ALPHA_CLAW
     Description: Alpha Claw
