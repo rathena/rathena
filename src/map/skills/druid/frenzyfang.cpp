@@ -3,34 +3,39 @@
 
 #include "frenzyfang.hpp"
 
+#include <config/core.hpp>
+
 #include "map/clif.hpp"
+#include "map/status.hpp"
 
-#include "skill_factory_druid.hpp"
+#include "pulseofmadness.hpp"
 
-SkillFrenzyFang::SkillFrenzyFang() : SkillImplRecursiveDamageSplash(AT_FRENZY_FANG) {
+SkillFrenzyFang::SkillFrenzyFang() : WeaponSkillImpl(AT_FRENZY_FANG) {
+}
+
+void SkillFrenzyFang::applyCounterAdditionalEffects(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& attack_type) const {
+	// Update madness when the skill hits the target
+	SkillPulseOfMadness::updateMadness(src);
 }
 
 void SkillFrenzyFang::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	if (!(flag & 1)) {
-		clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
-	}
+	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
 
-	skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag);
-	if (!(flag & 1)) {
-		SkillFactoryDruid::try_gain_madness(src);
-	}
+	WeaponSkillImpl::castendDamageId(src, target, skill_lv, tick, flag);
 }
 
-void SkillFrenzyFang::calculateSkillRatio(const Damage*, const block_list* src, const block_list*, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {
+void SkillFrenzyFang::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& skillratio, int32 mflag) const {
 	const status_change* sc = status_get_sc(src);
 	const status_data* sstatus = status_get_status_data(*src);
 
-	const bool madness = sc != nullptr && (sc->hasSCE(SC_ALPHA_PHASE) || sc->hasSCE(SC_INSANE) || sc->hasSCE(SC_INSANE2) || sc->hasSCE(SC_INSANE3));
+	skillratio += -100 + 1000 + 250 * (skill_lv - 1);
 
-	int32 skillratio = (madness ? 1750 : 1000) + 250 * (skill_lv - 1);
-	skillratio += sstatus->pow * 5; // TODO - unknown scaling [munkrej]
+	if (sc != nullptr && (sc->hasSCE(SC_ALPHA_PHASE) || sc->hasSCE(SC_INSANE) || sc->hasSCE(SC_INSANE2) || sc->hasSCE(SC_INSANE3))) {
+		skillratio += 750;
+	}
+	skillratio += sstatus->pow * 4;
+
 	RE_LVL_DMOD(100);
-	base_skillratio += -100 + skillratio;
 }
 
 void SkillFrenzyFang::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
