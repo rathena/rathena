@@ -29,16 +29,19 @@ void SkillLowFlight::calculateSkillRatio(const Damage* wd, const block_list* src
 }
 
 void SkillLowFlight::splashSearch(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
-	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
+	// Move the src 1 cell near the target, between the src and the target
+	uint8 dir = map_calc_dir(target, src->x, src->y);
 
-	// TODO : player location should be at 1 cell of target after dashing
-	if (!unit_movepos(src, target->x, target->y, 2, true)) {
-		if (map_session_data *sd = BL_CAST(BL_PC, src); sd != nullptr) {
+	if (!unit_movepos(src, target->x+dirx[dir], target->y+diry[dir], 2, true)) {
+		if (map_session_data* sd = BL_CAST(BL_PC, src); sd != nullptr) {
 			clif_skill_fail(*sd, getSkillId(), USESKILL_FAIL);
 		}
 		return;
 	}
+
 	clif_blown(src);
+
+	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
 
 	SkillImplRecursiveDamageSplash::splashSearch(src, target, skill_lv, tick, flag);
 }
