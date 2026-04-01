@@ -39,6 +39,6 @@ void SkillGlacialNova::castendPos2(block_list* src, int32 x, int32 y, uint16 ski
 	// TODO : Should the distance to the player be checked?
 	// On official server SC_GLACIER_SHEILD does not save the position of glacial monolith
 
-	clif_skill_poseffect(*src, getSkillId(), skill_lv,sce->val2, sce->val3, tick);
+	clif_skill_poseffect(*src, getSkillId(), skill_lv, sce->val2, sce->val3, tick);
 	SkillImplRecursiveDamageSplash::castendPos2(src, sce->val2, sce->val3, skill_lv, tick, flag);
 }

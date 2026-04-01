@@ -6264,6 +6264,10 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(block_list *src, uint16 sk
 	case NW_GRENADES_DROPPING:
 		limit = skill_get_time2(skill_id,skill_lv);
 		break;
+
+	case AT_GLACIER_MONOLITH:
+		skill_clear_group(src, 1); // Delete previous monolith
+		break;
 	}
 
 	// Init skill unit group
@@ -6957,8 +6961,6 @@ int32 skill_unit_onplace_timer(skill_unit *unit, block_list *bl, t_tick tick)
 			if (battle_check_target(unit, bl, BCT_ENEMY) > 0) {
 				skill_attack(skill_get_type(sg->skill_id), ss, unit, bl, sg->skill_id, sg->skill_lv, tick, SD_ANIMATION | SKILL_ALTDMG_FLAG);
 			}
-			break;
-		case UNT_GLACIAL_MONOLITH:
 			break;
 
 		case UNT_DUMMYSKILL:
@@ -7729,6 +7731,13 @@ int32 skill_unit_onplace_timer(skill_unit *unit, block_list *bl, t_tick tick)
 		case UNT_HYUN_ROKS_BREEZE:
 			skill_attack(skill_get_type(sg->skill_id), ss, ss, bl, sg->skill_id, sg->skill_lv, tick, SD_ANIMATION);
  			break;
+
+		case UNT_GLACIAL_MONOLITH:
+			if (bl->id == ss->id) {
+				// (on official server SC_GLACIER_SHEILD does not save the position of glacial monolith)
+				sc_start4(ss, bl, skill_get_sc(sg->skill_id), 100, sg->skill_lv, unit->x, unit->y, unit->m, sg->interval + 100);
+			}
+			break;
 	}
 
 	if (bl->type == BL_MOB && ss != bl)
@@ -11171,6 +11180,7 @@ int32 skill_clear_group(block_list *bl, uint8 flag)
 			case MH_POISON_MIST:
 			case MH_LAVA_SLIDE:
 			case SOA_TOTEM_OF_TUTELARY:
+			case AT_GLACIER_MONOLITH:
 				if (flag & 1) {
 					skill_delunitgroup(*it);
 					count++;
@@ -12548,17 +12558,6 @@ static int32 skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 		}
 	} else {// skill unit is still active
 		switch( group->unit_id ) {
-			case UNT_GLACIAL_MONOLITH: {
-				block_list* src = map_id2bl(group->src_id);
-				if (src && src->m == unit->m) {
-					const int32 range = skill_get_range(group->skill_id, group->skill_lv);
-					if (range <= 0 || distance_xy(src->x, src->y, unit->x, unit->y) <= range) {
-						const t_tick buff_duration = group->interval > 0 ? group->interval : 1;
-						sc_start4(src, src, skill_get_sc(group->skill_id), 100, group->skill_lv, unit->x, unit->y, unit->m, buff_duration);
-					}
-				}
-				break;
-			}
 			case UNT_BLASTMINE:
 			case UNT_SKIDTRAP:
 			case UNT_LANDMINE:

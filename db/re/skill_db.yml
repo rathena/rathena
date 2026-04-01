@@ -48623,10 +48623,9 @@ Body:
     AfterCastActDelay: 200
     Cooldown: 3000
     Unit:
-      Id: GLACIAL_MONOLITH
-      Range: 0
-      Interval: 500
-      Target: Enemy
+      Id: Glacial_Monolith
+      Range: 7
+      Interval: 1000
     Requires:
       SpCost:
         - Level: 1

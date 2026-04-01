@@ -5,9 +5,7 @@
 
 #include <config/core.hpp>
 
-#include "map/clif.hpp"
 #include "map/status.hpp"
-#include "map/unit.hpp"
 
 SkillGlacialMonolith::SkillGlacialMonolith() : SkillImplRecursiveDamageSplash(AT_GLACIER_MONOLITH) {
 }
@@ -26,23 +24,9 @@ void SkillGlacialMonolith::calculateSkillRatio(const Damage*, const block_list* 
 }
 
 void SkillGlacialMonolith::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {
+	// Damage
 	SkillImplRecursiveDamageSplash::castendPos2(src, x, y, skill_lv, tick, flag);
 
-	if (unit_data* ud = unit_bl2ud(src); ud != nullptr) {
-		for (size_t i = 0; i < ud->skillunits.size();) {
-			std::shared_ptr<s_skill_unit_group> sg = ud->skillunits[i];
-
-			if (sg != nullptr && (sg->skill_id == AT_GLACIER_MONOLITH || sg->unit_id == UNT_GLACIAL_MONOLITH)) {
-				skill_delunitgroup(sg);
-				continue;
-			}
-
-			++i;
-		}
-	}
-
-	const t_tick buff_duration = skill_get_unit_interval(getSkillId());
-	sc_start4(src, src, skill_get_sc(getSkillId()), 100, skill_lv, x, y, src->m, buff_duration);
-
+	// Place the UNT which give SC_GLACIER_SHEILD to the caster in range
 	skill_unitsetting(src, getSkillId(), skill_lv, x, y, 0);
 }
