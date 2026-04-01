@@ -526,7 +526,6 @@
     <ClInclude Include="skills/druid/thunderingorb.hpp" />
     <ClInclude Include="skills/druid/typhoonwing.hpp" />
     <ClInclude Include="skills/druid/windbomb.hpp" />
-    <ClInclude Include="skills/druid/zephyrlink.hpp" />
     <ClInclude Include="skills/elemental/ageofice.hpp" />
     <ClInclude Include="skills/elemental/aquaplay.hpp" />
     <ClInclude Include="skills/elemental/avalanche.hpp" />
@@ -2430,9 +2429,6 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/druid/windbomb.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="skills/druid/zephyrlink.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/elemental/ageofice.cpp">

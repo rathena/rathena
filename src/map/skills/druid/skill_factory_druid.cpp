@@ -68,7 +68,6 @@
 #include "thunderingorb.cpp"
 #include "typhoonwing.cpp"
 #include "windbomb.cpp"
-#include "zephyrlink.cpp"
 
 	constexpr int32 kGrowthDuration = 10000;
 
@@ -340,7 +339,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case AT_TERRA_WAVE:
 			return std::make_unique<SkillTerraWave>();
 		case AT_ZEPHYR_LINK:
-			return std::make_unique<SkillZephyrLink>();
+			return std::make_unique<StatusSkillImpl>(skill_id);
 
 		default:
 			return nullptr;

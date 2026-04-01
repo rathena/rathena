@@ -1239,9 +1239,6 @@
     <ClInclude Include="skills/druid/windbomb.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
-    <ClInclude Include="skills/druid/zephyrlink.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
     <ClInclude Include="skills/elemental/ageofice.hpp">
       <Filter>Header Files\Skills\Elemental</Filter>
     </ClInclude>
@@ -5127,9 +5124,6 @@
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/windbomb.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/zephyrlink.cpp">
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/elemental/ageofice.cpp">
