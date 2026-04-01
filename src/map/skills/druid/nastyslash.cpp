@@ -27,9 +27,12 @@ void SkillNastySlash::calculateSkillRatio(const Damage* wd, const block_list* sr
 }
 
 void SkillNastySlash::splashSearch(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
+	// the final direction is opposite to the direction the player is facing before casting the skill
+	uint8 dir = unit_getdir(src);
+
 	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
 
 	SkillImplRecursiveDamageSplash::splashSearch(src, target, skill_lv, tick, flag);
 
-	skill_blown(src, src, 5, map_calc_dir(src, target->x, target->y), BLOWN_IGNORE_NO_KNOCKBACK);
+	skill_blown(src, src, 5, dir, BLOWN_IGNORE_NO_KNOCKBACK);
 }
