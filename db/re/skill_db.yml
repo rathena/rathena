@@ -48178,6 +48178,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
+    SplashArea: 3
     Cooldown: 5000
     Requires:
       SpCost:
