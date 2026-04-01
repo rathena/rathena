@@ -46780,6 +46780,7 @@ Body:
     Type: Magic
     TargetType: Self
     Range: 9
+    Hit: Single
     HitCount: 1
     Element: Earth
     SplashArea:
@@ -48002,13 +48003,11 @@ Body:
     Name: AT_SIXTH_SENSE
     Description: Sixth Sense
     MaxLevel: 5
-    Range: 1
   - Id: 6576
     Name: AT_PULSE_OF_MADNESS
     Description: Pulse of Madness
     MaxLevel: 5
     TargetType: Self
-    Range: 1
     Duration1:
       - Level: 1
         Time: 60000
@@ -48081,19 +48080,10 @@ Body:
       Critical: true
     Range: 5
     GiveAp: 1
+    Hit: Single
     HitCount: 1
     Element: Weapon
-    SplashArea:
-      - Level: 1
-        Area: 2
-      - Level: 2
-        Area: 2
-      - Level: 3
-        Area: 2
-      - Level: 4
-        Area: 2
-      - Level: 5
-        Area: 2
+    SplashArea: 2
     AfterCastActDelay: 500
     Cooldown: 300
     Requires:
@@ -48120,19 +48110,10 @@ Body:
       Critical: true
     Range: 3
     GiveAp: 1
+    Hit: Single
     HitCount: 1
     Element: Weapon
-    SplashArea:
-      - Level: 1
-        Area: 3
-      - Level: 2
-        Area: 3
-      - Level: 3
-        Area: 3
-      - Level: 4
-        Area: 3
-      - Level: 5
-        Area: 3
+    SplashArea: 3
     AfterCastActDelay: 500
     Cooldown: 300
     Requires:
@@ -48163,17 +48144,7 @@ Body:
     Hit: Multi_Hit
     HitCount: 2
     Element: Weapon
-    SplashArea:
-      - Level: 1
-        Area: 3
-      - Level: 2
-        Area: 3
-      - Level: 3
-        Area: 3
-      - Level: 4
-        Area: 3
-      - Level: 5
-        Area: 3
+    SplashArea: 3
     AfterCastActDelay: 500
     Cooldown: 300
     Requires:
@@ -48200,6 +48171,7 @@ Body:
     DamageFlags:
       Critical: true
     Range: 7
+    Hit: Single
     HitCount: 1
     Element: Weapon
     Cooldown: 5000
@@ -48392,6 +48364,7 @@ Body:
       Critical: true
     Range: 7
     GiveAp: 3
+    Hit: Single
     HitCount: 1
     Element: Weapon
     SplashArea:
@@ -48453,6 +48426,7 @@ Body:
       Critical: true
     Range: 7
     GiveAp: 3
+    Hit: Single
     HitCount: 1
     Element: Weapon
     SplashArea:
@@ -48620,6 +48594,7 @@ Body:
       - Level: 10
         Time: 15000
     Duration2: 500
+    Hit: Single
     HitCount: 1
     Element: Water
     SplashArea:
@@ -48795,6 +48770,7 @@ Body:
     Type: Magic
     TargetType: Self
     Range: 1
+    Hit: Single
     HitCount: 1
     Element: Water
     SplashArea:
@@ -49029,6 +49005,7 @@ Body:
     Type: Magic
     TargetType: Self
     Range: 1
+    Hit: Single
     HitCount: 1
     Element: Wind
     SplashArea:
@@ -49190,6 +49167,7 @@ Body:
     Type: Magic
     TargetType: Self
     Range: 1
+    Hit: Single
     HitCount: 1
     Element: Earth
     Duration1: 10000
