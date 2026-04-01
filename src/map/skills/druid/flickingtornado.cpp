@@ -28,13 +28,13 @@ void SkillFlickingTornado::calculateSkillRatio(const Damage* wd, const block_lis
 }
 
 void SkillFlickingTornado::splashSearch(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
+	// the final direction is opposite to the direction the player is facing before casting the skill
+	uint8 dir = unit_getdir(src);
+
 	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
 
 	SkillImplRecursiveDamageSplash::splashSearch(src, target, skill_lv, tick, flag);
 
-	// TODO : the direction should be opposite to the direction the player is facing (before casting the skill)
-
-	uint8 dir = map_calc_dir(src, target->x, target->y);
 	int32 retreat = skill_lv >= 6 ? 5 : 3;
 	skill_blown(src, src, retreat, dir, BLOWN_IGNORE_NO_KNOCKBACK);
 }
