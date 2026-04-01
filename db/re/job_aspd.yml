@@ -629,9 +629,9 @@ Body:
       Baby_Karnos: true
       Alitea: true
     BaseASPD: # TODO: Unconfirmed
-      Fist: 45
+      Fist: 40
       Dagger: 40
-      1hAxe: 48
-      2hAxe: 51
-      Mace: 50
+      1hAxe: 45
+      2hAxe: 48
+      Mace: 44
       Shield: 5
