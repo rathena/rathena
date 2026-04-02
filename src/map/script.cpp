@@ -12,6 +12,7 @@
 #include <cerrno>
 #include <cmath>
 #include <csetjmp>
+#include <chrono>
 #include <cstdlib> // atoi, strtol, strtoll, exit
 
 #ifdef PCRE_SUPPORT
@@ -21,6 +22,7 @@
 #include <common/cbasetypes.hpp>
 #include <common/ers.hpp>  // ers_destroy
 #include <common/malloc.hpp>
+#include <common/metrics.hpp>
 #include <common/md5calc.hpp>
 #include <common/nullpo.hpp>
 #include <common/random.hpp>
@@ -4375,6 +4377,17 @@ void script_attach_state(struct script_state* st){
  *------------------------------------------*/
 void run_script_main(struct script_state *st)
 {
+	const auto script_start = std::chrono::steady_clock::now();
+	const int32 script_oid = st != nullptr ? st->oid : 0;
+	std::string script_npc_label;
+
+	if( script_oid > 0 ){
+		npc_data* nd = map_id2nd( script_oid );
+		if( nd != nullptr ){
+			script_npc_label = std::string( map_mapid2mapname( nd->m ) ) + "::" + nd->exname;
+		}
+	}
+
 	int32 cmdcount = script_config.check_cmdcount;
 	int32 gotocount = script_config.check_gotocount;
 	TBL_PC *sd;
@@ -4520,6 +4533,15 @@ void run_script_main(struct script_state *st)
 				intif_saveregistry(sd);
 		}
 		script_free_state(st);
+	}
+
+	const auto script_elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>( std::chrono::steady_clock::now() - script_start );
+	metrics::counter_inc( "map_script_runs" );
+	metrics::observe_duration_ns( "map_script_run", static_cast<uint64_t>( script_elapsed.count() ) );
+
+	if( !script_npc_label.empty() ){
+		metrics::counter_inc( "map_script_npc_runs", 1, "npc", script_npc_label );
+		metrics::observe_duration_ns( "map_script_npc_run", static_cast<uint64_t>( script_elapsed.count() ), "npc", script_npc_label );
 	}
 }
 

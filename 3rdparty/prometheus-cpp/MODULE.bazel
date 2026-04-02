@@ -1,0 +1,20 @@
+module(
+    name = "prometheus-cpp",
+    version = "1.3.0",
+    repo_name = "com_github_jupp0r_prometheus_cpp",
+)
+
+bazel_dep(name = "boringssl", version = "0.20250311.0")
+bazel_dep(name = "civetweb", version = "1.16.bcr.1")
+bazel_dep(name = "curl", version = "8.8.0.bcr.3")
+bazel_dep(name = "platforms", version = "0.0.11")
+bazel_dep(name = "rules_cc", version = "0.1.1")
+bazel_dep(name = "zlib", version = "1.3.1.bcr.5")
+
+bazel_dep(name = "google_benchmark", version = "1.9.1", dev_dependency = True)
+bazel_dep(name = "googletest", version = "1.16.0", dev_dependency = True)
+
+# due to
+#   https://github.com/bazelbuild/bazel/issues/24426
+#   https://github.com/bazelbuild/bazel-central-registry/pull/3320
+bazel_dep(name = "re2", version = "2024-07-02.bcr.1")
