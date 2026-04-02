@@ -4,8 +4,13 @@
 #ifndef SCRIPT_HPP
 #define SCRIPT_HPP
 
+#if __has_include(<ryml/ryml_std.hpp>)
+#include <ryml/ryml_std.hpp>
+#include <ryml/ryml.hpp>
+#else
 #include <ryml_std.hpp>
 #include <ryml.hpp>
+#endif
 
 #include <common/database.hpp>
 #include <common/cbasetypes.hpp>
