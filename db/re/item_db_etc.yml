@@ -100461,6 +100461,169 @@ Body:
       NoMail: true
       NoAuction: true
       NoGuildStorage: true
+  - Id: 1002123
+    AegisName: 5th_Enc_Ticket_A
+    Name: "[5th] Angel Spirit A Ticket"
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002124
+    AegisName: 5th_Enc_Ticket_B
+    Name: "[5th] Angel Spirit B Ticket"
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002125
+    AegisName: 5th_Enc_Ticket_C
+    Name: "[5th] Angel Spirit C Ticket"
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002126
+    AegisName: 5th_Enc_Ticket_D
+    Name: "[5th] Angel Spirit D Ticket"
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002127
+    AegisName: 5th_Enc_Ticket_E
+    Name: "[5th] Angel Spirit E Ticket"
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002128
+    AegisName: 5th_Enc_Ticket_F
+    Name: "[5th] Angel Spirit F Ticket"
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002129
+    AegisName: 5th_MDC_Pass
+    Name: "[5th] MD Challenge Ticket"
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002130
+    AegisName: 5th_Hunt_Horor_Pass
+    Name: "[5th] Hunting Horror Ticket"
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002131
+    AegisName: 5th_MML_Pass
+    Name: "[5th] Monopoly Midgard Ticket"
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002132
+    AegisName: 5th_MML_Coin
+    Name: "[5th] Monopoly Midgard Coin"
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002133
+    AegisName: 5th_MML_Shop_Pass
+    Name: "[5th] Monopoly Midgard Shop Ticket"
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002134
+    AegisName: 5th_Enc_Mat
+    Name: Legendary Fur
+    Type: Etc
+    Trade:
+      NoMail: true
+      NoAuction: true
+  - Id: 1002135
+    AegisName: Anni_Jumping_Ticket
+    Name: New Year Jumping Ticket
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+  - Id: 1002136
+    AegisName: 5th_Enc_Ticket_Z
+    Name: "[5th] Angel Spirit Z Ticket"
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
   - Id: 1002137
     AegisName: Pow_Meteor_Extract
     Name: Power Meteorite Extract    # !todo check english name
