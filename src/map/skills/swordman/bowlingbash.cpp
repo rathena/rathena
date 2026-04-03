@@ -13,6 +13,21 @@
 SkillBowlingBash::SkillBowlingBash() : SkillImpl(KN_BOWLINGBASH) {
 }
 
+void SkillBowlingBash::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
+#ifdef RENEWAL
+	const map_session_data* sd = BL_CAST(BL_PC, &src);
+
+	if (sd != nullptr && sd->status.weapon == W_2HSWORD) {
+		if (dmg.miscflag >= 4)
+			dmg.div_ = 4;
+		else if (dmg.miscflag >= 2)
+			dmg.div_ = 3;
+	}
+#else
+	dmg.blewcount = 0;
+#endif
+}
+
 void SkillBowlingBash::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {
 	base_skillratio += 40 * skill_lv;
 }

@@ -4,7 +4,6 @@
 #include "staremperoradvent.hpp"
 
 #include "map/clif.hpp"
-#include "map/map.hpp"
 #include "map/pc.hpp"
 #include "map/status.hpp"
 
@@ -23,8 +22,6 @@ void SkillStarEmperorAdvent::castendNoDamageId(block_list *src, block_list *targ
 	status_change *sc = status_get_sc(src);
 	map_session_data* sd = BL_CAST(BL_PC, src);
 
-	int32 starget = BL_CHAR|BL_SKILL;
-
 	if (sc && sc->getSCE(SC_DIMENSION)) {
 		if (sd) {
 			// Remove old shields if any exist.
@@ -35,9 +32,6 @@ void SkillStarEmperorAdvent::castendNoDamageId(block_list *src, block_list *targ
 		status_change_end(src, SC_DIMENSION);
 	}
 
-	skill_area_temp[1] = 0;
 	clif_skill_nodamage(src,*target,getSkillId(),skill_lv);
-
-	map_foreachinrange(skill_area_sub, target, skill_get_splash(getSkillId(), skill_lv), starget,
-		src, getSkillId(), skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
+	skill_castend_damage_id(src, target, getSkillId(), skill_lv, tick, flag);
 }

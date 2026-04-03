@@ -3,7 +3,7 @@
 
 #include "aimedbolt.hpp"
 
-#include <config/const.hpp>
+#include <config/core.hpp>
 
 #include "map/status.hpp"
 

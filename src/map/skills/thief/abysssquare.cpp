@@ -11,6 +11,11 @@
 SkillAbyssSquare::SkillAbyssSquare() : SkillImpl(ABC_ABYSS_SQUARE) {
 }
 
+void SkillAbyssSquare::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
+	if (dmg.miscflag == 2)
+		dmg.div_ = 2;
+}
+
 void SkillAbyssSquare::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {
 	flag|=1;//Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
 

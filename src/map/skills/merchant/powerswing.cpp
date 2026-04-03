@@ -10,6 +10,13 @@
 SkillPowerSwing::SkillPowerSwing() : WeaponSkillImpl(NC_POWERSWING) {
 }
 
+void SkillPowerSwing::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
+	const status_change *sc = status_get_sc(&src);
+
+	if (sc != nullptr && sc->hasSCE(SC_ABR_BATTLE_WARIOR))
+		dmg.div_ = -2;
+}
+
 void SkillPowerSwing::applyAdditionalEffects(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const {
 	sc_start(src,target, SC_STUN, 10, skill_lv, skill_get_time(getSkillId(), skill_lv));
 }

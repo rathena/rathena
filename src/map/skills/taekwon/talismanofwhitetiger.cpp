@@ -3,8 +3,9 @@
 
 #include "talismanofwhitetiger.hpp"
 
-#include <config/const.hpp>
+#include <config/core.hpp>
 
+#include "map/clif.hpp"
 #include "map/pc.hpp"
 #include "map/status.hpp"
 
@@ -27,14 +28,10 @@ void SkillTalismanOfWhiteTiger::calculateSkillRatio(const Damage *wd, const bloc
 void SkillTalismanOfWhiteTiger::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	status_change *sc = status_get_sc(src);
 
-	int32 starget = BL_CHAR|BL_SKILL;
-
 	if (sc != nullptr && sc->getSCE(SC_T_FIRST_GOD) != nullptr) {
 		sc_start(src, src, skill_get_sc(getSkillId()), 100, skill_lv, skill_get_time(getSkillId(), skill_lv));
 	}
 
-	skill_area_temp[1] = 0;
 	clif_skill_nodamage(src,*target,getSkillId(),skill_lv);
-	map_foreachinrange(skill_area_sub, target, skill_get_splash(getSkillId(), skill_lv), starget,
-			src, getSkillId(), skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
+	skill_castend_damage_id(src, target, getSkillId(), skill_lv, tick, flag);
 }
