@@ -3475,16 +3475,6 @@ int32 battle_get_weapon_element(const Damage& wd, const block_list& src, const b
 		skill->impl->modifyElement(wd, src, target, skill_lv, element, calc_for_damage_only);
 	}
 
-// calc_flag means the element should be calculated for damage only
-	if (calc_for_damage_only)
-		return element;
-
-#ifdef RENEWAL
-	// TODO refactor
-	if (skill_id == CR_SHIELDBOOMERANG)
-		element = ELE_NEUTRAL;
-#endif
-
 	return element;
 }
 

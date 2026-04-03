@@ -18,6 +18,7 @@ void SkillShieldBoomerang::calculateSkillRatio(const Damage* wd, const block_lis
 
 void SkillShieldBoomerang::modifyElement(const Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv, int32& element, int32 flag) const {
 #ifdef RENEWAL
+	// flag 1 means the element should be calculated for damage only
 	if (flag & 1)
 		element = ELE_NEUTRAL;
 #endif
