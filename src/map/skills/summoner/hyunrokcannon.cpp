@@ -33,7 +33,7 @@ void SkillHyunrokCannon::castendDamageId(block_list *src, block_list *target, ui
 	skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag);
 }
 
-void SkillHyunrokCannon::modifyElement(int32& element, const block_list& src, int32 flag) const {
+void SkillHyunrokCannon::modifyElement(const Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv, int32& element, int32 flag) const {
 	const status_change* sc = status_get_sc(&src);
 
 	if( sc != nullptr && !sc->empty() ){

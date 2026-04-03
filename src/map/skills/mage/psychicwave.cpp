@@ -32,7 +32,7 @@ void SkillPsychicWave::castendPos2(block_list* src, int32 x, int32 y, uint16 ski
 	skill_unitsetting(src,getSkillId(),skill_lv,x,y,0);
 }
 
-void SkillPsychicWave::modifyElement(int32& element, const block_list& src, int32 flag) const {
+void SkillPsychicWave::modifyElement(const Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv, int32& element, int32 flag) const {
 	const status_change* sc = status_get_sc(&src);
 
 	if( sc != nullptr && !sc->empty() ) {

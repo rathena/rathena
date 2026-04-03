@@ -38,7 +38,7 @@ void SkillSpiralPierce::applyAdditionalEffects(block_list *src, block_list *targ
 		sc_start(src,target,SC_ANKLE,100,0,skill_get_time2(getSkillId(),skill_lv));
 }
 
-void SkillSpiralPierce::modifyElement(int32& element, const block_list& src, int32 flag) const {
+void SkillSpiralPierce::modifyElement(const Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv, int32& element, int32 flag) const {
 	if (src.type != BL_PC)
 		element = ELE_NEUTRAL; // forced neutral for monsters
 }

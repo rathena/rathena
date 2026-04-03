@@ -22,7 +22,7 @@ void SkillSteelHorn::applyAdditionalEffects(block_list* src, block_list* target,
 	sc_start(src, target, SC_STUN, 20 + 2 * skill_lv, skill_lv, skill_get_time(getSkillId(), skill_lv));
 }
 
-void SkillSteelHorn::modifyElement(int32& element, const block_list& src, int32 flag) const {
+void SkillSteelHorn::modifyElement(const Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv, int32& element, int32 flag) const {
 	const status_change* sc = status_get_sc(&src);
 
 	if (sc != nullptr && sc->hasSCE(SC_GOLDENE_FERSE))

@@ -51,7 +51,7 @@ void SkillHesperusLit::applyAdditionalEffects(block_list* src, block_list* targe
 		skill_castend_damage_id(src,target,LG_PINPOINTATTACK, rnd_value<uint16>(1, pc_checkskill(sd,LG_PINPOINTATTACK)),tick,0);
 }
 
-void SkillHesperusLit::modifyElement(int32& element, const block_list& src, int32 flag) const {
+void SkillHesperusLit::modifyElement(const Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv, int32& element, int32 flag) const {
 	const status_change* sc = status_get_sc(&src);
 
 	if (sc != nullptr && sc->hasSCE(SC_BANDING) && sc->getSCE(SC_BANDING)->val2 > 4)

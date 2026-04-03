@@ -45,7 +45,7 @@ void SkillCatnipMeteor::castendPos2(block_list* src, int32 x, int32 y, uint16 sk
 	}
 }
 
-void SkillCatnipMeteor::modifyElement(int32& element, const block_list& src, int32 flag) const {
+void SkillCatnipMeteor::modifyElement(const Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv, int32& element, int32 flag) const {
 	const status_change* sc = status_get_sc(&src);
 
 	if( sc != nullptr && !sc->empty() ){
@@ -84,7 +84,7 @@ void SkillCatnipMeteor2::calculateSkillRatio(const Damage *wd, const block_list 
 	RE_LVL_DMOD(100);
 }
 
-void SkillCatnipMeteor2::modifyElement(int32& element, const block_list& src, int32 flag) const {
+void SkillCatnipMeteor2::modifyElement(const Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv, int32& element, int32 flag) const {
 	const status_change* sc = status_get_sc(&src);
 
 	if( sc != nullptr && !sc->empty() ){

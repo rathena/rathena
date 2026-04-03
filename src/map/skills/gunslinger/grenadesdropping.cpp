@@ -31,7 +31,7 @@ void SkillGrenadesDropping::calculateSkillRatio(const Damage* wd, const block_li
 	RE_LVL_DMOD(100);
 }
 
-void SkillGrenadesDropping::modifyElement(int32& element, const block_list& src, int32 flag) const {
+void SkillGrenadesDropping::modifyElement(const Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv, int32& element, int32 flag) const {
 	const status_change* sc = status_get_sc(&src);
 
 	// Night Watch Grenade Fragment elementals

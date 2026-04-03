@@ -46,7 +46,7 @@ void SkillImpl::modifyDamageData(Damage&, const block_list&, const block_list&, 
 	// no-op
 }
 
-void SkillImpl::modifyElement(int32&, const block_list&, int32) const {
+void SkillImpl::modifyElement(const Damage&, const block_list&, const block_list&, uint16, int32&, int32) const {
 	// no-op
 }
 

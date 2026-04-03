@@ -55,7 +55,7 @@ public:
 	/**
 	 * Allows modifying the element type of attack.
 	 */
-	virtual void modifyElement(int32& element, const block_list& src, int32 flag) const;
+	virtual void modifyElement(const Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv, int32& element, int32 flag) const;
  
 protected:
 	e_skill skill_id_;

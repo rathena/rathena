@@ -33,7 +33,7 @@ void SkillRayOfGenesis::applyAdditionalEffects(block_list* src, block_list* targ
 		sc_start(src,target, SC_BLIND, 50, skill_lv, skill_get_time(getSkillId(),skill_lv));
 }
 
-void SkillRayOfGenesis::modifyElement(int32& element, const block_list& src, int32 flag) const {
+void SkillRayOfGenesis::modifyElement(const Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv, int32& element, int32 flag) const {
 	const status_change* sc = status_get_sc(&src);
 
 	if (sc != nullptr && sc->hasSCE(SC_INSPIRATION))

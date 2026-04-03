@@ -28,7 +28,7 @@ void SkillHyunrokSpiritPower::splashSearch(block_list* src, block_list* target, 
 	SkillImplRecursiveDamageSplash::splashSearch(src, target, skill_lv, tick, flag);
 }
 
-void SkillHyunrokSpiritPower::modifyElement(int32& element, const block_list& src, int32 flag) const {
+void SkillHyunrokSpiritPower::modifyElement(const Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv, int32& element, int32 flag) const {
 	const status_change* sc = status_get_sc(&src);
 
 	if( sc != nullptr && !sc->empty() ){

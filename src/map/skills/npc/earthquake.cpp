@@ -14,6 +14,6 @@ void SkillEarthquake::castendPos2(block_list* src, int32 x, int32 y, uint16 skil
 	skill_unitsetting(src, getSkillId(), skill_lv, x, y, 0);
 }
 
-void SkillEarthquake::modifyElement(int32& element, const block_list& src, int32 flag) const {
+void SkillEarthquake::modifyElement(const Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv, int32& element, int32 flag) const {
 	element = ELE_NEUTRAL;
 }
