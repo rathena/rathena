@@ -32,3 +32,23 @@ void SkillHyunrokCannon::castendDamageId(block_list *src, block_list *target, ui
 	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
 	skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag);
 }
+
+void SkillHyunrokCannon::modifyElement(const Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv, int32& element, int32 flag) const {
+	const status_change* sc = status_get_sc(&src);
+
+	if( sc != nullptr && !sc->empty() ){
+		if( sc->hasSCE( SC_COLORS_OF_HYUN_ROK_1 ) ){
+			element = ELE_WATER;
+		}else if( sc->hasSCE( SC_COLORS_OF_HYUN_ROK_2 ) ){
+			element = ELE_WIND;
+		}else if( sc->hasSCE( SC_COLORS_OF_HYUN_ROK_3 ) ){
+			element = ELE_EARTH;
+		}else if( sc->hasSCE( SC_COLORS_OF_HYUN_ROK_4 ) ){
+			element = ELE_FIRE;
+		}else if( sc->hasSCE( SC_COLORS_OF_HYUN_ROK_5 ) ){
+			element = ELE_DARK;
+		}else if( sc->hasSCE( SC_COLORS_OF_HYUN_ROK_6 ) ){
+			element = ELE_HOLY;
+		}
+	}
+}

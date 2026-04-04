@@ -24,6 +24,17 @@ void SkillDragonBreath::castendDamageId(block_list *src, block_list *target, uin
 	}
 }
 
+void SkillDragonBreath::modifyElement(const Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv, int32& element, int32 flag) const {
+	const status_change* sc = status_get_sc(&src);
+
+	if (sc != nullptr) {
+		if (sc->hasSCE(SC_LUXANIMA)) // Lux Anima has priority over Giant Growth
+			element = ELE_DARK;
+		else if (sc->hasSCE(SC_GIANTGROWTH))
+			element = ELE_HOLY;
+	}
+}
+
 
 // RK_DRAGONBREATH_WATER
 SkillDragonBreathWater::SkillDragonBreathWater() : SkillImplRecursiveDamageSplash(RK_DRAGONBREATH_WATER) {
@@ -40,5 +51,16 @@ void SkillDragonBreathWater::castendDamageId(block_list *src, block_list *target
 		clif_skill_nodamage(src,*src,getSkillId(),skill_lv);
 	else {
 		skill_attack(BF_WEAPON, src, src, target, getSkillId(), skill_lv, tick, flag);
+	}
+}
+
+void SkillDragonBreathWater::modifyElement(const Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv, int32& element, int32 flag) const {
+	const status_change* sc = status_get_sc(&src);
+
+	if (sc != nullptr) {
+		if (sc->hasSCE(SC_LUXANIMA)) // Lux Anima has priority over Fighting Spirit
+			element = ELE_NEUTRAL;
+		else if (sc->hasSCE(SC_FIGHTINGSPIRIT))
+			element = ELE_GHOST;
 	}
 }

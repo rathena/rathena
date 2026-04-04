@@ -37,3 +37,8 @@ void SkillSpiralPierce::applyAdditionalEffects(block_list *src, block_list *targ
 	if( dstsd || ( dstmd && !status_bl_has_mode(target,MD_STATUSIMMUNE) ) ) //Does not work on status immune
 		sc_start(src,target,SC_ANKLE,100,0,skill_get_time2(getSkillId(),skill_lv));
 }
+
+void SkillSpiralPierce::modifyElement(const Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv, int32& element, int32 flag) const {
+	if (src.type != BL_PC)
+		element = ELE_NEUTRAL; // forced neutral for monsters
+}
