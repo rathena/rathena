@@ -606,8 +606,8 @@ ba_maison,70,145,3	script	Tamarin#ep172_bamaison-00	4_EP17_TAMARIN,{
 	switch( checkquest(11638,HUNTING) ) {
 	case -1:
 		mes "[Tamarin]";
-		mes "We are requesting the collection of the Guardian Parts remnants around the mansion, it seems to have been attacked recently and it's harming the residential enviroment of the mansion.";
-		mes "Please collect 20 Guardian Parts to improve the enviromental image of the mansion.";
+		mes "We are requesting the collection of the Guardian Parts remnants around the mansion, it seems to have been attacked recently and it's harming the residential environment of the mansion.";
+		mes "Please collect 20 Guardian Parts to improve the environmental image of the mansion.";
 		next;
 		if (select( "Accept.", "Decline." ) == 2) {
 			cutin "ep172_tamarin04",2;
@@ -1797,7 +1797,7 @@ ba_in01,203,103,5	script	Dien#jh5_1	4_F_DIENE,{
 		select( "It's a good idea." );
 		cutin "16loo_01",2;
 		mes "[Rookie]";
-		mes "Well, who can remember exactly and vividly what occured here?";
+		mes "Well, who can remember exactly and vividly what occurred here?";
 		next;
 		cutin "",255;
 		if (select( "The Mansion Manager.", "The Cleaning Robots." ) == 2) {

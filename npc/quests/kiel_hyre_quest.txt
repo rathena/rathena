@@ -3558,7 +3558,7 @@ kh_school,122,186,4	script	Beautiful Lady#kh6	894,{
 		mes "modified Puppet Designs...";
 		next;
 		mes "[Allysia]";
-		mes "Alright, I've recieved";
+		mes "Alright, I've received";
 		mes "Kiel Hyre's orders, and";
 		mes "must carry them out...";
 		delitem 7497,1; //Steel_Piece

@@ -1,0 +1,44 @@
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
+#include "starlightkick.hpp"
+
+#include <config/core.hpp>
+
+#include "map/clif.hpp"
+#include "map/map.hpp"
+#include "map/pc.hpp"
+#include "map/status.hpp"
+
+SkillStarLightKick::SkillStarLightKick() : SkillImplRecursiveDamageSplash(SKE_STAR_LIGHT_KICK) {
+}
+
+void SkillStarLightKick::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& skillratio, int32 mflag) const {
+	const map_session_data* sd = BL_CAST(BL_PC, src);
+	const status_data* sstatus = status_get_status_data(*src);
+
+	skillratio += -100 + 400 + 200 * skill_lv;
+	skillratio += skill_lv * 5 * pc_checkskill(sd, SKE_SKY_MASTERY);
+	skillratio += 5 * sstatus->pow;
+	RE_LVL_DMOD(100);
+}
+
+void SkillStarLightKick::splashSearch(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
+	map_session_data* sd = BL_CAST(BL_PC, src);
+
+	uint8 dir = DIR_NORTHEAST;
+	if (target->x != src->x || target->y != src->y)
+		dir = map_calc_dir(target, src->x, src->y);	// dir based on target as we move player based on target location
+	if (skill_check_unit_movepos(0, src, target->x + dirx[dir], target->y + diry[dir], 1, 1)) {
+		clif_skill_nodamage(src,*target,getSkillId(),skill_lv,1);
+		clif_blown(src);
+		skill_attack(BF_WEAPON, src, src, target, getSkillId(), skill_lv, tick, flag);
+	} else {
+		if (sd != nullptr)
+			clif_skill_fail( *sd, getSkillId(), USESKILL_FAIL );
+
+		// TODO: Should we return here?
+	}
+
+	SkillImplRecursiveDamageSplash::splashSearch(src, target, skill_lv, tick, flag);
+}

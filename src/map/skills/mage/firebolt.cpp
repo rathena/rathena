@@ -25,3 +25,15 @@ void SkillFireBolt::calculateSkillRatio(const Damage *wd, const block_list *src,
 void SkillFireBolt::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 &flag) const {
 	skill_attack(BF_MAGIC, src, src, target, getSkillId(), skill_lv, tick, flag);
 }
+
+void SkillFireBolt::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
+	const status_change* sc = status_get_sc(&src);
+
+	if (sc != nullptr) {
+		if (sc->hasSCE(SC_SPELLFIST) && (dmg.miscflag & BF_SHORT)) {
+			dmg.div_ = 1; // ad mods, to make it work similar to regular hits [Xazax]
+			dmg.flag = BF_WEAPON | BF_SHORT;
+			dmg.type = DMG_NORMAL;
+		}
+	}
+}

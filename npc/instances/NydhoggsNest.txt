@@ -482,7 +482,7 @@ prt_in,171,94,3	script	Assistant Naomi#edq	893,3,3,{
 			mes "He researches combat between Odin and the Gods, and about the Gods' origins and life.";
 			next;
 			mes "["+.@name$+"]";
-			mes "So, did he already know that the Rebirth of Satan Morocc has occured before?";
+			mes "So, did he already know that the Rebirth of Satan Morocc has occurred before?";
 			next;
 			mes "[Assistant Naomi]";
 			mes "I can't be sure, but he thought someday it would occur. It broke out earlier than he expected though.";
