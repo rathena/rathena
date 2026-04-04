@@ -973,7 +973,7 @@ bool chclif_parse_select_accessible_map( int32 fd, struct char_session_data& sd 
 
 		Sql_EscapeStringLen( sql_handle, esc_name, char_dat.name, strnlen( char_dat.name, NAME_LENGTH ) );
 
-		if( SQL_ERROR == Sql_Query( sql_handle, "INSERT INTO `%s`(`time`, `account_id`,`char_num`,`name`) VALUES (NOW(), '%d', '%d', '%s')", schema_config.charlog_db, sd.account_id, p->slot, esc_name ) ){
+		if( SQL_ERROR == Sql_Query( sql_handle, "INSERT INTO `%s`(`time`, `account_id`,`char_num`,`name`) VALUES (NOW(), '%d', '%d', '%s')", log_schema_config.charlog_db, sd.account_id, p->slot, esc_name ) ){
 			Sql_ShowDebug( sql_handle );
 		}
 	}
@@ -1131,7 +1131,7 @@ bool chclif_parse_charselect( int32 fd, struct char_session_data& sd ){
 
 		Sql_EscapeStringLen(sql_handle, esc_name, char_dat.name, strnlen(char_dat.name, NAME_LENGTH));
 		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s`(`time`, `account_id`,`char_num`,`name`) VALUES (NOW(), '%d', '%d', '%s')",
-			schema_config.charlog_db, sd.account_id, slot, esc_name) )
+			log_schema_config.charlog_db, sd.account_id, slot, esc_name) )
 			Sql_ShowDebug(sql_handle);
 	}
 	ShowInfo("Selected char: (Account %d: %d - %s)\n", sd.account_id, slot, char_dat.name);

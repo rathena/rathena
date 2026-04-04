@@ -2,9 +2,10 @@
 // For more information, see LICENCE in the main folder
 
 #include "loginlog.hpp"
+#include "login.hpp"
 
 #include <cstdlib> // exit
-#include <string>
+#include <unordered_set>
 
 #include <common/cbasetypes.hpp>
 #include <common/mmo.hpp>
@@ -18,13 +19,14 @@ std::string log_db_hostname = "127.0.0.1";
 uint16 log_db_port = 3306;
 std::string log_db_username = "ragnarok";
 std::string log_db_password = "";
-std::string log_db_database = "ragnarok";
+std::string log_db_database = "log";
 std::string log_login_db = "loginlog";
 std::string log_codepage = "";
 
 static Sql* sql_handle = nullptr;
 static bool enabled = false;
 
+std::unordered_set<uint32> ignored_login_ips;
 
 /**
  * Get the number of failed login attempts by the ip in the last minutes.
@@ -38,8 +40,8 @@ unsigned long loginlog_failedattempts(uint32 ip, uint32 minutes) {
 	if( !enabled )
 		return 0;
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT count(*) FROM `%s` WHERE `ip` = '%s' AND (`rcode` = '0' OR `rcode` = '1') AND `time` > NOW() - INTERVAL %d MINUTE",
-		log_login_db.c_str(), ip2str(ip,nullptr), minutes) )// how many times failed account? in one ip.
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT count(*) FROM `%s`.`%s` WHERE `ip` = '%s' AND (`rcode` = '0' OR `rcode` = '1') AND `time` > NOW() - INTERVAL %d MINUTE",
+		log_db_database.c_str(), log_login_db.c_str(), ip2str(ip, nullptr), minutes))// how many times failed account? in one ip.
 		Sql_ShowDebug(sql_handle);
 
 	if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
@@ -65,15 +67,17 @@ void login_log(uint32 ip, const char* username, int32 rcode, const char* message
 	char esc_message[255*2+1];
 	int32 retcode;
 
-	if( !enabled )
-		return;
+	if (!enabled) return;
+
+	if (ignored_login_ips.find(ip) != ignored_login_ips.end()) return;
 
 	Sql_EscapeStringLen(sql_handle, esc_username, username, strnlen(username, NAME_LENGTH));
 	Sql_EscapeStringLen(sql_handle, esc_message, message, strnlen(message, 255));
+	const char* ipStr = ip2str(ip, nullptr);
 
 	retcode = Sql_Query(sql_handle,
-		"INSERT INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%s', '%s', '%d', '%s')",
-		log_login_db.c_str(), ip2str(ip,nullptr), esc_username, rcode, esc_message);
+		"INSERT INTO `%s`.`%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%s', '%s', '%d', '%s')",
+		log_db_database.c_str(), log_login_db.c_str(), ipStr, esc_username, rcode, esc_message);
 
 	if( retcode != SQL_SUCCESS )
 		Sql_ShowDebug(sql_handle);
@@ -86,26 +90,25 @@ void login_log(uint32 ip, const char* username, int32 rcode, const char* message
  * @return true if successful, false if config not complete or server already running
  */
 bool loginlog_config_read(const char* key, const char* value) {
-	if( strcmpi(key, "log_db_ip") == 0 )
+	if (strcmpi(key, "log_db_ip") == 0)
 		log_db_hostname = value;
-	else
-	if( strcmpi(key, "log_db_port") == 0 )
+	else if (strcmpi(key, "log_db_port") == 0)
 		log_db_port = (uint16)strtoul(value, nullptr, 10);
-	else
-	if( strcmpi(key, "log_db_id") == 0 )
+	else if (strcmpi(key, "log_db_id") == 0)
 		log_db_username = value;
-	else
-	if( strcmpi(key, "log_db_pw") == 0 )
+	else if (strcmpi(key, "log_db_pw") == 0)
 		log_db_password = value;
-	else
-	if( strcmpi(key, "log_db_db") == 0 )
+	else if (strcmpi(key, "log_db_database") == 0)
 		log_db_database = value;
-	else
-	if( strcmpi(key, "log_codepage") == 0 )
+	else if (strcmpi(key, "log_codepage") == 0)
 		log_codepage = value;
-	else
-	if( strcmpi(key, "log_login_db") == 0 )
+	else if (strcmpi(key, "log_login_db") == 0)
 		log_login_db = value;
+	else if (strcmpi(key, "log_ignored_login_ip") == 0) {
+		uint32 ip = str2ip(value);
+		if (ip)
+			ignored_login_ips.insert(ip);
+	}
 	else
 		return false;
 
