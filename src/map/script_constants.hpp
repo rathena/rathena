@@ -2004,6 +2004,7 @@
 	export_constant(SC_WATER_CHARM_POWER);
 	export_constant(SC_WIND_CHARM_POWER);
 	export_constant(SC_GROUND_CHARM_POWER);
+	export_constant(SC_LOCKON_LASER);
 
 /// Do not modify code below this, until the end of the API hook, since it will be automatically generated again
 /// @APIHOOK_START(EFST_CONST)
@@ -10416,6 +10417,8 @@
 	export_constant(NK_IGNORELONGCARD);
 	export_constant(NK_CRITICAL);
 	export_constant(NK_SIMPLEDEFENSE);
+	export_constant(NK_IGNORERES);
+	export_constant(NK_IGNOREMRES);
 
 	/* skill inf */
 	export_constant(INF_PASSIVE_SKILL);

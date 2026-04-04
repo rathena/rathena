@@ -5691,7 +5691,7 @@ static struct Damage battle_calc_weapon_attack(block_list *src, block_list *targ
 
 		// Res reduces physical damage by a percentage and is calculated before DEF and other reductions.
 		// All skills that use the simple defense formula (damage substracted by DEF+DEF2) ignore Res
-		if ((wd.damage + wd.damage2) && tstatus->res > 0 && !nk[NK_SIMPLEDEFENSE]) {
+		if ((wd.damage + wd.damage2) && tstatus->res > 0 && !nk[NK_SIMPLEDEFENSE] && !nk[NK_IGNORERES]) {
 			// (Res flat reduction is already applied)
 			int16 res = tstatus->res;
 
@@ -6077,6 +6077,9 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 			case NPC_FLAMECROSS:
 				ad.damage = static_cast<int64>( sstatus->rhw.atk ) * static_cast<int64>( 20 ) * static_cast<int64>( skill_lv );
 				break;
+			case NPC_LOCKON_LASER_ATK:
+				ad.damage = 30000;
+				break;
 			default: {
 				if (sstatus->matk_max > sstatus->matk_min) {
 					MATK_ADD(sstatus->matk_min+rnd()%(sstatus->matk_max-sstatus->matk_min));
@@ -6153,7 +6156,7 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 
 #ifdef RENEWAL
 		// MRes reduces magical damage by a percentage and is calculated before MDEF and other reductions.
-		if (ad.damage != 0 && tstatus->mres > 0) {
+		if (ad.damage != 0 && tstatus->mres > 0 && !nk[NK_IGNOREMRES]) {
 			// (MRes flat reduction is already applied)
 			int16 mres = tstatus->mres;
 
