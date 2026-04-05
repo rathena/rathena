@@ -6879,41 +6879,6 @@ bool pc_steal_item(map_session_data *sd,block_list *bl, uint16 skill_lv)
 }
 
 /*==========================================
- * Stole zeny from bl (mob)
- * return
- *	0 = fail
- *	1 = success
- *------------------------------------------*/
-int32 pc_steal_coin(map_session_data *sd,block_list *target)
-{
-	int32 rate, target_lv;
-	mob_data *md;
-
-	if(!sd || !target || target->type != BL_MOB)
-		return 0;
-
-	md = (TBL_MOB*)target;
-	target_lv = status_get_lv(target);
-
-	if (md->state.steal_coin_flag || md->sc.getSCE(SC_STONE) || md->sc.getSCE(SC_FREEZE) || md->sc.getSCE(SC_HANDICAPSTATE_FROSTBITE) || 
-		md->sc.getSCE(SC_HANDICAPSTATE_SWOONING) || md->sc.getSCE(SC_HANDICAPSTATE_LIGHTNINGSTRIKE) || md->sc.getSCE(SC_HANDICAPSTATE_CRYSTALLIZATION) || 
-		status_bl_has_mode(target,MD_STATUSIMMUNE) || util::vector_exists(status_get_race2(md), RC2_TREASURE))
-		return 0;
-
-	rate = sd->battle_status.dex / 2 + 2 * (sd->status.base_level - target_lv) + (10 * pc_checkskill(sd, RG_STEALCOIN)) + sd->battle_status.luk / 2;
-	if(rnd()%1000 < rate)
-	{
-		// Zeny Steal Amount: (rnd() % (10 * target_lv + 1 - 8 * target_lv)) + 8 * target_lv
-		int32 amount = (rnd() % (2 * target_lv + 1)) + 8 * target_lv; // Reduced formula
-
-		pc_getzeny(sd, amount, LOG_TYPE_STEAL);
-		md->state.steal_coin_flag = 1;
-		return 1;
-	}
-	return 0;
-}
-
-/*==========================================
  * Set's a player position.
  * @param sd
  * @param mapindex
@@ -11083,7 +11048,7 @@ bool pc_jobchange(map_session_data *sd,int32 job, char upper)
 }
 
 /*==========================================
- * Tell client player sd has change equipement
+ * Tell client player sd has change equipment
  *------------------------------------------*/
 void pc_equiplookall(map_session_data *sd)
 {

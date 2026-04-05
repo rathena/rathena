@@ -53,7 +53,7 @@ void SkillVenomSplasher::castendDamageId(block_list* src, block_list* target, ui
 	}
 }
 
-int16 SkillVenomSplasher::getSearchSize(uint16 skill_lv) const {
+int16 SkillVenomSplasher::getSearchSize(block_list* src, uint16 skill_lv) const {
 	// Venom Splasher uses a different range for searching than for splashing
 	return 1;
 }

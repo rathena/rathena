@@ -30,7 +30,7 @@
 //=     Some more numeric conversion, and some other cleanup.
 //= 3.1 Updated Ice Necklace quest, added missing checks. [L0ne_W0lf]
 //= 3.2 Added missing updates for Peace to the Arunafeltz quest. [L0ne_W0lf]
-//= 3.3 Fixed occurance of PcName. [L0ne_W0lf]
+//= 3.3 Fixed occurrence of PcName. [L0ne_W0lf]
 //=     Fixed level 4 ID warps always being usable.
 //= 3.3a Fixed level 4 ID warps again. (Bugreport:4102) [L0ne_W0lf]
 //= 3.4 Added quest log entries for:

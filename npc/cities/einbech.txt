@@ -23,7 +23,7 @@
 //= 1.3 Implemented the Lover's quest. [MasterOfMuppets]
 //= 1.4 Moved quests to quests/quests_ein.txt [Evera]
 //= 1.5 Optimized some of the NPCs and fixed some typos [DZeroX]
-//= 1.6 Replaced occurances of PcName. [L0ne_W0lf]
+//= 1.6 Replaced occurrences of PcName. [L0ne_W0lf]
 //============================================================
 
 einbech,172,113,4	script	Nemuk#ein	855,{
