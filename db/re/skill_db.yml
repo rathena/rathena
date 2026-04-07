@@ -36687,8 +36687,6 @@ Body:
         - Level: 5
           Amount: 60
       State: Shield
-      Status:
-        Attack_Stance: true
     Status: Shield_Power
   - Id: 5266
     Name: IG_OVERSLASH
