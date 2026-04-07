@@ -37618,8 +37618,6 @@ Body:
           Amount: 55
         - Level: 5
           Amount: 60
-      Weapon:
-        Dagger: true
   - Id: 5292
     Name: SHC_IMPACT_CRATER
     Description: Impact Crater
