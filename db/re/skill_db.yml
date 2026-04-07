@@ -37628,7 +37628,7 @@ Body:
       Splash: true
       Critical: true
     Hit: Multi_Hit
-    HitCount: 1
+    HitCount: 5
     Element: Weapon
     SplashArea:
       - Level: 1
@@ -37666,10 +37666,6 @@ Body:
           Amount: 70
         - Level: 5
           Amount: 78
-      Weapon:
-        Katar: true
-      Status:
-        Rollingcutter: true
     Status: WeaponBlock_On
   - Id: 5293
     Name: SHC_ENCHANTING_SHADOW

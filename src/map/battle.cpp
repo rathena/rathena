@@ -3082,8 +3082,13 @@ static bool is_attack_critical(struct Damage* wd, block_list *src, const block_l
 			case GC_CROSSIMPACT:
 			case SHC_SAVAGE_IMPACT:
 			case SHC_ETERNAL_SLASH:
-			case SHC_IMPACT_CRATER:
 			case SHC_CROSS_SLASH:
+				cri /= 2;
+				break;
+			case SHC_IMPACT_CRATER:
+				if (sd == nullptr || sd->weapontype1 != W_KATAR)
+					return false;
+
 				cri /= 2;
 				break;
 			case WH_GALESTORM:
