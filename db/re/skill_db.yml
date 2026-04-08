@@ -35672,7 +35672,7 @@ Body:
     FixedCastTime: 1500
     Requires:
       SpCost: 130
-      ApCost: 25
+      ApCost: 15
     Unit:
       Id: Astral_Strike
       Range:
