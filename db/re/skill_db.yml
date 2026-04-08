@@ -35975,6 +35975,7 @@ Body:
     Type: Weapon
     TargetType: Self
     DamageFlags:
+      Critical: true
       Splash: true
     Range: 9
     Hit: Single
