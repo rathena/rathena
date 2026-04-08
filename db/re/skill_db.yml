@@ -45753,15 +45753,15 @@ Body:
       SpCost: 10
       ApCost:
         - Level: 1
-          Amount: 22
-        - Level: 2
-          Amount: 19
-        - Level: 3
-          Amount: 16
-        - Level: 4
           Amount: 13
+        - Level: 2
+          Amount: 11
+        - Level: 3
+          Amount: 9
+        - Level: 4
+          Amount: 7
         - Level: 5
-          Amount: 10
+          Amount: 5
   - Id: 6511
     Name: SHC_CROSS_SLASH
     Description: Cross Slash
