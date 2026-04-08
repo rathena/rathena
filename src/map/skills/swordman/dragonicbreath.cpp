@@ -21,10 +21,10 @@ void SkillDragonicBreath::calculateSkillRatio(const Damage* wd, const block_list
 
 	if (sc && sc->getSCE(SC_DRAGONIC_AURA)) {
 		skillratio += 3 * sstatus->pow;
-		skillratio += (skill_lv * (sstatus->max_hp * 25 / 100) * 7) / 100;	// Skill level x 0.07 x ((MaxHP / 4) + MaxSP)
+		skillratio += (skill_lv * (sstatus->max_hp * 25 / 100) * 7) / 100;
 		skillratio += (skill_lv * sstatus->max_sp * 7) / 100;
 	} else {
-		skillratio += (skill_lv * (sstatus->max_hp * 25 / 100) * 5) / 100;	// Skill level x 0.05 x ((MaxHP / 4) + MaxSP)
+		skillratio += (skill_lv * (sstatus->max_hp * 25 / 100) * 5) / 100;
 		skillratio += (skill_lv * sstatus->max_sp * 5) / 100;
 	}
 
