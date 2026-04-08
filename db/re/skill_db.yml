@@ -36242,6 +36242,7 @@ Body:
     Type: Weapon
     TargetType: Attack
     DamageFlags:
+      Critical: true
       Splash: true
     Range: 3
     Hit: Multi_Hit
