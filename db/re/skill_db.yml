@@ -45874,15 +45874,15 @@ Body:
         Time: 500
     Cooldown:
       - Level: 1
-        Time: 12500
-      - Level: 2
         Time: 10000
+      - Level: 2
+        Time: 8000
       - Level: 3
-        Time: 7500
+        Time: 6000
       - Level: 4
-        Time: 5000
+        Time: 4000
       - Level: 5
-        Time: 2500
+        Time: 2000
     FixedCastTime: 1500
     Requires:
       SpCost:
