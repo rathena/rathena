@@ -36275,7 +36275,7 @@ Body:
       Splash: true
     Range: 3
     Hit: Multi_Hit
-    HitCount: -3
+    HitCount: 3
     Element: Weapon
     SplashArea: 3
     GiveAp: 4
