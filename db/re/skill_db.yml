@@ -44787,7 +44787,7 @@ Body:
       - Level: 5
         Area: 3
     AfterCastActDelay: 300
-    Cooldown: 1000
+    Cooldown: 750
     Requires:
       SpCost:
         - Level: 1
