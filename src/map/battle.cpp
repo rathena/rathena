@@ -1969,8 +1969,10 @@ int64 battle_calc_damage(block_list *src,block_list *bl,struct Damage *d,int64 d
 					damage += damage * 120 / 100; 
 					break;
 				case HN_MEGA_SONIC_BLOW:
-				case HN_SPIRAL_PIERCE_MAX:
 					damage *= 2;
+					break;
+				case HN_SPIRAL_PIERCE_MAX:
+					damage += damage * 130 / 100; 
 					break;
 			}
 		}
