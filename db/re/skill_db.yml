@@ -43587,7 +43587,7 @@ Body:
     HitCount: -3
     GiveAp: 3
     Element: Weapon
-    SplashArea: 2
+    SplashArea: 3
     Cooldown: 3500
     FixedCastTime: 500
     Duration1: 2500
