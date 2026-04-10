@@ -1059,6 +1059,18 @@ uint64 ElementalDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			elemental->status.dmotion = 360;
 	}
 
+	if (this->nodeExists(node, "DamageTaken")) {
+		uint16 damage;
+
+		if (!this->asUInt16Rate(node, "DamageTaken", damage, 100))
+			return 0;
+
+		elemental->damagetaken = damage;
+	} else {
+		if (!exists)
+			elemental->damagetaken = 100;
+	}
+
 	elemental->status.aspd_rate = 1000;
 
 	if (this->nodeExists(node, "Mode")) {

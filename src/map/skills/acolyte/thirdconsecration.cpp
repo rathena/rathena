@@ -14,7 +14,9 @@ SkillThirdConsecration::SkillThirdConsecration() : SkillImplRecursiveDamageSplas
 void SkillThirdConsecration::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& skillratio, int32 mflag) const {
 	const status_data* sstatus = status_get_status_data(*src);
 
-	skillratio += -100 + 700 * skill_lv + 10 * sstatus->pow;
+	skillratio += -100 + 1200 * skill_lv;
+	skillratio += 10 * sstatus->pow;
+
 	RE_LVL_DMOD(100);
 }
 
@@ -24,7 +26,6 @@ void SkillThirdConsecration::applyAdditionalEffects(block_list* src, block_list*
 
 void SkillThirdConsecration::splashSearch(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
 	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
-	status_heal(src, status_get_max_hp(src) * skill_lv / 100, status_get_max_sp(src) * skill_lv / 100, 0);
 
 	SkillImplRecursiveDamageSplash::splashSearch(src, target, skill_lv, tick, flag);
 }

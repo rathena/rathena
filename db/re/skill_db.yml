@@ -35672,7 +35672,7 @@ Body:
     FixedCastTime: 1500
     Requires:
       SpCost: 130
-      ApCost: 25
+      ApCost: 15
     Unit:
       Id: Astral_Strike
       Range:
@@ -35975,6 +35975,7 @@ Body:
     Type: Weapon
     TargetType: Self
     DamageFlags:
+      Critical: true
       Splash: true
     Range: 9
     Hit: Single
@@ -36119,6 +36120,7 @@ Body:
     Type: Weapon
     TargetType: Attack
     DamageFlags:
+      Critical: true
       Splash: true
     Range: 3
     Hit: Single
@@ -36241,6 +36243,7 @@ Body:
     Type: Weapon
     TargetType: Attack
     DamageFlags:
+      Critical: true
       Splash: true
     Range: 3
     Hit: Multi_Hit
@@ -36273,7 +36276,7 @@ Body:
       Splash: true
     Range: 3
     Hit: Multi_Hit
-    HitCount: -3
+    HitCount: 3
     Element: Weapon
     SplashArea: 3
     GiveAp: 4
@@ -36363,7 +36366,7 @@ Body:
     HitCount: 5
     Element: Weapon
     SplashArea: 3
-    Cooldown: 1000
+    Cooldown: 700
     Requires:
       SpCost:
         - Level: 1
@@ -36687,8 +36690,6 @@ Body:
         - Level: 5
           Amount: 60
       State: Shield
-      Status:
-        Attack_Stance: true
     Status: Shield_Power
   - Id: 5266
     Name: IG_OVERSLASH
@@ -37618,8 +37619,6 @@ Body:
           Amount: 55
         - Level: 5
           Amount: 60
-      Weapon:
-        Dagger: true
   - Id: 5292
     Name: SHC_IMPACT_CRATER
     Description: Impact Crater
@@ -37630,7 +37629,7 @@ Body:
       Splash: true
       Critical: true
     Hit: Multi_Hit
-    HitCount: 1
+    HitCount: 5
     Element: Weapon
     SplashArea:
       - Level: 1
@@ -37668,10 +37667,6 @@ Body:
           Amount: 70
         - Level: 5
           Amount: 78
-      Weapon:
-        Katar: true
-      Status:
-        Rollingcutter: true
     Status: WeaponBlock_On
   - Id: 5293
     Name: SHC_ENCHANTING_SHADOW
@@ -43595,7 +43590,7 @@ Body:
     HitCount: -3
     GiveAp: 3
     Element: Weapon
-    SplashArea: 2
+    SplashArea: 3
     Cooldown: 3500
     FixedCastTime: 500
     Duration1: 2500
@@ -44795,7 +44790,7 @@ Body:
       - Level: 5
         Area: 3
     AfterCastActDelay: 300
-    Cooldown: 1000
+    Cooldown: 750
     Requires:
       SpCost:
         - Level: 1
@@ -45753,15 +45748,15 @@ Body:
       SpCost: 10
       ApCost:
         - Level: 1
-          Amount: 22
-        - Level: 2
-          Amount: 19
-        - Level: 3
-          Amount: 16
-        - Level: 4
           Amount: 13
+        - Level: 2
+          Amount: 11
+        - Level: 3
+          Amount: 9
+        - Level: 4
+          Amount: 7
         - Level: 5
-          Amount: 10
+          Amount: 5
   - Id: 6511
     Name: SHC_CROSS_SLASH
     Description: Cross Slash
@@ -45882,15 +45877,15 @@ Body:
         Time: 500
     Cooldown:
       - Level: 1
-        Time: 12500
-      - Level: 2
         Time: 10000
+      - Level: 2
+        Time: 8000
       - Level: 3
-        Time: 7500
+        Time: 6000
       - Level: 4
-        Time: 5000
+        Time: 4000
       - Level: 5
-        Time: 2500
+        Time: 2000
     FixedCastTime: 1500
     Requires:
       SpCost:
