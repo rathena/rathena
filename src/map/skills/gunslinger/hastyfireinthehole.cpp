@@ -39,3 +39,24 @@ void SkillHastyFireInTheHole::calculateSkillRatio(const Damage* wd, const block_
 	skillratio += 5 * sstatus->con;
 	RE_LVL_DMOD(100);
 }
+
+void SkillHastyFireInTheHole::modifyElement(const Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv, int32& element, int32 flag) const {
+	const status_change* sc = status_get_sc(&src);
+
+	// Night Watch Grenade Fragment elementals
+	if( sc != nullptr ){
+		if( sc->hasSCE( SC_GRENADE_FRAGMENT_1 ) ){
+			element = ELE_WATER;
+		}else if( sc->hasSCE( SC_GRENADE_FRAGMENT_2 ) ){
+			element = ELE_WIND;
+		}else if( sc->hasSCE( SC_GRENADE_FRAGMENT_3 ) ){
+			element = ELE_EARTH;
+		}else if( sc->hasSCE( SC_GRENADE_FRAGMENT_4 ) ){
+			element = ELE_FIRE;
+		}else if( sc->hasSCE( SC_GRENADE_FRAGMENT_5 ) ){
+			element = ELE_DARK;
+		}else if( sc->hasSCE( SC_GRENADE_FRAGMENT_6 ) ){
+			element = ELE_HOLY;
+		}
+	}
+}

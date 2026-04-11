@@ -45,9 +45,9 @@ static struct eri *delay_damage_ers; //For battle delay damage structures.
 #endif
 
 // Early declaration
-int32 battle_get_weapon_element( const Damage *wd, const block_list* src, const block_list* target, uint16 skill_id, uint16 skill_lv, int16 weapon_position, bool calc_for_damage_only );
-int32 battle_get_magic_element( const block_list* src, const block_list* target, uint16 skill_id, uint16 skill_lv, int32 mflag );
-int32 battle_get_misc_element( const block_list* src, const block_list* target, uint16 skill_id, uint16 skill_lv, int32 mflag );
+int32 battle_get_weapon_element(const Damage& dmg, const block_list& src, const block_list& target, uint16 skill_id, uint16 skill_lv, equip_index weapon_position, bool calc_for_damage_only);
+int32 battle_get_magic_element(const Damage& dmg, const block_list& src, const block_list& target, uint16 skill_id, uint16 skill_lv);
+int32 battle_get_misc_element(const Damage& dmg, const block_list& src, const block_list& target, uint16 skill_id, uint16 skill_lv);
 static void battle_calc_defense_reduction( Damage* wd, block_list* src, block_list* target, uint16 skill_id, uint16 skill_lv );
 
 /**
@@ -1306,13 +1306,13 @@ bool battle_status_block_damage(block_list *src, block_list *target, status_chan
 	if (flag & BF_WEAPON) {
 		status_data* sstatus = status_get_status_data(*src);
 		if(sstatus->rhw.ele == ELE_NEUTRAL && sstatus->lhw.ele > sstatus->rhw.ele)
-			element = battle_get_weapon_element(d, src, target, skill_id, skill_lv, EQI_HAND_L, false);
+			element = battle_get_weapon_element(*d, *src, *target, skill_id, skill_lv, EQI_HAND_L, false);
 		else
-			element = battle_get_weapon_element(d, src, target, skill_id, skill_lv, EQI_HAND_R, false);
+			element = battle_get_weapon_element(*d, *src, *target, skill_id, skill_lv, EQI_HAND_R, false);
 	} else if(flag & BF_MAGIC)
-		element = battle_get_magic_element(src, target, skill_id, skill_lv, d->miscflag);
+		element = battle_get_magic_element(*d, *src, *target, skill_id, skill_lv);
 	else
-		element = battle_get_misc_element(src, target, skill_id, skill_lv, d->miscflag);
+		element = battle_get_misc_element(*d, *src, *target, skill_id, skill_lv);
 	
 	switch( element ){
 		case ELE_NEUTRAL:
@@ -2031,7 +2031,7 @@ int64 battle_calc_damage(block_list *src,block_list *bl,struct Damage *d,int64 d
 	}
 
 	if (sd && pc_ismadogear(sd)) {
-		pc_overheat(*sd, (battle_get_weapon_element(d, src, bl, skill_id, skill_lv, EQI_HAND_R, false) == ELE_FIRE ? 3 : 1));
+		pc_overheat(*sd, (battle_get_weapon_element(*d, *src, *bl, skill_id, skill_lv, EQI_HAND_R, false) == ELE_FIRE ? 3 : 1));
 	}
 
 	// Target status (again), required for RELIEVE
@@ -3453,221 +3453,92 @@ static int32 battle_calc_equip_attack(block_list *src, int32 skill_id)
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
-int32 battle_get_weapon_element( const Damage* wd, const block_list* src, const block_list* target, uint16 skill_id, uint16 skill_lv, int16 weapon_position, bool calc_for_damage_only ){
-	const map_session_data* sd = BL_CAST(BL_PC,src);
-	const status_change* sc = status_get_sc(src);
-	const status_data* sstatus = status_get_status_data(*src);
+int32 battle_get_weapon_element(const Damage& wd, const block_list& src, const block_list& target, uint16 skill_id, uint16 skill_lv, equip_index weapon_position, bool calc_for_damage_only) {
 	int32 element = skill_get_ele(skill_id, skill_lv);
+
+	const map_session_data* sd = BL_CAST(BL_PC, &src);
+	const status_change* sc = status_get_sc(&src);
+	const status_data* sstatus = status_get_status_data(src);
 
 	//Take weapon's element
 	if( !skill_id || element == ELE_WEAPON ) {
-		if (weapon_position == EQI_HAND_R)
-			element = sstatus->rhw.ele;
-		else
-			element = sstatus->lhw.ele;
-		if(is_skill_using_arrow(src, skill_id) && sd && sd->bonus.arrow_ele && weapon_position == EQI_HAND_R)
+		if (sstatus != nullptr) {
+			if (weapon_position == EQI_HAND_R)
+				element = sstatus->rhw.ele;
+			else
+				element = sstatus->lhw.ele;
+		}
+
+		if(is_skill_using_arrow(&src, skill_id) && sd && sd->bonus.arrow_ele && weapon_position == EQI_HAND_R)
 			element = sd->bonus.arrow_ele;
 		if(sd && sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm >= MAX_SPIRITCHARM)
 			element = sd->spiritcharm_type; // Summoning 10 spiritcharm will endow your weapon
-		// on official endows override all other elements [helvetica]
-		if(sc && sc->getSCE(SC_ENCHANTARMS)) // Check for endows
-			element = sc->getSCE(SC_ENCHANTARMS)->val1;
+
+		if (sc != nullptr) {
+			// on official endows override all other elements [helvetica]
+			if (sc->hasSCE(SC_ENCHANTARMS)) // Check for endows
+				element = sc->getSCE(SC_ENCHANTARMS)->val1;
+
+			if (skill_id == 0 && sc->hasSCE(SC_GOLDENE_FERSE) && (rnd() % 100 < sc->getSCE(SC_GOLDENE_FERSE)->val4))
+				element = ELE_HOLY;
+		}
 	} else if( element == ELE_ENDOWED ) //Use enchantment's element
-		element = status_get_attack_sc_element(src,sc);
+		element = status_get_attack_sc_element(&src, sc);
 	else if( element == ELE_RANDOM ) //Use random element
 		element = rnd()%ELE_ALL;
 
-	switch( skill_id ) {
-		case GS_GROUNDDRIFT:
-			element = wd->miscflag; //element comes in flag.
-			break;
-		case LK_SPIRALPIERCE:
-			if (!sd)
-				element = ELE_NEUTRAL; //forced neutral for monsters
-			break;
-		case RK_DRAGONBREATH:
-			if (sc) {
-				if (sc->getSCE(SC_LUXANIMA)) // Lux Anima has priority over Giant Growth
-					element = ELE_DARK;
-				else if (sc->getSCE(SC_GIANTGROWTH))
-					element = ELE_HOLY;
-			}
-			break;
-		case RK_DRAGONBREATH_WATER:
-			if (sc) {
-				if (sc->getSCE(SC_LUXANIMA)) // Lux Anima has priority over Fighting Spirit
-					element = ELE_NEUTRAL;
-				else if (sc->getSCE(SC_FIGHTINGSPIRIT))
-					element = ELE_GHOST;
-			}
-			break;
-		case LG_HESPERUSLIT:
-			if (sc && sc->getSCE(SC_BANDING) && sc->getSCE(SC_BANDING)->val2 > 4)
-				element = ELE_HOLY;
-			break;
-		case GN_CARTCANNON:
-		case NC_ARMSCANNON:
-			if (sd && sd->state.arrow_atk > 0)
-				element = sd->bonus.arrow_ele;
-			break;
-		case SJ_PROMINENCEKICK:
- 				element = ELE_FIRE;
- 			break;
-		case RL_H_MINE:
-			if (sd && sd->flicker) //Force RL_H_MINE deals fire damage if activated by RL_FLICKER
-				element = ELE_FIRE;
-			break;
-		case NW_BASIC_GRENADE:
-		case NW_HASTY_FIRE_IN_THE_HOLE:
-		case NW_GRENADES_DROPPING:
-		case NW_MISSION_BOMBARD:
-			// Night Watch Grenade Fragment elementals affecting those skills.
-			if( sc != nullptr ){
-				if( sc->getSCE( SC_GRENADE_FRAGMENT_1 ) != nullptr ){
-					element = ELE_WATER;
-				}else if( sc->getSCE( SC_GRENADE_FRAGMENT_2 ) != nullptr ){
-					element = ELE_WIND;
-				}else if( sc->getSCE( SC_GRENADE_FRAGMENT_3 ) != nullptr ){
-					element = ELE_EARTH;
-				}else if( sc->getSCE( SC_GRENADE_FRAGMENT_4 ) != nullptr ){
-					element = ELE_FIRE;
-				}else if( sc->getSCE( SC_GRENADE_FRAGMENT_5 ) != nullptr ){
-					element = ELE_DARK;
-				}else if( sc->getSCE( SC_GRENADE_FRAGMENT_6 ) != nullptr ){
-					element = ELE_HOLY;
-				}
-			}
-			break;
-		case SS_FUUMASHOUAKU:
-		case SS_FUUMAKOUCHIKU:
-			if( sd != nullptr ){
-				element = sd->bonus.arrow_ele;
-			}
-			break;
+	// Modify the element type of skill attack
+	if (std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id); skill != nullptr && skill->impl != nullptr) {
+		skill->impl->modifyElement(wd, src, target, skill_lv, element, calc_for_damage_only);
 	}
-
-	if (sc && sc->getSCE(SC_GOLDENE_FERSE) && ((!skill_id && (rnd() % 100 < sc->getSCE(SC_GOLDENE_FERSE)->val4)) || skill_id == MH_STAHL_HORN))
-		element = ELE_HOLY;
-
-// calc_flag means the element should be calculated for damage only
-	if (calc_for_damage_only)
-		return element;
-
-#ifdef RENEWAL
-	if (skill_id == CR_SHIELDBOOMERANG)
-		element = ELE_NEUTRAL;
-#endif
 
 	return element;
 }
 
-int32 battle_get_magic_element(const block_list* src, const block_list* target, uint16 skill_id, uint16 skill_lv, int32 mflag) {
+int32 battle_get_magic_element(const Damage& dmg, const block_list& src, const block_list& target, uint16 skill_id, uint16 skill_lv) {
 	int32 element = skill_get_ele(skill_id, skill_lv);
-	const map_session_data* sd = BL_CAST(BL_PC,src);
-	const status_change *sc = status_get_sc(src);
-	const status_data* sstatus = status_get_status_data(*src);
-	
-	if (element == ELE_WEAPON) { // pl=-1 : the skill takes the weapon's element
-		element = sstatus->rhw.ele;
-		if(sd && sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm >= MAX_SPIRITCHARM)
-			element = sd->spiritcharm_type; // Summoning 10 spiritcharm will endow your weapon
-	} else if (element == ELE_ENDOWED) //Use status element
-		element = status_get_attack_sc_element(src,status_get_sc(src));
-	else if (element == ELE_RANDOM) //Use random element
-		element = rnd()%ELE_ALL;
 
-	switch(skill_id) {
-		case NPC_EARTHQUAKE:
+	switch (element) {
+		case ELE_WEAPON: // pl = -1 : the skill takes the weapon's element
+			if (const status_data* sstatus = status_get_status_data(src); sstatus != nullptr)
+				element = sstatus->rhw.ele;
+
+			if (const map_session_data* sd = BL_CAST(BL_PC, &src); sd != nullptr && sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm >= MAX_SPIRITCHARM)
+				element = sd->spiritcharm_type; // Summoning 10 spiritcharm will endow your weapon
+			break;
+		case ELE_ENDOWED: // Use status element
+			element = status_get_attack_sc_element(&src, status_get_sc(&src));
+			break;
+		case ELE_RANDOM: // Use random element
+			element = rnd() % ELE_ALL;
+			break;
+	}
+
+	// Modify the element type of skill attack
+	if (std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id); skill != nullptr && skill->impl != nullptr) {
+		skill->impl->modifyElement(dmg, src, target, skill_lv, element, 0);
+	}
+
+	return element;
+}
+
+int32 battle_get_misc_element(const Damage& dmg, const block_list& src, const block_list& target, uint16 skill_id, uint16 skill_lv) {
+	int32 element = skill_get_ele(skill_id, skill_lv);
+
+	switch (element) {
+		case ELE_WEAPON:
+		case ELE_ENDOWED:	// Attack that takes weapon's element for misc attacks? Make it neutral [Skotlex]
 			element = ELE_NEUTRAL;
 			break;
-		case WL_HELLINFERNO:
-			if (mflag & 2) { // ELE_DARK
-				element = ELE_DARK;
-			}
-			break;
-		case NPC_PSYCHIC_WAVE:
-		case SO_PSYCHIC_WAVE:
-			if( sc != nullptr && !sc->empty() ) {
-				static const std::vector<sc_type> types = {
-					SC_HEATER_OPTION,
-					SC_COOLER_OPTION,
-					SC_BLAST_OPTION,
-					SC_CURSED_SOIL_OPTION,
-					SC_FLAMETECHNIC_OPTION,
-					SC_COLD_FORCE_OPTION,
-					SC_GRACE_BREEZE_OPTION,
-					SC_EARTH_CARE_OPTION,
-					SC_DEEP_POISONING_OPTION
-				};
-				for( sc_type type : types ){
-					if( sc->getSCE( type ) ){
-						element = sc->getSCE( type )->val3;
-						break;
-					}
-				}
-			}
-			break;
-		case KO_KAIHOU:
-			if(sd && sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm > 0)
-				element = sd->spiritcharm_type;
-			break;
-		case CD_DIVINUS_FLOS:
-		case AB_ADORAMUS:
-			if (sc != nullptr && sc->hasSCE(SC_ANCILLA))
-				element = ELE_NEUTRAL;
-			break;
-		case LG_RAYOFGENESIS:
-			if (sc && sc->getSCE(SC_INSPIRATION))
-				element = ELE_NEUTRAL;
-			break;
-		case IG_IMPERIAL_PRESSURE:
-			if (sc != nullptr && sc->hasSCE(SC_GUARD_STANCE))
-				element = ELE_HOLY;
-			break;
-		case WM_REVERBERATION:
-		case TR_METALIC_FURY:
-		case TR_SOUNDBLEND:
-		case TR_RHYTHMICAL_WAVE:
-			if (sd)
-				element = sd->bonus.arrow_ele;
-			break;
-		case SU_CN_METEOR:
-		case SU_CN_METEOR2:
-		case SH_HYUN_ROKS_BREEZE:
-		case SH_HYUN_ROK_CANNON:
-		case SH_HYUN_ROK_SPIRIT_POWER:
-			if( sc != nullptr && !sc->empty() ){
-				if( sc->getSCE( SC_COLORS_OF_HYUN_ROK_1 ) != nullptr ){
-					element = ELE_WATER;
-				}else if( sc->getSCE( SC_COLORS_OF_HYUN_ROK_2 ) != nullptr ){
-					element = ELE_WIND;
-				}else if( sc->getSCE( SC_COLORS_OF_HYUN_ROK_3 ) != nullptr ){
-					element = ELE_EARTH;
-				}else if( sc->getSCE( SC_COLORS_OF_HYUN_ROK_4 ) != nullptr ){
-					element = ELE_FIRE;
-				}else if( sc->getSCE( SC_COLORS_OF_HYUN_ROK_5 ) != nullptr ){
-					element = ELE_DARK;
-				}else if( sc->getSCE( SC_COLORS_OF_HYUN_ROK_6 ) != nullptr ){
-					element = ELE_HOLY;
-				}
-			}
-			break;
-		case SS_ANKOKURYUUAKUMU:
-			if (mflag & SKILL_ALTDMG_FLAG)
-				element = ELE_FIRE;
+		case ELE_RANDOM:	// Use random element
+			element = rnd() % ELE_ALL;
 			break;
 	}
 
-	return element;
-}
-
-int32 battle_get_misc_element( const block_list* src, const block_list* target, uint16 skill_id, uint16 skill_lv, int32 mflag ) {
-	int32 element = skill_get_ele(skill_id, skill_lv);
-	
-	if (element == ELE_WEAPON || element == ELE_ENDOWED) //Attack that takes weapon's element for misc attacks? Make it neutral [Skotlex]
-		element = ELE_NEUTRAL;
-	else if (element == ELE_RANDOM) //Use random element
-		element = rnd()%ELE_ALL;
+	// Modify the element type of skill attack
+	if (std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id); skill != nullptr && skill->impl != nullptr) {
+		skill->impl->modifyElement(dmg, src, target, skill_lv, element, 0);
+	}
 
 	return element;
 }
@@ -3774,11 +3645,11 @@ static void battle_calc_element_damage(struct Damage* wd, block_list *src, block
 	status_change* sc = status_get_sc(src);
 	status_data* sstatus = status_get_status_data(*src);
 	status_data* tstatus = status_get_status_data(*target);
-	int32 right_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_R, true);
+	int32 right_element = battle_get_weapon_element(*wd, *src, *target, skill_id, skill_lv, EQI_HAND_R, true);
 
 	// Elemental attribute fix
 	if(!nk[NK_IGNOREELEMENT] && (wd->damage > 0 || wd->damage2 > 0)) {
-		int32 left_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_L, true);
+		int32 left_element = battle_get_weapon_element(*wd, *src, *target, skill_id, skill_lv, EQI_HAND_L, true);
 
 		switch (skill_id) {
 			case PA_SACRIFICE:
@@ -4018,8 +3889,8 @@ static void battle_calc_damage_parts(struct Damage* wd, block_list *src,block_li
 	map_session_data *sd = BL_CAST(BL_PC, src);
 	bool critical = false;
 
-	int32 right_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_R, false);
-	int32 left_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_L, false);
+	int32 right_element = battle_get_weapon_element(*wd, *src, *target, skill_id, skill_lv, EQI_HAND_R, false);
+	int32 left_element = battle_get_weapon_element(*wd, *src, *target, skill_id, skill_lv, EQI_HAND_L, false);
 
 	wd->statusAtk += sstatus->batk;
 	wd->statusAtk2 += sstatus->batk;
@@ -5109,8 +4980,8 @@ static void battle_calc_attack_plant(struct Damage* wd, block_list *src,block_li
 			return;
 		}
 
-		const int32 right_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_R, false);
-		const int32 left_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_L, false);
+		const int32 right_element = battle_get_weapon_element(*wd, *src, *target, skill_id, skill_lv, EQI_HAND_R, false);
+		const int32 left_element = battle_get_weapon_element(*wd, *src, *target, skill_id, skill_lv, EQI_HAND_L, false);
 
 		if (wd->damage > 0) {
 			wd->damage = battle_attr_fix(src, target, wd->damage, right_element, tstatus->def_ele, tstatus->ele_lv);
@@ -5534,8 +5405,8 @@ static struct Damage battle_calc_weapon_attack(block_list *src, block_list *targ
 		skill->impl->modifyDamageData(wd, *src, *target, skill_lv);
 	}
 
-	right_element = battle_get_weapon_element(&wd, src, target, skill_id, skill_lv, EQI_HAND_R, false);
-	left_element = battle_get_weapon_element(&wd, src, target, skill_id, skill_lv, EQI_HAND_L, false);
+	right_element = battle_get_weapon_element(wd, *src, *target, skill_id, skill_lv, EQI_HAND_R, false);
+	left_element = battle_get_weapon_element(wd, *src, *target, skill_id, skill_lv, EQI_HAND_L, false);
 
 	if (sc != nullptr && sc->empty())
 		sc = nullptr; //Skip checking as there are no status changes active.
@@ -5974,7 +5845,7 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 	tsc = status_get_sc(target);
 
 	//Initialize variables that will be used afterwards
-	s_ele = battle_get_magic_element(src, target, skill_id, skill_lv, mflag);
+	s_ele = battle_get_magic_element(ad, *src, *target, skill_id, skill_lv);
 
 	//Set miscellaneous data that needs be filled
 	if(sd) {
@@ -6454,7 +6325,7 @@ struct Damage battle_calc_misc_attack(block_list *src,block_list *target,uint16 
 		md.blewcount += battle_blewcount_bonus(sd, skill_id);
 	}
 
-	s_ele = battle_get_misc_element(src, target, skill_id, skill_lv, mflag);
+	s_ele = battle_get_misc_element(md, *src, *target, skill_id, skill_lv);
 
 	//Skill Range Criteria
 	md.flag |= battle_range_type(src, target, skill_id, skill_lv);
