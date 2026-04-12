@@ -66,7 +66,7 @@ char* normalize_name(char* str,const char* delims)
 		return str;
 
 	// trim start of string
-	while( *in && strchr(delims,*in) )
+	while( *in && (unsigned char)*in <= 127 && strchr(delims,*in) )
 		++in;
 	while( *in )
 	{
@@ -76,14 +76,33 @@ char* normalize_name(char* str,const char* delims)
 			++out;
 		}
 		// copy non trim characters
-		while( *in && !strchr(delims,*in) )
+		while( *in )
 		{
-			*out = *in;
-			++out;
-			++in;
+			// thai character
+			if ((unsigned char)*in > 127)
+			{
+				*out = *in;
+				++out;
+				++in;
+				continue;
+			}
+
+			// normal ascii
+			if (!strchr(delims, *in))
+			{
+				*out = *in;
+				++out;
+				++in;
+			}
+
+			// delims
+			else
+			{
+				break;
+			}
 		}
 		// skip trim characters
-		while( *in && strchr(delims,*in) )
+		while( *in && (unsigned char)*in <= 127 && strchr(delims,*in) )
 			++in;
 		put_space = 1;
 	}
