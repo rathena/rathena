@@ -90602,6 +90602,15 @@ Body:
          bonus2 bExpAddRace,RC_All,5;
          bonus2 bDropAddRace,RC_All,5;
       }
+  - Id: 315055
+    AegisName: aegis_315055
+    Name: Flower Garden
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect FOOTPRINT_EF_FLOWER_GARDEN,true;
+    UnEquipScript: |
+      hateffect FOOTPRINT_EF_FLOWER_GARDEN,false;
   - Id: 1000000
     AegisName: IDTest_event
     Name: IDTest event
@@ -102009,6 +102018,11 @@ Body:
       NoDrop: true
       NoMail: true
       NoAuction: true
+  - Id: 1002822
+    AegisName: aegis_1002822
+    Name: "[Footprints] Flower Garden"
+    Type: Etc
+    Weight: 100
   - Id: 1002827
     AegisName: Energy_Xtal_RR_TW
     Name: Energy Crystal (Ring of Restoration)    # !todo check english name
