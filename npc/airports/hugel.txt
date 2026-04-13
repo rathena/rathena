@@ -10,15 +10,19 @@
 //= Hugel Airport NPCs
 //===== Additional Comments: ================================= 
 //= 1.0 First version.
-//============================================================ 
+//============================================================
+//===================== Tradução PT-BR ==========
+// Tradução: HD Scripts
+// Revisado: HD Scripts - Projeto eaBrasil
+//===============================================  
 
 hugel,178,142,0	script	toairplane#hugel	45,1,1,{
 	end;
 OnTouch:
-	mes "To use the airship, you are required to pay 1,200 zeny or a Free Airship Ticket.";
-	mes "Would you like to use the service?";
+	mes "Para usar o aeroplano, você precisa pagar uma taxa de 1,200 Zenys ou possuir um Bilhete para Aeroplano.";
+	mes "Você deseja usar o serviço?";
 	next;
-	if (select("Yes:No") == 1) {
+	if (select("Sim:Não") == 1) {
 		if (countitem(7311) > 0) {
 			delitem 7311,1; //Free_Flying_Ship_Ticket
 			warp "airplane",244,58;
@@ -29,10 +33,10 @@ OnTouch:
 			warp "airplane",244,58;
 			end;
 		}
-		mes "I am sorry, but you do not have enough money.";
-		mes "Please remember, you are required to pay 1,200 zeny to use the service.";
+		mes "Me desculpe, mas você não possui zenys suficientes.";
+		mes "Lembre, você precisa pagar uma taxa de 1,200 Zenys para usar esse serviço.";
 		close;
 	}
-	mes "Thank you, please come again.";
+	mes "Obrigado, volte novamente.";
 	close;
 }

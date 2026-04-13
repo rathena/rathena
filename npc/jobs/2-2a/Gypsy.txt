@@ -13,71 +13,73 @@
 //= 1.1 Made all into functions, additional checks, etc. [Lupus]
 //= 1.2 Made numbers into constants. [Vicious]
 //= 1.3 Now saves/restores all the quest skills [Lupus]
-//============================================================ 
+//=============== Tradução PT-BR =============================
+// J4ND3RS0N - Disponibilizado para Projeto SOCERO
+//============================================================
 
-valkyrie,53,56,3	script	Gypsy#Valkyrie	101,{
+valkyrie,53,56,3	script	Cigana#Valkyrie	101,{
 	if (ADVJOB == 0 || Upper != 1) {
 		set .@karma_d,rand(1,10);
 		if (.@karma_d > 4) {
-			mes "[Gypsy]";
-			mes "Congratulations.";
-			mes "Honor to the warriors!";
+			mes "[Cigana]";
+			mes "Parabéns.";
+			mes "Honra aos guerreiros!";
 			close;
 		}
-		mes "[Gypsy]";
-		mes "Move left,";
-		mes "move right~!";
-		mes "And step...!";
-		mes "Dancing can be";
-		mes "more than a hobby.";
-		mes "For me, it's a way of life~";
+		mes "[Cigana]";
+		mes "Mexe pra esquerda,";
+		mes "mexe pra direita~!";
+		mes "E dê um passo...!";
+		mes "Dançar pode ser";
+		mes "mais que um passatempo.";
+		mes "Para mim, isso é um modo de vida~";
 		close;
 	}
 	else if (ADVJOB == Job_Gypsy && Class == Job_Archer_High && JobLevel > 39) {
-		mes "[Gypsy]";
-		mes "The land of Midgard";
-		mes "is in need of talented women";
-		mes "to subtly change the balances";
-		mes "in the battle between good";
-		mes "and evil.";
+		mes "[Cigana]";
+		mes "A terra de Rune-Midgard";
+		mes "está precisando de mulheres talentosas";
+		mes "para mudar sutilmente o balanço";
+		mes "nas batalhas entre o bem";
+		mes "e o mal.";
 		next;
-		mes "[Gypsy]";
-		mes "Are you ready";
-		mes "to take up this role,";
-		mes "and become a Gypsy?";
+		mes "[Cigana]";
+		mes "Você está pronta";
+		mes "para pegar esse cargo,";
+		mes "e se tornar uma Cigana?";
 		next;
-		if (select("No.:Yes.") == 1) {
-			mes "[Gypsy]";
-			mes "When you're ready,";
-			mes "feel free to come back.";
-			mes "Honor to the warriors!";
+		if (select("Não.:Sim.") == 1) {
+			mes "[Cigana]";
+			mes "Quando estiver pronta,";
+			mes "sinta-se livre para voltar.";
+			mes "Honra aos guerreiros!";
 			close;
 		}
 		if (SkillPoint) {
-			mes "[Gypsy]";
-			mes "It is still possible for you to learn more skills. Please use";
-			mes "all of your remaining Skill Points before returning to me.";
+			mes "[Cigana]";
+			mes "Ainda é possível para você aprender mais algumas habilidades. Por favor";
+			mes "use todos seus pontos de habilidade restantes antes de voltar aqui.";
 			close;
 		}
 		jobchange Job_Gypsy;
 		set ADVJOB,0;
-		mes "[Gypsy]";
-		mes "Congratulations!";
-		mes "As a Gypsy, I know";
-		mes "that your performances";
-		mes "sway the hearts of all";
-		mes "those who will be watching...";
+		mes "[Cigana]";
+		mes "Parabéns!";
+		mes "Como Cigana, eu sei";
+		mes "que suas performances";
+		mes "irão abalar os corações de todos";
+		mes "aqueles que estarão assistindo...";
 		close;
 	}
-	mes "[Gypsy]";
-	mes "Welcome";
-	mes "to Valhalla,";
-	mes "the Hall of Honor.";
+	mes "[Cigana]";
+	mes "Bem-vindo";
+	mes "a Valhalla,";
+	mes "o Salão da Honra.";
 	next;
-	mes "[Gypsy]";
-	mes "Please make";
-	mes "yourself comfortable";
-	mes "while you are here.";
-	mes "Honor to the warriors!";
+	mes "[Cigana]";
+	mes "Por favor sinta-se";
+	mes "confortável enquanto";
+	mes "estiver aqui.";
+	mes "Honra aos guerreiros!";
 	close;
-}
+}

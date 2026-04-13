@@ -15,69 +15,58 @@
 //= 1.3 Now saves/restores all the quest skills [Lupus]
 //= 1.3a Corrected a Little Typo error. [Samuray22]
 //=     Thanks to Myllena.
-//============================================================ 
+//=============== Tradução PT-BR ================
+// HanzoBR - Disponibilizado para Projeto SOCERO
+//===============================================
 
-valkyrie,53,54,3	script	Minstrel#Valkyrie	741,{
+valkyrie,53,54,3	script	Menestrel#Valkyrie	741,{
 	if (ADVJOB == 0 || Upper != 1) {
 		set .@karma_d,rand(1,10);
 		if (.@karma_d > 4) {
-			mes "[Minstrel]";
-			mes "Congratulations.";
-			mes "Honor to the warriors!";
+			mes "[Menestrel]";
+			mes "Parabéns";
+			mes "Honra aos guerreiros!";
 			close;
 		}
-		mes "[Minstrel]";
-		mes "Do you want to";
-		mes "sing a song with me?";
+		mes "[Menestrel]";
+		mes "Quer cantar comigo?";
 		mes "Sha la la la la~";
 		close;
 	}
 	else if (ADVJOB == Job_Clown && Class == Job_Archer_High && JobLevel > 39) {
-		mes "[Minstrel]";
-		mes "The dreary world";
-		mes "of mortals is in need";
-		mes "of more cheerful song.";
-		mes "Will you bring it to them";
-		mes "and turn the tide in the";
-		mes "battle against evil?";
+		mes "[Menestrel]";
+		mes "O mundo sombrio dos mortais precisa de uma música mais alegre.";
+        mes "Você irá trazer a música para eles e virar a maré na batalha contra o mal?";
 		next;
-		mes "[Minstrel]";
-		mes "Will you do this";
-		mes "for Midgard...";
-		mes "As a Minstrel?";
+		mes "[Menestrel]";
+		mes "Você fará isto por Rune-Midgard";
+		mes "Como Menestrel?";
 		next;
-		if (select("No.:Yes.") == 1) {
-			mes "[Minstrel]";
-			mes "When you're ready,";
-			mes "feel free to come back.";
-			mes "Honor to the warriors!";
+		if (select("Não.:Sim.") == 1) {
+			mes "[Menestrel]";
+			mes "Quando você estiver pronto, volte e fale comigo.";
+			mes "Honra aos guerreiros!";
 			close;
 		}
 		if (SkillPoint) {
-			mes "[Minstrel]";
-			mes "It is still possible for you to learn more skills. Please use";
-			mes "all of your remaining Skill Points before returning to me.";
+			mes "[Menestrel]";
+			mes "Você ainda tem pontos de habilidades disponíveis.";
+			mes "Por favor, utilize todos, e torne a falar comigo.";
 			close;
 		}
 		jobchange Job_Clown;
 		set ADVJOB,0;
-		mes "[Minstrel]";
-		mes "Congratulations!";
-		mes "As a Minstrel, your";
-		mes "your songs will bring";
-		mes "hope to your allies, and";
-		mes "desperation to your foes.";
+		mes "[Menestrel]";
+		mes "Parabéns!";
+		mes "Como um Menestrel, suas suas músicas trarão esperança para seus aliados e desespero para seus inimigos.";
 		close;
 	}
-	mes "[Minstrel]";
-	mes "Welcome";
-	mes "to Valhalla,";
-	mes "the Hall of Honor.";
+	mes "[Menestrel]";
+	mes "Bem vindo";
+	mes "Ao salão de Honra de Valhalla.";
 	next;
-	mes "[Minstrel]";
-	mes "Please make";
-	mes "yourself comfortable";
-	mes "while you are here.";
-	mes "Honor to the warriors!";
+	mes "[Menestrel]";
+	mes "Por favor, sinta-se a vontade enquanto estiver por aqui.";
+	mes "Honra aos Guerreiros!";
 	close;
-}
+}

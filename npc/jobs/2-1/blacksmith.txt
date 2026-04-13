@@ -42,139 +42,141 @@
 //= 2.8 Removed the need for use of 'goto.' [L0ne_W0lf]
 //= 2.9 Updated with some extra conditions. [Euphy]
 //==============================================================
+//===================== Tradução PT-BR ==========
+// Tradução: Weed0
+// Revisado: HD Scripts - Projeto eaBrasil
+//=============================================== 
 
-ein_in01,18,28,4	script	Guildsman#BLS	731,{
+ein_in01,18,28,4	script	Mestre Ferreiro#BLS	4_M_JOB_BLACKSMITH,{
 	if (Upper == 1) {
 		mes "[Altiregen]";
-		mes "Hey hey. I don't have time for chit-chat, I'm a pretty busy guy. There's all these Merchants working hard to become Blacksmiths.";
+		mes "Ei ei. Eu não tenho tempo para papo furado, sou um cara muito ocupado. Há todos esses Mercadores trabalhando duro para se tornarem Ferreiros.";
 		next;
 		mes "[Altiregen]";
-		mes "Wait a minute, I think I've met you before.";
+		mes "Espere um minuto, eu acho que já o vi antes.";
 		mes "Ummm.....";
 		next;
 		mes "[Altiregen]";
-		mes "Are you the one who broke my weapon and ran away? Or are you the one who tortured me so that I'd forge a weapon for you? Why can't I remember?";
+		mes "Você foi aquele que quebrou minha arma e correu? Ou você é aquele que me torturou para que eu forjasse uma arma para você? Por que eu não consigo me lembrar?";
 		next;
 		mes "[Altiregen]";
 		mes ".......";
-		mes "I can't remember who you are for the life of me. Is this deja vu?";
+		mes "Eu não consigo me lembrar quem você é para a minha vida. Isto é deja vu?";
 		next;
 		mes "[Altiregen]";
-		mes "Argh!! This is really bugging me! But still, I can sense that there's something special about you. Oh well, whatever. Have a good day~";
+		mes "Argh!! Isto está realmente me incomodando! Mas espere, eu posso sentir que há algo de especial em você. Oh bem, tanto faz. Tenha um bom dia~";
 		close;
 	}
 	mes "[Altiregen]";
-	mes "Welcome!";
-	mes "We are Workers of Steel,";
-	mes "the Blacksmith Guild.";
+	mes "Bem-vindo!";
+	mes "Nós somos Trabalhadores do Aço,";
+	mes "a Guilda dos Ferreiros.";
 	next;
 	mes "[Altiregen]";
-	mes "We pour the fervor";
-	mes "and passion of our souls into";
-	mes "our craft. Our skills of melting metal into new weapons";
-	mes "and tools is truly a form of art!";
-	if (BaseClass >= Job_Thief) close;	// Custom expanded class check.
+	mes "Nós colocamos o fervor";
+	mes "e a paixão de nossas almas";
+	mes "em nossas forjas. Nossa habilidade de derreter metal em novas armas";
+	mes "e ferramentas é realmente uma forma de arte!";
 	next;
-
 	// Third class check - precedes other BaseClass dialogue.
 	if (Class >= Job_Rune_Knight && Class <= Job_Baby_Mechanic2) {
 		mes "[Altiregen]";
-		mes "You... look like a stranger. But somehow it seems that you're related to our guild. Haha~";
-		mes "Am I right?";
+		mes "Você ... parecer um estranho. Mas de alguma forma, parece que você está relacionado com a nosso clã. Haha ~";
+		mes "Estou certo?";
 		close;
 	}
 
 	if (BaseClass == Job_Novice) {
 		mes "[Altiregen]";
-		if (Sex == SEX_FEMALE) {
+		if (Sex == 0) {
 			mes "Oh~";
-			mes "what a very";
-			mes "pretty lady!";
+			mes "mas que";
+			mes "bela moça!";
 		}
-		mes "Are you interested in";
-		mes "becoming a Blacksmith?";
+		mes "Você está interessada em";
+		mes "se tornar uma Ferreira";
 		next;
 		mes "[Altiregen]";
-		mes "First, you must become a Merchant before you can become a Blacksmith. Go to the city of Alberta to learn the Merchant trade.";
+		mes "Primeiro, você deve se tornar uma Mercadora antes de se tornar uma Ferreira. Vá até a cidade de Alberta para aprender sobre o comércio dos Mercadores.";
 		close;
 	}
 	else if (BaseClass == Job_Swordman) {
 		mes "[Altiregen]";
-		mes "Oh, are you interested in having a weapon forged? I'm sorry to disappoint you, but I actually have a lot of business to attend to.";
+		mes "Oh, você está interessado em ter uma arma forjada? Sinto muito em desapontá-lo, mas eu tenho muito trabalho para atender.";
 		close;
 	}
 	else if (BaseClass == Job_Archer) {
 		mes "[Altiregen]";
 		mes "Oh...";
-		mes "There's not much we can offer you here. And you can't really help out around here unless you know how to make stuff...";
+		mes "Não há muito o que eu possa oferecer para você aqui. E você não poder ajudar aqui realmente ao menos que você saiba fazer coisas...";
 		close;
 	}
 	else if (BaseClass == Job_Mage) {
 		mes "[Altiregen]";
-		mes "Oh? What's a magic user doing here? I'm surprised. Usually this kind of rough work is beneath you intellectual types.";
+		mes "Oh? O que um usuário mágico está fazendo aqui? Eu estou surpreso. Normalmente este tipo de trabalho pesado não condiz com o tipo intelectual.";
 		close;
 	}
 	else if (BaseClass == Job_Acolyte) {
 		mes "[Altiregen]";
-		mes "Oh! Am I correct in assuming you're a member of the Clergy? Would you please bless me before you leave!";
+		mes "Oh! Eu estou correto em dizer que você é um membro do Clero? Você poderia me abençoar antes de ir embora!";
 		close;
 	}
 	else if (BaseClass == Job_Thief) {
 		mes "[Altiregen]";
-		mes "I'm sorry...";
-		mes "But there really isn't anything for you to steal here. Well, there are the Daggers we keep in the back, but...";
+		mes "Me desculpe...";
+		mes "Mas não há nada para você roubar por aqui. Bem, há Adagas que nós guardamos nos fundos, mas...";
 		close;
 	}
 	else if (BaseJob == Job_Alchemist) {
 		mes "[Altiregen]";
-		mes "So how's the pharmacy business going on recently?";
-		mes "Well, my forging business does not seem to grow any longer.";
+		mes "Então como está indo o negócio farmacêutico recentemente?";
+		mes "Bem, meu negócio de forja não parece ir mais para frente.";
 		close;
 	}
 	else if (BaseJob == Job_Blacksmith) {
 		mes "[Altiregen]";
-		mes "Oh! Long time no see.";
-		mes "Have you come to purchase supplies from Christopher? These days I'm stuck behind this desk. My body's itching to strike the ol' anvil.";
+		mes "Oh! Faz muito tempo que eu não te vejo.";
+		mes "Você veio comprar suprimentos do Christopher? Estes dias eu estou preso atráz desta mesa. Meu corpo suplica para que eu bata na velha bigorna.";
 		close;
 	}
 	else if (BaseJob == Job_Merchant) {
 		if (SkillPoint) {
 			mes "[Altiregen]";
-			mes "You can't change to the Blacksmith Job Class without first using all your skill points. Please come back after wisely using your skill points.";
+			mes "Você não pode mudar para a Classe dos Ferreiros sem antes usar todos os seus pontos de habilidade. Por favor volte após usar sabiamente todos os seus pontos de habilidade.";
 			close;
 		}
 		if (BSMITH_Q == 0) {
 			mes "[Altiregen]";
-			mes "Why don't you stop struggling";
-			mes "to make zeny as a Merchant and";
-			mes "join the elite Blacksmith class?";
-			mes "If you're interested, fill out this application with your name";
-			mes "and Job Level.";
+			mes "Por que você não para de lutar";
+			mes "para fazer zeny como um Mercador e";
+			mes "se junta à classe de elite Ferreiro?";
+			mes "Se você estiver interessado, preencha este formulário com seu nome";
+			mes "e seu Nível de Classe.";
 			next;
-			switch(select("Fill out Application.:What are the requirements?:Um, I need to think about it.")) {
+			switch(select("Preencher o Formulário.:Quais são os requerimentos?:Hm, eu preciso pensar sobre isto.")) {
 			case 1:
 				if (SkillPoint) {
 					mes "[Altiregen]";
-					mes "You can't change to the Blacksmith Job Class without first using all your skill points. Please come back after wisely using your skill points.";
+					mes "Você não pode mudar para a Classe dos Ferreiros sem antes usasr todos os seus pontos de habilidade. Por favor volte após usar sabiamente todos os seus pontos de habilidade.";
 					close;
 				}
 				else if (JobLevel > 39 && BSMITH_Q == 0) {
 					mes "[Altiregen]";
 					mes "Hmmm...";
-					mes "Looks like you";
-					mes "meet the Job Level";
-					mes "Requirement.";
+					mes "Parece que você";
+					mes "se encaixa no requerimento";
+					mes "de Nível de Classe.";
 					next;
 					mes "[Altiregen]";
-					mes "You see, we don't accept just anybody into our guild. First, we only accept experienced Merchants with a true desire to become great Blacksmiths. Let's see...";
+					mes "Você vê, nós não aceitamos qualquer um na nossa guilda. Primeiro, nós sõ aceitamos Mercadores experientes com um desejo real de se tornar um ótimo Ferreiro. Vejamos...";
 					next;
-					mes "^3355FF*Shuffling of papers*^000000";
+					mes "^3355FF*Mexendo nos Papéis*^000000";
 					next;
 					mes "[Altiregen]";
 					mes "Hmmm...";
-					mes "One of our Blacksmiths in Einbech, ^8E6B23Geschupenschte^000000 has sent us word that he's short on help. Your first test of character will be to help him out.";
+					mes "Um de nossos Ferreiros em Einbech, ^8E6B23Geschupenschte^000000 nós enviou um comunicado que ele precisa de uma ajuda. Seu primeiro teste de caráter será ajudá-lo.";
 					next;
-					set BSMITH_Q,1;
+					BSMITH_Q = 1;
 					setquest 2000;
 					mes "[Altiregen]";
 					mes "Be careful";
@@ -183,380 +185,363 @@ ein_in01,18,28,4	script	Guildsman#BLS	731,{
 				}
 				else if (JobLevel < 40) {
 					mes "[Altiregen]";
-					mes "Hmmm, it seems that you lack experience as a Merchant. We require that you are at least Job Level 40, you see.";
+          mes "Hmmm, parece que você não tem muita experiência como um Mercador. Nós requerimos que você seja ao menos Nível de Classe 40, você vê.";
 					next;
 					mes "[Altiregen]";
-					mes "I feel bad turning you away after you've come so far, but rules are rules. Sorry to disappoint you, but we'll welcome you back once you're ready.";
+					mes "Eu me sinto mal descartando você depois de ter vindo tão longe, mas regras são regras. Desculpe desapontá-lo, mas você será bem vindo quando estiver pronto";
 					close;
 				}
 			case 2:
 				mes "[Altiregen]";
-				mes "You want to know our requirements? First, you need to have Job Level 40 or higher as a Merchant. Second, you need to pass a test that will be given by the Blacksmith Guild.";
+			mes "Você quer saber nossos requerimentos? Primeiro, você deve ter Nível de Classe 40 ou mais como um Mercador. Despois, você precisa passar de um teste que será dado pela Guilda dos Ferreiros.";
 				next;
 				mes "[Altiregen]";
-				mes "The test may consist of difficult tasks, but it's definitely not impossible. You will need to deliver certain items to different areas around the world";
-				mes "to complete the test.";
+				mes "O teste deve consistir de tarefas difíceis, mas definitivamente não é impossível. Você precisará entregar certos itens à diferentes áreas ao redor do mundo";
+				mes "para completar o teste.";
 				close;
 			case 3:
 				mes "[Altiregen]";
 				mes "Hmmm...";
-				mes "Well, I hope";
-				mes "to see you again.";
+				mes "Bem, espero";
+				mes "vê-lo novamente.";
 				close;
 			}
 		}
 		else if (BSMITH_Q > 0  && BSMITH_Q < 8) {
 			mes "[Altiregen]";
-			mes "You haven't left yet?";
-			mes "Go to Einbech and find ^8E6B23Geschupenschte^000000. Finish helping him out, and when you're done, come back to me.";
+			mes "Você ainda não se foi?";
+			mes "Vá até Einbech e procure por ^8E6B23Geschupenschte^000000. Ajude-o, e quando você terminar, volte até mim.";
 			close;
 		}
 		else if (BSMITH_Q > 8 && BSMITH_Q < 15) {
 			mes "[Altiregen]";
-			mes "Was the work you did for ^8E6B23Geschupenschte^000000 to your liking? He's known for being pretty exacting...";
+			mes "^8E6B23Geschupenschte^000000 gostou do trabalho que você fez? Ele é conhecido por ser muito exigente...";
 			close;
 		}
 		else if (BSMITH_Q == 15) {
 			mes "[Altiregen]";
-			mes "Great job!!";
-			mes "You have passed";
-			mes "the first test...";
+			mes "Ótimo trabalho!!";
+			mes "Você foi aprovado";
+			mes "no primeiro teste...";
 			next;
 			mes "[Altiregen]";
-			mes "Hm? You look surprised.";
-			mes "I guess you didn't know that there's more than one test. ";
-			mes "Haha, but don't worry, you are not going to travel that far.";
-			mes "Please go talk to the guildsman inside the building for more details about your next test.";
+			mes "Hm? Você parece surpreso.";
+			mes "Eu acho que você não pensava que não haveria mais de um teste.";
+			mes "Haha, mas não se preocupe, você não irá viajar tão longe.";
+			mes "Por favor vá falar com o membro da guilda dentro da construção para mais detalhes sobre o próximo teste.";
 			next;
-			if (select("I want to change my job quickly! But...oh well.:Grrr! Enough is enough!") == 1) {
-				set BSMITH_Q,16;
+			if (select("Eu quero mudar de classe rapidamente! Mas...está bem.:Grrr! Já basta!") == 1) {
+				BSMITH_Q = 16;
 				changequest 2013,2014;
 				mes "[Altiregen]";
-				mes "I'm sorry, but I'm sure you understand, right? We can't just casually accept anybody into";
-				mes "our guild!";
+				mes "Me desculpe, mas estou certo que você entende, certo? Nós não podemos aceitar qualquer um em";
+				mes "nossa guilda!";
 				next;
 				mes "[Altiregen]";
-				mes "If we don't keep our standards,";
-				mes "we won't be able to maintain the respectability of the Blacksmith Guild!";
-				mes "We can't embarass our guild in this manner! *Ahem* Anyway, you talk to the guildsman inside the building now.";
+				mes "Se nós não mentermos nossos padrões,";
+				mes "nós não seremos capazes de manter o respeito da Guilda dos Ferreiros!";
+				mes "Nós não podemos embassar nossa guilda desta maneira! *Ahem* De qualquer jeito, você deve falar com o membro da guilda dentro da construção agora.";
 				close;
 			}
 			mes "[Altiregen]";
-			mes "Are you saying you're going";
-			mes "to quit the application process? That's an insult to our guild!";
-			mes "Get out of here! With that kind of attitude, you can forget becoming a member of the Blacksmith Guild!";
+			mes "Você está dizendo que irá";
+			mes "sair do processo de aplicação? Isto é um insulto para a nossa guilda!";
+			mes "Dê o fora daqui! Com este tipo de atitude, você pode esquecer de se tornar um membro da Guilda dos Ferreiros!";
 			next;
 			mes "[Altiregen]";
-			mes "You have no spirit!";
-			mes "If you can't endure this, you'll never be a Blacksmith!";
+			mes "Você não tem espírito!";
+			mes "Se você não puder aguentar isto, você nunca será um Ferreiro!";
 			close;
 		}
 		else if (BSMITH_Q == 16) {
 			mes "[Altiregen]";
-			mes "Um? Haven't you talk to the guildsman yet?";
-			mes "If you haven't, I suggest you to do so as soon as possible.";
+			mes "Hm? Você ainda não foi falar com o membro da guilda?";
+			mes "Se você não foi, sugiro que você vá falar o mais rápido possível.";
 			close;
 		}
 		else if (BSMITH_Q == 17 && countitem(1005) > 0 && JobLevel > 39) {
 			mes "[Altiregen]";
 			if (ismounting()) {
-				mes "You are on a riding pet, so you cannot change your job.";
-				mes "Please unequip your riding pet and try again!";
+				mes "Você está em uma montaria de aluguel, então você não pode mudar seu trabalho.";
+				mes "Por favor desequipe a montaria de aluguel e tente novamente!";
 				close;
 			}
-			mes "Excellent, I can tell by the twinkle in your eye that you were successful. I can now bestow upon you the gift of the smithing, the art of the Blacksmith.";
+			mes "Excelente, Eu posso falar pelo brilho em seus olhos que você teve sucesso. Eu posso agora colocar em prática o dom da forja, a arte dos Ferreiros.";
 			if (checkquest(2015) != -1) {
 				changequest 2015,2016;
 			}
 			next;
-			set .@joblvl,JobLevel;
+			.@joblvl = JobLevel;
 			callfunc "Job_Change",Job_Blacksmith;
-			callfunc "F_ClearJobVar";		// clears all job variables for the current player
+			callfunc "F_ClearJobVar";		// limpa todas as variáveis do jogador.
 			mes "[Altiregen]";
-			mes "Always remember that we are creators, and artists over metals. Be wary that you do not fall into the pitfalls of selfishness";
-			mes "and greed.";
+			mes "Sempre se lembre que nós somos criadores, e artistas sobre o metal. Fique atento para não cair nos precipícios do egoísmo.";
+			mes "e ganância.";
 			next;
-			delitem 1005,1; //Hammer_Of_Blacksmith
+			delitem 1005,1; // Martelo de Ferreiro
 			completequest 2016;
 			mes "[Altiregen]";
-			mes "Here is a little";
-			mes "gift to mark the";
-			mes "beginning of your";
-			mes "life as a Blacksmith.";
-			mes "Congratulations!!!";
+			mes "Aqui está um pequeno";
+			mes "presente para marcar o";
+			mes "início de sua";
+			mes "vida como um Ferreiro.";
+			mes "Parabéns!!!";
 			if (.@joblvl > 48)
-				getitem 999,30; //Steel
-			else 
-				getitem 999,5; //Steel
+				getitem 999,30; // Aço
+			else
+				getitem 999,5; // Aço
 			close;
 		}
 	}
 }
 
-ein_in01,201,27,3	script	Guildsman#alberta	63,{
+ein_in01,201,27,3	script	Líder da Guilda#alberta	1_M_SMITH,{
 	mes "[Geschupenschte]";
-	mes "Hello there!";
-	mes "I'm ^8E6B23Geschupenschte^000000,";
-	mes "a Blacksmith by trade.";
-	mes "Nice to meet you!";
+	mes "Olá!";
+	mes "Eu sou ^8E6B23Geschupenschte^000000,";
+	mes "um Ferreiro por troca.";
+	mes "Prazer em conhecê-lo!";
 	next;
 	if (BaseJob == Job_Merchant) {
 		mes "[Geschupenschte]";
 		mes "Oh ho ho!";
-		mes "You're a Merchant!";
-		mes "Excellent! I was";
-		mes "in need of some help!";
+		mes "Você é um Mercador!";
+		mes "Excelente! Eu estava";
+		mes "precisando de uma ajuda!";
 		next;
 		if (BSMITH_Q == 0) {
 			mes "[Geschupenschte]";
-			mes "But, of course,";
-			mes "I wouldn't bother you";
-			mes "if you're busy. Go along";
-			mes "your way if you must~";
+			mes "Mas, é claro,";
+			mes "eu não irei te encomodar";
+			mes "se você estiver ocupado. Siga";
+			mes "o seu caminho se você precisar~";
 			next;
 			mes "[Geschupenschte]";
-			mes "After all...";
-			mes "I should know";
-			mes "how it's like";
-			mes "to be busy~";
+			mes "Depois de tudo...";
+			mes "Eu deveria saber";
+			mes "como é estar";
+			mes "ocupado~";
 			close;
 		}
 		else if ((BSMITH_Q == 1) || (BSMITH_Q == 2)) {
 			if (BSMITH_Q == 1) {
 				mes "[Geschupenschte]";
-				mes "Am I correct in assuming you are the help sent by the Blacksmith Guild? There aren't many trustyworthy people I can hire to help me, so I'm always";
-				mes "short on help.";
+				mes "Eu estou correto em presumir que você foi enviado pela Guilda dos Ferreiros? Não há muitas pessoas confiáveis em que eu possa contar para me ajudar, então eu estou sempre";
+				mes "precisando de ajuda.";
 				next;
 				mes "[Geschupenschte]";
-				mes "Hmm, in any case,";
-				mes "you are the help that was sent, right? Okay, I have some work for you that must be handled";
-				mes "right away!";
+				mes "Hmm, de qualquer jeito,";
+				mes "você foi a ajuda que foi enviada, certo? Certo, eu tenho algum trabalho para você que deve ser feito";
+				mes "da maneira correta!";
 				next;
 				mes "[Geschupenschte]";
-				mes "Some time ago, I had a boy working for me who had no experience and bought the wrong supplies! It was terrible...";
+				mes "Algum tempo atráz, eu tinha um garoto trabalhando para mim que não tinha experiência e comprou os suprimentos errados! Foi terrível...";
 				next;
 				mes "[Geschupenschte]";
-				mes "Anyone would hate to lose money through a foolish mistake like that. However, I have a slightly more difficult job for you.";
+				mes "Qualquer um odiaria perder dinheiro atravéz de erros tolos como este. Mesmo assim, eu tenho um trabalho mais difícil para você.";
 				next;
 				mes "[Geschupenschte]";
-				mes "However, I want to make sure that you have some basic knowledge as a Merchant. I'd like to ask you some questions, if that's okay.";
+				mes "Mesmo assim, eu quero ter certeza que você tem um conhecimento básico como um Mercador. Eu gostaria de fazer algumas perguntas, se não houver problema.";
 				next;
-				set .@selection,select("Yes.:Um, can I have some time to prepare?");
+				.@selection = select("Sim.:Um, eu posso ter um tempo para preparo?");
 			}
 			else if (BSMITH_Q == 2) {
 				mes "[Geschupenschte]";
-				mes "So, have you";
-				mes "studied a little";
-				mes "more this time?";
+				mes "Então, você";
+				mes "estudou um pouco";
+				mes "mais esse tempo?";
 				next;
 				mes "[Geschupenschte]";
-				mes "I admit that it's pretty unreasonable to expect anyone to get a perfect score the first time around, so I'll give you";
-				mes "a little break...";
+				mes "Eu admito que é bastante razoável esperar que qualquer um para conseguir uma pontuação perfeita na primeira vez, então eu vou lhe dar";
+				mes "uma pequena pausa ...";
 				next;
 				mes "[Geschupenschte]";
-				mes "You can miss";
-				mes "one problem!";
-				mes "Alright, let's start";
-				mes "with the questions~";
+				mes "Você pode perder";
+				mes "um problema";
+				mes "Tudo bem, vamos começar";
+				mes "com as questões ~";
 				next;
 			}
 			if (.@selection != 2) {
 				if (rand(2)) {
 					mes "[Geschupenschte]";
-					mes "1. Which one of the following regions is matched incorrectly";
-					mes "with its specialty item?";
+					mes "1. Qual das regiões a seguir está combinada incorretamente";
+					mes "com sua especialidade?";
 					next;
-					if (select("Morocc - Thief Clothes:Alberta - Two Hand Axe:Comodo - Berserk Potion:Alberta - Swordmace") == 4)
-						set .@black_q,.@black_q+10;
+					if (select("Morroc - Traje de Gatuno:Alberta - Machado de Duas Mãos:Comodo - Poção da Fúria Selvagem:Alberta - Clava") == 4)
+						.@black_q += 10;
 					mes "[Geschupenschte]";
-					mes "2. What status can";
-					mes "be inflicted with the";
-					mes "^8E6B23Hammer Fall^000000 skill?";
+					mes "2. Que condição pode ser";
+					mes "inflingido com a habilidade";
+					mes "^8E6B23Martelo de Thor^000000?";
 					next;
-					if (select("Stun:Blind:Silence:Sleep") == 1)
-						set .@black_q,.@black_q+10;
+					if (select("Atordoamento:Cegueira:Silêncio:Sono") == 1) .@black_q += 10;
 					mes "[Geschupenschte]";
-					mes "3. Which one of the following skills cannot be performed";
-					mes "by a Merchant?";
+					mes "3. Qual das seguintes habilidades não pode ser usada";
+					mes "por um Mercador?";
 					next;
-					if (select("Vending:Discount:Overcharge:Increase AGI") == 4)
-						set .@black_q,.@black_q+10;
+					if (select("Venda:Desconto:Superfaturar:Aumentar Agilidade") == 4) .@black_q += 10;
 					mes "[Geschupenschte]";
-					mes "4. Where can you find a store";
-					mes "that sells Blue Gemstones?";
+					mes "4. Onde você pode achar uma loja";
+					mes "que vende Gemas Azuis?";
 					next;
-					if (select("Alberta:Morocc:Geffen:Prontera") == 3)
-						set .@black_q,.@black_q+10;
+					if (select("Alberta:Morroc:Geffen:Prontera") == 3) .@black_q += 10;
 					mes "[Geschupenschte]";
-					mes "5. Where is the";
-					mes "Tool Dealer";
-					mes "located in Geffen?";
+					mes "5. Onde o Vendedor";
+					mes "de Utilidades fica";
+					mes "ocalizado em Geffen?";
 					next;
-					if (select("8 o'clock direction from the town square:11 o'clock direction from the town square:6 o'clock direction from the town square:5 o'clock direction from the town square") == 1)
-						set .@black_q,.@black_q+10;
+					if (select("Direção 8 horas do centro da cidade:Direção 11 horas do centro da cidade:Direção 6 horas do centro da cidade:Direção 5 horas do centro da cidade") == 1) set .@black_q,.@black_q+10;
 					mes "[Geschupenschte]";
-					mes "6. Which weapon";
-					mes "cannot be used";
-					mes "by a Merchant?";
+					mes "6. Que arma";
+					mes "não pode ser usada";
+					mes "por um Mercador?";
 					next;
-					if (select("Stiletto:Ring Pommel Saber:Chain:Bible") == 4)
-						set .@black_q,.@black_q+10;
+					if (select("Stiletto:Sabre de Impacto:Mangual Pesado:Bíblia") == 4) .@black_q += 10;
 					mes "[Geschupenschte]";
-					mes "7. Which one of the following";
-					mes "has the highest defense rate?";
+					mes "7. Quais dos seguintes itens";
+					mes "tem a maior taxa de defesa?";
 					next;
-					if (select("Panties:Mink Coat:Wooden Mail:Silk Robe") == 2)
-						set .@black_q,.@black_q+10;
+					if (select("Roupa de Baixo:Casaco de Pele:Armadura de Madeira:Manto de Seda") == 2) .@black_q += 10;
 					mes "[Geschupenschte]";
-					mes "8. For Level 3 weapons,";
-					mes "what is the ^8E6B23Safe^000000 limit";
-					mes "for upgrading?";
+					mes "8. Para armas de Nível 3,";
+					mes "qual é o limite ^8E6B23Seguro^000000";
+					mes "de aprimoramento?";
 					next;
-					if (select("up to + 3:up to + 4:up to + 5:up to + 6") == 3)
-						set .@black_q,.@black_q+10;
-					mes "9. What item";
-					mes "can be made using";
-					mes "the ^8E6B23Trunks^000000 item?";
+					if (select("até + 3:até + 4:até + 5:até + 6") == 3) .@black_q += 10;
+					mes "9. Que item";
+					mes "pode ser feito usando";
+					mes "o item ^8E6B23Tronco^000000?";
 					next;
-					if (select("Sakkat:Ghost Bandana:Majestic Goat:Antler") == 1)
-						set .@black_q,.@black_q+10;
+					if (select("Chapéu Chinês:Bandana Fantasma:Chifres Magestosos:Chifre de Alce") == 1) .@black_q += 10;
 					mes "[Geschupenschte]";
-					mes "10. The most important";
-					mes "part of being a Merchant is...?";
+					mes "10. A parte mais importante";
+					mes "em ser um Mercador é...?";
 					next;
-					select("Credit:Integrity:Money:Rhetoric");
-					set .@black_q,.@black_q+10;
+					select("Crédito:Integridade:Dinheiro:Retórica");
+					.@black_q += 10;
 				}
 				else {
 					mes "[Geschupenschte]";
-					mes "1. Among the following cities, which one is not correctly matched with its specialty?";
+					mes "1. Qual das regiões a seguir está combinada incorretamente com sua especialidade?";
 					next;
-					if (select("Al De Baran - Yggdrasil Leaf:Alberta - Hammer:Comodo - Berserk Potion:Al De Baran - Hammer") == 4)
-						set .@black_q,.@black_q+10;
+					if (select("Al De Baran - Folha de Yggdrasil:Alberta - Marreta:Comodo - Poção da Fúria Selvagem:Al De Baran - Marreta") == 4) set .@black_q,.@black_q+10;
 					mes "[Geschupenschte]";
-					mes "2. How much Zeny";
-					mes "is one Jellopy worth?";
+					mes "2. Quantos Zeny";
+					mes "valhe um Jellopy?";
 					next;
-					if (select("1 Zeny:2 Zeny:3 Zeny:4 Zeny") == 3)
-						set .@black_q,.@black_q+10;
+					if (select("1 Zeny:2 Zeny:3 Zeny:4 Zeny") == 3) .@black_q += 10;
 					mes "[Geschupenschte]";
-					mes "3. What is required";
-					mes "for a Merchant to use";
-					mes "the ^8E6B23Vending^000000 Skill?";
+					mes "3. O que é requerido";
+					mes "para um Mercador para usar";
+					mes "a habilidade ^8E6B23Venda^000000?";
 					next;
-					if (select("Must have a Cart.:Must have items to sell.:Must be wielding a weapon.:Must be wearing armor.") == 1)
-						set .@black_q,.@black_q+10;
+					if (select("Deve ter um Carrinho.:Deve ter itens para vender.:Deve estar empunhando uma arma.:Deve estar vestindo uma armadura.") == 1) set .@black_q,.@black_q+10;
 					mes "[Geschupenschte]";
-					mes "4. Where can you";
-					mes "change your Job to";
-					mes "become a Merchant?";
+					mes "4. Onde você poder";
+					mes "mudar de Classe para";
+					mes "se tornar um Mercador?";
 					next;
-					if (select("Alberta:Morocc:Geffen:Prontera") == 1)
-						set .@black_q,.@black_q+10;
+					if (select("Alberta:Morroc:Geffen:Prontera") == 1) .@black_q += 10;
 					mes "[Geschupenschte]";
-					mes "5. Where is the";
-					mes "Weapons Dealer";
-					mes "located in Morocc?";
+					mes "5. Onde o Vendedor";
+					mes "de Armas fica";
+					mes "localizado em Morroc?";
 					next;
-					if (select("7 o'clock from the town's center:11 o'clock from the town's center:6 o'clock from the town's center:5 o'clock from the town's center") == 4)
-						set .@black_q,.@black_q+10;
+					if (select("7 horas do centro da cidade:11 horas do centro da cidade:6 horas do centro da cidade:5 horas do centro da cidade") == 4) set .@black_q,.@black_q+10;
 					mes "[Geschupenschte]";
-					mes "6. What weapon";
-					mes "can a Merchant";
-					mes "not use?";
+					mes "6. Qual destas armas";
+					mes "um Mercador não";
+					mes "pode usar?";
 					next;
-					if (select("Main Gauche:Claymore:Chain:Two handed Axe") == 2)
-						set .@black_q,.@black_q+10;
+					if (select("Main Gauche:Claymore:Mangual Pesado:Machado do Duas Mãos") == 2) .@black_q += 10;
 					mes "[Geschupenschte]";
-					mes "7. Which one of the following";
-					mes "has the highest defense rate?";
+					mes "7. Qual dos seguintes itens";
+					mes "tem a maior taxa de defesa?";
 					next;
-					if (select("Panties:Mink Coat:Wooden Mail:Silk Robe") == 2)
-						set .@black_q,.@black_q+10;
+					if (select("Roupa de Baixo:Casaco de Pele:Armadura de Madeira:Manto de Seda") == 2) .@black_q += 10;
 					mes "[Geschupenschte]";
-					mes "8. For Level 3 weapons,";
-					mes "what is the ^8E6B23Safe^000000 limit";
-					mes "for upgrading?";
+					mes "8. Para armas de Nível 3,";
+					mes "qual é o limite ^8E6B23Seguro^000000";
+					mes "de aprimoramento?";
 					next;
-					if (select("up to + 3:up to + 4:up to + 5:up to + 6") == 3)
-						set .@black_q,.@black_q+10;
+					if (select("até + 3:até + 4:até + 5:até + 6") == 3) .@black_q += 10;
 					mes "[Geschupenschte]";
-					mes "9. What monster does";
-					mes "NOT drop Iron Ore?";
+					mes "9. Que monstro NÃO";
+					mes "derruba Minério de Ferro?";
 					next;
-					if (select("Chon Chon:Steel Chon Chon:Zerom:Anolian") == 4)
-						set .@black_q,.@black_q+10;
+					if (select("Chon Chon:Chon Chon de Aço:Zerom:Anolian") == 4) .@black_q += 10;
 					mes "[Geschupenschte]";
-					mes "10. What is most";
-					mes "important to a Merchant?";
+					mes "10. O que é mais";
+					mes "importante para um Mercador?";
 					next;
-					select("Rhetoric:Credit:Money:Experience");
-					set .@black_q,.@black_q+10;
+					select("Retórica:Crédito:Dinheiro:Experiência");
+					.@black_q += 10;
 				}
 				mes "[Geschupenschte]";
-				mes "Umm. You did a good job!";
+				mes "Umm. Você fez um bom trabalho!";
 				next;
 				mes "[Geschupenschte]";
-				mes "Let's see...your score is..." + .@black_q + " points.";
+				mes "Vamos ver...sua pontuação é..." + .@black_q + " pontos.";
 				if (.@black_q == 100) {
-					set BSMITH_Q,3;
+					BSMITH_Q = 3;
 					if (checkquest(2001) != -1) {
 						changequest 2001,2002;
 					} else {
 						changequest 2000,2002;
 					}
 					mes "Oh ho ho~";
-					mes "You'll have";
-					mes "no problem";
-					mes "with this score!";
+					mes "Você não terá";
+					mes "nenhum problema";
+					mes "com esta pontuação!";
 					next;
 					mes "[Geschupenschte]";
-					mes "I will entrust you with a job!";
-					mes "Give me a little time to make the necessary arrangements.";
-					mes "When you get back, I'll be ready!";
+					mes "Eu irei confiar em você com este trabalho!";
+					mes "Só me dê um pequeno tempo para que eu possa arrumar as coisas.";
+					mes "Quando você voltar, eu estarei pronto!";
 					close;
 				}
-				set BSMITH_Q,2;
-				if (checkquest(2001) == -1) {
+				BSMITH_Q = 2;
+				if (checkquest(2001) != -1) {
 					changequest 2000,2001;
 				}
 				mes ".............";
 				next;
 				mes "[Geschupenschte]";
 				if (BSMITH_Q == 2) {
-					mes "How do I say this?";
-					mes "How did you fail again?!";
-					mes "If you plan to perform your duties in this manner, I can't trust you with any kind of job...";
+					mes "Como eu disse isto?";
+					mes "Como você falhou de novo?!";
+					mes "Se você planeja continuar desta maneira, eu não posso confiar em você para nenhum tipo de trabalho...";
 					close;
 				}
 				mes "Hmm...";
-				mes "It pains me to say this, but it seems you need to study a little more. You can never be";
-				mes "a Blacksmith with";
-				mes "this score!";
+				mes "Me dói dizer isto, mas parece que você precisa estudar um pouco mais. Você nunca pode ser";
+				mes "um Ferreiro com";
+				mes "esta pontuação!";
 				close;
 			}
 			mes "[Geschupenschte]";
-			mes "Ah, of course I don't mind if you came back a little later. Being prepared prevents disasters";
-			mes "later, after all. No harm in";
-			mes "being careful~";
+			mes "Ah, é claro que eu não ligo se você voltar um pouco mais tarde. Se preparar previne disastres";
+			mes "mais tarde, antes de tudo. Não deixe";
+			mes "de ser cuidadoso~";
 			close;
 		}
 		/*
 		else if (BSMITH_Q == 2) {
 			mes "[Geschupenschte]";
-			mes "So, have you";
-			mes "studied a little";
-			mes "more this time?";
+			mes "Então, você estudou";
+			mes "um pouco mais";
+			mes "desta vez?";
 			next;
 			mes "[Geschupenschte]";
-			mes "I admit that it's pretty unreasonable to expect anyone to get a perfect score the first time around, so I'll give you";
-			mes "a little break...";
+			mes "Eu admito que não há razão de esperar que alguém consiga uma pontuação perfeita da primeira vez, então eu irei lhe dar";
+			mes "uma chance...";
 			next;
 			mes "[Geschupenschte]";
-			mes "You can miss";
-			mes "one problem!";
-			mes "Alright, let's start";
-			mes "with the questions~";
+			mes "Você pode errar";
+			mes "um problema!";
+			mes "Tudo certo, vamos começar";
+			mes "com as questões~";
 			next;
 			goto L_AskQuestions;
 		}
@@ -564,51 +549,51 @@ ein_in01,201,27,3	script	Guildsman#alberta	63,{
 		else if (BSMITH_Q == 3) {
 			mes "[Geschupenschte]";
 			mes "Hmm...";
-			mes "Now, where were";
-			mes "those order request forms...";
+			mes "Agora, onde estão";
+			mes "aqueles formulários de pedidos...";
 			next;
-			mes "^3355FF*Shuffling of Papers*";
-			mes "*Rustling of Papers*^000000";
+			mes "^3355FF*Mexendo nos Papéis*";
+			mes "*Revirando os Papéis*^000000";
 			next;
 			mes "[Geschupenschte]";
-			mes "Oh! Here it is!";
-			mes "This is order that";
-			mes "has been delayed";
-			mes "the most...";
+			mes "Oh! Aqui está!";
+			mes "Este foi o pedido";
+			mes "que mais foi";
+			mes "adiado...";
 			mes "Heh heh~";
 			next;
 			mes "[Geschupenschte]";
-			mes "Well, to make";
-			mes "this you will need...";
+			mes "Bem, para fazer";
+			mes "isto você vai precisar de...";
 			next;
 			switch(rand(1,5)) {
-			//Steel, Rotten_Bandage, Blue_Gemstone, Arc_Wand
+			// Aço, Bandagem Estragada, Gema Azul, Cetro
 			case 1: setarray .@items[0], 999,1, 930,1, 717,2, 1610,1, 4; changequest 2002,2003; break;
-			//Sparkling_Dust, Skel_Bone, Zargon, Gladius
+			// Poeira Estelar, Osso, Zargônio, Gladius
 			case 2: setarray .@items[0], 1001,2, 932,1, 912,1, 1219,1, 5; changequest 2002,2004; break;
-			//Coal, Shell, Boody_Red, Tsurugi
+			// Carvão, Casca, Sangue Escarlate, Tsurugi
 			case 3: setarray .@items[0], 1003,1, 935,2, 990,2, 1119,1, 6; changequest 2002,2005; break;
-			//Iron_Ore, Eye_Bandage, Blue_Gemstone, Arbalest
+			// Minério de Ferro, Tapa-Olho, Gema Azul, Balista
 			case 4: setarray .@items[0], 1002,1, 2212,1, 717,2, 1713,1, 7; changequest 2002,2006; break;
-			//Iron, Green_Herb, Animal's_Skin, Ring_Pommel_Saber
+			// Ferro, Erva Verde, Pele de Animal, Sabre de Impacto
 			default: setarray .@items[0], 998,1, 511,1, 919,2, 1122,1, 8; changequest 2002,2007; break;
 			}
-			set BSMITH_Q,.@items[8];
+			BSMITH_Q = .@items[8];
 			mes "[Geschupenschte]";
 			mes "^8E6B23"+.@items[1]+" "+getitemname(.@items[0])+"^000000,";
 			mes "^8E6B23"+.@items[3]+" "+getitemname(.@items[2])+"^000000,";
 			mes "^8E6B23"+.@items[5]+" "+getitemname(.@items[4])+"^000000, and";
 			mes "^8E6B23"+.@items[7]+" "+getitemname(.@items[6])+"^000000, the kind";
-			mes "you can buy from";
-			mes "an NPC shop.";
+			mes "você pode comprar";
+			mes "de uma loja.";
 			next;
 			mes "[Geschupenschte]";
-			mes "Collecting these items will be your test. Coincidentally, it's also a bit of a good way for me to save money. I'll repeat what you'll need to bring back to me...";
+			mes "Coletar estes itens será o seu teste. Coincidentemente, é uma boa maneira de guardar dinheiro. Eu irei repetir o que você precisa trazer para mim...";
 			next;
 			mes "[Geschupenschte]";
-			mes "Okay~";
-			mes "Good luck";
-			mes "on your first job!";
+			mes "Ok~";
+			mes "Boa sorte";
+			mes "no seu primeiro trabalho!";
 			close;
 		}
 		else if (BSMITH_Q > 3 && BSMITH_Q < 9) {
@@ -620,37 +605,37 @@ ein_in01,201,27,3	script	Guildsman#alberta	63,{
 			case 8: setarray .@items[0], 998,1, 511,1, 919,2, 1122,1, 13; break;
 			}
 			mes "[Geschupenschte]";
-			mes "Ah, you're back!";
-			mes "Did you bring";
-			mes "everything that";
-			mes "I requested?";
+			mes "Ah, você voltou!";
+			mes "Você trouxe";
+			mes "tudo que";
+			mes "eu lhe pedi?";
 			next;
 			if (countitem(.@items[0]) >= .@items[1] && countitem(.@items[2]) >= .@items[3] && countitem(.@items[4]) >= .@items[5] && countitem(.@items[6]) >= .@items[7]) {
 				mes "[Geschupenschte]";
-				mes "Wait...";
-				mes "Didn't I tell you";
-				mes "to get 3 Steel?";
+				mes "Espera...";
+				mes "Eu não falei para você";
+				mes "trazer 3 Aços?";
 				next;
 				mes "[Geschupenschte]";
-				mes "Oh, I guess it was";
-				mes "two after all. Let's see...";
-				mes "Yeah, you got everything!";
-				mes "Now, just give me a second.";
+				mes "Oh, eu acho que eram";
+				mes "dois mesmo. Deixe-me ver...";
+				mes "É, você me trouxe tudo!";
+				mes "Agora, me dê apenas um segundo.";
 				next;
 				mes "[Geschupenschte]";
-				mes "Oh, you should make sure that you are not carrying ^FF0000more than one "+getitemname(.@items[6])+"^000000, you should really only have an "+getitemname(.@items[6])+" that you bought from an NPC shop in your inventory.";
+				mes "Oh, você deve ter certeza de que não está carregando ^FF0000mais que um "+getitemname(.@items[6])+"^000000, você deve somente ter um "+getitemname(.@items[6])+" que você comprou de uma loja NPC no seu inventório.";
 				next;
-				if (select("Oh, could you give me a second?:Oh, I brought what you asked for.") == 1) {
+				if (select("Oh, você pode me dar um segundo?:Oh, eu trouxe o que você pediu.") == 1) {
 					mes "[Geschupenschte]";
-					mes "Hmmm, it would be";
-					mes "a good idea to put the";
-					mes "rest of your items";
-					mes "in Kafra Storage.";
+					mes "Hmmm, pode ser uma";
+					mes "boa idéia colocar o";
+					mes "resto de seus itens";
+					mes "no Armazém da Kafra.";
 					close;
 				}
 				mes "[Geschupenschte]";
-				mes "Okay.";
-				mes "Great~!!";
+				mes "Ok.";
+				mes "Ótimo~!!";
 				next;
 				mes "[Geschupenschte]";
 				mes "^3355FF*Clang...!*^000000";
@@ -662,38 +647,38 @@ ein_in01,201,27,3	script	Guildsman#alberta	63,{
 				delitem .@items[2],.@items[3];
 				delitem .@items[4],.@items[5];
 				delitem .@items[6],.@items[7];
-				set BSMITH_Q,.@items[8];
+				BSMITH_Q = .@items[8];
 				mes "[Geschupenschte]";
 				mes "Wooooo~~~";
-				mes "All done...";
+				mes "Tudo feito...";
 				switch(BSMITH_Q) {
 				case 9:
-					mes "Okay, now take this to ^8E6B23Baisulist^000000 in Geffen of Rune-Midgarts Kingdom. Simply deliver it and bring me the receipt.";
-					getitem 1610,1; //Arc_Wand
+					mes "Muito bem, agora leve isso para ^8E6B23Bysliter^000000 em Geffen do Reino de Rune-Midgard. Basta entregá-lo e trazer para mim o recibo.";
+					getitem 1610,1; // Cetro
 					if (checkquest(2003) != -1) {
 						changequest 2003,2008;
 					}
 					next;
 					mes "[Geschupenschte]";
 					mes "Hmm...?";
-					mes "What's that look for?";
-					mes "This is not a normal";
-					mes "Arc Wand! Look closely";
-					mes "at the handle...";
+					mes "O que é que você está procurando?";
+					mes "Isso não é um Cetro";
+					mes "comum! Olhe cautelosamente";
+					mes "para a alça...";
 					next;
-					mes "^3355FFThe handle reads:";
-					mes "'Super Arc Wand";
-					mes "of Geschupenschte";
-					mes "Mark 2.' It does seem";
-					mes "to have a completely";
-					mes "different feel.^000000";
+					mes "^3355FFNa alça lê-se:";
+					mes "'Super Cetro";
+					mes "do Geschupenschte";
+					mes "Número 2.' Parece que";
+					mes "tem um aspecto";
+					mes "completamente diferente.^000000";
 					next;
 					mes "[Geschupenschte]";
-					mes "Anyway, take this";
-					mes "to ^8E6B23Baisulist^000000 in Geffen of Rune-Midgarts Kingdom,";
+					mes "Em todo caso, leve isso";
+					mes "para ^8E6B23Bysliter^000000 em Geffen do Reino de Rune-Midgard,";
 					break;
 				case 10:
-					mes "Okay, now take this to ^8E6B23Wickebine^000000 in Morocc of Rune-Midgarts Kingdom. Simply deliver it and bring me the receipt.";
+					mes "Certo, agora leve isso para ^8E6B23Whichebain^000000 em Morroc do Reino de Rune-Midgard. Basta entregá-lo e trazer para mim o recibo.";
 					getitem 1219,1; //Gladius
 					if (checkquest(2004) != -1) {
 						changequest 2004,2009;
@@ -701,24 +686,24 @@ ein_in01,201,27,3	script	Guildsman#alberta	63,{
 					next;
 					mes "[Geschupenschte]";
 					mes "Hmm...?";
-					mes "What's that look for?";
-					mes "This is not a normal";
-					mes "Gladius! Look closely";
-					mes "at the handle...";
+					mes "O que é que você está procurando?";
+					mes "Isso não é uma Gladius";
+					mes "comum! Olhe cautelosamente";
+					mes "para a alça...";
 					next;
-					mes "^3355FFThe handle reads:";
+					mes "^3355FFNa alça lê-se:";
 					mes "'Super Gladius";
-					mes "of Geschupenschte";
-					mes "Mark 2.' It does seem";
-					mes "to have a completely";
-					mes "different feel.^000000";
+					mes "do Geschupenschte";
+					mes "Número 2.' Parece que";
+					mes "tem um aspecto";
+					mes "completamente diferente.^000000";
 					next;
 					mes "[Geschupenschte]";
-					mes "Anyway, take this";
-					mes "to ^8E6B23Wickebine^000000 in Morocc of Rune-Midgarts Kingdom,";
+					mes "Em todo caso, leve isso";
+					mes "para ^8E6B23Whichebain^000000 em Morroc do Reino de Rune-Midgard,";
 					break;
 				case 11:
-					mes "Okay, now take this to ^8E6B23Krongast^000000 in Lighthalzen. Simply deliver it and bring me the receipt.";
+					mes "Certo, agora leve isso para ^8E6B23Grongast^000000 em Lighthalzen. Basta entregá-lo e trazer para mim o recibo.";
 					getitem 1119,1; //Tsurugi
 					if (checkquest(2005) != -1) {
 						changequest 2005,2010;
@@ -726,147 +711,147 @@ ein_in01,201,27,3	script	Guildsman#alberta	63,{
 					next;
 					mes "[Geschupenschte]";
 					mes "Hmm...?";
-					mes "What's that look for?";
-					mes "This is not a normal";
-					mes "Tsurugi! Look closely";
-					mes "at the blade...";
+					mes "O que é que você está procurando?";
+					mes "Isso não é uma Tsurugi";
+					mes "comum! Olhe cautelosamente";
+					mes "para a lâmina...";
 					next;
-					mes "^3355FFThe blade reads:";
-					mes "'Fine-edged";
+					mes "^3355FFNa lâmina lê-se:";
+					mes "'Super Afiada";
 					mes "Geschupenschte";
-					mes "Tsurugi Special.'";
-					mes "It does seem to feel";
-					mes "completely different";
-					mes "than normal Tsurugis...^000000";
+					mes "Tsurugi Especial.'";
+					mes "Parece que tem um aspecto";
+					mes "completamente diferente";
+					mes "das Tsurugis normais...^000000";
 					next;
 					mes "[Geschupenschte]";
-					mes "Anyway, take this";
-					mes "to ^8E6B23Krongast^000000 in Lighthalzen";
+					mes "Em todo caso, leve isso";
+					mes "para ^8E6B23Grongast^000000 em Lighthalzen";
 					break;
 				case 12:
-					mes "Okay, now take this to ^8E6B23Talpiz^000000 in Payon of Rune-Midgarts Kingdom. Simply deliver this and bring me the receipt.";
-					getitem 1713,1; //Arbalest
+					mes "Certo, agora leve isso para ^8E6B23Talpiz^000000 em Payon do Reino de Rune-Midgard. Basta entregá-lo e trazer para mim o recibo.";
+					getitem 1713,1; // Arbaleste
 					if (checkquest(2006) != -1) {
 						changequest 2006,2011;
 					}
 					next;
 					mes "[Geschupenschte]";
 					mes "Hmm...?";
-					mes "What's that look for?";
-					mes "This is not a normal";
-					mes "Arbalest! Look closely";
-					mes "at the bow...";
+					mes "O que é que você está procurando?";
+					mes "Isso não é um Arbalest";
+					mes "comum! Olhe cautelosamente";
+					mes "para o arco...";
 					next;
-					mes "^3355FFThe bow reads:";
+					mes "^3355FFNo arco lê-se:";
 					mes "Geschupenschte";
-					mes "Arbalest Luxury Edition.";
-					mes "It does seem more luxurious";
-					mes "than regular Arbalests.^000000";
+					mes "Arbaleste Edição de Luxo.'";
+					mes "Parece ser mais luxuoso";
+					mes "que os Arbalestes regulares.^000000";
 					next;
 					mes "[Geschupenschte]";
-					mes "Anyway, take this";
-					mes "to ^8E6B23Talpiz^000000 in Payon of Rune-Midgarts Kindgom,";
+					mes "Em todo caso, leve isso";
+					mes "para ^8E6B23Talpiz^000000 em Payon do Reino de Rune-Midgard,";
 					break;
 				case 13:
-					mes "Okay, now take this to ^8E6B23Bismarc^000000 in Hugel. Simply deliver this and bring back the receipt.";
-					getitem 1122,1; //Ring_Pommel_Saber
+					mes "Certo, agora leve isso para ^8E6B23Bismark^000000 em Hugel. Basta entregá-lo e trazer para mim o recibo.";
+					getitem 1122,1; // Sabre de Impacto
 					if (checkquest(2007) != -1) {
 						changequest 2007,2012;
 					}
 					next;
 					mes "[Geschupenschte]";
 					mes "Hmm...?";
-					mes "What's that look for?";
-					mes "This is not a normal";
-					mes "Ring Pommel Saber!";
-					mes "Look closely at";
-					mes "the handle...";
+					mes "O que é que você está procurando?";
+					mes "Isso não é um Sabre de Impacto";
+					mes "comum!";
+					mes "Olhe cautelosamente para";
+					mes "a alça...";
 					next;
-					mes "^3355FFThe handle reads:";
-					mes "'Green Herbal";
-					mes "Ring Pommel Saber";
-					mes "of Geschupenschte";
-					mes "Mark 2.' It does seem";
-					mes "to have a completely";
-					mes "different feel.^000000";
-					next;
-					mes "[Geschupenschte]";
-					mes "The power of Green Herbs, which is imbued in this sword, can be very useful! You can save someone from slowly dying of poison by stabbing them quickly with this weapon!";
+					mes "^3355FFNa alça lê-se:";
+					mes "'Sabre de Impacto";
+					mes "feito com ervas verdes";
+					mes "do Geschupenschte";
+					mes "Número 2.' Parece que";
+					mes "tem um aspecto";
+					mes "completamente diferente.^000000";
 					next;
 					mes "[Geschupenschte]";
-					mes "Anyway, take this";
-					mes "to ^8E6B23Bismarc^000000 in Hugel";
+					mes "O poder das Ervas Verdes, que estão impregnadas nessa espada, pode ser muito útil! Você pode salvar alguém de uma morte lenta por evenenamento, estabilizando-a rapidamente com essa arma!";
+					next;
+					mes "[Geschupenschte]";
+					mes "Em todo caso, leve isso";
+					mes "para ^8E6B23Bismark^000000 em Hugel";
 				}
-				mes "and don't forget";
-				mes "the receipt!";
+				mes "e não esqueça";
+				mes "do recibo!";
 				close;
 			}
 			else {
 				mes "[Geschupenschte]";
-				mes "You still haven't";
-				mes "brought all the items.";
-				mes "Do you need to be reminded";
-				mes "or something? Bring me...";
+				mes "Você ainda não";
+				mes "trouxe todos os itens.";
+				mes "Você precisa ser lembrado";
+				mes "ou algo parecido? Traga-me...";
 				next;
 				mes "[Geschupenschte]";
 				mes "^8E6B23"+.@items[1]+" "+getitemname(.@items[0])+"^000000,";
 				mes "^8E6B23"+.@items[3]+" "+getitemname(.@items[2])+"^000000,";
-				mes "^8E6B23"+.@items[5]+" "+getitemname(.@items[4])+"^000000, and";
-				mes "^8E6B23"+.@items[7]+" "+getitemname(.@items[6])+"^000000, the kind";
-				mes "you can buy from";
-				mes "an NPC shop.";
+				mes "^8E6B23"+.@items[5]+" "+getitemname(.@items[4])+"^000000, e";
+				mes "^8E6B23"+.@items[7]+" "+getitemname(.@items[6])+"^000000, do tipo";
+				mes "em que você pode comprar de";
+				mes "uma loja NPC.";
 				next;
 				mes "[Geschupenschte]";
-				mes "Now, be sure to have";
-				mes "everything I need when";
-				mes "you come back. Remember,";
-				mes "this is a test! You can't";
-				mes "be a Blacksmith if you";
-				mes "slack off!";
+				mes "Agora, tenha certeza de ter";
+				mes "tudo, eu preciso quando";
+				mes "você voltar. Lembre-se,";
+				mes "isso é um teste! Você não pode";
+				mes "ser um Ferreiro se você";
+				mes "for preguiçoso!";
 				close;
 			}
 		}
 		else if (BSMITH_Q > 8 && BSMITH_Q < 14) {
 			mes "[Geschupenschte]";
-			mes "What are you";
-			mes "still doing here?";
-			mes "Hurry and deliver";
-			mes "the package~!";
-			mes "Did you forget";
-			mes "where to go?";
+			mes "O que você";
+			mes "ainda está fazendo aqui?";
+			mes "Apresse-se e entregue";
+			mes "o pacote~!";
+			mes "Você esqueceu";
+			mes "para onde ir?";
 			next;
 			mes "[Geschupenschte]";
 			if (BSMITH_Q == 9) {
-				mes "In Geffen, at the";
-				mes "11 o'clock direction from the town center, you will find ^8E6B23Baisulist^000000. And don't forget the receipt.";
+				mes "Em Geffen, na direção";
+				mes "às 11 horas do relógio a partir do centro da cidade, você irá encontrar ^8E6B23Bysliter^000000. E não esqueça o recibo.";
 			}
 			else if (BSMITH_Q == 10) {
-				mes "Find the Swordmace";
-				mes "dealer ^8E6B23Wickebine^000000 in Morocc. And don't forget the receipt.";
+				mes "Ache o negociador de";
+				mes "Clavas ^8E6B23Whichebain^000000 em Morroc. E não esqueça o recibo.";
 			}
 			else if (BSMITH_Q == 11) {
-				mes "In Lighthalzen, 6 o'clock direction from the town center, you will find ^8E6B23Krongast^000000 near the weapon shop. And don't forget the receipt.";
+				mes "Em Lighthalzen, na direção às 6 horas do relógio a partir do centro da cidade, você irá encontrar ^8E6B23Grongast^000000 próximo a loja de armas. E não esqueça o recibo.";
 			}
 			else if (BSMITH_Q == 12) {
-				mes "In Payon, at the 5 o'clock direction from the town center, you will find ^8E6B23Talpiz^000000. And don't forget the receipt.";
+				mes "Em Payon, na direção às 5 horas do relógio a partir do centro da cidade, você irá encontrar ^8E6B23Talpiz^000000. E não esqueça o recibo.";
 			}
 			else {
-				mes "In Hugel, at the 1 o'clock direction from the town center, you will find ^8E6B23Bismarc^000000 near the airship. And don't forget the receipt.";
+				mes "Em Hugel, na direção à 1 hora do relógio a partir do centro da cidade, você irá encontrar ^8E6B23Bismark^000000 próximo ao aeroporto. E não esqueça o recibo.";
 			}
 			close;
 		}
 		else if (BSMITH_Q == 14) {
 			mes "[Geschupenschte]";
 			mes "Hmmm...?";
-			mes "Have you";
-			mes "completed";
-			mes "the delivery?";
-			mes "Let's see that receipt~";
+			mes "Você";
+			mes "completou";
+			mes "a entrega?";
+			mes "Vamos ver o recibo~";
 			next;
-			if (select("Yes sir, here it is.:Receipt? I, uh, have it somewhere.") == 1) {
+			if (select("Sim senhor, aqui está.:Recibo? Eu, uh, está em algum lugar.") == 1) {
 				if (countitem(1073) > 0) {
-					set BSMITH_Q,15;
-					delitem 1073,1; //Merchant_Voucher_1
+					BSMITH_Q = 15;
+					delitem 1073,1; //Recibo de Entrega
 					if (checkquest(2008) != -1) {
 						changequest 2008,2013;
 					}
@@ -884,164 +869,164 @@ ein_in01,201,27,3	script	Guildsman#alberta	63,{
 					}
 					mes "[Geschupenschte]";
 					mes "Oh ho ho~";
-					mes "Great!";
-					mes "You're truly";
-					mes "a great Merchant!";
+					mes "Ótimo!";
+					mes "Você é realmente";
+					mes "um grande Mercador!";
 					next;
 					mes "[Geschupenschte]";
-					mes "Good job!";
-					mes "Return to ^8E6B23Altiregen^000000 in Einbroch, the guy you first met when you applied for the Blacksmith job.";
+					mes "Ótimo trabalho!";
+					mes "Retorne para ^8E6B23Altiregen^000000 em Einbroch, o cara que você primeiro conheceu para aplicar-se como Ferreiro.";
 					next;
 					mes "[Geschupenschte]";
-					mes "I have faith that you";
-					mes "will be a great Blacksmith!";
+					mes "Eu tenho esperanças de que você";
+					mes "será um grande Ferreiro!";
 					close;
 				}
-				set BSMITH_Q,3;
+				BSMITH_Q = 3;
 				mes "[Geschupenschte]";
-				mes "You mean...";
-				mes "You didn't get";
-				mes "a receipt?";
-				mes "What...?";
+				mes "Você quer dizer...";
+				mes "Você não pegou";
+				mes "o recibo?";
+				mes "O que...?";
 				next;
 				mes "[Geschupenschte]";
-				mes "A receipt is";
-				mes "a Merchant's best friend!";
-				mes "It's necessary to your job!";
-				mes "You'll have to start your";
-				mes "test all over again!";
+				mes "O recibo é";
+				mes "o melhor amigo de um Mercador!";
+				mes "É necessário para o seu trabalho!";
+				mes "Você terá de começar o seu";
+				mes "teste todo novamente!";
 				close;
 			}
 			mes "[Geschupenschte]";
-			mes "Return when you";
-			mes "find the receipt~";
-			mes "You didn't forget";
-			mes "to receive a receipt.";
-			mes "Right...?";
+			mes "Retorne quando você";
+			mes "achar o recibo~";
+			mes "E não esqueça";
+			mes "de pegar o recibo.";
+			mes "Certo...?";
 			close;
 		}
 		else if (BSMITH_Q == 15) {
 			mes "[Geschupenschte]";
-			mes "Thank you";
-			mes "very much";
-			mes "your help.";
-			mes "Return to Einbroch";
-			mes "and see ^8E6B23Altiregen^000000!";
+			mes "Muito obrigado,";
+			mes "muito mesmo,";
+			mes "pela sua ajuda.";
+			mes "Retorne para Einbroch";
+			mes "e encontre ^8E6B23Altiregen^000000!";
 			close;
 		}
 		mes "[Geschupenschte]";
 		mes "Hmm...?";
-		mes "You already finished";
-		mes "your test here with me!";
-		mes "And surprisingly, I don't";
-		mes "need any more help, today.";
+		mes "Você já terminou";
+		mes "seu teste aqui comigo!";
+		mes "E surpreendentemente, eu não";
+		mes "preciso de nenhuma ajuda por hoje.";
 		close;
 	}
 	else {
 		mes "[Geschupenschte]";
-		mes "Being";
-		mes "a Blacksmith";
-		mes "is truly great!";
-		mes "Don't you think so?";
+		mes "Ser";
+		mes "um Ferreiro";
+		mes "é realmente maravilhoso!";
+		mes "Você não acha?";
 		mes "Mwahahahahah!!";
 		close;
 	}
 }
 
-geffen,46,164,1	script	Baisulist#BLS	69,{
+geffen,46,164,1	script	Baisulist#BLS	1_F_04,{
 	if (BSMITH_Q == 9 && countitem(1610) > 0) {
 		mes "[Baisulist]";
-		mes "Oh, hello!";
-		mes "Have you come";
-		mes "to deliver my";
-		mes "Arc Wand?";
+		mes "Oh, olá!";
+		mes "Você veio";
+		mes "para entregar meu";
+		mes "Cetro?";
 		next;
 		mes "[Baisulist]";
-		mes "You sure this is what I ordered, right? I mean, if it's been used,";
-		mes "I don't want it.";
+		mes "Tem certeza que este foi o que eu pedi, né? Quero dizer, se ele já foi ultilizado,";
+		mes "eu não vou querer.";
 		next;
-		if (select("Whoops, this is one of the items I use...:I'm sure! It's brand new!") == 1) {
+		if (select("Ops, este é um dos itens que eu uso...:Estou certo! É novinho!") == 1) {
 			mes "[Baisulist]";
-			mes "Well...";
-			mes "I guess I can";
-			mes "wait a little longer.";
-			mes "Please hurry with";
-			mes "my delivery~";
+			mes "Bem...";
+			mes "Acho que posso";
+			mes "esperar um pouco mais.";
+			mes "Por favor rápido com";
+			mes "meu pedido~";
 			close;
 		}
 		mes "[Baisulist]";
-		mes "You're";
-		mes "absolutely sure?";
+		mes "Você têm";
+		mes "certeza absoluta?";
 		set BSMITH_Q,14;
-		delitem 1610,1; //Arc_Wand
+		delitem 1610,1; //Cetro
 		next;
 		mes "[Baisulist]";
-		mes "Thank you so much for traveling all the way here. That Geschupenschte, please smack him for me when you meet him for being so late on this order...";
+		mes "Muito obrigado por você viajar até aqui. Por favor, dê um beijinho no Geschupenschte para mim quando você o ver...";
 		next;
 		mes "[Baisulist]";
-		mes "Please wait";
-		mes "a second, let";
-		mes "me give you a receipt~";
+		mes "Por favor espere";
+		mes "um segundo, deixa";
+		mes "eu te dar um recibo~";
 		next;
-		getitem 1073,1; //Merchant_Voucher_1
+		getitem 1073,1; //Recibo de Entrega
 		mes "[Baisulist]";
-		mes "Here it is.";
-		mes "Thank you so much!";
-		mes "Oh, and good luck~";
-		mapannounce "geffen","Hey, " +strcharinfo(0)+ ", thank you so much for the delivery~",bc_map;
+		mes "Aqui está.";
+		mes "Muito obrigado!";
+		mes "Oh, e boa sorte~";
+		mapannounce "geffen","Ei, " +strcharinfo(0)+ ", muito obrigado pela entrega~",bc_map;
 		close;
 	}
 	else if (BSMITH_Q == 14) {
 		mes "[Baisulist]";
-		mes "Thank you";
-		mes "so much for";
-		mes "the delivery~";
+		mes "Muito";
+		mes "obrigado pela";
+		mes "entrega~";
 		close;
 	}
 	else {
 		mes "[Baisulist]";
 		mes "Oh...";
-		mes "It's been a while";
-		mes "since I've been";
-		mes "to Alberta.";
+		mes "Tem muito tempo";
+		mes "desde que eu saí";
+		mes "de Alberta.";
 		next;
 		mes "[Baisulist]";
-		mes "I ordered something";
-		mes "from there a while ago,";
-		mes "but I haven't received";
-		mes "my delivery...";
+		mes "Eu pedi alguma coisa";
+		mes "lá há muito tempo,";
+		mes "mas eu ainda não recebi";
+		mes "meu pedido...";
 		next;
 		mes "[Baisulist]";
-		mes "I wonder...";
-		mes "Could the Blacksmith Guild";
-		mes "be undermanned? I can't think of any other reason for them to be late...";
+		mes "Me pergunto...";
+		mes "Poderia a Guilda dos Ferreiros";
+		mes "estar sem pessoal? Eu não consigo pensar em outro motivo para demorarem tanto...";
 		next;
 		mes "[Baisulist]";
-		mes "When will I get";
-		mes "my special Arc Wand?";
+		mes "Quando vou conseguir";
+		mes "meu Cetro especial?";
 		close;
 	}
 }
 
-morocc,27,112,4	script	Wickebine#BLS	725,{
+morocc,27,112,4	script	Wickebine#BLS	4_F_JOB_ASSASSIN,{
 	if (BSMITH_Q == 10 && countitem(1219) > 0) {
 		cutin "Job_Black_hucke01",2;
 		mes "[Wickebine]";
 		mes "...!";
-		mes "It's here!";
+		mes "Está aqui!";
 		next;
 		mes "[Wickebine]";
-		mes "This is what I ordered, right?";
-		mes "I don't want any used or old Gladius that you might have!";
+		mes "Isto é o que pedi, certo?";
+		mes "Eu não quero nenhuma velha ou usada Gladius que você possa ter!";
 		next;
-		if (select("Whoops, not that one.:I guarantee you it is new.") == 1) {
+		if (select("Ops, não essa.:Eu te garanto que é nova.") == 1) {
 			cutin "Job_Black_hucke03",2;
 			mes "[Wickebine]";
 			mes "Oooh...!";
-			mes "Hurry up";
-			mes "with my Gladius~";
+			mes "Rápido";
+			mes "com minha Gladius~";
 			next;
-			mes "- She seems to be upset. -";
+			mes "- Ela parece estar chateada. -";
 			close2;
 			cutin "Job_Black_hucke03",255;
 			end;
@@ -1049,39 +1034,39 @@ morocc,27,112,4	script	Wickebine#BLS	725,{
 		cutin "Job_Black_hucke02",2;
 		mes "[Wickebine]";
 		mes "Hah hah hah!";
-		mes "Finally! Now...";
-		mes "Let me have";
-		mes "a look!";
+		mes "Finalmente! Agora...";
+		mes "Deixa eu dar";
+		mes "uma olhada!";
 		next;
-		mes "- She looks very happy. -";
+		mes "- Ela parece muito feliz. -";
 		next;
-		set BSMITH_Q,14;
+		BSMITH_Q = 14;
 		delitem 1219,1; //Gladius
 		cutin "Job_Black_hucke01",2;
 		mes "[Wickebine]";
-		mes "Are you with the";
-		mes "Einbroch Blacksmith Guild?";
-		mes "Give this message to Geschupenschte!";
+		mes "Você está na";
+		mes "Guilda de Ferreiros de Einbroch?";
+		mes "Entregue esta mensagem para o Geschupenschte!";
 		next;
 		cutin "Job_Black_hucke03",2;
 		mes "[Wickebine]";
-		mes "'^660000You're late!";
-		mes "Do you know how long";
-		mes "I've been waiting?!^000000'";
+		mes "'^660000Você está atrasado!";
+		mes "Você têm idéia";
+		mes "do quanto eu estive esperando?!^000000'";
 		next;
 		cutin "Job_Black_hucke02",2;
 		mes "[Wickebine]";
-		mes "But, this is also";
-		mes "a masterfully crafted item.";
-		mes "Tell him I'm satisfied with the quality of the workmanship.";
+		mes "Mas, este é um";
+		mes "item totalmente artesanal.";
+		mes "Diga a ele que estou satisfeito com a qualidade do trabalho.";
 		next;
-		getitem 1073,1; //Merchant_Voucher_1
+		getitem 1073,1; //Recibo de Entrega
 		emotion ET_THROB;
 		mes "[Wickebine]";
-		mes "Here's the receipt.";
-		mes "I think you did";
-		mes "a good job.";
-		mapannounce "morocc","Thanks for delivering, " + strcharinfo(0) + "~!",bc_map;
+		mes "Aqui está o recibo.";
+		mes "Eu acho que você";
+		mes "fez um bom trabalho.";
+		mapannounce "morocc","Obrigado pela entrega, " + strcharinfo(0) + "~!",bc_map;
 		close2;
 		cutin "Job_Black_hucke02",255;
 		end;
@@ -1090,7 +1075,7 @@ morocc,27,112,4	script	Wickebine#BLS	725,{
 		emotion ET_THROB;
 		cutin "Job_Black_hucke02",2;
 		mes "[Wickebine]";
-		mes "Thanks for the delivery.";
+		mes "Obrigado pela entrega.";
 		close2;
 		cutin "Job_Black_hucke02",255;
 		end;
@@ -1100,85 +1085,85 @@ morocc,27,112,4	script	Wickebine#BLS	725,{
 		mes "[Wickebine]";
 		mes "...";
 		next;
-		mes "[Wickebine]";
+		mes "[Wickemine]";
 		mes "...";
 		mes "......";
 		next;
-		mes "[Wickebine]";
-		mes "They're late.";
-		mes "They're late,";
-		mes "they're late,";
-		mes "they're late~!";
+		mes "[Wickmine]";
+		mes "Eles estão atrasados.";
+		mes "Eles estão atrasados,";
+		mes "eles estão atrasados,";
+		mes "eles estão atrasados~!";
 		next;
 		mes "[Wickebine]";
-		mes "How long does it take for something to ship from Geschupenschte? Usually, the Geffen Blacksmith Guild is pretty prompt...";
+		mes "Quanto tempo demora para chegar alguma coisa do navio do Geschupenschte? Normalmente, a Guilda de Ferreiros de Geffen é bastante rápida...";
 		next;
 		emotion ET_THROB;
 		mes "[Wickebine]";
 		mes "Ooohh...";
-		mes "This is very";
-		mes "upsetting...";
+		mes "Isto é muito";
+		mes "agoniante...";
 		close2;
 		cutin "Job_Black_hucke03",255;
 		end;
 	}
 }
 
-lighthalzen,209,80,4	script	Krongast#BLS	734,{
+lighthalzen,209,80,4	script	Krongast#BLS	4_M_JOB_KNIGHT2,{
 	if (BSMITH_Q == 11 && countitem(1119) > 0) {
 		mes "[Krongast]";
 		mes "Ohhhhhh~";
-		mes "Is it here?";
-		mes "Very nice.";
-		mes "Let me take a look.";
+		mes "Está aqui?";
+		mes "Está aqui?";
+		mes "Deixe-me ver.";
 		next;
 		mes "[Krongast]";
-		mes "So you're sure this is the item";
-		mes "I ordered, right? I wouldn't want it if it's been used.";
+		mes "Mas você têm certeza que este é o item";
+		mes "que pedi, né? Eu não vou querer se estiver usado.";
 		next;
-		if (select("Whoops, this one is used!:It was just made, so it's new.") == 1) {
+		if (select("Ops, este aqui é usado!:Acabou de ser feito, está novo.") == 1) {
 			mes "[Krongast]";
 			mes "Hmmmmm!";
-			mes "Please deliver";
-			mes "the right sword!";
-			mes "I've been waiting";
-			mes "long enough already...";
+			mes "Por favor";
+			mes "traga a espada certa!";
+			mes "Eu já esperei";
+			mes "tanto....";
 			close;
 		}
 		mes "[Krongast]";
-		mes "You double checked?";
-		mes "Alright then, I'll take it!";
+		mes "Você conferiu de novo?";
+		mes "Correto, eu vou pegar!";
 		next;
-		set BSMITH_Q,14;
+		BSMITH_Q = 14;
 		delitem 1119,1; //Tsurugi
 		mes "[Krongast]";
 		mes "Oh ho...";
-		mes "This is good.";
-		mes "Much better than";
-		mes "what I expected.";
+		mes "Isto é ótimo.";
+		mes "Muito melhor";
+		mes "do que eu esperava.";
 		next;
 		mes "[Krongast]";
-		mes "With this sword...";
-		mes "My special moves will be even more powerful! I may even be able to perfect my fast attacking techniques! I love it!";
+		mes "Com esta espada...";
+		mes "Minhas técnicas especiais vão ficar muito mais poderosas! Eu posso até ser capaz de aperfeiçoar minhas técnicas de velocidade! Eu amei!";
 		next;
 		mes "[Krongast]";
-		mes "Okay then.";
-		mes "Let me give";
-		mes "you a receipt.";
+		mes "Certo.";
+		mes "Deixa eu te dar";
+		mes "seu recibo.";
 		next;
-		getitem 1073,1; //Merchant_Voucher_1
+		getitem 1073,1; //Recibo de Entrega
 		mes "[Krongast]";
-		mes "Here is";
-		mes "your receipt.";
-		mes "Thank you for";
-		mes "your business!";
-		mapannounce "lighthalzen",strcharinfo(0)+"... Thank you for the delivery.",bc_map;
+		mes "Aqui está";
+		mes "seu recibo.";
+		mes "Obrigado";
+		mes "pela entrega.!";
+		mapannounce "lighthalzen",strcharinfo(0)+"... Obrigado pela sua entrega.",bc_map;
 		close;
 	}
 	else if (BSMITH_Q == 14) {
 		mes "[Krongast]";
-		mes "Thank you";
-		mes "for the delivery.";
+		mes "Obrigado";
+		mes "pela entrega.";
 		close;
 	}
 	else {
@@ -1190,455 +1175,455 @@ lighthalzen,209,80,4	script	Krongast#BLS	734,{
 		mes "......";
 		next;
 		mes "[Krongast]";
-		mes "When will the sword";
-		mes "I ordered finally arrive?";
-		mes "I need to try my ultimate skill, ^2F4F4FFine Edge^000000 with it.";
+		mes "Quando é que finalmente";
+		mes "vai chegar a espada que eu pedi?";
+		mes "Preciso treinar minha habilidade suprema, ^2F4F4FFine Edge^000000 com ela.";
 		next;
 		mes "[Krongast]";
 		mes "Ahhhhhhh!";
-		mes "I need to";
-		mes "have that sword!";
+		mes "Eu tenho que";
+		mes "ter aquela espada!";
 		close;
 	}
 }
 
-payon,214,79,4	script	Talpiz#BLS	59,{
+payon,214,79,4	script	Talpiz#BLS	1_M_ORIENT01,{
 	if (BSMITH_Q == 12 && countitem(1713) > 0) {
 		mes "[Talpiz]";
 		mes "Oh~";
-		mes "Is it finally here?";
-		mes "The package I ordered?";
+		mes "Está finalmente aqui?";
+		mes "A minha encomenda?";
 		next;
 		mes "[Talpiz]";
-		mes "Um, this is what I ordered, right? I don't want an Arbalest that's been used before.";
+		mes "Hm, está do jeito que pedi, né? Eu não quero um Arbaleste que já foi usado antes.";
 		next;
-		if (select("Whoops, this is a used one.:I'm sure it's new.") == 1) {
+		if (select("Ops, está aqui é usada.:Tenho certeza, é novo!") == 1) {
 			mes "[Talpiz]";
 			mes "Hmmmm.";
-			mes "Please hurry";
-			mes "and bring the";
-			mes "correct item.";
-			mes "I've waited too";
-			mes "long already...";
+			mes "Por favor seja rápido";
+			mes "e traga o";
+			mes "item correto.";
+			mes "Eu já esperei";
+			mes "muito por isso...";
 			close;
 		}
 		mes "[Talpiz]";
-		mes "So, you're sure?";
-		mes "Let me take a look...";
+		mes "Então, você têm certeza?";
+		mes "Deixe-me dar uma olhada...";
 		next;
-		set BSMITH_Q,14;
-		delitem 1713,1; //Arbalest
+		BSMITH_Q = 14;
+		delitem 1713,1; //Arbaleste
 		mes "[Talpiz]";
 		mes "*wheet whoo*";
-		mes "Very nice!!";
+		mes "Muito bom!!";
 		next;
 		mes "[Talpiz]";
-		mes "This is truly a quality made custom item. I love how there is a case for an eye patch! I really reallly love this~";
+		mes "Este é realmente um item personalizado de qualidade. Eu adoro como tem um estojo para o tapa-olho! Eu realmente amei~";
 		next;
 		mes "[Talpiz]";
-		mes "Thank you!";
-		mes "For something of this quality,";
-		mes "I can even sell it for a high price even after I've used it!";
+		mes "Obrigado!";
+		mes "Por algo desta qualidade,";
+		mes "eu até posso vendê-lo por um preço elevado, mesmo depois que eu usei ele!";
 		next;
-		getitem 1073,1; //Merchant_Voucher_1
+		getitem 1073,1; //Recibo de Entrega
 		mes "[Talpiz]";
-		mes "Here!";
-		mes "Please take";
-		mes "your receipt.";
-		mes "I really appreciate";
-		mes "your hard work.";
-		mapannounce "payon","Thanks, " +strcharinfo(0)+ ", you really delivered. Everytime I look at this, I love it even more~",bc_map;
+		mes "Aqui!";
+		mes "Pegue por favor,";
+		mes "seu recibo.";
+		mes "Eu realmente apreciei";
+		mes "seu trabalho duro.";
+		mapannounce "payon","Obrigado, " +strcharinfo(0)+ ", você realmente entregou. Cada vez que olho pra isso, eu amo ainda mais~",bc_map;
 		close;
 	}
 	else if (BSMITH_Q == 14) {
 		mes "[Talpiz]";
-		mes "Really,";
-		mes "I can't say it";
-		mes "enough. This is";
-		mes "top quality work~!";
+		mes "Realmente,";
+		mes "Eu não tenho";
+		mes "palavras. Este é";
+		mes "um trabalho de primeira qualidade~!";
 		close;
 	}
 	else {
 		mes "[Talpiz]";
 		mes "Eh...";
-		mes "When will my";
-		mes "order arrive?";
+		mes "Quando meu";
+		mes "pedido chegará?";
 		next;
 		mes "[Talpiz]";
-		mes "A custom made Arbalest";
-		mes "with a quality case to hold your eye patches. Only one person can make something like that...";
+		mes "Um Arbaleste personalizado";
+		mes "feito com um estojo de qualidade para segurar seu tapa-olho. Só uma pessoa pode fazer uma coisa dessas...";
 		next;
 		mes "[Talpiz]";
 		mes "Ahhhhhh...";
-		mes "The waiting";
-		mes "is unbearable!";
+		mes "A espera é";
+		mes "agoniante!";
 		close;
 	}
 }
 
-hugel,168,183,1	script	Bismarc#BLS	118,{
+hugel,168,183,1	script	Bismarc#BLS	2_M_THIEFMASTER,{
 	if (BSMITH_Q == 13 && countitem(1122) > 0) {
 		mes "[Bismarc]";
-		mes "Sweet God...";
-		mes "Have you sent";
-		mes "an angel...?";
-		mes "Is that the Ring Pommel Saber";
-		mes "I ordered? It's my only hope...";
+		mes "Doce Senhor...";
+		mes "Você mandou";
+		mes "um anjo?";
+		mes "Esse é o Sabre de Impacto que";
+		mes "eu pedi? É a minha única esperança...";
 		next;
 		mes "[Bismarc]";
-		mes "^666666*Huuuk*^000000 This is what I ordered, right? I needed one especially";
-		mes "made to stop this poison...";
+		mes "^666666*Huuuk*^000000 Isto é o que eu pedi, certo? Eu precisava de um especialmente";
+		mes "feito para parar este veneno...";
 		next;
-		if (select("Whoops, this is my own Ring Pommel Saber.:I'm sure this is the one.") == 1) {
+		if (select("Eh... este é o meu próprio Sabre de Impacto.:Estou certo de que é este.") == 1) {
 			mes "[Bismarc]";
-			mes "N-Nooo...";
-			mes "Hurry...!";
-			mes "I need that";
-			mes "sword for its";
-			mes "an...ti...d-dote!";
+			mes "N-Não...";
+			mes "Apresse-se...!";
+			mes "Eu preciso dessa";
+			mes "espada parar o";
+			mes "an...tí...d-doto!";
 			next;
-			mes "^3355FFIt looks like";
-			mes "he's slowly dying...!";
-			mes "You'd better hurry.^000000";
+			mes "^3355FFPara que";
+			mes "ele está morrendo lentamente...";
+			mes "É melhor você se apressar.^000000";
 			close;
 		}
 		mes "[Bismarc]";
 		mes "^666666*Ghklk*^000000";
-		mes "Give it...!";
-		mes "Pleeeease!";
+		mes "Dê-me...";
+		mes "Por favor!";
 		next;
-		set BSMITH_Q,14;
-		delitem 1122,1; //Ring_Pommel_Saber
-		mes "^3355FFBismarc stabs";
-		mes "himself, repeatedly,";
-		mes "with the Ring Pommel Saber";
-		mes "that has been imbued with";
-		mes "the power of Green Herbs.^000000";
+		BSMITH_Q = 14;
+		delitem 1122,1; //Sabre de Impacto
+		mes "^3355FFBismark fura";
+		mes "a si mesmo repetidamente";
+		mes "com o Sabre de Impacto";
+		mes "que foi embebido com";
+		mes "o poder de Ervas Verdes.^000000";
 		next;
 		mes "[Bismarc]";
 		mes "^666666*Ghyklk*^000000";
 		mes "*Gasp gasp*";
 		next;
 		mes "[Bismarc]";
-		mes "Please...";
-		mes "Help me up.";
-		mes "The poison is";
-		mes "still coarsing";
-		mes "through my body...";
+		mes "Por favor...";
+		mes "Ajude-me!";
+		mes "O veneno ainda";
+		mes "está se espalhando";
+		mes "pelo meu corpo...";
 		next;
 		mes "[Bismarc]";
 		mes "OwwwWWWW!!";
-		mes "IT'S BURNING!";
+		mes "ESTÁ QUEIMANDO!";
 		next;
 		mes "[Bismarc]";
 		mes "*Gasp Gasp*";
-		mes "*Whew* Okay,";
-		mes "I can feel the";
-		mes "antidote working now.";
-		mes "Just what I needed.";
+		mes "*Ah* Certo,";
+		mes "posso sentir o";
+		mes "antídoto funcionando agora.";
+		mes "Era tudo o que eu precisava.";
 		next;
-		getitem 1073,1; //Merchant_Voucher_1
+		getitem 1073,1; //Recibo de Entrega
 		mes "[Bismarc]";
-		mes "Here is";
-		mes "your receipt.";
-		mes "T-take it...!";
-		mes "It's yours!";
-		mapannounce "hugel","Thanks, " +strcharinfo(0)+ ", for the delivery. You saved my life...",bc_map;
+		mes "Aqui está";
+		mes "o seu recibo.";
+		mes "P-pegue-o...";
+		mes "É seu!";
+		mapannounce "hugel","Obrigado, " +strcharinfo(0)+ ", pela entrega. Você salvou minha vida...",bc_map;
 		close;
 	}
 	else if (BSMITH_Q == 14) {
 		mes "[Bismarc]";
-		mes "Thank you.";
-		mes "You saved";
-		mes "my life...";
+		mes "Obrigado.";
+		mes "Você salvou";
+		mes "minha vida...";
 		close;
 	}
 	else {
 		mes "[Bismarc]";
 		mes "^666666*Ghyklk*^000000";
 		mes "^666666*Huk Hukk*^000000";
-		mes "When will my";
-		mes "o-order arrive...?";
+		mes "Quando meu pedido";
+		mes "vai chegar...?";
 		next;
 		mes "[Bismarc]";
-		mes "The poison in";
-		mes "my body... the pain...";
-		mes "excruciating... L-lord...";
+		mes "O veneno no";
+		mes "meu corpo... a dor...";
+		mes "excruciante... S-senhor...";
 		next;
 		mes "[Bismarc]";
-		mes "When is the";
-		mes "antidote gonna";
-		mes "get here?!";
+		mes "Quando o";
+		mes "antídoto vai";
+		mes "chegar aqui?!";
 		close;
 	}
 }
 
-ein_in01,24,41,5	script	Blacksmith Guildsman#moc	726,{
+ein_in01,24,41,5	script	Homem da Guilda dos Ferreiros#moc	4_F_JOB_BLACKSMITH,{
 	if (BSMITH_Q == 16) {
 		emotion ET_SCRATCH;
 		mes "[Mitehmaeeuh]";
-		mes "Oh...so you're the one who wants to be a blacksmith?";
-		mes "Nice, heh heh.";
-		mes "As you've realized from your past tests, you won't be promoted from Merchant to Blacksmtih immediately.";
+		mes "Oh... então é você quem quer se tornar um ferreiro?";
+		mes "Legal, heh heh.";
+		mes "Não é por ter passado pelos testes passados que você será promovido de Mercador a Ferreiro de imediato.";
 		next;
 		mes "[Mitehmaeeuh]";
-		mes "How much do you truly understand about smithing? Are you ready for me to ask you some questions?";
+		mes "Quanto você realmente sabe sobre forja? Está pronto para que faça algumas perguntas?";
 		next;
-		if (select("Yes:No, not yet~") == 1) {
+		if (select("Sim:Não, ainda não.") == 1) {
 			mes "[Mitehmaeeuh]";
-			mes "Alright...";
-			mes "My test is simple.";
-			mes "I'll ask five questions.";
-			mes "If you miss too many,";
-			mes "you fail. And I won't";
-			mes "tell you what you missed.";
+			mes "Certo...";
+			mes "Meu teste é simples.";
+			mes "Farei cinco perguntas.";
+			mes "Se errar muitas,";
+			mes "você falha. E não";
+			mes "direi quais você errou.";
 			next;
-			set .@blackss_te,0;
+			.@blackss_te = 0;
 			mes "[Mitehmaeeuh]";
-			mes "Please listen";
-			mes "and answer carefully...";
+			mes "Por favor, ouça";
+			mes "e responda cuidadosamente...";
 			next;
 			switch(rand(1,3)) {
 			case 1:
 				mes "[Mitehmaeeuh]";
-				mes "1. What ability";
-				mes "is required to learn";
-				mes "the ^8E6B23Discount^000000 skill?";
+				mes "1. Qual habilidade";
+				mes "é requisito para aprender";
+				mes "a habilidade ^8E6B23Desconto^000000?";
 				next;
-				if (select("Level 3 Push Cart:Item Appraisal:Level 10 Mammonite:Level 3 Enlarge Weight") == 4)
-					set .@blackss_te,.@blackss_te+20;
+				if (select("Usar Carrinho Level 3:Identificar Item:Mammonita Level 10:Aumentar Capacidade de Carga Level 3") == 4)
+					.@blackss_te += 20;
 				mes "[Mitehmaeeuh]";
-				mes "2. When you attack";
-				mes "with ^8E6B23Hammerfall^000000,";
-				mes "what status effect can";
-				mes "you inflict on enemies?";
+				mes "2. Quando você ataca";
+				mes "com ^8E6B23Matelo de Thor^000000,";
+				mes "qual efeito de condição você";
+				mes "pode inflingir nos inimigos?";
 				next;
-				if (select("Stun:Blindness:Chaos:Silence") == 1)
-					set .@blackss_te,.@blackss_te+20;
+				if (select("Atordoamento:Cegueira:Caos:Silêncio") == 1)
+					.@blackss_te += 20;
 				mes "[Mitehmaeeuh]";
-				mes "3. How much Zeny is spent";
-				mes "when attacking with the";
-				mes "mastered Mammonite skill?";
-				mes "(Level 10 Mammonite)";
+				mes "3. Quanto de zeny é gasto";
+				mes "quando se ataca com a";
+				mes "habilidade Mammonita no máximo?";
+				mes "(Mammonita Level 10)";
 				next;
 				if (select("900 Zeny:1000 Zeny:2000 Zeny:100,000 Zeny") == 2)
-					set .@blackss_te,.@blackss_te+20;
+					.@blackss_te += 20;
 				mes "[Mitehmaeeuh]";
-				mes "4. What is the";
-				mes "discount rate when";
-				mes "the ^8E6B23Discount^000000";
-				mes "skill is mastered?";
+				mes "4. Qual é a";
+				mes "taxa de desconto quando";
+				mes "a habilidade^8E6B23Desconto^000000";
+				mes "está no máximo?";
 				next;
 				if (select("21 % :22 % :23 % :24 % ") == 4)
-					set .@blackss_te,.@blackss_te+20;
+					.@blackss_te += 20;
 				mes "[Mitehmaeeuh]";
-				mes "5. What is the maximum";
-				mes "percentage that you can";
-				mes "overcharge items sold to";
-				mes "NPCs after mastering the";
-				mes "^8E6B23Overcharge^000000 skill?";
+				mes "5. Qual é a máxima";
+				mes "porcentagem que você pode";
+				mes "lucrar sobre itens vendidos a";
+				mes "NPCs depois de ter a habilidade";
+				mes "^8E6B23Lucro^000000 no máximo?";
 				next;
 				if (select("21 % :22 % :23 % :24 % ") == 3)
-					set .@blackss_te,.@blackss_te+20;
+					.@blackss_te += 20;
 				break;
 			case 2:
 				mes "[Mitehmaeeuh]";
-				mes "1. Which of the";
-				mes "following monsters";
-				mes "drops Steel?";
+				mes "1. Qual dos";
+				mes "seguintes monstros";
+				mes "dropa aço?";
 				next;
-				if (select("Zerom:Chon Chon:Skel Worker:Requiem") == 3)
+				if (select("Zerom:ChonChon:Esqueleto Operário:Réquiem") == 3)
+					.@blackss_te += 20;
+				mes "[Mitehmaeeuh]";
+				mes "2. Qual das seguintes";
+				mes "pedras pode ser feita de";
+				mes "Sangue Escarlate??";
+				next;
+				if (select("Coração Flamejante:Vento Bruto:Natureza Grandioza:Gelo Místico") == 1)
+					.@blackss_te += 20;
+				mes "[Mitehmaeeuh]";
+				mes "3. Qual das seguintes";
+				mes "pedras você tem mais";
+				mes "em seu Armazém da Kafra?";
+				next;
+				select("Frescor do Vento:Sangue Escarlate:Vida Verdejante:Cristal Azul");
+					.@blackss_te += 20;
+				mes "[Mitehmaeeuh]";
+				mes "4. Geralmente,";
+				mes "qual das seguintes";
+				mes "propriedades recebe o";
+				mes "maior dano de uma arma";
+				mes "encantada com Vento?";
+				next;
+				if (select("Fogo:Água:Terra:Vento") == 2)
 					set .@blackss_te,.@blackss_te+20;
 				mes "[Mitehmaeeuh]";
-				mes "2. Which of the following";
-				mes "stones can be made from";
-				mes "Red Bloods?";
+				mes "5. Quantos Minérios de Ferro";
+				mes "são necessários para fazer";
+				mes "1 Aço?";
 				next;
-				if (select("Flame Heart:Rough Wind:Great Nature:Mystic Frozen") == 1)
-					set .@blackss_te,.@blackss_te+20;
-				mes "[Mitehmaeeuh]";
-				mes "3. Which of the following";
-				mes "stones do you have the most";
-				mes "of in your Kafra Storage?";
-				next;
-				select("Wind of Verdure:Red Blood:Green Live:Crystal Blue");
-					set .@blackss_te,.@blackss_te+20;
-				mes "[Mitehmaeeuh]";
-				mes "4. In general,";
-				mes "which of the following";
-				mes "properties receives the";
-				mes "most damage from a Wind";
-				mes "attribute weapon?";
-				next;
-				if (select("Fire Property:Water Property:Earth Property:Wind Property") == 2)
-					set .@blackss_te,.@blackss_te+20;
-				mes "[Mitehmaeeuh]";
-				mes "5. How many Iron Ore";
-				mes "is required to make";
-				mes "1 Steel?";
-				next;
-				if (select("5 Iron Ore :4 Iron Ore:3 Iron Ore:6 Iron Ore") == 1)
-					set .@blackss_te,.@blackss_te+20;
+				if (select("5 Minério de Ferro :4 Minério de Ferro:3 Minério de Ferro:6 Minério de Ferro") == 1)
+					.@blackss_te += 20;
 				break;
 			case 3:
 				mes "[Mitehmaeeuh]";
-				mes "1. What do you usually";
-				mes "do when you meet someone";
-				mes "randomly on the street?";
+				mes "1. O que você geralmente";
+				mes "faz quando você encontra alguém";
+				mes "por acaso na rua?";
 				next;
-				switch(select("Ask them what they need.:Have a brief conversation.:Ignore them.:Give items and run away.")) {
+				switch(select("Pergunto o que precisam.:Tenho uma conversa rápida.:Ignoro.:Dou itens e corro.")) {
 				case 1:
 				case 2:
-					set .@blackss_te,.@blackss_te+20;
+					.@blackss_te += 20;
 					break;
 				default:
 					break;
 				}
 				mes "[Mitehmaeeuh]";
-				mes "2. In what village";
-				mes "can you learn the";
-				mes "^8E6B23Crazy Uproar^000000 and";
-				mes "^8E6B23Change Cart^000000 skills?";
+				mes "2. Em qual cidade";
+				mes "você pode aprender as habilidades";
+				mes "^8E6B23Grito de Guerra^000000 e";
+				mes "^8E6B23Mudar Carrinho^000000?";
 				next;
-				if (select("Al De Baran:Alberta:Morocc:Izlude") == 2)
+				if (select("Al De Baran:Alberta:Morroc:Izlude") == 2)
+					.@blackss_te += 20;
+				mes "[Mitehmaeeuh]";
+				mes "3. Do centro de Einbroch,";
+				mes "em qual direção fica a Guilda dos Ferreiros?";
+				next;
+				if (select("Noroeste:Sudeste:Sudoeste:Norte") == 2)
 					set .@blackss_te,.@blackss_te+20;
 				mes "[Mitehmaeeuh]";
-				mes "3. From the center of Einbroch,";
-				mes "in which direction is the Blacksmith Guild?";
+				mes "4. Em qual cidade";
+				mes "você pode encontrar";
+				mes "mais Ferreiros?";
 				next;
-				if (select("11 o'clock:5 o'clock:7 o'clock:12 o'clock") == 2)
-					set .@blackss_te,.@blackss_te+20;
+				if (select("Prontera:Morroc:Alberta:Einbroch") == 4)
+					.@blackss_te += 20;
 				mes "[Mitehmaeeuh]";
-				mes "4. In which town";
-				mes "can you find the";
-				mes "most Blacksmiths?";
+				mes "5. Qual dos";
+				mes "seguintes status";
+				mes "afetam sua habilidades";
+				mes "como um Ferreiro?";
 				next;
-				if (select("Prontera:Morocc:Alberta:Einbroch") == 4)
-					set .@blackss_te,.@blackss_te+20;
-				mes "[Mitehmaeeuh]";
-				mes "5. Which of the";
-				mes "following statuses";
-				mes "affect your skill";
-				mes "as a Blacksmith?";
-				next;
-				if (select("STR :DEX:AGI :VIT ") == 2)
-					set .@blackss_te,.@blackss_te+20;
+				if (select("FOR:DES:AGI:VIT") == 2) 
+					.@blackss_te += 20;
 				break;
 			}
 			mes "[Mitehmaeeuh]";
 			mes "Ah...";
-			mes "You've completed";
-			mes "the quiz. Let's see...";
+			mes "Você completou";
+			mes "o teste. Vejamos...";
 			next;
 			mes "[Mitehmaeeuh]";
-			mes "You earned";
+			mes "Você fez";
 			mes ""+ .@blackss_te +" points...";
 			if (.@blackss_te > 70) {
-				mes "Very nice!";
-				mes "Congratulations!";
-				mes "You just passed!";
+				mes "Muito bem";
+				mes "Parabéns!";
+				mes "Você passou!";
 				next;
 				mes "[Mitehmaeeuh]";
-				mes "However, don't let your early success make you overconfident. A Blacksmith's life isn't a picnic. As proof that you have passed the test, I give you this Hammer of Blacksmith.";
-				set BSMITH_Q,17;
-				getitem 1005,1; //Hammer_Of_Blacksmith
+				mes "Entretanto, não deixe seu sucesso lhe tornar superconfiante. A vida de um Ferreiro não é um piquenique. Como prova de que você passou no teste, eu lhe dou este Martelo do Ferreiro.";
+				BSMITH_Q = 17;
+				getitem 1005,1; //Martelo de Ferro
 				changequest 2014,2015;
 				next;
 				mes "[Mitehmaeeuh]";
-				mes "Take this Hammer";
-				mes "of Blacksmith and go back to the Altiregen. Okay then? I wish you the best of luck!";
+				mes "Pegue este Martelo";
+				mes "do Ferreiro e volte para Altiregen. Certo, então? Desejo sorte!";
 				close;
 			}
-			mes "You failed! You better study up before coming back here.";
+			mes "Você falhou! É melhor você estudar mais antes de voltar aqui.";
 			next;
 			mes "[Mitehmaeeuh]";
-			mes "With your knowledge, or lack thereof, you'll just end up hurting yourself holding a hammer!";
+			mes "Com seu conhecimento, ou burrice, você só vai se machucar segurando um machado!";
 			close;
 		}
 		mes "[Mitehmaeeuh]";
-		mes "Okay then.";
-		mes "Please prepare";
-		mes "yourself and return";
-		mes "when you are ready...";
+		mes "Certo.";
+		mes "Por favor, prepare-se";
+		mes "e volte quando";
+		mes "estiver pronto...";
 		close;
 	}
 	else if (BSMITH_Q == 17) {
 		emotion ET_SCRATCH;
 		mes "[Mitehmaeeuh]";
-		mes "Yeap, you just passed the Blacksmith job test~";
+		mes "Ah, você acabou de fazer o teste de Ferreiro!";
 		next;
 		mes "[Mitehmaeeuh]";
-		mes "Why don't you go back to Mr.Altiregen?";
+		mes "Por que não volta ao Sr. Altiregen?";
 		next;
 		mes "[Mitehmaeeuh]";
-		mes "Don't forget to bring the Hammer of Blacksmith with you!";
+		mes "Não se esqueça de levar o Martelo do Ferreiro com você!";
 		next;
 		mes "[Mitehmaeeuh]";
-		mes "Oh, also make sure that you have no skill point left before you change your job~";
+		mes "Ah, também tenha certeza de que você não tem nenhum ponto de habilidade sobrando antes de mudar de classe!";
 		close;
 	}
 	else {
 		emotion ET_SCRATCH;
 		mes "[Mitehmaeeuh]";
-		mes "I had to deal with the heat when I was in Morocc,";
-		mes "and now I have to deal with the smog in this Einbroch!";
+		mes "Tive que lidar com o calor, enquanto estive em Morroc";
+		mes "e agora eu tenho que lidar com a fumaça em Einbroch!";
 		next;
 		mes "[Mitehmaeeuh]";
-		mes "But, I must admit that this is the perfect place for Blacksmiths because we have an abundance of crafting material supplies as well as highly developed equipment.";
+		mes "Mas, eu tenho que admitir que este é um lugar perfeito para Ferreiros, porque nós temos suprimento em abundância de materiais de forja, bem como equipamento de primeira.";
 		next;
 		mes "[Mitehmaeeuh]";
-		mes "We, Blacksmiths are trying our best to forge the best of the best weapons.";
+		mes "Nós, Ferreiros, estamos dando o máximo de nós para forjar as melhores armas.";
 		next;
 		mes "[Mitehmaeeuh]";
-		mes "We pledge our honor on that!";
+		mes "Nós temos nossa honra nisso!";
 		close;
 	}
 }
 
-geffen_in,109,170,3	script	Blacksmith Guildsman#gef	726,{
-	mes "[Blacksmith Guildsman]";
-	mes "Good day, are you here to visit Blacksmith Guild?";
+geffen_in,109,170,3	script	Guilda dos Ferreiros#gef	4_F_JOB_BLACKSMITH,{
+	mes "[Homem da Guilda dos Ferreiros]";
+	mes "Bom dia, está aqui para visitar a Guilda dos Ferreiros?";
 	next;
-	mes "[Blacksmith Guildsman]";
-	mes "I thank you for coming this far to visit our guild. However, I regret to inform you that Blacksmith Guild has been";
-	mes "moved to ^3131FF'Einbroch' in the Schwarzwald Republic^000000.";
+	mes "[Homem da Guilda dos Ferreiros]";
+	mes "Agradeço por ter vindo até aqui para visitar nossa guilda. Entretanto, temo em informar que a Guilda dos Ferreiros foi";
+	mes "transferida para ^3131FF'Einbroch' na República de Schwaltzvalt^000000.";
 	next;
-	mes "[Blacksmith Guildsman]";
-	mes "You can travel to Schwarzwald Republic by using the airship.";
-	mes "I can provide you a teleport service to Izlude, where you can use the airship.";
-	mes "Would you like to move to Izlude immediately?";
+	mes "[Homem da Guilda dos Ferreiros]";
+	mes "Você pode viajar para a República de Schwaltzvalt usando o aeroplano.";
+	mes "Posso providenciar um teleporte para Izlude, onde voCê pode pegar o aeroplano.";
+	mes "Você quer ir para Izlude imediatamente?";
 	next;
-	switch(select("How to go to Einbroch:Yes!:No, thanks.")) {
+	switch(select("Como chegar em Einbroch?:Sim!:Não, obrigado.")) {
 	case 1:
-		mes "[Blacksmith Guildsman]";
-		mes "Oops, haven't you used the airship yet?";
+		mes "[Homem da Guilda dos Ferreiros]";
+		mes "Ops, você nunca usou o aeroplano?";
 		next;
-		mes "[Blacksmith Guildsman]";
-		mes "Unlike Rune-Midgarts Kingdom, Schwarzwald Republic has 'the airship' instead of teleport services to move between towns.";
+		mes "[Homem da Guilda dos Ferreiros]";
+		mes "Ao contrário do Reino de Rune-Midgard, a República de Schwaltzvalt tem 'o aeroplano', ao invés do serviço de teletransporte para chegar às cidades.";
 		next;
-		mes "[Blacksmith Guildsman]";
-		mes "In ^3131FF'Izlude'^000000, you can use ^3131FF'the international airship'^000000 which travels between ^3131FFIzlude and Juno in Schwarzwald Republic^000000.";
+		mes "[Homem da Guilda dos Ferreiros]";
+		mes "Em ^3131FF'Izlude'^000000, você pode usar ^3131FF'o aeroplano internacional'^000000, que viaja entre ^3131FFIzlude e Juno na República de Schwaltzvalt^000000.";
 		next;
-		mes "[Blacksmith Guildsman]";
-		mes "Take the airship, and go to Juno. Then from Juno, you need to take ^3131FFthe domestic airship^000000 to go to Einbroch.";
-		mes "Remember, you are ^3131FFnot going outside of the airport^000000 upon transit from the international to the domestic airship.";
+		mes "[Homem da Guilda dos Ferreiros]";
+		mes "Pegue o aeroplano e vá a Juno. Então, de Juno, você precisa pegar o ^3131FFaeroplano local^000000 para ir a Einbroch.";
+		mes "Lembre-se, você ^3131FFnão sairá do aeroporto^000000 para mudar do aeroplano internacional para o local.";
 		next;
-		mes "[Blacksmith Guildsman]";
-		mes "It might sound complicated, but you will know once you are in the airport.";
-		mes "When you arrive in Blacksmith Guild, please send my regard to my coworkers!";
+		mes "[Homem da Guilda dos Ferreiros]";
+		mes "Pode parecer complicado, mas você entenderá assim que estiver no aeroporto.";
+		mes "Quando você chegar na Guilda dos Ferreiros, por favor, mande lembranças para meus colegas!";
 		close;
 	case 2:
 		if (Zeny < 600) {
-			mes "[Blacksmith Guildsman]";
-			mes "Excuse me, but you do not have enough money.";
+			mes "[Homem da Guilda dos Ferreiros]";
+			mes "Desculpe-me, mas você não tem dinheiro suficiente.";
 			close;
 		}
-		set Zeny, Zeny-600;
+		Zeny -= 600;
 		warp "izlude",94,103;
 		end;
 	case 3:
-		mes "[Blacksmith Guildsman]";
-		mes "Please take care!";
+		mes "[Homem da Guilda dos Ferreiros]";
+		mes "Por favor, tome cuidado!";
 		close;
 	}
-}
+}

@@ -28,893 +28,830 @@
 //= 3.2 Modified the quest to renewal. [Vali] (Thanks to Muad_Dib for the necessary info).
 //= 3.3 Fixed waitingroom bug. [Euphy]
 //============================================================ 
+//===================== Tradução PT-BR ==========
+// Tradução: Weed0
+// Revisado: HD Scripts - Projeto eaBrasil
+//=============================================== 
 
-gef_tower,111,37,4	script	Wizard Guildsman	70,{
+gef_tower,111,37,4	script	Assistente de Mago	70,{
 	if (Upper == 1) {
 		mes "[Catherine]";
-		mes "? Excuse me, I am wondering if we have met before...?";
-		mes "Hey~ you have changed a lot! So, what happened?";
+		mes "? Com licença, acho que nós nos encontramos antes, não...?";
+		mes "Ei~ você mudou muito! Então, o que aconteceu?";
 		next;
 		mes "[Catherine]";
-		mes "I feel you have become so much powerful, eh?";
-		mes "Congratulations and good luck with your life!";
+		mes "Eu sinto que você está mais poderoso, hein?";
+		mes "Parabéns e boa sorte com sua vida!";
 		close;
 	}
 	if (BaseJob != Job_Mage) {
 		if (BaseJob == Job_Wizard) {
 			mes "[Catherine]";
-			mes "Since you're already a Wizard, you don't have any more business with me...?";
-			mes "Now, excuse me.";
+			mes "Desde que você se tornou um Bruxo, você não tem mais negócios comigo, tem...?";
+			mes "Agora, com licença.";
 			next;
 			mes "[Catherine]";
-			if (Sex == SEX_MALE)
-				mes "Well, If you intended to ask me on a date... I appreciate it...hohoho.";
-			else
-				mes "Well, if you fix me up with a cute guy... I'd appreciate it...hohoho!.";
+			mes ""+((Sex)?"Bem, se você pretende me convidar para sair... eu iria gostar... hohoho...":"Bem, se você me apresentar-se um cara bonito... eu iria gostar... hohoho!")+"";
 			close;
-		}
-		else if (BaseClass == Job_Novice) {
-			mes "[Wizard Guildsman]";
-			mes "Oh my goodness, it's a novice~ ain't you the cutest little thing.";
-			mes "By the way honey, this place is for Wizards.";
+		} else if (BaseClass == Job_Novice) {
+			mes "[Bruxa]";
+			mes "Oh meu Deus, é um aprendiz~, você não é coisa mais bonita desse mundo?";
+			mes "A propósito querido, esse lugar é para Bruxos.";
 			next;
-			mes "[Wizard Guildsman]";
-			mes "If you are interested in magic,";
-			mes "Go visit the ^0000FFMage^000000 guild.";
-		}
-		else {
-			mes "[Wizard Guildsman]";
-			mes "Huh? what brings you to such a high place...?";
-			mes "If you don't have any specific business, please leave immediately.";
-			mes "This place is for Wizards, you know?";
+			mes "[Bruxa]";
+			mes "Se você estiver interessado em magia,";
+			mes "vá visitar a Guilda dos ^0000FFMagos^000000.";
+		} else {
+			mes "[Bruxa]";
+			mes "Hã? O que traz você a um lugar como esse...?";
+			mes "Se não tiver nenhum assunto específico, saia imediatamente.";
+			mes "Esse lugar é para Bruxos, sabe?";
 		}
 		next;
-		mes "[Wizard Guildsman]";
-		mes "Ok, then. Farewell.";
+		mes "[Bruxa]";
+		mes "Ok, então. Passar bem.";
 		close;
 	}
 	if (WIZ_Q == 0) {
-		mes "[Wizard Guildsman]";
-		mes "Huh? What are you doing way up here...?";
-		mes "So what brings you here?";
+		mes "[Bruxa]";
+		mes "Hã? O que você faz aqui em cima...?";
+		mes "O que trouxe você aqui?";
 		next;
-		if (select("I want to become a Wizard.:...nothing.") == 1) {
-			mes "[Wizard Guildsman]";
-			mes "I see... Well, of course you want to become a Wizard, otherwise you wouldn't have walked up all those stairs right?";
-			mes "Anyways, I would like to welcome you. I will assist you in becoming a Wizard.";
+		if (select("Eu quero me tornar um Bruxo.:...nada.") == 1) {
+			mes "[Bruxa]";
+			mes "Humm... Bem, é claro que você quer se tornar um Bruxo, senão você não subiria todas aquelas escadas certo?";
+			mes "Em todo caso, eu devo lhe dar as boas-vindas. Eu vou ajudar você a se tornar um Bruxo.";
 			next;
-			mes "[Wizard Guildsman]";
-			mes "My name is Catherine Medici. Just between me and you, I just became a Wizard too!";
-			mes "You can call me Cathy if you want. Hehehehehe~";
-			next;
-			mes "[Catherine]";
-			mes "Many people want to become Wizards, but only the patient and strong ones will eventually accomplish their goals.";
-			mes "In order to become a Wizard, one must undergo difficult quests.";
+			mes "[Bruxa]";
+			mes "Meu nome é Catherine Medici. Apenas entre eu e você, eu acabei de me tornar uma Bruxa também!";
+			mes "Você pode me chamar de Cathy se quiser. Hehehehehe~";
 			next;
 			mes "[Catherine]";
-			mes "Also only mages who have reached a job level of 40 or higher are qualified for these quests.";
-			mes "Lower level mages aren't experienced enough with magic to become Wizards...";
+			mes "Muitas pessoas querem se tornar Bruxos, mas apenas as fortes e as pacientes vão alcançar seus objetivos.";
+			mes "Para se tornar um Bruxo, deve-se passar por tarefas difíceis.";
 			next;
 			mes "[Catherine]";
-			mes "Well, I will give you more information when you apply for the job.";
-			mes "So! Do you want to apply now?";
+			mes "Também, apenas Magos que alcançaram o nível de classe 40 ou mais estão classificados para essas tarefas.";
+			mes "Magos de nível mais baixo que esse não têm experiência suficiente com magia para se tornarem Bruxos...";
 			next;
-			if (select("Yes, I do.:On second thought, Let me think about it.") == 1) {
+			mes "[Catherine]";
+			mes "Bom, eu vou dar mais informações quando você se inscrever no teste.";
+			mes "Então... você quer se inscrever agora?";
+			next;
+			if (select("Sim, claro.:Deixe-me pensar mais sobre isso.") == 1) {
+				mes "[Catherine]";
 				if (JobLevel < 40) {
-					mes "[Catherine]";
-					mes "Hey hey, weren't you listening to me?";
-					mes "I told you that you need to be at least job level 40 to sign up for the quest...";
+					mes "Ei ei, você não estava me ouvindo?";
+					mes "Eu falei que você precisa ser ao menos nível 40 de classe para se inscrever...";
 					next;
 					mes "[Catherine]";
-					mes "No need to hurry, go experience and ponder more about the world of magic.";
-					mes "When I deem you're qualified, I will accept your application.";
+					mes "Não precisa se apressar, vá refletir e conhecer mais sobre o Mundo da Magia.";
+					mes "Quando você estiver qualificado, eu vou aceitar sua inscrição.";
 					close;
 				}
 				if (SkillPoint) {
-					mes "[Catherine]";
-					mes "Umm... You're well qualified, but you have some unused skill points left.";
-					mes "You'd better learn more skills before applying again.";
+					mes "Umm... você está bem qualificado, mas você tem alguns pontos de habilidade sobrando.";
+					mes "Você deve aprender mais habilidades antes de se inscrever de novo.";
 					close;
 				}
-				mes "[Catherine]";
-				mes "Very well then, I accept your application.";
-				mes "Your name is..." + strcharinfo(0) + ", isn't it? I am not sure if I pronounced it correctly?";
+				mes "Muito bem então, eu aceito sua inscrição.";
+				mes "Seu nome é..."+strcharinfo(0)+", certo? Não estou certa, pronunciei corretamente?";
 				next;
 				mes "[Catherine]";
-				mes "The Wizard job change quest is divided into 3 parts.";
-				mes "1st part, gathering magic items.";
-				mes "2nd part, a written test.";
-				mes "The last part is a practical magic test.";
+				mes "Para se tornar um Bruxo você deve cumprir 3 testes.";
+				mes "1º teste, coletar itens mágicos.";
+				mes "2º teste, teste escrito..";
+				mes "O último é um teste prático de magia.";
 				next;
 				mes "[Catherine]";
-				mes "Among one of these tests, we exempt those who are at job level 50.";
-				mes "It is enough to prove to us the effort it will take to become a Wizard if a mage has learned that much already.";
+				mes "Nós dispensamos aqueles que são Nível de classe 50, em um dos três testes.";
+				mes "Se o Mago aprendeu isso tudo, isso é o bastante para nos provar o esforço que vai fazer para se tornar um Bruxo.";
 				next;
 				if (JobLevel == 50) {
 					mes "[Catherine]";
-					mes "Hmm, come to think of it, you're at job level 50!?";
-					mes "You must have worked very hard. Your going to become a very powerful Wizard, I can feel it in you.";
+					mes "Hmm, deixe-me ver, você está no nível de classe 50!?";
+					mes "Você deve ter se esforçado muito. Você vai se tornar um Bruxo muito poderoso, eu posso sentir isso em você.";
 					next;
 					mes "[Catherine]";
-					mes "Ok. You already passed the 1st test then.";
-					mes "Don't get too laid back though, there are still 2 more tests left.";
+					mes "Ok. Você já passou o 1º teste então.";
+					mes "Não fique muito relaxado, ainda restam 2 testes.";
 					next;
 					mes "[Catherine]";
-					mes "Go talk to the man in the corner and he will give you the remaining exams.";
-					mes "Be careful. We have lost many Mages due to the difficulty of the exams.";
-					set WIZ_Q,3;
+					mes "Vá falar com o homem no canto dessa sala e ele lhe dará os testes restantes.";
+					mes "Tenha cuidado. Nós perdemos muitos Magos devido a dificuldade dos exames.";
+					WIZ_Q = 3;
 					setquest 9015;
 					close;
 				}
 				mes "[Catherine]";
-				mes "Then, since I have your application and everything else I need, I'll give you some info about the first test.";
-				mes "You can memorize this or write it down, doesn't matter. But remember it for sure.";
+				mes "Então, desde que eu tenha tudo que eu preciso, eu vou lhe dar mais informações sobre o primeiro teste.";
+				mes "Você pode memorizar ou escrever se quiser, não importa. Mas você deve se lembrar, com certeza.";
 				next;
 				mes "[Catherine]";
-				mes "The first test is collecting magic items.";
-				mes "The important part is that you must gather these items on your own.";
+				mes "O primeiro teste é coletar itens mágicos.";
+				mes "A parte mais importante é que você deve consegui-los sozinho.";
 				next;
 				set wizard_m1,rand(1,2);
 				mes "[Catherine]";
-				mes "The items you must collect are...";
+				mes "Os itens que você deve coletar são..";
 				if (rand(2)) {
-					set WIZ_Q,1;
+					WIZ_Q = 1;
 					setquest 9013;
-					mes "^3355FFRed Gemstone^000000 10 each,";
-					mes "^3355FFBlue Gemstone^000000 10 each,";
-					mes "^3355FFYellow Gemstone^000000 10 each,";
-				}
-				else {
-					set WIZ_Q,2;
+					mes "10 exemplares de ^3355FFGema Vermelha^000000,";
+					mes "10 exemplares de ^3355FFGema Azul^000000,";
+					mes "10 exemplares de ^3355FFGema Amarela^000000,";
+				} else {
+					WIZ_Q = 2;
 					setquest 9014;
-					mes "^3355FFCrystal Blue^000000 5 each,";
-					mes "^3355FFGreen Live^000000 5 each,";
-					mes "^3355FFRed Blood^000000 5 each,";
-					mes "^3355FFWind of Verdure^000000 5 each,";
+					mes "5 exemplares de ^3355FFCristal Azul^000000,";
+					mes "5 exemplares de ^3355FFVida Verdejante^000000,";
+					mes "5 exemplares de ^3355FFSangue Escarlate^000000,";
+					mes "5 exemplares de ^3355FFFrescor do Vento^000000,";
 				}
-				mes "...is it too hard? No, any would be Wizard should be able to at least get these items.";
+				mes "...é difícil? Não, qualquer um que queira se tornar um Bruxo deve ser capaz de coletar esses itens.";
 				next;
 				mes "[Catherine]";
-				mes "Well, good luck.";
-				mes "I'll be happily waiting. ~Hehe.";
+				mes "Bom, boa sorte.";
+				mes "Vou esperar. ~Hehe.";
 				close;
 			}
 			mes "[Catherine]";
-			mes "Oh, ok then, take your time.";
-			mes "Since I'll always be here, accepting applications...*sigh*...anyways! ~Hehehehe.";
+			mes "Oh, ok então, não tenha pressa.";
+			mes "Já que eu sempre estou aqui, aceitando inscrições...*suspiro*! ~Hehehehe.";
 			close;
 		}
-		mes "[Wizard Guildsman]";
-		mes "Geez, what a lame person.";
-		mes "You have no business here, hope you don't mind, now off you go!";
+		mes "[Bruxa]";
+		mes "Nossa, que pessoa fracassada";
+		mes "Você não tem nenhum assunto para tratar aqui, agora saia daqui!";
 		close;
-	}
-	else if (WIZ_Q == 1) {
+	} else if (WIZ_Q == 1) {
 		mes "[Catherine]";
-		mes "Let me see, did you get all the items?";
-		mes "Then let's check...";
+		mes "Deixe-me ver, você pegou todos os itens?";
+		mes "Vamos checar...";
 		next;
+		mes "[Catherine]";
 		if (countitem(716) > 9 && countitem(717) > 9 && countitem(715) > 9) {
-			mes "[Catherine]";
-			mes "Perfect! You got all the items. I like!~";
-			mes "These items will be put to great use in our guild. ~Hehehee.";
+			mes "Perfeito! Você pegou todos os itens!~";
+			mes "Esses itens serão bem úteis para nossa guilda. ~Hehehee.";
 			next;
-			delitem 716,10; //Red_Gemstone
-			delitem 717,10; //Blue_Gemstone
-			delitem 715,10; //Yellow_Gemstone
-			set WIZ_Q,3;
+			delitem 716,10; //Gema Vermelha
+			delitem 717,10; //Gema Azul
+			delitem 715,10; //Gema Amarela
+			WIZ_Q = 3;
 			changequest 9013,9015;
 			mes "[Catherine]";
-			mes "Good for you! You passed the first test.";
-			mes "But there are still two more left, so don't get too relaxed.";
+			mes "Muito bem! Você passou o primeiro teste.";
+			mes "Mas ainda restam 2 testes, então não fique tão relaxado.";
 			next;
 			mes "[Catherine]";
-			mes "Go talk to the guy in the corner for the rest of the tests.";
-			mes "It might be a bit hard, so be careful, I wouldn't want you ending up like most of the Mages that come for these exams...poor souls indeed, may they rest in peace. ~Hehehe.";
+			mes "Vá falar com o homem no canto para saber sobre os outros testes..";
+			mes "Eles podem ser um pouco difíceis, então tome cuidado, eu não gostaria que você terminasse como a maioria dos Magos que vêm para esses exames... pobres almas na verdade, que descansem em paz. ~Hehehe.";
 			close;
 		}
-		mes "[Catherine]";
-		mes "Hey, what's this? Umm...I don't think you have everything yet!";
+		mes "Ei, eu acho que você não tem tudo ainda!";
 		next;
 		mes "[Catherine]";
-		mes "It might've been tough coming all the way up here, what with this altitude and all, but go back and collect the items.";
-		mes "Life's short enough as it is, so stop wasting your time and gather the items I told you before.";
+		mes "Deve ter sido difícil vir até aqui em cima, mas volte e pegue todos os itens.";
+		mes "A vida é curta o suficiente, então para de perder tempo e consiga os itens que eu te pedi.";
 		next;
 		mes "[Catherine]";
-		mes "^3355FFRed Gemstone^000000 10 each,";
-		mes "^3355FFBlue Gemstone^000000 10 each,";
-		mes "^3355FFYellow Gemstone^000000 10 each,";
-		mes "Don't forget this time, and bring all the items, ok?...";
+		mes "10 exemplares de ^3355FFGema Vermelha^000000,";
+		mes "10 exemplares de ^3355FFGema Azul^000000,";
+		mes "10 exemplares de ^3355FFGema Amarela^000000,";
+		mes "Não esqueça dessa vez, e traga todos os itens, ok?...";
 		close;
-	}
-	else if (WIZ_Q == 2) {
+	} else if (WIZ_Q == 2) {
 		mes "[Catherine]";
-		mes "Did you get all the items?";
-		mes "Let's see... Do you have the right ones?...";
+		mes "Você pegou todos os itens?";
+		mes "Vamos ver... você tem os itens corretos?...";
 		next;
+		mes "[Catherine]";
 		if (countitem(991) > 4 && countitem(993) > 4 && countitem(990) > 4 && countitem(992) > 4) {
-			mes "[Catherine]";
-			mes "Perfect! Good job...I'm satisfied! ~Hehe";
-			mes "Our guild greatly appreciates these items and will use them wisely.";
+			mes "Perfeito! Bom trabalho... Eu estou satisfeita! ~Hehe";
+			mes "Nossa Guilda aprecia com grandeza esses itens. Tenho certeza que eles serão usados sabiamente.";
 			next;
-			delitem 991,5; //Crystal_Blue
-			delitem 993,5; //Yellow_Live
-			delitem 990,5; //Boody_Red
-			delitem 992,5; //Wind_Of_Verdure
-			set WIZ_Q,3;
+			delitem 991,5; //Cristal Azul
+			delitem 993,5; //Vida Verdejante
+			delitem 990,5; //Sangue Escarlate
+			delitem 992,5; //Frescor do Vento
+			WIZ_Q = 3;
 			changequest 9014,9015;
 			mes "[Catherine]";
-			mes "Good. You've passed the first test now.";
-			mes "But you still have two more tests to go, so don't get too laid back, because it only gets harder from here. ~Hehehe";
+			mes "Bom. Você passou o primeiro teste agora.";
+			mes "Mas você ainda tem mais dois testes restantes, então não relaxe, porque só fica mais difícil daqui para frente. ~Hehehe";
 			next;
 			mes "[Catherine]";
-			mes "Go talk to that guy in the corner to take the rest of the tests.";
-			mes "It might be a bit hard, so be careful, I wouldn't want you ending up like most of the Mages that come for these exams...poor souls indeed, may they rest in peace. ~Hehehe.";
+			mes "Vá falar com o homem no canto para saber sobre os outros testes..";
+			mes "Eles podem ser um pouco difíceis, então tome cuidado, eu não gostaria que você terminasse como a maioria dos Magos que vêm para esses exames...pobres almas na verdade, que descansem em paz. ~Hehehe.";
 			close;
 		}
-		mes "[Catherine]";
-		mes "Eh, what's this? I don't think you have everything?";
+		mes "Er, o que é isso? Eu acho que você ainda não tem todos os itens?";
 		next;
 		mes "[Catherine]";
-		mes "I regret that you had to go through the trouble of coming all the way up here, but go get the right items again.";
-		mes "Stop wasting your time and get the items I initially requested. For goodness sakes...This is the easiest part of the exam.";
+		mes "Eu lamento que você tenha tido todo o trabalho de subir até aqui, mas vá pegar os itens corretos de novo.";
+		mes "Pare de perder tempo e vá pegar os itens que eu pedi. Pelo amor de Deus... essa é a parte mais fácil do exame.";
 		next;
 		mes "[Catherine]";
-		mes "^3355FFCrystsal Blue^000000 5 each,";
-		mes "^3355FFGreen Live^000000 5 each,";
-		mes "^3355FFRed Blood^000000 5 each,";
-		mes "^3355FFWind of Verdure^000000 5 each,";
-		mes "Don't forget them this time and gather the correct ones, ok? See you soon...";
+		mes "5 exemplares de ^3355FFCristal Azul^000000,";
+		mes "5 exemplares de ^3355FFVida Verdejante^000000,";
+		mes "5 exemplares de ^3355FFSangue Escarlate^000000,";
+		mes "5 exemplares de ^3355FFFrescor do Vento^000000,";
+		mes "Não esqueça dessa vez e pegue os certos, certo?...";
 		close;
-	}
-	else if (WIZ_Q == 3) {
+	} else if (WIZ_Q == 3) {
 		mes "[Catherine]";
-		mes "What is it? You didn't go talk to the guy in the corner?";
-		mes "You can't become a Wizard by just brining the items I requested, no no, that just wont do...";
+		mes "O que foi? Você ainda não foi falar com o homem ali no canto?";
+		mes "Você não vai se tornar um Bruxo só trazendo os itens que eu pedi...";
 		next;
 		mes "[Catherine]";
-		mes "You can only prove yourself Wizard material after you take the two remaining tests.";
-		mes "I'll be waiting, so go now.";
+		mes "Você apenas pode se tornar um Bruxo depois que passar nos outros 2 testes.";
+		mes "Estou esperando, então vá.";
 		close;
-	}
-	else if (WIZ_Q == 4) {
+	} else if (WIZ_Q == 4) {
 		mes "[Catherine]";
-		mes "*sigh*...Poor thing, what a pity.";
-		mes "How can you think of trying to become a Wizard when you can't even answer those simple questions?";
+		mes "*Suspiro*...coitado, que pena.";
+		mes "Como você pensa em se tornar um Bruxo quando você nem mesmo consegue responder aquelas perguntas?";
 		next;
 		mes "[Catherine]";
-		mes "Let's see... Should I give you some hints as your senior?";
-		mes "But I'm a bit thirsty, so give me 1 Apple Juice, and we got a deal. ~Hehehe";
+		mes "Deixe-me ver... será que eu devo te dar algumas dicas?";
+		mes "Mas eu estou com sede, então me dê 1 Suco de Maçã, e nós temos um acordo. ~Hehehe";
 		next;
-		switch(select("Give me some hints, please.:I want to try again on my own!")) {
-		case 1:
-			if (countitem(531) > 0) {
-				delitem 531,1; //Apple_Juice
-				mes "[Catherine]";
-				mes "Yummers, Apple Juice is the best...";
-				mes "Gulp gulp gulp... Haaaaaah... ~Hehe";
-				next;
-				mes "[Catherine]";
-				mes "Well then, I'll give you a hint for the second test.";
-				next;
-				mes "[Catherine]";
-				mes "He asks three types of questions.";
-				mes "Questions about Magic, Monsters...";
-				mes "and Magicians...also known as Mages.";
-				next;
-				mes "[Catherine]";
-				mes "It's up to him to decide which questions to ask.";
-				mes "*sigh*...He'd look much better if he cut his hair and shaved...";
-				mes "He always looks so grungy because he doesn't take care of himself...*sigh*...pity, he could be a regular lady killer. ~tehehehe";
-				next;
-				mes "[Catherine]";
-				mes "Anyways, as for the questions about magic...";
-				mes "They're usually about the spells you've learned.";
-				next;
-				mes "[Catherine]";
-				mes "If it's something you haven't learned or haven't experienced, or anything like that...";
-				mes "I heard there's a nice place you can refer to that's very well organized.";
-				next;
-				mes "[Catherine]";
-				mes "You just have to cast the spell, you know...the one that looks like a big bold *e* symbol.";
-				mes "The magic words are... iro.ragnarokonline.com ~Or so they say!";
-				mes "Strange spell, don't you think? I don't know how to make it work myself.";
-				next;
-				mes "[Catherine]";
-				mes "And about the monster questions.";
-				mes "Fighting them yourself and learning is the best way to go about that.";
-				next;
-				mes "[Catherine]";
-				mes "But you know in Prontera, there is a big library.";
-				mes "You can get information about most of the monsters in that library.";
-				mes "Going there and studying a bit more would work too.";
-				next;
-				mes "[Catherine]";
-				mes "Last, but not least, questions about Mages.";
-				mes "This is something that most others cannot teach you...";
-				mes "Because you are a Mage.";
-				next;
-				mes "[Catherine]";
-				mes "It's hard to know about others when you don't even know about yourself, right?";
-				mes "So if you get one of these questions, think about it carefully then answer.";
-			}
-			else {
-				mes "[Catherine]";
-				mes "Like I said, I'll think about it if you give me 1 Apple Juice.";
-				mes "If not... Well, you can think about it on your own. Hey I don't make the rules here i just follow em! Can't argue with this one though. ~tehehehe";
-			}
-			break;
-		case 2:
+		if(select("Me dê algumas dicas, por favor.:Eu quero tentar sozinho!") ==2) {
 			mes "[Catherine]";
-			mes "Yeah, you get the most satisfaction when you solve things on your own.";
-			mes "Go finish the rest of the tests with that spirit!";
+			mes "Claro, você ganha mais satisfação quando você resolve as coisas por si mesmo.";
+			mes "Vá terminar o resto dos testes com esse espirito!";
 		}
-		next;
-		mes "[Catherine]";
-		mes "Well then, see you soon! *crosses fingers* dont end up like the others before you! May God rest thier souls...huh? Oh nothing! ~Hehehehe";
-		mes "Hurry, he's waiting for you!";
-		close;
-	}
-	else if (WIZ_Q == 5) {
-		mes "[Catherine]";
-		mes "Tehehehe~ I was listening all along.";
-		mes "Well done in answering all those questions. I want to give something, like a present...";
-		next;
-		mes "[Catherine]";
-		mes "You still have one more test to go, right?";
-		mes "Just a bit more and you will be qualified to be a Wizard, so I'll give you the present then. ~Hehe";
-		next;
-		mes "[Catherine]";
-		mes "See ya, well...hopefully!";
-		mes "He's waiting for you!";
-		close;
-	}
-	else if (WIZ_Q == 6) {
-		mes "[Catherine]";
-		mes "Eh, did you leave in the middle of the test?";
-		mes "You...*sigh*...I didn't think you would do such a dishonorable thing.";
-		next;
-		mes "[Catherine]";
-		if (Sex == SEX_MALE) {
-			mes "Granted you're a mage, but how could a guy be so weak?!";
-			mes "Well, at least your alive still. Go back and try harder this time. ~tehehehe";
-		}
-		else {
-			mes "Don't pretend to be weak just because you're a girl. Look at me! I did it, and so can you. You can't ask for sympathy.";
-			mes "You came all this way to become a Wizard! Now come on, you can do it!!";
+		if (countitem(531) > 0) {
+			delitem 531,1; //Suco de Maçã
+			mes "[Catherine]";
+			mes "Delicia! Suco de Maçã é o melhor...";
+			mes "Gulp gulp gulp... Haaaaaah... ~Hehe";
 			next;
 			mes "[Catherine]";
-			mes "I agree that it is difficult, but not to the point of giving up.";
-			mes "You of all people should find the strength and patience to complete this test!";
+			mes "Bem então, Eu vou te dar uma dica para o segundo teste.";
+			next;
+			mes "[Catherine]";
+			mes "Ele faz 3 tipos de pergunta";
+			mes "Perguntas sobre Magia, Monstros...";
+			mes "e Magos.";
+			next;
+			mes "[Catherine]";
+			mes "A decisão é dele sobre quais perguntas fazer.";
+			mes "*Suspiro*... Ele seria muito mais bonito se cortasse o cabelo e se barbeasse...";
+			mes "Ele sempre parece tão velho porque ele não cuida de si mesmo... *suspiro*... pena, ele poderia ser um galã. ~Hehehehe";
+			next;
+			mes "[Catherine]";
+			mes "Hum, para as perguntas sobre magia...";
+			mes "Ele normalmente pergunta sobre magias que você aprendeu.";
+			next;
+			mes "[Catherine]";
+			mes "Se existe algo que você não aprendeu ou experimentou, ou algo do tipo...";
+			mes "Eu ouvi falar que existe um lugar onde você pode encontrar.";
+			next;
+			mes "[Catherine]";
+			mes "Você apenas deve conjurar a magia, você sabe... aquela que parece um *e* grande e em negrito.";
+			mes "As palavras mágicas são...ragnarokonline.com.br ~Como eles falam!";
+			mes "Magia estranha, não? Eu não consigo fazer sozinha.";
+			next;
+			mes "[Catherine]";
+			mes "E sobre as perguntas de monstro.";
+			mes "Lutar com eles é o melhor caminho para aprender.";
+			next;
+			mes "[Catherine]";
+			mes "Mas você sabe que em Prontera, existe uma biblioteca enorme.";
+			mes "Você pode conseguir informações sobre a maioria dos monstros nessa biblioteca.";
+			mes "Estudar lá um pouco iria funcionar também.";
+			next;
+			mes "[Catherine]";
+			mes "Por último, mas não menos importante, perguntas sobre Magos.";
+			mes "Isso é algo que a maioria dos outros não pode ensinar a você...";
+			mes "Porque você é um Mago.";
+			next;
+			mes "[Catherine]";
+			mes "É dificil saber dos outros quando você nem sequer conhece você mesmo, certo?";
+			mes "Então se ele lhe perguntar algumas dessas questões, pense cuidadosamente e então responda.";
+		} else {
+			mes "[Catherine]";
+			mes "Como eu disse, eu vou te dar umas dicas se você me der 1 Suco de Maçã.";
+			mes "Se não... Bem, você pode pensar nisso sozinho. Ei eu não falo as regras aqui eu apenas sigo elas! ~tehehehe";
 		}
 		next;
 		mes "[Catherine]";
-		mes "So, try harder this time...";
-		mes "He's waiting!";
+		mes "Bem então, vejo você! *cruza os dedos* não termine como os outros antes de você! Que Deus cuide das suas almas...hã? Ah nada! ~Hehehehe";
+		mes "Se apresse, ele está esperando por você.";
 		close;
-	}
-	else if (WIZ_Q == 7) {
+	} else if (WIZ_Q == 5) {
+		mes "[Catherine]";
+		mes "Tehehehe~ Eu ouvi tudo.";
+		mes "Muito bem em responder todas aquelas perguntas. Eu quero te dar algo, como um presente...";
+		next;
+		mes "[Catherine]";
+		mes "Você ainda tem mais um teste, certo?";
+		mes "Apenas mais um pouco e você será qualificado para se tornar um Bruxo, aí então eu vou te dar um presente. ~Hehe";
+		next;
+		mes "[Catherine]";
+		mes "Vejo você, Bem...espero!";
+		mes "Ele está esperando vocês!";
+		close;
+	} else if (WIZ_Q == 6) {
+		mes "[Catherine]";
+		mes "Err, Você saiu no meio do teste?";
+		mes "Você...*suspiro*...Eu não acho que você faria uma coisa tão desonrosa";
+		next;
+		mes "[Catherine]";
+		if (Sex) {
+			mes "Com certeza você é um Mago, mas como um cara pode ser tão fraco?!";
+			mes "Bom, ao menos você ainda está vivo. Vá e consiga dessa vez. ~tehehehe";
+		} else {
+			mes "Não tente parecer fraca só porque é uma garota. Olhe para mim! Eu consegui, e você também pode. Você não pode pedir compaixão.";
+			mes "Você passou por tudo isso para se tornar uma Bruxa! Vá, você consegue!!";
+			next;
+			mes "[Catherine]";
+			mes "Eu concordo que é difícil, mas não ao ponto de desistir.";
+			mes "Você deve encontrar a força e a paciência para passar nesse teste!";
+		}
+		next;
+		mes "[Catherine]";
+		mes "Então, se esforce...";
+		mes "Ele está esperando!";
+		close;
+	} else if (WIZ_Q == 7) {
+		mes "[Catherine]";
 		if (JobLevel < 40) {
-			set WIZ_Q,0;
-			mes "[Catherine]";
-			mes "Hey, what don't you get it?";
-			mes "I said you must be at least job level 40 to change your job, got it?";
+			WIZ_Q = 0;
+			mes "Oi, você não entendeu?";
+			mes "Eu disse que você deve ser ao menos nível 40 de classe para trocar sua profissão, entendeu?";
 			next;
 			mes "[Catherine]";
-			mes "There is nothing to be in hurry, so why don't you take your time for studying?";
-			mes "When the time comes, I will welcome you with open arms.";
+			mes "Não precisa se apressar, então porque você não vai estudar?";
+			mes "Quando for a hora, eu vou te receber de braços abertos.";
 			close;
 		}
 		if (SkillPoint) {
-			mes "[Catherine]";
-			mes "Are you done with all the tests? Oh drats, it seems like you still have some skill points left.";
-			mes "Learn some other skills with your remaining points, and then come talk to me again.";
+			mes "Você acabou com todos os testes? Oh , me parece que você têm algums pontos de habilidades sobrando.";
+			mes "Aprenda algumas outras habilidades com seus pontos restantes, e então venha falar comigo de novo.";
 			close;
 		}
 		mes "[Catherine]";
-		mes "Wooooooooooooow...you finished all the tests?!";
-		mes "Congratulations, congrats, congrats! Wooopiiieeeee! ~Hehehehehehe";
+		mes "Wooooooooooooow...você acabou todos os testes?!";
+		mes "Parabéns, Parabéns, Parabéns! Wooopiiieeeee! ~Hehehehehehe";
 		next;
 		mes "[Catherine]";
-		mes "Well, no need to wait, I congratulate you. I hearby deem you Wizard.";
+		mes "Bom, não precisamos esperar, parabenizo você. Eu considero você um Bruxo.";
 		next;
 		completequest 9018;
 		callfunc "Job_Change",Job_Wizard;
 		callfunc "F_ClearJobVar";		// clears all job variables for the current player
 		mes "[Catherine]";
-		mes "Since you're a Wizard now, act like a Wizard, got it?";
-		mes "Us wizards have to be careful since we possess the ultimate power of magic.";
+		mes "Já que você é um Bruxo agora, aja como um, entendeu?";
+		mes "Nós Bruxos temos que tormar cuidado já que nós possuimos o último poder de magia.";
 		next;
 		mes "[Catherine]";
-		mes "Don't go about casting spells in town for no reason, or bother others with spells that are in their own battle.";
-		mes "A Wizard's magic is meant for their own battles with monsters.";
+		mes "Não vá conjurar magias na cidade por nenhuma razão, ou incomodar os outros nas suas batalhas.";
+		mes "A magia de um Bruxo é para auxiliar nas suas próprias batalhas.";
 		next;
 		mes "[Catherine]";
-		mes "Go join parties with others and keep training.";
-		mes "And...oh, wait, I prepared a present for you, one sec.";
+		mes "Vá se juntar a grupos com outros e continue treinando.";
+		mes "E...ah, espere, tenho um presente para você, um segundo...";
 		next;
 		mes "[Catherine]";
-		mes "rummage rummage...";
-		mes "shuffle shuffle...";
+		mes "remexe remexe...";
+		mes "mistura mistura...";
 		next;
 		getitem 505,6; //Blue_Potion
 		mes "[Catherine]";
-		mes "Here you go. I hope you'll make good use of it when you need it. ~tehehe";
-		mes "I gave them to you as a present, so don't go out and sell it. Use it for yourself, ok?";
+		mes "Aqui vai. Eu espero que você faça um bom uso quando precisar. ~tehehe";
+		mes "Eu dei a você como um presente, então vá e não venda. Use para você mesmo, ok?";
 		next;
 		mes "[Catherine]";
-		mes "Well, then...*sight*...live a wonderful life as a Wizard, become the strongest out there!";
+		mes "Bem, então...*suspiro*...viva uma vida maravilhosa como um Bruxo, se torne o mais forte de todos!";
 		close;
 	}
 }
 
-gef_tower,102,24,2	script	Gloomy Wizard	735,{
+gef_tower,102,24,2	script	Bruxo Sombrio	4_M_JOB_WIZARD,{
 	if (BaseJob != Job_Mage) {
 		if (BaseJob == Job_Wizard) {
 			mes "[Raulel]";
-			mes "*Cough* *cough* what do you want?";
-			mes "If you are a person that uses magic, then you need to make sure you are well informed about it.";
+			mes "*Tosse* *tosse* O que você quer?";
+			mes "Se você é uma pessoa que usa magia, então você precisa ter certeza que está bem informado sobre isso.";
 			next;
 			mes "[Raulel]";
-			mes "Don't live dishonestly, or impolitely, or else one day you'll be caught in a spell you can't control, and BOOM, your dead!";
-			if (Sex == SEX_MALE) {
-				mes "If you don't want that to happen, then learn how to use spells properly!";
+			mes "Não viva desonestamente, ou seja mal-educado, ou então um dia você vai ser pego numa magia que você não pode controlar, e BOOM, você morre!";
+			if (Sex) {
+				mes "Se você não quer que isso aconteca, então lembre como usar as magias corretamente!";
 				next;
 				mes "[Raulel]";
-				mes "You may live life crippled if you get obsessed with the love of Greater Magic. ~haha";
-			}
-			else {
-				mes "So learn how to use magic properly, or you would just be better off giving up on using magic.";
+				mes "Você pode viver aleijado se ficar muito obcecado com a Magia. ~haha";
+			} else {
+				mes "Então aprende como usar a magia corretamente, ou então é melhor você desistir dela.";
 				next;
 				mes "[Raulel]";
-				mes "If you don't want that, go hit on a guy or something! ~Hahahaha";
-				mes "If you don't pay attention to yourself, you'll be engulfed by magic one day...";
+				mes "Se você não quiser fazer isso, vá bater em alguém ou alguma coisa! ~Hahahaha";
+				mes "Se você não prestar atenção em si mesmo, você será engolido pela magia um dia...";
 			}
 			close;
 		}
 		else if (BaseJob == Job_Priest) {
 			mes "[Raulel]";
-			mes "Go away, one who works for the Church!";
-			mes "Magic repels Holy power, jeez...your messing up my aura.";
+			mes "Vá embora, pessoa que trabalha para Igreja!";
+			mes "Magia repele poder Sagrado, você está bagunçando minha aura.";
 			next;
 			mes "[Raulel]";
-			mes "And plus, *cough* *cough* my health isn't all that good right now either...";
-			mes "Don't come any closer, just leave!";
+			mes "E mais, *tosse* *tosse* minha saúde não está tão boa no momento...";
+			mes "Não venha mais perto, apenas saia!";
 			close;
-		}
-		else if (BaseClass == Job_Novice) {
+		} else if (BaseClass == Job_Novice) {
 			mes "[Raulel]";
-			mes "Why did a little one like you come here?!";
-			mes "Get lost! ~Hahahahaha";
+			mes "Por que uma criança como você veio aqui?!";
+			mes "Saia! ~Hahahahaha";
 			close2;
 			warp "geffen",120,110;
 			end;
 		}
 		mes "[Raulel]";
-		mes "*sneeze* *cough* Oooowww...my entire body is in pain. I feel like I'm trapped in a tub of ice water!";
+		mes "*espirra* *tosse* Oooowww...meu corpo todo está dolorido. Eu sinto como se estivesse preso num tubo de gelo!";
 		next;
 		mes "[Raulel]";
-		mes "What do you want? Jeez...just get lost, won't you?";
+		mes "O que você quer? Nossa...apenas saia, ok?";
 		close;
 	}
+	mes "[Raulel]";
 	if (WIZ_Q == 0) {
-		mes "[Raulel]";
-		mes "*cough* *cough* *sneeze* I don't know who you are and what you do, but I don't have any business with you.";
+		mes "tosse* *tosse* *espirra* Eu não sei quem é você ou o que você faz, mas eu não tenho nada a tratar com você.";
 		next;
 		mes "[Raulel]";
-		mes "Go away! Get lost!";
+		mes "Vá embora! Saia!";
 		close;
-	}
-	else if (WIZ_Q == 1 || WIZ_Q  == 2) {
-		mes "[Raulel]";
-		mes "Hahahaha~ You're the one that wants to become a Wizard?!";
+	} else if (WIZ_Q == 1 || WIZ_Q  == 2) {
+		mes "Hahahaha~ Você quer se tornar um Bruxo?!";
 		next;
 		mes "[Raulel]";
-		mes "*sneeze* If you just lived as you were, all you'd have to do was hunt a little and live the easy life...";
+		mes "*espirra* Se você vivesse como está, tudo o quê tinha que fazer era caçar um pouco e viver a vida fácil...";
 		next;
 		mes "[Raulel]";
-		mes "*Cough* *cough* Let's see how well you live as a Wizard. ~Hahahahhaha";
+		mes "*Tosse* *tosse* Vamos ver de que maneira você vive como um Bruxo. ~Hahahahhaha";
 		close;
-	}
-	else if ((WIZ_Q == 3) || (WIZ_Q == 4)) {
+	} else if ((WIZ_Q == 3) || (WIZ_Q == 4)) {
 		if (WIZ_Q == 3) {
 			mes "[Raulel]";
-			mes "*Cough* *cough*...You must've passed the first test.";
-			mes "Ok, I'm the Wizard in charge of your testing from now on. My name is 'Raulel Asparagus'.";
+			mes "*Tosse* *tosse*...Você deve ter passado o primeiro teste.";
+			mes "Ok, eu sou o Bruxo responsável pelos seus testes de agora em diante. Meu nome é 'Raulel Asparagus'.";
 			next;
 			mes "[Raulel]";
-			mes "*sneeze* It's not too late yet, wouldn't you rather just go back to town and enjoy the peaceful life?";
+			mes "*espirra* Ainda não é tão tarde, não seria melhor voltar para cidade e aproveitar a vida pacata?";
 			next;
 			mes "[Raulel]";
-			mes "Hahahaha~ You don't know how dangerous it is...to deal with Greater Magic.";
+			mes "Hahahaha~ Você não sabe o quão perigoso é...lidar com Magia.";
 			next;
-			if (select("I want to live as a normal Mage.:I would like to continue with the tests.") == 1) {
+			if (select("Eu quero viver como um simples Mago.:Eu gostaria de continuar com os testes.") == 1) {
 				mes "[Raulel]";
-				mes "Hahaha~ *sneeze* Good choice...*cough* *cough*~";
-				mes "Best not to even dream about life as a Wizard. Graa...Greaa...*sneeze* Greater Magic wasn't meant for humans to use!";
+				mes "Hahaha~ *espirra* Boa escolha...*tosse* *tosse*~";
+				mes "Melhor nem sonhar em como ser um Bruxo. Maa...Maa...*espirra* Magia não foi feita para Humanos usarem!";
 				next;
 				mes "[Raulel]";
-				mes "Leave the top of this tower quietly and don't ever look back.";
-				mes "Just live peacefully with the powers that you have right now.";
+				mes "Deixe o topo dessa torre calmamente e nem olhe para trás.";
+				mes "Apenas viva pacificamente com os poderes que você tem agora.";
 				close;
 			}
 			mes "[Raulel]";
-			mes "*sneeze* Hahahaha~ Now there's a foolish one here!";
-			mes "Well then, let's see how good you are. *cough* I want to see this with my own two eyes!";
+			mes "espirro* Hahahaha~ Agora tem um louco aqui!";
+			mes "Bem então, deixe-me ver o quão bom você é. *tosse* Eu quero ver isso com meus próprios olhos!";
 			next;
 			mes "[Raulel]";
-			mes "*sneeze* Then let's begin the test!";
-			mes "If you don't answer them all correctly, you fail. Hahahahahahahahaha~";
+			mes "*espirra* Então vamos começar o teste!";
+			mes "Se você não responder todas elas corretamente, você não passa. Hahahahahahahahaha~";
 			next;
 			mes "[Raulel]";
-			mes "I'll give you 10 questions so give me the right answers.";
-			mes "If you get something wrong, I won't tell you what it is!";
+			mes "Eu vou fazer 10 perguntas então me responda corretamente.";
+			mes "Se você responder alguma errada, eu não vou te dizer qual é!";
 			if(checkquest(9016) == -1) {
 				changequest 9015,9016;
 			}
 			next;
 			mes "[Raulel]";
-			mes "*Cough* *cough* Then here go the questions!";
-		}
-		else if (WIZ_Q == 4) {
+			mes "*Tosse* *Tosse* então vamos às perguntas!";
+		} else if (WIZ_Q == 4) {
 			mes "[Raulel]";
-			mes "Hahahaha~ Are you that desperate? *sneeze* What a pain in the arse...";
+			mes "Hahahaha ~ Você está tão desesperado? *sneeze* What a pain in the arse...";
 			next;
 			mes "[Raulel]";
-			mes "Since you don't want to settle for a stable and peaceful life, I'll give you another chance...";
+			mes "Desde que você não quer se contentar com uma vida estável e pacífica, eu vou lhe dar outra chance ...";
 			next;
 			mes "[Raulel]";
-			mes "If you miss one single question, then just give up. You wouldn't have any talent in being a Wizard! ~Hahahahaha";
+			mes "Se você errar uma única pergunta, ou então simplesmente desistir. Você não teria nenhum talento em ser um bruxo! ~ Hahahahaha";
 			next;
-			if (select("Because of you, I want to live as a normal Mage now.:I would like to continue with the tests.") == 1) {
+			if (select("Eu quero viver como um simples Mago.:Eu gostaria de continuar com os testes.") == 1) {
 				mes "[Raulel]";
-				mes "Hahahaha~ Surprising, comming from you, that's a very wise choice...*cough* *cough*";
-				mes "If i were you, i would never, ever dream of becoming a Wizard again. Gre...Greaa...*sneeze* Greater Magic wasn't meant for humans to use.";
+				mes "Hahaha~ *espirra* Boa escolha...*tosse* *tosse*~";
+				mes "Melhor nem sonhar em como ser um Bruxo. Maa...Maa...*espirra* Magia não foi feita para Humanos usarem!.";
 				next;
 				mes "[Raulel]";
-				mes "Just leave the top of this tower quietly and never look back.";
-				mes "Live peacefully with the powers that you have right now.";
+				mes "Deixe o topo dessa torre calmamente e nem olhe para trás.";
+				mes "Apenas viva pacificamente com os poderes que você tem agora.";
 				close;
 			}
 			mes "[Raulel]";
-			mes "Hahahahahahaha~ Now there's a foolish one right here!";
-			mes "Well then, let's see just how good you can be! *sneeze* I want to see this with my own two eyes.";
+			mes "Hahahahahahaha ~ Agora há um tolo aqui!";
+			mes "Bem, então vamos ver o quão bom você pode ser! * espirra * Eu quero ver isso com meus próprios olhos.";
 			next;
 			mes "[Raulel]";
-			mes "Then let's begin the test!";
+			mes "Então vamos começar o teste!";
 		}
 		next;
 		switch(rand(1,3)) {
 		case 1:
 			mes "[Raulel]";
-			mes "1. Which of the following is not necessary to learn Fire Wall?";
+			mes "1. Qual destes não é necessário para aprender barreira de fogo?";
 			next;
-			if (select("Fire Bolt Lv 4:Fire Ball Lv 5:Sight Lv 1:Napalm Beat Lv 4") == 4)
-				set .@wizard_t,.@wizard_t+10;
+			if (select("Lanças de Fogo Lv 4:Bola de Fogo Lv 5:Sight Lv 1:Ataque Espiritual Lv 4") == 4) set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
-			mes "2. Regaurdless of it's previous attribute, What does the monster's attribute change to when you cast Frost Diver on it?";
+			mes "2. Sem importar o atributo anterior, qual o atributo final do monstro quando você conjura Rajada Congelante nele?";
 			next;
-			if (select("Water:Earth:Fire:Wind") == 1)
-				set .@wizard_t,.@wizard_t+10;
+			if (select("Água:Terra:Fogo:Vento") == 1) set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
-			mes "3. When you completely master Napalm Beat, what is the ratio of the increased MATK using that spell?";
+			mes "3. Quando você domina completamente Ataque Espiritual, qual é a taxa de aumento no MATK usando essa magia?";
 			next;
-			if (select("1.6 times:1.7 times:2 times:20 times") == 2)
-				set .@wizard_t,.@wizard_t+10;
+			if (select("1,6 vezes:1,7 vezes:2 vezes:20 vezes") == 2) set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
-			mes "4. What item do you need when casting Stone Curse?";
+			mes "4. Que item você precisa para conjurar Petrificar?";
 			next;
-			if (select("Red Blood:Blue Gemstone:Yellow Gemstone:Red Gemstone") == 4)
-				set .@wizard_t,.@wizard_t+10;
+			if (select("Sangue Escarlate:Gema Azul:Gema Amarela:Gema Vermelha") == 4) set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
-			mes "5. Which of the following is not required to master Safety Wall?";
+			mes "5. Qual destes não é requerido para dominar Escudo Mágico?";
 			next;
-			if (select("Napalm Beat Lv 4:Soul Strike Lv 5:Increase SP Recovery Lv 6:Safety Wall Lv 7") == 3)
-				set .@wizard_t,.@wizard_t+10;
+			if (select("Ataque Espiritual Lv 4:Espiritos Anciões Lv 5:Aumentar Recuperação de SP Lv 6:Escudo Mágico Lv 7") == 3) set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
-			mes "6. Without the INT bonus, what amount of SP is recovered every 10 seconds when you have learned Increase SP Recovery Lv 7?";
+			mes "6. Sem o bônus de INT, qual a quantidade de SP recperada a cada 10 segundos quando você aprendeu Aumentar Recuperação de SP Lv 7?";
 			next;
-			if (select("14:21:28:35") == 2)
-				set .@wizard_t,.@wizard_t+10;
+			if (select("14:21:28:35") == 2) set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
-			mes "7. Using Energy Coat, when you have 50% of your SP remaining, how much SP is used when hit, and what percentage is damage reduced by?";
+			mes "7. Usando Proteção Arcana, quando você tem 50% do seu SP restante, quanto de SP é usado ao receber dano, e qual é a porcentagem de dano reduzido?";
 			next;
-			if (select("Damage 18% SP1.5%:Damage 18% SP2%:Damage 24% SP1.5%:Damage 24% SP2%") == 2)
-				set .@wizard_t,.@wizard_t+10;
+			if (select("Dano 18% SP1.5%:Dano 18% SP2%:Dano 24% SP1.5%:Dano 24% SP2%") == 2) set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
-			mes "8. How much SP is consumed and how many times can you avoid attacks when using Safety Wall Lv 6?";
+			mes "8. Qual é o SP consumido e quantas vezes você pode evitar ataques usando Escudo Mágico Lv 6?";
 			next;
-			if (select("SP 40, 6 times:SP 35, 6 times:SP 40, 7 times:SP 35, 7 times") == 3)
-				set .@wizard_t,.@wizard_t+10;
+			if (select("SP 40, 6 vezes:SP 35, 6 vezes:SP 40, 7 vezes:SP 35, 7 vezes") == 3) set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
-			mes "9. How much SP is needed when using Lv 10 Thunderstorm?";
+			mes "9. Qual o SP necessário para usar Tempestade de Raios Lv 10?";
 			next;
-			if (select("84:74:64:54") == 2)
-				set .@wizard_t,.@wizard_t+10;
+			if (select("84:74:64:54") == 2) set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
-			mes "10. Which skill is most useful training in the Byalan Dungeon?";
+			mes "10. Qual habilidade é mais útil para caçar na Caverna Byalan?";
 			next;
-			if (select("Lightning Bolt:Fire Bolt:Cold Bolt:Sight") == 1)
-				set .@wizard_t,.@wizard_t+10;
+			if (select("Relâmpago:Lanças de Fogo:Lanças de Gelo:Chama Reveladora") == 1) set .@wizard_t,.@wizard_t+10;
 			break;
 		case 2:
 			mes "[Raulel]";
-			mes "1. Which monster can you obtain a slotted Guard from?";
+			mes "1. De que monstro você pode obter Vembrassa com Slot?";
 			next;
-			if (select("Thief Bug:PecoPeco:Pupa:Kobold (Hammer)") == 3)
-				set .@wizard_t,.@wizard_t+10;
+			if (select("Besouro Ladrão:PecoPeco:Pupa:Kobold (Marreta)") == 3) set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
-			mes "2. Which of the following is the easiest monster for a low level Mage to hunt?";
+			mes "2. Qual destes é o monstro mais fácil para um Mago de baixo nível matar?";
 			next;
-			if (select("Flora:Giearth:Golem:Myst") == 1)
-				set .@wizard_t,.@wizard_t+10;
+			if (select("Flora:Giearth:Golem:Névoa") == 1) set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
-			mes "3. Which monster will not be affected by Stone Curse?";
+			mes "3. Qual destes monstros não são imunes a Petrificar?";
 			next;
-			if (select("Elder Willow:Evil Druid:Magnolia:Marc") == 2)
-				set .@wizard_t,.@wizard_t+10;
+			if (select("Salgueiro Ancião:Druida Maligno:Magnólia:Cavalo-Marinho") == 2) set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
-			mes "4. When attacking a Lv 3 water attribute monster with a wind attribute weapon, what is the damage percentage?";
+			mes "4. Quando atacar um monstro de atributo água Lv 3 com uma arma de atributo vento, qual será a porcentagem do dano?";
 			next;
-			if (select("125%:150%:175%:200%") == 4)
-				set .@wizard_t,.@wizard_t+10;
+			if (select("125%:150%:175%:200%") == 4) .@wizard_t += 10;
 			mes "[Raulel]";
-			mes "5. If a Baby Desert Wolf and a Familiar fought, which one would win?";
+			mes "5. Se um Filhote de Lobo do Deserto e um Familia lutassem, qual dos dois ganharia?";
 			next;
-			if (select("Baby Desert Wolf:Familiar:Neither:I don't know") == 1)
-				set .@wizard_t,.@wizard_t+10;
+			if (select("Filhote de Lobo do Deserto:Familiar:Nenhum dos dois:Eu não sei") == 1) set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
-			mes "6. Which of the following cannot be a Cute Pet?";
+			mes "6. Qual destes não podem ser domesticados?";
 			next;
-			if (select("Poporing:Roda Frog:Smokie:Poison Spore") == 2)
-				set .@wizard_t,.@wizard_t+10;
+			if (select("Poporing:Sapo de Rodda:Fumacento:Esporo Venenoso") == 2) set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
-			mes "7. Choose the monster that is weak against a fire attribute attack.";
+			mes "7. Escolha o monstro que é fraco contra o atributo Fogo.";
 			next;
-			if (select("Dagger Goblin:Mace Goblin:Morningstar Goblin:Hammer Goblin") == 4)
-				set .@wizard_t,.@wizard_t+10;
+			if (select("Golbin da Faca:Goblin da Maça:Morningstar Goblin:Goblin da Marreta") == 4) set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
-			mes "8. Which of the following has the highest defense?";
+			mes "8. Qual destes tem maior defesa?";
 			next;
-			if (select("Horn:Chonchon:Andre:Caramel") == 4)
-				set .@wizard_t,.@wizard_t+10;
+			if (select("Besouro-Chifre:Chonchon:Andre:Caramelo") == 4) set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
-			mes "9. Choose the monster that's of a different species.";
+			mes "9. Escolha o monstro que é de uma espécie diferente.";
 			next;
-			if (select("Poring:Mastering:Ghostring:Spore") == 3)
-				set .@wizard_t,.@wizard_t+10;
+			if (select("Poring:Mastering:Ghostring:Esporo") == 3) set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
-			mes "10. Which of the following is not an Undead monster?";
+			mes "10. Qual destes não é um Morto-Vivo?";
 			next;
-			if (select("Drake:Megalodon:Deviace:Khalitzburg") == 3)
-				set .@wizard_t,.@wizard_t+10;
+			if (select("Drake:Megalodon:Deviace:Khalitzburg") == 3) set .@wizard_t,.@wizard_t+10;
 			break;
 		case 3:
 			mes "[Raulel]";
-			mes "1. Which stat is the most important for a Mage?";
+			mes "1. Qual destes é mais importante para um Mago?";
 			next;
-			if (select("INT:AGI:DEX:VIT") == 1)
-				set .@wizard_t,.@wizard_t+10;
+			if (select("INT:AGI:DES:VIT") == 1) .@wizard_t += 10;
 			mes "[Raulel]";
-			mes "2. Which attribute does not have a 'Bolt' type attack?";
+			mes "2. Qual destes atributos não tem um ataque tipo 'Lanças'?";
 			next;
-			if (select("Water:Earth:Fire:Wind") == 2)
-				set .@wizard_t,.@wizard_t+10;
+			if (select("Água:Terra:Fogo:Vento") == 2) .@wizard_t += 10;
 			mes "[Raulel]";
-			mes "3. Choose the one that does not relate to a Mage.";
+			mes "3. Escolha qual não é relacionado a um Mago.";
 			next;
-			if (select("Weak physical strength.:Attacks at a distance.:Good at selling stuff.:Magic Defense is high.") == 3)
-				set .@wizard_t,.@wizard_t+10;
+			if (select("Força física fraca.:Ataque à distância.:Bom em vender coisas.:Defesa mágica alta.") == 3) set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
-			mes "4. Which town is the home of Mages?";
+			mes "4. Qual é a cidade natal dos Magos?";
 			next;
-			if (select("Prontera:Morocc:Alberta:Geffen") == 4)
-				set .@wizard_t,.@wizard_t+10;
+			if (select("Prontera:Morroc:Alberta:Geffen") == 4) .@wizard_t += 10;
 			mes "[Raulel]";
-			mes "5. Which of the following cards has nothing to do with INT?";
+			mes "5. Qual destas cartas não tem nada a ver com INT?";
 			next;
-			if (select("Andre Egg Card:Soldier Andre Card:Baby Desert Wolf Card:Elder Willow Card") == 2)
-				set .@wizard_t,.@wizard_t+10;
+			if (select("Carta Ovo de Andre:Carta Andre Soldado:Carta Filhote Lobo do Deserto:Carta Salgueiro Ancião") == 2) set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
-			mes "6. What is the Mage good at compared to other job classes?";
+			mes "6. Em que um Mago é bom comparado as outras classes?";
 			next;
-			if (select("Exceptional Vocal Ability:Exceptional Acting Ability:Exceptional Dance Skills:Exceptional Magic Skills") == 4)
-				set .@wizard_t,.@wizard_t+10;
+			if (select("Habilidade Vocal Excepcional:Habilidade Excepcional em Atuação:Habilidades de Dança Excepcionais:Habilidades Mágicas Excepcionais") == 4) set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
-			mes "7. What is the INT bonus at Job Lv 40 for a Mage?";
+			mes "7. Qual é o bônus de INT do nível de classe 40 para Magos?";
 			next;
-			if (select("8:7:6:5") == 4)
-				set .@wizard_t,.@wizard_t+10;
+			if (select("8:7:6:5") == 4) .@wizard_t += 10;
 			mes "[Raulel]";
-			mes "8. Which item can a Mage not equip?";
+			mes "8. Qual item um Mago não pode equipar?";
 			next;
-			if (select("Knife:Boys Cap:Sandle:Eye of Dullahan") == 2)
-				set .@wizard_t,.@wizard_t+10;
+			if (select("Faca:Quepe:Sandálias:Olho de Dullahan") == 2) set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
-			mes "9. Which of the following is the catalyst when making the Mage test solution 3?";
+			mes "9. Qual destes é o catalisador para fazer a Solução Mágica número 3?";
 			next;
-			if (select("Blue Gemstone:Red Gemstone:Yellow Gemstone:Red Blood") == 1)
-				set .@wizard_t,.@wizard_t+10;
+			if (select("Gema Azul:Gema Vermelha:Gema Amarela:Sangue Escarlate") == 1) set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
-			mes "10. Which card is irrelevant to magic?";
+			mes "10. Qual destas cartas é irrelavante à Magica?";
 			next;
-			if (select("Marduk Card:Magnolia Card:Willow Card:Maya Card") == 2)
-				set .@wizard_t,.@wizard_t+10;
+			if (select("Carta Marduk:Carta Magnólia:Carta Salgueiro:Carta Maya") == 2) set .@wizard_t,.@wizard_t+10;
 		}
 		mes "[Raulel]";
 		if (WIZ_Q == 4) {
-			mes "Good job, you finished answered all the questions... Go buy yourself some potions or something if you have the Zeny. Haha...";
+			mes "Bom trabalho, você respondeu todas as perguntas... Vá comprar algumas poções ou algo se você tiver Zeny. Haha...";
 			next;
 			mes "[Raulel]";
-			mes "Your score is... " + .@wizard_t + "points.....";
+			mes "Sua pontuação foi de... " +.@wizard_t+ "pontos.....";
 			if (.@wizard_t == 100) {
-				set WIZ_Q,5;
+				WIZ_Q = 5;
 				changequest 9016,9017;
-				mes "Hahahahahahah~ Well done, you passed the second test.";
-				mes "It wasn't done in one try like mine was, but I'll let you slide...";
+				mes "Hahahahahahah~ Muito bem, você passou o segundo teste.";
+				mes "Não foi feito em uma tentativa como a minha foi, mas eu vou deixar você passar...";
 				next;
 				mes "[Raulel]";
-				mes "*sneeze* Don't relax just yet, there's still the matter of the third and final test.";
-				mes "I advise you to rest a bit while the final test is prepared. Your gonna need it. Hahahahaha~";
+				mes "*espirra* Não relaxe ainda, ainda há o problema do Terceiro teste final.";
+				mes "Eu aconselho você a descansar um pouco enquanto o Teste final é preparado. Você vai precisar. Hahahahaha~";
 				close;
-			}
-			else if (.@wizard_t == 90) {
-				set WIZ_Q,5;
+			} else if (.@wizard_t == 90) {
+				WIZ_Q = 5;
 				changequest 9016,9017;
-				mes "Hahaha~ Since you only missed one problem, you passed the second test.";
-				mes "It wasn't done in one try like mine was, but I'll let you slide...";
+				mes "Hahaha~ Já que você só errou uma questão, você passou o segundo teste";
+				mes "Não foi feito em uma tentativa como a minha foi, mas eu vou deixar você passar...";
 				next;
 				mes "[Raulel]";
-				mes "*sneeze* Don't relax just yet, there's still the matter of the third and final test.";
-				mes "I advise you to rest a bit while the final test is prepared. Your gonna need it. Hahahahaha~";
+				mes "*espirra* Não relaxe ainda, ainda há o problema do Terceiro teste final.";
+				mes "Eu aconselho você a descansar um pouco enquanto o Teste final é preparado. Você vai precisar. Hahahahaha~";
 				close;
-			}
-			else if (.@wizard_t == 80) {
-				set WIZ_Q,5;
+			} else if (.@wizard_t == 80) {
+				WIZ_Q = 5;
 				changequest 9016,9017;
-				mes "Sheez... You didn't do very well, but you passed the second test.";
-				mes "It wasn't done in one try like mine was, but I'll let you slide...";
+				mes "Nossa... Você não foi muito bem, mas você passou o segundo teste.";
+				mes "Não foi feito em uma tentativa como a minha foi, mas eu vou deixar você passar...";
 				next;
 				mes "[Raulel]";
-				mes "*sneeze* Don't relax just yet, there's still the matter of the third and final test.";
-				mes "I advise you to rest a bit while the final test is prepared. Your gonna need it. Hahahahaha~";
+				mes "*espirra* Não relaxe ainda, ainda há o problema do Terceiro teste final.";
+				mes "Eu aconselho você a descansar um pouco enquanto o Teste final é preparado. Você vai precisar. Hahahahaha~";
 				close;
-			}
-			else {
-				mes "You failed. Go study some more!";
+			} else {
+				mes "Você foi reprovado. Estude mais!";
 				next;
 				mes "[Raulel]";
-				mes "*cough* *cough* Did you really think you could become a Wizard with such a mediocre level like yours?";
-				mes "Get lost! If you were a Wizard right now, the monsters that I fight, would eat you up in no time!";
+				mes "*tosse* *tosse* Você realmente achou que poderia se tornar um Bruxo em um nível mediocre como o seu?";
+				mes "Dê o fora! Se você fosse um Bruxo agora, os monstros que eu Lutei, comeriam você agora mesmo!";
 				close;
 			}
 		}
-		mes "Hmmm...Good job, you finished answering all the questions, go buy yourself some potions or something, thats IF you have the Zeny. Hahahahahahahah~";
+		mes "Hmmm...Bom trabalho, você respondeu todas as perguntas, vá comprar algumas poções ou outra coisa, isso se você tiver Zeny. Hahahahahahahah~";
 		next;
 		mes "[Raulel]";
-		mes "Your score is... " + .@wizard_t + " points!";
+		mes "Sua pontuação foi... " + .@wizard_t + " pontos!";
 		if (.@wizard_t == 100) {
-			set WIZ_Q,5;
+			WIZ_Q = 5;
 			changequest 9016,9017;
-			mes "*cough* *Cough* Well done, you passed the second test.";
+			mes "*tosse* *tosse* Muito bem, você passou o segundo teste.";
 			next;
 			mes "[Raulel]";
-			mes "Hahahaha~ Don't relax just yet, there's still the third test.";
-			mes "*sneeze* I advise you to rest a bit while the final test is prepared...Hahahahah~";
+			mes "Hahahaha~ Não relaxe ainda, ainda há o terceiro teste.";
+			mes "*espirra* Eu aconselho você a descansar um pouco enquanto o teste final é preparado...Hahahahah~";
 			close;
-		}
-		else if (.@wizard_t == 90) {
-			set WIZ_Q,5;
+		} else if (.@wizard_t == 90) {
+			WIZ_Q = 5;
 			changequest 9016,9017;
-			mes "Hahahaha~ I'll let you slide by since you only missed one problem. You passed the second test.";
+			mes "Hahahaha~ Eu vou deixar você passar já que você só errou um problema. Você passou o segundo teste.";
 			next;
 			mes "[Raulel]";
-			mes "Hahahaha~ Don't relax just yet, there's still the third test.";
-			mes "*sneeze* I advise you to rest a bit while the final test is prepared...Hahahahah~";
+			mes "Hahahaha~ Não relaxe ainda, ainda há o terceiro teste.";
+			mes "*espirra* Eu aconselho você a descansar um pouco enquanto o teste final é preparado...Hahahahah~";
 			close;
-		}
-		else {
-			set WIZ_Q,4;
-			mes "You failed. I will let you come back again...after you've learned more relating to the type of questions I've asked you.";
+		} else {
+			WIZ_Q = 4;
+			mes "Você foi reprovado. Eu vou deixar você voltar de novo.. depois que tiver aprendido mais sobre as perguntas que eu fiz a você.";
 			next;
 			mes "[Raulel]";
-			mes "Tisk...not enough, not enough! Did you really think you could become a Wizard with the little bit of knowledge you have?";
-			mes "Get lost! If you were a Wizard right now, the monsters I deal with would eat you up in no time!";
+			mes "Tsc...não é o suficiente! Você realmente achou que poderia se tornar um Bruxo com esse pouco conhecimento que tem?";
+			mes "Saia! Se você fosse um Bruxo agora, os monstros que eu trabalho iriam comer você em pouco tempo!";
 			close;
 		}
-	}
-	else if (WIZ_Q == 5) {
+	} else if (WIZ_Q == 5) {
 		mes "[Raulel]";
-		mes "Ok, hope you got plenty of rest. Hahahahahah~";
-		mes "Then let's begin the last test.";
+		mes "Ok, espero que tenha descansado o bastente. Hahahahahah~";
+		mes "Então vamos começar o último teste.";
 		next;
 		mes "[Raulel]";
-		mes "Should I explain a little about this final test? It is difficult, I will not hide that from you...";
+		mes "Devo explicar um pouco sobre o último teste? É difícil, eu não vou mentir...";
 		next;
-		if (select("No, it's ok, I'm ready.:I would like to listen.") == 1) {
+		if (select("Não, sem problemas, estou pronto.:Quero escutar.") == 1) {
 			mes "[Raulel]";
-			mes "What a rash person. Your the type that rushes into battle without thinking, what in the world are you doing here instead of with the Prontera Chivalry? Heck, go for it! *cough* Not my fault if you end up dying.";
-			mes "Just consider yourself a glass cannon...because the monsters are going to break you into pieces. Hahahahahahahahaha~";
+			mes "Que pessoa preciptada. Você é daqueles que entra na batalha sem pensar, o que você está fazendo aqui ao invés de estar na Cavalaria de Prontera? Você apenas vai! *tosse* Não é minha culpa se terminar morrendo.";
+			mes "Apenas se considere um Canhão de vidro... porque os monstros vão quebrar você em pedaços. Hahahahahahahahaha~";
 			next;
-			set WIZ_Q,6;
-			savepoint "geffen",120,107,1,1;
+			WIZ_Q = 6;
+			savepoint "geffen",120,107;
 			mes "[Raulel]";
-			mes "Then, as you wish. I'll send you there right now.";
-			mes "Oh, if you see a white light at the end of a tunnel, that means your pathetic cause you failed! Hahahahahah~";
+			mes "Então, como você deseja. Eu vou mandar você pra lá agora.";
+			mes "Oh, Se você ver uma luz branca no fim do túnel, significa que você é patético porque falhou! Hahahahahah~";
 			close2;
 			warp "job_wiz",57,154;
 			end;
 		}
 		mes "[Raulel]";
-		mes "What a devoted person. Very well, I'll explain.";
-		mes "No matter how hard this last test may seem, if you do as I say, you can finish it quickly and easily.";
+		mes "Que pessoa dedicada. Muito bem, Eu vou explicar.";
+		mes "Não importa quanto difícil esse teste possa parecer, se você fizer como eu digo, você vai poder acabar rápido e fácil.";
 		next;
 		mes "[Raulel]";
-		mes "The final test has a total of 3 parts.";
-		mes "The order is Water Room, Earth Room, Fire Room. In each room, there are monsters of that particular attribute.";
+		mes "O teste final tem um total de 3 partes.";
+		mes "A ordem é Sala da Água, Sala da Terra, Sala do Fogo. Em cada sala, existem monstros do mesmo atributo.";
 		next;
 		mes "[Raulel]";
-		mes "You'll find out what monsters will be there once you go in. If you use attacks with the *sneeze*";
-		mes "right attribute, it shouldn't be too hard. Hahaha~";
+		mes "Você vai descobrir que os monstros vão estar lá quando você entrar. Se você usar os ataques com os atributos *espirra*";
+		mes "certos, não será muito difícil. Hahaha~";
 		next;
 		mes "[Raulel]";
-		mes "Once you defeat all the monsters within the given time in any one room...";
-		mes "you'll be moved to the next room.";
+		mes "Uma vez que você tenha derrotado todos os monstros dentro do tempo dado na sala...";
+		mes "você irá para a próxima sala.";
 		next;
 		mes "[Raulel]";
-		mes "After these three rooms are clear, the testing is over.";
-		mes "You will become a Wizard which is controlled by Greater Magic Powers! Know this...There is no returning to an easy life.";
+		mes "Depois que essas 3 salas estiverem limpas, o teste está acabado.";
+		mes "Você se tornará um Bruxo que é controlado pelos poderes da Grande Magia! Depois disso...Não há retorno para a vida calma.";
 		next;
 		mes "[Raulel]";
-		mes "Hahaha~ You look frightened. You know, it's not too late to turn back and live an easy life.";
-		mes "If you want, I can send you back to town right now... What do you want to do?";
+		mes "Hahaha~ Você parece assustado. Você sabe, ainda não é tão tarde para voltar a sua vida calma.";
+		mes "Se você quiser, Eu posso te mandar para a cidade agora mesmo... O que você quer fazer?";
 		next;
-		if (select("Continue testing.:I want to go back because I have butterflies in my stomach.") == 1) {
-			set WIZ_Q,6;
-			savepoint "geffen",120,107,1,1;
+		if (select("Continuar.:Eu quero voltar por que estou com medo.") == 1) {
+			WIZ_Q = 6;
+			savepoint "geffen",120,107;
 			mes "[Raulel]";
-			mes "You are indeed, very determined. Ok! Hahahahahaha~";
-			mes "*Cough* *cough* As you wish, we shall begin the final test!";
+			mes "Você é realmente, muito determinado. Ok! Hahahahahaha~";
+			mes "*tosse* *tosse* Como você quer, nós devemos começar o teste final!";
 			close2;
 			warp "job_wiz",57,154;
 			end;
 		}
-		set WIZ_Q,6;
+		WIZ_Q = 6;
 		mes "[Raulel]";
-		mes "Good thinking. This is a better choice for you. Hahahahah~";
-		mes "Go back and live a easy life, Greater Magic is a force that should not be wield by types like yourself.";
+		mes "Boa idéia. Essa é a melhor escolha para você. Hahahahah~";
+		mes "Volte e viva uma vida tranqüila, Magia superior é uma força que não pode ser manipulada por pessoas como você.";
 		close2;
 		warp "geffen",120,110;
 		end;
-	}
-	else if (WIZ_Q == 6) {
+	} else if (WIZ_Q == 6) {
 		if (WIZ_Q2 == 6) {
 			mes "[Raulel]";
-			mes "Hahahahahaha~ I've never seen anyone so...sooo...*sneeze* tenacious as you.";
-			mes "So you want to try again eh? Even though I've ridiculed you for your failures before??";
+			mes "Hahahahahaha~ Eu nunca vi ninguém tão persistente como você.";
+			mes "Então você quer tentar de novo é? Embora eu tenha ridicularizado você por suas falhas??";
 			next;
 			mes "[Raulel]";
-			mes "Ok then, here's a proposition. Since you're probably worn out as it is, and I can clearly see the lust for Greater Magic burning in your eyes...";
-			mes "Hahahahaha~ yeah! Go bring me a ^3355FFWorn Out Scroll^000000.";
+			mes "Ok então, aqui vai uma proposta. Ja que provavelmente você está cansado, eu eu posso ver claramente o desejo da Grande Magia queimando em seus olhos...";
+			mes "Hahahahaha~ yeah! Me traga um ^3355FFPergaminho Desgastado^000000.";
 			next;
-			set WIZ_Q2,WIZ_Q2+1;
+			WIZ_Q2 = 7;
 			mes "[Raulel]";
-			mes "If not, you can take the test again...";
-			mes "Well, I'll send you to take the test for now. Hahahaha~";
+			mes "Ou então, você pode fazer o teste de novo...";
+			mes "Bem, Eu vou te mandar para o teste agora. Hahahaha~";
 			close2;
 			warp "job_wiz",57,154;
 			end;
-		}
-		else if (WIZ_Q2 > 6) {
+		} else if (WIZ_Q2 > 6) {
 			mes "[Raulel]";
-			mes "Oh! So you're back? Hahahahaha~";
-			mes "*Cough* Cough* Do you want to take the test again? Or did you bring the ^3355FFWorn Out Scroll^000000?";
+			mes "Oh! Então você voltou? Hahahahaha~";
+			mes "*Tosse*Tosse* Você quer fazer o teste de novo? Ou você trouxe o ^3355FFPergaminho Desgastado^000000?";
 			next;
-			if (select("Continue the test.:Worn Out Scroll...") == 1) {
-				savepoint "geffen",120,107,1,1;
+			if (select("Fazer o Teste.:Pergaminho desgastado...") == 1) {
+				savepoint "geffen",120,107;
 				mes "[Raulel]";
-				mes "Hahaha~ Ok, at least you have some spirit.";
-				mes "I'll send you in again, try dying once more will yah? Hahahahahahahahaha~";
+				mes "Hahaha~ Ok, pelo menos você tem espírito.";
+				mes "Eu vou te mandar para lá, tente morrer mais uma vez, ok? Hahahahahahahahaha~";
 				close2;
 				warp "job_wiz",57,154;
 				end;
@@ -922,162 +859,154 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 			if (countitem(618) > 0) {
 				delitem 618,1; //Worn_Out_Scroll
 				mes "[Raulel]";
-				mes "Hahahahahahahaha~ *Cough* *cough* So you ended up bringing one of these eh? Good job...";
-				mes "I think I can continue my research with this...";
+				mes "Hahahahahahahaha~ *Tosse* *Tosse* Então você terminou me trazendo um desses é? Bom trabalho...";
+				mes "Eu acho que Eu posso continuar minha pesquisa com isso...";
 				next;
-				set WIZ_Q2,0;
-				set WIZ_Q,7;
+				WIZ_Q2 = 0;
+				WIZ_Q = 7;
 				mes "[Raulel]";
-				mes "Even though your not Grade A Wizard material, I can tell your serious about wanting the Greater Magic. I'll tell Catherine that you passed. Hahahahahahahahah~";
-				mes "You went through a lot of trouble here, and that is the true purpose for us selecting Wizards. Only those who will devote themselves to the art will ever become Wizards. Good luck to you. Become much Stronger. Hahahahahaha~";
+				mes "Apesar de você não ser um Bruxo nível A, posso ver você sériamente querendo a Grande Magia. Eu vou dizer a Catherine que você passou. Hahahahahahahahah~";
+				mes "Você passou por muitas dificuldades aqui, e este é o verdadeiro propósito de nós selecionarmos Bruxos. Apenas aqueles que se dedicam à arte se tornarão Bruxos. Boa sorte para você. Se torne mais forte. Hahahahahaha~";
 				close;
 			}
 		}
 		mes "[Raulel]";
-		mes "*sneeze* What? You want to take the test again?";
-		mes "Geez...you already failed the battle test! Hahahahahahahaha~ So you like magic that much, eh?";
+		mes "*espirra* O quê? Você quer fazer o teste de novo?";
+		mes "Nossa...você já falhou o teste prático! Hahahahahahahaha~ Então você gosta de mágica tanto assim, é?";
 		next;
 		mes "[Raulel]";
-		mes "Since your so weak that you can't finish this final test on your own...you need a separate test to help you out.";
-		mes "*Cough* If you can't pass the battle test, then do a good job with this one. Hahahahahahah~";
+		mes "Já que você é tão fraco que nem consegue completar o teste final sozinho...você precisa de um teste a parte para ajudar.";
+		mes "*Tosse* Se você não consegue passar o Teste prático, então se saia bem neste. Hahahahahahah~";
 		next;
 		mes "[Raulel]";
-		mes "Well, you better answer these problems if you plan on becoming a Wizard. Hahahahahahaha~";
+		mes "Bem, é melhor responder esses problemas se você planeja se tornar um Bruxo. Hahahahahahaha~";
 		next;
 		mes "[Raulel]";
-		mes "1. Choose the monster with a different attribute than the others.";
+		mes "1. Escolha o Monstros com o atributo diferente dos outros.";
 		next;
-		if (select("Mantis:Cornutus:Giearth:Caramel") == 2)
-			set .@wizard_t,.@wizard_t+20;
+		if (select("Louva-a-Deus:Cornutus:Giearth:Caramelo") == 2) set .@wizard_t,.@wizard_t+20;
 		mes "[Raulel]";
-		mes "2. Choose the monster that is not a looting one.";
+		mes "2. Escolha o monstro que não é do tipo de pilhagem.";
 		next;
-		if (select("Yoyo:Magnolia:Metaller:Zerom") == 4)
-			set .@wizard_t,.@wizard_t+20;
+		if (select("Yoyo:Magnólia:Metaller:Zerom") == 4) set .@wizard_t,.@wizard_t+20;
 		mes "[Raulel]";
-		mes "3. Which of these monsters does not recognize casting?";
+		mes "3. Qual desses monstros não reconhece Conjurações?";
 		next;
-		if (select("Marina:Vitata:Scorpion:Giearth") == 1)
-			set .@wizard_t,.@wizard_t+20;
+		if (select("Marina:Vitata:Escorpião:Giearth") == 1) set .@wizard_t,.@wizard_t+20;
 		mes "[Raulel]";
-		mes "4. Choose the spell that would be efficient against a Marine Sphere.";
+		mes "4. Escolha a magia que é a mais eficiente contra Esfera Marinha.";
 		next;
-		if (select("Cold Bolt:Fire Bolt:Lightning Bolt:Stone Curse") == 3)
-			set .@wizard_t,.@wizard_t+20;
+		if (select("Lanças de Gelo:Lanças de Fogo:Relâmpago:Petrificar") == 3) set .@wizard_t,.@wizard_t+20;
 		mes "[Raulel]";
-		mes "5. Choose the monster that can move.";
+		mes "5. Escolha o monstro que pode se mover.";
 		next;
-		if (select("Hydra:Madragora:Greatest General:Frilldora") == 4)
-			set .@wizard_t,.@wizard_t+20;
+		if (select("Hidra:Mandrágora:Guardião da Floresta:Frilldora") == 4) set .@wizard_t,.@wizard_t+20;
 		mes "[Raulel]";
-		mes "*pfft* Do it right, so I don't have to ask again.";
+		mes "*pfft* Faça direito, para que eu não precise perguntar de novo.";
 		next;
 		mes "[Raulel]";
-		mes "You got " + .@wizard_t + " points.";
+		mes "Você fez "+.@wizard_t+" pontos.";
 		if (.@wizard_t == 100) {
-			mes "Hahahahahaha~ *Cough* *cough* If you can answer all these questions correctly, how is it you can't do well in battles??";
+			mes "HHahahahahaha~ *Tosse* *Tosse* Se você pode responder todas essas perguntas corretamente, por que você não se sai bem em batalhas??";
 			next;
-		}
-		else if (.@wizard_t == 80) {
-			mes "Eh, soso...";
-			mes "I'll let you retake the test.";
+		} else if (.@wizard_t == 80) {
+			mes "Ehh, ok...";
+			mes "Vou deixar você refazer o teste.";
 			next;
-		}
-		else {
-			mes "You failed! Go study some more!";
+		} else {
+			mes "Você falhou! Vá estudar mais!";
 			next;
 			mes "[Raulel]";
-			mes "You lack something...*sneez*...like intelligence. That's why you keep on failing. Hahahahahahahaha~";
+			mes "Você tem uma deficiência em algo...*espirra*...algo como Inteligência. É por isso que você continua falhando. Hahahahahahahaha~";
 			close;
 		}
-		if (select("Begin the test please.:Can I get another explanation?") == 1) {
+		if (select("Começar o teste.:Posso ter outra explicação?") == 1) {
 			mes "[Raulel]";
-			mes "Nobody is going to help you become a Wizard. Hahahahahahahaha~";
-			mes "*Cough* *cough* No point in crying after dying...";
+			mes "Ninguem vai te ajudar em se tornar um Bruxo. Hahahahahahahaha~";
+			mes "*Tosse* *Tosse* Sem sentido chorar depois que morrer...";
 			next;
 			percentheal 100,100;
 			mes "[Raulel]";
-			mes "Then, as you wish. I'll send you to fight.";
-			mes "Oh! If you see some tall pearly gates and hear a booming deep voice from behind it, that means that your a failure when it comes to Magic. Hahahahahahahahaha~";
+			mes "Então, como você quiser. Eu vou te mandar para a batalha.";
+			mes "Oh! Se você ver um Portão grande com pérolas e escutar vozes de lá, isso significa que você falhou. Hahahahahahahahaha~";
 			close2;
 			warp "job_wiz",57,154;
 			end;
 		}
 		mes "[Raulel]";
-		mes "*Cough* *cough* Then I shall explain.";
-		mes "The test may be hard, but just do as I tell you and it shouldn't be a problem.";
+		mes "*Tosse* *Tosse* Então deixe-me explicar.";
+		mes "O teste pode ser difícil, mas faça como eu digo e você não terá problemas.";
 		next;
 		mes "[Raulel]";
-		mes "There are 3 parts to this final test.";
-		mes "The order is...*sneez*...the Water Room, Earth Room, and then the Fire Room. Each room has monsters of that attribute in it.";
+		mes "Existem 3 partes para o Teste Final.";
+		mes "A ordem é...*espirra*...A Sala da Água, Sala da Tera, e a Sala do Fogo. Cada sala contém monstros do mesmo atributo.";
 		next;
 		mes "[Raulel]";
-		mes "You'll see what monsters they are when you enter.";
-		mes "If you use the appropriate spells against them, it shouldn't be that difficult. Hahahahahahaha~";
+		mes "Você vai ver que os monstros já estarão lá quando você entrar.";
+		mes "Se você usar as magias apropriadas contra eles, não será tão difícil. Hahahahahahaha~";
 		next;
 		mes "[Raulel]";
-		mes "Within the given time, if you defeat all the monsters...";
-		mes "you will be sent to the next room.";
+		mes "Se dentro do tempo dado, você derrotar todos os monstros...";
+		mes "você será mandado para a próxima sala.";
 		next;
 		mes "[Raulel]";
-		mes "After that, the test is over.";
-		mes "You will then become a Wizard controlled by Greater Magic powers! There is no coming back to the easy life you have known thus far.";
+		mes "Depois disso, o teste acaba.";
+		mes "Você então se tornará um Bruxo controlado pelos poderes da Grande Magia! Não há volta para a vida que você conheceu até agora.";
 		next;
 		mes "[Raulel]";
-		mes "Hahahahaha~ You look frightened. It's not too late you know.";
-		mes "*Cough* *cough* You can give up and go back to town! Just forget about the Greater Magic and live a normal life. What do yah say?";
+		mes "Hahahahaha~ Você parece assustado. Ainda não é tarde, sabe?.";
+		mes "*Tosse* *Tosse* você pode desistir e voltar para a cidade! Apenas esqueça sobre a Grande Magia e viva uma vida normal. O que você diz?";
 		next;
-		if (select("Continue with the test.:I'm too scared, I would like to quit.") == 1) {
+		if (select("Continuar com o Teste.:Estou assustado, Quero sair.") == 1) {
 			percentheal 100,100;
 			mes "[Raulel]";
-			mes "This time when you die, don't come back crying. Hahahahahahahahah~ *Cough *cough*";
-			mes "As you wish, let's begin the final test!";
+			mes "Essa é a parte que você morre, não volte chorando. Hahahahahahahahah~ *Tosse *Tosse*";
+			mes "Como você quer, vamos começar o teste final!";
 			close2;
 			warp "job_wiz",57,154;
 			end;
 		}
 		mes "[Raulel]";
-		mes "Comming from you, thats some darn good thinking. That's more a fit for you anyways. Hahahahahahahahaha~";
-		mes "Go back and live a quiet and peaceful life!";
+		mes "Vindo de você, isso é um pensamento condenado. Isso combina mais com você. Hahahahahahahahaha~";
+		mes "Volte e viva uma vida quieta e pacífica!";
 		close2;
 		warp "geffen",120,110;
 		end;
-	}
-	else if (WIZ_Q == 7) {
+	} else if (WIZ_Q == 7) {
 		mes "[Raulel]";
-		mes "You shouldn't have any more business with me as far as I'm concerned.";
-		mes "But, since your so darned persistent, I'll let you take the test again. Hahahahaha~";
+		mes "Você não deveria ter nada a tratar comigo que eu saiba.";
+		mes "Mas, já que você é tão persistente, Eu vou deixar você fazer o teste de novo. Hahahahaha~";
 		next;
 		mes "[Raulel]";
-		mes "Go! Go and become the Wizard you really want to be.";
-		mes "And be careful! Greater Magic will always be after you...";
+		mes "Vá! Vá e se torne o Bruxo que você realmente quer ser.";
+		mes "e seja Cuidadoso! Grande Magia sempre estará com você...";
 		close;
 	}
 }
 
-job_wiz,50,165,4	script	Arena Assistant	700,{
-	mes "[Arena Assistant]";
-	mes "Welcome to the Wizard Job Change Arena.";
-	mes "If you would like to take the final test, then please enter the waiting room.";
+job_wiz,50,165,4	script	Assistente da Arena	8_F_GIRL,{
+	mes "[Assistente da Arena]";
+	mes "Bem-vindo à Arena de troca de teste para ser tornar um Bruxo.";
+	mes "Se você quiser fazer o teste final, por favor entre na sala de espera.";
 	next;
-	mes "[Arena Assistant]";
-	mes "If someone is already taking the test, please wait.";
-	mes "All testing status will be broadcasted, and will begin as soon as the previous tester has gone through.";
+	mes "[Assistente da Arena]";
+	mes "Se alguem estiver fazendo o teste, por favor espere.";
+	mes "Todas as informações do teste serão publicadas, e vai começar assim que o jogador anterior sair.";
 	next;
-	mes "[Arena Assistant]";
-	mes "Each person may take approximately 5 to 10 minutes.";
-	mes "If you would like to leave the arena, please log off anytime.";
+	mes "[Assistente da Arena]";
+	mes "Cada teste leva aproximadamente 5 a 10 minutos.";
+	mes "Se quiser sair da arena, por favor deslogue.";
 	close;
 
 OnInit:
-	waitingroom "Waiting Room",20,"Arena Assistant::OnStartArena",1;
+	waitingroom "Sala de Espera",20,"Assistente da Arena::OnStartArena",1;
 	enablewaitingroomevent;
 	end;
 
 OnStartArena:
 	killmonsterall "job_wiz";
 	warpwaitingpc "job_wiz",114,169;
-	donpcevent "Room of Water::OnEnable";
+	donpcevent "Sala de Água::OnEnable";
 	disablewaitingroomevent;
 	end;
 
@@ -1088,544 +1017,548 @@ OnStart:
 
 // Water Room (Test 2 part 1)
 //==========================================================
-job_wiz,1,1,1	script	Room of Water	66,{
+job_wiz,1,1,1	script	Sala de Água	1_F_01,{
 OnInit:
-	disablenpc "Room of Water";
+	disablenpc "Sala de Água";
 	end;
 
 OnEnable:
-	enablenpc "Room of Water";
+	enablenpc "Sala de Água";
+	//if (!RENEWAL) {
 	if (!checkre(0)) {
-		set .MyMobs,8;
-		monster "job_wiz",129,170,"Obeaune",1044,1,"Room of Water::OnMyMobDead";
+		.MyMobs = 8;
+		monster "job_wiz",129,170,"Obeaune",1044,1,"Sala de Água::OnMyMobDead";
 	}
 	else
-		set .MyMobs,7;
-	monster "job_wiz",109,174,"Phen",1158,1,"Room of Water::OnMyMobDead";
-	monster "job_wiz",118,174,"Shellfish",1074,1,"Room of Water::OnMyMobDead";
-	monster "job_wiz",109,165,"Vadon",1066,1,"Room of Water::OnMyMobDead";
-	monster "job_wiz",118,165,"Cornutus",1067,1,"Room of Water::OnMyMobDead";
-	monster "job_wiz",101,157,"Marina",1141,1,"Room of Water::OnMyMobDead";
-	monster "job_wiz",126,157,"Marin",1242,1,"Room of Water::OnMyMobDead";
-	monster "job_wiz",98,170,"Magnolia",1138,1,"Room of Water::OnMyMobDead";
+		.MyMobs = 7;
+	monster "job_wiz",109,174,"Phen",1158,1,"Sala de Água::OnMyMobDead";
+	monster "job_wiz",118,174,"Shellfish",1074,1,"Sala de Água::OnMyMobDead";
+	monster "job_wiz",109,165,"Vadon",1066,1,"Sala de Água::OnMyMobDead";
+	monster "job_wiz",118,165,"Cornutus",1067,1,"Sala de Água::OnMyMobDead";
+	monster "job_wiz",101,157,"Marina",1141,1,"Sala de Água::OnMyMobDead";
+	monster "job_wiz",126,157,"Marin",1242,1,"Sala de Água::OnMyMobDead";
+	monster "job_wiz",98,170,"Magnolia",1138,1,"Sala de Água::OnMyMobDead";
 	initnpctimer;
 	end;
 
 OnDisable:
 	killmonsterall "job_wiz";
-	disablenpc "Room of Water";
+	disablenpc "Sala de Água";
 	end;
 
 OnMyMobDead:
 	set .MyMobs,.MyMobs-1;
 	if (.MyMobs < 1) {
 		set WIZ_Q2,WIZ_Q2+1;
-		mapannounce "job_wiz",strcharinfo(0)+" has succeeded in eliminating the monsters.",bc_map;
-		donpcevent "Room of Water#Door::OnEnable";
+		mapannounce "job_wiz",strcharinfo(0)+" eliminou todos os Monstros.",bc_map;
+		donpcevent "Sala de Água#Door::OnEnable";
 		stopnpctimer;
 	}
 	end;
 
 OnTimer1000:
-	mapannounce "job_wiz","Water Room; The job change test will now proceed.",bc_map;
+	mapannounce "job_wiz","Sala da Água - O teste agora vai continuar..",bc_map;
 	end;
 
 OnTimer2000:
-	mapannounce "job_wiz","Time limit is 3 minutes. We will now start the test.",bc_map;
+	mapannounce "job_wiz","O tempo limite é de 3 minutos. Nós vamos iniciar o teste agora.",bc_map;
 	end;
 
 OnTimer3000:
-	mapannounce "job_wiz","Please eliminate all monsters within the time limit.",bc_map;
+	mapannounce "job_wiz","Por favor elimine todos os montros dentro do tempo estabelecido.",bc_map;
 	end;
 
 OnTimer33000:
-	mapannounce "job_wiz","2 minutes and 30 seconds remaining.",bc_map;
+	mapannounce "job_wiz","2 minutos e 30 segundos restantes.",bc_map;
 	end;
 
 OnTimer63000:
-	mapannounce "job_wiz","2 minutes remaining.",bc_map;
+	mapannounce "job_wiz","2 minutos restantes.",bc_map;
 	end;
 
 OnTimer93000:
-	mapannounce "job_wiz","1 minute and 30 seconds remaining.",bc_map;
+	mapannounce "job_wiz","1 minuto e 30 segundos restantes.",bc_map;
 	end;
 
 OnTimer123000:
-	mapannounce "job_wiz","1 minute remaining.",bc_map;
+	mapannounce "job_wiz","1 minuto restante.",bc_map;
 	end;
 
 OnTimer153000:
-	mapannounce "job_wiz","30 seconds remaining.",bc_map;
+	mapannounce "job_wiz","30 segundos restantes.",bc_map;
 	end;
 
 OnTimer173000:
-	mapannounce "job_wiz","10 seconds remaining.",bc_map;
+	mapannounce "job_wiz","10 segundos restantes.",bc_map;
 	end;
 
 OnTimer183000:
-	mapannounce "job_wiz","Time is up.",bc_map;
-	donpcevent "Room of Water::OnDisable";
+	mapannounce "job_wiz","O tempo acabou.",bc_map;
+	donpcevent "Sala de Água::OnDisable";
 	end;
 
 OnTimer184000:
-	enablenpc "Room of Water#Failed";
+	enablenpc "Sala de Água#Failed";
 	end;
 
 OnTimer185000:
-	mapannounce "job_wiz","Next candidate, please enter.",bc_map;
+	mapannounce "job_wiz","Próximo candidato, entre por favor.",bc_map;
 	end;
 
 OnTimer186000:
-	disablenpc "Room of Water#Failed";
-	donpcevent "Room of Water::OnDisable";
-	donpcevent "Arena Assistant::OnStart";
+	disablenpc "Sala de Água#Failed";
+	donpcevent "Sala de Água::OnDisable";
+	donpcevent "Sala de Espera#wiz::OnStart";
 	end;
 }
 
-job_wiz,1,2,1	script	Room of Water#Door	66,{
+job_wiz,1,2,1	script	Sala de Água#Door	1_F_01,{
 OnInit:
-	disablenpc "Room of Water#Door";
+	disablenpc "Sala de Água#Door";
 	end;
 
 OnEnable:
-	enablenpc "Room of Water#Door";
-	donpcevent "Room of Water::OnDisable";
-	set .MyMobs,5;
-	monster "job_wiz",114,169,"Marine Sphere",1142,1,"Room of Water#Door::OnMyMobDead";
-	monster "job_wiz",112,169,"Hydra",1068,1,"Room of Water#Door::OnMyMobDead";
-	monster "job_wiz",116,169,"Hydra",1068,1,"Room of Water#Door::OnMyMobDead";
-	monster "job_wiz",114,171,"Hydra",1068,1,"Room of Water#Door::OnMyMobDead";
-	monster "job_wiz",114,167,"Hydra",1068,1,"Room of Water#Door::OnMyMobDead";
+	enablenpc "Sala de Água#Door";
+	donpcevent "Sala de Água::OnDisable";
+	.MyMobs = 5;
+	monster "job_wiz",114,169,"Esfera Marinha",1142,1,"Sala de Água#Door::OnMyMobDead";
+	monster "job_wiz",112,169,"Hidra",1068,1,"Sala de Água#Door::OnMyMobDead";
+	monster "job_wiz",116,169,"Hidra",1068,1,"Sala de Água#Door::OnMyMobDead";
+	monster "job_wiz",114,171,"Hidra",1068,1,"Sala de Água#Door::OnMyMobDead";
+	monster "job_wiz",114,167,"Hidra",1068,1,"Sala de Água#Door::OnMyMobDead";
 	initnpctimer;
 	end;
 
 OnDisable:
 	killmonsterall "job_wiz";
-	disablenpc "Room of Water#Door";
+	disablenpc "Sala de Água#Door";
 	end;
 
 OnMyMobDead:
 	set .MyMobs,.MyMobs-1;
 	if (.MyMobs < 1) {
-		mapannounce "job_wiz",strcharinfo(0)+" has succeeded in eliminating the monsters.",bc_map;
+		mapannounce "job_wiz",strcharinfo(0)+" eliminou todos os monstros.",bc_map;
 		percentheal 100,100;
 		warp "job_wiz",116,97;
-		donpcevent "Room of Water#Door::OnDisable";
-		donpcevent "Room of Earth::OnEnable";
+		donpcevent "Sala de Água#Door::OnDisable";
+		donpcevent "Sala da Terra::OnEnable";
 		stopnpctimer;
 	}
 	end;
 
 OnTimer1000:
-	mapannounce "job_wiz","The guard monster has appeared. You have 1 minute.",bc_map;
+	mapannounce "job_wiz","O monstro Guardião apareceu. Você tem 1 minuto.",bc_map;
 	end;
 
 OnTimer30000:
-	mapannounce "job_wiz","30 seconds remaining.",bc_map;
+	mapannounce "job_wiz","30 segundos restantes.",bc_map;
 	end;
 
 OnTimer50000:
-	mapannounce "job_wiz","10 seconds remaining.",bc_map;
+	mapannounce "job_wiz","10 segundos restantes.",bc_map;
 	end;
 
 OnTimer60000:
-	mapannounce "job_wiz","Time is up.",bc_map;
-	donpcevent "Room of Water#Door::OnDisable";
+	mapannounce "job_wiz","O tempo acabou.",bc_map;
+	donpcevent "Sala de Água#Door::OnDisable";
 	end;
 
 OnTimer61000:
-	enablenpc "Room of Water#Failed";
+	enablenpc "Sala de Água#Failed";
 	end;
 
 OnTimer62000:
-	mapannounce "job_wiz","Next candidate, please enter.",bc_map;
+	mapannounce "job_wiz","Próximo candidato, entre por favor.",bc_map;
 	end;
 
 OnTimer63000:
-	disablenpc "Room of Water#Failed";
-	donpcevent "Room of Water#Door::OnDisable";
-	donpcevent "Arena Assistant::OnStart";
+	disablenpc "Sala de Água#Failed";
+	donpcevent "Sala de Água#Door::OnDisable";
+	donpcevent "Sala de Espera#wiz::OnStart";
 	end;
 }
 
-job_wiz,114,169,0	script	Room of Water#Failed	-1,16,16,{
+job_wiz,114,169,0	script	Sala de Água#Failed	-1,16,16,{
 OnInit:
-	disablenpc "Room of Water#Failed";
+	disablenpc "Sala de Água#Failed";
 	end;
 
-OnTouch_:
-	mapannounce "job_wiz",strcharinfo(0)+" has not succeeded.",bc_map;
+OnTouch:
+	mapannounce "job_wiz",strcharinfo(0)+" não conseguiu passar no exame.",bc_map;
 	warp "geffen",120,110;
 	end;
 }
 
 // Earth Room (Test 2 part 2)
 //==========================================================
-job_wiz,1,3,1	script	Room of Earth	66,{
+job_wiz,1,3,1	script	Sala da Terra	1_F_01,{
 OnInit:
-	disablenpc "Room of Earth";
+	disablenpc "Sala da Terra";
 	end;
 
 OnEnable:
-	enablenpc "Room of Earth";
+	enablenpc "Sala da Terra";
+	//if (!RENEWAL) {
 	if (!checkre(0)) {
 		set .MyMobs,10;
-		monster "job_wiz",120,102,"Hode",1127,1,"Room of Earth::OnMyMobDead";
-		monster "job_wiz",111,93,"Savage",1166,1,"Room of Earth::OnMyMobDead";
-		monster "job_wiz",127,86,"Mantis",1139,1,"Room of Earth::OnMyMobDead";
+		monster "job_wiz",120,102,"Hode",1127,1,"Sala da Terra::OnMyMobDead";
+		monster "job_wiz",111,93,"Savage",1166,1,"Sala da Terra::OnMyMobDead";
+		monster "job_wiz",127,86,"Mantis",1139,1,"Sala da Terra::OnMyMobDead";
 	}
 	else
-		set .MyMobs,7;
-	monster "job_wiz",111,102,"Yoyo",1057,1,"Room of Earth::OnMyMobDead";
-	monster "job_wiz",120,102,"Deniro",1105,1,"Room of Earth::OnMyMobDead";
-	monster "job_wiz",111,102,"Caramel",1103,1,"Room of Earth::OnMyMobDead";
-	monster "job_wiz",120,93,"Giearth",1121,1,"Room of Earth::OnMyMobDead";
-	monster "job_wiz",107,98,"Bigfoot",1060,1,"Room of Earth::OnMyMobDead";
-	monster "job_wiz",124,98,"Orc Warrior",1023,1,"Room of Earth::OnMyMobDead";
-	monster "job_wiz",104,86,"Vitata",1176,1,"Room of Earth::OnMyMobDead";
+		.MyMobs = 7;
+	monster "job_wiz",111,102,"Yoyo",1057,1,"Sala da Terra::OnMyMobDead";
+	monster "job_wiz",120,102,"Deniro",1105,1,"Sala da Terra::OnMyMobDead";
+	monster "job_wiz",111,102,"Caramel",1103,1,"Sala da Terra::OnMyMobDead";
+	monster "job_wiz",120,93,"Giearth",1121,1,"Sala da Terra::OnMyMobDead";
+	monster "job_wiz",107,98,"Bigfoot",1060,1,"Sala da Terra::OnMyMobDead";
+	monster "job_wiz",124,98,"Orc Warrior",1023,1,"Sala da Terra::OnMyMobDead";
+	monster "job_wiz",104,86,"Vitata",1176,1,"Sala da Terra::OnMyMobDead";
 	initnpctimer;
 	end;
 
 OnDisable:
 	killmonsterall "job_wiz";
-	disablenpc "Room of Earth";
+	disablenpc "Sala da Terra";
 	end;
 
 OnMyMobDead:
 	set .MyMobs,.MyMobs-1;
 	if (.MyMobs < 1) {
-		mapannounce "job_wiz",strcharinfo(0) + " has succeeded in eliminating the monsters.",bc_map;
-		donpcevent "Room of Earth#Door::OnEnable";
+		mapannounce "job_wiz",strcharinfo(0) + " eliminou todos os monstros.",bc_map;
+		donpcevent "Sala da Terra#Door::OnEnable";
 		stopnpctimer;
 	}
 	end;
 
 OnTimer1000:
-	mapannounce "job_wiz","Earth Room; The job change test will now proceed.",bc_map;
+	mapannounce "job_wiz","Sala da Terra - O teste agora vai continuar.",bc_map;
 	end;
 
 OnTimer2000:
-	mapannounce "job_wiz","The time limit is 3 minutes.",bc_map;
+	mapannounce "job_wiz","O tempo limite é de 3 minutos.",bc_map;
 	end;
 
 OnTimer3000:
-	mapannounce "job_wiz","Eliminate all monster within the time limit.",bc_map;
+	mapannounce "job_wiz","Elimine todos os monstros dentro do tempo dado.",bc_map;
 	end;
 
 OnTimer33000:
-	mapannounce "job_wiz","2 minutes and 30 seconds remaining.",bc_map;
+	mapannounce "job_wiz","2 minutos e 30 segundos restantes.",bc_map;
 	end;
 
 OnTimer63000:
-	mapannounce "job_wiz","2 minutes remaining.",bc_map;
+	mapannounce "job_wiz","2 minutos restantes.",bc_map;
 	end;
 
 OnTimer93000:
-	mapannounce "job_wiz","1 minute and 30 seconds remaining.",bc_map;
+	mapannounce "job_wiz","1 minuto e 30 segundos restantes.",bc_map;
 	end;
 
 OnTimer123000:
-	mapannounce "job_wiz","1 minute remaining.",bc_map;
+	mapannounce "job_wiz","1 minuto restante.",bc_map;
 	end;
 
 OnTimer153000:
-	mapannounce "job_wiz","30 seconds remaining.",bc_map;
+	mapannounce "job_wiz","30 segundos restantes.",bc_map;
 	end;
 
 OnTimer173000:
-	mapannounce "job_wiz","10 seconds remaining.",bc_map;
+	mapannounce "job_wiz","10 segundos restantes.",bc_map;
 	end;
 
 OnTimer183000:
-	mapannounce "job_wiz","Time is up.",bc_map;
-	donpcevent "Room of Earth::OnDisable";
+	mapannounce "job_wiz","O tempo acabou.",bc_map;
+	donpcevent "Sala da Terra::OnDisable";
 	end;
 
 OnTimer184000:
-	enablenpc "Room of Earth#Failed";
+	enablenpc "Sala da Terra#Failed";
 	end;
 
 OnTimer185000:
-	mapannounce "job_wiz","Next candidate, please enter.",bc_map;
+	mapannounce "job_wiz","Próximo candidato, entre por favor.",bc_map;
 	end;
 
 OnTimer186000:
-	disablenpc "Room of Earth#Failed";
-	donpcevent "Room of Earth::OnDisable";
-	donpcevent "Arena Assistant::OnStart";
+	disablenpc "Sala da Terra#Failed";
+	donpcevent "Sala da Terra::OnDisable";
+	donpcevent "Sala de Espera#wiz::OnStart";
 	end;
 }
 
-job_wiz,1,4,1	script	Room of Earth#Door	66,{
+job_wiz,1,4,1	script	Sala da Terra#Door	1_F_01,{
 OnInit:
-	disablenpc "Room of Earth#Door";
+	disablenpc "Sala da Terra#Door";
 	end;
 
 OnEnable:
-	enablenpc "Room of Earth#Door";
-	donpcevent "Room of Earth::OnDisable";
+	enablenpc "Sala da Terra#Door";
+	donpcevent "Sala da Terra::OnDisable";
+	//if (!RENEWAL) {
 	if (!checkre(0)) {
 		set .MyMobs,7;
-		monster "job_wiz",116,97,"Flora",1118,1,"Room of Earth#Door::OnMyMobDead";
+		monster "job_wiz",116,97,"Flora",1118,1,"Sala da Terra#Door::OnMyMobDead";
 	}
 	else
 		set .MyMobs,6;
-	monster "job_wiz",114,95,"Mandragora",1020,1,"Room of Earth#Door::OnMyMobDead";
-	monster "job_wiz",118,95,"Mandragora",1020,1,"Room of Earth#Door::OnMyMobDead";
-	monster "job_wiz",114,99,"Mandragora",1020,1,"Room of Earth#Door::OnMyMobDead";
-	monster "job_wiz",118,99,"Mandragora",1020,1,"Room of Earth#Door::OnMyMobDead";
-	monster "job_wiz",116,94,"Mandragora",1020,1,"Room of Earth#Door::OnMyMobDead";
-	monster "job_wiz",116,100,"Mandragora",1020,1,"Room of Earth#Door::OnMyMobDead";
+	monster "job_wiz",114,95,"Mandragora",1020,1,"Sala da Terra#Door::OnMyMobDead";
+	monster "job_wiz",118,95,"Mandragora",1020,1,"Sala da Terra#Door::OnMyMobDead";
+	monster "job_wiz",114,99,"Mandragora",1020,1,"Sala da Terra#Door::OnMyMobDead";
+	monster "job_wiz",118,99,"Mandragora",1020,1,"Sala da Terra#Door::OnMyMobDead";
+	monster "job_wiz",116,94,"Mandragora",1020,1,"Sala da Terra#Door::OnMyMobDead";
+	monster "job_wiz",116,100,"Mandragora",1020,1,"Sala da Terra#Door::OnMyMobDead";
 	initnpctimer;
 	end;
 
 OnDisable:
 	killmonsterall "job_wiz";
-	disablenpc "Room of Earth#Door";
+	disablenpc "Sala da Terra#Door";
 	end;
 
 OnMyMobDead:
 	set .MyMobs,.MyMobs-1;
 	if (.MyMobs < 1) {
-		mapannounce "job_wiz",strcharinfo(0) + " has succeeded in eliminating the monster.",bc_map;
+		mapannounce "job_wiz",strcharinfo(0) + " eliminou todos os monstros.",bc_map;
 		percentheal 100,100;
 		warp "job_wiz",46,99;
-		donpcevent "Room of Earth#Door::OnDisable";
-		donpcevent "Room of Fire::OnEnable";
+		donpcevent "Sala da Terra#Door::OnDisable";
+		donpcevent "Sala do Fogo::OnEnable";
 		stopnpctimer;
 	}
 	end;
 
 OnTimer1000:
-	mapannounce "job_wiz","The guard monster has appeared. You have 1 minute.",bc_map;
+	mapannounce "job_wiz","O monstro Guardião apareceu. Você tem 1 minuto.",bc_map;
 	end;
 
 OnTimer30000:
-	mapannounce "job_wiz","30 seconds remaining.",bc_map;
+	mapannounce "job_wiz","30 segundos restantes.",bc_map;
 	end;
 
 OnTimer50000:
-	mapannounce "job_wiz","10 seconds remaining.",bc_map;
+	mapannounce "job_wiz","10 segundos restantes.",bc_map;
 	end;
 
 OnTimer60000:
-	mapannounce "job_wiz","End time.",bc_map;
-	donpcevent "Room of Earth#Door::OnDisable";
+	mapannounce "job_wiz","O tempo Acabou.",bc_map;
+	donpcevent "Sala da Terra#Door::OnDisable";
 	end;
 
 OnTimer61000:
-	enablenpc "Room of Earth#Failed";
+	donpcevent "Sala da Terra#Failed::OnEnable";
 	end;
 
 OnTimer62000:
-	mapannounce "job_wiz","Next candidate, please enter.",bc_map;
+	mapannounce "job_wiz","Próximo candidato, por favor entre.",bc_map;
 	end;
 
 OnTimer63000:
-	disablenpc "Room of Earth#Failed";
-	donpcevent "Room of Earth#Door::OnDisable";
-	donpcevent "Arena Assistant::OnStart";
+	disablenpc "Sala da Terra#Failed";
+	donpcevent "Sala da Terra#Door::OnDisable";
+	donpcevent "Sala de Espera#wiz::OnStart";
 	end;
 }
 
-job_wiz,116,97,0	script	Room of Earth#Failed	-1,16,16,{
+job_wiz,116,97,0	script	Sala da Terra#Failed	-1,16,16,{
 OnInit:
-	disablenpc "Room of Earth#Failed";
+	disablenpc "Sala da Terra#Failed";
 	end;
 
-OnTouch_:
-	mapannounce "job_wiz",strcharinfo(0) + " has not succeeded.",bc_map;
+OnTouch:
+	mapannounce "job_wiz",strcharinfo(0) + " não conseguiu passar no exame.",bc_map;
 	warp "geffen",120,110;
 	end;
 }
 
 // Fire Room (Test 2 part 3)
 //==========================================================
-job_wiz,1,5,1	script	Room of Fire	66,{
+job_wiz,1,5,1	script	Sala do Fogo	1_F_01,{
 OnInit:
-	disablenpc "Room of Fire";
+	disablenpc "Sala do Fogo";
 	end;
 
 OnEnable:
-	enablenpc "Room of Fire";
+	enablenpc "Sala do Fogo";
+	//if (!RENEWAL) {
 	if (!checkre(0)) {
 		set .MyMobs,8;
-		monster "job_wiz",58,110,"Zerom",1178,1,"Room of Fire::OnMyMobDead";
-		monster "job_wiz",54,89,"Desert Wolf",1106,1,"Room of Fire::OnMyMobDead";
+		monster "job_wiz",58,110,"Zerom",1178,1,"Sala do Fogo::OnMyMobDead";
+		monster "job_wiz",54,89,"Desert Wolf",1106,1,"Sala do Fogo::OnMyMobDead";
 	}
 	else
 		set .MyMobs,6;
-	monster "job_wiz",33,110,"Goblin",1123,1,"Room of Fire::OnMyMobDead";
-	monster "job_wiz",40,103,"Scorpion",1001,1,"Room of Fire::OnMyMobDead";
-	monster "job_wiz",51,103,"Frilldora",1119,1,"Room of Fire::OnMyMobDead";
-	monster "job_wiz",40,92,"PecoPeco",1019,1,"Room of Fire::OnMyMobDead";
-	monster "job_wiz",51,92,"Elder Willow",1033,1,"Room of Fire::OnMyMobDead";
-	monster "job_wiz",37,89,"Metaller",1058,1,"Room of Fire::OnMyMobDead";
+	monster "job_wiz",33,110,"Goblin",1123,1,"Sala do Fogo::OnMyMobDead";
+	monster "job_wiz",40,103,"Scorpion",1001,1,"Sala do Fogo::OnMyMobDead";
+	monster "job_wiz",51,103,"Frilldora",1119,1,"Sala do Fogo::OnMyMobDead";
+	monster "job_wiz",40,92,"PecoPeco",1019,1,"Sala do Fogo::OnMyMobDead";
+	monster "job_wiz",51,92,"Elder Willow",1033,1,"Sala do Fogo::OnMyMobDead";
+	monster "job_wiz",37,89,"Metaller",1058,1,"Sala do Fogo::OnMyMobDead";
 	initnpctimer;
 	end;
 
 OnDisable:
 	killmonsterall "job_wiz";
-	disablenpc "Room of Fire";
+	disablenpc "Sala do Fogo";
 	end;
 
 OnMyMobDead:
 	set .MyMobs,.MyMobs-1;
 	if (.MyMobs < 1) {
-		mapannounce "job_wiz",strcharinfo(0) + " has succeeded in eliminating the monsters.",bc_map;
-		donpcevent "Room of Fire#Door::OnEnable";
+		mapannounce "job_wiz",strcharinfo(0) + " eliminou todos os monstros.",bc_map;
+		donpcevent "Sala do Fogo#Door::OnEnable";
 		stopnpctimer;
 	}
 	end;
 
 OnTimer1000:
-	mapannounce "job_wiz","Fire Room; The job change test shall now proceed.",bc_map;
+	mapannounce "job_wiz","Sala de Fogo - O teste agora vai continuar.",bc_map;
 	end;
 
 OnTimer2000:
-	mapannounce "job_wiz","Time limit is 3 minutes. We will now start the test.",bc_map;
+	mapannounce "job_wiz","O tempo limite é de 3 minutos. Nós vamos começar o teste agora.",bc_map;
 	end;
 
 OnTimer3000:
-	mapannounce "job_wiz","Please eliminate all monsters within the time limit.",bc_map;
+	mapannounce "job_wiz","Elimine todos os montros no tempo dado.",bc_map;
 	end;
 
 OnTimer33000:
-	mapannounce "job_wiz","2 minutes and 30 seconds remaining.",bc_map;
+	mapannounce "job_wiz","2 minutos e 30 segundos restantes.",bc_map;
 	end;
 
 OnTimer63000:
-	mapannounce "job_wiz","2 minutes remaining.",bc_map;
+	mapannounce "job_wiz","2 minutos restantes.",bc_map;
 	end;
 
 OnTimer93000:
-	mapannounce "job_wiz","1 minute and 30 seconds remaining.",bc_map;
+	mapannounce "job_wiz","1 minuto e 30 segundos restantes.",bc_map;
 	end;
 
 OnTimer123000:
-	mapannounce "job_wiz","1 minute remaining.",bc_map;
+	mapannounce "job_wiz","1 minuto restante.",bc_map;
 	end;
 
 OnTimer153000:
-	mapannounce "job_wiz","30 seconds remaining.",bc_map;
+	mapannounce "job_wiz","30 segundos restantes.",bc_map;
 	end;
 
 OnTimer173000:
-	mapannounce "job_wiz","10 seconds remaining.",bc_map;
+	mapannounce "job_wiz","10 segundos restantes.",bc_map;
 	end;
 
 OnTimer183000:
-	mapannounce "job_wiz","Time is up.",bc_map;
-	donpcevent "Room of Fire::OnDisable";
+	mapannounce "job_wiz","O Tempo acabou.",bc_map;
+	donpcevent "Sala do Fogo::OnDisable";
 	end;
 
 OnTimer184000:
-	enablenpc "Room of Fire#Failed";
+	donpcevent "Sala do Fogo#Failed::OnEnable";
 	end;
 
 OnTimer185000:
-	mapannounce "job_wiz","Next candidate, please enter.",bc_map;
+	mapannounce "job_wiz","Próximo candidato, entre por favor.",bc_map;
 	end;
 
 OnTimer186000:
-	disablenpc "Room of Fire#Failed";
-	donpcevent "Room of Fire::OnDisable";
-	donpcevent "Arena Assistant::OnStart";
+	disablenpc "Sala do Fogo#Failed";
+	donpcevent "Sala do Fogo::OnDisable";
+	donpcevent "Sala de Espera#wiz::OnStart";
 	end;
 }
 
-job_wiz,1,6,1	script	Room of Fire#Door	66,{
+job_wiz,1,6,1	script	Sala do Fogo#Door	1_F_01,{
 OnInit:
-	disablenpc "Room of Fire#Door";
+	disablenpc "Sala do Fogo#Door";
 	end;
 
 OnEnable:
-	enablenpc "Room of Fire#Door";
-	donpcevent "Room of Fire::OnDisable";
+	enablenpc "Sala do Fogo#Door";
+	donpcevent "Sala do Fogo::OnDisable";
 	set .MyMobs,3;
-	monster "job_wiz",44,99,"Greatest General",1277,1,"Room of Fire#Door::OnMyMobDead";
-	if (checkre(0)) {
-		monster "job_wiz",43,99,"Greatest General",1277,1,"Room of Fire#Door::OnMyMobDead";
-		monster "job_wiz",45,99,"Greatest General",1277,1,"Room of Fire#Door::OnMyMobDead";
+	monster "job_wiz",44,99,"Greatest General",1277,1,"Sala do Fogo#Door::OnMyMobDead";
+	if (RENEWAL) {
+		monster "job_wiz",43,99,"Greatest General",1277,1,"Sala do Fogo#Door::OnMyMobDead";
+		monster "job_wiz",45,99,"Greatest General",1277,1,"Sala do Fogo#Door::OnMyMobDead";
 	}
 	else {
-		monster "job_wiz",43,99,"Horong",1129,1,"Room of Fire#Door::OnMyMobDead";
-		monster "job_wiz",45,99,"Horong",1129,1,"Room of Fire#Door::OnMyMobDead";
+		monster "job_wiz",43,99,"Horong",1129,1,"Sala do Fogo#Door::OnMyMobDead";
+		monster "job_wiz",45,99,"Horong",1129,1,"Sala do Fogo#Door::OnMyMobDead";
 	}
 	initnpctimer;
 	end;
 
 OnDisable:
 	killmonsterall "job_wiz";
-	disablenpc "Room of Fire#Door";
+	disablenpc "Sala do Fogo#Door";
 	end;
 
 OnMyMobDead:
 	set .MyMobs,.MyMobs-1;
 	if (.MyMobs < 1) {
-		mapannounce "job_wiz","Congratulations, " + strcharinfo(0) + ". You have passed the job change test.",bc_map;
-		set WIZ_Q,7;
+		mapannounce "job_wiz","Parabéns, "+strcharinfo(0)+". Você passou no teste.",bc_map;
+		WIZ_Q = 7;
 		changequest 9017,9018;
-		donpcevent "Room of Fire#Door::OnDisable";
-		donpcevent "Test Helper#wiz::OnEnable";
+		donpcevent "Sala do Fogo#Door::OnDisable";
+		donpcevent "Ajudante do Teste#wiz::OnEnable";
 		stopnpctimer;
 	}
 	end;
 
 OnTimer1000:
-	mapannounce "job_wiz","The guard monster has appeared. You have 2 minutes.",bc_map;
+	mapannounce "job_wiz","O monstro Guardião apareceu. Você tem 2 minutos.",bc_map;
 	end;
 
 OnTimer30000:
-	mapannounce "job_wiz","1 minute and 30 seconds remaining.",bc_map;
+	mapannounce "job_wiz","1 minuto e 30 segundos restantes.",bc_map;
 	end;
 
 OnTimer60000:
-	mapannounce "job_wiz","1 minute remaining.",bc_map;
+	mapannounce "job_wiz","1 minuto restante.",bc_map;
 	end;
 
 OnTimer90000:
-	mapannounce "job_wiz","30 seconds remaining.",bc_map;
+	mapannounce "job_wiz","30 segundos restantes.",bc_map;
 	end;
 
 OnTimer110000:
-	mapannounce "job_wiz","10 seconds remaining.",bc_map;
+	mapannounce "job_wiz","10 segundos restantes.",bc_map;
 	end;
 
 OnTimer120000:
-	mapannounce "job_wiz","Time is up.",bc_map;
-	donpcevent "Room of Fire#Door::OnDisable";
+	mapannounce "job_wiz","O tempo acabou.",bc_map;
+	donpcevent "Sala do Fogo#Door::OnDisable";
 	end;
 
 OnTimer121000:
-	enablenpc "Room of Fire#Failed";
+	enablenpc "Sala do Fogo#Failed";
 	end;
 
 OnTimer122000:
-	mapannounce "job_wiz","Next candidate, please enter.",bc_map;
+	mapannounce "job_wiz","Próximo candidado, entre por favor.",bc_map;
 	end;
 
 OnTimer123000:
-	disablenpc "Room of Fire#Failed";
-	donpcevent "Room of Fire#Door::OnDisable";
-	donpcevent "Arena Assistant::OnStart";
+	disablenpc "Sala do Fogo#Failed";
+	donpcevent "Sala do Fogo#Door::OnDisable";
+	donpcevent "Sala de Espera#wiz::OnStart";
 }
 
-job_wiz,46,99,0	script	Room of Fire#Failed	-1,16,16,{
+job_wiz,46,99,0	script	Sala do Fogo#Failed	-1,16,16,{
 OnInit:
-	disablenpc "Room of Fire#Failed";
+	disablenpc "Sala do Fogo#Failed";
 	end;
 
-OnTouch_:
+OnTouch:
 	warp "geffen",120,110;
 	end;
 }
 
-job_wiz,1,7,1	script	Test Helper#wiz	66,{
+job_wiz,1,7,1	script	Ajudante do Teste#wiz	1_F_01,{
 	end;
 
 OnInit:
-	disablenpc "Test Helper#wiz";
+	disablenpc "Ajudante do Teste#wiz";
 	end;
 
 OnEnable:
@@ -1633,15 +1566,15 @@ OnEnable:
 	end;
 
 OnDisable:
-	disablenpc "Test Helper#wiz";
+	disablenpc "Ajudante do Teste#wiz";
 	end;
 
 OnTimer2000:
-	mapannounce "job_wiz","Please return and complete the rest of the job change processes.",bc_map;
+	mapannounce "job_wiz","Por favor volte e complete o resto do teste.",bc_map;
 	end;
 
 OnTimer4000:
-	mapannounce "job_wiz","This is the end of the test. Next candidate, please stand by.",bc_map;
+	mapannounce "job_wiz","Esse é o final do teste. Próximo candidato, se apresente.",bc_map;
 	end;
 
 OnTimer5000:
@@ -1649,337 +1582,308 @@ OnTimer5000:
 	end;
 
 OnTimer7000:
-	mapannounce "job_wiz","Next candidate, please enter.",bc_map;
+	mapannounce "job_wiz","Próximo candidato, entre por favor.",bc_map;
 	end;
 
 OnTimer9000:
-	donpcevent "Test Helper#wiz::OnDisable";
-	donpcevent "Arena Assistant::OnStart";
+	donpcevent "Ajudante do Teste#wiz::OnDisable";
+	donpcevent "Sala de Espera#wiz::OnStart";
 	stopnpctimer;
 	end;
 }
 
-gef_tower,107,36,4	script	White Dog#wiz	81,{
+gef_tower,107,36,4	script	Cachorro Branco#wiz	4_DOG01,{
 	if (BaseJob != Job_Mage) {
 		if (BaseJob == Job_Wizard) {
 			cutin "job_wizard_maria01",2;
 			mes "[Maria]";
-			mes "Instead of sticking around here, wouldn't it be better to go out and test how strong you've become?";
+			mes "Ao invés de ficar andando por aqui, não seria melhor testar o quão forte você ficou?";
 			next;
 			mes "[Maria]";
-			mes "Don't forget that Wizards grow and improve in power each and every day.";
+			mes "Não esqueça que Bruxos crescem e melhoram seus poderes todos os dias.";
 			close2;
 			cutin "job_wizard_maria01",255;
 			end;
-		}
-		else if (BaseClass == Job_Novice) {
+		} else if (BaseClass == Job_Novice) {
 			cutin "job_wizard_maria01",2;
-			mes "[Dog]";
-			mes "What? Kiddo!";
-			mes "Is a Dog talking so amusing to you?";
-		}
-		else {
+			mes "[Cachorro]";
+			mes "O quê? Criança!";
+			mes "Um cachorro falante é tão incrível para você?";
+		} else {
 			cutin "job_wizard_maria02",2;
-			mes "[Dog]";
-			mes "Sheesh...Why would a person that can't even cast a spell a single spell come up here?";
-			mes "*Pfft* If you're that bored, do the world a favor and climb to the top of this building via the outside, then proceed to do some acrobatics if you get there.";
+			mes "[Cachorro]";
+			mes "Sheesh...Por que uma pessoa que nem mesmo consegue conjurar uma magia vem aqui em cima?";
+			mes "*Pfft* Se você estiver tão entediado, faça um favor ao mundo, suba até o topo dessa torre pelo lado de fora, e começe a fazer algunas acrobacias se você conseguir.";
 		}
 		next;
-		mes "[Dog]";
-		mes "*Bark* Get lost!";
-		mes "I don't have time for people like you!";
+		mes "[Cachorro]";
+		mes "*Late* Se manda!";
+		mes "Eu não tenho tempo para pessoas como você!";
 		close2;
 		cutin "job_wizard_maria02",255;
 		end;
 	}
 	if (WIZ_Q == 0) {
 		cutin "job_wizard_maria01",2;
-		mes "[Dog]";
-		mes "Ah...I know what you're about to say. You want to change jobs to a Wizard, right?";
+		mes "[Cachorro]";
+		mes "Ah...Eu sei o que você quer dizer. Você quer se tornar um Bruxo, certo?";
 		next;
-		mes "[Dog]";
-		mes "Go talk to Catherine. She'll help you.";
+		mes "[Cachorro]";
+		mes "Vá falar com Catherine. Ela vai te ajudar.";
 		next;
-		mes "[Dog]";
-		mes "Also, if you would like to know anything about the job change process, I can explain.";
+		mes "[Cachorro]";
+		mes "Além disso, se você quiser saber algo sobre o teste, eu posso explicar.";
 		next;
-		switch(select(".......:A Dog is talking to me...")) {
+		switch(select(".......:Um Cachorro está falando comigo...")) {
 		case 1:
-			mes "[Dog]";
-			mes "...*bark*...? What is it?? Why are you looking at me like that?!";
-			mes "Is it your first time seeing a Dog talk?";
+			mes "[Cachorro]";
+			mes "...*late*...? O que é?? Por que você está olhando pra mim assimt?!";
+			mes "É a primeira vez que você vê um Cachorro falar?";
 			next;
-			mes "[Dog]";
-			mes "*Bark* It's not common that you see a Dog talking I suppose. bark~";
-			mes "...Yes i suppose it is a rare site...*grrr*...Stop Gawking for goodness sakes!";
+			mes "[Cachorro]";
+			mes "*Late* Não é normal você ver um cachorro falando eu suponho. late~";
+			mes "...Sim eu acho que é uma visão rara...*grrr*...Feche a boca por favor!";
 			next;
-			mes "[Dog]";
-			mes "My name is 'Maria Splodofska'. Just call me 'Maria'.";
-			mes "I'm helping candidates that wish to become Wizards.";
+			mes "[Cachorro]";
+			mes "Meu nome é 'Maria Splodofska'. Apenas me chame 'Maria'.";
+			mes "Eu estou ajudando candidatos que querem se tornar Bruxos.";
 			next;
 			cutin "job_wizard_maria03",2;
 			mes "[Maria]";
-			mes "*Bark* Well, the reason I became a dog is...I was helping my boyfriend in experimenting to prepare for his Final for his Magic Degree. Well, *Grrrr* he accidentally turned me into a dog.";
-			mes "Theoretically, in a couple months the chemicals should wear off and I should be returned to normal. When exactly, I have no idea?";
+			mes "*Late* Bem, eu me tornei um cachorro porque...Eu estava ajudando meu namorado num experimento para o teste final dele em Graduação em Mágica. Bom, *Grrrr* ele acidentalmente me transformou num cachorro.";
+			mes "Teoricamente, em algums meses a química vai acabar e eu vou voltar ao normal. Quando exatamente, não tenho idéia?";
 			next;
 			cutin "job_wizard_maria01",2;
 			mes "[Maria]";
-			mes "Well...it doesn't concern you anyways.";
-			mes "Now, where were we.";
+			mes "Bem...isso não te diz respeito.";
+			mes "Agora, onde estávamos?.";
 			next;
 			break;
 		case 2:
 			cutin "job_wizard_maria02",2;
-			mes "[Dog]";
-			mes "*Bark* *bark* *bark* Don't state the obvious! Alright, I know I'm a dog!";
+			mes "[Cachorro]";
+			mes "*Late* *Late* *Late* Não diga o óbvio! Certo, eu sei que so um cachorro!";
 			next;
 			cutin "job_wizard_maria01",2;
-			mes "[Dog]";
-			mes "My name is 'Maria Splodofska'. People call me 'Maria'.";
-			mes "I'm helping little ones like you that wish to become Wizards.";
+			mes "[Cachorro]";
+			mes "Meu nome é 'Maria Splodofska'. O pessoal me chama 'Maria'.";
+			mes "Eu ajudo pessoas como você que desejam se tornar um Bruxo.";
 			next;
 			cutin "job_wizard_maria03",2;
-			mes "[Dog called 'Maria']";
-			mes "The reason I became a dog is...My boyfriend that was experimenting to prepare for the Magic Degree, accidentally turned me into a dog.";
-			mes "Theoretically, in a couple months, the chemicals should wear off and I should be returned to normal. Exactly when, I have no idea?";
+			mes "[Cadela chamada 'Maria']";
+			mes "O motivo de eu ter me tornado um cachorro...Meu namorado estava fazendo experimentos para a Graduação em Magia dele, acidentalmente ele me transformou em cachorro.";
+			mes "Teoricamente, em alguns meses, a química vai acabar e eu vou voltar ao normal. Quando exatamente, não tenho idéia?";
 			next;
 			cutin "job_wizard_maria02",2;
-			mes "[Dog called 'Maria']";
-			mes "I'm not a 'dog' called 'Maria'!! Oi!! Listen to me!!";
+			mes "[Cadela chamada 'Maria']";
+			mes "Eu não sou uma Cadela chamada 'Maria'!! Oi!! Me escute!!";
 			next;
-			mes "[Dog... 'Maria'...]";
+			mes "[Cadela... 'Maria'...]";
 			mes "..........";
 			next;
 			mes "[Maria]";
-			mes "...*BARK* *BARK* *BARK*... I'm upset, but whatever!! You seem busy so I'll just drop it.";
+			mes "...*LATE* *LATE* *LATE*... Eu estou chateada, mas que seja!! Você parece ocupado, então eu vou deixar.";
 			next;
 			break;
 		}
 		cutin "job_wizard_maria01",2;
 		mes "[Maria]";
-		mes "Like I said before, to change jobs, talk to Catherine.";
-		mes "She's a new Wizard too.";
+		mes "Como eu tinha dito, para trocar de classe, fale com Catherine.";
+		mes "Ela é uma Bruxa nova também.";
 		next;
 		mes "[Maria]";
-		mes "I can tell you more about the job change process, but I can't hold back a busy person now can I?";
-		mes "What do you think? Should I explain some about whats in store for Mages that wish to become Wizards?";
+		mes "Eu posso te contar mais sobre o processo de troca de classe, mas eu não posso atrapalhar uma pessoa ocupada agora, posso?";
+		mes "O que você acha? Devo explicar algo sobre Magos que querem se tornar Bruxos?";
 		next;
-		switch(select("Yes, please! I would like that.:No, it's ok.:A talking dog...")) {
+		switch(select("Sim, por favor! Eu gostaria disso.:Não, está tudo bem.:Um cachorro falante...")) {
 		case 1:
 			cutin "job_wizard_maria01",2;
 			mes "[Maria]";
-			mes "OK, I will explain the process for you.";
+			mes "Certo, vou explicar o processo para você.";
 			next;
 			mes "[Maria]";
-			mes "There are three tests in the job change process.";
-			mes "The first test is collecting magic items.";
+			mes "Existem três testes no processo todo.";
+			mes "O primeiro teste é coletar itens mágicos.";
 			next;
 			mes "[Maria]";
-			mes "That one begins when you submit an application to Catherine.";
-			mes "She'll either tell you to collect all types of gemstones, or gather stones with attributes.";
+			mes "Ele começa quando você se inscreve para o processo com a Catherine.";
+			mes "Ou ela vai te mandar coletar vários tipos de gemas, ou pegar pedras com atributos.";
 			next;
 			mes "[Maria]";
-			mes "Second test is a magic quiz,";
-			mes "The gloomy Laurel in the corner is in charge of that part.";
+			mes "O segundo teste é um quiz mágico,";
+			mes "O homem sombrio no canto alí é o responsável por essa parte.";
 			next;
 			mes "[Maria]";
-			mes "There are questions about magic, monsters, and Mages.";
-			mes "Out of the 10 questions, if you don't get them all correct, he doesn't let you pass. In other words, you fail...";
+			mes "Existem perguntas sobre mágica, monstros e magos..";
+			mes "De 10 perguntas, se você não acertar todas, ele não vai deixar você passar...";
 			next;
 			mes "[Maria]";
-			mes "Oddly enough, He is in charge of the 3rd test too.";
-			mes "The third test is eliminating monsters.";
+			mes "Estranhamente, ele é o encarregado pelo 3º teste também.";
+			mes "O terceiro teste é eliminar monstros.";
 			next;
 			mes "[Maria]";
-			mes "In each room, there are monsters of certain attributes.";
-			mes "You must attack them with the appropriate spells.";
+			mes "Em cada sala, existem monstros de certos atributos.";
+			mes "Você deve ataca-los com as magias de propriedades certas.";
 			next;
 			mes "[Maria]";
-			mes "Well, that's all that I can say. Go apply now.";
+			mes "Bem, isso é tudo que eu posso dizer. Vá se inscrever agora.";
 			next;
 			mes "[Maria]";
-			mes "It's better to just try it yourself than to listen to my descriptions.";
+			mes "É melhor tentar por você mesmo do que escutar minhas descrições..";
 			close2;
 			cutin "job_wizard_maria01",255;
 			warp "gef_dun00",116,102;
 			end;
 		case 2:
 			mes "[Maria]";
-			mes "Really? Ok, then go apply and do your best.";
+			mes "Sério? Certo, então vá se inscrever e faça o seu melhor.";
 			close2;
 			cutin "job_wizard_maria01",255;
 			end;
 		case 3:
 			cutin "job_wizard_maria02",2;
 			mes "[Maria]";
-			mes "I'm not a DOG!! HOOOOWWWWWWLLLLLLL~";
+			mes "Eu não sou um cachorro!! Auuuuuuuuuuu~";
 			next;
 			mes "[Maria]";
-			mes "Dang it! I hope you FAIL!! Go get lost!!";
+			mes "Grr! Espero que falhe!! Se manda!!";
 			close2;
 			cutin "job_wizard_maria01",255;
 			warp "gef_dun00",116,102;
 			end;
 		}
-	}
-	else if (WIZ_Q == 1) {
+	} else if (WIZ_Q == 1) {
 		cutin "job_wizard_maria01",2;
 		mes "[Maria]";
-		mes "You seem lost...";
-		mes "You've applied, and now you're looking for the items right?";
+		mes "Você parece perdido...";
+		mes "Você se inscreve, e agora está procurando pelos itens certo?";
 		next;
 		mes "[Maria]";
-		mes "But since this is only the first test, don't depend on others.";
-		mes "Complete it yourself. Thats the best way.";
+		mes "Mas já que esse é apenas o primeiro teste, não dependa dos outros.";
+		mes "Faça sozinho. Essa é a melhor maneira.";
 		next;
 		mes "[Maria]";
-		mes "From what I've heard, you have to gather gemstones...";
-		mes "I can't help you directly, but I can give you some advice.";
+		mes "Pelo o que eu escutei, você tem que coletar gemas...";
+		mes "Eu não posso te ajudar diretamente, mas eu posso te dar umas dicas.";
 		next;
 		mes "[Maria]";
-		mes "First, to get Red Gemstones, go to Culverts in Prontera.";
-		mes "You can obtain them from the Thief Bugs and Thief Bug eggs found plentiful there.";
+		mes "Primeiro, para pegar Gemas vermelhas, vá aos esgotos de Prontera.";
+		mes "Você pode obtê-las dos Besouros-ladrões e dos Ovos de Besouro-ladrão encontrados lás.";
 		next;
 		mes "[Maria]";
-		mes "Yellow Gemstones are easy to find in the desert.";
-		mes "Condors, Picky's, and sometimes monsters like Golem's drop them.";
+		mes "Gemas Amarelas são fáceis de achar no deserto.";
+		mes "Condores, Pickys, e algums monstros como Golem soltam elas.";
 		next;
 		mes "[Maria]";
-		mes "And...*woof* to get Blue Gemstones. Try going to the Byalan Dungeons.";
-		mes "Cornutus, Vadon, and monsters like Mars can drop those Gems.";
+		mes "e...*au* para conseguir Gemas azuis. Tente ir na Ilha Byalan.";
+		mes "Cornutus, Vadon, e monstros como Marte podem soltar essas gemas.";
 		next;
 		mes "[Maria]";
-		mes "Of course you can get blue Gemstones at the magic shop here in town...";
-		mes "But, finding them yourself would be much more rewarding and helpful later in the test.";
+		mes "Mas é claro que você pode pegar Gemas azuis na Loja Mágica aqui na cidade...";
+		mes "Mas, encontrar elas por si só seria muito mais gratificante e útil no teste.";
 		next;
 		mes "[Maria]";
-		mes "Anyways, try your best.";
-		mes "This is the basics of being a Wizard.";
+		mes "De qualquer jeito, faça seu melhor.";
+		mes "Essa é a base de ser um Bruxo.";
 		close2;
 		cutin "job_wizard_maria01",255;
 		end;
-	}
-	else if (WIZ_Q == 2) {
+	} else if (WIZ_Q == 2) {
 		cutin "job_wizard_maria01",2;
 		mes "[Maria]";
-		mes "You seem lost...";
-		mes "You've applied, and now you're looking for the items right?";
+		mes "Você parece perdido...";
+		mes "Você se inscreveu, e agora você está procurando pelos itens certo?";
 		next;
 		mes "[Maria]";
-		mes "But since this is only the first test, don't depend on others for help.";
-		mes "Complete it yourself, thats the best way.";
+		mes "Mas já que esse é apenas o primeiro teste, não dependa dos outros..";
+		mes "Faça sozinho. Essa é a melhor maneira..";
 		next;
 		mes "[Maria]";
-		mes "From what I've heard, you have to gather elemental stones...";
-		mes "I can't help you directly, but I can give you some advice.";
+		mes "Pelo o que eu escutei, você tem que coletar pedras elementais...";
+		mes "Eu não posso te ajudar diretamente, mas eu posso te dar umas dicas.";
 		next;
 		mes "[Maria]";
-		mes "Well, you can find the Crystal Blue in Byalan Dungeon.";
-		mes "Cornutus, Kukre, Marina, Vadon...these monsters drop them frequently.";
+		mes "Bem, você pode encontrar Cristal Azul na Ilha Byalan.";
+		mes "Cornutus, Kukre, Marina, Vadon...esses monstros soltam com frequência.";
 		next;
 		mes "[Maria]";
-		mes "You can get Green Live from insect type monsters.";
-		mes "Try hunting monsters like Horn, Mantis, or Vitata.";
+		mes "Você pode pegar Vida Verdejante dos monstros tipo inseto.";
+		mes "Tente caçar monstros como Besouro-Chifre,Louva-a-Deus ou Vitata.";
 		next;
 		mes "[Maria]";
-		mes "Oh and *woof*, Red Blood. I heard you can get a lot of those from...";
-		mes "Elder Willows, Metallers or Scorpions found in the desert would work well too.";
+		mes "Oh e *au*, Sangue Escarlate. Você pode pegar um monte desses de...";
+		mes "Salgueiro Anciões, Metallers ou Escorpiões encontrados no deserto.";
 		next;
 		mes "[Maria]";
-		mes "For Wind of Verdue. Hornet, Stainer, Steel Chonchon.";
-		mes "If you try just a bit, you can get them really easily.";
+		mes "Para Frescor do Vento. Zangão, Percevejo,Chonchon de Aço.";
+		mes "Se você tentar um pouco, você pode conseguir facilmente.";
 		next;
 		mes "[Maria]";
-		mes "But anyways, always try your best.";
-		mes "It's the basics of being a Wizard.";
+		mes "De qualquer jeito, faça seu melhor.";
+		mes "Essa é a base de ser um Bruxo.";
 		close2;
 		cutin "job_wizard_maria01",255;
 		end;
-	}
-	else if (WIZ_Q == 3) {
+	} else if (WIZ_Q == 3) {
 		cutin "job_wizard_maria01",2;
 		mes "[Maria]";
-		mes "Don't be too relieved just after the first test.";
-		mes "Try your best, as you still have two more tests to go.";
+		mes "Não fique relaxado apenas depois do primeiro teste.";
+		mes "Faça seu melhor, porque você ainda tem dois testes para passar.";
 		close2;
 		cutin "job_wizard_maria01",255;
 		end;
-	}
-	else if (WIZ_Q == 4) {
+	} else if (WIZ_Q == 4) {
 		cutin "job_wizard_maria01",2;
 		mes "[Maria]";
 		mes "ZzzzZzzzZzzz...";
 		next;
 		cutin "job_wizard_maria02",2;
 		mes "[Maria]";
-		mes "*wimper*...Blizadris...you suck...Zzz...";
+		mes "*wimper*...Blizadris...seu idiota...Zzz...";
 		close2;
 		cutin "job_wizard_maria02",255;
 		end;
-	}
-	else if (WIZ_Q == 5) {
+	} else if (WIZ_Q == 5) {
 		cutin "job_wizard_maria01",2;
 		mes "[Maria]";
-		mes "Oh, you're doing well aren't you?";
+		mes "Oh, você está indo bem não é?";
 		next;
 		mes "[Maria]";
-		mes "Well, try your best to the very end.";
-		mes "Laurel is waiting.";
+		mes "Bem, Faça seu melhor até o final.";
+		mes "Laurel está esperando.";
+		close2;
+		cutin "job_wizard_maria01",255;
+		end;
+	} else if (WIZ_Q == 6) {
+		cutin "job_wizard_maria01",2;
+		mes "[Maria]";
+		mes "*LATE*...você desistiu?";
+		mes "*Suspiro*...Como você pode se tornar um bruxo com o coração fraco?";
+		next;
+		mes "[Maria]";
+		mes "Você sabe que cada sala tem monstros do mesmo atributo...";
+		mes "Se você é uma pessoa que lida com magia, você precisa saber sobre os diferentes tipos de magia.";
+		next;
+		mes "[Maria]";
+		mes "Você também precisa aprender como contra-atacar monstros que usam habilidades.";
+		mes "Sua melhor tática é atacar os monstros que estão atacando você primeiro.";
+		next;
+		mes "[Maria]";
+		mes "*Grrr* De qualquer maneira, Continue o teste.";
+		mes "Não tenha uma mente fraca, *au* e volte! *Late* *Late* agora mesmo! *BARK*";
+		close2;
+		cutin "job_wizard_maria01",255;
+		end;
+	} else if (WIZ_Q == 7) {
+		cutin "job_wizard_maria01",2;
+		mes "[Maria]";
+		mes "Como eu pensava, sabia que você era capaz de fazer isso, eu podia cheirar isso em você! *au*";
+		mes "Agora eu posso te chamar de Bruxo.";
+		next;
+		mes "[Maria]";
+		mes "Parabéns. Sempre dê seu melhor em tudo, não importa o quê.";
 		close2;
 		cutin "job_wizard_maria01",255;
 		end;
 	}
-	else if (WIZ_Q == 6) {
-		cutin "job_wizard_maria01",2;
-		mes "[Maria]";
-		mes "*BARK*...you gave up?";
-		mes "*Sigh*...How can you become a Wizard with such a weak heart?";
-		next;
-		mes "[Maria]";
-		mes "You know that each room has monsters of the same attribute...";
-		mes "If you're a person that deals with magic, you need to know about the different spells.";
-		next;
-		mes "[Maria]";
-		mes "You also need to learn how to counter monsters that use skills.";
-		mes "Your best bet is to kill the monsters that are attacking you first.";
-		next;
-		mes "[Maria]";
-		mes "*Grrr* Anyways, continue the test.";
-		mes "Don't have a weak mind, *woof* and go back! *Bark* *Bark* Right this moment! *BARK*";
-		close2;
-		cutin "job_wizard_maria01",255;
-		end;
-	}
-	else if (WIZ_Q == 7) {
-		cutin "job_wizard_maria01",2;
-		mes "[Maria]";
-		mes "As I thought, I knew you'd be able to do it, I could smell it in yah! *Woof*";
-		mes "Now I can call you Wizard.";
-		next;
-		mes "[Maria]";
-		mes "Congratulations. Always give your best at everything, no matter what.";
-		close2;
-		cutin "job_wizard_maria01",255;
-		end;
-	}
-}
-
-//============================================================ 
-// Old changelog
-//============================================================ 
-//= 1.1 Now using the initnpctimer command, donpcevent,
-//= and new waitingroom event commands.  No more addtimer spamming.
-//= No longer have to talk to the npc to take the test.  Just enter the chat room.
-//= 1.2 Changed global variable names to unique ones.
-//= 1.2a Rollback from the wrong Kashy's fix
-//= 1.2b Fixed issue with duplicating monsters thx to Bison.[kobra_k88]
-//= 1.2c changed one Horong to Frilldora (now 3rd room contains 1 agressive mob.)
-//= 1.2d more simplified fire room - removed agressive Desert Wolf [Lupus]
-//= 1.3 Added Baby Class support. 1.5 Fixed possible EXP abuse [Lupus]
-//= 1.6 Added a func which prevent advanced classes passing
-//= 2nd Job Quests again. It also guides adv classes where to go. [Lupus]
-//= 1.7 Replaced 2 Hodes with 2 Horong's (according to the official guide) [Lupus]
-//= 1.8 Removed callfunc Is_####_Class in favor of baseClass [Silentdragon]
-//= 2.1 Changed numbers to constants. [Vicious]
-//= 2.2 Merged back JFunc [Lupus] 2.2a Removed extra MES, added missing NEXT
-//= 2.3 Bigfoot monster summon corrected [Zairik]
+}

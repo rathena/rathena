@@ -17,501 +17,335 @@
 //= 1.6 Fixed AEGIS amatsu warp typo. [Kisuka]
 //= 1.7 Kagerou/Oboro support (Class -> BaseClass) [Euphy]
 //============================================================ 
+//===================== Tradução PT-BR ==========
+// Tradução: Weed0
+// Revisado: HD Scripts - Projeto eaBrasil
+//=============================================== 
 
 alberta,30,65,3	script	Akagi	730,{
-	if (Class == Job_Novice) {
-		if (JobLevel == 10) {
-			mes "[Akagi]";
-			mes "Hmmm...";
-			mes "You must have come,";
-			mes "sensing that someone";
-			mes "is waiting for you here.";
-			mes "Tell me, do you seek";
-			mes "the path of patience?";
-			next;
-			if(select("No:Yes") == 1) {
-				mes "[Akagi]";
-				mes "I see.";
-				mes "To each his own,";
-				mes "I suppose. Take";
-				mes "care of yourself.";
-				close;
-			}
-			mes "[Akagi]";
-			mes "Very well.";
-			mes "Then, let me";
-			mes "set you on that";
-			mes "path right away...";
-			close2;
-			switch(rand(3)) {
-				case 1:
-					warp "amatsu",170,229;
-					end;
-				case 2:
-					warp "amatsu",216,188;
-					end;
-				default:
-					warp "amatsu",178,176;
-					end;
-			}
-		} else {
-			mes "[Akagi]";
-			mes "Hm? I cannot be";
-			mes "of any service to";
-			mes "you until you grow";
-			mes "a little stronger...";
-			close;
-		}
-	} else {
+	if (Class != Job_Novice) {
 		mes "[Akagi]";
-		mes "Hmm...";
-		mes "You and I...";
-		mes "We are fairly equal in";
-		mes "terms of combat ability.";
-		mes "Perhaps we can spar";
-		mes "together sometime.";
+		mes "Hmm... Você e eu...";
+		mes "Somos bastante parecidos em termos de habilidade de combate.";
+		mes "Talvez possamos treinar juntos algum dia.";
 		close;
+	}
+	if (JobLevel < 10) {
+		mes "[Akagi]";
+		mes "Hm? Não posso te dar nenhum serviço até que se torne um pouco mais forte...";
+		close;
+	}
+	mes "[Akagi]";
+	mes "Humm...";
+	mes "Você deve ter vindo aqui sentindo que alguém estava esperando por você.";
+	mes "Diga-me, você busca o caminho da paciência?";
+	next;
+	if (select("Não:Sim") == 1) {
+		mes "[Akagi]";
+		mes "Entendo.";
+		mes "Cada um por si, suponho.";
+		mes "Cuide-se.";
+		close;
+	}
+	mes "[Akagi]";
+	mes "Muito bem.";
+	mes "Então, deixe-me levá-lo àquele local logo ali.";
+	close2;
+	switch(rand(3)) {
+		case 1: warp "amatsu",170,229; end;
+		case 2: warp "amatsu",216,188; end;
+		default: warp "amatsu",178,176; end;
 	}
 }
 
-que_ng,30,65,3	script	Kuuga Gai#nq	730,{
+que_ng,30,65,3	script	Cougar#nq	4_M_JOB_ASSASSIN,{
 	if (Upper == 2) {
-		mes "[Kuuga Gai]";
-		mes "I... I've never";
-		mes "seen a baby as";
-		mes "powerful as you!";
-		mes "G-get away, you";
-		mes "freak of nature!";
+		mes "[Cougar]";
+		mes "Eu... Eu nunca vi uma criancinha tão poderosa quanto você!";
+		mes "S-se afaste, sua aberração da natureza!";
 		close;
 	}
-	if (Class == Job_Novice) {
-		if (JobLevel < 10) {
-			mes "[Kuuga Gai]";
-			mes "Hm? Have you come to";
-			mes "learn how to be a Ninja?";
-			mes "You're not quite experienced";
-			mes "enough yet, so come back";
-			mes "after you're more familiar";
-			mes "with fighting monsters.";
-			close;
-		}
+	if (Class == Job_Ninja) {
+		mes "[Cougar]";
+		mes "Como tem passado?";
+		mes "Treine duro: você quer ser capaz de desaparecer sem deixar rastros.";
+		mes "Se você puder fazer isso, terá o respeito de qualquer Ninja~";
+		close;
+	} else if (Class == Job_Novice && JobLevel < 10) {
+		mes "[Cougar]";
+		mes "Hm? Você veio para aprender como se tornar um Ninja?";
+		mes "Você não é suficientemente experiente ainda, então volte depois que lutar com monstros lhe for mais familiar.";
+		close;
+	} else if (Class == Job_Novice && JobLevel == 10) {
 		if (NINJ_Q == 0) {
 			mes "["+strcharinfo(0)+"]";
-			mes "Excuse me.";
-			mes "H-hello?";
+			mes "Com licença. O-olá?";
 			next;
-			mes "[Kuuga Gai]";
+			mes "[Cougar]";
 			mes "...............................";
-			mes "How did you do that?";
+			mes "Como fez isso?";
 			next;
 			mes "["+strcharinfo(0)+"]";
-			mes "Do what? I didn't";
-			mes "do anything, I don't think...";
+			mes "Fiz o quê? Eu não fiz nada, eu acho que não...";
 			next;
-			mes "[Kuuga Gai]";
-			mes "H-How are you able to";
-			mes "see me? I'm supposed to";
-			mes "be invisible to the naked eye.";
-			mes "Ah, now I get it. Wildcat Joe";
-			mes "must have sent you to kill me! I won't fall for your tricks! Die!";
+			mes "[Cougar]";
+			mes "C-como você é capaz de me vez?";
+			mes "Era suposto que eu estivesse invisível a olho nu!";
+			mes "Ah, agora entendi.";
+			mes "Wildcat Joe deve ter te mandado para me matar!";
+			mes "Não cairei em seus truques! Morra!";
 			next;
 			mes "["+strcharinfo(0)+"]";
-			mes "W-wait! I-I don't even";
-			mes "know who Wildcat Joe is!";
-			mes "Calm down, there's no";
-			mes "need to get violent!";
+			mes "E-espere! Eu nem mesmo sei quem sei quem Wildcat Joe é!";
+			mes "Acalme-se, não há motivo para ficar violento!";
 			next;
-			mes "[Kuuga Gai]";
-			mes "What...?";
-			mes "How did you dodge";
-			mes "all of my attacks?";
-			mes "You've got some talent,";
-			mes "I'll give you that.";
+			mes "[Cougar]";
+			mes "Quê...? Como se esquivou de todos os meus ataques?";
+			mes "Você tem algum talento, eu admito.";
 			next;
 			mes "["+strcharinfo(0)+"]";
 			mes "...............................";
-			mes "I came here hoping";
-			mes "to change my job";
-			mes "to a Ninja.";
+			mes "Eu vim aqui esperando mudar minha classe para Ninja.";
 			next;
-			mes "[Kuuga Gai]";
-			mes "...Oh. Is that all?";
-			mes "Hmm, you've got great";
-			mes "potential, but I can't help";
-			mes "you now. I've got too many";
-			mes "enemies, and I can't let my";
-			mes "guard down for even a second.";
+			mes "[Cougar]";
+			mes "...Oh. Isso é tudo?";
+			mes "Hmm, você tem grande potencial, mas não posso te ajudar agora.";
+			mes "Tenho inimigos demais, e não posso baixar a guarda nem por um segundo.";
 			next;
-			mes "[Kuuga Gai]";
-			mes "That Wildcat Joe is";
-			mes "completely ruthless...!";
-			mes "He could strike at any time!";
-			mes "He'll do anything to achieve";
-			mes "victory over his enemies!";
+			mes "[Cougar]";
+			mes "Aquele Wildcat Joe é completamente implacável...!";
+			mes "Ele poderia atacar a qualquer hora!";
+			mes "Ele faria qualquer coisa para alcançar a vitóra sobre seus inimigos!";
 			next;
-			mes "[Kuuga Gai]";
-			mes "Wait, wait, I just";
-			mes "thought of something.";
-			mes "Maybe you can help me out.";
-			mes "Do what I ask, and I'll teach";
-			mes "you a few of my skills if you";
-			mes "really want to be a Ninja.";
+			mes "[Cougar]";
+			mes "Espere, espere, acabei de pensar em algo.";
+			mes "Talvez você possa me ajudar.";
+			mes "Faça o que peço, e irei ensiná-lo algumas de minhas habilidades se você realmente quiser se tornar um Ninja.";
 			next;
-			if(select("Sure.:No, thanks.") == 2) {
-				mes "[Kuuga Gai]";
-				mes "Hm? Well, alright.";
-				mes "Still, I don't see";
-				mes "why we can't help";
-				mes "each other in this";
-				mes "little predicament...";
+			if (select("Com certeza!:Não, obrigado.") == 2) {
+				mes "[Cougar]";
+				mes "Hm? Bem, tudo bem. Entretanto, não entendo porque não podemos nos ajudar neste pequeno dilema...";
 				close;
 			}
-			mes "[Kuuga Gai]";
-			mes "Great! Now, I wanted to";
-			mes "ask Wildcat Joe if he'd";
-			mes "agree to a temporary truce.";
-			mes "I'm aware that both of us";
-			mes "are out of weapons, so we";
-			mes "should get well equipped first.";
+			mes "[Cougar]";
+			mes "Ótimo!";
+			mes "Agora, eu queria perguntar ask Wildcat Joe se ele concordaria com uma trégua temporária.";
+			mes "Estou ciente que ambos estamos sem armas, então deveríamos nos equipar melhor antes.";
 			next;
-			mes "[Kuuga Gai]";
-			mes "Please take this letter,";
-			mes "and deliver it to Wildcat";
-			mes "Joe in Einbroch. He's a master";
-			mes "of disguise, so keep a careful";
-			mes "eye out for him. Ah, and look";
-			mes "for him in a high place.";
+			mes "[Cougar]";
+			mes "Por favor, pegue esta carta e entregue-a a Wildcat Joe, em Einbroch.";
+			mes "Ele é um mestre dos disfarces, então mantenha um olhar atento a ele.";
+			mes "Ah, e procure-o em um local alto.";
 			next;
-			mes "[Kuuga Gai]";
-			mes "Yeah, Wildcat Joe";
-			mes "always did have a thing";
-			mes "for hiding in high places.";
-			mes "Anyway, after you give him";
-			mes "the letter, come back and";
-			mes "let me know his answer.";
+			mes "[Cougar]";
+			mes "Sim, Wildcat Joe sempre teve uma queda por se esconder em lugares altos.";
+			mes "De qualquer maneira, depois de entregar-lhe a carta, volte e me diga sua resposta.";
 			set NINJ_Q,1;
 			setquest 6015;
 			close;
-		}
-		else if (NINJ_Q == 1) {
-			mes "[Kuuga Gai]";
-			mes "Even if this task";
-			mes "isn't that urgent,";
-			mes "please hurry over to";
-			mes "Einbroch and deliver";
-			mes "my letter to Wildcat Joe.";
+		} else if (NINJ_Q == 1) {
+			mes "[Cougar]";
+			mes "Mesmo que esta tarefa não seja tão urgente, por favor, corra para Einbroch e entregue minha carta para Wildcat Joe.";
 			close;
-		}
-		else if (NINJ_Q == 2) {
-			mes "[Kuuga Gai]";
-			mes "Did you deliver that";
-			mes "letter to Wildcat Joe?";
-			mes "I still need to know his";
-			mes "response to my proposal";
-			mes "for a truce. Anyway, see";
-			mes "if you can needle him for it.";
+		} else if (NINJ_Q == 2) {
+			mes "[Cougar]";
+			mes "Você entregou aquela carta para Wildcat Joe?";
+			mes "Eu ainda preciso saber a resposta dele para minha proposta de trégua.";
+			mes "De qualquer maneira, veja se consegue forçá-lo a isso.";
 			close;
-		}
-		else if (NINJ_Q == 3) {
-			mes "[Kuuga Gai]";
-			mes "Ah, you've returned.";
-			mes "So did Wildcat Joe send";
-			mes "you back here with his";
-			mes "response? Great, great,";
-			mes "please let me read it.";
+		} else if (NINJ_Q == 3) {
+			mes "[Cougar]";
+			mes "Ah, você voltou.";
+			mes "Então, Wildcat Joe mandou você de volta com a resposta dele?";
+			mes "Ótimo, ótimo, por favor, leia-a para mim.";
 			next;
-			mes "[Kuuga Gai]";
-			mes "What...?! How could he";
-			mes "reject my proposal for";
-			mes "a truce?! This can only";
-			mes "mean that he's made another";
-			mes "Kunai. Nuts! I have to catch";
-			mes "up to him, or I'm a goner!";
+			mes "[Cougar]";
+			mes "Quê...?! Como ele poderia rejeitar minha proposta de trégua?!";
+			mes "Isto só pode significar que ele fez outra Kunai.";
+			mes "Poxa! Tenho que alcançá-lo ou estarei arruinado!";
 			next;
-			mes "[Kuuga Gai]";
-			mes "Listen, you've got to help";
-			mes "me out again! I need you to";
-			mes "gather some materials so that";
-			mes "I can craft my own Kunai to fight Wildcat Joe. Then, I'll go ahead";
-			mes "and change your job to a Ninja.";
+			mes "[Cougar]";
+			mes "Ouça, você tem que me ajudar de novo!";
+			mes "Preciso que você me traga alguns materiais para que eu possa criar minha própria Kunai para lutar com Wildcat Joe.";
+			mes "Então, cumprirei nosso trato e mudarei sua classe para Ninja.";
 			next;
-			mes "[Kuuga Gai]";
-			mes "All you need";
-			mes "to bring me is";
-			mes "^3355FF5 Cyfars^000000 and";
-			mes "^3355FF1 Phracon^000000.";
-			mes "Please get those";
-			mes "as quickly as you can!";
+			mes "[Cougar]";
+			mes "Tudo o que precisa me trazer é";
+			mes "^3355FF5 Cyfars^000000 e";
+			mes "^3355FF1 Fracon^000000.";
+			mes "Por favor, consiga-os o mais rápido que puder!";
 			next;
 			mes "["+strcharinfo(0)+"]";
-			mes "Huh? That's funny,";
-			mes "Wildcat Joe actually";
-			mes "asked me to gather";
-			mes "those same materials.";
+			mes "Huh? Que engraçado, Wildcat Joe me pediu para conseguir os mesmos materiais.";
 			next;
-			mes "[Kuuga Gai]";
-			mes "Curses! Then that means...";
-			mes "You actually helped Joe";
-			mes "in crafting his Kunai! No!";
-			mes "I should have thought about";
-			mes "that earlier! Well, it's too";
-			mes "late now. Just h-hurry it up!";
+			mes "[Cougar]";
+			mes "Maldição! Então isso significa...";
+			mes "Que você ajudou Joe em criar sua Kunai! Não!";
+			mes "Eu deveria ter pensado nisso antes!";
+			mes "Bem, é tarde demais agora. Apenas apresse-se!";
 			set NINJ_Q,4;
 			changequest 6017,6018;
 			close;
-		}
-		else if (NINJ_Q == 4) {
-			if (countitem(7053) < 5 || countitem(1010) < 1) {
-				mes "[Kuuga Gai]";
-				mes "Hurry and bring";
-				mes "^3355FF5 Cyfars^000000 and";
-				mes "^3355FF1 Phracon^000000 to me,";
-				mes "so that I can craft";
-				mes "my own Kunai to use";
-				mes "against Wildcat Joe!";
+		} else if (NINJ_Q == 4) {
+			if (countitem(7053) < 5 || !(countitem(1010))) {
+				mes "[Cougar]";
+				mes "Se apresse e traga";
+				mes "^3355FF5 Cyfars^000000 e";
+				mes "^3355FF1 Fracon^000000";
+				mes "para mim, então poderei criar minha própria Kunai para usar contra Wildcat Joe!";
 				close;
 			}
-			if (SkillPoint != 0) {
-				mes "[Kuuga Gai]";
+			if (SkillPoint) {
+				mes "[Cougar]";
 				mes "Whoa, whoa...";
-				mes "You still have some";
-				mes "leftover Skill Points.";
-				mes "You'd better spend all";
-				mes "of them before you";
-				mes "change jobs, right?";
+				mes "Você ainda tem alguns Pontos de Habilidade restantes.";
+				mes "É melhor gastar todos eles antes de mudar de classe, certo?";
 				close;
 			}
-			mes "[Kuuga Gai]";
-			mes "Ah, you're back with";
-			mes "everything that I need.";
-			mes "You've come earlier than";
-			mes "I expected, eh? Great,";
-			mes "as promised, I'll turn";
-			mes "you into a Ninja.";
+			mes "[Cougar]";
+			mes "Ah, você está de volta com tudo que preciso.";
+			mes "Voltou antes do que eu esperava, eh?";
+			mes "Ótimo, como prometido, te transformarei em um Ninja.";
 			next;
-			mes "[Kuuga Gai]";
-			mes "Let me formally introduce";
-			mes "myself. I am High Ninja Kuuga Gai";
-			mes "in the Touga Ninja Corps, and";
-			mes "I'm in charge of the search";
-			mes "party to find Sir Kazma.";
+			mes "[Cougar]";
+			mes "Permita que eu me apresente formalmente.";
+			mes "Eu sou o Mestre Ninja Cougar do Grupo Ninja Touga, e estou encarregado do grupo de busca para encontrar Sir Kazma.";
 			next;
-			mes "[Kuuga Gai]";
-			mes "Sir Kazma is the chief";
-			mes "of my village, but he's";
-			mes "run away. This has resulted";
-			mes "in an internal conflict within";
-			mes "the Ninja Corps. Things are";
-			mes "pretty unstable right now...";
+			mes "[Cougar]";
+			mes "Sir Kazma é o chefe do meu vilarejo, mas ele fugiu.";
+			mes "Isto resultou em um conflito interno entre o Grupo Ninja.";
+			mes "As coisas estão bem instáveis agora...";
 			next;
-			mes "[Kuuga Gai]";
-			mes "I initially didn't want to";
-			mes "accept you as a Ninja because";
-			mes "of this complicated situation.";
-			mes "However, you've proven that";
-			mes "you're truly worthy of joining";
-			mes "the Ninja ranks.";
+			mes "[Cougar]";
+			mes "Inicialmente, não queria te aceitar como um Ninja, por causa dessa situação complicada.";
+			mes "Contudo, você provou que é realmente digno de se juntar ao grupo dos Ninjas.";
 			next;
-			mes "[Kuuga Gai]";
-			mes "According to his letter, even";
-			mes "Joe thinks highly of you. Just";
-			mes "remember that, as a Ninja, your";
-			mes "mission is your highest priority. But don't let mission objectives";
-			mes "supersede your conscience.";
+			mes "[Cougar]";
+			mes "De acordo com a carta dele, até mesmo Joe reconhece seu valor.";
+			mes "Basta lembrar que, como um Ninja, sua missão é sua maior prioridade.";
+			mes "Mas não deixe os objetivos da missão tornem-se mais importantes que sua consciência.";
 			next;
-			mes "[Kuuga Gai]";
-			mes "''Secrecy above all else.''";
-			mes "To keep our secrets in the";
-			mes "shadows, you can only buy";
-			mes "or sell Ninja weapons with";
-			mes "authorized dealers. Please";
-			mes "keep that in mind.";
+			mes "[Cougar]";
+			mes "''Sigilo acima de tudo.''";
+			mes "Para manter nossos segredos nas sombras, você pode somente comprar ou vender armas Ninja em comerciantes autorizados.";
+			mes "Por favor, lembre-se disso.";
 			next;
-			mes "[Kuuga Gai]";
-			mes "As of today, you are";
-			mes "now a proud member of the";
-			mes "Touga Ninja Corps. Be as";
-			mes "agile as the wind, and as";
-			mes "quiet as the falling shadows.";
+			mes "[Cougar]";
+			mes "A partir de hoje, você é um membro do esplêndido Grupo Ninja Touga.";
+			mes "Seja tão ágil como o vento, e tão silencioso como a o cair das sombras.";
 			callfunc "Job_Change",Job_Ninja;
 			set NINJ_Q,5;
 			delitem 7053,5; // Cyfar
-			delitem 1010,1; // Phracon
+			delitem 1010,1; // Fracon
 			getitem 13010,1;	// Asura
 			completequest 6018;
 			close;
 		}
-		else {
-			mes "[Kuuga Gai]";
-			mes "How have you been?";
-			mes "Train hard: you want";
-			mes "to be able to vanish";
-			mes "without a trace. If you";
-			mes "can do that, you'll get";
-			mes "the respect of any Ninja~";
-			close;
-		}
-	} else {
-		if (BaseClass == Job_Ninja) {
-			mes "[Kuuga Gai]";
-			mes "How have you been?";
-			mes "Train hard: you want";
-			mes "to be able to vanish";
-			mes "without a trace. If you";
-			mes "can do that, you'll get";
-			mes "the respect of any Ninja~";
-			close;
-		} else {
-			mes "[Kuuga Gai]";
-			mes "What...?";
-			mes "How were you able";
-			mes "to find me hidden";
-			mes "in the shadows?!";
-			mes "You must be more than";
-			mes "a common adventurer, eh?";
-			close;
-		}
-	}
+		mes "[Cougar]";
+		mes "Como tem passado?";
+		mes "Treine duro: você quer ser capaz de desaparecer sem deixar rastros.";
+		mes "Se você puder fazer isso, terá o respeito de qualquer Ninja~";
+		close;
+	}	
+	mes "[Cougar]";
+	mes "Quê...? Como você foi capaz de me encontrar nas sombras?!";
+	mes "Você deve ser mais que um aventureiro comum, eh?";
+	close;
 }
 
-einbroch,184,194,3	script	Suspicious Man#nq	881,{
+einbroch,184,194,3	script	Homem Suspeito#nq	4_M_SITDOWN,{
 	if (NINJ_Q == 1) {
-		mes "[Suspicious Man]";
-		mes "I've traveled to many";
-		mes "countries, but I've never";
-		mes "been on a building as high";
-		mes "as Einbroch Tower. All the";
-		mes "buildings in my hometown";
-		mes "are tiny in comparison...";
+		mes "[Homem Suspeito]";
+		mes "Eu viajei para muitos países, mas nunca estive em um prédio tão alto como a Torre de Einbroch.";
+		mes "Todos os prédios na minha cidade natal são minúsculos em comparação...";
 		next;
 		mes "["+strcharinfo(0)+"]";
-		mes "Oh, are you from";
-		mes "Amatsu? I'm looking";
-		mes "for someone named";
-		mes "Wildcat Joe from there.";
+		mes "Oh, você é de Amatsu?";
+		mes "Estou procurando alguém de lá que é chamado Wildcat Joe.";
 		next;
-		mes "[Suspicious Man]";
-		mes "...No. No, I'm actually";
-		mes "from Izlude, and I'm only";
-		mes "here in Einbroch for some";
-		mes "minerals. Tell me, why are";
-		mes "you looking for this Wildcat Joe?";
+		mes "[Homem Suspeito]";
+		mes "Não... Não, na verdade sou de Izlude, e estou aqui em Einbroch somente por alguns minérios.";
+		mes "Diga-me, por que está procurando por Wildcat Joe?";
 		next;
 		mes "["+strcharinfo(0)+"]";
-		mes "Well, I need to deliver";
-		mes "this letter to him and";
-		mes "get his response so that";
-		mes "I can become a Ninja.";
+		mes "Bem, preciso entregar esta carta para ele e obter sua resposta para que eu possa me tornar um Ninja.";
 		next;
-		mes "[Suspicious Man]";
-		mes "Really? Now that I think";
-		mes "about it, I do think that I've";
-		mes "run once or twice into him";
-		mes "in this town. Though, he prefers to be called ''Red Leopard Joe,''";
-		mes "instead of ''Wildcat Joe.''";
+		mes "[Homem Suspeito]";
+		mes "Sério? Pensando bem, eu acho que já o encontrei uma ou duas vezes nesta cidade.";
+		mes "No entanto, ele prefere ser chamado de ''Red Leopard Joe,'' ao invés de ''Wildcat Joe.''";
 		next;
-		mes "["+strcharinfo(0)+"]";
-		mes "I really want to help you";
-		mes "find him, but first I need";
-		mes "to find the minerals that";
-		mes "I'm looking for. If you don't";
-		mes "mind, would you help me?";
-		mes "Then I can help you find Joe.";
+		mes "[Homem Suspeito]";
+		mes "Eu realmente quero te ajudar a encontrá-lo, mas primeiro eu preciso encontrar alguns minérios que estou procurando.";
+		mes "Se não se importar, poderia me ajudar?";
+		mes "Depois posso te ajudar a encontrar Joe.";
 		next;
-		if(select("Don't worry, I'll find him alone.:Sure, I'll help you.") == 1) {
-			mes "[Suspicious Man]";
-			mes "You sure about that...?";
-			mes "Red Leopard Joe is a true";
-			mes "master of disguise. You'll";
-			mes "need all the help you can";
-			mes "get to find him...";
+		if (select("Não se preocupe, eu o encontrarei sozinho.:Claro, eu te ajudarei.") == 1) {
+			mes "[Homem Suspeito]";
+			mes "Tem certeza...? Red Leopard Joe é realmente um mestre dos disfarces.";
+			mes "Você precisará de toda ajudar que puder para encontrá-lo...";
 			close;
 		}
-		mes "[Suspicious Man]";
-		mes "Great, I'm glad to";
-		mes "hear that. Please";
-		mes "help me find";
-		mes "^3355FF5 Cyfars^000000 and";
-		mes "^3355FF1 Phracon^000000.";
+		mes "[Homem Suspeito]";
+		mes "Ótimo, estou feliz por ouvir isso.";
+		mes "Por favor, ajude-me a encontrar ^3355FF5 Cyfars^000000 e ^3355FF1 Fracon^000000.";
 		set NINJ_Q,2;
 		changequest 6015,6016;
 		close;
-	}
-	else if (NINJ_Q == 2) {
-		if (countitem(7053) < 5 || countitem(1010) < 1) {
-			mes "[Suspicious Man]";
-			mes "Please bring";
-			mes "^3355FF5 Cyfars^000000 and";
-			mes "^3355FF1 Phracon^000000 to me as";
-			mes "soon as you can. Then,";
-			mes "I can help you find";
-			mes "Red Leopard Joe.";
+	} else if (NINJ_Q == 2) {
+		if (countitem(7053) < 5 || !(countitem(1010))) {
+			mes "[Homem Suspeito]";
+			mes "Por favor, traga ";
+			mes "^3355FF5 Cyfars^000000 e";
+			mes "^3355FF1 Fracon^000000";
+			mes "para mim o mais rápido que puder.";
+			mes "Então, eu posso te ajudar a encontrar Red Leopard Joe.";
 			close;
 		}
-		mes "[Suspicious Man]";
-		mes "Good, good. You've";
-		mes "brought the minerals...";
-		mes "Now, it's my turn to";
-		mes "help you now. Here,";
-		mes "let me see that letter.";
+		mes "[Homem Suspeito]";
+		mes "Bom, muito bom.";
+		mes "Você trouxe os minerais...";
+		mes "Agora, é minha vez de te ajudar.";
+		mes "Aqui, deixe-me ver essa carta.";
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "?????!!";
 		next;
-		mes "[Suspicious Man]";
-		mes "Why? Didn't you bring Kuuga Gai's letter for me?";
+		mes "[Homem Suspeito]";
+		mes "Por quê? Você não trouxe essa carta de Cougar para mim?";
 		next;
 		mes "["+strcharinfo(0)+"]";
-		mes "Are you...";
-		mes "Are you Wildcat Joe?";
+		mes "Você é.. Você é Wildcat Joe?";
 		next;
-		mes "[Suspicious Man]";
-		mes "...Yes, but I prefer to";
-		mes "be called Red Leopard Joe.";
-		mes "Kuuga Gai sent you to me, right?";
-		mes "He's the only one who calls";
-		mes "me that. So you want to be";
-		mes "a Ninja, eh? Hmm, alright.";
+		mes "[Homem Suspeito]";
+		mes "...Sim, mas prefiro ser chamado Red Leopard Joe.";
+		mes "Cougar o mandou a mim, certo?";
+		mes "Ele é o único que me chama assim.";
+		mes "Então você quer ser um ninja, eh? Hmm, está bem.";
 		next;
 		mes "[Red Leopard Joe]";
-		mes "If you want to be a Ninja,";
-		mes "you should always be careful";
-		mes "of what you see and what you trust. Don't forget that if your";
-		mes "secrets are ever discovered, then you're finished as a Ninja.";
+		mes "Se você quiser ser um Ninja, deve sempre ser cuidadoso com o que vê e em o quem confia.";
+		mes "Não se esqueça de que, se os seus segredos forem descobertos, então você está acabado como Ninja.";
 		next;
 		mes "[Red Leopard Joe]";
-		mes "Remember to move";
-		mes "quickly, and to always";
-		mes "vanish without a trace.";
-		mes "To remain hidden in the";
-		mes "shadows is really our";
-		mes "ultimate power.";
+		mes "Lembre-se de se mover rapidamente, e de sempre desaparecer sem deixar rastros.";
+		mes "Permanecer oculto nas sombras é realmente nosso poder supremo.";
 		next;
 		mes "["+strcharinfo(0)+"]";
-		mes "I see...";
-		mes "...........";
+		mes "Entendo... ...........";
 		next;
 		mes "[Red Leopard Joe]";
-		mes "For now, let me read";
-		mes "this letter. Let's see...";
-		mes "Hm. I thought that Kuuga Gai";
-		mes "would want to challenge me";
-		mes "again, but he actually wants";
-		mes "a temporary truce? Hah!";
+		mes "Por agora, deixe-me ler esta carta.";
+		mes "Vamos ver... Hm.";
+		mes "Pensei que Cougar queria me desafiar de novo, mas na verdade ele quer uma trégua temporária? Hah!";
 		next;
 		mes "[Red Leopard Joe]";
-		mes "Thanks to your help,";
-		mes "I now have the minerals";
-		mes "I need to construct a Kunai!";
-		mes "Hahaha! I won't agree to a truce when I have the advantage!";
+		mes "Obrigado por sua ajuda, agora que tenho minérios, preciso construir uma Kunai!";
+		mes "Hahaha! Não concordarei com uma trégua quando eu tenho a vantagem!";
 		next;
 		mes "[Red Leopard Joe]";
-		mes "Anyway, let me write my";
-		mes "response to him. I'll also";
-		mes "give you my recommendation...";
-		mes "I think you'll make a very fine";
-		mes "Ninja, even if I did trick you";
-		mes "just earlier. Heh heh heh!";
+		mes "De qualquer maneira, deixe-me escrever minha resposta para ele.";
+		mes "Também vou escrever uma recomendação para você...";
+		mes "Acho que você vai se tornar um excelente Ninja, mesmo que eu tenha acabado de te enganar.";
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "......";
@@ -519,71 +353,47 @@ einbroch,184,194,3	script	Suspicious Man#nq	881,{
 		mes "............";
 		next;
 		mes "[Red Leopard Joe]";
-		mes "Here you go.";
-		mes "Please bring this";
-		mes "letter to Kuuga Gai.";
-		mes "It'll take a while to";
-		mes "return to Amatsu, so let";
-		mes "me send you there directly...";
-		delitem 1010,1;	// Phracon
+		mes "Aqui está.";
+		mes "Por favor, leve esta carta para Cougar.";
+		mes "Demoraria um pouco para voltar para Amatsu, então deixe-me mandá-lo diretamente para lá...";
+		delitem 1010,1;	// Fracon
 		delitem 7053,5;	// Cyfar
-		set NINJ_Q,3;
+		NINJ_Q = 3;
 		changequest 6016,6017;
 		close2;
 		warp "amatsu",113,127;
 		end;
-	}
-	else if (NINJ_Q == 3) {
+	} else if (NINJ_Q == 3) {
 		mes "[Red Leopard Joe]";
-		mes "Eh? I'm not sure what";
-		mes "happened, but it seems";
-		mes "that you haven't delivered";
-		mes "my response to Kuuga Gai yet.";
-		mes "Shall I directly send you";
-		mes "to Amatsu right now?";
+		mes "Eh? Não sei o que aconteceu, mas parece que você ainda não entregou minha resposta para Cougar.";
+		mes "Devo enviar-lhe diretamente para Amatsu agora?";
 		next;
-		if(select("No, thanks.:Yes, please.") == 1) {
+		if (select("Não, obrigado.:Sim, por favor.") == 1) {
 			mes "[Red Leopard Joe]";
-			mes "Alright. Well, I was";
-			mes "just trying to save";
-			mes "you some time.";
+			mes "Certo. Bem, eu estava só tentando poupar algum tempo seu.";
 			close;
 		}
 		mes "[Red Leopard Joe]";
-		mes "Okay, then.";
-		mes "Goodbye for now.";
+		mes "Okay, então. Adeus por enquanto.";
 		close2;
 		warp "amatsu",113,127;
 		end;
-	}
-	else if (NINJ_Q == 4) {
+	} else if (NINJ_Q == 4) {
 		mes "[Red Leopard Joe]";
-		mes "Kuuga Gai asked you to";
-		mes "gather some materials";
-		mes "too? Oh well, I suppose";
-		mes "that I can't blame him.";
-		mes "Besides, I should be able";
-		mes "to beat him in a fair fight~";
+		mes "Cougar te pediu para obter alguns materiais também?";
+		mes "Oh, bem, suponho que não posso culpá-lo.";
+		mes "Aliás, devo ser capaz de vencê-lo em uma luta justa~";
 		close;
-	}
-	else if (NINJ_Q == 5 && BaseClass == Job_Ninja) {
+	} else if (NINJ_Q == 5 && Class == Job_Ninja) {
 		mes "[Red Leopard Joe]";
-		mes "Oh, you're a Ninja~";
-		mes "I hope you continue to";
-		mes "train yourself and master";
-		mes "all the Ninja skills that";
-		mes "you can. Always remember";
-		mes "to blend into the shadows.";
+		mes "Oh, você é um Ninja~";
+		mes "Espero que continue a treinar e maximizar todas as habilidades de Ninja que puder.";
+		mes "Sempre se lembre de misturar-se com as sombras.";
 		close;
 	}
 	else {
-		mes "[Tourist]";
-		mes "I've traveled to many";
-		mes "countries, but I've never";
-		mes "been on a building as high";
-		mes "as Einbroch Tower. All the";
-		mes "buildings in my hometown";
-		mes "are tiny in comparison...";
-		close;
+		mes "[Turista]";
+		mes "Eu viajei para muitos países, mas nunca estive em um prédio tão alto como a Torre de Einbroch.";
+		mes "Todos os prédios na minha cidade natal são minúsculos em comparação...";
 	}
-}
+}

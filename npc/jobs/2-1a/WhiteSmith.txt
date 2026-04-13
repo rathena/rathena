@@ -14,75 +14,79 @@
 //= 1.2 Made numbers into constants. [Vicious]
 //= 1.3 Now saves/restores all the quest skills [Lupus]
 //============================================================ 
+//===================== Tradução PT-BR ==========
+// Tradução: Weed0
+// Revisado: HD Scripts - Projeto eaBrasil
+//=============================================== 
 
 valkyrie,44,50,5	script	MasterSmith#Valkyrie	731,{
 	if (ADVJOB == 0 || Upper != 1) {
 		set .@karma_d,rand(1,10);
 		if (.@karma_d > 4) {
 			mes "[MasterSmith]";
-			mes "Congratulations.";
-			mes "Honor to the warriors!";
+			mes "Parabéns.";
+			mes "Honra aos guerreiros!";
 			close;
 		}
 		mes "[MasterSmith]";
 		mes "Ah...";
-		mes "The pinnacle";
-		mes "of craftsmanship.";
-		mes "That's the work of";
-		mes "a MasterSmith.";
+		mes "O melhor em";
+		mes "forjar e o refinamento.";
+		mes "Esse é o trabalho";
+		mes "do Mestre-Ferreiro.";
 		next;
 		mes "[MasterSmith]";
-		mes "Once you're the";
-		mes "the best of the best,";
-		mes "you begin forging with";
-		mes "the goal of discovering";
-		mes "new and better ways of";
-		mes "crafting...";
+		mes "Sendo um será";
+		mes "o melhor dos melhores,";
+		mes "você começará a forjar com";
+		mes "o objetivo de descobrir";
+		mes "novas e melhores formas de";
+		mes "forja...";
 		close;
 	}
 	else if (ADVJOB == Job_WhiteSmith && Class == Job_Merchant_High && JobLevel > 39) {
 		mes "[MasterSmith]";
-		mes "The time has come!";
-		mes "Our world needs brave,";
-		mes "hard-working adventurers";
-		mes "like you...";
+		mes "Chegou a hora!";
+		mes "Nosso mundo precisa de coragem,";
+		mes "e de esforçados aventureiros";
+		mes "como você...";
 		next;
 		mes "[MasterSmith]";
-		mes "Would you like to";
-		mes "become a MasterSmith?";
+		mes "Você gostaria de se tornar";
+		mes "um Mestre-Ferreiro?";
 		next;
-		if (select("No.:Yes.") == 1) {
+		if (select("Nap.:Sim.") == 1) {
 			mes "[MasterSmith]";
-			mes "When you're ready,";
-			mes "feel free to come back.";
-			mes "Honor to the warriors!";
+			mes "Quando estiver pronto,";
+			mes "sinta-se a vontade para voltar.";
+			mes "Honre os guerreiros!";
 			close;
 		}
 		if (SkillPoint) {
 			mes "[MasterSmith]";
-			mes "It is still possible for you to learn more skills. Please use";
-			mes "all of your remaining Skill Points before returning to me.";
+			mes "Ainda é possível que você aprenda mais habilidades. Por favor, use";
+			mes "todos os seus Pontos de Habilidades antes de voltar a falar comigo.";
 			close;
 		}
 		jobchange Job_Whitesmith;
 		set ADVJOB,0;
 		mes "[MasterSmith]";
-		mes "Congratulations!";
-		mes "As a MasterSmith,";
-		mes "I hope you will forge";
-		mes "a path towards a brighter";
-		mes "future for Midgard.";
+		mes "Parabéns!";
+		mes "Sendo um Mestre-Ferreiro,";
+		mes "eu acredito que você irá construir";
+		mes "um brilhante futuro";
+		mes "para Rune-Midgard.";
 		close;
 	}
 	mes "[MasterSmith]";
-	mes "Welcome";
-	mes "to Valhalla,";
-	mes "the Hall of Honor.";
+	mes "Bem-vindo";
+	mes "a Valhalla,";
+	mes "o Salao de Honras.";
 	next;
 	mes "[MasterSmith]";
-	mes "Please make";
-	mes "yourself comfortable";
-	mes "while you are here.";
-	mes "Honor to the warriors!";
+	mes "Por favor, sinta-se";
+	mes "confortável enquanto";
+	mes "você estiver aqui.";
+	mes "Honra os guerreiros.";
 	close;
-}
+}
