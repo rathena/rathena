@@ -36948,10 +36948,13 @@ Body:
     MaxLevel: 10
     Type: Magic
     TargetType: Attack
+    DamageFlags:
+      Splash: true
     Range: 9
     Hit: Multi_Hit
     HitCount: 2
     Element: Holy
+    SplashArea: 4
     GiveAp: 2
     CastTime: 4000
     AfterCastActDelay: 500
