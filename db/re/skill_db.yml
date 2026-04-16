@@ -34602,15 +34602,15 @@ Body:
         Time: 150000
     Duration2:
       - Level: 1
-        Time: 5000
+        Time: 2500
       - Level: 2
-        Time: 4000
-      - Level: 3
-        Time: 3000
-      - Level: 4
         Time: 2000
-      - Level: 5
+      - Level: 3
+        Time: 1500
+      - Level: 4
         Time: 1000
+      - Level: 5
+        Time: 500
     Cooldown: 60000
     Requires:
       SpCost:
