@@ -36951,15 +36951,18 @@ Body:
     MaxLevel: 10
     Type: Magic
     TargetType: Attack
+    DamageFlags:
+      Splash: true
     Range: 9
-    Hit: Single
-    HitCount: 1
+    Hit: Multi_Hit
+    HitCount: 2
     Element: Holy
+    SplashArea: 4
     GiveAp: 2
     CastTime: 4000
     AfterCastActDelay: 500
     Duration1: 20000
-    Cooldown: 1000
+    Cooldown: 750
     FixedCastTime: 1500
     Requires:
       SpCost:
@@ -37116,7 +37119,7 @@ Body:
     FixedCastTime: 1500
     Requires:
       SpCost: 150
-      ApCost: 20
+      ApCost: 15
     Unit:
       Id: Pneumaticus_Procella
       Range:
@@ -43548,7 +43551,7 @@ Body:
     Type: Weapon
     TargetType: Attack
     Range: 2
-    Hit: Multi_hit
+    Hit: Multi_Hit
     HitCount: -2
     GiveAp: 3
     Element: Weapon
