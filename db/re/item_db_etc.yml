@@ -102030,6 +102030,51 @@ Body:
     Weight: 10
     Trade:
       NoDrop: true
+  - Id: 1002834
+    AegisName: ABI_Ground_Essence
+    Name: Ground Essence of the Rift    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1002835
+    AegisName: ABI_Ground_Rune_Ore
+    Name: Ground Rune Ore Shard    # !todo check english name
+    Type: Etc
+    Weight: 1
+  - Id: 1002836
+    AegisName: ABI_Ground_Rune
+    Name: Ground Rune of Rift    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1002837
+    AegisName: ABI_Lava_Essence
+    Name: Rift Volcanic Essence    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1002838
+    AegisName: ABI_Lava_Rune_Ore
+    Name: Rift Volcano Rune Shard    # !todo check english name
+    Type: Etc
+    Weight: 1
+  - Id: 1002839
+    AegisName: ABI_Lava_Rune
+    Name: Rift Volcano Rune    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1002840
+    AegisName: ABI_Fixed_Crack
+    Name: Fixed Crack    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1002841
+    AegisName: aegis_1002841
+    Name: Dimensional Land Card Shard    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1002842
+    AegisName: aegis_1002842
+    Name: Dimensional Volcano Card Shard    # !todo check english name
+    Type: Etc
+    Weight: 10
   - Id: 1200000
     AegisName: IDTest_arrow
     Name: IDTest arrow
