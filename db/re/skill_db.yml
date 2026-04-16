@@ -34895,7 +34895,7 @@ Body:
     FixedCastTime: 1000
     Requires:
       SpCost: 100
-      ApCost: 150
+      ApCost: 120
     Status: Dragonic_Aura
   - Id: 5211
     Name: DK_MADNESS_CRUSHER
