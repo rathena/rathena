@@ -37647,6 +37647,7 @@ Body:
         Area: 3
     GiveAp: 3
     Duration1: 10000
+    AfterCastActDelay: 300
     Cooldown:
       - Level: 1
         Time: 5000
@@ -37661,15 +37662,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 46
+          Amount: 53
         - Level: 2
-          Amount: 54
+          Amount: 56
         - Level: 3
-          Amount: 62
+          Amount: 59
         - Level: 4
-          Amount: 70
+          Amount: 62
         - Level: 5
-          Amount: 78
+          Amount: 65
     Status: WeaponBlock_On
   - Id: 5293
     Name: SHC_ENCHANTING_SHADOW
