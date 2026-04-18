@@ -16,8 +16,6 @@ paramk	mapflag	nopenalty
 //============================================================
 // Municipality (Cities/Towns/Villages)
 //============================================================
-brasilis	mapflag	nopenalty
-bra_in01	mapflag	nopenalty
 dicastes01	mapflag	nopenalty
 dicastes02	mapflag	nopenalty
 dic_in01	mapflag	nopenalty

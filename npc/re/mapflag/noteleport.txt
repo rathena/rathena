@@ -26,10 +26,9 @@ paramk	mapflag	noteleport
 moc_para01	mapflag	noteleport
 
 //============================================================
-// Episode 13
+// Episode 13.3
 //============================================================
 s_atelier	mapflag	noteleport
-bra_in01	mapflag	noteleport
 dic_in01	mapflag	noteleport
 job3_gen01	mapflag	noteleport
 job3_sha01	mapflag	noteleport
@@ -359,6 +358,12 @@ job4_tro	mapflag	noteleport
 1@4drk	mapflag	monster_noteleport
 
 //============================================================
+// Spirit Handler Job Change
+//============================================================
+1@exsh	mapflag	noteleport
+1@exsh	mapflag	monster_noteleport
+
+//============================================================
 // Geffen Night Arena
 //============================================================
 1@ge_sn	mapflag	noteleport
@@ -458,3 +463,13 @@ que_thr	mapflag	noteleport
 //============================================================
 itemmall	mapflag	noteleport
 itemmall	mapflag	monster_noteleport
+
+//============================================================
+// Forgotten Area 1
+//============================================================
+for_dun01	mapflag	noteleport
+
+//============================================================
+// Forgotten Area 2
+//============================================================
+for_dun02	mapflag	noteleport

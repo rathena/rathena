@@ -15,6 +15,7 @@
 //= 1.6 Added Illusion of Underwater exchange [Capuche]
 //= 1.7 Added Illusion of Twins enchanter [Capuche]
 //= 1.8 Added Illusion Merchant [Haydrich]
+//= 1.9 Added Illusion of Teddy Bear exchange [Atemo]
 //============================================================
 
 //============================================================
@@ -882,5 +883,55 @@ OnInit:
 	// Restock
 	npcshopupdate "market_resonance_stone",100003,2000000,99999;
 	npcshopupdate "market_resonance_stone",100004,2000000,99999;
+	end;
+}
+
+
+//============================================================
+//= Illusion of Teddy Bear
+//============================================================
+
+ein_d02_i,177,158,3	script	Bear Wanting Illusion Stone#ITB	4_NASARIAN,{
+	.@item_name$ = getitemname(25271); // IllusionStone
+	mes "[Bear Wanting " + .@item_name$ + "]";
+	mes "If you give me an " + .@item_name$ + ", I'll do something nice for you!";
+	next;
+	switch( select( "Reason for being here", "Good thing [Illusion equipment]", "Quit" ) ) {
+	case 1:
+		mes "[Bear Wanting " + .@item_name$ + "]";
+		mes "I don't know why...!";
+		mes "The other teddy bears were in line, so I was in line too!";
+		mes "Whoaaaaaa!!!!";
+		mes "I didn't know it was here!";
+		next;
+		mes "[Bear Wanting " + .@item_name$ + "]";
+		mes "A teddy bear with an " + .@item_name$ + "!";
+		mes "Strong!";
+		mes "I don't have any " + .@item_name$ + "s!";
+		mes "Less... stronger...";
+		next;
+		mes "[Bear Wanting " + .@item_name$ + "]";
+		mes "What are " + .@item_name$ + "s?";
+		mes "I don't know but I want some!";
+		close;
+	case 2:
+		mes "[Bear Wanting " + .@item_name$ + "]";
+		mes "Makes you good with what you have!";
+		next;
+		mes "[Bear Wanting " + .@item_name$ + "]";
+		mes "If you want to do well, bring equipment refined to ^ff0000+9 or higher. It'll all disappear... haha?^000000";
+		next;
+		mes "[Bear Wanting " + .@item_name$ + "]";
+		mes "^ff0000" + .@item_name$ + "^000000!!! " + .@item_name$ + " is the most important thing, but... other materials are also needed.";
+		mes "For every good thing you need another good thing.";
+		next;
+		close2;
+		callshop( "barter_ill_teddy" );
+		end;
+	case 3:
+		mes "[Bear Wanting " + .@item_name$ + "]";
+		mes "Okay...";
+		close;
+	}
 	end;
 }

@@ -618,7 +618,6 @@ OnInit:
 	end;
 }
 
-/*
 ein_d02_i,161,180,5	script	Machoko#machoco	8_F_GIRL,{
 	if (BaseLevel < 150)
 		end;
@@ -767,7 +766,6 @@ OnInit:
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(3457,PLAYTIME) == 2" );
 	end;
 }
-*/
 
 tur_d03_i,125,186,5	script	Orian#orian	4_M_LGTPOOR,{
 	if (BaseLevel < 150)

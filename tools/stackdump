@@ -57,7 +57,7 @@ fi
 # Finally dump the backtrace
 # If number is given, Sig-plugin format. otherwise, standard stackdump format
 if [ $# -gt 2 ]; then
-	awk '$2 ~ /[0-9a-eA-E]\]$/{print $2}' $STACK | tr -d \[\] | addr2line -f -e $SERVER 
+	awk '$2 ~ /[0-9a-eA-E]\]$/{print $2}' $STACK | tr -d \[\] | addr2line -f -e $SERVER
 else
 	awk '/^[0-9]/{print $2}' $STACK | addr2line -f -e $SERVER
 fi

@@ -3,8 +3,8 @@
 
 #include "char_cnslif.hpp"
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 
 #include <common/cli.hpp>
 #include <common/ers.hpp>
@@ -47,7 +47,7 @@ TIMER_FUNC(cnslif_console_timer){
 	memset(buf,0,MAX_CONSOLE_IN); //clear out buf
 
 	if(cli_hasevent()){
-		if(fgets(buf, MAX_CONSOLE_IN, stdin)==NULL)
+		if(fgets(buf, MAX_CONSOLE_IN, stdin)==nullptr)
 			return -1;
 		else if(strlen(buf)>MIN_CONSOLE_IN)
 			cnslif_parse(buf);
@@ -56,11 +56,11 @@ TIMER_FUNC(cnslif_console_timer){
 }
 
 // Console Command Parser [Wizputer]
-int cnslif_parse(const char* buf)
+int32 cnslif_parse(const char* buf)
 {
 	char type[64];
 	char command[64];
-	int n=0;
+	int32 n=0;
 
 	if( ( n = sscanf(buf, "%63[^:]:%63[^\n]", type, command) ) < 2 ){
 		if((n = sscanf(buf, "%63[^\n]", type))<1) return -1; //nothing to do no arg

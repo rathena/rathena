@@ -3,16 +3,16 @@
 
 #include "date.hpp"
 
-#include <time.h>
+#include <ctime>
 
 /*
  * Get the current year
  */
-int date_get_year(void)
+int32 date_get_year(void)
 {
 	time_t t;
 	struct tm * lt;
-	t = time(NULL);
+	t = time(nullptr);
 	lt = localtime(&t);
 	return lt->tm_year+1900;
 }
@@ -24,7 +24,7 @@ enum e_month date_get_month(void)
 {
 	time_t t;
 	struct tm * lt;
-	t = time(NULL);
+	t = time(nullptr);
 	lt = localtime(&t);
 	return (enum e_month)(lt->tm_mon+1);
 }
@@ -32,11 +32,11 @@ enum e_month date_get_month(void)
 /*
  * Get the day of the month
  */
-int date_get_dayofmonth(void)
+int32 date_get_dayofmonth(void)
 {
 	time_t t;
 	struct tm * lt;
-	t = time(NULL);
+	t = time(nullptr);
 	lt = localtime(&t);
 	return lt->tm_mday;
 }
@@ -48,7 +48,7 @@ enum e_dayofweek date_get_dayofweek(void)
 {
 	time_t t;
 	struct tm * lt;
-	t = time(NULL);
+	t = time(nullptr);
 	lt = localtime(&t);
 	return (enum e_dayofweek)lt->tm_wday;
 }
@@ -56,11 +56,11 @@ enum e_dayofweek date_get_dayofweek(void)
 /*
  * Get the day of the year
  */
-int date_get_dayofyear(void)
+int32 date_get_dayofyear(void)
 {
 	time_t t;
 	struct tm * lt;
-	t = time(NULL);
+	t = time(nullptr);
 	lt = localtime(&t);
 	return lt->tm_yday;
 }
@@ -68,11 +68,11 @@ int date_get_dayofyear(void)
 /*
  * Get the current hours
  */
-int date_get_hour(void)
+int32 date_get_hour(void)
 {
 	time_t t;
 	struct tm * lt;
-	t = time(NULL);
+	t = time(nullptr);
 	lt = localtime(&t);
 	return lt->tm_hour;
 }
@@ -80,11 +80,11 @@ int date_get_hour(void)
 /*
  * Get the current minutes
  */
-int date_get_min(void)
+int32 date_get_min(void)
 {
 	time_t t;
 	struct tm * lt;
-	t = time(NULL);
+	t = time(nullptr);
 	lt = localtime(&t);
 	return lt->tm_min;
 }
@@ -92,11 +92,11 @@ int date_get_min(void)
 /*
  * Get the current seconds
  */
-int date_get_sec(void)
+int32 date_get_sec(void)
 {
 	time_t t;
 	struct tm * lt;
-	t = time(NULL);
+	t = time(nullptr);
 	lt = localtime(&t);
 	return lt->tm_sec;
 }
@@ -104,7 +104,7 @@ int date_get_sec(void)
 /*
  * Get the value for the specific type
  */
-int date_get( enum e_date_type type )
+int32 date_get( enum e_date_type type )
 {
 	switch( type ){
 		case DT_SECOND:

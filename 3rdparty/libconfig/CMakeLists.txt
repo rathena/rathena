@@ -27,3 +27,10 @@ set( LIBCONFIG_SOURCES
 set( LIBCONFIG_DEFINITIONS
 	"-DLIBCONFIG_STATIC"
 	CACHE INTERNAL "libconfig definitions" )
+
+include(CheckIncludeFile)
+check_include_file(xlocale.h HAVE_LOCALE_H)
+
+if(HAVE_LOCALE_H)
+	set( LIBCONFIG_DEFINITIONS "${LIBCONFIG_DEFINITIONS} -DHAVE_XLOCALE_H" CACHE INTERNAL "libconfig definitions" )
+endif()

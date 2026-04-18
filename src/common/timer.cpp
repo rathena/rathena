@@ -3,15 +3,9 @@
 
 #include "timer.hpp"
 
+#include <cstdlib>
+#include <cstring>
 #include <utility>
-
-#include <stdlib.h>
-#include <string.h>
-
-#ifdef WIN32
-#include "winapi.hpp" // GetTickCount()
-#else
-#endif
 
 #include "cbasetypes.hpp"
 #include "db.hpp"
@@ -19,6 +13,9 @@
 #include "nullpo.hpp"
 #include "showmsg.hpp"
 #include "utils.hpp"
+#ifdef WIN32
+#include "winapi.hpp" // GetTickCount()
+#endif
 
 // If the server can't handle processing thousands of monsters
 // or many connected clients, please increase TIMER_MIN_INTERVAL.
@@ -28,14 +25,14 @@ const t_tick TIMER_MIN_INTERVAL = 20;
 const t_tick TIMER_MAX_INTERVAL = 1000;
 
 // timers (array)
-static struct TimerData* timer_data = NULL;
-static int timer_data_max = 0;
-static int timer_data_num = 0;
+static struct TimerData* timer_data = nullptr;
+static int32 timer_data_max = 0;
+static int32 timer_data_num = 0;
 
 // free timers (array)
-static int* free_timer_list = NULL;
-static int free_timer_list_max = 0;
-static int free_timer_list_pos = 0;
+static int32* free_timer_list = nullptr;
+static int32 free_timer_list_max = 0;
+static int32 free_timer_list_pos = 0;
 
 
 /// Comparator for the timer heap. (minimum tick at top)
@@ -47,7 +44,7 @@ static int free_timer_list_pos = 0;
 #define DIFFTICK_MINTOPCMP(tid1,tid2) DIFF_TICK(timer_data[tid1].tick,timer_data[tid2].tick)
 
 // timer heap (binary heap of tid's)
-static BHEAP_VAR(int, timer_heap);
+static BHEAP_VAR(int32, timer_heap);
 
 
 // server startup time
@@ -61,15 +58,15 @@ struct timer_func_list {
 	struct timer_func_list* next;
 	TimerFunc func;
 	char* name;
-} *tfl_root = NULL;
+} *tfl_root = nullptr;
 
 /// Sets the name of a timer function.
-int add_timer_func_list(TimerFunc func, const char* name)
+int32 add_timer_func_list(TimerFunc func, const char* name)
 {
 	struct timer_func_list* tfl;
 
 	if (name) {
-		for( tfl=tfl_root; tfl != NULL; tfl=tfl->next )
+		for( tfl=tfl_root; tfl != nullptr; tfl=tfl->next )
 		{// check suspicious cases
 			if( func == tfl->func )
 				ShowWarning("add_timer_func_list: duplicating function %p(%s) as %s.\n",tfl->func,tfl->name,name);
@@ -90,7 +87,7 @@ const char* search_timer_func_list(TimerFunc func)
 {
 	struct timer_func_list* tfl;
 
-	for( tfl=tfl_root; tfl != NULL; tfl=tfl->next )
+	for( tfl=tfl_root; tfl != nullptr; tfl=tfl->next )
 		if (func == tfl->func)
 			return tfl->name;
 
@@ -102,9 +99,13 @@ const char* search_timer_func_list(TimerFunc func)
  *----------------------------*/
 
 #if defined(ENABLE_RDTSC)
-static uint64 RDTSC_BEGINTICK = 0,   RDTSC_CLOCK = 0;
+#include <chrono>
+#include <thread>
 
-static __inline uint64 _rdtsc(){
+static t_tick rdtsc_begintick = 0, rdtsc_clock = 0;
+
+#ifdef DEPRECATED_COMPILER_SUPPORT
+static __inline uint64 __rdtsc(){
 	register union{
 		uint64	qw;
 		uint32 	dw[2];
@@ -114,26 +115,30 @@ static __inline uint64 _rdtsc(){
 
 	return t.qw;
 }
+#elif defined(WIN32)
+	#include <intrin.h>
+#else
+	#include <x86intrin.h>
+#endif
 
 static void rdtsc_calibrate(){
-	uint64 t1, t2;
-	int32 i;
-
 	ShowStatus("Calibrating Timer Source, please wait... ");
 
-	RDTSC_CLOCK = 0;
+	t_tick total = 0, delay = 1000;
+	size_t calibrating_rounds = 5;
 
-	for(i = 0; i < 5; i++){
-		t1 = _rdtsc();
-		usleep(1000000); //1000 MS
-		t2 = _rdtsc();
-		RDTSC_CLOCK += (t2 - t1) / 1000;
+	for(size_t i = 0; i < calibrating_rounds; i++){
+		t_tick t1 = __rdtsc();
+		std::this_thread::sleep_for(std::chrono::milliseconds(delay));
+		t_tick t2 = __rdtsc();
+		total += (t2 - t1) / delay;
 	}
-	RDTSC_CLOCK /= 5;
 
-	RDTSC_BEGINTICK = _rdtsc();
+	rdtsc_clock = total / calibrating_rounds;
 
-	ShowMessage(" done. (Frequency: %u Mhz)\n", (uint32)(RDTSC_CLOCK/1000) );
+	rdtsc_begintick = __rdtsc();
+
+	ShowMessage(" done. (Frequency: %u Mhz)\n", (uint32)(rdtsc_clock/1000) );
 }
 
 #endif
@@ -141,23 +146,22 @@ static void rdtsc_calibrate(){
 /// platform-abstracted tick retrieval
 static t_tick tick(void)
 {
-#if defined(WIN32)
+#if defined(ENABLE_RDTSC)
+	// RDTSC: Returns the number of CPU cycles since reset. Unreliable if the CPU frequency is variable.
+	return static_cast<t_tick>( ( __rdtsc() - rdtsc_begintick ) / rdtsc_clock );
+#elif defined(WIN32)
 #ifdef DEPRECATED_WINDOWS_SUPPORT
 	return GetTickCount();
 #else
 	return GetTickCount64();
 #endif
-#elif defined(ENABLE_RDTSC)
-	//
-		return (unsigned int)((_rdtsc() - RDTSC_BEGINTICK) / RDTSC_CLOCK);
-	//
 #elif defined(HAVE_MONOTONIC_CLOCK)
 	struct timespec tval;
 	clock_gettime(CLOCK_MONOTONIC, &tval);
 	return tval.tv_sec * 1000 + tval.tv_nsec / 1000000;
 #else
 	struct timeval tval;
-	gettimeofday(&tval, NULL);
+	gettimeofday(&tval, nullptr);
 	return tval.tv_sec * 1000 + tval.tv_usec / 1000;
 #endif
 }
@@ -167,9 +171,9 @@ static t_tick tick(void)
 //////////////////////////////////////////////////////////////////////////
 // tick is cached for TICK_CACHE calls
 static t_tick gettick_cache;
-static int gettick_count = 1;
+static int32 gettick_count = 1;
 
-unsigned int gettick_nocache(void)
+t_tick gettick_nocache(void)
 {
 	gettick_count = TICK_CACHE;
 	gettick_cache = tick();
@@ -202,7 +206,7 @@ t_tick gettick(void)
  *--------------------------------------*/
 
 /// Adds a timer to the timer_heap
-static void push_timer_heap(int tid)
+static void push_timer_heap(int32 tid)
 {
 	BHEAP_ENSURE(timer_heap, 1, 256);
 	BHEAP_PUSH(timer_heap, tid, DIFFTICK_MINTOPCMP);
@@ -213,9 +217,9 @@ static void push_timer_heap(int tid)
  *--------------------------*/
 
 /// Returns a free timer id.
-static int acquire_timer(void)
+static int32 acquire_timer(void)
 {
-	int tid;
+	int32 tid;
 
 	// select a free timer
 	if (free_timer_list_pos) {
@@ -246,9 +250,9 @@ static int acquire_timer(void)
 
 /// Starts a new timer that is deleted once it expires (single-use).
 /// Returns the timer's id.
-int add_timer(t_tick tick, TimerFunc func, int id, intptr_t data)
+int32 add_timer(t_tick tick, TimerFunc func, int32 id, intptr_t data)
 {
-	int tid;
+	int32 tid;
 
 	tid = acquire_timer();
 	timer_data[tid].tick     = tick;
@@ -264,9 +268,9 @@ int add_timer(t_tick tick, TimerFunc func, int id, intptr_t data)
 
 /// Starts a new timer that automatically restarts itself (infinite loop until manually removed).
 /// Returns the timer's id, or INVALID_TIMER if it fails.
-int add_timer_interval(t_tick tick, TimerFunc func, int id, intptr_t data, int interval)
+int32 add_timer_interval(t_tick tick, TimerFunc func, int32 id, intptr_t data, int32 interval)
 {
-	int tid;
+	int32 tid;
 
 	if( interval < 1 )
 	{
@@ -287,15 +291,15 @@ int add_timer_interval(t_tick tick, TimerFunc func, int id, intptr_t data, int i
 }
 
 /// Retrieves internal timer data
-const struct TimerData* get_timer(int tid)
+const struct TimerData* get_timer(int32 tid)
 {
-	return ( tid >= 0 && tid < timer_data_num ) ? &timer_data[tid] : NULL;
+	return ( tid >= 0 && tid < timer_data_num ) ? &timer_data[tid] : nullptr;
 }
 
 /// Marks a timer specified by 'id' for immediate deletion once it expires.
 /// Param 'func' is used for debug/verification purposes.
 /// Returns 0 on success, < 0 on failure.
-int delete_timer(int tid, TimerFunc func)
+int32 delete_timer(int32 tid, TimerFunc func)
 {
 	if( tid < 0 || tid >= timer_data_num )
 	{
@@ -308,7 +312,7 @@ int delete_timer(int tid, TimerFunc func)
 		return -2;
 	}
 
-	timer_data[tid].func = NULL;
+	timer_data[tid].func = nullptr;
 	timer_data[tid].type = TIMER_ONCE_AUTODEL;
 
 	return 0;
@@ -316,14 +320,14 @@ int delete_timer(int tid, TimerFunc func)
 
 /// Adjusts a timer's expiration time.
 /// Returns the new tick value, or -1 if it fails.
-t_tick addtick_timer(int tid, t_tick tick)
+t_tick addtick_timer(int32 tid, t_tick tick)
 {
 	return settick_timer(tid, timer_data[tid].tick+tick);
 }
 
 /// Modifies a timer's expiration time (an alternative to deleting a timer and starting a new one).
 /// Returns the new tick value, or -1 if it fails.
-t_tick settick_timer(int tid, t_tick tick)
+t_tick settick_timer(int32 tid, t_tick tick)
 {
 	size_t i;
 
@@ -357,7 +361,7 @@ t_tick do_timer(t_tick tick)
 	// process all timers one by one
 	while( BHEAP_LENGTH(timer_heap) )
 	{
-		int tid = BHEAP_PEEK(timer_heap);// top element in heap (smallest tick)
+		int32 tid = BHEAP_PEEK(timer_heap);// top element in heap (smallest tick)
 
 		diff = DIFF_TICK(timer_data[tid].tick, tick);
 		if( diff > 0 )
@@ -388,8 +392,8 @@ t_tick do_timer(t_tick tick)
 				timer_data[tid].type = 0;
 				if (free_timer_list_pos >= free_timer_list_max) {
 					free_timer_list_max += 256;
-					RECREATE(free_timer_list,int,free_timer_list_max);
-					memset(free_timer_list + (free_timer_list_max - 256), 0, 256 * sizeof(int));
+					RECREATE(free_timer_list,int32,free_timer_list_max);
+					memset(free_timer_list + (free_timer_list_max - 256), 0, 256 * sizeof(int32));
 				}
 				free_timer_list[free_timer_list_pos++] = tid;
 			break;
@@ -409,7 +413,7 @@ t_tick do_timer(t_tick tick)
 
 unsigned long get_uptime(void)
 {
-	return (unsigned long)difftime(time(NULL), start_time);
+	return (unsigned long)difftime(time(nullptr), start_time);
 }
 
 /**
@@ -430,12 +434,12 @@ const char* timestamp2string(char* str, size_t size, time_t timestamp, const cha
 /*
  * Split given timein into year, month, day, hour, minute, second
  */
-void split_time(int timein, int* year, int* month, int* day, int* hour, int* minute, int *second) {
-	const int factor_min = 60;
-	const int factor_hour = factor_min*60;
-	const int factor_day = factor_hour*24;
-	const int factor_month = 2629743; // Approx  (30.44 days) 
-	const int factor_year = 31556926; // Approx (365.24 days)
+void split_time(int32 timein, int32* year, int32* month, int32* day, int32* hour, int32* minute, int32 *second) {
+	const int32 factor_min = 60;
+	const int32 factor_hour = factor_min*60;
+	const int32 factor_day = factor_hour*24;
+	const int32 factor_month = 2629743; // Approx  (30.44 days) 
+	const int32 factor_year = 31556926; // Approx (365.24 days)
 
 	*year = timein/factor_year;
 	timein -= *year*factor_year;
@@ -463,14 +467,14 @@ void split_time(int timein, int* year, int* month, int* day, int* hour, int* min
 double solve_time(char* modif_p) {
 	double totaltime = 0;
 	struct tm then_tm;
-	time_t now = time(NULL);
+	time_t now = time(nullptr);
 	time_t then = now;
 	then_tm = *localtime(&then);
 	
 	nullpo_retr(0,modif_p);
 
 	while (modif_p[0] != '\0') {
-		int value = atoi(modif_p);
+		int32 value = atoi(modif_p);
 		if (value == 0)
 			modif_p++;
 		else {
@@ -524,7 +528,7 @@ void timer_final(void)
 	struct timer_func_list *tfl;
 	struct timer_func_list *next;
 
-	for( tfl=tfl_root; tfl != NULL; tfl = next ) {
+	for( tfl=tfl_root; tfl != nullptr; tfl = next ) {
 		next = tfl->next;	// copy next pointer
 		aFree(tfl->name);	// free structures
 		aFree(tfl);

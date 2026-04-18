@@ -1018,7 +1018,7 @@ que_ng,149,178,4	script	Lab Director	744,{
 		}
 	}
 	else if(gun_na == 10){
-		if (countitem(999) > 69 && countitem(985) > 4 && countitem(984) > 2 && countitem(1003) > 69 && countitem(7317) > 49 && Zeny > 50000){
+		if (countitem(999) > 69 && countitem(985) > 4 && countitem(984) > 2 && countitem(1003) > 69 && countitem(7317) > 49 && Zeny >= 50000){
 			delitem 999,70;
 			delitem 985,5;
 			delitem 984,3;

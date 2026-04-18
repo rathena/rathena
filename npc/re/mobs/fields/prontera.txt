@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.7
+//= 1.8
 //===== Additional Comments: =================================
 //= 1.2 fixed some map name typos [Lupus]
 //= 1.3 Official kRO 10.1 spawns [Playtester]
@@ -11,6 +11,7 @@
 //= 1.5 Updated to Renewal spawns.
 //= 1.6 Added Prontera Field 8 duplicates. [Euphy]
 //= 1.7 Correct Spawn by Navigation's mob data. [attackjom]
+//= 1.8 Official 18.1 Field 8 spawns, duplicates removed [Playtester]
 //============================================================
 
 //==================================================
@@ -90,36 +91,27 @@ prt_fild07,225,110,5,5	monster	Black Mushroom	1084,3,360000,180000
 //==================================================
 // prt_fild08 - Prontera Field
 //==================================================
-prt_fild08,0,0	monster	Poring	1002,110,5000
-prt_fild08,0,0	monster	Lunatic	1063,110,5000
-prt_fild08,0,0	monster	Fabre	1007,88,5000
-prt_fild08,0,0	monster	Little Poring	2398,33,50000
-prt_fild08,0,0	monster	Pupa	1008,66,5000
-
-//==================================================
-// prt_fild08 - Duplicates
-//==================================================
-prt_fild08a,0,0	monster	Poring	1002,110,5000
-prt_fild08a,0,0	monster	Lunatic	1063,110,5000
-prt_fild08a,0,0	monster	Fabre	1007,88,5000
-prt_fild08a,0,0	monster	Little Poring	2398,33,50000
-prt_fild08a,0,0	monster	Pupa	1008,66,5000
-prt_fild08b,0,0	monster	Poring	1002,110,5000
-prt_fild08b,0,0	monster	Lunatic	1063,110,5000
-prt_fild08b,0,0	monster	Fabre	1007,88,5000
-prt_fild08b,0,0	monster	Little Poring	2398,33,50000
-prt_fild08b,0,0	monster	Pupa	1008,66,5000
-prt_fild08c,0,0	monster	Poring	1002,110,5000
-prt_fild08c,0,0	monster	Lunatic	1063,110,5000
-prt_fild08c,0,0	monster	Fabre	1007,88,5000
-prt_fild08c,0,0	monster	Little Poring	2398,33,50000
-prt_fild08c,0,0	monster	Pupa	1008,66,5000
-prt_fild08d,0,0	monster	Poring	1002,110,5000
-prt_fild08d,0,0	monster	Lunatic	1063,110,5000
-prt_fild08d,0,0	monster	Fabre	1007,88,5000
-prt_fild08d,0,0	monster	Little Poring	2398,33,50000
-prt_fild08d,0,0	monster	Pupa	1008,66,5000
-
+prt_fild08,0,0	monster	Poring	1002,20,5000
+prt_fild08,0,0	monster	Lunatic	1063,20,5000
+prt_fild08,0,0	monster	Fabre	1007,10,5000
+prt_fild08,305,233,10,10	monster	Poring	1002,2,15000
+prt_fild08,305,233,10,10	monster	Lunatic	1063,2,15000
+prt_fild08,305,233,10,10	monster	Fabre	1007,2,15000
+prt_fild08,271,249,20,20	monster	Poring	1002,5,15000
+prt_fild08,271,249,20,20	monster	Lunatic	1063,5,15000
+prt_fild08,271,249,20,20	monster	Fabre	1007,5,15000
+prt_fild08,94,335,50,50	monster	Poring	1002,20,10000
+prt_fild08,166,334,50,50	monster	Poring	1002,20,10000
+prt_fild08,253,337,50,50	monster	Poring	1002,20,10000
+prt_fild08,228,230,30,30	monster	Lunatic	1063,10,10000
+prt_fild08,246,263,50,50	monster	Lunatic	1063,10,10000
+prt_fild08,190,237,50,50	monster	Lunatic	1063,10,10000
+prt_fild08,100,256,50,50	monster	Lunatic	1063,10,10000
+prt_fild08,70,164,70,70	monster	Fabre	1007,20,10000
+prt_fild08,144,147,70,70	monster	Fabre	1007,20,10000
+prt_fild08,263,79,90,90	monster	Fabre	1007,20,10000
+prt_fild08,336,113,40,40	monster	Pupa	1008,20,10000
+prt_fild08,330,269,40,40	monster	Little Poring	2398,20,10000
 
 //==================================================
 // prt_fild09 - Prontera Field

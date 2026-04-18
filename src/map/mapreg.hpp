@@ -29,6 +29,6 @@ int64 mapreg_readreg(int64 uid);
 char* mapreg_readregstr(int64 uid);
 bool mapreg_setreg(int64 uid, int64 val);
 bool mapreg_setregstr(int64 uid, const char* str);
-int mapreg_destroyreg(DBKey key, DBData *data, va_list ap);
+int32 mapreg_destroyreg(DBKey key, DBData *data, va_list ap);
 
 #endif /* MAPREG_HPP */

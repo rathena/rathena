@@ -50,6 +50,7 @@ enum e_pc_permission : uint32 {
 	PC_PERM_ATTENDANCE,
 	PC_PERM_MACRO_DETECT,
 	PC_PERM_MACRO_REGISTER,
+	PC_PERM_TRADE_UNCONDITIONAL,
 	//.. add other here
 	PC_PERM_MAX,
 };
@@ -88,6 +89,7 @@ static const struct s_pcg_permission_name {
 	{ "attendance",PC_PERM_ATTENDANCE },
 	{ "macro_detect",PC_PERM_MACRO_DETECT },
 	{ "macro_register",PC_PERM_MACRO_REGISTER },
+	{ "trade_unconditional",PC_PERM_TRADE_UNCONDITIONAL },
 };
 
 struct s_player_group{
@@ -101,9 +103,9 @@ struct s_player_group{
 	uint32 index;
 
 public:
-	bool can_use_command( const std::string& command, AtCommandType type );
-	bool has_permission( e_pc_permission permission );
-	bool should_log_commands();
+	bool can_use_command( const std::string& command, AtCommandType type ) const;
+	bool has_permission( e_pc_permission permission ) const;
+	bool should_log_commands() const;
 };
 
 class PlayerGroupDatabase : public TypesafeYamlDatabase<uint32, s_player_group>{

@@ -4,6 +4,8 @@
 #ifndef INT_ACHIEVEMENT_HPP
 #define INT_ACHIEVEMENT_HPP
 
-int inter_achievement_parse_frommap(int fd);
+#include <common/cbasetypes.hpp>
+
+int32 inter_achievement_parse_frommap(int32 fd);
 
 #endif /* INT_ACHIEVEMENT_HPP */

@@ -594,7 +594,7 @@ lhz_in02,100,143,3	script	Hair Dresser#li	122,{
 					mes "you can be more daring than";
 					mes "that! Be fashionably adventurous, you fashionable adventurer~";
 					emotion ET_THROB;
-					close;
+					close3;
 				}
 			}
 			else {
@@ -917,7 +917,7 @@ lhz_in02,100,143,3	script	Hair Dresser#li	122,{
 				mes "I'll make you the best looking";
 				mes "person in the entire world!";
 				emotion ET_BEST;
-				close;
+				close3;
 			case 2:
 				mes "[Prince Shammi]";
 				mes "Oh, did you forget which";
@@ -925,7 +925,7 @@ lhz_in02,100,143,3	script	Hair Dresser#li	122,{
 				mes "number? By all means, please";
 				mes "check again! Find the one that";
 				mes "is perfect just for you, okay?";
-				close;
+				close3;
 			}
 		}
 		break;

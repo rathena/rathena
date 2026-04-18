@@ -4057,7 +4057,7 @@ prt_cas_q,20,139,3	script	Spica Nerius#ep16_room01	4_EP16_SPICA,{
 				next;
 				mes "[Spica]";
 				mes "" + strcharinfo(0) + ", why don't you go back to your room and wait for the message?";
-				close;
+				close3;
 			}
 			mes "[Spica]";
 			mes "Why don't you go visit other families if you have not visited them all?";
@@ -4105,7 +4105,7 @@ prt_cas_q,20,139,3	script	Spica Nerius#ep16_room01	4_EP16_SPICA,{
 			next;
 			mes "[Spica]";
 			mes "I wonder if the old folks would hear me out though.";
-			close;
+			close3;
 		}
 		mes "[Spica]";
 		mes "Skia told me something similar to that.";
@@ -8968,7 +8968,7 @@ prt_cas_q,93,74,4	script	Po Richard#EP161GAM	4_M_6THPRIN1,{
 			emotion ET_OTL;
 			mes "[Po Richard]";
 			mes "I guess the offer hasn't been attractive to you. I am sorry, but come back later when you change your mind.";
-			close;
+			close3;
 		}
 		emotion ET_OK;
 		mes "[Po Richard]";

@@ -3,9 +3,8 @@
 
 #include "loginlog.hpp"
 
+#include <cstdlib> // exit
 #include <string>
-
-#include <stdlib.h> // exit
 
 #include <common/cbasetypes.hpp>
 #include <common/mmo.hpp>
@@ -23,7 +22,7 @@ std::string log_db_database = "ragnarok";
 std::string log_login_db = "loginlog";
 std::string log_codepage = "";
 
-static Sql* sql_handle = NULL;
+static Sql* sql_handle = nullptr;
 static bool enabled = false;
 
 
@@ -33,21 +32,21 @@ static bool enabled = false;
  * @param minutes: intervall to search
  * @return number of failed attempts
  */
-unsigned long loginlog_failedattempts(uint32 ip, unsigned int minutes) {
+unsigned long loginlog_failedattempts(uint32 ip, uint32 minutes) {
 	unsigned long failures = 0;
 
 	if( !enabled )
 		return 0;
 
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT count(*) FROM `%s` WHERE `ip` = '%s' AND (`rcode` = '0' OR `rcode` = '1') AND `time` > NOW() - INTERVAL %d MINUTE",
-		log_login_db.c_str(), ip2str(ip,NULL), minutes) )// how many times failed account? in one ip.
+		log_login_db.c_str(), ip2str(ip,nullptr), minutes) )// how many times failed account? in one ip.
 		Sql_ShowDebug(sql_handle);
 
 	if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
 	{
 		char* data;
-		Sql_GetData(sql_handle, 0, &data, NULL);
-		failures = strtoul(data, NULL, 10);
+		Sql_GetData(sql_handle, 0, &data, nullptr);
+		failures = strtoul(data, nullptr, 10);
 		Sql_FreeResult(sql_handle);
 	}
 	return failures;
@@ -61,10 +60,10 @@ unsigned long loginlog_failedattempts(uint32 ip, unsigned int minutes) {
  * @param rcode:
  * @param message:
  */
-void login_log(uint32 ip, const char* username, int rcode, const char* message) {
+void login_log(uint32 ip, const char* username, int32 rcode, const char* message) {
 	char esc_username[NAME_LENGTH*2+1];
 	char esc_message[255*2+1];
-	int retcode;
+	int32 retcode;
 
 	if( !enabled )
 		return;
@@ -74,7 +73,7 @@ void login_log(uint32 ip, const char* username, int rcode, const char* message) 
 
 	retcode = Sql_Query(sql_handle,
 		"INSERT INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%s', '%s', '%d', '%s')",
-		log_login_db.c_str(), ip2str(ip,NULL), esc_username, rcode, esc_message);
+		log_login_db.c_str(), ip2str(ip,nullptr), esc_username, rcode, esc_message);
 
 	if( retcode != SQL_SUCCESS )
 		Sql_ShowDebug(sql_handle);
@@ -91,7 +90,7 @@ bool loginlog_config_read(const char* key, const char* value) {
 		log_db_hostname = value;
 	else
 	if( strcmpi(key, "log_db_port") == 0 )
-		log_db_port = (uint16)strtoul(value, NULL, 10);
+		log_db_port = (uint16)strtoul(value, nullptr, 10);
 	else
 	if( strcmpi(key, "log_db_id") == 0 )
 		log_db_username = value;
@@ -149,6 +148,6 @@ bool loginlog_init(void) {
  */
 bool loginlog_final(void) {
 	Sql_Free(sql_handle);
-	sql_handle = NULL;
+	sql_handle = nullptr;
 	return true;
 }

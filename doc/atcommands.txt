@@ -1047,13 +1047,10 @@ Changes Kafra Points by the specified amount.
 @hairstyle <default: 0-27>
 @haircolor <default: 0-8>
 @dye <default: 0-4>
-@bodystyle <default: 0-1>
+@bodystyle <job ID>
 
 Changes appearance based on the given parameters.
 The min/max values are set in '/conf/battle/client.conf'.
-
-Appearance changed via @bodystyle won't save unless
-'save_body_style' is enabled in '/conf/battle/client.conf'
 
 ---------------------------------------
 
@@ -1124,7 +1121,7 @@ Some options can be found in '/conf/battle/misc.conf'.
 @heal {<hp> {<sp>}}
 
 Heals the specified amount of HP and SP.
-If no paramters are given, the character will be fully healed.
+If no parameters are given, the character will be fully healed.
 
 ---------------------------------------
 
@@ -1249,6 +1246,11 @@ Adds a card or enchant to the specific slot of the equipment.
 <card_id>: Can actually be any existing card or enchant item. Put 0 to remove it.
 
 ---------------------------------------
+
+@resetcooltime
+/resetcooltime
+
+Resets the cooldown of all skills of the player and if active also of the homunculus or the mercenary.
 
 ==============================
 | 5. Administrative Commands |

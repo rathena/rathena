@@ -136,7 +136,7 @@ prt_in,243,168,4	script	Jovovich	91,{
 			mes "* Fees and Information *";
 			mes "- 1 Dyestuffs item of the color of hair you want.";
 			mes "- 1000 zeny fee.";
-			break;
+			close;
 
 		case 3:
 			mes "[Hairdresser Jovovich]";

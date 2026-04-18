@@ -1,0 +1,43 @@
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
+#include "servantweapondemolition.hpp"
+
+#include <config/core.hpp>
+
+#include "map/clif.hpp"
+#include "map/pc.hpp"
+#include "map/status.hpp"
+
+SkillServantWeaponDemolition::SkillServantWeaponDemolition() : SkillImplRecursiveDamageSplash(DK_SERVANT_W_DEMOL) {
+}
+
+void SkillServantWeaponDemolition::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
+	const map_session_data* sd = BL_CAST(BL_PC, &src);
+
+	if (sd != nullptr && (sd->servantball + sd->servantball_old) < dmg.div_)
+		dmg.div_ = sd->servantball + sd->servantball_old;
+}
+
+void SkillServantWeaponDemolition::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
+	clif_skill_nodamage(src,*target,getSkillId(),skill_lv);
+	skill_castend_damage_id(src, target, getSkillId(), skill_lv, tick, flag);
+}
+
+void SkillServantWeaponDemolition::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& skillratio, int32 mflag) const {
+	const status_data* sstatus = status_get_status_data(*src);
+
+	skillratio += -100 + 500 * skill_lv;
+	skillratio += 5 * sstatus->pow;
+	RE_LVL_DMOD(100);
+}
+
+int64 SkillServantWeaponDemolition::splashDamage(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
+	status_change* tsc = status_get_sc(target);
+
+	// Servant Weapon - Demol only hits if the target is marked with a sign by the attacking caster.
+	if (!(tsc && tsc->getSCE(SC_SERVANT_SIGN) && tsc->getSCE(SC_SERVANT_SIGN)->val1 == src->id))
+		return 0;
+
+	return SkillImplRecursiveDamageSplash::splashDamage(src, target, skill_lv, tick, flag);
+}

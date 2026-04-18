@@ -1,0 +1,117 @@
+//===== rAthena Script =======================================
+//= Hall of Life
+//===== Description: =========================================
+//= Hall of Life Monster Spawn Script.
+//===== Additional Comments: =================================
+//= 1.0 First version. [Atemo]
+//============================================================
+
+for_dun01	monster	--ja--	22192,12	// SPIRIT_G_LAND_S
+for_dun01	monster	--ja--	22193,16	// SPIRIT_G_LAND_M
+for_dun01	monster	--ja--	22194,18	// SPIRIT_G_LAND_L
+for_dun01	monster	--ja--	22196,12	// SPIRIT_B_FLAME_S
+for_dun01	monster	--ja--	22197,16	// SPIRIT_B_FLAME_M
+for_dun01	monster	--ja--	22198,18	// SPIRIT_B_FLAME_L
+for_dun01	monster	--ja--	22200,12	// SPIRIT_S_WIND_S
+for_dun01	monster	--ja--	22201,16	// SPIRIT_S_WIND_M
+for_dun01	monster	--ja--	22202,18	// SPIRIT_S_WIND_L
+for_dun01	monster	--ja--	22204,12	// SPIRIT_I_WATER_S
+for_dun01	monster	--ja--	22205,16	// SPIRIT_I_WATER_M
+for_dun01	monster	--ja--	22206,18	// SPIRIT_I_WATER_L
+for_dun01	monster	--ja--	22195,4	// SPIRIT_G_LAND_SL
+for_dun01	monster	--ja--	22199,4	// SPIRIT_B_FLAME_SL
+for_dun01	monster	--ja--	22203,4	// SPIRIT_S_WIND_SL
+for_dun01	monster	--ja--	22207,4	// SPIRIT_I_WATER_SL
+
+for_dun02	monster	--ja--	22216,24	// SPIRIT_H_WATER_S
+for_dun02	monster	--ja--	22217,28	// SPIRIT_H_WATER_M
+for_dun02	monster	--ja--	22218,32	// SPIRIT_H_WATER_L
+for_dun02	monster	--ja--	22220,24	// SPIRIT_D_WIND_S
+for_dun02	monster	--ja--	22221,28	// SPIRIT_D_WIND_M
+for_dun02	monster	--ja--	22222,32	// SPIRIT_D_WIND_L
+for_dun02	monster	--ja--	22224,24	// SPIRIT_R_FLAME_S
+for_dun02	monster	--ja--	22225,28	// SPIRIT_R_FLAME_M
+for_dun02	monster	--ja--	22226,32	// SPIRIT_R_FLAME_L
+for_dun02	monster	--ja--	22228,24	// SPIRIT_F_LAND_S
+for_dun02	monster	--ja--	22229,28	// SPIRIT_F_LAND_M
+for_dun02	monster	--ja--	22230,32	// SPIRIT_F_LAND_L
+for_dun02	monster	--ja--	22219,7	// SPIRIT_H_WATER_SL
+for_dun02	monster	--ja--	22223,7	// SPIRIT_D_WIND_SL
+for_dun02	monster	--ja--	22227,7	// SPIRIT_R_FLAME_SL
+for_dun02	monster	--ja--	22231,7	// SPIRIT_F_LAND_SL
+
+t_garden,1,1,0	script	control_t_garden	HIDDEN_WARP_NPC,{
+	end;
+OnInit:
+OnMinute59:
+	.zone = !.zone;
+
+	if (.zone == 0) {	// Zone 2 (for_dun01) -> Zone 1 (for_dun02)
+		mapannounce "t_garden", "In approximately 1 minute, the dimensional contamination in Area 2 will subside and a large-scale dimensional contamination will occur in Area 1.", bc_map, 0xCCFF00;
+		mapannounce "for_dun02", "Large-scale dimensional contamination event will occur in this dungeon in approximately 1 minute.", bc_map, 0xFFDD;
+		mapannounce "for_dun01", "The dimensional contamination phenomenon in this dungeon is expected to subside in about 1 minute.", bc_map, 0xFFDD;
+	}
+	else {	// Zone 1 (for_dun02) -> Zone 2 (for_dun01)
+		mapannounce "t_garden", "In approximately 1 minute, the dimensional contamination in Area 1 will subside and a large-scale dimensional contamination will occur in Area 2.", bc_map, 0xCCFF00;
+		mapannounce "for_dun02", "The dimensional contamination phenomenon in this dungeon is expected to subside in about 1 minute.", bc_map, 0xFFDD;
+		mapannounce "for_dun01", "Large-scale dimensional contamination event will occur in this dungeon in approximately 1 minute.", bc_map, 0xFFDD;
+	}
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	stopnpctimer;
+
+	for ( .@i = 22208; .@i <= 22215; ++.@i )
+		killmonster "for_dun01", "control_t_garden::OnMob" + .@i;
+	for ( .@i = 22232; .@i <= 22239; ++.@i )
+		killmonster "for_dun02", "control_t_garden::OnMob" + .@i;
+
+	if (.zone == 0) {	// Zone 2 (for_dun01) -> Zone 1 (for_dun02)
+		mapannounce "t_garden", "Forgotten Memories : The dimensional contamination phenomenon in Area 2 has calmed down, and a large-scale dimensional contamination phenomenon has occurred in Area 1.", bc_map, 0xFFDD;
+		mapannounce "for_dun02", "Large-scale dimensional contamination is occurring in this dungeon...", bc_map, 0xFFDD;
+		mapannounce "for_dun01", "All dimensional contamination that occurred in this dungeon has been calmed down.", bc_map, 0xFFDD;
+
+		callsub( S_Spawn, "for_dun02", 22232, 22239, 12 );
+	}
+	else {	// Zone 1 (for_dun02) -> Zone 2 (for_dun01)
+		mapannounce "t_garden", "Forgotten Memories : The dimensional contamination phenomenon in Area 1 has calmed down, and a large-scale dimensional contamination phenomenon has occurred in Area 2.", bc_map, 0xFFDD;
+		mapannounce "for_dun02", "All dimensional contamination that occurred in this dungeon has been calmed down.", bc_map, 0xFFDD;
+		mapannounce "for_dun01", "Large-scale dimensional contamination is occurring in this dungeon...", bc_map, 0xFFDD;
+		
+		callsub( S_Spawn, "for_dun01", 22208, 22215, 6 );
+	}
+	end;
+
+S_Spawn:
+	.@map$ = getarg(0);
+	.@id_min = getarg(1);
+	.@id_max = getarg(2);
+	.@amount = getarg(3);
+
+	for ( .@i = .@id_min; .@i <= .@id_max; ++.@i )
+		monster .@map$,0,0,"--ja--",.@i,.@amount, "control_t_garden::OnMob" + .@i;
+	return;
+
+OnMob22210: callsub( S_Mob, "for_dun01", 22210 );
+OnMob22209: callsub( S_Mob, "for_dun01", 22209 );
+OnMob22208: callsub( S_Mob, "for_dun01", 22208 );
+OnMob22211: callsub( S_Mob, "for_dun01", 22211 );
+OnMob22214: callsub( S_Mob, "for_dun01", 22214 );
+OnMob22213: callsub( S_Mob, "for_dun01", 22213 );
+OnMob22212: callsub( S_Mob, "for_dun01", 22212 );
+OnMob22215: callsub( S_Mob, "for_dun01", 22215 );
+
+OnMob22234: callsub( S_Mob, "for_dun02", 22234 );
+OnMob22233: callsub( S_Mob, "for_dun02", 22233 );
+OnMob22232: callsub( S_Mob, "for_dun02", 22232 );
+OnMob22235: callsub( S_Mob, "for_dun02", 22235 );
+OnMob22238: callsub( S_Mob, "for_dun02", 22238 );
+OnMob22237: callsub( S_Mob, "for_dun02", 22237 );
+OnMob22236: callsub( S_Mob, "for_dun02", 22236 );
+OnMob22239: callsub( S_Mob, "for_dun02", 22239 );
+
+S_Mob:
+	monster getarg(0),0,0,"--ja--",getarg(1),1, "control_t_garden::OnMob" + getarg(1);
+	end;
+}

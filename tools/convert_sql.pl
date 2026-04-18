@@ -85,7 +85,7 @@ sub ConvertFile { my($sFilein,$sFileout,$sType)=@_;
 	print "Starting ConvertFile with: \n\t filein=$sFilein \n\t fileout=$sFileout \n";
 	open FHIN,"$sFilein" or die "ERROR: Can't read or locate $sFilein.\n";
 	open $sFHout,">$sFileout" or die "ERROR: Can't write $sFileout.\n";
-	
+
 	printf $sFHout ("%s\n",$create_table);
 	while(my $ligne=<FHIN>) {
 		my $sWasCom = 0;
@@ -176,7 +176,7 @@ sub escape { my ($str,$sregex,$sreplace) = @_;
 
 sub BuildDataForType{ my($sTarget,$sType) = @_;
 	print "Starting BuildDataForType with: \n\t Target=$sTarget, Type=$sType \n";
-	
+
 	if($sType =~ /mob_skill/i) { #Same format for Pre-Renewal and Renewal.
 		$db = $sTable;
 		if($sTarget =~ /Pre/i){

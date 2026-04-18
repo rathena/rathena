@@ -2102,13 +2102,11 @@ OnTouch:	// unknown effect
 OnSummon:
 	monster 'map_herbs$,169,79,"Kappa",20620,1, instance_npcname("#172_sec_boss") + "::OnBossKill";
 	'boss_gid = $@mobid[0];
-	setunittitle 'boss_gid, "<Red Pepper>";
 	donpcevent instance_npcname("#172_sec_boss") + "::OnShield";
 	end;
 OnSummonHard:
 	monster 'map_herbs$,275,80,"Lambda",20621,1, instance_npcname("#172_sec_boss") + "::OnBossKill";
 	'boss_gid = $@mobid[0];
-	setunittitle 'boss_gid, "<Red Pepper>";
 	donpcevent instance_npcname("#172_sec_boss") + "::OnShield";
 	end;
 

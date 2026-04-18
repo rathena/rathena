@@ -966,7 +966,7 @@ Body:
     Script: |
       bonus bLuk,10;
       bonus bSPDrainValue,2;
-      bonus2 bSkillAtk,42,20;
+      bonus2 bSkillAtk,"MC_MAMMONITE",20;
       if (BaseClass == Job_Merchant) {
          bonus2 bAddMonsterDropItem,617,5;
          bonus bMagicDamageReturn,20;
@@ -983,9 +983,9 @@ Body:
       bonus bMaxHP,500;
       bonus bDef,5;
       bonus bMdef,5;
-      bonus2 bSkillAtk,14,10;
-      bonus2 bSkillAtk,19,10;
-      bonus2 bSkillAtk,20,10;
+      bonus2 bSkillAtk,"MG_COLDBOLT",10;
+      bonus2 bSkillAtk,"MG_FIREBOLT",10;
+      bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",10;
       if (BaseClass == Job_Mage) {
          bonus bMatkRate,3;
          bonus bCastrate,-15;

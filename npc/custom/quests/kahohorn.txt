@@ -32,7 +32,7 @@ geffen,115,107,5	script	Lord Kaho's Servant	61,{
 	next;
 	mes .@n$;
 	for(set .@i,0; .@i<10; set .@i,.@i+1)
-		mes "1x ^0055FF"+getitemname(.@Items[.@i])+"^000000 (from "+strmobinfo(1,.@Drops[.@i])+")";
+		mes "1x ^0055FF"+getitemname(.@Items[.@i])+"^000000 (from "+getmonsterinfo(.@Drops[.@i], MOB_NAME)+")";
 	next;
 	mes .@n$;
 	mes "We're not done yet, sweetie...";

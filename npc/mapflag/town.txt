@@ -28,3 +28,4 @@ louyang	mapflag	town
 hugel	mapflag	town
 rachel	mapflag	town
 veins	mapflag	town
+brasilis	mapflag	town

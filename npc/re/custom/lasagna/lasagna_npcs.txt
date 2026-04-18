@@ -323,7 +323,7 @@ lasa_fild01,60,322,3	script	Vigilante Aglio#doram02	4_DR_AGLIO,{
 				cutin "tutorial02.BMP",4;
 				mes "^4d4dff!- Notice -!^000000";
 				mes "^4d4dffCheck out the quest details by pressing the shortcut key [Alt+U],^000000 or through the Quest icon found in the menu tray.^000000";
-				close;
+				close3;
 			}
 			mes "[Vigilante Aglio]";
 			mes "Whoa, you're good!";

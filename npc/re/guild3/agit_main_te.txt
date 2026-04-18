@@ -438,7 +438,7 @@ function GuardianData;
 			if (select( "Fire","Cancel" ) == 2) {
 				mes "[ Hired Kafra Employee ]";
 				mes "I'll work hard for you... Thank you!";
-				close;
+				close3;
 			}
 			mes "[ Hired Kafra Employee ]";
 			mes "Oh, my goodness! This is nonsense!";

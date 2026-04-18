@@ -2625,13 +2625,13 @@ OnTouch:
 		delitem 6506, 1; // Memorial_Boquet
 		erasequest 7398;
 		setquest 7399;
-		close;
+		close3;
 	} else if (malaya_diwata == 5) {
 		cutin "malaya_diwata02", 2;
 		mes "[Diwata]";
 		mes "I promise I'll be a good little girl if those hillbillies leave me alone.";
 		mes "If they bother me again, however, I won't be.";
-		close;
+		close3;
 	} else {
 		if (checkquest(7402) == -1) {
 			if (checkquest(7403) == -1) {
@@ -2650,7 +2650,7 @@ OnTouch:
 					mes "The flowers you bring makes me calm down.";
 					mes "....";
 					mes ".. It's not because I miss people or I like the flowers. Don't take it the wrong way.";
-					close;
+					close3;
 				}
 				cutin "malaya_diwata01", 2;
 				mes "[Diwata]";
@@ -2658,7 +2658,7 @@ OnTouch:
 				mes "What? Oh, it's you.";
 				mes "Those hillbillies came back again!";
 				mes "I'm going to kill them!";
-				close;
+				close3;
 			}
 			cutin "malaya_diwata02", 2;
 			mes "[Diwata]";
@@ -2669,7 +2669,7 @@ OnTouch:
 			mes "The flowers you bring makes me calm down.";
 			mes "....";
 			mes ".. It's not because I miss people or I like the flowers. Don't take it the wrong way.";
-			close;
+			close3;
 		}
 		cutin "malaya_diwata01", 2;
 		mes "[Diwata]";
@@ -2718,7 +2718,7 @@ OnTouch:
 		delitem 6506, 1; // Memorial_Boquet
 		setquest 7403;
 		erasequest 7402;
-		close;
+		close3;
 	}
 	cutin "", 255;
 	end;

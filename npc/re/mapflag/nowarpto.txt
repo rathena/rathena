@@ -328,6 +328,11 @@ job4_mag	mapflag	nowarpto
 job4_tro	mapflag	nowarpto
 
 //============================================================
+// Spirit Handler Job Change
+//============================================================
+1@exsh	mapflag	nowarpto
+
+//============================================================
 // Geffen Night Arena
 //============================================================
 1@ge_sn	mapflag	nowarpto
@@ -401,6 +406,9 @@ e_hugel	mapflag	nowarpto
 // Training Ground outside Prontera
 //============================================================
 tra_fild	mapflag	nowarpto
+tra_fild01	mapflag	nowarpto
+tra_fild02	mapflag	nowarpto
+tra_fild03	mapflag	nowarpto
 
 //============================================================
 // Episode 18 - Direction of Prayer

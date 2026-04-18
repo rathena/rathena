@@ -41,7 +41,7 @@
 #   NoNearNPC:                Determines if the skill can be used near a NPC. (Optional)
 #     AdditionalRange         Number of cells from an NPC where the skill can be cast. (Optional)
 #     Type:                   Type of NPC.
-#   CastCancel                Cancel cast when hit. (Default: false)
+#   CastCancel                Cancel cast when hit. (Default: true)
 #   CastDefenseReduction      Defense reduction rate during skill cast. (Default: 0)
 #   CastTime:                 Time to cast the skill in milliseconds. (Default: 0)
 #     - Level                 Skill level.
@@ -98,7 +98,7 @@
 #         Amount              Ammo amount required at specific skill level.
 #     State                   Special state required to cast. (Default: None)
 #     Status:                 Status change required to cast. (Default: nullptr)
-#     SphereCost:             Spirit sphere required to cast. (Default: 0)
+#     SpiritSphereCost:       Spirit sphere required to cast. (Default: 0)
 #       - Level               Skill level.
 #         Amount              Spirit sphere required at specific skill level.
 #     ItemCost:               Item required to cast. (Default: 0)

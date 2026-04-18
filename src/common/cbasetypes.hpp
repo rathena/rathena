@@ -87,7 +87,7 @@
 #endif
 
 #include <cinttypes>
-#include <limits.h>
+#include <climits>
 
 // temporary fix for bugreport:4961 (unintended conversion from signed to unsigned)
 // (-20 >= UCHAR_MAX) returns true
@@ -178,8 +178,7 @@ typedef unsigned long int   ppuint32;
 //////////////////////////////////////////////////////////////////////////
 // integer with exact processor width (and best speed)
 //////////////////////////////
-#include <stddef.h> // size_t
-//#include <stdbool.h> //boolean
+#include <cstddef> // size_t
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -301,7 +300,7 @@ typedef char bool;
 #define Assert(EX)
 #else
 // extern "C" {
-#include <assert.h>
+#include <cassert>
 // }
 #if !defined(DEFCPP) && defined(WIN32) && !defined(MINGW)
 #include <crtdbg.h>
@@ -313,7 +312,7 @@ typedef char bool;
 //////////////////////////////////////////////////////////////////////////
 // Has to be unsigned to avoid problems in some systems
 // Problems arise when these functions expect an argument in the range [0,256[ and are fed a signed char.
-#include <ctype.h>
+#include <cctype>
 #define ISALNUM(c) (isalnum((unsigned char)(c)))
 #define ISALPHA(c) (isalpha((unsigned char)(c)))
 #define ISCNTRL(c) (iscntrl((unsigned char)(c)))
@@ -335,7 +334,7 @@ typedef char bool;
 
 //////////////////////////////////////////////////////////////////////////
 // Make sure va_copy exists
-#include <stdarg.h> // va_list, va_copy(?)
+#include <cstdarg> // va_list, va_copy(?)
 #if !defined(va_copy)
 #if defined(__va_copy)
 #define va_copy __va_copy
@@ -381,7 +380,7 @@ void SET_FUNCPOINTER(T1& var, T2 p)
 #endif
 
 #ifndef max
-static inline int max(int a, int b){ return (a > b) ? a : b; } //default is int
+static inline int32 max(int32 a, int32 b){ return (a > b) ? a : b; } //default is int32
 #endif
 static inline int8 i8max(int8 a, int8 b){ return (a > b) ? a : b; }
 static inline int16 i16max(int16 a, int16 b){ return (a > b) ? a : b; }
@@ -399,7 +398,7 @@ static inline size_t zmax(size_t a, size_t b){ return (a > b) ? a : b; } //cause
 #endif
 
 #ifndef min
-static inline int min(int a, int b){ return (a < b) ? a : b; } //default is int
+static inline int32 min(int32 a, int32 b){ return (a < b) ? a : b; } //default is int32
 #endif
 static inline int8 i8min(int8 a, int8 b){ return (a < b) ? a : b; }
 static inline int16 i16min(int16 a, int16 b){ return (a < b) ? a : b; }

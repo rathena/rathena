@@ -1,0 +1,29 @@
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
+#include "homunculus_theonefighterrises.hpp"
+
+#include "map/clif.hpp"
+#include "map/homunculus.hpp"
+#include "map/pc.hpp"
+#include "map/status.hpp"
+
+SkillTheOneFighterRises::SkillTheOneFighterRises() : SkillImplRecursiveDamageSplash(MH_THE_ONE_FIGHTER_RISES) {
+}
+
+void SkillTheOneFighterRises::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
+	homun_data* hd = BL_CAST(BL_HOM, src);
+
+	if (hd != nullptr) {
+		hom_addspiritball(hd, MAX_SPIRITBALL);
+	}
+
+	clif_skill_nodamage(src,*target,getSkillId(),skill_lv);
+	skill_castend_damage_id(src, target, getSkillId(), skill_lv, tick, flag);
+}
+
+void SkillTheOneFighterRises::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {
+	const status_data* sstatus = status_get_status_data(*src);
+
+	base_skillratio += -100 + 580 * skill_lv * status_get_lv(src) / 100 + sstatus->str;
+}

@@ -8,15 +8,15 @@
 
 struct s_pet;
 
-int inter_pet_init(void);
+int32 inter_pet_init(void);
 void inter_pet_sql_final(void);
-int inter_pet_save(void);
-int inter_pet_delete(int pet_id);
+int32 inter_pet_save(void);
+int32 inter_pet_delete(int32 pet_id);
 
-int inter_pet_parse_frommap(int fd);
-int inter_pet_sql_init(void);
+int32 inter_pet_parse_frommap(int32 fd);
+int32 inter_pet_sql_init(void);
   //extern char pet_txt[256];
 
-int inter_pet_tosql(int pet_id, struct s_pet *p);
+int32 inter_pet_tosql(int32 pet_id, struct s_pet *p);
 
 #endif /* INT_PET_HPP */

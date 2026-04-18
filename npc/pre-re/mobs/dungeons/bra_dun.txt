@@ -1,0 +1,64 @@
+//===== rAthena Script =======================================
+//= Brasilis Dungeon Monster Spawn Script
+//===== Description: =========================================
+//= [Official Conversion based on bRO & jRO servers]
+//
+// Note:
+// - Brasilis was introduced in Pre-Renewal only for bRO and
+//   jRO official servers with differences in monster stats,
+//   spawns and quests.
+//   It was added in Renewal for every other official server.
+//   Since we follow kRO this is disabled by default.
+//   You can enable it on npc/pre-re/scripts_athena.conf
+//===== Changelog: ===========================================
+//= 1.0 First Version [Playtester]
+//============================================================
+
+//bRO Pre-Renewal spawns
+
+//==================================================
+// bra_dun01 - Behind the Waterfall
+//==================================================
+bra_dun01	monster	Iara	2069,60,5000
+bra_dun01	monster	Piranha	2070,100,5000
+bra_dun01	monster	Hydra	1068,10,5000
+bra_dun01	monster	Plankton	1161,10,5000
+bra_dun01	monster	Marina	1141,10,5000
+bra_dun01	monster	Black Mushroom	1084,10,180000,90000
+
+//==================================================
+// bra_dun02 - Behind the Waterfall
+//==================================================
+bra_dun02	monster	Iara	2069,120,5000
+bra_dun02	monster	Piranha	2070,80,5000
+bra_dun02	monster	Hydra	1068,20,5000
+bra_dun02	monster	Plankton	1161,20,5000
+bra_dun02	monster	Marina	1141,10,5000
+bra_dun02	monster	Black Mushroom	1084,10,180000,90000
+bra_dun02	boss_monster	Boitata	2068,1,7200000,600000,1
+
+
+//jRO Pre-Renewal spawns
+
+//==================================================
+// bra_dun01 - Behind the Waterfall
+//==================================================
+//bra_dun01	monster	Kukre	1070,40,5000
+//bra_dun01	monster	Hydra	1068,60,5000
+//bra_dun01	monster	Marina	1141,5,5000
+//bra_dun01	monster	Thara Frog	1034,40,5000
+//bra_dun01	monster	Piranha	2070,50,5000
+//bra_dun01	monster	Iara	2069,30,5000
+//bra_dun01	monster	Headless Mule	2071,10,5000
+//bra_dun01	monster	Black Mushroom	1084,5,120000,60000
+
+//==================================================
+// bra_dun02 - Behind the Waterfall
+//==================================================
+//bra_dun02	monster	Hydra	1068,20,5000
+//bra_dun02	monster	Piranha	2070,60,5000
+//bra_dun02	monster	Iara	2069,40,5000
+//bra_dun02	monster	Headless Mule	2071,40,5000
+//bra_dun02	monster	Shining Plant	1083,1,1800000,900000
+//bra_dun02	monster	Red Mushroom	1084,5,120000,60000
+//bra_dun02	boss_monster	Boitata	2068,1,7200000,600000,1

@@ -19,9 +19,9 @@
  extern const char* GRF_PATH_FILENAME;
 //char
  extern const char* CHAR_CONF_NAME;
- extern const char* SQL_CONF_NAME;
 //login
  extern const char* LOGIN_CONF_NAME;
+ extern const char *LOGIN_MSG_CONF_NAME;
 //common
  extern const char* LAN_CONF_NAME; //char-login
  extern const char* MSG_CONF_NAME_EN; //all
@@ -29,9 +29,9 @@
 extern void display_helpscreen(bool exit);
 bool cli_hasevent();
 void display_versionscreen(bool do_exit);
-bool opt_has_next_value(const char* option, int i, int argc);
-int cli_get_options(int argc, char ** argv);
+bool opt_has_next_value(const char* option, int32 i, int32 argc);
+int32 cli_get_options(int32 argc, char ** argv);
 TIMER_FUNC(parse_console_timer);
-extern int parse_console(const char* buf); //particular for each serv
+extern int32 parse_console(const char* buf); //particular for each serv
 
 #endif /* CLI_HPP */
