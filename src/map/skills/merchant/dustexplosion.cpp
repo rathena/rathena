@@ -17,7 +17,7 @@ void SkillDustExplosion::calculateSkillRatio(const Damage *wd, const block_list 
 
 	skillratio += -100 + 500 + 620 * skill_lv;
 	skillratio += 5 * sstatus->pow;	// !TODO: check POW ratio
-	if (sc && sc->getSCE(SC_RESEARCHREPORT))
+	if (sc != nullptr && sc->hasSCE(SC_RESEARCHREPORT))
 		skillratio += 50 + 210 * skill_lv;
 	RE_LVL_DMOD(100);
 }
