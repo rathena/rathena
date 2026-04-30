@@ -3873,14 +3873,14 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	sd->itemsphealrate.clear();
 	sd->itemgroupsphealrate.clear();
 
+	sd->sp_loss.clear();
+	sd->hp_regen.clear();
+	sd->sp_regen.clear();
+	sd->percent_hp_regen.clear();
+	sd->percent_sp_regen.clear();
+
 	// Zero up structures...
-	memset(&sd->hp_loss, 0, sizeof(sd->hp_loss)
-		+ sizeof(sd->sp_loss)
-		+ sizeof(sd->hp_regen)
-		+ sizeof(sd->sp_regen)
-		+ sizeof(sd->percent_hp_regen)
-		+ sizeof(sd->percent_sp_regen)
-		+ sizeof(sd->def_set_race)
+	memset(&sd->def_set_race, 0, sizeof(sd->def_set_race)
 		+ sizeof(sd->mdef_set_race)
 		+ sizeof(sd->norecover_state_race)
 		+ sizeof(sd->hp_vanish_race)
@@ -15490,10 +15490,10 @@ static int32 status_natural_heal(block_list* bl, va_list args)
 		flag = RGN_NONE;
 
 	if (sd) {
-		if (sd->hp_loss.value || sd->sp_loss.value)
-			pc_bleeding(sd, natural_heal_diff_tick);
-		if (sd->hp_regen.value || sd->sp_regen.value || sd->percent_hp_regen.value || sd->percent_sp_regen.value)
-			pc_regen(sd, natural_heal_diff_tick);
+		if (!sd->hp_loss.empty() || !sd->sp_loss.empty())
+			pc_bleeding(*sd, natural_heal_diff_tick);
+		if (!sd->hp_regen.empty() || !sd->sp_regen.empty() || !sd->percent_hp_regen.empty() || !sd->percent_sp_regen.empty())
+			pc_regen(*sd, natural_heal_diff_tick);
 	}
 
 	if(flag&(RGN_SHP|RGN_SSP) && regen->ssregen &&
