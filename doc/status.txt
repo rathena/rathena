@@ -222,7 +222,7 @@ Flags: Various status flags for specific status change events.
 	NoClearance           - Cannot be removed by AB_CLEARANCE.
 	NoBanishingBuster     - Cannot be removed by RL_BANISHING_BUSTER.
 	NoSave                - Won't be saved when player logs out.
-	NoSaveInfinite        - Infinite duration status won't be saved when player logs out.
+	NoSaveInfinite        - Infinite duration status won't be saved when player logs out (val4>0 or timer=INVALID_TIMER).
 	NoWarning             - Ignores the status_change_start check for statuses that have no defining features associated to them in the status database.
 
 	RemoveOnDamaged       - Removed when receiving damage.
