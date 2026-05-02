@@ -17,7 +17,7 @@
 
 	.@Price = 0;	// Zeny required for heal
 	.@Buffs = 1;	// Also buff players? (1: yes / 0: no)
-	.@Delay = 1;	// Heal delay, in seconds
+	.@Delay = 3;	// Heal delay, in seconds
 
 	if (@HD > gettimetick(2))
 		end;

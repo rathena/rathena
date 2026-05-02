@@ -1,0 +1,51 @@
+/*
+	Author: Nyani
+	Version 1.0
+	----------------------------------------------
+	Playtime System
+	----------------------------------------------
+	Changelogs
+	1.0 - Initial Release
+	
+*/
+
+-	script	PlaytimeCount	-1,{
+    end;
+OnPCLoginEvent:
+    //if(BaseLevel < 30) end;
+	@starttime$ = gettimestr("%Y-%m-%d %H:%M:%S", 21);
+    message  strcharinfo(0),"Playtime Point System is now enabled. Please note that vending will disqualify you from gaining points.";
+	addtimer 300000,"PlaytimeCount::OnPointUpdate"; // 5 minutes
+	dispbottom "Play Point System start time: "+@starttime$;
+    dispbottom "[ "+#playtimepts+"0/60 ] minutes completed.";
+end;
+OnPointUpdate:
+    if ( checkvending(strcharinfo(0)) == 2 ){
+        dispbottom "You have been removed from the Playtime Point System. Please re-log to opt-in again.";
+        deltimer strnpcinfo(3)+"::OnPointUpdate";
+        end;
+    }
+    @playtime += 1;
+    if(@playtime == 2){
+		@playtime = 0;
+        #playtimepts += 1;
+        if(#playtimepts == 6){
+            #playtimepts = 0;
+			#YourPtsHere += 1;
+            @playtime = 0;
+            message strcharinfo(0),"[Playtime Points]: You have received your Playtime Reward at "+gettimestr("%Y-%m-%d %H:%M:%S", 21)+".";
+			@prevtime$ = gettimestr("%Y-%m-%d %H:%M:%S", 21);
+        }
+    }
+	deltimer "PlaytimeCount::OnPointUpdate";
+	addtimer 300000,"PlaytimeCount::OnPointUpdate";
+end;
+OnPlaytimeCheck:
+	dispbottom "Last Reward: "+@prevtime$;
+	dispbottom "Minutes: "+#playtimepts+"0/60";
+	dispbottom "Current points: "+#YourPtsHere;
+end;
+OnInit:
+	bindatcmd "playtime",strnpcinfo(0)+"::OnPlaytimeCheck";
+end;
+}
