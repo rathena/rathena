@@ -7,7 +7,7 @@ prontera,164,172,3	script	Instance Merchant	4_M_HUMERCHANT,{
 		mes "[Instance Merchant]";
 		mes "So, what do you want?";
 		next;
-		switch( select( "Illusion Vampire", "Illusion Underwater", "Illusion Teddy", , "Resonance Stone", "Illusion Moonlight", "Illusion Frozen", "Illusion Turtle", "Illusion Luanda", "Illusion Teddy", "Cancel" ) ) {
+		switch( select( "Illusion Vampire", "Illusion Underwater", "Illusion Teddy", "Resonance Stone", "Illusion Moonlight", "Illusion Frozen", "Illusion Turtle", "Illusion Luanda", "Illusion Teddy", "Cancel" ) ) {
 		case 1:
 			specialeffect EF_HFLIMOON3;
 			emotion ET_BEST;
@@ -85,7 +85,7 @@ prontera,164,172,3	script	Instance Merchant	4_M_HUMERCHANT,{
 			mes "Did you find anything you liked? If you need anything, please let me know at any time.";
 			close;
 	}
-	end;
+
 	case 2:
 		mes "[Instance Merchant]";
 		mes "Not yet implemented.";
