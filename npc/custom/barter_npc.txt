@@ -1,4 +1,4 @@
-prontera,164,172,3	script	Instance Merchant	4_M_HUMERCHANT,{
+prontera,164,172,3	script	Instance & EP Merchant	4_M_HUMERCHANT,{
 	mes "[Instance Merchant]";
 	mes "I can exchange instance drops directly. Tell me what instance you need.";
 	next;
@@ -88,8 +88,154 @@ prontera,164,172,3	script	Instance Merchant	4_M_HUMERCHANT,{
 
 	case 2:
 		mes "[Instance Merchant]";
-		mes "Not yet implemented.";
-		end;
+		mes "So, what do you want?";
+		next;
+		switch( select( "Episode 14", "Episode 15", "Episode 16.1", "Episode 16.2", "Episode 17.1", "Episode 17.2", "Episode 18", "Episode 19", "Episode 20", "Episode 21", "Cancel" ) ) {
+		case 1:
+			specialeffect EF_HFLIMOON3;
+			emotion ET_BEST;
+			mes "[Instance Merchant]";
+			mes "**14 NOT YET IMPLEMENTED**";
+			close2;
+//			callshop( "barter_ill_vampire" );
+//			end;
+		case 2:
+			specialeffect EF_HFLIMOON3;
+			emotion ET_BEST;
+			mes "[Instance Merchant]";
+			mes "**15 NOT YET IMPLEMENTED**";
+			close2;
+//			callshop( "barter_ill_vampire" );
+//			end;
+		case 3:
+			specialeffect EF_HFLIMOON3;
+			emotion ET_BEST;
+			mes "[Instance Merchant]";
+			mes "Episode 16.1 Extended Shop";
+			mes "So, what do you want?";
+			next;
+			switch( select( "Guillotine Cross", "Ranger", "Shadow Chaser", "Rune Knight", "Arch Bishop", "Genetic", "Summoner", "Warlock", "Sorcerer", "Soul Reaper", "Rebellion", "Royal Guard", "Sura", "Kagerou", "Star Emperor", "Ministrel", "Ext. Super Novice", "Mechanic", "Cancel" ) ) {
+			case 1:
+				callshop( "shop_ext161_JOB_GUILLOTINE_CROSS" );
+				end;
+			case 2:
+				callshop( "shop_ext161_JOB_RANGER" );
+				end;
+			case 3:
+				callshop( "shop_ext161_JOB_SHADOW_CHASER" );
+				end;
+			case 4:
+				callshop( "shop_ext161_JOB_RUNE_KNIGHT" );
+				end;
+			case 5:
+				callshop( "shop_ext161_JOB_ARCH_BISHOP" );
+				end;
+			case 6:
+				callshop( "shop_ext161_JOB_GENETIC" );
+				end;
+			case 7:
+				callshop( "shop_ext161_JOB_SUMMONER" );
+				end;
+			case 8:
+				callshop( "shop_ext161_JOB_WARLOCK" );
+				end;
+			case 9:
+				callshop( "shop_ext161_JOB_SORCERER" );
+				end;
+			case 10:
+				callshop( "shop_ext161_JOB_SOUL_REAPER" );
+				end;
+			case 11:
+				callshop( "shop_ext161_JOB_REBELLION" );
+				end;
+			case 12:
+				callshop( "shop_ext161_JOB_ROYAL_GUARD" );
+				end;
+			case 13:
+				callshop( "shop_ext161_JOB_SURA" );
+				end;
+			case 14:
+				callshop( "shop_ext161_JOB_KAGEROU" );
+				end;
+			case 15:
+				callshop( "shop_ext161_JOB_STAR_EMPEROR" );
+				end;
+			case 16:
+				callshop( "shop_ext161_JOB_MINSTREL" );
+				end;
+			case 17:
+				callshop( "shop_ext161_JOB_SUPER_NOVICE_E" );
+				end;
+			case 18:
+				callshop( "shop_ext161_JOB_MECHANIC" );
+				end;
+			case 19:
+				mes "[Instance Merchant]";
+				mes "Did you find anything you liked? If you need anything, please let me know at any time.";
+				close;
+				end;
+			}
+		case 4:
+			specialeffect EF_HFLIMOON3;
+			emotion ET_BEST;
+			mes "[Instance Merchant]";
+			mes "**16.2 NOT YET IMPLEMENTED**";
+			close2;
+//			callshop( "barter_ill_vampire" );
+//			end;
+		case 5:
+			specialeffect EF_HFLIMOON3;
+			emotion ET_BEST;
+			mes "[Instance Merchant]";
+			mes "**17.1 NOT YET IMPLEMENTED**";
+			close2;
+//			callshop( "barter_ill_vampire" );
+//			end;
+		case 6:
+			specialeffect EF_HFLIMOON3;
+			emotion ET_BEST;
+			mes "[Instance Merchant]";
+			mes "**17.2 NOT YET IMPLEMENTED**";
+			close2;
+//			callshop( "barter_ill_vampire" );
+//			end;
+		case 7:
+			specialeffect EF_HFLIMOON3;
+			emotion ET_BEST;
+			mes "[Instance Merchant]";
+			mes "**18 NOT YET IMPLEMENTED**";
+			close2;
+//			callshop( "barter_ill_vampire" );
+//			end;
+		case 8:
+			specialeffect EF_HFLIMOON3;
+			emotion ET_BEST;
+			mes "[Instance Merchant]";
+			mes "**19 NOT YET IMPLEMENTED**";
+			close2;
+//			callshop( "barter_ill_vampire" );
+//			end;
+		case 9:
+			specialeffect EF_HFLIMOON3;
+			emotion ET_BEST;
+			mes "[Instance Merchant]";
+			mes "**20 NOT YET IMPLEMENTED**";
+			close2;
+//			callshop( "barter_ill_vampire" );
+//			end;
+		case 10:
+			specialeffect EF_HFLIMOON3;
+			emotion ET_BEST;
+			mes "[Instance Merchant]";
+			mes "**21 NOT YET IMPLEMENTED**";
+			close2;
+//			callshop( "barter_ill_vampire" );
+//			end;
+		case 11:
+			mes "[Instance Merchant]";
+			mes "Did you find anything you liked? If you need anything, please let me know at any time.";
+			close;
+	}
 	case 3:
 		mes "[Instance Merchant]";
 		mes "Did you find anything you liked? If you need anything, please let me know at any time.";
