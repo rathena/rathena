@@ -5,7 +5,7 @@ OnPCLoginEvent:
     dispbottom "Current Server Time: " + gettimestr("%Y-%m-%d %H:%M:%S",21);
 
     // 2. Global broadcast (optional)
-    // announce "Player [" + strcharinfo(0) + "] has joined the adventure!", bc_all, 0xFFCC00;
+     announce "Player [" + strcharinfo(0) + "] has joined the adventure!", bc_all, 0xFFCC00;
 
     // 3. Show a Welcome Dialog (Message Box)
     mes "[Server Manager]";
