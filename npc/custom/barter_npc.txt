@@ -78,7 +78,7 @@ prontera,164,172,3	script	Instance & EP Merchant	4_M_HUMERCHANT,{
 			mes "[Instance Merchant]";
 			mes "Use it well and come see me later if you find more Illusion Stones! *Chuckle*";
 			close2;
-			callshop( "barter_ill_teddy" );
+//			callshop( "barter_ill_teddy" );
 			end;
 		case 10:
 			mes "[Instance Merchant]";
