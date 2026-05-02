@@ -1,1 +1,1 @@
-prontera,155,150,4	bartershop	Herb_Exchanger	90,100,501:1
+prontera,155,150,4	bartershop	Herb_Exchanger	105,100,501:1
