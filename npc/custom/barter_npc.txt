@@ -1,55 +1,99 @@
 prontera,164,172,3	script	Instance Merchant	4_M_HUMERCHANT,{
 	mes "[Instance Merchant]";
-	mes "I can exchange instance drops directly. Tell me what you need.";
+	mes "I can exchange instance drops directly. Tell me what instance you need.";
 	next;
-	mes "[Instance Merchant]";
-	mes "So, what do you want?";
-	next;
-	switch( select( "Illusion Vampire", "What are Illusion Stones?", "Can I strengthen the exchanged item?", "Cancel" ) ) {
+	switch( select( "Illusion Instances", "Episodes", "Cancel" ) ) {
 	case 1:
-		specialeffect EF_HFLIMOON3;
-		emotion ET_BEST;
 		mes "[Instance Merchant]";
-		mes "Use it well and come see me later if you find more Illusion Stones! *Chuckle*";
-		close2;
-		callshop( "barter_ill_vampire" );
-		end;
+		mes "So, what do you want?";
+		next;
+		switch( select( "Illusion Vampire", "Illusion Underwater", "Illusion Teddy", , "Resonance Stone", "Illusion Moonlight", "Illusion Frozen", "Illusion Turtle", "Illusion Luanda", "Illusion Teddy", "Cancel" ) ) {
+		case 1:
+			specialeffect EF_HFLIMOON3;
+			emotion ET_BEST;
+			mes "[Instance Merchant]";
+			mes "Use it well and come see me later if you find more Illusion Stones! *Chuckle*";
+			close2;
+			callshop( "barter_ill_vampire" );
+			end;
+		case 2:
+			specialeffect EF_HFLIMOON3;
+			emotion ET_BEST;
+			mes "[Instance Merchant]";
+			mes "Use it well and come see me later if you find more Illusion Stones! *Chuckle*";
+			close2;
+			callshop( "barter_ill_underwater" );
+			end;
+		case 3:
+			specialeffect EF_HFLIMOON3;
+			emotion ET_BEST;
+			mes "[Instance Merchant]";
+			mes "Use it well and come see me later if you find more Illusion Stones! *Chuckle*";
+			close2;
+			callshop( "barter_ill_twins" );
+			end;
+		case 4:
+			specialeffect EF_HFLIMOON3;
+			emotion ET_BEST;
+			mes "[Instance Merchant]";
+			mes "Use it well and come see me later if you find more Illusion Stones! *Chuckle*";
+			close2;
+			callshop( "resonance_stone_barter" );
+			end;
+		case 5:
+			specialeffect EF_HFLIMOON3;
+			emotion ET_BEST;
+			mes "[Instance Merchant]";
+			mes "Use it well and come see me later if you find more Illusion Stones! *Chuckle*";
+			close2;
+			callshop( "barter_ill_moonlight" );
+			end;
+		case 6:
+			specialeffect EF_HFLIMOON3;
+			emotion ET_BEST;
+			mes "[Instance Merchant]";
+			mes "Use it well and come see me later if you find more Illusion Stones! *Chuckle*";
+			close2;
+			callshop( "barter_ill_frozen" );
+			end;
+		case 7:
+			specialeffect EF_HFLIMOON3;
+			emotion ET_BEST;
+			mes "[Instance Merchant]";
+			mes "Use it well and come see me later if you find more Illusion Stones! *Chuckle*";
+			close2;
+			callshop( "barter_ill_turtle" );
+			end;
+		case 8:
+			specialeffect EF_HFLIMOON3;
+			emotion ET_BEST;
+			mes "[Instance Merchant]";
+			mes "Use it well and come see me later if you find more Illusion Stones! *Chuckle*";
+			close2;
+			callshop( "barter_ill_luanda" );
+			end;
+		case 9:
+			specialeffect EF_HFLIMOON3;
+			emotion ET_BEST;
+			mes "[Instance Merchant]";
+			mes "Use it well and come see me later if you find more Illusion Stones! *Chuckle*";
+			close2;
+			callshop( "barter_ill_teddy" );
+			end;
+		case 10:
+			mes "[Instance Merchant]";
+			mes "Did you find anything you liked? If you need anything, please let me know at any time.";
+			close;
+	}
+	end;
 	case 2:
-		mes "[Great Merchant]";
-		mes "What are ^0000cdIllusion Stones^000000, you ask? Well... I don't think anyone knows exactly what they are.";
-		next;
-		mes "[Great Merchant]";
-		mes "I only know they're rare and can only be found in some special places, and I'm here to collect them for my clients.";
-		next;
-		mes "[Great Merchant]";
-		mes "My clients want to figure out what these stones are. They're paying me a lot of money,";
-		next;
-		mes "[Great Merchant]";
-		mes "so I could offer adventurers like you ^0000cdexpensive equipment in exchange for the stones^000000, and still fetch a profit.";
-		next;
-		mes "[Great Merchant]";
-		mes "Bring ^0000cda piece of refined equipment, Illusion Stones^000000, and various materials that are only found in this place. I'll ^0000cdupgrade the equipment, weapon, armor, or accessory?^000000for you.";
-		next;
-		mes "[Great Merchant]";
-		mes "This benefits both of us. Let me know if you're interested in my proposition.";
-		close;
+		mes "[Instance Merchant]";
+		mes "Not yet implemented.";
+		end;
 	case 3:
-		mes "[Great Merchant]";
-		mes "So, you want to reinforce the equipment you get. You're thorough. I like that!";
-		next;
-		mes "[Great Merchant]";
-		mes "A while ago, an adventurer who passed through this place told me that a chemist in Prontera refines the Illusion equipment in exchange for Illusion Stones.";
-		next;
-		mes "[Great Merchant]";
-		mes "It seems Illusion Stones are a popular topic everywhere. Everyone wants to know about what they are.";
-		next;
-		mes "[Great Merchant]";
-		mes "If you want to refine your equipment, then go to the <NAVI>Illusion Enchanter<INFO>prontera,90,115,000,0,</INFO></NAVI> near the Town Office.";
-		close;
-	case 4:
-		mes "[Great Merchant]";
+		mes "[Instance Merchant]";
 		mes "Did you find anything you liked? If you need anything, please let me know at any time.";
 		close;
 	}
-	end;
+end;
 }
