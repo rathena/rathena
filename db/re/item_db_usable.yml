@@ -4989,7 +4989,7 @@ Body:
     AegisName: Stone_Of_Intelligence_
     Name: Stone of Sage
     Type: Usable
-    Buy: 100000
+    Buy: 10000
     Weight: 300
     Flags:
       BuyingStore: true
