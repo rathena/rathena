@@ -98,7 +98,7 @@ prontera,164,172,3	script	Instance & EP Merchant	4_M_HUMERCHANT,{
 			mes "**14 NOT YET IMPLEMENTED**";
 			close2;
 //			callshop( "barter_ill_vampire" );
-//			end;
+			end;
 		case 2:
 			specialeffect EF_HFLIMOON3;
 			emotion ET_BEST;
@@ -106,7 +106,7 @@ prontera,164,172,3	script	Instance & EP Merchant	4_M_HUMERCHANT,{
 			mes "**15 NOT YET IMPLEMENTED**";
 			close2;
 //			callshop( "barter_ill_vampire" );
-//			end;
+			end;
 		case 3:
 			specialeffect EF_HFLIMOON3;
 			emotion ET_BEST;
