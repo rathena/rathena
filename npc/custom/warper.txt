@@ -17,6 +17,7 @@
 //============================================================
 
 -	script	Warper	-1,{
+cutin "illust_valkyrie", 2;
 function Go; function Disp; function Pick; function Restrict;
 
 // --------------------------------------------------
