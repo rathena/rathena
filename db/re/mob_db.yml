@@ -188,7 +188,7 @@ Body:
         Index: 7
         Rate: 20
         StealProtected: true
-        - Item: Play_RO_Gold_Coin_
+      - Item: Play_RO_Gold_Coin_
         Index: 8
         Rate: 1000
         StealProtected: true
