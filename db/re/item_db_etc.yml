@@ -102181,7 +102181,7 @@ Body:
       Ammo: true
     Flags:
       BuyingStore: true
-  - Id: 50000
+  - Id: 1231000
     AegisName: Play_RO_Gold_Coin_
     Name: Play RO Coin
     Type: Etc
