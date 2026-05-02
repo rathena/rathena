@@ -1,0 +1,24 @@
+-	script	GlobalDropSystem	-1,{
+OnNPCKillEvent:
+    // Define the drop chance (100 = 1%)
+    .@chance = 1000; 
+    
+    // Define the Item ID (e.g., 30008 for your Costume Ticket)
+    .@item_id = 50000;
+
+    // Ensure the killer is a player and the target was a monster
+    if (killedrid >= 1000) {
+        if (rand(1, 10000) <= .@chance) {
+            
+            // Get the monster's current map and coordinates
+            getmapxy(.@map$, .@x, .@y, BL_MOB, killedrid);
+            
+            // makeitem <item id>,<amount>,"<map name>",<x>,<y>
+            makeitem .@item_id, 1, .@map$, .@x, .@y;
+            
+            // Optional: Notify the player so they don't miss it
+            dispbottom "A " + getitemname(.@item_id) + " has dropped nearby!";
+        }
+    }
+    end;
+}
