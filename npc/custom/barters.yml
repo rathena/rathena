@@ -45,3 +45,10 @@
 Header:
   Type: BARTER_DB
   Version: 2
+
+- Index: 100
+    Items:
+      - Item: Red_Herb
+        Amount: 10
+      - Item: Blue_Herb
+        Amount: 5
