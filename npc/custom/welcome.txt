@@ -1,0 +1,25 @@
+-	script	ServerWelcome	-1,{
+OnPCLoginEvent:
+    // 1. Private message to the player
+    dispbottom "Welcome to the server, " + strcharinfo(0) + "!";
+    dispbottom "Current Server Time: " + gettimestr("%Y-%m-%d %H:%M:%S",21);
+
+    // 2. Global broadcast (optional)
+    // announce "Player [" + strcharinfo(0) + "] has joined the adventure!", bc_all, 0xFFCC00;
+
+    // 3. Show a Welcome Dialog (Message Box)
+    mes "[Server Manager]";
+    mes "Greetings, traveler!";
+    mes "We hope you enjoy your stay.";
+    mes "Don't forget to check the ^FF0000Barter Shop^000000 in Prontera!";
+    
+    // 4. Check if it's their first time (New Character)
+    if (#FirstLogin == 0) {
+        set #FirstLogin, 1;
+        mes "Since it's your first time, here is a gift!";
+        // Give 1 Costume Ticket (ID 30008)
+        getitem 30008, 1; 
+        specialeffect2 EF_SPIRIT;
+    }
+    close;
+}
