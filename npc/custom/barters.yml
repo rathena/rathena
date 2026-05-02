@@ -46,9 +46,8 @@ Header:
   Type: BARTER_DB
   Version: 2
 
-- Index: 100
-    Items:
-      - Item: Red_Herb
-        Amount: 10
-      - Item: Blue_Herb
-        Amount: 5
+Footer:
+  Imports:
+  - Path: npc/re/merchants/barters.yml
+    Mode: Renewal
+  - Path: npc/custom/barters.yml
