@@ -182,7 +182,7 @@ prontera,164,172,3	script	Instance & EP Merchant	4_M_HUMERCHANT,{
 			mes "**16.2 NOT YET IMPLEMENTED**";
 			close2;
 //			callshop( "barter_ill_vampire" );
-//			end;
+			end;
 		case 5:
 			specialeffect EF_HFLIMOON3;
 			emotion ET_BEST;
@@ -190,7 +190,7 @@ prontera,164,172,3	script	Instance & EP Merchant	4_M_HUMERCHANT,{
 			mes "**17.1 NOT YET IMPLEMENTED**";
 			close2;
 //			callshop( "barter_ill_vampire" );
-//			end;
+			end;
 		case 6:
 			specialeffect EF_HFLIMOON3;
 			emotion ET_BEST;
@@ -198,7 +198,7 @@ prontera,164,172,3	script	Instance & EP Merchant	4_M_HUMERCHANT,{
 			mes "**17.2 NOT YET IMPLEMENTED**";
 			close2;
 //			callshop( "barter_ill_vampire" );
-//			end;
+			end;
 		case 7:
 			specialeffect EF_HFLIMOON3;
 			emotion ET_BEST;
@@ -206,7 +206,7 @@ prontera,164,172,3	script	Instance & EP Merchant	4_M_HUMERCHANT,{
 			mes "**18 NOT YET IMPLEMENTED**";
 			close2;
 //			callshop( "barter_ill_vampire" );
-//			end;
+			end;
 		case 8:
 			specialeffect EF_HFLIMOON3;
 			emotion ET_BEST;
@@ -214,7 +214,7 @@ prontera,164,172,3	script	Instance & EP Merchant	4_M_HUMERCHANT,{
 			mes "**19 NOT YET IMPLEMENTED**";
 			close2;
 //			callshop( "barter_ill_vampire" );
-//			end;
+			end;
 		case 9:
 			specialeffect EF_HFLIMOON3;
 			emotion ET_BEST;
@@ -222,7 +222,7 @@ prontera,164,172,3	script	Instance & EP Merchant	4_M_HUMERCHANT,{
 			mes "**20 NOT YET IMPLEMENTED**";
 			close2;
 //			callshop( "barter_ill_vampire" );
-//			end;
+			end;
 		case 10:
 			specialeffect EF_HFLIMOON3;
 			emotion ET_BEST;
@@ -230,16 +230,18 @@ prontera,164,172,3	script	Instance & EP Merchant	4_M_HUMERCHANT,{
 			mes "**21 NOT YET IMPLEMENTED**";
 			close2;
 //			callshop( "barter_ill_vampire" );
-//			end;
+			end;
 		case 11:
 			mes "[Instance Merchant]";
 			mes "Did you find anything you liked? If you need anything, please let me know at any time.";
 			close;
+			end;
 	}
 	case 3:
 		mes "[Instance Merchant]";
 		mes "Did you find anything you liked? If you need anything, please let me know at any time.";
 		close;
+		end;
 	}
 end;
 }
