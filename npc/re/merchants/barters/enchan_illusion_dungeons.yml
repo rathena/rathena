@@ -910,9 +910,6 @@ Body:
           - Index: 4
             Item: Chonchon_Doll_HQ
             Amount: 100
-          - Index: 5
-            Item: Clay_Doll
-            Amount: 15
       - Index: 3
         Item: Boots_IL
         RequiredItems:
