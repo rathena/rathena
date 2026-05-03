@@ -8132,9 +8132,6 @@ static uint16 status_calc_speed(block_list *bl, status_change *sc, int32 speed)
 				val = max(val, 20);
 			if (sc->getSCE(SC_GROUNDGRAVITY))
 				val = max(val, 20);
-			if( sc->getSCE( SC_SHADOW_CLOCK ) != nullptr ){
-				val = max( val, 30 );
-			}
 
 			if( sd && sd->bonus.speed_rate + sd->bonus.speed_add_rate > 0 ) // Permanent item-based speedup
 				val = max( val, sd->bonus.speed_rate + sd->bonus.speed_add_rate );
@@ -8193,6 +8190,9 @@ static uint16 status_calc_speed(block_list *bl, status_change *sc, int32 speed)
 		}
 		if( sc->getSCE(SC_WILD_WALK) != nullptr )
 			val = max( val, sc->getSCE(SC_WILD_WALK)->val2 );
+		if( sc->getSCE( SC_SHADOW_CLOCK ) != nullptr ){
+			val = max( val, 50 );
+		}
 
 		// !FIXME: official items use a single bonus for this [ultramage]
 		if( sd && sd->bonus.speed_rate + sd->bonus.speed_add_rate < 0 ) // Permanent item-based speedup
