@@ -42,7 +42,6 @@ moc_para01,110,91,4	script	Lucy	70,{
 
             // Grant free 72-hour rental item (4320 minutes)
             rentitem2 .@shadow_id,259200,0,0,0,0,0,0,0;
-		     <item id>,<time>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>;
             mes "[Lucy]";
             mes "There you go! Enjoy your free rental piece. It will dissolve in 72 hours.";
             close;
