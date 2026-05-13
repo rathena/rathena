@@ -41,7 +41,7 @@ moc_para01,110,91,4	script	Lucy	70,{
             }
 
             // Grant free 72-hour rental item (4320 minutes)
-            getitem2 .@shadow_id, 1, 1, 0, 0, 0, 0, 0, 0, 4320;
+            rentitem .@shadow_id, 60;
             mes "[Lucy]";
             mes "There you go! Enjoy your free rental piece. It will dissolve in 72 hours.";
             close;
@@ -112,7 +112,7 @@ moc_para01,110,91,4	script	Lucy	70,{
 
             // Deduct currency and apply 72-hour rental profile (4320 minutes)
             delitem 6224, 20;
-            getitembound2 .@shadow_id, 1, 1, 0, 0, 0, 0, 0, 0, 4320;
+            rentitem .@shadow_id, 60;
             
             mes "[Lucy]";
             mes "Payment processed. Enjoy your advanced equipment piece!";
