@@ -103,7 +103,7 @@ moc_para01,110,91,4	script	Lucy	70,{
             }
 
             // Currency Verification for Advanced Gear: 20 Eden Coins (6224)
-            if (countitem(6224) < 20) {
+            if (countitem(25223) < 20) {
                 mes "[Lucy]";
                 mes "Transaction aborted. You do not have enough Eden Coins.";
                 mes "Advanced high-tier rentals require exactly **20 Eden Coins**.";
@@ -111,8 +111,8 @@ moc_para01,110,91,4	script	Lucy	70,{
             }
 
             // Deduct currency and apply 72-hour rental profile (4320 minutes)
-            delitem 6224, 20;
-            rentitem .@shadow_id, 60;
+            delitem 25223, 20;
+            rentitem2 .@shadow_id,259200,1,0,0,0,0,0,0;
             
             mes "[Lucy]";
             mes "Payment processed. Enjoy your advanced equipment piece!";
