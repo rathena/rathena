@@ -14,7 +14,7 @@
 // ==========================================
 // 1. COMBINED EQUIPMENT VENDOR
 // ==========================================
-prontera,147,242,5	script	Equipment Merchant#p_market	961,{
+prontera,142,238,5	script	Equipment Merchant#p_market	961,{
 	mes "[Equipment Merchant]";
 	mes "Welcome! What type of combat gear are you looking for today?";
 	next;
@@ -54,7 +54,7 @@ prontera,147,242,5	script	Equipment Merchant#p_market	961,{
 // ==========================================
 // 2. COMBINED HEADGEAR & GARMENT VENDOR
 // ==========================================
-prontera,164,254,4	script	Headgear & Garment Dealer#p_market	961,{
+prontera,142,241,4	script	Headgear & Garment Dealer#p_market	961,{
 	mes "[Headgear & Garment Dealer]";
 	mes "I have garments, accessories, and a massive collection of headgears.";
 	next;
@@ -80,7 +80,7 @@ prontera,164,254,4	script	Headgear & Garment Dealer#p_market	961,{
 // ==========================================
 // 3. COMBINED SUPPLIES & DEALERS
 // ==========================================
-prontera,151,284,4	script	Supply Dealer#p_market	961,{
+prontera,142,246,4	script	Supply Dealer#p_market	961,{
 	mes "[Supply Dealer]";
 	mes "Looking for consumables, ammunition, or specialty goods?";
 	next;
