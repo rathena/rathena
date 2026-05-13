@@ -1,7 +1,7 @@
 //============================================================
 // Eden Group Leveling Board (130 - 190)
 //============================================================
-moc_paraup,48,179,0	script	130-190 Mission Board	428,{
+moc_para01,48,179,0	script	130-190 Mission Board	428,{
 
     if (BaseLevel < 130 || BaseLevel > 190) {
         mes "[130-190 Mission Board]";
