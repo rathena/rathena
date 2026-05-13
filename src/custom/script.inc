@@ -17,3 +17,17 @@
 //	script_pushint(st,1);
 //	return 0;
 //}
+
+/// Returns the skill's name [Easycore]
+///
+/// getskillname(<skill id>)
+/// getskillname("<skill name>")
+BUILDIN_FUNC(getskillname)
+{
+	uint16 skill_id = (script_isstring(st,2) ? skill_name2id(script_getstr(st,2)) : script_getnum(st,2));
+	if (!skill_get_index(skill_id))
+		script_pushconststr(st, "Unknown Skill");
+	else
+		script_pushstrcopy(st,skill_get_desc(skill_id));
+	return SCRIPT_CMD_SUCCESS;
+}
