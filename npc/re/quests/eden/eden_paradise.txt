@@ -1,0 +1,443 @@
+// =======================================================
+// Paradise Beginner Weapon Distributor: Mala
+// =======================================================
+moc_para01,110,79,4	script	Mala	851,{
+    mes "[Mala]";
+    mes "Hello, recruit! I supply basic starter weapons to new adventurers.";
+    mes "Need some simple armaments to kick off your training?";
+    next;
+
+    // Universal Eden Membership Verification
+    if (!callfunc("F_HasEdenGroupMark")) {
+        mes "[Mala]";
+        mes "I am sorry, but I only dispense training weapons to registered Eden Group members.";
+        close;
+    }
+
+    mes "[Mala]";
+    if (BaseLevel < 12) {
+        mes "You must be at least Base Level 12 to handle these basic tools.";
+        close;
+    }
+    
+    mes "Pick any weapon from my beginner stash. It won't cost you a single Zeny!";
+    next;
+
+    switch(select("Paradise Sword:Paradise Axe:Paradise Mace:Paradise Dagger:Paradise Bow:Paradise Rod:Paradise Revolver:Paradise Foxtail:Cancel")) {
+        case 1: .@wpn = 500032; break; // Paradise Sword
+        case 2: .@wpn = 520010;  break; // Paradise Axe
+        case 3: .@wpn = 590025;  break; // Paradise Mace
+        case 4: .@wpn = 510035; break; // Paradise Dagger
+        case 5: .@wpn = 700036;  break; // Paradise Bow
+        case 6: .@wpn = 550032;  break; // Paradise Rod / Staff
+        case 7: .@wpn = 800004; break; // Paradise Revolver
+        case 8: .@wpn = 550033; break; // Paradise Foxtail
+        case 9: close;
+    }
+
+    mes "[Mala]";
+    mes "Here you go. Train hard, stay safe, and make the Eden Group proud!";
+    getitem .@wpn, 1;
+    close;
+}
+
+// =======================================================
+// Paradise Weapon Distributor: Reno
+// =======================================================
+moc_para01,110,83,4	script	Reno	967,{
+    mes "[Reno]";
+    mes "Hey there, friend! I handle intermediate and advanced Paradise weapons.";
+    mes "Ready to boost your offensive power?";
+    next;
+
+    // Universal Eden Membership Verification
+    if (!callfunc("F_HasEdenGroupMark")) {
+        mes "[Reno]";
+        mes "Sorry, I only hand out gear to verified Eden Group members.";
+        close;
+    }
+
+    switch(select("Claim Intermediate Weapon (Lv 45 - Free):Purchase Advanced Weapon (10 Coins):Cancel")) {
+
+        // =======================================================
+        // INTERMEDIATE WEAPON SYSTEM (LEVEL 45 - FREE & REPEATABLE)
+        // =======================================================
+        case 1:
+            mes "[Reno]";
+            if (BaseLevel < 45) {
+                mes "You need to be at least Base Level 45 for this gear allocation.";
+                close;
+            }
+
+            mes "Select your job class category:";
+            next;
+
+            switch(select("Swordsman Classes:Merchant Classes:Thief Classes:Mage Classes:Acolyte Classes:Archer/Performer Classes:Expanded/Other Classes")) {
+                case 1:
+                    mes "Select your weapon:";
+                    switch(select("Paradise Knight Lance:Paradise Knight Two-Handed Sword:Paradise Crusader Sword:Paradise Crusader Spear")) {
+                        case 1: .@wpn = 630014; break;
+                        case 2: .@wpn = 600020; break;
+                        case 3: .@wpn = 500033; break;
+                        case 4: .@wpn = 530017; break;
+                    }
+                    break;
+
+                case 2:
+                    mes "Select your weapon:";
+                    switch(select("Paradise Blacksmith Axe:Paradise Blacksmith Two-Handed Axe:Paradise Alchemist Mace:Paradise Alchemist Sword")) {
+                        case 1: .@wpn = 520011; break;
+                        case 2: .@wpn = 620011; break;
+                        case 3: .@wpn = 590026; break;
+                        case 4: .@wpn = 500034; break;
+                    }
+                    break;
+
+                case 3:
+                    mes "Select your weapon:";
+                    switch(select("Paradise Assassin Chakram:Paradise Assassin Katar:Paradise Rogue Dagger:Paradise Rogue Bow")) {
+                        case 1: .@wpn = 610024; break;
+                        case 2: .@wpn = 610025;  break;
+                        case 3: .@wpn = 510036; break;
+                        case 4: .@wpn = 700037; break;
+                    }
+                    break;
+
+                case 4:
+                    mes "Select your weapon:";
+                    switch(select("Paradise Wizard Staff:Paradise Wizard Wand:Paradise Sage Magic Book:Paradise Sage Spell Book")) {
+                        case 1: .@wpn = 550034; break;
+                        case 2: .@wpn = 550035; break;
+                        case 3: .@wpn = 540027; break;
+                        case 4: .@wpn = 540028; break;
+                    }
+                    break;
+
+                case 5:
+                    mes "Select your weapon:";
+                    switch(select("Paradise Priest Mace:Paradise Priest Wand:Paradise Monk Knuckle:Paradise Monk Claw")) {
+                        case 1: .@wpn = 590027; break;
+                        case 2: .@wpn = 550036; break;
+                        case 3: .@wpn = 560022; break;
+                        case 4: .@wpn = 560023; break;
+                    }
+                    break;
+
+                case 6:
+                    mes "Select your weapon:";
+                    switch(select("Paradise Hunter Bow:Paradise Hunter Crossbow:Paradise Bard&Dancer Bow:Paradise Bard Violin:Paradise Dancer Rope")) {
+                        case 1: .@wpn = 700038; break;
+                        case 2: .@wpn = 700039; break;
+                        case 3: .@wpn = 700040; break;
+                        case 4: .@wpn = 570021; break;
+                        case 5: .@wpn = 580021; break;
+                    }
+                    break;
+
+                case 7:
+                    mes "Select your weapon:";
+                    switch(select("Paradise Ninja Phys Huuma:Paradise Ninja Mag Huuma:Paradise Gunslinger Rifle:Paradise Gunslinger Revolver:Paradise Taekwon Battle Book:Paradise Taekwon Encyclopedia:Paradise Soul Linker Dagger:Paradise Soul Linker Wand:Paradise Doram Foxtail:Paradise Doram Foxtail Replica:Paradise Super Novice Sword:Paradise Super Novice Wand")) {
+                        case 1:  .@wpn = 650011; break;
+                        case 2:  .@wpn = 650010; break;
+                        case 3:  .@wpn = 810003; break;
+                        case 4:  .@wpn = 800005; break;
+                        case 5:  .@wpn = 540029; break;
+                        case 6:  .@wpn = 540030; break;
+                        case 7:  .@wpn = 510037; break;
+                        case 8:  .@wpn = 550037; break;
+                        case 9:  .@wpn = 550038; break;
+                        case 10: .@wpn = 550039; break;
+                        case 11: .@wpn = 550035; break;
+                        case 12: .@wpn = 550040; break;
+                    }
+                    break;
+            }
+
+            mes "[Reno]";
+            mes "Here is your Level 45 Intermediate weapon!";
+            getitem .@wpn, 1;
+            close;
+
+        // =======================================================
+        // ADVANCED CLASS WEAPONS SHOP (LEVEL 100+ & 3RD/EXTENDED JOB)
+        // =======================================================
+        case 2:
+            mes "[Reno]";
+            
+            if (BaseLevel < 100 || Class < 4001) {
+                mes "Access Denied.";
+                mes "Advanced weapons strictly require **Base Level 100** and a **Third Job or Advanced Extended Class**.";
+                close;
+            }
+
+            // ONE-TIME ENTRANCE REQUIREMENT CHECK
+            if (Paradise_Wpn_Unlocked == 0) {
+                mes "Before you can access my Advanced Weapons stash, you must complete a one-time delivery for me.";
+                mes "Please bring me **15x Old Pick**.";
+                next;
+
+                if (countitem(7314) < 15) { 
+                    mes "[Reno]";
+                    mes "You do not have enough Old Picks. Come back when you have all 15.";
+                    close;
+                }
+
+                delitem 7314, 15;
+                set Paradise_Wpn_Unlocked, 1;
+                mes "[Reno]";
+                mes "Fantastic! The Advanced Weapons shop is now permanently unlocked for you.";
+                mes "Your first purchase will still cost 10 Eden Coins, just like all subsequent ones.";
+                next;
+            }
+
+            mes "Select your class path category:";
+            next;
+
+            switch(select("Rune Knight/RG/Mechanic/Genetic:Guillotine Cross/Shadow Chaser:Warlock/Sorcerer/Arch Bishop:Sura/Ranger/Performers:Expanded Classes (Ninja/Gunslinger/etc)")) {
+                case 1:
+                    mes "Select your weapon:";
+                    switch(select("Rune Knight Lance:Rune Knight Two-Handed Sword:Royal Guard Sword:Royal Guard Spear:Mechanic Axe:Mechanic Two-Handed Axe:Genetic Mace:Genetic Sword")) {
+                        case 1: .@adv_wpn = 630015; break; 
+                        case 2: .@adv_wpn = 600021; break; 
+                        case 3: .@adv_wpn = 500036; break; 
+                        case 4: .@adv_wpn = 530018; break; 
+                        case 5: .@adv_wpn = 520012; break; 
+                        case 6: .@adv_wpn = 620012; break; 
+                        case 7: .@adv_wpn = 590028; break; 
+                        case 8: .@adv_wpn = 500037; break; 
+                    }
+                    break;
+
+                case 2:
+                    mes "Select your weapon:";
+                    switch(select("Guillotine Cross Chakram:Guillotine Cross Katar:Shadow Chaser Dagger:Shadow Chaser Bow")) {
+                        case 1: .@adv_wpn = 610026; break; 
+                        case 2: .@adv_wpn = 610027;  break; 
+                        case 3: .@adv_wpn = 510038; break; 
+                        case 4: .@adv_wpn = 700041; break; 
+                    }
+                    break;
+
+                case 3:
+                    mes "Select your weapon:";
+                    switch(select("Warlock Staff:Warlock Wand:Sorcerer Magic Book:Sorcerer Spell Book:Arch Bishop Mace:Arch Bishop Wand")) {
+                        case 1: .@adv_wpn = 640023; break; 
+                        case 2: .@adv_wpn = 640024; break; 
+                        case 3: .@adv_wpn = 540031; break; 
+                        case 4: .@adv_wpn = 540032; break; 
+                        case 5: .@adv_wpn = 590029; break; 
+                        case 6: .@adv_wpn = 550041; break; 
+                    }
+                    break;
+
+                case 4:
+                    mes "Select your weapon:";
+                    switch(select("Sura Knuckle:Sura Claw:Ranger Bow:Ranger Crossbow:Wanderer Rope:Wanderer Whip:Minstrel Violin:Minstrel Harp")) {
+                        case 1: .@adv_wpn = 560024; break; 
+                        case 2: .@adv_wpn = 560025; break; 
+                        case 3: .@adv_wpn = 700042; break; 
+                        case 4: .@adv_wpn = 700043; break; 
+                        case 5: .@adv_wpn = 580023; break; 
+                        case 6: .@adv_wpn = 580022; break; 
+                        case 7: .@adv_wpn = 570022; break; 
+                        case 8: .@adv_wpn = 570023; break; 
+                    }
+                    break;
+
+                case 5:
+                    mes "Select your weapon:";
+                    switch(select("Kagerou/Oboro Phys Huuma:Kagerou/Oboro Mag Huuma:Rebellion Gatling Gun:Rebellion Revolver:Star Emperor Moon Book:Star Emperor Solar Book:Soul Reaper Soul Stick:Soul Reaper Staff:Summoner Foxtail:Summoner Foxtail Replica:Super Novice Dagger:Super Novice Wand")) {
+                        case 1: .@adv_wpn = 650013; break; 
+                        case 2: .@adv_wpn = 650012; break; 
+                        case 3: .@adv_wpn = 830004; break; 
+                        case 4: .@adv_wpn = 830006; break; 
+                        case 5: .@adv_wpn = 540034; break; 
+                        case 6: .@adv_wpn = 540033; break; 
+                        case 7: .@adv_wpn = 640026; break; 
+                        case 8: .@adv_wpn = 640025; break; 
+                        case 9: .@adv_wpn = 550042; break; 
+                        case 10:.@adv_wpn = 550043; break; 
+                        case 11:.@adv_wpn = 510039; break; 
+                        case 12:.@adv_wpn = 550044; break; 
+                    }
+                    break;
+            }
+
+            if (countitem(6224) < 10) { 
+                mes "[Reno]";
+                mes "You don't have enough Eden Coins. These weapons require exactly 10.";
+                close;
+            }
+
+            delitem 6224, 10;
+            getitem .@adv_wpn, 1;
+            mes "[Reno]";
+            mes "Transaction successfully finalized! Enjoy your weapon.";
+            close;
+
+        case 4:
+            close;
+    }
+}
+
+// =======================================================
+// Paradise Armor Distributor: Lumin (Armor Only)
+// =======================================================
+moc_para01,110,87,4	script	Lumin	813,{
+    mes "[Lumin]";
+    mes "Greetings! I am Lumin, manager of intermediate and advanced defensive gear.";
+    mes "Looking to enhance your survival parameters out in the field?";
+    next;
+
+    // Universal Eden Membership Verification
+    if (!callfunc("F_HasEdenGroupMark")) {
+        mes "[Lumin]";
+        mes "Access denied. Only registered members of the Eden Group may claim armor assets.";
+        close;
+    }
+
+    switch(select("Claim Beginner Armor (Lv 60):Get Advanced Armor Set:Cancel")) {
+
+        // =======================================================
+        // INTERMEDIATE ARMOR ALLOCATION (LEVEL 60)
+        // =======================================================
+        case 1:
+            mes "[Lumin]";
+            if (BaseLevel < 10) {
+                mes "Your physical conditioning is insufficient. Return when you achieve Base Level 10.";
+                close;
+            }
+            mes "Select your designated configuration:";
+            next;
+
+            switch(select("Physical Defense Set:Magical Defense Set")) {
+                case 1:
+                    getitem 400137, 1; // Paradise Suit (T2)
+                    getitem 450183, 1; // Paradise Muffler (T2)
+                    getitem 480103, 1; // Paradise Cloak (T2)
+                    getitem 470067, 1; // Paradise Cloak (T2)
+					getitem 490122, 1; // Paradise Ring (T2)
+					getitem 490123, 1; // Paradise Glove (T2)
+                    break;
+                case 2:
+                    getitem 400138, 1; // Paradise Hat (T2)
+                    getitem 450184, 1; // Paradise Robe (T2)
+                    getitem 480104, 1; // Paradise Muffler (T2)
+					getitem 470068, 1; // Paradise Boots (T2)
+					getitem 490124, 1; // Paradise Magic Ring (T2)
+					getitem 490125, 1; // Paradise Necklace (T2)
+                    break;
+            }
+
+            mes "[Lumin]";
+            mes "Allocation complete. Ensure your defensive integrity is maintained.";
+            close;
+
+        // =======================================================
+        // ADVANCED ARMOR CRAFTING (LEVEL 100+ & 3RD/EXTENDED JOB)
+        // =======================================================
+        case 2:
+            mes "[Lumin]";
+            
+            // STRICT REQUIREMENT BLOCK
+            if (BaseLevel < 100 || Class < 4001) {
+                mes "Access Denied.";
+                mes "Advanced armor pieces strictly require **Base Level 100** and a **Third Job or Advanced Extended Class**.";
+                close;
+            }
+
+            // ONE-TIME FREE FULL SET SELECTION HAND-IN
+            if (Paradise_Advanced_Claimed == 0) {
+                mes "To claim your first Advanced Armor Set for free, please deliver these components:";
+                mes "- 15x Elastic Band";
+                mes "- 3x Blue Hair";
+                next;
+
+                // Checking for Elastic Band (7021) and Blue Hair (1034)
+                if (countitem(7021) < 15 || countitem(1034) < 3) {
+                    mes "[Lumin]";
+                    mes "Material check failed. Bring the exact components specified to proceed.";
+                    close;
+                }
+
+                mes "Choose your complementary full Advanced Set type:";
+                next;
+
+                switch(select("Advanced Physical Set:Advanced Magical Set")) {
+                    case 1:
+                        delitem 7021, 15; delitem 1034, 3;
+                        getitem 400139, 1; // Paradise Advanced Cap
+                        getitem 450185, 1; // Paradise Advanced Suit
+                        getitem 480105, 1; // Paradise Advanced Cloak (Adjust IDs to match your DB)
+                        getitem 470069, 1; // Paradise Advanced Boots
+                        getitem 490126, 1;  // Paradise Advanced Ring
+                        getitem 490127, 1;  // Paradise Advanced Glove
+                        break;
+                    case 2:
+                        delitem 7021, 15; delitem 1034, 3;
+                        getitem 400140, 1; // Paradise Advanced Hat
+                        getitem 450186, 1; // Paradise Advanced Robe
+                        getitem 480106, 1; // Paradise Advanced Muffler
+                        getitem 470093, 1; // Paradise Advanced Shoes
+                        getitem 490128, 1;  // Paradise Advanced Magic Ring
+                        getitem 490129, 1;  // Paradise Advanced Necklace
+                        break;
+                }
+                
+                set Paradise_Advanced_Claimed, 1;
+                mes "[Lumin]";
+                mes "Processing complete! Your complementary Advanced Set has been issued.";
+                mes "Any future individual armor purchases will now cost 10 Eden Coins.";
+                close;
+            }
+
+            // REPEATABLE COIN SHOP TRANSACTION LOOP
+            mes "Your introductory free choice has been consumed.";
+            mes "Additional pieces can be supplied for **10 Eden Coins** each.";
+            next;
+            
+            switch(select("Physical Armor Pieces:Magical Armor Pieces:Cancel")) {
+                case 1:
+                    mes "Select your item:";
+                    switch(select("Advanced Cap:Advanced Suit:Advanced Cloak:Advanced Boots:Advanced Ring:Advanced Glove")) {
+                        case 1: .@armor_id = 400139; break;
+                        case 2: .@armor_id = 450185; break;
+                        case 3: .@armor_id = 480105; break;
+                        case 4: .@armor_id = 470069; break;
+                        case 5: .@armor_id = 490126;  break;
+                        case 6: .@armor_id = 490127;  break;
+                    }
+                    break;
+
+                case 2:
+                    mes "Select your item:";
+                    switch(select("Advanced Hat:Advanced Robe:Advanced Muffler:Advanced Shoes:Advanced Magic Ring:Advanced Necklace")) {
+                        case 1: .@armor_id = 400140; break;
+                        case 2: .@armor_id = 450186; break;
+                        case 3: .@armor_id = 480106; break;
+                        case 4: .@armor_id = 470093; break;
+                        case 5: .@armor_id = 490128;  break;
+                        case 6: .@armor_id = 490129;  break;
+                    }
+                    break;
+
+                case 3:
+                    close;
+            }
+
+            if (countitem(6224) < 10) { // Eden Coin (6224)
+                mes "[Lumin]";
+                mes "Transaction aborted: Insufficient Eden Coins.";
+                close;
+            }
+
+            delitem 6224, 10;
+            getitem .@armor_id, 1;
+            mes "[Lumin]";
+            mes "Transaction finalized. Enjoy your upgraded defense piece!";
+            close;
+
+        case 3:
+            close;
+    }
+}

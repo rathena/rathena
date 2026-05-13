@@ -1,0 +1,124 @@
+// =======================================================
+// Paradise Shadow Equipment Rental: Lucy
+// =======================================================
+moc_para01,110,91,4	script	Lucy	70,{
+    mes "[Lucy]";
+    mes "Greetings, adventurer! I handle the distribution of Paradise Shadow items.";
+    mes "Looking for simple training rentals, or advanced combat pieces?";
+    next;
+
+    // Universal Eden Membership Verification
+    if (!callfunc("F_HasEdenGroupMark")) {
+        mes "[Lucy]";
+        mes "Access denied. Only active members of the Eden Group can rent shadow items.";
+        close;
+    }
+
+    switch(select("Rent Beginner Shadow Gear (Lv 10 - Free):Rent Advanced Shadow Gear (Lv 100+):Cancel")) {
+
+        // =======================================================
+        // CATEGORY 1: BEGINNER SHADOW GEAR SYSTEM (FREE)
+        // =======================================================
+        case 1:
+            mes "[Lucy]";
+            if (BaseLevel < 10) {
+                mes "Access Denied.";
+                mes "Beginner Shadow Equipment rentals require you to be at least **Base Level 10**.";
+                close;
+            }
+
+            mes "These basic shadow items are completely free and last for **72 hours (3 days)**.";
+            mes "Which piece would you like?";
+            next;
+
+            switch(select("Paradise Shadow Weapon:Paradise Shadow Shield:Paradise Shadow Armor:Paradise Shadow Shoes:Paradise Shadow Earring:Paradise Shadow Pendant")) {
+                case 1: .@shadow_id = 24687; break; // Basic Shadow Weapon (Adjust to your custom DB IDs)
+                case 2: .@shadow_id = 24688; break; // Basic Shadow Shield
+                case 3: .@shadow_id = 24689; break; // Basic Shadow Armor
+                case 4: .@shadow_id = 24690; break; // Basic Shadow Shoes
+                case 5: .@shadow_id = 24691; break; // Basic Shadow Earring
+                case 6: .@shadow_id = 24692; break; // Basic Shadow Pendant
+            }
+
+            // Grant free 72-hour rental item (4320 minutes)
+            rentitem2 .@shadow_id, 1, 1, 0, 0, 0, 0, 0, 0, 4320;
+            mes "[Lucy]";
+            mes "There you go! Enjoy your free rental piece. It will dissolve in 72 hours.";
+            close;
+
+        // =======================================================
+        // CATEGORY 2: ADVANCED SHADOW GEAR SYSTEM (20 COINS)
+        // =======================================================
+        case 2:
+            mes "[Lucy]";
+            if (BaseLevel < 100 || Class < 4001) {
+                mes "Access Denied.";
+                mes "Advanced Shadow Equipment rentals strictly require **Base Level 100** and a **Third Job or Advanced Extended Class**.";
+                close;
+            }
+
+            mes "Advanced rental pieces cost **20 Eden Coins** and last for **72 hours (3 days)**.";
+            next;
+
+            switch(select("Rent Advanced Shadow Armor/Accessory:Rent Class Shadow Weapon")) {
+                case 1:
+                    mes "[Lucy]";
+                    mes "Select your defensive piece:";
+                    next;
+                    switch(select("Paradise Advanced Shadow Shield:Paradise Advanced Shadow Armor:Paradise Advanced Shadow Shoes:Paradise Advanced Shadow Earring:Paradise Advanced Shadow Pendant")) {
+						case 1: .@shadow_id = 24693; break; // Advanced Shield (Adjust to match your DB)
+						case 2: .@shadow_id = 24694; break; // Advanced Armor
+						case 3: .@shadow_id = 24695; break; // Advanced Shoes
+						case 4: .@shadow_id = 24696; break; // Advanced Earring
+						case 5: .@shadow_id = 24697; break; // Advanced Pendant
+                    }
+                    break;
+
+                case 2:
+					// Dynamic Weapon Selection Matrix based on player's current Job Class ID
+					if (Class == 4060 || Class == 4061)      .@shadow_id = 24698; // Rune Knight
+					else if (Class == 4062 || Class == 4063) .@shadow_id = 24699; // Royal Guard
+					else if (Class == 4064 || Class == 4065) .@shadow_id = 24700; // Mechanic
+					else if (Class == 4066 || Class == 4067) .@shadow_id = 24701; // Genetic
+					else if (Class == 4068 || Class == 4069) .@shadow_id = 24702; // Guillotine Cross
+					else if (Class == 4070 || Class == 4071) .@shadow_id = 24703; // Shadow Chaser
+					else if (Class == 4072 || Class == 4073) .@shadow_id = 24704; // Warlock
+					else if (Class == 4074 || Class == 4075) .@shadow_id = 24705; // Sorcerer
+					else if (Class == 4076 || Class == 4077) .@shadow_id = 24706; // Arch Bishop
+					else if (Class == 4078 || Class == 4079) .@shadow_id = 24707; // Sura
+					else if (Class == 4080 || Class == 4081) .@shadow_id = 24708; // Ranger
+					else if (Class == 4082 || Class == 4083 || Class == 4084 || Class == 4085) .@shadow_id = 24709; // Wanderer & Minstrel
+					else if (Class == 4211 || Class == 4212) .@shadow_id = 24710; // Kagerou & Oboro
+					else if (Class == 4215)                  .@shadow_id = 24711; // Rebellion
+					else if (Class == 4239)                  .@shadow_id = 24712; // Star Emperor
+					else if (Class == 4240)                  .@shadow_id = 24713; // Soul Reaper
+					else if (Class == 4218)                  .@shadow_id = 24714; // Doram (Summoner)
+					else if (Class == 4190)                  .@shadow_id = 24715; // Super Novice (Ex)
+                    else {
+                        mes "[Lucy]";
+                        mes "I couldn't identify a verified Third Class profile on you. I cannot issue an advanced weapon.";
+                        close;
+                    }
+                    break;
+            }
+
+            // Currency Verification for Advanced Gear: 20 Eden Coins (6224)
+            if (countitem(6224) < 20) {
+                mes "[Lucy]";
+                mes "Transaction aborted. You do not have enough Eden Coins.";
+                mes "Advanced high-tier rentals require exactly **20 Eden Coins**.";
+                close;
+            }
+
+            // Deduct currency and apply 72-hour rental profile (4320 minutes)
+            delitem 6224, 20;
+            getitembound2 .@shadow_id, 1, 1, 0, 0, 0, 0, 0, 0, 4320;
+            
+            mes "[Lucy]";
+            mes "Payment processed. Enjoy your advanced equipment piece!";
+            close;
+
+        case 3:
+            close;
+    }
+}
