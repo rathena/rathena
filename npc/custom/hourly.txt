@@ -49,3 +49,6 @@ OnInit:
 	bindatcmd "playtime",strnpcinfo(0)+"::OnPlaytimeCheck";
 end;
 }
+
+//Custom Seller for runpoints
+prontera,144,178,3	pointshop	Playtime Points Shop	900,#playtimepts,12534:20,12405:3,12292:2,607:5,12250:6,12251:6,12252:6,12253:6,12254:6,12255:6,12203:3,12202:3,12203:3,12204:3,12205:3,12206:3,12207:3,12208:5,12210:15;
