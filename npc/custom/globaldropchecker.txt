@@ -1,0 +1,64 @@
+-	script	MapDropChecker	-1,{
+
+OnInit:
+	// 1. BIND THE COMMAND
+	bindatcmd("mapdrops", strnpcinfo(0)+"::OnCheckMapDrops", 0, 99);
+	
+	// 2. SERVER-WIDE GLOBAL DROPS ARRAY (From db/global_drop.yml)
+	// Format: item_id, drop_rate_percentage
+	setarray .global_drops$, 
+		"501", "1.00%",     // Red Potion everywhere
+		"607", "0.05%";     // Yggdrasil Berry everywhere
+
+	// 3. MAP-SPECIFIC DROPS ARRAY (From db/map_drop.yml)
+	// Format: "map_name", item_id, drop_rate_percentage
+	setarray .map_drops$, 
+		"pay_dun03", "909", "100.00%",   // Apple on Payon Dungeon 3
+		"pay_dun03", "502", "5.50%",     // Orange Potion on Payon Dungeon 3
+		"lhz_dun_n", "608", "1.25%",     // Yggdrasil Seed on LHZ
+		"prt_fild08", "512", "20.00%";   // Apple on prt_fild08
+
+	.g_array_size = getarraysize(.global_drops$);
+	.m_array_size = getarraysize(.map_drops$);
+	end;
+
+OnCheckMapDrops:
+	getmapxy(.@current_map$, .@x, .@y, 0);
+	.@found_map = 0;
+
+	dispbottom "======================================";
+	dispbottom " DROPS FOR: " + .@current_map$;
+	dispbottom "======================================";
+
+	// SECTION 1: PRINT SERVER-WIDE GLOBAL DROPS
+	dispbottom "--- Server-Wide Global Drops ---";
+	if (.g_array_size == 0) {
+		dispbottom " No server-wide drops configured.";
+	} else {
+		for (.@g = 0; .@g < .g_array_size; .@g += 2) {
+			.@g_item_id = atoi(.global_drops$[.@g]);
+			.@g_rate$   = .global_drops$[.@g+1];
+			dispbottom " [Global] " + getitemname(.@g_item_id) + " (ID: " + .@g_item_id + ") | Rate: " + .@g_rate$;
+		}
+	}
+
+	dispbottom " "; // Visual spacing
+
+	// SECTION 2: PRINT MAP-SPECIFIC DROPS
+	dispbottom "--- Map-Specific Drops ---";
+	for (.@m = 0; .@m < .m_array_size; .@m += 3) {
+		if (.map_drops$[.@m] == .@current_map$) {
+			.@m_item_id = atoi(.map_drops$[.@m+1]);
+			.@m_rate$   = .map_drops$[.@m+2];
+			
+			dispbottom " [Map]    " + getitemname(.@m_item_id) + " (ID: " + .@m_item_id + ") | Rate: " + .@m_rate$;
+			.@found_map++;
+		}
+	}
+
+	if (.@found_map == 0) {
+		dispbottom " No specific map drops configured for this location.";
+	}
+	dispbottom "======================================";
+	end;
+}
