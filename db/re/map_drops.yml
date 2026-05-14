@@ -44,13 +44,18 @@ Header:
   Version: 2
 
 Body:
+  - Map: ANY
+    GlobalDrops:
+      - Index: 0
+        Item: Play_RO_Gold_Coin_
+        Rate: 100000
   - Map: tur_d03_i
     SpecificDrops:
       - Monster: ILL_ASSULTER
         Drops:
           - Index: 0
             Item: IllusionStone
-            Rate: 100000
+            Rate: 1000
           - Index: 1
             Item: Huuma_Bird_Wing_IL
             Rate: 2500
@@ -89,7 +94,7 @@ Body:
             RandomOptionGroup: ILL_PHYSIC_NORMAL
           - Index: 1
             Item: IllusionStone
-            Rate: 1000
+            Rate: 10
           - Index: 2
             Item: War_Axe_IL
             Rate: 25
