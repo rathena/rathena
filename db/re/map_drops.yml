@@ -48,7 +48,7 @@ Body:
     GlobalDrops:
           - Index: 0
             Item: Play_RO_Gold_Coin_
-            Rate: 10000
+            Rate: 100000
   - Map: tur_d03_i
     SpecificDrops:
       - Monster: ILL_ASSULTER
