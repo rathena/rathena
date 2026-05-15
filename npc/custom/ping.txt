@@ -1,0 +1,15 @@
+-	script	ping_cmd	-1,{
+
+// When a player types !ping or @ping in the chat
+OnCall:
+	// Calculate the delay using the internal server tick
+	// Note: This measures the round-trip from the client's last packet
+	dispbottom "Your current latency is: " + (gettimetick(2) % 1000) + "ms";
+	end;
+
+OnInit:
+	// This binds the command to the script
+	// Change "ping" to "latency" or whatever you prefer
+	bindatcmd "ping", "ping_cmd::OnCall";
+	end;
+}
