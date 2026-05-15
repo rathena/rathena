@@ -51,4 +51,40 @@ end;
 }
 
 //Custom Seller for playpoints
-prontera,144,178,3	pointshop	Playtime Points Shop	627,#playtimepts,12534:20,12405:3,12292:2,607:5,12250:6,12251:6,12252:6,12253:6,12254:6,12255:6,12203:3,12202:3,12203:3,12204:3,12205:3,12206:3,12207:3,12208:1,12210:3,25223:1;
+-	pointshop	pts_shop	FAKE_NPC,#PlayPoints,12534:20,12405:3,12292:2,607:5,12250:6,12251:6,12252:6,12253:6,12254:6,12255:6,12203:3,12202:3,12203:3,12204:3,12205:3,12206:3,12207:3,12208:1,12210:3,25223:1;
+
+// Cash Coin Point Shop
+paramk,106,32,3	script	Cash Coin Point Shop	627,{
+	mes "[Earl]";
+	mes "Welcome to 'Vote / Coin / Points / Cash Shop'.";
+	mes "What do you need?";
+	next;
+	switch (select("Points Shop:Coin Shop:Cash Shop:Vote Shop")) {
+	case 1:
+		mes "[Earl]";
+		mes "Hi!";
+		mes "Good items sold in exhcange of your points.";
+		close2;
+		callshop "pts_shop",1;
+		end;
+	case 2:
+		mes "[Earl]";
+		mes "Hi!";
+		mes "Good items sold in exhcange of your PRO-Asia Coins.";
+		close2;
+		callshop( "barter_pro_coins" );
+		end;
+	case 3:
+		mes "[Earl]";
+		mes "Hi!";
+		mes "Good items sold in exhcange of your points. # NOT YET IMPLEMENTED";
+		close2;
+		end;
+	case 4:
+		mes "[Earl]";
+		mes "Hi!";
+		mes "Good items sold in exhcange of your points. # NOT YET IMPLEMENTED";
+		close2;
+		end;
+	}
+}
