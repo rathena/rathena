@@ -25,7 +25,7 @@ moc_para01,53,37,4	script	Eat Gear Mimic	464,{
         2101, 2103, 2105, 2187, 2189, 2201, 2203, 2205, 2212, 2218, 
         2506, 5054, 5087, 5107;
 
-    // Clear tracking arrays
+    // Clear tracking arrays safely
     cleararray .@items, 0, 128;
     cleararray .@refines, 0, 128;
     cleararray .@indices, 0, 128;
@@ -33,18 +33,25 @@ moc_para01,53,37,4	script	Eat Gear Mimic	464,{
     .@menus$ = "";
     .@count = 0;
 
-    // Populates native @inventorylist_ variables
+    // Populates native character variables
     getinventorylist;
 
-    // Bypass loop timeout engine limits safely
+    // Direct announcement debug block
+    mes "^00FF00[DEBUG MODULE]^000000 Total raw items found in your inventory: " + @inventorylist_count;
+
+    // Bypass loop timeout limits safely
     freeloop(1);
 
     // Loop through player inventory
     for (.@i = 0; .@i < @inventorylist_count; .@i++) {
-        // CORRECTED: Reading strictly from the correct character temporary array variables (@)
         .@item_id = @inventorylist_id[.@i];
         .@refine  = @inventorylist_refine[.@i];
         .@type    = getiteminfo(.@item_id, ITEMINFO_TYPE);
+
+        // Debug output for items with ANY refinement or gear potential
+        if (.@type == IT_ARMOR || .@type == IT_WEAPON) {
+            mes "^FF0000[DEBUG GEAR]^000000 Found Item: " + getitemname(.@item_id) + " | Type: " + .@type + " | Refine: " + .@refine;
+        }
 
         // 1. Blacklist Check
         .@is_blacklisted = 0;
@@ -95,6 +102,7 @@ moc_para01,53,37,4	script	Eat Gear Mimic	464,{
 
     // Safely exit if no eligible items are found
     if (.@count == 0) {
+        next;
         mes "[Eat Gear Mimic]";
         mes "You don't have any suitable, unequipped gear (+7 or higher) in your bag!";
         close;
