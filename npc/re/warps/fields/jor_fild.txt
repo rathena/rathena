@@ -1,0 +1,23 @@
+//===== rAthena Script =======================================
+//= Warps
+//===== Description: =========================================
+//= Warp Points for "jor" fields, maps around icecastle town.
+//===== Additional Comments: =================================
+//= 1.0 First version. [Atemo]
+//============================================================
+
+jor_tail,219,294,0	warp2	#to_jor_back1_3	1,1,jor_back1,222,22
+jor_back1,222,19,0	warp2	#to_tail_3	1,1,jor_tail,219,291
+jor_tail,98,287,0	warp2	#to_jor_back1_1	1,1,jor_back1,98,13
+jor_back1,98,10,0	warp2	#to_tail_1	1,1,jor_tail,98,284
+jor_back1,131,10,0	warp2	#to_tail_2	1,1,jor_tail,139,280
+jor_tail,134,281,0	warp2	#to_jor_back1_2	1,1,jor_back1,131,13
+jor_back1,385,229,0	warp2	#to_icecastle	1,1,icecastle,20,123
+icecastle,17,123,0	warp2	#to_jor_back1_A	1,1,jor_back1,380,229
+jor_back1,214,390,0	warp2	#to_jor_back2_A	1,1,jor_back2,229,17
+jor_back2,229,12,0	warp2	#to_jor_back1_B	1,1,jor_back1,214,387
+jor_back2,9,248,0	warp2	#to_jor_back3_A	1,1,jor_back3,364,245
+jor_back3,368,245,0	warp2	#to_jor_back2_B	1,1,jor_back2,13,248
+jor_back3,63,326,0	warp2	#to_jor_dun01_A	1,1,jor_dun01,113,10
+jor_dun01,113,7,0	warp2	#to_jor_back3_B	1,1,jor_back3,65,321
+jor_back3,368,245,0	warp2	#to_jor_back2_D	1,1,jor_back2,13,248

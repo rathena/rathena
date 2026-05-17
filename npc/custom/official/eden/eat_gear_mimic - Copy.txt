@@ -1,0 +1,87 @@
+moc_para01,53,37,3	script	Eat Gear Mimic	464,{
+    mes "[Eat Gear Mimic]";
+    mes "CHOMP! I only eat the finest gear.";
+    next;
+
+    setarray .@blacklist,
+        2301, 2302, 2303, 2304, 2305, 2307, 2308, 2309, 2310, 2311,
+        2312, 2314, 2316, 2318, 2319, 2220, 2221, 2224, 2226, 2252,
+        2101, 2103, 2105, 2187, 2189, 2201, 2203, 2205, 2212, 2218,
+        2506, 5054, 5087, 5107;
+
+    setarray .@indices, EQI_HEAD_TOP, EQI_ARMOR, EQI_ARMOR, EQI_HAND_R;
+    setarray .@slots$, "Headgear", "Body Armor", "Weapon";
+
+    .@s = select(implode(.@slots$, ":")) - 1;
+
+    // ANTI-HACK: Take a "snapshot" of the item now
+    .@original_id = getequipid(.@indices[.@s]);
+    .@original_refine = getequiprefinerycnt(.@indices[.@s]);
+    
+    // CRITICAL FIX STEP 1: Capture the unique card slots to identify the exact item via delitem2
+    .@c1 = getequipcardid(.@indices[.@s], 0);
+    .@c2 = getequipcardid(.@indices[.@s], 1);
+    .@c3 = getequipcardid(.@indices[.@s], 2);
+    .@c4 = getequipcardid(.@indices[.@s], 3);
+
+    if (.@original_id <= 0 || .@original_refine < 7) {
+        mes "[Eat Gear Mimic]";
+        mes "CHOMP? You aren't wearing anything tasty (or +7) there!";
+        close;
+    }
+
+    if (.@indices[.@s] == EQI_HAND_R && getiteminfo(.@original_id, ITEMINFO_WLV) < 3) {
+        mes "[Eat Gear Mimic]";
+        mes "YUCK! Level 1 and 2 weapons are for babies!";
+        close;
+    }
+
+    for (.@i = 0; .@i < getarraysize(.@blacklist); .@i++) {
+        if (.@original_id == .@blacklist[.@i]) {
+            mes "PTOOIE! I don't eat common monster trash!";
+            close;
+        }
+    }
+
+    mes "Feed me your " + getitemname(.@original_id) + " (" + "+" + .@original_refine + ")?";
+    if (select("Yes, CHOMP!:No!") == 2) close;
+
+    // ANTI-HACK: FINAL VERIFICATION
+    if (getequipid(.@indices[.@s]) != .@original_id || getequiprefinerycnt(.@indices[.@s]) != .@original_refine) {
+        mes "[SECURITY ALERT]";
+        mes "The equipment was changed! Nice try, human!";
+        // Optional: Kick or Jail player here
+        // atcommand "@jail " + strcharinfo(0);
+        close;
+    }
+
+    // CRITICAL FIX STEP 2: Unequip first so the item database fields update to inventory status
+    unequip .@indices[.@s];
+
+    // CRITICAL FIX STEP 3: Replace 'delitem' with 'delitem2' using exact item attributes 
+    // Format: delitem2 <item id>, <count>, <refine>, <attribute>, <card1>, <card2>, <card3>, <card4>, <broken>
+    delitem2 .@original_id,1,1,.@original_refine,0,.@c1,.@c2,.@c3,.@c4;
+
+    .@success = (rand(1, 100) <= 25);
+
+    // Reward Logic (Per Table)
+    if (.@indices[.@s] == EQI_HEAD_TOP) {
+        if (.@original_refine == 7) { if (.@success) getitem 6234, 1; else getitem 985, 10; }
+        else if (.@original_refine == 8) { if (.@success) getitem 6234, 2; else getitem 6234, 1; }
+        else { if (.@success) getitem 6234, 5; else getitem 6234, 2; }
+    }
+    else if (.@indices[.@s] == EQI_ARMOR) {
+        if (.@original_refine == 7) { if (.@success) getitem 6234, 1; else getitem 985, 10; }
+        else if (.@original_refine == 8) { if (.@success) getitem 6234, 2; else getitem 6234, 1; }
+        else { if (.@success) getitem 6234, 5; else getitem 6234, 2; }
+    }
+    else { // Weapon
+        if (.@original_refine == 7) { if (.@success) getitem 6230, 1; else getitem 984, 10; }
+        else if (.@original_refine == 8) { if (.@success) getitem 6230, 2; else getitem 6230, 1; }
+        else { if (.@success) getitem 6230, 5; else getitem 6230, 2; }
+    }
+
+    if (.@success) { specialeffect2 EF_HIT3; mes "DELICIOUS JACKPOT!"; }
+    else { specialeffect2 EF_SMOKE; mes "BURP... Scraps."; }
+    close;
+}

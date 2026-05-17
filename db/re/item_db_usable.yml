@@ -73185,8 +73185,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      transform 21530,1200000; /* Confirm time */
-      bonus_script " bonus2 bAddItemHealRate,1100006,100; ",120,1,1;
+      specialeffect2 EF_CLOAKING;
+      transform 21530,1200000,SC_MTP_W_POTION_100,100;
   - Id: 101166
     AegisName: Kr_B_Special05
     Name: G-Star RO Shop Box
@@ -88663,3 +88663,29 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 50001
+    AegisName: PRO_ASIA_STARTER_BOX
+    Name: PRO Asia Starter Box
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14545,10;
+      getitem 12412,10;
+      getitem 12710,20;
+      getitem 12250,5;
+      getitem 12251,5;
+      getitem 12252,5;
+      getitem 12253,5;
+      getitem 12254,5;
+      getitem 12255,5;
+      getitem 19836,1;
+      getitem 20461,1;
+      getitem 31694,1;
+      getitem 480236,1;

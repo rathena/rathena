@@ -1,0 +1,656 @@
+//glast_01,241,290,5	script	Oscar#entrance	4_ED_OSCAR,{
+
+//mes "[Oscar]";
+//mes "Is your mind ready? Just a reminder that you can only do one mode per day. either hard mode(not implemented) or Normal mode. Please note that if you enter either one of these, a cooldown will be applied for both.";
+//switch(select("Create Instance", "Generate Instance")) {
+//	case 1:
+//			if(is_party_leader() == false) {
+//				mes "you need to be an party leader";
+//				end;
+//			}
+//			switch( instance_create(.instance_name$) ) {
+//				case -3:
+//					dispbottom "Memorial Dungeon, 'Fall of Glast Heim' is already in progress.",0xFFFFFF;
+//					close;
+//				case -4:
+//				case -2:
+//				case -1:
+//					mes "^0000ff" + .instance_name$ + "^000000 - time gap generation failed.";
+//					close;
+//				}
+//			mes "[Oscar]";
+//			mes "Instance created.";
+//			set .@i_inst, instance_create(.instance_name$);
+//			end;
+//	case 2:
+//		switch( checkquest(16401,PLAYTIME) ) {
+//		case -1:
+//		case 0:
+//		case 1:
+//			mes "You still have cooldown on your instance.";
+//			close3;
+//		case 2:
+//			switch(instance_enter(.instance_name$)) {
+//				case IE_OTHER:
+//					mes "an unknown error has occurred";
+//					end;
+//				case IE_NOINSTANCE:
+//					mes "Create a instance first";
+//					end;
+//				case IE_OK:
+//					setquest 16401;
+//					mapannounce "glast_01", strcharinfo(0)+ "is entering "+.instance_name$, bc_map, "0x00ff99", FW_NORMAL, 12;
+//					end;
+//			}
+//		}
+//}
+//end;
+//OnInit:
+//	set .instance_name$, "Fall of Glast Heim";
+//	end;
+//}
+
+glast_01,241,290,5	script	Oscar#entrance	4_ED_OSCAR,{
+	if (BaseLevel < 160) {
+		mes "[Oscar]";
+		mes "Why don't you come back after becoming stronger?";
+		mes "Maybe, level 160.";
+		close;
+	}
+	if (isbegin_quest(16401) == 0) {
+		mes "[Oscar]";
+		mes "A long time ago, this castle did not look like this.";
+		next;
+		mes "[Oscar]";
+		mes "Ah, I'm sorry. I'm muttering in front of a stranger.";
+		next;
+		mes "[Oscar]";
+		mes "My name is Oscar. I'm studying the dimensional gap between time and space.";
+		next;
+		select("There's something like that here?");
+		mes "[Oscar]";
+		mes "Time will reveal the true answers if we look in the right places.";
+		next;
+		if (select("I don't care about history","That is interesting. Did you find anything?") == 1) {
+			mes "[Oscar]";
+			mes "Really? Hmm, please come back later when you are interested then.";
+			close;
+		}
+		mes "[Oscar]";
+		mes "Actually, dimensional time travel is possible but I'm too afraid to go there.";
+		next;
+		mes "[Oscar]";
+		mes "It might be possible for you!";
+		next;
+		mes "[Oscar]";
+		mes "Do you want to time travel?";
+		next;
+		if (select("No, thanks.","Yes, of course I do!") == 1) {
+			mes "[Oscar]";
+			mes "Really? But, jumping gigawatts, this is such a great opportunity.";
+			close;
+		}
+		mes "[Oscar]";
+		mes "I knew that you would understand what I said. Well, please tell me what you want to do.";
+		setquest 16401;// Meeting Oscar
+		completequest 16401;
+	}
+	else {
+		end;
+	}
+	next;
+	switch( checkquest(16402,PLAYTIME) ) {
+	case -1:
+		.@party_id = getcharid(1);
+		.@p_name$ = getpartyname(.@party_id);
+		.instance_name$ = "Fall of Glast Heim";
+
+		if (!instance_check_party(.@party_id)) {
+			mes "[Oscar]";
+			mes "Why don't you make a party with more than 1 person and talk to me again?";
+			close;
+		}
+		if (is_party_leader() == true)
+			.@menu$ = "Generate Time Gap";
+		else {
+			mes "[Oscar]";
+			mes "Have we met before? No way. It's my first time seeing you. What do you want?";
+		}
+		if (isbegin_quest(16403) == 0)
+			setquest 16403;// Begin Inside Quest
+		switch( select( .@menu$, "Enter Old Glast Heim", "Cancel" ) ) {
+		case 1:
+			switch( instance_create(.instance_name$) ) {
+			case -3:
+				dispbottom "Memorial Dungeon, 'Fall of Glast Heim' is already in progress.",0xFFFFFF;
+				close;
+			case -4:
+			case -2:
+			case -1:
+				mes "Party Name: " + getpartyname( getcharid(1) );
+				mes "Party Leader: " + strcharinfo(0);
+				mes "^0000ff" + .@md_name$ + "^000000 - time gap generation failed.";
+				close;
+			}
+			mes "[Oscar]";
+			mes "After the time gap opens, please tell me again.";
+			close;
+		case 2:
+			switch( instance_enter(.instance_name$) ) {
+			case IE_OTHER:
+				mes "[Oscar]";
+				mes "An unknown error has occurred.";
+				close;
+			case IE_NOINSTANCE:
+				mes "[Oscar]";
+				mes "The time gap is not yet open.";
+				close;
+			case IE_NOMEMBER:
+				mes "[Oscar]";
+				mes "Your body is not fit to enter the time gap. You won't be able to get in if you're not in a party.";
+				close;
+			case IE_OK:
+				mapannounce "glast_01", "" + getpartyname( getcharid(1) ) + " party member " + strcharinfo(0) + " enters the " + .@md_name$ + ".", bc_map,0x00FF99;
+				setquest 16402;// Trace of Time Travel
+				// warp "1@gl_k",150,20;
+				end;
+			}
+		case 3:
+			close;
+		}
+	case 0:
+	case 1:
+		mes "[Oscar]";
+		mes "Oh, my...";
+		mes "You still have after-effects of time travel. You can't travel again with this condition.";
+		next;
+		mes "[Oscar]";
+		mes "Staying healthy is important, so please take a break and come back again later.";
+		close;
+	case 2:
+		mes "^0000ffAll traces of access to Fall of Glast Heim have been removed. Now you can talk with Oscar again.^000000";
+		if (isbegin_quest(16403) == 0)
+			setquest 16403;// Corrupted Soul Hunt
+		erasequest 16402;
+		close;
+	}
+}
+// ===================================================
+// ============== Floor 1 ============================
+// ===================================================
+1@gl_prq,14,16,1	script	#hidden1	HIDDEN_NPC,3,3,{
+//if(!is_party_leader()) { end; }
+
+if('floor1$ == "1"){ end; }
+'floor1$ = 1;
+
+'partyId$ = getcharid(1);
+
+// thorns
+areamonster 'map$,80,30,13,80,"cursed flame",atoi('thorn$),20;
+areamonster 'map$,80,30,13,80,"Fallen Maid",atoi('alice$),20,instance_npcname("#hidden1")+"::OnMyMobDead";
+// thorns
+
+
+//areamonster 'map$,20,23,25,18,"Fallen Maid",atoi('alice$),5,instance_npcname("#hidden1")+"::OnMyMobDead";
+
+
+'mobsFloor = 20;
+
+hideonnpc instance_npcname("#hidden1");
+sleep 5000;
+mapannounce instance_mapname('map$),"Oscar: The only thing we can do is put them to rest so they are no longer in pain.",bc_map,'announceColor$;
+sleep 5000;
+mapannounce instance_mapname('map$),"Oscar: If you purify the people who have been cursed, you will still have time to head to the next room.",bc_map,'announceColor$;
+sleep 5000;
+mapannounce instance_mapname('map$),"Oscar: It's hard to move around here because the time is distorted and keep repeating itself.",bc_map,'announceColor$;
+sleep 5000;
+mapannounce instance_mapname('map$),"Oscar: Oh, I almost forgot, if you see a Flame Thorn, try to avoid it, it's the most thoublesome monster in this space.",bc_map,'announceColor$;
+
+end;
+
+OnMyMobDead:
+	if(--'mobsFloor <= 0) {
+		//enablenpc
+		mapannounce instance_mapname('map$),"Oscar: The time in the fist zone is flowing normally now let's go to the next area.",bc_map,'announceColor$;
+		sleep 5000;
+		warpparty 'map$,119,64,atoi('partyId$),'map$;
+	}
+end;
+OnInstanceInit:
+	'map$ = instance_mapname("1@gl_prq");
+	'alice$ = 20392;
+	'whiKn$ = 20390;
+	'khaKn$ = 20388;
+	'bloKn$ = 20394;
+	'kingE$ = 20386;
+	'thorn$ = 1960; // for now
+	
+	set 'floor1$,0;
+	set 'floor2$,0;
+	set 'floor3$,0;
+	set 'floor4$,0;
+	set 'floor5$,0;
+	set 'mobsFloor,0;
+	set 'ins_FOGH,0;
+	
+	'announceColor$ = "0x009933";
+	'mvpAnnounce$ = "0xee6600";
+	
+	set 'mvpAlive$,1;
+end;
+}
+// ===================================================
+// ============== Floor 2 ============================
+// ===================================================
+
+1@gl_prq,127,63,3	script	Oscar#hidden2	4_ED_OSCAR,3,3,{
+//if(!is_party_leader()) { end; }
+
+if('floor2$ == "1"){ end; }
+'floor2$ = 1;
+
+
+
+
+sleep 1000;
+npctalk "This place was used by the knights when they were working.";
+
+// thorns
+areamonster 'map$,126,75,185,12,"cursed flame",atoi('thorn$),20;
+areamonster 'map$,126,75,185,12,"Khaltzburg knight",atoi('khaKn$),23,instance_npcname("Oscar#hidden2")+"::OnMyMobDead";
+areamonster 'map$,126,75,185,12,"Khaltzburg knight",atoi('bloKn$),2,instance_npcname("Oscar#hidden2")+"::OnMyMobDead";
+// thorns
+
+
+//areamonster 'map$,132,57,137,52,"White Knight",atoi('whiKn$),5,instance_npcname("Oscar#hidden2")+"::OnMyMobDead";
+
+
+
+'mobsFloor = 25;
+
+sleep 2000;
+npctalk "Those who were resting after their work shifts couldn't evacuate in time.";
+sleep 2000;
+npctalk "They went insane after the curse, just like the maids who were preparing the meals.";
+// TODO: Missing quotes
+
+sleep 2000;
+
+hideonnpc instance_npcname("Oscar#hidden2");
+
+
+end;
+OnMyMobDead:
+	if(--'mobsFloor <= 0) {
+		// enable portal
+		mapannounce instance_mapname('map$),"Oscar: The time in the fist zone is flowing normally now let's go to the next area.",bc_map,'announceColor$;
+		sleep 5000;
+		warpparty 'map$,145,113,atoi('partyId$),'map$;
+	}
+}
+
+// ===================================================
+// ============== Floor 3 ============================
+// ===================================================
+1@gl_prq,148,121,3	script	Oscar#hidden3	4_ED_OSCAR,3,3,{
+//if(!is_party_leader()) { end; }
+
+if('floor3$ == "1"){ end; }
+'floor3$ = 1;
+
+sleep 1000;
+npctalk "This place used to be a hotel with the lounge over here.";
+
+
+
+
+// placeholder
+//areamonster 'map$,138,123,143,118,"White Knight",atoi('whiKn$),5,instance_npcname("Oscar#hidden3")+"::OnMyMobDead";
+
+// thorns
+areamonster 'map$,187,106,122,189,"cursed flame",atoi('thorn$),20;
+areamonster 'map$,187,106,122,189,"White Knight",atoi('whiKn$),30,instance_npcname("Oscar#hidden3")+"::OnMyMobDead";
+// thorns
+
+
+'mobsFloor = 30;
+
+// TODO: may be missing one still
+sleep 2000;
+npctalk "People who ate the food without knowing about the situation ended up being cursed as well.";
+sleep 2000;
+npctalk "I'm not too good with cleaning. Could you help out with this place too?";
+
+sleep 2000;
+hideonnpc instance_npcname("Oscar#hidden3");
+
+end;
+OnMyMobDead:
+	if(--'mobsFloor <= 0) {
+		//enable portal
+		mapannounce instance_mapname('map$),"Oscar: The time in the fist zone is flowing normally now let's go to the next area.",bc_map,'announceColor$;
+		sleep 5000;
+		warpparty 'map$,74,172,atoi('partyId$),'map$;
+	}
+
+}
+// ===================================================
+// ============== Floor 4 ============================
+// ===================================================
+1@gl_prq,67,174,3	script	Oscar#hidden4	4_ED_OSCAR,3,3,{
+//if(!is_party_leader()) { end; }
+
+if('floor4$ == "1"){ end; }
+'floor4$ = 1;
+
+sleep 1000;
+npctalk "This was where they used to keep the military literature.";
+
+// placeholder
+//areamonster 'map$,62,171,67,166,"White Knight",atoi('whiKn$),5,instance_npcname("Oscar#hidden4")+"::OnMyMobDead";
+
+// thorns
+areamonster 'map$,16,187,89,112,"cursed flame",atoi('thorn$),20;
+areamonster 'map$,16,187,89,112,"White Knight",atoi('whiKn$),15,instance_npcname("Oscar#hidden4")+"::OnMyMobDead";
+areamonster 'map$,16,187,89,112,"Khaltzburg Knight",atoi('khaKn$),15,instance_npcname("Oscar#hidden4")+"::OnMyMobDead";
+// thorns
+
+
+
+'mobsFloor = 5;
+
+// TODO: dont know if is just one
+sleep 2000;
+
+hideonnpc instance_npcname("Oscar#hidden4");
+
+end;
+OnMyMobDead:
+	if(--'mobsFloor <= 0) {
+		//enable portal
+		mapannounce instance_mapname('map$),"Oscar: This was the last room. Let's see if King Schmidt's spirit is still roaming.",bc_map,'announceColor$;
+		sleep 5000;
+		warpparty 'map$,51,247,atoi('partyId$),'map$;
+	}
+}
+// ===================================================
+// ============== MVP Floor ==========================
+// ===================================================
+
+1@gl_prq,53,270,3	script	Oscar#mvp	4_ED_OSCAR,3,3,{
+
+if('canleave$ == "1"){
+	getitem 607,1;
+	getitem 608,1;
+	warp "glast_01",241,290;
+	'floor1$ = 0;
+	'floor2$ = 0;
+	'floor3$ = 0;
+	'floor4$ = 0;
+	'floor5$ = 0;
+	end;
+}
+
+if('floor5$ == "1"){ end; }
+'floor5$ = 1;
+
+sleep 2000;
+mapannounce instance_mapname('map$),"I'm gather the time energy. The battle will begin shortly, be prepated.",bc_map,'announceColor$;
+sleep 10000;
+
+warpparty 'map$,51,270,atoi('partyId$),'map$;
+hideonnpc instance_npcname("Oscar#mvp");
+
+monster 'map$,51,281,"Corrupted King",atoi('kingE$),1,instance_npcname("Oscar#mvp")+"::OnMyMobDead";
+.monsterid = $@mobid[0];
+
+
+// boss fight!
+sleep 5000;
+
+while('mvpAlive$ == "1"){
+	mapannounce instance_mapname('map$),"Cursed King: Strong pain makes me stronger.",bc_map,'mvpAnnounce$;
+	
+	sleep 10000;
+}
+
+
+end;
+OnMyMobDead:
+	hideoffnpc instance_npcname("Oscar#mvp");
+	'mvpAlive$ = 0;
+	'canleave$ = 1;
+}
+
+
+
+// npc
+
+glast_01,245,296,4	script	exchange#fog	88,{
+
+switch(select("armor","manteau", "str","agi","vit","int","dex","luk")) {
+
+	case 1:
+	.item = 15388; // armor
+	break;
+	case 2:
+	.item = 15389; // manteau
+	break;
+	case 3:
+	.item = 32228; // str
+	break;
+	case 4:
+	.item = 32232; // agi
+	break;
+	case 5:
+	.item = 32231; // vit
+	break;
+	case 6:
+	.item = 32229; // int 
+	break;
+	case 7:
+	.item = 32233; // dex
+	break;
+	case 8:
+	.item = 32230; // luk
+	break;
+}
+	if(.item == 15388 || .item == 15389) {
+		if(countitem(25739) < 5 || countitem(6607) < 10) {
+			mes "you dont have the items buddy";
+			end;
+		}
+		delitem 25739,5;
+		delitem 6607,10;
+	
+	} else {
+		if(countitem(25740) < 5 || countitem(6755) < 5) {
+			mes "you dont have the items buddy";
+			end;
+		}
+		delitem 25740,5;
+		delitem 6755,5;
+	}
+
+	getitem .item,1;
+	
+end;
+}
+
+glast_01,243,296,4	script	enchanter#fog	88,{
+
+setArray .@armorEnchant1,4702,4703,4704,4732,4733,4734,4742,4743,4744,4712,4713,4714,4722,4723,4724,4752,4753,4754;
+setArray .@armorEnchant2,4702,4732,4742,4712,4722,4752,29302,29303,29304,29305,29306,29307,29308,29309;
+setArray .@manteauEnchant,4808,4820,4821,4813,4812,4826,4817,4816,4843,4834,4835,4836,4863,4864,4865;
+setArray .@accEnchant1,4702,4703,4704,4732,4733,4734,4742,4743,4744,4712,4713,4714,4722,4723,4724,4752,4753,4754;
+setArray .@accEnchant2,4821,4822,4812,4826,4843,4844,4835,4836,4864,4865;
+setArray .@accEnchant3,29587,29588,29589,29590,29591,29592;
+
+
+switch(select("armor","manteau","acc","cancel")) {
+case 1:
+	if(countitem(25739) < 5 || countitem(6608) < 10) {
+		mes "you dont have enought mats pal";
+		end;
+	}
+	.@item = getequipid(EQI_ARMOR);
+	.@refine = getequiprefinerycnt(EQI_ARMOR);
+	.@card0 = getequipcardid(EQI_ARMOR,0);
+	.@card1 = getequipcardid(EQI_ARMOR,1);
+	.@card2 = getequipcardid(EQI_ARMOR,2);
+	.@card3 = getequipcardid(EQI_ARMOR,3);
+
+	if(.@item != 15388){
+		mes "your are not wering a king suit";
+		end;
+	}
+	if(.@card1 != 0) {
+		mes "your armor is already fully enchanted";
+		end;
+	}
+	if(.@card3 == 0) {
+		.@card3 = .@armorEnchant1[rand(18)];
+		delequip EQI_ARMOR;
+		break;
+	}
+	if(.@card2 == 0) {
+		.@card2 = .@armorEnchant1[rand(18)];
+		delequip EQI_ARMOR;
+		break;
+	}
+	if(.@card1 == 0) {
+		.@card1 = .@armorEnchant2[rand(14)];
+		delequip EQI_ARMOR;
+		break;
+	}
+	break;
+case 2:
+	if(countitem(25739) < 5 || countitem(6608) < 10) {
+		mes "you dont have enought mats pal";
+		end;
+	}
+	
+	.@item = getequipid(EQI_GARMENT);
+	.@refine = getequiprefinerycnt(EQI_GARMENT);
+	.@card0 = getequipcardid(EQI_GARMENT,0);
+	.@card1 = getequipcardid(EQI_GARMENT,1);
+	.@card2 = getequipcardid(EQI_GARMENT,2);
+	.@card3 = getequipcardid(EQI_GARMENT,3);
+	if(.@item != 15389){
+		mes "your are not wearing a king suit";
+		end;
+	}
+	if(.@card1 != 0) {
+		mes "your armor is already fully enchanted";
+		end;
+	}
+	if(.@card3 == 0) {
+		.@card3 = .@manteauEnchant[rand(15)];
+		delequip EQI_GARMENT;
+		break;
+	}
+	if(.@card2 == 0) {
+		.@card2 = .@manteauEnchant[rand(15)];
+		delequip EQI_GARMENT;
+		break;
+	}
+	if(.@card1 == 0) {
+		.@card1 = .@manteauEnchant[rand(15)];
+		delequip EQI_GARMENT;
+		break;
+	}
+	break;
+case 3:
+	if(countitem(25740) < 10 || countitem(6755) < 40) {
+		mes "you dont have enought mats pal";
+		end;
+	}
+
+	.@item = getequipid(EQI_ACC_L);
+	.@card0 = getequipcardid(EQI_ACC_L,0);
+	.@card1 = getequipcardid(EQI_ACC_L,1);
+	.@card2 = getequipcardid(EQI_ACC_L,2);
+	.@card3 = getequipcardid(EQI_ACC_L,3);
+	if(.@item < 32228 || .@item > 32233){
+		mes "your are not wering a king suit";
+		end;
+	}
+	if(.@card1 != 0) {
+		mes "your armor is already fully enchanted";
+		end;
+	}
+	if(.@card3 == 0) {
+		.@card3 = .@accEnchant1[rand(18)];
+		delequip EQI_ACC_L;
+		break;
+	}
+	if(.@card2 == 0) {
+		.@card2 = .@accEnchant2[rand(10)];
+		delequip EQI_ACC_L;
+		break;
+	}
+	if(.@card1 == 0) {
+		.@card1 = .@accEnchant3[rand(6)];
+		delequip EQI_ACC_L;
+		break;
+	}
+	break;
+}
+getitem2 .@item,1,1,0,0,.@card0,.@card1,.@card2,.@card3;
+end;
+
+
+}
+
+
+// enchant npc
+// FIRE GO AWAY
+1@gl_prq,10,309,5	script	fire#v1	88,1,2,{ end; OnTouch: npcskill "NPC_FIREATTACK",10,130,175;}
+1@gl_prq,10,306,5	script	fire#v2	88,1,2,{ end; OnTouch: npcskill "NPC_FIREATTACK",10,130,175;}
+1@gl_prq,10,303,5	script	fire#v3	88,1,2,{ end; OnTouch: npcskill "NPC_FIREATTACK",10,130,175;}
+1@gl_prq,10,300,5	script	fire#v4	88,1,2,{ end; OnTouch: npcskill "NPC_FIREATTACK",10,130,175;}
+1@gl_prq,10,297,5	script	fire#v5	88,1,2,{ end; OnTouch: npcskill "NPC_FIREATTACK",10,130,175;}
+1@gl_prq,10,294,5	script	fire#v6	88,1,2,{ end; OnTouch: npcskill "NPC_FIREATTACK",10,130,175;}
+1@gl_prq,10,291,5	script	fire#v7	88,1,2,{ end; OnTouch: npcskill "NPC_FIREATTACK",10,130,175;}
+1@gl_prq,10,288,5	script	fire#v8	88,1,2,{ end; OnTouch: npcskill "NPC_FIREATTACK",10,130,175;}
+1@gl_prq,10,285,5	script	fire#v9	88,1,2,{ end; OnTouch: npcskill "NPC_FIREATTACK",10,130,175;}
+1@gl_prq,10,282,5	script	fire#v10	88,1,2,{ end; OnTouch: npcskill "NPC_FIREATTACK",10,130,175;}
+1@gl_prq,10,279,5	script	fire#v11	88,1,2,{ end; OnTouch: npcskill "NPC_FIREATTACK",10,130,175;}
+1@gl_prq,10,276,5	script	fire#v12	88,1,2,{ end; OnTouch: npcskill "NPC_FIREATTACK",10,130,175;}
+1@gl_prq,10,273,5	script	fire#v13	88,1,2,{ end; OnTouch: npcskill "NPC_FIREATTACK",10,130,175;}
+1@gl_prq,10,270,5	script	fire#v14	88,1,2,{ end; OnTouch: npcskill "NPC_FIREATTACK",10,130,175;}
+1@gl_prq,10,267,5	script	fire#v15	88,1,2,{ end; OnTouch: npcskill "NPC_FIREATTACK",10,130,175;}
+1@gl_prq,10,264,5	script	fire#v16	88,1,2,{ end; OnTouch: npcskill "NPC_FIREATTACK",10,130,175;}
+1@gl_prq,10,261,5	script	fire#v17	88,1,2,{ end; OnTouch: npcskill "NPC_FIREATTACK",10,130,175;}
+1@gl_prq,10,258,5	script	fire#v18	88,1,2,{ end; OnTouch: npcskill "NPC_FIREATTACK",10,130,175;}
+1@gl_prq,10,255,5	script	fire#v19	88,1,2,{ end; OnTouch: npcskill "NPC_FIREATTACK",10,130,175;}
+1@gl_prq,10,252,5	script	fire#v20	88,1,2,{ end; OnTouch: npcskill "NPC_FIREATTACK",10,130,175;}
+1@gl_prq,10,249,5	script	fire#v21	88,1,2,{ end; OnTouch: npcskill "NPC_FIREATTACK",10,130,175;}
+
+1@gl_prq,20,270,5	script	teste#walk	89,{
+	// fire going to right
+	for(.@i = 10; .@i < 90; .@i++) {
+		for(.@j = 1; .@j <= 21; .@j++) {
+			movenpc "fire#v"+.@j,.@i,(309-.@j*3);
+		}
+		sleep 100;
+	}
+	sleep 2000;
+	// fire going back to left
+	for(.@i = 90; .@i > 10; .@i--) {
+		for(.@j = 1; .@j <= 21; .@j++) {
+			movenpc "fire#v"+.@j,.@i,(309-.@j*3);
+		}
+		sleep 100;
+	}
+}
+/*
+// ==================================================================
+// item combo db
+29592:4880,{ bonus bAspd, 2; }
+29590:4876,{ bonus2 bMagicAddEle, ele_all, 15; }
+29591:4878,{ bonus bDelayrate, -10; }
+29589:4879,{ bonus2 bAddClass,Class_All,10; }
+29588:4875,{ bonus2 bAddSize, size_all, 25; }
+29587:4877,{ bonus bCritAtkRate, 30; } */

@@ -1,0 +1,164 @@
+// =========================================================
+// Abyss Lake 4F - Daily Quests Board
+// =========================================================
+
+hu_fild05,175,302,0	script	Abyss Expedition Board#ab4f_q	4_M_BOARD,{
+    mes "[Abyss Expedition Board]";
+    mes "--- Daily Hunting & Gathering Operations ---";
+    mes "Help the research team suppress the ancient draconic resurgence on the 4th floor.";
+    next;
+
+    if (BaseLevel < 170) {
+        mes "[Abyss Expedition Board]";
+        mes "WARNING: High risk sector.";
+        mes "Only adventurers level 170 or higher may participate.";
+        close;
+    }
+
+    // Daily Global Cooldown Reset Check (23 Hours)
+    if (ab4f_daily_cooldown > gettimetick(2)) {
+        .@time_left = ab4f_daily_cooldown - gettimetick(2);
+        .@hours = .@time_left / 3600;
+        .@mins = (.@time_left % 3600) / 60;
+        mes "[Abyss Expedition Board]";
+        mes "You have already completed today's operations.";
+        mes "Next deployment available in: ^FF0000" + .@hours + "h " + .@mins + "m^000000.";
+        close;
+    }
+
+    // Build Selection Menu dynamically based on active progress states
+    // 0 = Not started, 1 = Active, 2 = Ready to Turn In, 3 = Completed for today
+    .@menu$ = "";
+    .@menu$ += (ab4f_q1_status == 0) ? "Accept: [Hunt] Ancient Acidus Control:" : (ab4f_q1_status == 2) ? "^00FF00Turn In: [Hunt] Ancient Acidus Control^000000:" : (ab4f_q1_status == 1) ? "^FF9900Check Status: [Hunt] Ancient Acidus^000000:" : "Completed: [Hunt] Ancient Acidus:";
+    .@menu$ += (ab4f_q2_status == 0) ? "Accept: [Collect] Cursed Dragon Scales:" : (ab4f_q2_status == 2) ? "^00FF00Turn In: [Collect] Cursed Dragon Scales^000000:" : (ab4f_q2_status == 1) ? "^FF9900Check Status: [Collect] Scales^000000:" : "Completed: [Collect] Cursed Scales:";
+    .@menu$ += "Leave Board";
+
+    switch(select(.@menu$)) {
+        case 1: // --- QUEST 1: HUNTING ---
+            if (ab4f_q1_status == 0) {
+                mes "[Abyss Expedition Board]";
+                mes "Objective: Defeat 20 Ancient Gold Acidus and 20 Ancient Silver Acidus.";
+                next;
+                if (select("Accept Mission:Cancel") == 2) close;
+                set ab4f_q1_status, 1;
+                set ab4f_q1_gold, 0;
+                set ab4f_q1_silver, 0;
+                mes "[Abyss Expedition Board]";
+                mes "Mission registered. Safe hunting inside the 4th Layer.";
+                close;
+            }
+            if (ab4f_q1_status == 1) {
+                mes "[Abyss Expedition Board]";
+                mes "Current Hunting Progress:";
+                mes "-> Ancient Gold Acidus: ^FF0000" + ab4f_q1_gold + " / 20^000000";
+                mes "-> Ancient Silver Acidus: ^FF0000" + ab4f_q1_silver + " / 20^000000";
+                close;
+            }
+            if (ab4f_q1_status == 2) {
+                mes "[Abyss Expedition Board]";
+                mes "Suppressing the ancient variants was a success. Processing compensation...";
+                next;
+                set ab4f_q1_status, 3;
+                
+                // Rewards (Modify Exp values to match your rates)
+                getexp 5000000, 2500000; // Base Exp, Job Exp
+                getitem 100101, 2;       // Reward Currency (e.g., Dragon Bone Shard)
+                
+                callsub OnCheckDailyReset;
+                close;
+            }
+            break;
+
+        case 2: // --- QUEST 2: COLLECTING ---
+            if (ab4f_q2_status == 0) {
+                mes "[Abyss Expedition Board]";
+                mes "Objective: Collect 30 Cursed Dragon Scales dropped by Bone Dragons.";
+                next;
+                if (select("Accept Mission:Cancel") == 2) close;
+                set ab4f_q2_status, 1;
+                mes "[Abyss Expedition Board]";
+                mes "Mission registered. Scavenge the materials from the abyss.";
+                close;
+            }
+            if (ab4f_q2_status == 1) {
+                // Check if they already have the materials on hand
+                if (countitem(100102) >= 30) { // 100102 = Cursed Dragon Scale ID Template
+                    set ab4f_q2_status, 2;
+                    mes "[Abyss Expedition Board]";
+                    mes "You have gathered all the necessary scales. Please submit them.";
+                    next;
+                } else {
+                    mes "[Abyss Expedition Board]";
+                    mes "You currently have ^FF0000" + countitem(100102) + " / 30^000000 Cursed Dragon Scales.";
+                    close;
+                }
+            }
+            if (ab4f_q2_status == 2) {
+                if (countitem(100102) < 30) {
+                    set ab4f_q2_status, 1;
+                    mes "[Abyss Expedition Board]";
+                    mes "Error: It looks like you dropped some items. Retrieve them first.";
+                    close;
+                }
+                delitem 100102, 30;
+                set ab4f_q2_status, 3;
+                
+                getexp 5000000, 2500000;
+                getitem 100101, 2; // Reward Currency
+                
+                callsub OnCheckDailyReset;
+                close;
+            }
+            break;
+
+        default:
+            close;
+    }
+    end;
+
+// Subroutine to verify if all dailies are completed and lock the board for 23 hours
+OnCheckDailyReset:
+    if (ab4f_q1_status == 3 && ab4f_q2_status == 3) {
+        set ab4f_daily_cooldown, gettimetick(2) + 82800; // Lock for 23 hours
+        set ab4f_q1_status, 0; // Reset status handles for next day
+        set ab4f_q2_status, 0;
+        mes "^00FF00All daily Abyss 4F operations complete. See you tomorrow!^000000";
+    }
+    return;
+}
+
+// =========================================================
+// Background Hunt Tracker Hook Engine
+// =========================================================
+// This script runs automatically in the background across your server maps 
+// to log kills inside your Abyss 4F map (1@abyss).
+
+-	script	Abyss4F_Tracker	-1,{
+OnNPCKillEvent:
+    if (strcharinfo(3) != "1@abyss") end; // Only track kills inside the instance map
+
+    // Handle Gold Acidus Kill
+    if (killedrid == 3824 && ab4f_q1_status == 1) {
+        if (ab4f_q1_gold < 20) {
+            set ab4f_q1_gold, ab4f_q1_gold + 1;
+            dispbottom "Abyss 4F Daily: Killed Ancient Gold Acidus (" + ab4f_q1_gold + "/20)";
+            if (ab4f_q1_gold == 20 && ab4f_q1_silver == 20) {
+                set ab4f_q1_status, 2;
+                dispbottom "Abyss 4F Daily: Hunting mission ready to turn in!";
+            }
+        }
+    }
+
+    // Handle Silver Acidus Kill
+    if (killedrid == 3825 && ab4f_q1_status == 1) {
+        if (ab4f_q1_silver < 20) {
+            set ab4f_q1_silver, ab4f_q1_silver + 1;
+            dispbottom "Abyss 4F Daily: Killed Ancient Silver Acidus (" + ab4f_q1_silver + "/20)";
+            if (ab4f_q1_gold == 20 && ab4f_q1_silver == 20) {
+                set ab4f_q1_status, 2;
+                dispbottom "Abyss 4F Daily: Hunting mission ready to turn in!";
+            }
+        }
+    }
+    end;
+}

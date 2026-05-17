@@ -1,0 +1,78 @@
+//===== NexoMMORPG Script ==================================================================================
+//= King Poring Card Recycler. 
+//===== By: ================================================================================================
+//=  JinYuichi
+//===== Last Updated: ======================================================================================
+//= 02/07/2024
+//===== Description: =======================================================================================
+//= Added shop function 
+//= Added card recycling function
+//= Added maximum cards required for recycling function.
+//= Added zeny payment function 2,500,000 z 
+//= Added forbidden cards function that cannot be recycled
+//= Added card range function - Normal - Mini Boss - MvP
+//= Added card rate function - Normal 99% - Mini Boss 3% - MvP 1%
+//==========================================================================================================
+
+-	shop	card_merge_shop	-1,909:100
+
+prontera,174,176,5	script	King Poring	10056,{
+	
+	if (Zeny < .zeny_cost) {
+	    mes "[King Poring]";
+	    mes "To recycle cards you need ^FF0000" + .zeny_cost + " Zeny^000000.";
+	    close;
+	}
+	if (npcshopattach("card_merge_shop")) {
+	    deletearray @sold_nameid;
+	    callshop "card_merge_shop", 2;
+	    end;
+	}
+
+	OnSellItem:
+	    .@sold_size = getarraysize(@sold_nameid);
+	    if (.@sold_size == .card_count) {
+	        for (.@i = 0; .@i < .@sold_size; .@i++) {
+	            if (compare(.forbidden_card$, "|" + @sold_nameid[.@i] + "|")) {
+	                mes "[King Poring]";
+	                mes " ~ " + getitemname(@sold_nameid[.@i]) + "^000000 cannot be recycled.";
+	                close;
+	            }
+	            .@item_type[.@i] = getiteminfo(@sold_nameid[.@i], 2);
+	            .@not_valid = (.@item_type[.@i] != IT_CARD || @sold_nameid[.@i] < 4001 || @sold_nameid[.@i] > 4050);
+	            if (.@not_valid) .@failed++;
+	        }
+	        if (!.@failed) {
+	            if (select("Yes, I don't need them", "Not now") == 1) {
+	                Zeny -= .zeny_cost;
+	                for (.@i = 0; .@i < .@sold_size; .@i++)
+	                    delitem @sold_nameid[.@i], 1;
+
+	                // Determine which type of card is obtained based on probability rates
+	                .@rand = rand(1, 10000);
+	                if (.@rand <= .rate_normal_card) {
+	                    // Give a normal card from the new range (example: 4001-4020)
+	                    getitem rand(4001, 4020), 1;
+	                } else if (.@rand <= .rate_normal_card + .rate_mini_boss_card) {
+	                    // Give a mini boss card from the new range (example: 4021-4035)
+	                    getitem rand(4021, 4035), 1;
+	                } else {
+	                    // Give an MVP card from the new range (example: 4036-4050)
+	                    getitem rand(4036, 4050), 1;
+	                }
+	            }
+	        }
+	    } else {
+	        mes "[King Poring]";
+	        mes "You need to place ^FF0000" + .card_count + " different cards^000000.";
+	    }
+
+OnInit:
+    .card_count = 4; // Number of cards to exchange
+    .zeny_cost = 2500000; // Zeny needed for the process
+    .forbidden_card$ = ""; // Forbidden cards that cannot be recycled
+    .rate_normal_card = 9900; // Normal card rate (example: 9900 = 99%)
+    .rate_mini_boss_card = 200; // Mini boss rate (example: 300 = 3%)
+    .rate_mvp_card = 1; // MVP rate (example: 100 = 1%)
+    end;
+}

@@ -1,0 +1,106 @@
+// --- Main Entrance NPC ---
+comodo,214,186,5	script	Phantom's Spirit#cop	4_M_GHOSTRING,{
+    mes "[Phantom's Spirit]";
+    mes "Greetings, adventurer.";
+    mes "Beyond this rift lies the ^FF0000Corridor of Phantoms^000000,";
+    mes "where echoes of powerful MVPs reside with 100x their normal health.";
+    mes "Are you prepared to face them?";
+    next;
+
+    clear;
+    mes "[Phantom's Spirit]";
+    mes "You can enter for 1 hour using a ^33AA33Phantom's Seal^000000 (Free every 3 days)";
+    mes "or by handing over a ^33AA33Phantom's Invitation^000000.";
+    next;
+
+    switch(select("Request a Phantom's Seal (Free):Enter Corridor of Phantoms:Learn more about rewards:Cancel")) {
+        case 1:
+            // 3-Day Cooldown Check (259200 seconds)
+            if (cop_cooldown > gettimetick(2)) {
+                #cop_time_left = cop_cooldown - gettimetick(2);
+                #cop_hours = #cop_time_left / 3600;
+                #cop_mins = (#cop_time_left % 3600) / 60;
+                mes "[Phantom's Spirit]";
+                mes "The spirits are resting. You must wait:";
+                mes "^FF0000" + #cop_hours + " Hour(s) and " + #cop_mins + " Minute(s)^000000 before claiming another free Seal.";
+                close;
+            }
+            
+            // Give free pass variable token
+            set cop_cooldown, gettimetick(2) + 259200;
+            set cop_has_seal, 1;
+            mes "[Phantom's Spirit]";
+            mes "You have received the Phantom's blessing! You now have a temporary ^33AA33Phantom's Seal^000000 active for your next warp.";
+            close;
+
+        case 2:
+            // Entry Validation Check
+            if (cop_has_seal == 0 && countitem(63100) < 1) { // Change 63100 to your custom Phantom Invitation Item ID
+                mes "[Phantom's Spirit]";
+                mes "You have no valid pass.";
+                mes "Come back with an active free ^FF0000Phantom's Seal^000000 or a ^FF0000Phantom's Invitation^000000 item.";
+                close;
+            }
+
+            // Consume access token
+            if (cop_has_seal >= 1) {
+                set cop_has_seal, 0; // Consume the free pass
+                mes "[Phantom's Spirit]";
+                mes "Using your active ^33AA33Phantom's Seal^000000...";
+            } else {
+                delitem 63100, 1; // Consume 1 Invitation Item
+                mes "[Phantom's Spirit]";
+                mes "Handing over 1 ^33AA33Phantom's Invitation^000000...";
+            }
+            next;
+
+            // Initialize 1-Hour Time Limit
+            set cop_expiry, gettimetick(2) + 3600;
+            addtimer 3600000, "Phantom's Spirit#cop::OnKickOut"; // 1 hour in ms
+
+            mes "[Phantom's Spirit]";
+            mes "Be swift. You have exactly 1 hour inside.";
+            next;
+            
+            // Warp to Floor 1 base coordinates
+            warp "1@cop", 100, 100; 
+            end;
+
+        case 3:
+            mes "[Phantom's Spirit]";
+            mes "Monsters inside drop ^FF9900Flowers Left by Phantom^000000.";
+            mes "They will not yield their normal item drops, but these flowers can be traded for exceptional rare items.";
+            close;
+
+        case 4:
+            close;
+    }
+
+// Kick out handling function
+OnKickOut:
+    if (strcharinfo(3) == "1@cop" || strcharinfo(3) == "2@cop" || strcharinfo(3) == "3@cop") {
+        dispbottom "Your time in the Corridor of Phantoms has expired.";
+        warp "comodo", 214, 186;
+    }
+    end;
+}
+
+
+// --- In-Map Teleport Floor Managers ---
+// Place these inside your actual instance map code to bridge Floor 1 -> Floor 2 -> Floor 3
+
+1@cop,150,150,0	script	Floor 2 Rift	4_M_PORTAL,{
+    mes "Step through into the 2nd Floor of Phantoms?";
+    next;
+    if (select("Yes:No") == 2) close;
+    warp "2@cop", 50, 50;
+    end;
+}
+
+2@cop,150,150,0	script	Floor 3 Rift	4_M_PORTAL,{
+    mes "Step through into the final 3rd Floor of Phantoms?";
+    next;
+    if (select("Yes:No") == 2) close;
+    warp "3@cop", 50, 50;
+    end;
+}

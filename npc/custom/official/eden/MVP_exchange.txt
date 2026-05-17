@@ -1,0 +1,98 @@
+// Eden Group MVP Item Exchange - Eve Natalia
+// Location: moc_para01 50, 36
+moc_para01,53,33,3	script	Eve Natalia	882,{
+	mes "[Eve Natalia]";
+	mes "Greetings adventurer. I collect rare relics from the most powerful monsters in Midgard.";
+	mes "If you bring me two of the same rare items, I can exchange them for a Safe Refine Certificate.";
+	next;
+
+	// --- Item Database ---
+	// Format: ItemID, Certificate Type (1=Armor, 2=Weapon)
+	setarray .@mvp_items[0],
+		2421,1, // Nidhoggur's Shadow Garb
+		2115,1, // Valkyrja's Shield
+		2357,1, // Valkyrian Armor
+		2382,1, // Diabolus Robe
+		2374,1, // Diabolus Armor
+		2433,1, // Diabolus Boots
+		2426,1, // Diabolus Manteau
+		13412,2, // Twin Edge of Naght Sieger (Blue)
+		13413,2, // Twin Edge of Naght Sieger (Red)
+		1737,2, // Mystic Bow
+		1182,2, // Bloody Eater
+		1191,2, // Alca Bringer
+		1528,2, // Grand Cross
+		1369,2, // Guillotine
+		1196,2; // Two-Handed Chrome Metal Sword
+
+	mes "Which item would you like to trade?";
+	mes "^FF0000(Note: Requires 2 of the same item)^000000";
+	next;
+
+	// Generate Menu from Database
+	.@menu$ = "";
+	for(.@i = 0; .@i < getarraysize(.@mvp_items); .@i += 2) {
+		.@menu$ += getitemname(.@mvp_items[.@i]) + ":";
+	}
+
+	.@s = select(.@menu$) - 1;
+	.@selected_item = .@mvp_items[.@s * 2];
+	.@type = .@mvp_items[.@s * 2 + 1];
+
+	// Check total count owned
+	if (countitem(.@selected_item) < 2) {
+		mes "[Eve Natalia]";
+		mes "You don't have enough! I need exactly ^0000FF2x " + getitemname(.@selected_item) + "^000000.";
+		close;
+	}
+
+	// Safety Check: Prevent trading equipped items
+	if (isequipped(.@selected_item)) {
+		mes "[Eve Natalia]";
+		mes "Please unequip your ^FF0000" + getitemname(.@selected_item) + "^000000 before talking to me.";
+		mes "I cannot accept items you are currently wearing!";
+		close;
+	}
+
+	// NEW: Check if any of the items in the inventory are refined
+	getinventorylist;
+	.@has_refined = 0;
+	for (.@i = 0; .@i < @inventorylist_count; .@i++) {
+		// Look for matching unequipped items that have a refinement level > 0
+		if (@inventorylist_id[.@i] == .@selected_item && @inventorylist_equip[.@i] == 0 && @inventorylist_refine[.@i] > 0) {
+			.@has_refined = 1;
+			break; // Found at least one refined copy, we can stop checking
+		}
+	}
+
+	// NEW: Warn the player if a refined version is detected in their inventory
+	if (.@has_refined) {
+		mes "[Eve Natalia]";
+		mes "^FF0000WARNING:^000000 I detected that at least one of the " + getitemname(.@selected_item) + "s in your inventory is ^00FF00refined^000000.";
+		mes "If you proceed, the game might consume your refined item!";
+		mes "Are you absolutely sure you want to risk this trade?";
+		next;
+		if (select("Yes, I am sure:No, let me move it to storage!") == 2) close;
+	}
+
+	mes "[Eve Natalia]";
+	mes "Exchanging 2 " + getitemname(.@selected_item) + "... is this correct?";
+	if (select("Yes, please:No, wait!") == 2) close;
+
+	// Process Exchange
+	delitem .@selected_item, 2;
+
+	// Reward Logic: Randomly pick between Safe to 6/7 Armor or Safe to 7 Weapon
+	if (.@type == 1) {
+		// Armor Certificate Pool (Safe to 7 Armor or Safe to 6 Armor)
+		getitem (rand(1,2) == 1 ? 6233 : 6234), 1;
+	} else {
+		// Weapon Certificate Pool (Safe to 7 Weapon)
+		getitem 6230, 1;
+	}
+
+	specialeffect2 EF_MAGIC_PURPLE;
+	mes "[Eve Natalia]";
+	mes "A fair trade. Use that certificate wisely!";
+	close;
+}

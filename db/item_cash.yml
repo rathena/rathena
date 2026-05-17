@@ -34,4 +34,4 @@ Header:
 
 Footer:
   Imports:
-    - Path: db/import/item_cash.yml
+    - Path: db/import-tmpl/item_cash.yml

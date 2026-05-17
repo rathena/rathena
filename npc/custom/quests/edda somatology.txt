@@ -1,0 +1,231 @@
+// =========================================================
+// EDDA Somatology Laboratory (iRO Version Baseline)
+// =========================================================
+
+yuno,216,345,5	script	Sierra#edda_main	4_F_KERRE,{
+    mes "[Sierra]";
+    mes "Greetings. I am part of the Secret Wings organization.";
+    mes "We have unearthed a Virtual Record containing tragic data";
+    mes "regarding Seyren Windsor's unofficial expedition team...";
+    next;
+    
+    if (BaseLevel < 170) {
+        mes "[Sierra]";
+        mes "I am sorry, but your body cannot handle the resonance.";
+        mes "Come back when you are ^FF0000Base Level 170 or higher^000000.";
+        close;
+    }
+
+    if (!inparty()) {
+        mes "[Sierra]";
+        mes "You must form a unified party to synchronize with the records.";
+        close;
+    }
+
+    if (!is_partyleader()) {
+        mes "[Sierra]";
+        mes "Only your designated party leader can initialize the sync.";
+        close;
+    }
+
+    // Official iRO Rule: Shared daily lockouts between modes
+    if (edda_biolab_lockout > gettimetick(2)) {
+        mes "[Sierra]";
+        mes "Your memories are still recovering from the last sequence.";
+        mes "Please wait before attempting to interface again.";
+        close;
+    }
+
+    .@instance_id = instance_id();
+    if (.@instance_id > 0) {
+        mes "[Sierra]";
+        mes "An active instance for your party already exists.";
+        next;
+        if (select("Enter Instance:Cancel") == 1) {
+            // Read active mode variable to warp to the correct instance map
+            .@mode = instance_get_var(.@instance_id, "mode");
+            if (.@mode == 1) instance_warpall .@instance_id, "1@edda", 50, 50;
+            else instance_warpall .@instance_id, "2@edda", 50, 50;
+        }
+        close;
+    }
+
+    mes "[Sierra]";
+    mes "Which operational memory layer would you like to investigate?";
+    next;
+
+    // Mode Selection Engine
+    switch(select("Expedition Mode (Story focus / Casual):Battle Mode (High difficulty / Full Rewards):Cancel")) {
+        case 1:
+            .@mode = 1; // Expedition Mode
+            .@map_res$ = "1@edda"; // Map ID mapping for Expedition
+            break;
+        case 2:
+            .@mode = 2; // Battle Mode
+            .@map_res$ = "2@edda"; // Map ID mapping for Battle Mode
+            break;
+        default:
+            close;
+    }
+
+    mes "[Sierra]";
+    mes "Initializing data protocol. Stand ready...";
+    next;
+
+    // Create the unique instance space
+    .@instance_id = instance_create("EDDA Somatology", "party", getcharid(1));
+    if (.@instance_id < 0) {
+        mes "[Sierra]";
+        mes "System Error: Memory synchronization failed to boot.";
+        close;
+    }
+
+    instance_attachmap(.@map_res$, .@instance_id);
+    instance_set_timeout(7200, 300, .@instance_id); // Official 120-minute limit
+    instance_set_var(.@instance_id, "mode", .@mode);
+    instance_set_var(.@instance_id, "progress", 0);
+    instance_init(.@instance_id);
+
+    // Enforce 1-Day Lockout Cooldown
+    set edda_biolab_lockout, gettimetick(2) + 86400;
+
+    mes "[Sierra]";
+    mes "The matrix is stable. Go inside.";
+    next;
+    
+    instance_warpall .@instance_id, .@map_res$, 50, 50;
+    end;
+}
+
+// =========================================================
+// Inside Instance Engine (Dual Mode Scripting Template)
+// =========================================================
+
+// --- EXPEDITION MAP CONTROLLER ---
+1@edda,50,55,0	script	Sierra#exp_ctrl	4_F_KERRE,{
+    .@instance = instance_id();
+    .@prog = instance_get_var(.@instance, "progress");
+
+    if (.@prog == 0) {
+        mes "[Sierra]";
+        mes "Welcome to the Expedition simulation room.";
+        mes "The story records indicate that Seyren and his crew passed here.";
+        next;
+        mes "[Seyren Windsor]";
+        mes "Keep moving, everyone... We must remain stealthy.";
+        next;
+        mes "[Margaretha Sorin]";
+        mes "I have a terrible feeling about this place, Seyren...";
+        next;
+        
+        // Spawn lighter wave layout
+        mapannounce instance_mapname("1@edda"), "[System]: Clearing security drones...", bc_map, 0x00FF00;
+        instance_monster(.@instance, "1@edda", 60, 60, "Regenschirm Guard", 20543, 5, "Sierra#exp_ctrl::OnMobDead");
+        instance_set_var(.@instance, "mobs_left", 5);
+        instance_set_var(.@instance, "progress", 1);
+        close;
+    }
+    
+    if (.@prog == 1) {
+        mes "[Sierra]";
+        mes "Secure the area before reviewing subsequent data.";
+        close;
+    }
+
+    if (.@prog == 2) {
+        mes "[Sierra]";
+        mes "The memory has been fully extracted. Take your rewards.";
+        next;
+        
+        // Expedition mode low rewards
+        getitem 25786, 2; // Somatology Research Document
+        getitem 25787, 4; // Somatology Experimental Fragment
+        
+        mapannounce instance_mapname("1@edda"), "[System]: Simulation safely concluded.", bc_map, 0x00FFFF;
+        warp "yuno", 216, 345;
+        end;
+    }
+
+OnMobDead:
+    .@instance = instance_id();
+    .@rem = instance_get_var(.@instance, "mobs_left") - 1;
+    instance_set_var(.@instance, "mobs_left", .@rem);
+
+    if (.@rem <= 0) {
+        mapannounce instance_mapname("1@edda"), "[System]: Sector safe. Return to Sierra.", bc_map, 0xFFFF00;
+        instance_set_var(.@instance, "progress", 2);
+    }
+    end;
+}
+
+
+// --- BATTLE MAP CONTROLLER ---
+2@edda,50,55,0	script	Sierra#bat_ctrl	4_F_KERRE,{
+    .@instance = instance_id();
+    .@prog = instance_get_var(.@instance, "progress");
+
+    if (.@prog == 0) {
+        mes "[Sierra]";
+        mes "WARNING: Battle mode simulation active.";
+        mes "No cutscenes will interrupt. The combat matrix is intensive.";
+        next;
+        if (select("Initiate Battle Matrix:Cancel") == 2) close;
+        
+        close;
+        // Spawn heavy mob counts for Battle Mode
+        mapannounce instance_mapname("2@edda"), "[System]: Hostile biological signals detected!", bc_map, 0xFF0000;
+        instance_monster(.@instance, "2@edda", 45, 45, "Regenschirm Elite Guard", 20543, 15, "Sierra#bat_ctrl::OnMobDead");
+        instance_monster(.@instance, "2@edda", 65, 65, "Regenschirm Scientist", 20543, 10, "Sierra#bat_ctrl::OnMobDead");
+        
+        instance_set_var(.@instance, "mobs_left", 25);
+        instance_set_var(.@instance, "progress", 1);
+        end;
+    }
+
+    if (.@prog == 2) {
+        mes "[Sierra]";
+        mes "The perimeter is cleared. The final combat simulation core is accessible.";
+        next;
+        close;
+        
+        mapannounce instance_mapname("2@edda"), "[System]: Unknown Swordsman (MVP) materialized!", bc_map, 0xFF0000;
+        // 102571 = Unknown Swordsman MVP
+        instance_monster(.@instance, "2@edda", 50, 50, "Unknown Swordsman", 102571, 1, "Sierra#bat_ctrl::OnBossDead");
+        instance_set_var(.@instance, "progress", 3);
+        end;
+    }
+    
+    if (.@prog == 4) {
+        mes "[Sierra]";
+        mes "Outstanding performance. You have conquered the combat logs.";
+        next;
+        
+        // Full Battle Mode Rewards
+        getitem 25786, 9;  // 9x Somatology Research Document
+        getitem 25787, 15; // 15x Somatology Experimental Fragment
+        
+        // Spawn a random official EDDA weapon delivery chest
+        instance_monster(.@instance, "2@edda", 52, 52, "Treasure Box", 1324, 1, "");
+        
+        instance_set_var(.@instance, "progress", 5);
+        close;
+    }
+    end;
+
+OnMobDead:
+    .@instance = instance_id();
+    .@rem = instance_get_var(.@instance, "mobs_left") - 1;
+    instance_set_var(.@instance, "mobs_left", .@rem);
+
+    if (.@rem <= 0 && instance_get_var(.@instance, "progress") == 1) {
+        mapannounce instance_mapname("2@edda"), "[System]: Security grid broken. Speak to Sierra to reveal the boss.", bc_map, 0x00FF00;
+        instance_set_var(.@instance, "progress", 2);
+    }
+    end;
+
+OnBossDead:
+    .@instance = instance_id();
+    mapannounce instance_mapname("2@edda"), "[System]: Combat sequence cleared. Claim your rewards.", bc_map, 0x00FFFF;
+    instance_set_var(.@instance, "progress", 4);
+    end;
+}

@@ -176,13 +176,13 @@ moc_para01,110,83,4	script	Reno	967,{
                 mes "Please bring me **15x Old Pick**.";
                 next;
 
-                if (countitem(7314) < 15) { 
+                if (countitem(7318) < 15) { 
                     mes "[Reno]";
                     mes "You do not have enough Old Picks. Come back when you have all 15.";
                     close;
                 }
 
-                delitem 7314, 15;
+                delitem 7318, 15;
                 set Paradise_Wpn_Unlocked, 1;
                 mes "[Reno]";
                 mes "Fantastic! The Advanced Weapons shop is now permanently unlocked for you.";
@@ -263,13 +263,13 @@ moc_para01,110,83,4	script	Reno	967,{
                     break;
             }
 
-            if (countitem(6224) < 10) { 
+            if (countitem(25223) < 10) { 
                 mes "[Reno]";
                 mes "You don't have enough Eden Coins. These weapons require exactly 10.";
                 close;
             }
 
-            delitem 6224, 10;
+            delitem 25223, 10;
             getitem .@adv_wpn, 1;
             mes "[Reno]";
             mes "Transaction successfully finalized! Enjoy your weapon.";
@@ -354,7 +354,7 @@ moc_para01,110,87,4	script	Lumin	813,{
                 next;
 
                 // Checking for Elastic Band (7021) and Blue Hair (1034)
-                if (countitem(7021) < 15 || countitem(1034) < 3) {
+                if (countitem(7200) < 15 || countitem(1034) < 3) {
                     mes "[Lumin]";
                     mes "Material check failed. Bring the exact components specified to proceed.";
                     close;
@@ -365,7 +365,7 @@ moc_para01,110,87,4	script	Lumin	813,{
 
                 switch(select("Advanced Physical Set:Advanced Magical Set")) {
                     case 1:
-                        delitem 7021, 15; delitem 1034, 3;
+                        delitem 7200, 15; delitem 1034, 3;
                         getitem 400139, 1; // Paradise Advanced Cap
                         getitem 450185, 1; // Paradise Advanced Suit
                         getitem 480105, 1; // Paradise Advanced Cloak (Adjust IDs to match your DB)
@@ -374,7 +374,7 @@ moc_para01,110,87,4	script	Lumin	813,{
                         getitem 490127, 1;  // Paradise Advanced Glove
                         break;
                     case 2:
-                        delitem 7021, 15; delitem 1034, 3;
+                        delitem 7200, 15; delitem 1034, 3;
                         getitem 400140, 1; // Paradise Advanced Hat
                         getitem 450186, 1; // Paradise Advanced Robe
                         getitem 480106, 1; // Paradise Advanced Muffler
@@ -425,13 +425,13 @@ moc_para01,110,87,4	script	Lumin	813,{
                     close;
             }
 
-            if (countitem(6224) < 10) { // Eden Coin (6224)
+            if (countitem(25223) < 10) { // Eden Coin (6224)
                 mes "[Lumin]";
                 mes "Transaction aborted: Insufficient Eden Coins.";
                 close;
             }
 
-            delitem 6224, 10;
+            delitem 25223, 10;
             getitem .@armor_id, 1;
             mes "[Lumin]";
             mes "Transaction finalized. Enjoy your upgraded defense piece!";

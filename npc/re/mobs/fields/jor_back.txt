@@ -1,0 +1,24 @@
+//===== rAthena Script =======================================
+//= jor_back Monsters Spawn Script
+//===== Current Version: =====================================
+//= 1.0
+//===== Additional Comments: =================================
+//= 1.0 First version. [Atemo]
+//============================================================
+
+jor_back1	monster	--ja--	21524,60
+jor_back1	monster	--ja--	21525,60
+jor_back1	monster	--ja--	21523,80
+
+jor_back2	monster	--ja--	21521,70
+jor_back2	monster	--ja--	21525,25
+jor_back2	monster	--ja--	21523,35
+jor_back2	monster	--ja--	21520,70
+
+jor_back3	monster	--ja--	21526,30
+jor_back3	monster	--ja--	21527,15
+jor_back3	monster	--ja--	21525,20
+jor_back3	monster	--ja--	21522,70
+jor_back3	monster	--ja--	21520,70
+// unknown delay
+jor_back3	boss_monster	--ja--	21537,1,7200000,600000,1

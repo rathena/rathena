@@ -10,7 +10,7 @@
 //=    https://rathena.org/board/files/file/4307-script-command-getskillname/
 //============================================================
 
-moc_para01,28,85,3	script	Plagiarism NPC	747,{
+prontera,142,172,3	script	Plagiarism NPC	747,{
 	mes "[ ^FF0000Plagiarism Master^000000 ]";
 	if (.plag_skill && !getskilllv("RG_PLAGIARISM")) {
 		mes "You must have Plagiarism learned.";

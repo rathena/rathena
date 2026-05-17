@@ -31,7 +31,7 @@ OnPointUpdate:
         #playtimepts += 1;
         if(#playtimepts == 6){
             #playtimepts = 0;
-			#YourPtsHere += 1;
+			#PlayPoints += 1;
             @playtime = 0;
             message strcharinfo(0),"[Playtime Points]: You have received your Playtime Reward at "+gettimestr("%Y-%m-%d %H:%M:%S", 21)+".";
 			@prevtime$ = gettimestr("%Y-%m-%d %H:%M:%S", 21);
@@ -43,7 +43,7 @@ end;
 OnPlaytimeCheck:
 	dispbottom "Last Reward: "+@prevtime$;
 	dispbottom "Minutes: "+#playtimepts+"0/60";
-	dispbottom "Current points: "+#YourPtsHere;
+	dispbottom "Current points: "+#PlayPoints;
 end;
 OnInit:
 	bindatcmd "playtime",strnpcinfo(0)+"::OnPlaytimeCheck";

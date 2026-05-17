@@ -65,5 +65,5 @@ Footer:
   - Path: npc/re/merchants/barters/rgsr_in.yml
   - Path: npc/re/merchants/barters/Pet_Groomer.yml
   - Path: npc/re/merchants/barters/points_barter.yml
-
+  - Path: npc/re/merchants/barters/thanatos-tower.yml
 

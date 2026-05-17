@@ -583,3 +583,18 @@ Body:
       Map: 1@exsh
       X: 90
       Y: 35
+  - Id: 118
+    Name: Thanatos Tower
+    TimeLimit: 3600
+    Enter:
+      Map: 1@thts
+      X: 74
+      Y: 371
+    AdditionalMaps:
+      2@thts: true
+      3@thts: true
+      4@thts: true
+      5@thts: true
+      6@thts: true
+      7@thts: true
+      8@thts: true

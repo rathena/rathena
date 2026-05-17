@@ -1,0 +1,160 @@
+// =========================================================
+// Abyss Lake Dungeon F4 - Access and Instance Manager
+// =========================================================
+
+abyss_03,115,25,0	script	Dragon's Alter Guard#ab4f	4_M_DRAGON,{
+    mes "[Dragon's Alter]";
+    mes "Human... your steps echo loudly in this sacred tomb.";
+    mes "Beyond this gate lies the ^FF00004th Layer of Abyss Lake^000000,";
+    mes "where the ancient Dragon Bone structures hold immense power.";
+    next;
+
+    if (BaseLevel < 170) {
+        mes "[Dragon's Alter]";
+        mes "Your physical form cannot withstand the intense draconic pressure.";
+        mes "Return when you are ^FF0000Base Level 170 or higher^000000.";
+        close;
+    }
+
+    if (!inparty()) {
+        mes "[Dragon's Alter]";
+        mes "The dragon spirits demand a coordinated hunting party.";
+        mes "Please form a party before requesting passage.";
+        close;
+    }
+
+    if (!is_partyleader()) {
+        mes "[Dragon's Alter]";
+        mes "Only your party leader may interface with the portal mechanics.";
+        close;
+    }
+
+    // Cooldown Check (23 Hours)
+    if (abyss_f4_lockout > gettimetick(2)) {
+        .@time_left = abyss_f4_lockout - gettimetick(2);
+        .@hours = .@time_left / 3600;
+        .@mins = (.@time_left % 3600) / 60;
+        mes "[Dragon's Alter]";
+        mes "The seals are currently recharging for you.";
+        mes "You must wait ^FF0000" + .@hours + " hour(s) and " + .@mins + " minute(s)^000000.";
+        close;
+    }
+
+    // Check if instance already exists
+    .@instance_id = instance_id();
+    if (.@instance_id > 0) {
+        mes "[Dragon's Alter]";
+        mes "Your party already has an open gateway to the 4th floor.";
+        next;
+        if (select("Enter Abyss Lake 4F:Cancel") == 1) {
+            instance_warpall .@instance_id, "1@abyss", 120, 120;
+        }
+        close;
+    }
+
+    mes "[Dragon's Alter]";
+    mes "To unlock the seals, you must offer up tribute:";
+    mes "-> ^00FF001x Dragon Treasure Key^000000";
+    next;
+
+    if (countitem(100100) < 1) { // Change 100100 to your actual Dragon Treasure Key Item ID
+        mes "[Dragon's Alter]";
+        mes "You lack the required entry token.";
+        mes "Acquire a ^FF0000Dragon Treasure Key^000000 and return.";
+        close;
+    }
+
+    if (select("Offer Key & Open Gate:Leave") == 2) close;
+
+    // Consume Item
+    delitem 100100, 1;
+
+    // Create Instance Space
+    .@instance_id = instance_create("Abyss Lake 4F", "party", getcharid(1));
+    if (.@instance_id < 0) {
+        mes "[Dragon's Alter]";
+        mes "Critical Error: The spatial rift failed to construct.";
+        close;
+    }
+
+    // Instance Settings
+    instance_attachmap("1@abyss", .@instance_id);
+    instance_set_timeout(3600, 300, .@instance_id); // 1-hour time limit, 5 mins empty duration
+    instance_set_var(.@instance_id, "state", 0);
+    instance_init(.@instance_id);
+
+    // Set 23-Hour Cooldown Lockout
+    set abyss_f4_lockout, gettimetick(2) + 82800;
+
+    mes "[Dragon's Alter]";
+    mes "The configuration is complete. Step into the abyss.";
+    next;
+
+    instance_warpall .@instance_id, "1@abyss", 120, 120;
+    end;
+}
+
+// =========================================================
+// Inside Instance: Map Control & Monster Waves
+// =========================================================
+
+1@abyss,120,125,0	script	Bone Structure#ab4f_ctrl	4_M_STONE,{
+    .@instance = instance_id();
+    .@state = instance_get_var(.@instance, "state");
+
+    if (.@state == 2) {
+        mes "[Bone Structure]";
+        mes "The spatial resonance has dissolved. The map is spent.";
+        close;
+    }
+
+    if (.@state == 1) {
+        mes "[Bone Structure]";
+        mes "The dragon onslaught is currently active. Purge them all.";
+        close;
+    }
+
+    mes "[Bone Structure]";
+    mes "An ancient mechanical pillar built from dragon vertebrae.";
+    mes "Disturbing it will cause nearby ancient species to swarm your party.";
+    next;
+
+    if (select("Disturb the Pillar (Spawn Monsters):Leave") == 2) close;
+
+    close;
+    instance_set_var(.@instance, "state", 1);
+    
+    mapannounce instance_mapname("1@abyss"), "[System]: The dragon bones rattle... Ancient variants are swarming!", bc_map, 0xFF0000;
+
+    // --- MONSTER SPAWN BLOCK (Missing Pieces Template) ---
+    // Format: instance_monster(instance_id, "map", x, y, "name", mob_id, count, "event")
+    // Replace IDs 3824-3826 with your custom/official Purple/Silver/Gold Acidus or Bone Dragons
+    instance_monster(.@instance, "1@abyss", 110, 110, "Ancient Gold Acidus", 3824, 10, "Bone Structure#ab4f_ctrl::OnMobDead");
+    instance_monster(.@instance, "1@abyss", 130, 110, "Ancient Silver Acidus", 3825, 10, "Bone Structure#ab4f_ctrl::OnMobDead");
+    instance_monster(.@instance, "1@abyss", 120, 140, "Bone Ferus", 3826, 15, "Bone Structure#ab4f_ctrl::OnMobDead");
+
+    instance_set_var(.@instance, "mobs_left", 35);
+    end;
+
+OnMobDead:
+    .@instance = instance_id();
+    .@rem = instance_get_var(.@instance, "mobs_left") - 1;
+    instance_set_var(.@instance, "mobs_left", .@rem);
+
+    if (.@rem <= 0) {
+        mapannounce instance_mapname("1@abyss"), "[System]: The area grows quiet. The Ancient Bone Dragon (MVP) approaches...", bc_map, 0x00FF00;
+        
+        // Spawn the Boss (Replace 3827 with your chosen Abyss 4F Boss, e.g., Bone Detardeurus / Dragon Egg Core)
+        instance_monster(.@instance, "1@abyss", 120, 120, "Bone Detardeurus", 3827, 1, "Bone Structure#ab4f_ctrl::OnBossDead");
+    }
+    end;
+
+OnBossDead:
+    .@instance = instance_id();
+    mapannounce instance_mapname("1@abyss"), "[System]: The draconic force dissipates. A treasure cache has appeared.", bc_map, 0x00FFFF;
+    instance_set_var(.@instance, "state", 2);
+    
+    // Spawn the Reward Relic
+    instance_monster(.@instance, "1@abyss", 120, 122, "Dragon Nest Relic", 1324, 1, "");
+    end;
+}

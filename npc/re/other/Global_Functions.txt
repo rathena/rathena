@@ -48,21 +48,58 @@ function	script	F_22507	{// ShabbyOldScroll
 //  2 : All the quests are completed
 function	script	F_queststatus	{
 	.@type = getarg(0);
-	.@base = checkquest(getarg(1),.@type);
+	.@status = checkquest(getarg(1),.@type);
+	switch( .@status ) {
+	case -1:
+		.@status = 0;
+		break;
+	case 0:
+	case 1:
+		.@status = 1;
+		break;
+	case 2:
+		.@status = 2;
+		break;
+	}
+
 	.@size = getargcount();
 
 	for ( .@i = 2; .@i < .@size; ++.@i ) {
-		if (checkquest(getarg(.@i),.@type) != .@base)
+		.@next_status = checkquest(getarg(.@i),.@type);
+		switch( .@next_status ) {
+		case -1:
+			.@next_status = 0;
+			break;
+		case 0:
+		case 1:
+			.@next_status = 1;
+			break;
+		case 2:
+			.@next_status = 2;
+			break;
+		}
+
+		if (.@next_status != .@status)
 			return -1;
 	}
-	switch( .@base ) {
-	case -1:
-		return 0;
-	case 0:
-	case 1:
-		return 1;
-	case 2:
-		return 2;
+	return .@status;
+}
+
+// Return a value referring to the state of the quests in range.
+// -1 : at least on of the quest doesn't have the same state
+//  0 : all the quests are in the state 0 (not in quest log)
+//  1 : all the quests are in the state 1 (given)
+//  2 : all the quests are in the state 2 (completed)
+function	script	F_queststatus_between	{
+	.@start = getarg(0);
+	.@end = getarg(1);
+	.@state = isbegin_quest(.@start);
+
+	for ( .@i = .@start+1; .@i <= .@end; ++.@i ) {
+		if (isbegin_quest(.@i) != .@state) {
+			.@state = -1;
+			break;
+		}
 	}
-	end;
-}	
+	return .@state;
+}

@@ -42,6 +42,9 @@
 		sc_start SC_GLORIA, 600000, 5;
 		sc_start SC_SUFFRAGIUM, 600000, 5;
 		specialeffect2 EF_INCALLSTATUS;
+		// --- Auto-Magnify Function ---
+		// This identifies all unidentified items in the player's inventory
+		identifyall;
 	}
 	if (.@Delay)
 		@HD = gettimetick(2) + .@Delay;

@@ -1,0 +1,123 @@
+//=====================================================================
+// - Official MuhRO Eden Market Shop: Red Hugo (With Item Verification)
+//=====================================================================
+paramk,59,100,4	script	Red Hugo	1883,{
+    mes "[Red Hugo]";
+    mes "Greetings. I can strip down your old instance or dungeon gear into Safe Refine Certificates.";
+    mes "Make sure you are holding the item in your inventory and have the right ^FF0000Exchange Hammer^000000.";
+    next;
+
+    switch(select("- Buy Exchange Hammers:- Extract Refine Ticket:- Cancel")) {
+        case 1:
+            callshop "hugo_hammer_shop",1;
+            end;
+            
+        case 2:
+            mes "[Red Hugo]";
+            mes "Which category of eligible gear are we processing today?";
+            next;
+            .@type = select("- Weapon extraction:- Armor extraction");
+            next;
+
+            getinventorylist;
+            .@menu$ = "";
+            deletearray .@valid_idx[0], getarraysize(.@valid_idx);
+            .@count = 0;
+            
+            for (.@i = 0; .@i < @inventorylist_count; .@i++) {
+                if (@inventorylist_equip[.@i] == 0) {
+                    .@curr_id = @inventorylist_id[.@i];
+                    .@curr_refine = @inventorylist_refine[.@i];
+                    
+                    if (.@type == 1 && @inventorylist_type[.@i] == IT_WEAPON) {
+                        if (.@curr_refine >= 9 && .@curr_refine <= 12) {
+                            if (callsub(OnCheckWeaponEligible, .@curr_id)) {
+                                .@menu$ += @inventorylist_name$[.@i] + " (+" + .@curr_refine + "):";
+                                .@valid_idx[.@count] = .@i;
+                                .@count++;
+                            }
+                        }
+                    } 
+                    else if (.@type == 2 && @inventorylist_type[.@i] == IT_ARMOR) {
+                        if (.@curr_refine >= 8 && .@curr_refine <= 12) {
+                            if (callsub(OnCheckArmorEligible, .@curr_id)) {
+                                .@menu$ += @inventorylist_name$[.@i] + " (+" + .@curr_refine + "):";
+                                .@valid_idx[.@count] = .@i;
+                                .@count++;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            if (.@menu$ == "") {
+                mes "[Red Hugo]";
+                mes "You don't have any qualifying, unequipped items from the approved list.";
+                close;
+            }
+            
+            .@choice = select(.@menu$) - 1;
+            .@target_idx = .@valid_idx[.@choice];
+            .@item_id = @inventorylist_id[.@target_idx];
+            .@refine = @inventorylist_refine[.@target_idx];
+            
+            if (.@type == 1) {
+                if (.@refine == 9)  { .@hammer_needed = 100381; .@cert_reward = 6229; }
+                else if (.@refine == 10) { .@hammer_needed = 100382; .@cert_reward = 6228; }
+                else if (.@refine == 11) { .@hammer_needed = 100383; .@cert_reward = 6238; }
+                else if (.@refine == 12) { .@hammer_needed = 100384; .@cert_reward = 6584; }
+            } else {
+                if (.@refine == 8)  { .@hammer_needed = 50004; .@cert_reward = 6233; }
+                else if (.@refine == 9)  { .@hammer_needed = 50005; .@cert_reward = 6232; }
+                else if (.@refine == 10) { .@hammer_needed = 50006; .@cert_reward = 6994; }
+                else if (.@refine == 11) { .@hammer_needed = 50007; .@cert_reward = 6239; }
+                else if (.@refine == 12) { .@hammer_needed = 50031; .@cert_reward = 6585; }
+            }
+            
+            if (countitem(.@hammer_needed) < 1) {
+                mes "[Red Hugo]";
+                mes "You do not have the required ^FF0000"+getitemname(.@hammer_needed)+"^000000.";
+                close;
+            }
+            
+            mes "[Red Hugo]";
+            mes "This action will completely ^FF0000DESTROY^000000 your +" + .@refine + " " + getitemname(.@item_id) + ". Are you certain?";
+            next;
+            if (select("- Break it:- Keep it") == 2) close;
+            
+            delitem .@hammer_needed, 1;
+            delitem2 .@item_id, 1, 1, .@refine, 0, 0, 0, 0, 0;
+            getitem .@cert_reward, 1;
+            
+            mes "[Red Hugo]";
+            mes "Extraction complete! Here is your ticket.";
+            close;
+            
+        case 3:
+            close;
+    }
+
+OnCheckWeaponEligible:
+    .@id = getarg(0);
+    if (.@id >= 28705 && .@id <= 28710) return 1;
+    if (.@id == 550132) return 1;
+    return 0;
+
+OnCheckArmorEligible:
+    switch(getarg(0)) {
+        case 20744: case 15117: case 22047: case 15051: case 15093:
+        case 15095: case 15094: case 22035: case 22036: case 15098:
+        case 22037: case 18849: case 22044: case 20733: case 15111:
+        case 20732: case 22043: case 15110: case 15073: case 15090:
+        case 20721: case 18820: case 22033: case 2187:  case 2486:
+        case 19033: case 15141: case 20779: case 22075: case 18997:
+        case 15121: case 2582:  case 18570: case 15212: case 22141:
+        case 20856: case 2169:  case 15097: case 18848: case 2554:
+        case 15074:
+            return 1;
+        default:
+            return 0;
+    }
+}
+
+-	marketshop	hugo_hammer_shop	FAKE_NPC,100381:500000:10,100382:1000000:10,100383:1500000:10,100384:2000000:10,50004:500000:10,50005:1000000:10,50006:1500000:10,50007:2000000:10,50031:2500000:10

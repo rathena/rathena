@@ -1,0 +1,19 @@
+//===== rAthena Script =======================================
+//= jor_ab Monsters Spawn Script
+//===== Current Version: =====================================
+//= 1.0
+//===== Additional Comments: =================================
+//= 1.0 First version. [Atemo]
+//============================================================
+
+jor_ab01	monster	--ja--	21538,65
+jor_ab01	monster	--ja--	21540,65
+jor_ab01	monster	--ja--	21541,35
+jor_ab01	monster	--ja--	21543,35
+jor_ab01	monster	--ja--	21600,10
+
+jor_ab02	monster	--ja--	21539,55
+jor_ab02	monster	--ja--	21542,55
+jor_ab02	monster	--ja--	21544,40
+jor_ab02	monster	--ja--	21545,40
+jor_ab02	monster	--ja--	21601,10

@@ -39,11 +39,11 @@ function	script	F_CoolDown	{
 // Limited
 -	marketshop	para_coin10	FAKE_NPC,6304:500000:10,6080:100000:10,6081:300000:10,6380:1000000:1000,6004:100000:1
 
--	marketshop	para_hei10	FAKE_NPC,6608:150000:1,6607:20000:1,6755:200000:1,7642:10000:1,22687:200000:1,23016:1000000:1
+-	marketshop	para_hei10	FAKE_NPC,6608:150000:1,6607:20000:1,6755:200000:1,7642:10000:1,22687:200000:1
 
 -	marketshop	para_key10	FAKE_NPC,7026:100000:10,7027:100000:10 // todo
 
--	marketshop	para_wp00	FAKE_NPC,1181:10000000:1
+-	marketshop	para_wp00	FAKE_NPC,2039:100000000:1,2051:100000000:1,26109:100000000:1,21050:100000000:1,26007:100000000:1,23016:1000000:1,13469:100000000:1,16063:100000000:1,32005:100000000:1,28022:100000000:1,28023:100000000:1,18149:100000000:1,18174:100000000:1,13469:100000000:1,28244:100000000:1,28254:100000000:1,32301:100000000:1,13337:100000000:1,13338:100000000:1,1326:100000000:1,1846:100000000:1,16065:100000000:1,28612:100000000:1,28626:100000000:1,28725:100000000:1,28745:100000000:1,28762:100000000:1
 
 -	marketshop	para_arm10	FAKE_NPC,5007:2000000:1
 
@@ -59,27 +59,27 @@ function	script	F_CoolDown	{
 
 -	marketshop	para_mora10	FAKE_NPC,11526:5000:100,11525:5000:1000,11520:50000:100,12574:20000:100
 
--	marketshop	para_ref10	FAKE_NPC,998:10000:500,1003:10000:500,1002:10000:500,999:10000:500
+-	marketshop	para_ref10	FAKE_NPC,998:2000:500,1003:2000:500,1002:3000:500,999:3000:500,25728:200000:5,25730:800000:2
 
--	marketshop	para_ref20	FAKE_NPC,984:200000:10,985:200000:100,987:240000:1,988:600000:1,989:1200000:1
+-	marketshop	para_ref20	FAKE_NPC,984:80000:10,985:200000:100,987:240000:1,988:350000:1,989:700000:1,6635:50000000:1,990:10000:5000,991:10000:5000,992:10000:5000,993:10000:5000
 
--	marketshop	para_jew10	FAKE_NPC,969:1000000:20,7289:500000:20,7290:500000:20,7291:500000:20,7292:500000:20,7293:500000:20,7294:500000:20,7295:500000:20,7296:500000:20,7297:500000:20
+-	marketshop	para_jew10	FAKE_NPC,969:250000:20,7289:50000:20,7290:50000:20,7291:50000:20,7292:50000:20,7293:50000:20,7294:50000:20,7295:50000:20,7296:50000:20,7297:50000:20
 
--	marketshop	para_alc10	FAKE_NPC,971:20000:20,972:12000:20,970:12000:20:7136:7000:20,7135:18000:20
+-	marketshop	para_alc10	FAKE_NPC,971:20000:20,972:20000:20,970:30000:20:7136:20000:20,7135:20000:20
 
--	marketshop	para_alc20	FAKE_NPC,1061:3000:1000,905:1000:1000,1059:1000:1000,7033:1000:1000,929:4000:1000
+-	marketshop	para_alc20	FAKE_NPC,1061:5000:1000,905:1000:1000,1059:1000:1000,7033:1000:1000,929:4000:1000,1000:10000:1000,921:500:3000,507:200:5000,508:500:3000,509:1000:3000,510:3500:1000,511:200:1000,576:2000:1000,1033:1000:1000,1032:1000:1000,6244:1500:1000,1051:1000:1000,6217:15000:1000
 
 -	marketshop	para_alc30	FAKE_NPC,1000:10000:100,1001:10000:100,990:10000:100,991:10000:100,992:10000:100,993:10000:100
 
--	marketshop	para_fod10	FAKE_NPC,6252:40000:100,6253:8000:100,6254:30000:100,6256:15000:100,6257:15000:100,6259:15000:100,6260:10000:100,22658:80000:50,22659:100000:50
+-	marketshop	para_fod10	FAKE_NPC,7476:50000:100,7477:80000:100,7478:120000:100,7479:160000:100,100075:50000:100,100076:80000:100,100077:120000:100,100078:160000:50
 
--	marketshop	para_mag10	FAKE_NPC,12108:20000:99999,717:1500:99999,715:4500:99999,716:4500:99999,14512:100000:100,14513:100000:100,14514:100000:100,12737:500:99999,12734:1500:99999,12738:2000:100,12735:3000:50,12736:10000:10,6360:200:99999,6363:200:99999,6361:200:99999,6362:200:99999
+-	marketshop	para_mag10	FAKE_NPC,715:4500:99999,716:4500:99999,14512:100000:100,14513:100000:100,14514:100000:100,23194:300000:50,23193:300000:50,23191:300000:50,23192:300000:50
 
--	marketshop	para_mag11	FAKE_NPC,717:1500:99999,12737:500:99999,12734:1500:99999,6360:200:99999,6363:200:99999,6361:200:99999,6362:200:99999
+-	marketshop	para_mag11	FAKE_NPC,715:4500:99999,716:4500:99999,14512:100000:100,14513:100000:100,14514:100000:100,23194:300000:50,23193:300000:50,23191:300000:50,23192:300000:50
 
--	marketshop	para_mag20	FAKE_NPC,12119:8000:100,12121:8000:100,12120:5000:100,12118:15000:100
-
--	marketshop	para_plt01	FAKE_NPC,709:10000:50,7932:4000:99999,7933:4000:99999,7934:4000:99999,7935:4000:99999,7936:4000:99999,7937:4000:99999
+-	marketshop	para_mag20	FAKE_NPC,12118:50000:100,12119:30000:100,12121:30000:100,12120:30000:100,12114:80000:100,12115:80000:100,12116:80000:100,12117:80000:100
+-	marketshop	para_plt01	FAKE_NPC,6236:300000:10,7211:300000:10,7566:300000:10,6649:300000:10,968:300000:10,25508:300000:10,7510:300000:10,7754:300000:10,7020:300000:10,7450:300000:10,7109:300000:10,751:300000:10,7036:300000:10,7513:300000:10,750:300000:10,7019:300000:10,1030:300000:10,25622:300000:10,7300:300000:10,7018:300000:10,7169:300000:10,7562:300000:10,6091:300000:10,7114:300000:10,7113:300000:10,7451:300000:10,25629:300000:10,7108:300000:10,23817:100000:10
+-	marketshop	para_ist01	FAKE_NPC,25786:900000:2,25787:20000:20,6608:300000:10,6607:20000:20,6755:2000000:2
 
 // Update Market Shop
 -	script	Update_Shop	-1,{
@@ -246,8 +246,7 @@ OnClock0000:
 
 -	shop	para_fod01	FAKE_NPC,7482:-1,577:-1,580:-1,7457:-1,581:-1,7453:-1,7455:-1,7454:-1,7456:-1,7452:-1,579:-1
 
--	shop	para_unm01	FAKE_NPC,537:-1,643:-1,10013:-1,10014:-1,6113:-1,6114:-1,6115:-1,6110:-1,6100:-1,6098:-1,6112:-1,6104:-1,6108:-1,6111:-1,6095:-1,7824:-1,6097:-1,6107:-1,6105:-1,6099:-1,25231:1000,25232:1000,25233:1000
-
+-	shop	para_unm01	FAKE_NPC,25231:1000,25232:1000,25233:1000,25377:10000,11616:1400,537:-1,643:-1,10013:-1,10014:-1,6113:-1,6114:-1,6115:-1,6110:-1,6100:-1,6098:-1,6112:-1,6104:-1,6108:-1,6111:-1,6095:-1,7824:-1,6097:-1,6107:-1,6105:-1,6099:-1,6016:-1
 
 // setting map-variable
 -	script	MV_Eden Market Group	FAKE_NPC,{
@@ -596,7 +595,7 @@ paramk,72,33,0	script	[Strong Friends]#wp00	HIDDEN_NPC,{
 }
 
 // Miffy
-paramk,65,30,3	script	Miffy#wp01	4_F_LGTGIRL,{
+paramk,65,31,3	script	Miffy#wp01	4_F_LGTGIRL,{
 	if ($event_paramk > 1) {
 		mes "[Miffy]";
 		mes "A limited collection, only available on fiery Friday, Saturday and Sunday!";
@@ -1394,6 +1393,163 @@ paramk,53,104,3	script	Dus the Smith#ref02	2_M_OLDBLSMITH,{
 	}
 }
 
+// =========================================================
+// Eden Para Market - Red Hugo (Armor & Weapon Extraction)
+// =========================================================
+
+paramk,59,100,2	script	Red Hugo#pmrf03	4_M_SIGNMCNT,{
+    mes "[Red Hugo]";
+    mes "Are you interested in extracting the latent energy";
+    mes "of your highly refined equipment?";
+    mes "I accept specific masterwork armors, as well as high-grade weapons.";
+    next;
+
+    // Array containing all specific item IDs from your provided armor list image
+    setarray .@valid_armor, 
+        15072, // Anti-Magic Suit
+        15073, // Heroic Target Suit
+        15074, // Geffen Magic Robe
+        15111, // Barkitsumia Scale Armor
+        15112, // YSF01 Plate
+        15090, // Gray Armor
+        15123, // Nab's Ancient Armor / Nab's Cloth
+        15087, // Heroic Hidden Clothes
+        15088, // Heroic Plate
+        15093, // Ancient Decoration of Elf
+        15094, // Sorcerer's Part VIII
+        15095, // Heroic Judgement Shawl
+        20720, // Gray Manteau
+        20743, // Supplement Part Agi
+        20744, // Upgrade Part - Engine
+        20745, // Upgrade Part - Booster
+        20790, // Upgrade Part - Wing
+        20721, // Gray Boots
+        22033, // Grey Boots (Variant)
+        22056, // Heroic Shoes
+        22075, // Riffel Shoes
+        22141, // YSF01 Greaves
+        22019, // Heroic Manteau
+        22037; // Heroic Unbound Upgrade Boots
+
+    switch(select("Extract Armor Certificate:Extract Weapon Certificate:Cancel")) {
+        case 1: // ==================== ARMOR EXTRACTION ====================
+            mes "[Red Hugo]";
+            mes "Please equip the valid Armor piece you want to convert.";
+            mes "It must be refined to ^FF0000+7 or higher^000000.";
+            next;
+
+            setarray .@slots, EQI_ARMOR, EQI_GARMENT, EQI_SHOES;
+            setarray .@slot_names$, "Body Armor", "Garment/Manteau", "Footwear/Boots";
+            .@s = select(implode(.@slot_names$, ":")) - 1;
+            .@target_slot = .@slots[.@s];
+
+            .@item_id = getequipid(.@target_slot);
+            .@refine  = getequiprefinerycnt(.@target_slot);
+
+            if (.@item_id <= 0 || .@refine < 7) {
+                mes "[Red Hugo]";
+                mes "You aren't wearing any valid gear (or it's below +7) in that slot!";
+                close;
+            }
+
+            .@is_valid = 0;
+            for (.@i = 0; .@i < getarraysize(.@valid_armor); .@i++) {
+                if (.@item_id == .@valid_armor[.@i]) { .@is_valid = 1; break; }
+            }
+
+            if (!.@is_valid) {
+                mes "[Red Hugo]";
+                mes "I am sorry, but this item is not on my armor collection register.";
+                close;
+            }
+            
+            .@is_weapon = 0;
+            break;
+
+        case 2: // ==================== WEAPON EXTRACTION ====================
+            mes "[Red Hugo]";
+            mes "Please equip the weapon into your Right Hand.";
+            mes "It must be refined to ^FF0000+7 or higher^000000.";
+            next;
+
+            .@target_slot = EQI_HAND_R;
+            .@item_id = getequipid(.@target_slot);
+            .@refine  = getequiprefinerycnt(.@target_slot);
+
+            if (.@item_id <= 0 || .@refine < 7) {
+                mes "[Red Hugo]";
+                mes "You are not holding a valid weapon (or it's below +7) in your Right Hand!";
+                close;
+            }
+
+            // Fetch structural data properties directly from database entries
+            .@w_lvl = getiteminfo(.@item_id, ITEMINFO_WLV);
+            .@name$ = lower(getitemname(.@item_id));
+
+            // Validate Weapon Rules (Crimson Level 3, Thanatos Lvl 4, Illusion Lvl 4, Vicious Mind Lvl 4)
+            .@is_valid = 0;
+            if (.@w_lvl == 3 && strpos(.@name$, "crimson") != -1) .@is_valid = 1;
+            else if (.@w_lvl == 4 && strpos(.@name$, "thanatos") != -1) .@is_valid = 1;
+            else if (.@w_lvl == 4 && strpos(.@name$, "illusion") != -1) .@is_valid = 1;
+            else if (.@w_lvl == 4 && strpos(.@name$, "vicious") != -1) .@is_valid = 1;
+
+            if (!.@is_valid) {
+                mes "[Red Hugo]";
+                mes "That weapon is invalid! I only accept:";
+                mes "-> Upgraded Lvl 3 Crimson Weapons";
+                mes "-> Level 4 Thanatos Weapons";
+                mes "-> Illusion Lvl 4 Weapons";
+                mes "-> Level 4 Vicious Mind Weapons";
+                close;
+            }
+
+            .@is_weapon = 1;
+            break;
+
+        default:
+            close;
+    }
+
+    // ==================== COMMON DELETION & REWARD ENGINE ====================
+    mes "[Red Hugo]";
+    mes "Are you absolutely sure you want to sacrifice your +" + .@refine + " " + getitemname(.@item_id) + "?";
+    next;
+    if (select("Yes, Extract Ticket:No, Keep Gear") == 2) close;
+
+    // Secure Snapshot Attributes
+    .@c1 = getequipcardid(.@target_slot, 0);
+    .@c2 = getequipcardid(.@target_slot, 1);
+    .@c3 = getequipcardid(.@target_slot, 2);
+    .@c4 = getequipcardid(.@target_slot, 3);
+
+    if (getequipid(.@target_slot) != .@item_id || getequiprefinerycnt(.@target_slot) != .@refine) {
+        mes "[SECURITY ALERT]";
+        mes "Equipment state altered during communication loop.";
+        close;
+    }
+
+    // Process targeted delitem2 execution
+    unequip .@target_slot;
+    delitem2 .@item_id,1,1,.@refine,0,.@c1,.@c2,.@c3,.@c4;
+
+    // Assign Rewards based on type and refine level
+    if (.@is_weapon) {
+        // Weapon Tickets: 6231 (+8), 6230 (+9), 6995 (+10) - Adjust IDs to your database if custom
+        if (.@refine == 7)       getitem 6231, 1; 
+        else if (.@refine == 8)  getitem 6230, 1; 
+        else if (.@refine >= 9) getitem 6995, 1;
+    } else {
+        // Armor Tickets: 6233 (+8), 6232 (+9), 6994 (+10)
+        if (.@refine == 7)       getitem 6233, 1; 
+        else if (.@refine == 8)  getitem 6232, 1; 
+        else if (.@refine >= 9) getitem 6994, 1;
+    }
+
+    specialeffect2 EF_HIT3;
+    mes "[Red Hugo]";
+    mes "Extraction completed successfully! Your certificate has been placed in your inventory.";
+    close;
+}
 
 // Rain-of-Gems
 // sign
@@ -1949,6 +2105,34 @@ paramk,130,98,3	script	Mist the Hunter#unm03	4_M_JOB_HUNTER,{
 		mes "be used by Hunters";
 		mes "and Snipers, capish?";
 		mes "...Heh heh, jealous?";
+		close;
+	}
+}
+
+// Instance Seller
+paramk,119,102,3	script	Manager Parayo	679,{
+	if ($event_paramk > 3) {
+    		mes "[Manager Parayo]";
+		mes "Welcome, adventurer! The market stalls are open.";
+		mes "I source specialized instance loot from across the kingdom.";
+		mes "Our public inventory pools refresh over time.";
+		next;
+		if (select("Buy items.:Cancel.") == 1) {
+    			mes "[Manager Parayo]";
+			mes "I gather and sell the items for the instances all by myself...";
+			mes "Even though I scavenge for them all week, there's not a lot available.";
+			mes "They may be sold out already.";
+			close2;
+			callshop "para_ist01";
+			end;
+		}
+		mes "[Manager Parayo]";
+		mes "I am sorry, but that batch has completely sold out.";
+		mes "Check back later when my suppliers return.";
+		close;
+	} else { // holiday
+        	mes "[Manager Parayo]";
+        	mes "The trading ports are currently sealed.";
 		close;
 	}
 }

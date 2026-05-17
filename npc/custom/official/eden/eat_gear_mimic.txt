@@ -1,0 +1,140 @@
+moc_para01,53,37,4	script	Eat Gear Mimic	938,{
+    mes "[Eat Gear Mimic]";
+    
+    // 1. Check if player has joined the Eden Group
+    if (!Eden_Member) {
+        mes "Grrr... You smell like an outsider!";
+        mes "I only deal with registered members of the ^0000FFEden Group^000000!";
+        close;
+    }
+
+    mes "Give me your refined gear, crunch, crunch...";
+    mes "I eat Level 3 or 4 weapons, armors, shields, garments, and shoes!";
+    next;
+    
+    if (select("Feed a gear:Cancel") == 2) {
+        mes "[Eat Gear Mimic]";
+        mes "Picky human... come back when you have tasty gear.";
+        close;
+    }
+
+    // Define the blacklist from your image
+    setarray .@blacklist,
+        2301, 2302, 2303, 2304, 2305, 2307, 2308, 2309, 2310, 2311,
+        2312, 2314, 2316, 2318, 2319, 2220, 2221, 2224, 2226, 2252,
+        2101, 2103, 2105, 2187, 2189, 2201, 2203, 2205, 2212, 2218,
+        2506, 5054, 5087, 5107;
+
+    // Clear tracking arrays
+    cleararray .@items, 0, 128;
+    cleararray .@refines, 0, 128;
+    cleararray .@indices, 0, 128;
+    cleararray .@types, 0, 128;
+    .@menu$ = "";
+    .@count = 0;
+
+    // Populates @inventorylist_ variables natively
+    getinventorylist;
+
+    // Loop through player inventory
+    for (.@i = 0; .@i < @inventorylist_count; .@i++) {
+        .@item_id = @inventorylist_id[.@i];
+        .@refine  = @inventorylist_refine[.@i];
+        .@type    = getiteminfo(.@item_id, ITEMINFO_TYPE);
+
+        // 1. Blacklist Check
+        .@is_blacklisted = 0;
+        for (.@b = 0; .@b < getarraysize(.@blacklist); .@b++) {
+            if (.@item_id == .@blacklist[.@b]) {
+                .@is_blacklisted = 1;
+                break;
+            }
+        }
+        if (.@is_blacklisted) continue; // Skip if blacklisted
+
+        // 2. Accept Weapons (5) and Armor types (4 - includes Armor, Shield, Garment, Shoes)
+        if (.@type != IT_ARMOR && .@type != IT_WEAPON) continue;
+        
+        // REVISE: If it's a weapon, verify that its weapon level is exactly 3 or 4
+        if (.@type == IT_WEAPON) {
+            .@wlv = getiteminfo(.@item_id, ITEMINFO_WLV);
+            if (.@wlv != 3 && .@wlv != 4) continue;
+        }
+
+        // 3. Exclude Upper/Middle/Lower Headgears
+        .@loc = getiteminfo(.@item_id, ITEMINFO_LOC);
+        if (.@type == IT_ARMOR && (.@loc & EQP_HEAD_TOP || .@loc & EQP_HEAD_MID || .@loc & EQP_HEAD_LOW)) continue;
+
+        // 4. Safety: Do not eat items that are actively equipped by the player
+        if (@inventorylist_equip[.@i]) continue;
+
+        // 5. Custom Rule: Only accept gear with refines (+7 or higher)
+        if (.@refine < 7) continue; 
+
+        // Store selected variables safely 
+        .@items[.@count]   = .@item_id;
+        .@refines[.@count] = .@refine;
+        .@indices[.@count] = .@i;     // Save raw inventory slot mapping
+        .@types[.@count]   = .@type;  // Save item type for reward processing
+        
+        // Build the visible choice window string
+        .@menu$ = .@menu$ + getitemname(.@item_id) + " (+" + .@refine + "):";
+        .@count++;
+    }
+
+    if (.@count == 0) {
+        mes "[Eat Gear Mimic]";
+        mes "You don't have any suitable, unequipped gear in your bag!";
+        close;
+    }
+
+    // Process user selection index
+    .@choice = select(.@menu$) - 1;
+    .@selected_item   = .@items[.@choice];
+    .@selected_refine = .@refines[.@choice];
+    .@selected_index  = .@indices[.@choice];
+    .@selected_type    = .@types[.@choice];
+
+    mes "[Eat Gear Mimic]";
+    mes "Are you sure you want me to eat your ^FF0000+" + .@selected_refine + " " + getitemname(.@selected_item) + "^000000?";
+    next;
+
+    if (select("Yes, feed it!:No, save it!") == 2) {
+        mes "[Eat Gear Mimic]";
+        mes "Smart choice... almost lost a good tool.";
+        close;
+    }
+
+    // Re-verify that the item slot index matches our stored target item ID
+    getinventorylist; 
+    if (@inventorylist_id[.@selected_index] == .@selected_item && @inventorylist_refine[.@selected_index] == .@selected_refine) {
+        
+        // Direct, precise index deletion block
+        delinventorylistval(.@selected_index, 1);
+        
+        mes "[Eat Gear Mimic]";
+        mes "*CRUNCH* *MUNCH* ... Delicious!";
+        
+        // Reward Logic engine
+        if (.@selected_type == IT_WEAPON) {
+            // Weapon Rewards 
+            if (.@selected_refine == 7)  getitem 6230, 1; // +7 Weapon 
+            if (.@selected_refine == 8)  getitem 6230, 2; // +8 Weapon 
+            if (.@selected_refine >= 9)  getitem 6230, 5; // +9 Weapon 
+        } else {
+            // Armor / Shield / Garment / Shoe Rewards
+            if (.@selected_refine == 7)  getitem 6234, 1; // +7 Armor 
+            if (.@selected_refine == 8)  getitem 6234, 2; // +8 Armor 
+            if (.@selected_refine >= 9)  getitem 6234, 5; // +9 Armor 
+        }
+        
+        announce strcharinfo(0) + " has fed a +" + .@selected_refine + " " + getitemname(.@selected_item) + " to the Gear Mimic!", bc_blue|bc_self;
+    } else {
+        mes "[Eat Gear Mimic]";
+        mes "Hey! Stop moving things around in your bag! The item changed positions!";
+    }
+    close;
+}
+
++7 weapon = 6230
++7 ar = 6234
