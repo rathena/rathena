@@ -11,18 +11,18 @@ moc_para01,53,37,4	script	Eat Gear Mimic	464,{
     mes "Give me your refined gear, crunch, crunch...";
     mes "I eat Level 3 or 4 weapons, armors, shields, garments, and shoes!";
     next;
-    
+
     if (select("Feed a gear:Cancel") == 2) {
         mes "[Eat Gear Mimic]";
         mes "Picky human... come back when you have tasty gear.";
         close;
     }
 
-    // Define the blacklist from your image
-    setarray .@blacklist,
-        2301, 2302, 2303, 2304, 2305, 2307, 2308, 2309, 2310, 2311,
-        2312, 2314, 2316, 2318, 2319, 2220, 2221, 2224, 2226, 2252,
-        2101, 2103, 2105, 2187, 2189, 2201, 2203, 2205, 2212, 2218,
+    // Define the blacklist
+    setarray .blacklist, 
+        2301, 2302, 2303, 2304, 2305, 2307, 2308, 2309, 2310, 2311, 
+        2312, 2314, 2316, 2318, 2319, 2320, 2321, 2324, 2326, 2252, 
+        2101, 2103, 2105, 2187, 2189, 2201, 2203, 2205, 2212, 2218, 
         2506, 5054, 5087, 5107;
 
     // Clear tracking arrays
@@ -30,7 +30,7 @@ moc_para01,53,37,4	script	Eat Gear Mimic	464,{
     cleararray .@refines, 0, 128;
     cleararray .@indices, 0, 128;
     cleararray .@types, 0, 128;
-    .@menu$ = "";
+    .@menus$ = "";
     .@count = 0;
 
     // Populates @inventorylist_ variables natively
@@ -44,18 +44,18 @@ moc_para01,53,37,4	script	Eat Gear Mimic	464,{
 
         // 1. Blacklist Check
         .@is_blacklisted = 0;
-        for (.@b = 0; .@b < getarraysize(.@blacklist); .@b++) {
-            if (.@item_id == .@blacklist[.@b]) {
+        for (.@b = 0; .@b < getarraysize(.blacklist); .@b++) {
+            if (.@item_id == .blacklist[.@b]) {
                 .@is_blacklisted = 1;
                 break;
             }
         }
         if (.@is_blacklisted) continue; // Skip if blacklisted
 
-        // 2. Accept Weapons (5) and Armor types (4 - includes Armor, Shield, Garment, Shoes)
+        // 2. Accept Weapons (5) and Armor Types (4 includes Armor, Shield, Garment, Shoes)
         if (.@type != IT_ARMOR && .@type != IT_WEAPON) continue;
-        
-        // REVISE: If it's a weapon, verify that its weapon level is exactly 3 or 4
+
+        // Verify weapon level is exactly 3 or 4
         if (.@type == IT_WEAPON) {
             .@wlv = getiteminfo(.@item_id, ITEMINFO_WLV);
             if (.@wlv != 3 && .@wlv != 4) continue;
@@ -69,65 +69,72 @@ moc_para01,53,37,4	script	Eat Gear Mimic	464,{
         if (@inventorylist_equip[.@i]) continue;
 
         // 5. Custom Rule: Only accept gear with refines (+7 or higher)
-        if (.@refine < 7) continue; 
+        if (.@refine < 7) continue;
 
-        // Store selected variables safely 
+        // Store selected variables safely
         .@items[.@count]   = .@item_id;
         .@refines[.@count] = .@refine;
-        .@indices[.@count] = .@i;     // Save raw inventory slot mapping
-        .@types[.@count]   = .@type;  // Save item type for reward processing
-        
+        .@indices[.@count] = .@i;        // Save raw inventory slot mapping
+        .@types[.@count]   = .@type;      // Save item type for reward processing
+
         // Build the visible choice window string
-        .@menu$ = .@menu$ + getitemname(.@item_id) + " (+" + .@refine + "):";
+        .@menus$ = .@menus$ + getitemname(.@item_id) + " (+" + .@refine + "):";
         .@count++;
     }
 
+    // FIX: Safely exit if no eligible items are found to prevent freeze state
     if (.@count == 0) {
         mes "[Eat Gear Mimic]";
         mes "You don't have any suitable, unequipped gear in your bag!";
         close;
     }
 
+    // FIX: Remove trailing colon from the string to prevent infinite loop crash
+    if (charat(.@menus$, strlen(.@menus$) - 1) == ":") {
+        .@menus$ = substr(.@menus$, 0, strlen(.@menus$) - 2);
+    }
+
     // Process user selection index
-    .@choice = select(.@menu$) - 1;
-    .@selected_item   = .@items[.@choice];
-    .@selected_refine = .@refines[.@choice];
-    .@selected_index  = .@indices[.@choice];
-    .@selected_type    = .@types[.@choice];
+    // NOTE: .@choice is 1-indexed, arrays are 0-indexed. We subtract 1 below (.@choice - 1)
+    .@choice = select(.@menus$);
+    .@selected_item   = .@items[.@choice - 1];
+    .@selected_refine = .@refines[.@choice - 1];
+    .@selected_index  = .@indices[.@choice - 1];
+    .@selected_type    = .@types[.@choice - 1];
 
     mes "[Eat Gear Mimic]";
-    mes "Are you sure you want me to eat your ^FF0000+" + .@selected_refine + " " + getitemname(.@selected_item) + "^000000?";
+    mes "Are you sure you want me to eat your ^FF0000(+" + .@selected_refine + " " + getitemname(.@selected_item) + ")^000000?";
     next;
 
-    if (select("Yes, feed it!:No, save it!") == 2) {
+    if (select("Yes, feed him:No, save it") == 2) {
         mes "[Eat Gear Mimic]";
         mes "Smart choice... almost lost a good tool.";
         close;
     }
 
     // Re-verify that the item slot index matches our stored target item ID
-    getinventorylist; 
+    getinventorylist;
     if (@inventorylist_id[.@selected_index] == .@selected_item && @inventorylist_refine[.@selected_index] == .@selected_refine) {
         
-        // Direct, precise index deletion block
+        // FIX: Replaced non-existent command with native rAthena inventory slot index deletion
         delitemidx(@inventorylist_idx[.@selected_index], 1);
-        
+
         mes "[Eat Gear Mimic]";
         mes "*CRUNCH* *MUNCH* ... Delicious!";
-        
+
         // Reward Logic engine
         if (.@selected_type == IT_WEAPON) {
-            // Weapon Rewards 
-            if (.@selected_refine == 7)  getitem 6230, 1; // +7 Weapon 
-            if (.@selected_refine == 8)  getitem 6230, 2; // +8 Weapon 
-            if (.@selected_refine >= 9)  getitem 6230, 5; // +9 Weapon 
+            // Weapon Rewards
+            if (.@selected_refine == 7)       getitem 6230, 1; // +7 Weapon Reward
+            else if (.@selected_refine == 8)  getitem 6230, 2; // +8 Weapon Reward
+            else if (.@selected_refine >= 9)  getitem 6230, 5; // +9 Weapon Reward
         } else {
             // Armor / Shield / Garment / Shoe Rewards
-            if (.@selected_refine == 7)  getitem 6234, 1; // +7 Armor 
-            if (.@selected_refine == 8)  getitem 6234, 2; // +8 Armor 
-            if (.@selected_refine >= 9)  getitem 6234, 5; // +9 Armor 
+            if (.@selected_refine == 7)       getitem 6234, 1; // +7 Armor Reward
+            else if (.@selected_refine == 8)  getitem 6234, 2; // +8 Armor Reward
+            else if (.@selected_refine >= 9)  getitem 6234, 5; // +9 Armor Reward
         }
-        
+
         announce strcharinfo(0) + " has fed a +" + .@selected_refine + " " + getitemname(.@selected_item) + " to the Gear Mimic!", bc_blue|bc_self;
     } else {
         mes "[Eat Gear Mimic]";
