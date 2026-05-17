@@ -1,8 +1,8 @@
-moc_para01,53,37,4	script	Eat Gear Mimic	938,{
+moc_para01,53,37,4	script	Eat Gear Mimic	464,{
     mes "[Eat Gear Mimic]";
     
     // 1. Check if player has joined the Eden Group
-    if (!Eden_Member) {
+    if (!callfunc("F_HasEdenGroupMark")) {
         mes "Grrr... You smell like an outsider!";
         mes "I only deal with registered members of the ^0000FFEden Group^000000!";
         close;
