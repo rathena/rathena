@@ -1,6 +1,22 @@
+//===== NexoMMORPG Script ==================================================================================
+//= King Poring Card Recycler. 
+//===== By: ================================================================================================
+//=  JinYuichi
+//===== Last Updated: ======================================================================================
+//= 02/07/2024
+//===== Description: =======================================================================================
+//= Added shop function 
+//= Added card recycling function
+//= Added maximum cards required for recycling function.
+//= Added zeny payment function 2,500,000 z 
+//= Added forbidden cards function that cannot be recycled
+//= Added card range function - Normal - Mini Boss - MvP
+//= Added card rate function - Normal 99% - Mini Boss 3% - MvP 1%
+//==========================================================================================================
 // 1. Define the dummy shop container used to catch the card sales
 // Using an item like Jellopy (909) with a price of -1 means it's a custom script shop
-shop card_merge_shop -1,909:100
+-	shop	card_merge_shop	-1,909:100
+
 
 // 2. Main King Poring NPC
 prontera,174,176,5	script	King Poring	10056,{
