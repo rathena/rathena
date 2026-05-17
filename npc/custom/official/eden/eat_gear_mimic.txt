@@ -133,7 +133,6 @@ moc_para01,53,37,4	script	Eat Gear Mimic	464,{
             else if (.@selected_refine >= 9)  getitem 6234, 5;
         }
 
-        announce strcharinfo(0) + " has fed a +" + .@selected_refine + " " + getitemname(.@selected_item) + " to the Gear Mimic!", bc_blue|bc_blue;
     } else {
         mes "[Eat Gear Mimic]";
         mes "Hey! Stop moving things around in your bag! The item changed positions!";
