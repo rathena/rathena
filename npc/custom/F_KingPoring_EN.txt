@@ -1,78 +1,130 @@
-//===== NexoMMORPG Script ==================================================================================
-//= King Poring Card Recycler. 
-//===== By: ================================================================================================
-//=  JinYuichi
-//===== Last Updated: ======================================================================================
-//= 02/07/2024
-//===== Description: =======================================================================================
-//= Added shop function 
-//= Added card recycling function
-//= Added maximum cards required for recycling function.
-//= Added zeny payment function 2,500,000 z 
-//= Added forbidden cards function that cannot be recycled
-//= Added card range function - Normal - Mini Boss - MvP
-//= Added card rate function - Normal 99% - Mini Boss 3% - MvP 1%
-//==========================================================================================================
+// 1. Define the dummy shop container used to catch the card sales
+// Using an item like Jellopy (909) with a price of -1 means it's a custom script shop
+shop card_merge_shop -1,909:100
 
--	shop	card_merge_shop	-1,909:100
-
+// 2. Main King Poring NPC
 prontera,174,176,5	script	King Poring	10056,{
-	
-	if (Zeny < .zeny_cost) {
-	    mes "[King Poring]";
-	    mes "To recycle cards you need ^FF0000" + .zeny_cost + " Zeny^000000.";
-	    close;
-	}
-	if (npcshopattach("card_merge_shop")) {
-	    deletearray @sold_nameid;
-	    callshop "card_merge_shop", 2;
-	    end;
-	}
 
-	OnSellItem:
-	    .@sold_size = getarraysize(@sold_nameid);
-	    if (.@sold_size == .card_count) {
-	        for (.@i = 0; .@i < .@sold_size; .@i++) {
-	            if (compare(.forbidden_card$, "|" + @sold_nameid[.@i] + "|")) {
-	                mes "[King Poring]";
-	                mes " ~ " + getitemname(@sold_nameid[.@i]) + "^000000 cannot be recycled.";
-	                close;
-	            }
-	            .@item_type[.@i] = getiteminfo(@sold_nameid[.@i], 2);
-	            .@not_valid = (.@item_type[.@i] != IT_CARD || @sold_nameid[.@i] < 4001 || @sold_nameid[.@i] > 4050);
-	            if (.@not_valid) .@failed++;
-	        }
-	        if (!.@failed) {
-	            if (select("Yes, I don't need them", "Not now") == 1) {
-	                Zeny -= .zeny_cost;
-	                for (.@i = 0; .@i < .@sold_size; .@i++)
-	                    delitem @sold_nameid[.@i], 1;
+    // Check if player has enough Zeny before even opening the shop interface
+    if (Zeny < .zeny_cost) {
+        mes "[King Poring]";
+        mes "To recycle cards you need ^FF0000" + .zeny_cost + "^000000 Zeny.";
+        close;
+    }
 
-	                // Determine which type of card is obtained based on probability rates
-	                .@rand = rand(1, 10000);
-	                if (.@rand <= .rate_normal_card) {
-	                    // Give a normal card from the new range (example: 4001-4020)
-	                    getitem rand(4001, 4020), 1;
-	                } else if (.@rand <= .rate_normal_card + .rate_mini_boss_card) {
-	                    // Give a mini boss card from the new range (example: 4021-4035)
-	                    getitem rand(4021, 4035), 1;
-	                } else {
-	                    // Give an MVP card from the new range (example: 4036-4050)
-	                    getitem rand(4036, 4050), 1;
-	                }
-	            }
-	        }
-	    } else {
-	        mes "[King Poring]";
-	        mes "You need to place ^FF0000" + .card_count + " different cards^000000.";
-	    }
+    // Attach the player to the custom shop and open the sell window directly
+    if (npcshopattach("card_merge_shop")) {
+        cleararray @sold_nameid, 0, 128;
+        cleararray @sold_quantity, 0, 128;
+        callshop "card_merge_shop", 2; // Mode 2 forces the "Sell" window to open instantly
+        end;
+    }
+    
+    mes "[King Poring]";
+    mes "Failed to initialize the recycling matrix. Please contact an Administrator.";
+    close;
+
+// This special event triggers automatically the moment the player clicks "Sell" in the shop interface
+OnSellItem:
+    .@sold_size = getarraysize(@sold_nameid);
+    .@failed = 0;
+
+    // Check if the player put EXACTLY the required amount of cards
+    if (.@sold_size != .card_count) {
+        mes "[King Poring]";
+        mes "You must place exactly ^FF0000" + .card_count + "^000000 different cards to proceed.";
+        close;
+    }
+
+    // Loop through the items the player dragged into the window to validate them
+    for (.@i = 0; .@i < .@sold_size; .@i++) {
+        .@item_id = @sold_nameid[.@i];
+        .@type = getiteminfo(.@item_id, ITEMINFO_TYPE);
+
+        // A. Check if the item is blacklisted/forbidden
+        if (compare(.forbidden_cards$, "|" + .@item_id + "|")) {
+            mes "[King Poring]";
+            mes "^0000FF" + getitemname(.@item_id) + "^000000 cannot be recycled.";
+            close;
+        }
+
+        // B. Ensure the item is actually classified as a Card in your database
+        if (.@type != IT_CARD) {
+            .@failed++;
+        }
+    }
+
+    if (.@failed > 0) {
+        mes "[King Poring]";
+        mes "One or more items you offered are not valid cards!";
+        close;
+    }
+
+    // Confirmation screen
+    mes "[King Poring]";
+    mes "Are you sure you want to sacrifice these 4 cards and pay ^FF0000" + .zeny_cost + "^000000 Zeny for a new random card?";
+    next;
+
+    if (select("Yes, proceed!:Not right now") == 2) {
+        mes "[King Poring]";
+        mes "Come back when you are ready to recycle.";
+        close;
+    }
+
+    // Final security check for Zeny right before deduction
+    if (Zeny < .zeny_cost) {
+        mes "[King Poring]";
+        mes "You don't have enough Zeny anymore!";
+        close;
+    }
+
+    // Deduct currency
+    Zeny -= .zeny_cost;
+
+    // Delete the 4 cards from the player's inventory
+    for (.@i = 0; .@i < .@sold_size; .@i++) {
+        delitem @sold_nameid[.@i], 1;
+    }
+
+    // Determine the type of card obtained based on your custom probability rates
+    .@rand = rand(1, 10000);
+
+    if (.@rand <= .rate_normal_card) {
+        // Normal card rewards (Example Item ID range: 4001 to 4020)
+        .@reward = rand(4001, 4020);
+        getitem .@reward, 1;
+        mes "[King Poring]";
+        mes "The spirits are satisfied. You received: ^00FF00" + getitemname(.@reward) + "^000000!";
+    } 
+    else if (.@rand <= (.rate_normal_card + .rate_mini_boss_card)) {
+        // Mini-boss card rewards (Example Item ID range: 4021 to 4035)
+        .@reward = rand(4021, 4035);
+        getitem .@reward, 1;
+        mes "[King Poring]";
+        mes "Incredible! A rare energy surges! You received: ^0000FF" + getitemname(.@reward) + "^000000!";
+    } 
+    else {
+        // MVP card rewards (Example Item ID range: 4036 to 4050)
+        .@reward = rand(4036, 4050);
+        getitem .@reward, 1;
+        
+        mes "[King Poring]";
+        mes "THE GROUND SHAKES! An MVP essence appears! You received: ^FF0000" + getitemname(.@reward) + "^000000!";
+        // Server-wide global broadcast announcement for an MVP drop
+        announce "King Poring: " + strcharinfo(0) + " has successfully recycled 4 cards and obtained an MVP Card: " + getitemname(.@reward) + "!!", bc_all;
+    }
+    close;
 
 OnInit:
-    .card_count = 4; // Number of cards to exchange
-    .zeny_cost = 2500000; // Zeny needed for the process
-    .forbidden_card$ = ""; // Forbidden cards that cannot be recycled
-    .rate_normal_card = 9900; // Normal card rate (example: 9900 = 99%)
-    .rate_mini_boss_card = 200; // Mini boss rate (example: 300 = 3%)
-    .rate_mvp_card = 1; // MVP rate (example: 100 = 1%)
+    .card_count = 4;           // Number of cards required to exchange
+    .zeny_cost = 2500000;      // Zeny required for the process (2.5m)
+    
+    // Add IDs separated by pipes to blacklist specific cards (e.g., "|4001|4002|")
+    .forbidden_cards$ = "||";  
+    
+    // Probability configurations out of 10,000 total points (100.00%)
+    .rate_normal_card = 9800;    // 98.00% Chance
+    .rate_mini_boss_card = 199;  // 1.99% Chance
+    .rate_mvp_card = 1;          // 0.01% Chance
     end;
 }
