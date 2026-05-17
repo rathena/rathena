@@ -33,29 +33,30 @@ moc_para01,53,37,4	script	Eat Gear Mimic	464,{
     .@menus$ = "";
     .@count = 0;
 
-    // Populates @inventorylist_ variables natively
+    // Populates native @inventorylist_ variables
     getinventorylist;
 
-    // FIX: Enable freeloop to allow rAthena to process large inventory iterations without crashing
+    // Bypass loop timeout engine limits safely
     freeloop(1);
 
     // Loop through player inventory
     for (.@i = 0; .@i < @inventorylist_count; .@i++) {
+        // CORRECTED: Reading strictly from the correct character temporary array variables (@)
         .@item_id = @inventorylist_id[.@i];
         .@refine  = @inventorylist_refine[.@i];
         .@type    = getiteminfo(.@item_id, ITEMINFO_TYPE);
 
         // 1. Blacklist Check
         .@is_blacklisted = 0;
-        for (.@b = 0; .@b < 34; .@b++) { // Hardcoded array length for faster lookup performance
+        for (.@b = 0; .@b < 34; .@b++) { 
             if (.@item_id == .blacklist[.@b]) {
                 .@is_blacklisted = 1;
                 break;
             }
         }
-        if (.@is_blacklisted) continue; // Skip if blacklisted
+        if (.@is_blacklisted) continue; 
 
-        // 2. Accept Weapons (5) and Armor Types (4 includes Armor, Shield, Garment, Shoes)
+        // 2. Accept Weapons (5) and Armor Types (4)
         if (.@type != IT_ARMOR && .@type != IT_WEAPON) continue;
 
         // Verify weapon level is exactly 3 or 4
@@ -74,13 +75,13 @@ moc_para01,53,37,4	script	Eat Gear Mimic	464,{
         // 5. Custom Rule: Only accept gear with refines (+7 or higher)
         if (.@refine < 7) continue;
 
-        // Store selected variables safely
+        // Store selected variables safely inside local arrays
         .@items[.@count]   = .@item_id;
         .@refines[.@count] = .@refine;
         .@indices[.@count] = .@i;        
         .@types[.@count]   = .@type;      
 
-        // Build simple menu string construction
+        // Simple string menu construction
         if (.@menus$ == "") {
             .@menus$ = getitemname(.@item_id) + " (+" + .@refine + ")";
         } else {
@@ -89,13 +90,13 @@ moc_para01,53,37,4	script	Eat Gear Mimic	464,{
         .@count++;
     }
 
-    // FIX: Disable freeloop immediately after loop execution to restore standard system safety guards
+    // Turn safety guards back on
     freeloop(0);
 
     // Safely exit if no eligible items are found
     if (.@count == 0) {
         mes "[Eat Gear Mimic]";
-        mes "You don't have any suitable, unequipped gear in your bag!";
+        mes "You don't have any suitable, unequipped gear (+7 or higher) in your bag!";
         close;
     }
 
