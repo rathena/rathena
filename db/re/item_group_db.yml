@@ -133388,7 +133388,6 @@ Body:
             Amount: 100
           - Index: 1
             Item: Cubic_Dia
-    # custom rates
   - Group: D_GW_EXTRACTOR
     SubGroups:
       - SubGroup: 1
