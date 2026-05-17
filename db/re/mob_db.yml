@@ -108742,7 +108742,7 @@ Body:
         Rate: 1000
       - Item: Cursed_Seal
         Rate: 50
-      - Item: aegis_300270
+      - Item: Empathizer_Card
         Rate: 1
         StealProtected: true
   - Id: 20774
@@ -108784,7 +108784,7 @@ Body:
         Rate: 50
       - Item: Golden_Jewel
         Rate: 1000
-      - Item: aegis_300271
+      - Item: Happy_Giver_Card
         Rate: 1
         StealProtected: true
   - Id: 20775
@@ -108828,7 +108828,7 @@ Body:
         Rate: 1000
       - Item: Piece_Of_Memory_Blue
         Rate: 10000
-      - Item: aegis_300274
+      - Item: Tha_Anger_Card
         Rate: 1
         StealProtected: true
   - Id: 20776
@@ -108872,7 +108872,7 @@ Body:
         Rate: 10000
       - Item: Brigan
         Rate: 1000
-      - Item: aegis_300275
+      - Item: Tha_Horror_Card
         Rate: 1
         StealProtected: true
   - Id: 20777
@@ -108916,7 +108916,7 @@ Body:
         Rate: 1000
       - Item: Piece_Of_Memory_Purple
         Rate: 10000
-      - Item: aegis_300277
+      - Item: Tha_Resent_Card
         Rate: 1
         StealProtected: true
   - Id: 20778
@@ -108960,7 +108960,7 @@ Body:
         Rate: 10000
       - Item: Brigan
         Rate: 1000
-      - Item: aegis_300276
+      - Item: Tha_Regret_Card
         Rate: 1
         StealProtected: true
   - Id: 20779
@@ -109003,7 +109003,7 @@ Body:
         Rate: 1
       - Item: Light_Granule
         Rate: 100
-      - Item: aegis_300278
+      - Item: Void_Mimic_Card
         Rate: 1
         StealProtected: true
   - Id: 20780
@@ -109087,7 +109087,7 @@ Body:
         Rate: 1500
       - Item: Old_Card_Album
         Rate: 1
-      - Item: aegis_300269
+      - Item: Eldest_Card
         Rate: 1
         StealProtected: true
   - Id: 20782
@@ -109127,7 +109127,7 @@ Body:
         Rate: 500
       - Item: Crystal_Mirror
         Rate: 1
-      - Item: aegis_300268
+      - Item: Crow_Duke_Card
         Rate: 1
         StealProtected: true
   - Id: 20783
@@ -109167,7 +109167,7 @@ Body:
         Rate: 3500
       - Item: Wind_Scroll_1_5
         Rate: 100
-      - Item: aegis_300267
+      - Item: Crow_Baron_Card
         Rate: 1
         StealProtected: true
   - Id: 20784
@@ -109301,7 +109301,7 @@ Body:
         Rate: 1
       - Item: Shine_Ring_Z
         Rate: 1
-      - Item: aegis_300270
+      - Item: Empathizer_Card
         Rate: 1
         StealProtected: true
   - Id: 20788
@@ -109337,7 +109337,7 @@ Body:
         Rate: 1
       - Item: Shine_Ring_S
         Rate: 1
-      - Item: aegis_300271
+      - Item: Happy_Giver_Card
         Rate: 1
         StealProtected: true
   - Id: 20789
@@ -109406,7 +109406,7 @@ Body:
         Rate: 1
       - Item: Shine_Ring_E
         Rate: 1
-      - Item: aegis_300272
+      - Item: Pray_Giver_Card
         Rate: 1
         StealProtected: true
   - Id: 20791
@@ -109442,7 +109442,7 @@ Body:
         Rate: 1
       - Item: Shine_Ring_A
         Rate: 1
-      - Item: aegis_300273
+      - Item: Smile_Giver_Card
         Rate: 1
         StealProtected: true
   - Id: 20792
@@ -109478,7 +109478,7 @@ Body:
         Rate: 1
       - Item: Sin_Ring_S
         Rate: 1
-      - Item: aegis_300274
+      - Item: Tha_Anger_Card
         Rate: 1
         StealProtected: true
   - Id: 20793
@@ -109514,7 +109514,7 @@ Body:
         Rate: 1
       - Item: Sin_Ring_A
         Rate: 1
-      - Item: aegis_300275
+      - Item: Tha_Horror_Card
         Rate: 1
         StealProtected: true
   - Id: 20794
@@ -109550,7 +109550,7 @@ Body:
         Rate: 1
       - Item: Sin_Ring_E
         Rate: 1
-      - Item: aegis_300277
+      - Item: Tha_Resent_Card
         Rate: 1
         StealProtected: true
   - Id: 20795
@@ -109586,7 +109586,7 @@ Body:
         Rate: 1
       - Item: Sin_Ring_O
         Rate: 1
-      - Item: aegis_300276
+      - Item: Tha_Regret_Card
         Rate: 1
         StealProtected: true
   - Id: 20796
@@ -110534,7 +110534,7 @@ Body:
         Rate: 1
       - Item: Cardinal_Jewel
         Rate: 1000
-      - Item: aegis_300272
+      - Item: Pray_Giver_Card
         Rate: 1
         StealProtected: true
   - Id: 20845
@@ -110576,7 +110576,7 @@ Body:
         Rate: 1
       - Item: Dark_Red_Jewel
         Rate: 1000
-      - Item: aegis_300273
+      - Item: Smile_Giver_Card
         Rate: 1
         StealProtected: true
   - Id: 20846

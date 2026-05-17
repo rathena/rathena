@@ -2917,3 +2917,33 @@ Body:
       - Index: 0
         Item: Play_RO_Gold_Coin_
         Rate: 1000
+  - Map: oz_dun01
+    GlobalDrops:
+      - Index: 0
+        Item: Ep18_Amethyst_Fragment
+        Rate: 5000
+  - Map: oz_dun02
+    GlobalDrops:
+      - Index: 0
+        Item: Ep18_Amethyst_Fragment
+        Rate: 5000
+  - Map: gw_fild01
+    GlobalDrops:
+      - Index: 0
+        Item: Ep18_Amethyst_Fragment
+        Rate: 5000
+  - Map: gw_fild02
+    GlobalDrops:
+      - Index: 0
+        Item: Ep18_Amethyst_Fragment
+        Rate: 5000
+  - Map: ra_fild10
+    GlobalDrops:
+      - Index: 0
+        Item: Ep18_Amethyst_Fragment
+        Rate: 5000
+  - Map: ra_fild11
+    GlobalDrops:
+      - Index: 0
+        Item: Ep18_Amethyst_Fragment
+        Rate: 5000
