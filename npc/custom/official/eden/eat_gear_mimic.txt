@@ -36,6 +36,9 @@ moc_para01,53,37,4	script	Eat Gear Mimic	464,{
     // Populates @inventorylist_ variables natively
     getinventorylist;
 
+    // FIX: Enable freeloop to allow rAthena to process large inventory iterations without crashing
+    freeloop(1);
+
     // Loop through player inventory
     for (.@i = 0; .@i < @inventorylist_count; .@i++) {
         .@item_id = @inventorylist_id[.@i];
@@ -44,7 +47,7 @@ moc_para01,53,37,4	script	Eat Gear Mimic	464,{
 
         // 1. Blacklist Check
         .@is_blacklisted = 0;
-        for (.@b = 0; .@b < getarraysize(.blacklist); .@b++) {
+        for (.@b = 0; .@b < 34; .@b++) { // Hardcoded array length for faster lookup performance
             if (.@item_id == .blacklist[.@b]) {
                 .@is_blacklisted = 1;
                 break;
@@ -74,10 +77,10 @@ moc_para01,53,37,4	script	Eat Gear Mimic	464,{
         // Store selected variables safely
         .@items[.@count]   = .@item_id;
         .@refines[.@count] = .@refine;
-        .@indices[.@count] = .@i;        // Save raw inventory slot mapping
-        .@types[.@count]   = .@type;      // Save item type for reward processing
+        .@indices[.@count] = .@i;        
+        .@types[.@count]   = .@type;      
 
-        // REVISED: Simple string construction without leaving trailing colons
+        // Build simple menu string construction
         if (.@menus$ == "") {
             .@menus$ = getitemname(.@item_id) + " (+" + .@refine + ")";
         } else {
@@ -85,6 +88,9 @@ moc_para01,53,37,4	script	Eat Gear Mimic	464,{
         }
         .@count++;
     }
+
+    // FIX: Disable freeloop immediately after loop execution to restore standard system safety guards
+    freeloop(0);
 
     // Safely exit if no eligible items are found
     if (.@count == 0) {
