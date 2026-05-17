@@ -53,61 +53,61 @@ Body:
         Item: Sin_Fragment
         RequiredItems:
           - Index: 0
-          - Item: Sin_Shard_A
+            Item: Sin_Shard_A
             Amount: 5
       - Index: 1
         Item: Sin_Fragment
         RequiredItems:
           - Index: 0
-          - Item: Sin_Shard_B
+            Item: Sin_Shard_B
             Amount: 5
       - Index: 2
         Item: Sin_Fragment
         RequiredItems:
           - Index: 0
-          - Item: Sin_Shard_C
+            Item: Sin_Shard_C
             Amount: 5
       - Index: 3
         Item: Sin_Fragment
         RequiredItems:
           - Index: 0
-          - Item: Sin_Shard_D
+            Item: Sin_Shard_D
             Amount: 5
       - Index: 4
         Item: Sin_Fragment
         RequiredItems:
           - Index: 0
-          - Item: Sin_Shard_E
+            Item: Sin_Shard_E
             Amount: 5
       - Index: 5
         Item: Fate_Fragment
         RequiredItems:
           - Index: 0
-          - Item: Fate_Shard_A
+            Item: Fate_Shard_A
             Amount: 5
       - Index: 6
         Item: Fate_Fragment
         RequiredItems:
           - Index: 0
-          - Item: Fate_Shard_B
+            Item: Fate_Shard_B
             Amount: 5
       - Index: 7
         Item: Fate_Fragment
         RequiredItems:
           - Index: 0
-          - Item: Fate_Shard_C
+            Item: Fate_Shard_C
             Amount: 5
       - Index: 8
         Item: Fate_Fragment
         RequiredItems:
           - Index: 0
-          - Item: Fate_Shard_D
+            Item: Fate_Shard_D
             Amount: 5
       - Index: 9
         Item: Fate_Fragment
         RequiredItems:
           - Index: 0
-          - Item: Fate_Shard_E
+            Item: Fate_Shard_E
             Amount: 5		
   - Name: mot_shop_1
     Items:
@@ -115,73 +115,73 @@ Body:
         Item: Sin_Ring_R
         RequiredItems:
           - Index: 0
-          - Item: Sin_Fragment
+            Item: Sin_Fragment
             Amount: 50
       - Index: 1
         Item: Sin_Ring_E
         RequiredItems:
           - Index: 0
-          - Item: Sin_Fragment
+            Item: Sin_Fragment
             Amount: 50
       - Index: 2
         Item: Sin_Ring_T
         RequiredItems:
           - Index: 0
-          - Item: Sin_Fragment
+            Item: Sin_Fragment
             Amount: 50
       - Index: 3
         Item: Sin_Ring_A
         RequiredItems:
           - Index: 0
-          - Item: Sin_Fragment
+            Item: Sin_Fragment
             Amount: 50
       - Index: 4
         Item: Sin_Ring_S
         RequiredItems:
           - Index: 0
-          - Item: Sin_Fragment
+            Item: Sin_Fragment
             Amount: 50
       - Index: 5
         Item: Sin_Ring_O
         RequiredItems:
           - Index: 0
-          - Item: Sin_Fragment
+            Item: Sin_Fragment
             Amount: 50
       - Index: 6
         Item: Sin_Necklace_R
         RequiredItems:
           - Index: 0
-          - Item: Sin_Fragment
+            Item: Sin_Fragment
             Amount: 50
       - Index: 7
         Item: Sin_Necklace_E
         RequiredItems:
           - Index: 0
-          - Item: Sin_Fragment
+            Item: Sin_Fragment
             Amount: 50
       - Index: 8
         Item: Sin_Necklace_T
         RequiredItems:
           - Index: 0
-          - Item: Sin_Fragment
+            Item: Sin_Fragment
             Amount: 50
       - Index: 9
         Item: Sin_Necklace_A
         RequiredItems:
           - Index: 0
-          - Item: Sin_Fragment
+            Item: Sin_Fragment
             Amount: 50
       - Index: 10
         Item: Sin_Necklace_S
         RequiredItems:
           - Index: 0
-          - Item: Sin_Fragment
+            Item: Sin_Fragment
             Amount: 50
       - Index: 11
         Item: Sin_Necklace_O
         RequiredItems:
           - Index: 0
-          - Item: Sin_Fragment
+            Item: Sin_Fragment
             Amount: 50		
   - Name: mot_shop_2
     Items:
@@ -189,71 +189,71 @@ Body:
         Item: Shine_Ring_R
         RequiredItems:
           - Index: 0
-          - Item: Fate_Fragment
+            Item: Fate_Fragment
             Amount: 50
       - Index: 1
         Item: Shine_Ring_A
         RequiredItems:
           - Index: 0
-          - Item: Fate_Fragment
+            Item: Fate_Fragment
             Amount: 50
       - Index: 2
         Item: Shine_Ring_E
         RequiredItems:
           - Index: 0
-          - Item: Fate_Fragment
+            Item: Fate_Fragment
             Amount: 50
       - Index: 3
         Item: Shine_Ring_Z
         RequiredItems:
           - Index: 0
-          - Item: Fate_Fragment
+            Item: Fate_Fragment
             Amount: 50
       - Index: 4
         Item: Shine_Ring_S
         RequiredItems:
           - Index: 0
-          - Item: Fate_Fragment
+            Item: Fate_Fragment
             Amount: 50
       - Index: 5
         Item: Shine_Ring_AQ
         RequiredItems:
           - Index: 0
-          - Item: Fate_Fragment
+            Item: Fate_Fragment
             Amount: 50
       - Index: 6
         Item: Shine_Necklace_R
         RequiredItems:
           - Index: 0
-          - Item: Fate_Fragment
+            Item: Fate_Fragment
             Amount: 50
       - Index: 7
         Item: Shine_Necklace_A
         RequiredItems:
           - Index: 0
-          - Item: Fate_Fragment
+            Item: Fate_Fragment
             Amount: 50
       - Index: 8
         Item: Shine_Necklace_E
         RequiredItems:
           - Index: 0
-          - Item: Fate_Fragment
+            Item: Fate_Fragment
             Amount: 50
       - Index: 9
         Item: Shine_Necklace_Z
         RequiredItems:
           - Index: 0
-          - Item: Fate_Fragment
+            Item: Fate_Fragment
             Amount: 50
       - Index: 10
         Item: Shine_Necklace_S
         RequiredItems:
           - Index: 0
-          - Item: Fate_Fragment
+            Item: Fate_Fragment
             Amount: 50
       - Index: 11
         Item: Shine_Necklace_AQ
         RequiredItems:
           - Index: 0
-          - Item: Fate_Fragment
+            Item: Fate_Fragment
             Amount: 50
