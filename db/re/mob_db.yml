@@ -109045,7 +109045,7 @@ Body:
         Rate: 300
       - Item: Bloody_Page
         Rate: 500
-      - Item: aegis_300279
+      - Item: Book_Of_Death_Card
         Rate: 1
         StealProtected: true
   - Id: 20781
