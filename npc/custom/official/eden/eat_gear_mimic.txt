@@ -33,13 +33,10 @@ moc_para01,53,37,4	script	Eat Gear Mimic	464,{
     .@menus$ = "";
     .@count = 0;
 
-    // Populates native character variables
+    // Populates native character temporary inventory arrays
     getinventorylist;
 
-    // Direct announcement debug block
-    mes "^00FF00[DEBUG MODULE]^000000 Total raw items found in your inventory: " + @inventorylist_count;
-
-    // Bypass loop timeout limits safely
+    // Bypass loop timeout engine limits safely
     freeloop(1);
 
     // Loop through player inventory
@@ -48,12 +45,16 @@ moc_para01,53,37,4	script	Eat Gear Mimic	464,{
         .@refine  = @inventorylist_refine[.@i];
         .@type    = getiteminfo(.@item_id, ITEMINFO_TYPE);
 
-        // Debug output for items with ANY refinement or gear potential
-        if (.@type == IT_ARMOR || .@type == IT_WEAPON) {
-            mes "^FF0000[DEBUG GEAR]^000000 Found Item: " + getitemname(.@item_id) + " | Type: " + .@type + " | Refine: " + .@refine;
-        }
+        // 1. Safety: Do not process items that are actively equipped by the player
+        if (@inventorylist_equip[.@i]) continue;
 
-        // 1. Blacklist Check
+        // 2. Custom Rule: Only accept gear with refines (+7 or higher)
+        if (.@refine < 7) continue;
+
+        // 3. Simple Broad Category Check: Must be standard armor or weapon
+        if (.@type != IT_ARMOR && .@type != IT_WEAPON) continue;
+
+        // 4. Blacklist Array Cross-Check
         .@is_blacklisted = 0;
         for (.@b = 0; .@b < 34; .@b++) { 
             if (.@item_id == .blacklist[.@b]) {
@@ -63,32 +64,17 @@ moc_para01,53,37,4	script	Eat Gear Mimic	464,{
         }
         if (.@is_blacklisted) continue; 
 
-        // 2. Accept Weapons (5) and Armor Types (4)
-        if (.@type != IT_ARMOR && .@type != IT_WEAPON) continue;
-
-        // Verify weapon level is exactly 3 or 4
-        if (.@type == IT_WEAPON) {
-            .@wlv = getiteminfo(.@item_id, ITEMINFO_WLV);
-            if (.@wlv != 3 && .@wlv != 4) continue;
-        }
-
-        // 3. Exclude Upper/Middle/Lower Headgears
+        // 5. Exclude Upper/Middle/Lower Headgears cleanly via common mask evaluation
         .@loc = getiteminfo(.@item_id, ITEMINFO_LOC);
         if (.@type == IT_ARMOR && (.@loc & EQP_HEAD_TOP || .@loc & EQP_HEAD_MID || .@loc & EQP_HEAD_LOW)) continue;
 
-        // 4. Safety: Do not eat items that are actively equipped by the player
-        if (@inventorylist_equip[.@i]) continue;
-
-        // 5. Custom Rule: Only accept gear with refines (+7 or higher)
-        if (.@refine < 7) continue;
-
-        // Store selected variables safely inside local arrays
+        // Store selected variables safely inside local index pointers
         .@items[.@count]   = .@item_id;
         .@refines[.@count] = .@refine;
         .@indices[.@count] = .@i;        
         .@types[.@count]   = .@type;      
 
-        // Simple string menu construction
+        // Build the option choice loop window sequence cleanly without leaving a trailing separator
         if (.@menus$ == "") {
             .@menus$ = getitemname(.@item_id) + " (+" + .@refine + ")";
         } else {
@@ -100,15 +86,14 @@ moc_para01,53,37,4	script	Eat Gear Mimic	464,{
     // Turn safety guards back on
     freeloop(0);
 
-    // Safely exit if no eligible items are found
+    // Safely exit if no eligible items passed all requirements
     if (.@count == 0) {
-        next;
         mes "[Eat Gear Mimic]";
         mes "You don't have any suitable, unequipped gear (+7 or higher) in your bag!";
         close;
     }
 
-    // Process user selection index cleanly
+    // Process user selection index cleanly from choices
     .@choice = select(.@menus$);
     .@selected_item   = .@items[.@choice - 1];
     .@selected_refine = .@refines[.@choice - 1];
@@ -148,7 +133,7 @@ moc_para01,53,37,4	script	Eat Gear Mimic	464,{
             else if (.@selected_refine >= 9)  getitem 6234, 5;
         }
 
-        announce strcharinfo(0) + " has fed a +" + .@selected_refine + " " + getitemname(.@selected_item) + " to the Gear Mimic!", bc_blue|bc_self;
+        announce strcharinfo(0) + " has fed a +" + .@selected_refine + " " + getitemname(.@selected_item) + " to the Gear Mimic!", bc_blue|bc_blue;
     } else {
         mes "[Eat Gear Mimic]";
         mes "Hey! Stop moving things around in your bag! The item changed positions!";
