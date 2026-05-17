@@ -1182,8 +1182,8 @@ OnStart:
 	'event_type[2] = true;
 	end;
 OnTimer2000:
-	if (unitisforcewalk('boss_id))	// debug, the unit is idle but should be walking
-		unitstopwalk 'boss_id, USW_FORCE_STOP;
+//	if (unitisforcewalk(''boss_id'))	// debug, the unit is idle but should be walking
+//		unitstopwalk 'boss_id, USW_FORCE_STOP;
 
 	if ('DE_BERSERKAIZER != 0) {
 		end;

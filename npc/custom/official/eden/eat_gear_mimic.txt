@@ -110,7 +110,7 @@ moc_para01,53,37,4	script	Eat Gear Mimic	938,{
     if (@inventorylist_id[.@selected_index] == .@selected_item && @inventorylist_refine[.@selected_index] == .@selected_refine) {
         
         // Direct, precise index deletion block
-        delinventorylistval(.@selected_index, 1);
+        delitemidx(@inventorylist_idx[.@selected_index], 1);
         
         mes "[Eat Gear Mimic]";
         mes "*CRUNCH* *MUNCH* ... Delicious!";
@@ -135,6 +135,3 @@ moc_para01,53,37,4	script	Eat Gear Mimic	938,{
     }
     close;
 }
-
-+7 weapon = 6230
-+7 ar = 6234
