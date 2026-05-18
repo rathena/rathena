@@ -21,50 +21,43 @@
 // 2. Main King Poring NPC
 prontera,174,176,5	script	King Poring	10056,{
 
-    // Check if player has enough Zeny before even opening the shop interface
     if (Zeny < .zeny_cost) {
         mes "[King Poring]";
         mes "To recycle cards you need ^FF0000" + .zeny_cost + "^000000 Zeny.";
         close;
     }
 
-    // Attach the player to the custom shop and open the sell window directly
     if (npcshopattach("card_merge_shop")) {
         cleararray @sold_nameid, 0, 128;
         cleararray @sold_quantity, 0, 128;
-        callshop "card_merge_shop", 2; // Mode 2 forces the "Sell" window to open instantly
+        callshop "card_merge_shop", 2;
         end;
     }
     
     mes "[King Poring]";
-    mes "Failed to initialize the recycling matrix. Please contact an Administrator.";
+    mes "Shop configuration error. Please contact an Administrator.";
     close;
 
-// This special event triggers automatically the moment the player clicks "Sell" in the shop interface
 OnSellItem:
     .@sold_size = getarraysize(@sold_nameid);
     .@failed = 0;
 
-    // Check if the player put EXACTLY the required amount of cards
     if (.@sold_size != .card_count) {
         mes "[King Poring]";
         mes "You must place exactly ^FF0000" + .card_count + "^000000 different cards to proceed.";
         close;
     }
 
-    // Loop through the items the player dragged into the window to validate them
     for (.@i = 0; .@i < .@sold_size; .@i++) {
         .@item_id = @sold_nameid[.@i];
         .@type = getiteminfo(.@item_id, ITEMINFO_TYPE);
 
-        // A. Check if the item is blacklisted/forbidden
         if (compare(.forbidden_cards$, "|" + .@item_id + "|")) {
             mes "[King Poring]";
             mes "^0000FF" + getitemname(.@item_id) + "^000000 cannot be recycled.";
             close;
         }
 
-        // B. Ensure the item is actually classified as a Card in your database
         if (.@type != IT_CARD) {
             .@failed++;
         }
@@ -76,7 +69,6 @@ OnSellItem:
         close;
     }
 
-    // Confirmation screen
     mes "[King Poring]";
     mes "Are you sure you want to sacrifice these 4 cards and pay ^FF0000" + .zeny_cost + "^000000 Zeny for a new random card?";
     next;
@@ -87,60 +79,123 @@ OnSellItem:
         close;
     }
 
-    // Final security check for Zeny right before deduction
     if (Zeny < .zeny_cost) {
         mes "[King Poring]";
         mes "You don't have enough Zeny anymore!";
         close;
     }
 
-    // Deduct currency
     Zeny -= .zeny_cost;
 
-    // Delete the 4 cards from the player's inventory
     for (.@i = 0; .@i < .@sold_size; .@i++) {
         delitem @sold_nameid[.@i], 1;
     }
 
-    // Determine the type of card obtained based on your custom probability rates
+    // Roll pool selection odds out of 10,000 (100.00%)
     .@rand = rand(1, 10000);
 
     if (.@rand <= .rate_normal_card) {
-        // Normal card rewards (Example Item ID range: 4001 to 4020)
-        .@reward = rand(4001, 4020);
+        .@reward = .common_pool[rand(0, .common_pool_size - 1)];
         getitem .@reward, 1;
         mes "[King Poring]";
-        mes "The spirits are satisfied. You received: ^00FF00" + getitemname(.@reward) + "^000000!";
+        mes "The spirits are satisfied. You received a common card: ^00FF00" + getitemname(.@reward) + "^000000!";
     } 
     else if (.@rand <= (.rate_normal_card + .rate_mini_boss_card)) {
-        // Mini-boss card rewards (Example Item ID range: 4021 to 4035)
-        .@reward = rand(4021, 4035);
+        .@reward = .miniboss_pool[rand(0, .miniboss_pool_size - 1)];
         getitem .@reward, 1;
         mes "[King Poring]";
-        mes "Incredible! A rare energy surges! You received: ^0000FF" + getitemname(.@reward) + "^000000!";
+        mes "A rare energy surges! You received a Mini-Boss card: ^0000FF" + getitemname(.@reward) + "^000000!";
     } 
     else {
-        // MVP card rewards (Example Item ID range: 4036 to 4050)
-        .@reward = rand(4036, 4050);
+        .@reward = .mvp_pool[rand(0, .mvp_pool_size - 1)];
         getitem .@reward, 1;
         
         mes "[King Poring]";
-        mes "THE GROUND SHAKES! An MVP essence appears! You received: ^FF0000" + getitemname(.@reward) + "^000000!";
-        // Server-wide global broadcast announcement for an MVP drop
-        announce "King Poring: " + strcharinfo(0) + " has successfully recycled 4 cards and obtained an MVP Card: " + getitemname(.@reward) + "!!", bc_all;
+        mes "THE GROUND SHAKES! You received an MVP Card: ^FF0000" + getitemname(.@reward) + "^000000!";
+        announce "King Poring: " + strcharinfo(0) + " has successfully recycled cards and obtained an MVP Card: " + getitemname(.@reward) + "!!", bc_all;
     }
     close;
 
 OnInit:
-    .card_count = 4;           // Number of cards required to exchange
-    .zeny_cost = 2500000;      // Zeny required for the process (2.5m)
-    
-    // Add IDs separated by pipes to blacklist specific cards (e.g., "|4001|4002|")
+    .card_count = 4;
+    .zeny_cost = 2500000;
     .forbidden_cards$ = "||";  
-    
-    // Probability configurations out of 10,000 total points (100.00%)
-    .rate_normal_card = 9800;    // 98.00% Chance
-    .rate_mini_boss_card = 199;  // 1.99% Chance
-    .rate_mvp_card = 1;          // 0.01% Chance
+
+    // Probability Rates Matrix (Must total 10,000 points)
+    .rate_normal_card = 9800;     // 98.00%
+    .rate_mini_boss_card = 199;   // 1.99%
+    .rate_mvp_card = 1;           // 0.01%
+
+    // =========================================================
+    // POOL 1: HIGHLY EXPANDED COMMON CARDS (Divine Pride Lookup)
+    // =========================================================
+    setarray .common_pool,
+        // Classic Prontera / Geffen / Payon Fields
+        4001, 4002, 4003, 4004, 4005, 4006, 4007, 4008, 4009, 4010,
+        4011, 4012, 4013, 4014, 4015, 4016, 4017, 4018, 4019, 4020,
+        4022, 4023, 4024, 4025, 4026, 4027, 4028, 4029, 4030, 4031,
+        // Dungeons: Ant Hell, Byalan, Culverts, Orc Dungeon
+        4032, 4033, 4034, 4035, 4036, 4037, 4038, 4039, 4040, 4041,
+        4042, 4043, 4044, 4045, 4046, 4047, 4048, 4049, 4050, 4051,
+        4052, 4053, 4054, 4055, 4056, 4057, 4058, 4059, 4060, 4061,
+        // Mid-Tier Maps: Sphinx, Pyramids, Clock Tower, Comodo
+        4062, 4063, 4064, 4065, 4066, 4067, 4068, 4069, 4070, 4071,
+        4072, 4073, 4074, 4075, 4076, 4077, 4078, 4079, 4080, 4081,
+        4082, 4083, 4084, 4085, 4086, 4087, 4088, 4089, 4090, 4091,
+        // High-Tier Maps: Magma, Turtle Island, Amatsu, Louyang
+        4092, 4093, 4094, 4095, 4096, 4097, 4098, 4099, 4100, 4101,
+        4102, 4103, 4104, 4105, 4106, 4107, 4108, 4109, 4110, 4111,
+        4112, 4113, 4114, 4115, 4116, 4117, 4118, 4119, 4120, 4122,
+        // Expanded Rachel / Veins / Nameless / Ash Vacuum Blocks
+        4417, 4418, 4419, 4420, 4421, 4422, 4423, 4424, 4425, 4426,
+        4427, 4428, 4429, 4430, 4431, 4432, 4433, 4434, 4435, 4436,
+        4437, 4438, 4439, 4440, 4441, 4442, 4443, 4444, 4445, 4446;
+    .common_pool_size = getarraysize(.common_pool);
+
+    // =========================================================
+    // POOL 2: MINI-BOSS / SEMI-RARE CARDS
+    // =========================================================
+    setarray .miniboss_pool,
+        // Classic & Expansion Mini-Bosses
+        4131, 4141, 4143, 4146, 4149, 4154, 4166, 4172, 4192, 4211, // Ghostring, Angeling, Deviling, Mastereing
+        4236, 4242, 4275, 4302, 4357, 4359, 4372, 4374, 4376, 4401, // Eclipse, Toad, Vagabond, Dragon Fly
+        4403, 4407, 4410, 4412, 4416, 4424, 4439, 4448, 4452, 4461; // Chonchon variants, Gryphon, Necromancer minion
+    .miniboss_pool_size = getarraysize(.miniboss_pool);
+
+    // =========================================================
+    // POOL 3: MVP BOSS CARDS (Divine Pride Catalog Indices)
+    // =========================================================
+    setarray .mvp_pool,
+        // Classic MVPs
+        4121, // Golden Thief Bug Card
+        4123, // Eddga Card
+        4128, // Tao Gunka / Osiris alternatives
+        4134, // Mistress Card
+        4137, // Moonlight Flower Card
+        4142, // Orc Hero Card
+        4144, // Drake Card
+        4145, // Baphomet Card
+        4147, // Orc Lord Card
+        4148, // Pharaoh Card
+        4168, // Dark Lord Card
+        4276, // Lord of Death Card
+        4305, // Dracula Card
+        4318, // Evil Snake Lord Card
+        4324, // Amon Ra Card
+        4330, // Doppelganger Card
+        4342, // Phreeoni Card
+        4352, // Turtle General Card
+        4361, // Stormy Knight Card
+        4371, // Lady Tanee Card
+        4386, // RSX-0806 Card
+        4404, // Vesper Card
+        4411, // Memory of Thanatos Card
+        4415, // Detale Card
+        4425, // Valkyrie Randgris Card
+        4430, // Gloom Under Night Card
+        4441, // Ifrit Card
+        4450; // Beelzebub Card
+    .mvp_pool_size = getarraysize(.mvp_pool);
+
     end;
 }

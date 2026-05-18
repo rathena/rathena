@@ -1,0 +1,193 @@
+-	script	alootid_main	-1,{
+
+	OnInit:
+		// allow auto load upon login
+		.enable_login_autoload = 1;
+		
+		// how many different group player can create
+		.max_alootid_group = 10;
+		
+		// src/config/core.hpp  AUTOLOOTITEM_SIZE
+		.max_alootid_item = 10; 
+		
+		// setting share mode (experimental, use at your own risk)
+		// 0 - Character ID (default)
+		// 1 - Party ID
+		// 2 - Guild ID
+		// 3 - Account ID (popular)
+		// 4 - Battle Ground ID
+		// 5 - Clan ID
+		.saved_mode = 0;
+		
+		bindatcmd("alootid2", strnpcinfo(3)+"::OnAtcommand");
+		end;
+		
+	OnAtcommand:
+		.@cid = getcharid(.saved_mode);
+		
+		if (.saved_mode && !.@cid) {
+			if (.saved_mode == 1)
+				dispbottom "Atcommand: "+.@atcmd_command$+" failed - required party.";
+			else if (.saved_mode == 2)
+				dispbottom "Atcommand: "+.@atcmd_command$+" failed - required guild.";
+			else if (.saved_mode == 4)
+				dispbottom "Atcommand: "+.@atcmd_command$+" failed - required battleground.";
+			else if (.saved_mode == 5)
+				dispbottom "Atcommand: "+.@atcmd_command$+" failed - required clan.";
+			end;
+		}
+		
+		.@alootid_group = atoi(.@atcmd_parameters$[1]);
+		if ((.@atcmd_numparameters && .@atcmd_parameters$[0] != "list") && (!.@alootid_group || .@alootid_group <= 0 || .@alootid_group > .max_alootid_group)) {
+			dispbottom "Atcommand: "+.@atcmd_command$+" "+.@atcmd_parameters$[0]+" <"+.@alootid_group+"> - invalid no "+.@alootid_group+". (min: 1, max: "+.max_alootid_group+")";
+			end;
+		}
+		
+		if (.@atcmd_parameters$[0] == "list") {
+			if (.@alootid_group) {
+				.@size = query_sql("SELECT `no`, `name`, `auto`, `nameid` FROM `ero_alootid` WHERE `mode` = "+.saved_mode+" AND `cid` = "+.@cid+" AND `no` = "+.@alootid_group+" ORDER BY `nameid` LIMIT "+.max_alootid_group, .@no, .@name$, .@auto, .@nameid_list);
+				dispbottom "Atcommand: "+.@atcmd_command$+" "+.@atcmd_parameters$[0]+" - found "+.@size+" items. " + (.enable_login_autoload && .@auto[.@i]? " (autoload upon login)":"");
+				for (.@i = 0; .@i < .@size; .@i++)
+					dispbottom "Group <"+.@no[.@i]+"> "+.@name$[.@i]+" - #"+.@nameid_list[.@i] + " - "+getitemname(.@nameid_list[.@i]);
+			}
+			else {
+				.@size = query_sql("SELECT `no`, `name`, `auto`, GROUP_CONCAT(nameid SEPARATOR ', ') FROM `ero_alootid` WHERE `mode` = "+.saved_mode+" AND `cid` = "+.@cid+" GROUP BY `name`, `no` ORDER BY `nameid` LIMIT "+.max_alootid_group, .@no, .@name$, .@auto, .@nameid_list$);
+				dispbottom "Atcommand: "+.@atcmd_command$+" "+.@atcmd_parameters$[0]+" - found "+.@size+" items. " + (.enable_login_autoload && .@auto[.@i]? " (autoload upon login)":"");
+				for (.@i = 0; .@i < .@size; .@i++)
+					dispbottom "Group <"+.@no[.@i]+"> "+.@name$[.@i]+" - "+.@nameid_list$[.@i];
+			}
+			end;
+		}
+		
+		if (.@atcmd_parameters$[0] == "save") {
+			for (.@i = 2; .@i < .@atcmd_numparameters; .@i++) {
+				.@nameid = atoi(.@atcmd_parameters$[.@i]);
+				if (inarray(.@saved_nameid, .@nameid) != -1)
+					continue;
+				if (getitemname(.@nameid) != "null") {
+					.@item_count++;
+					.@saved_nameid[.@size] = .@nameid;
+					.@size++;
+					.@sql$ = .@sql$ + ((.@item_count > 1) ? ", ":"") + "("+.saved_mode+", "+.@cid+", "+.@alootid_group+", "+.@nameid+")";
+					dispbottom "Atcommand: "+.@atcmd_command$+" "+.@atcmd_parameters$[0]+" <"+.@alootid_group+"> - adding #"+.@nameid+" - "+ getitemname(.@nameid);
+				}
+			}
+			if (.@sql$ == "")
+				dispbottom "Atcommand: "+.@atcmd_command$+" "+.@atcmd_parameters$[0]+" <"+.@alootid_group+"> - failed.";
+			else {
+				query_sql("DELETE FROM `ero_alootid` WHERE `mode` = "+.saved_mode+" AND `cid` = "+.@cid+" AND `no` = "+.@alootid_group);
+				query_sql("INSERT INTO `ero_alootid` (`mode`, `cid`,`no`, `nameid`) VALUES " + .@sql$);
+				dispbottom "Atcommand: "+.@atcmd_command$+" "+.@atcmd_parameters$[0]+" <"+.@alootid_group+"> - successfully.";
+			}
+			end;
+		}
+		
+		if (.@atcmd_parameters$[0] == "add") {
+			.@size = query_sql("SELECT `nameid` FROM `ero_alootid` WHERE `mode` = "+.saved_mode+" AND `cid` = "+.@cid+" AND `no` = "+.@alootid_group+" ORDER BY `nameid` LIMIT "+.max_alootid_item, .@saved_nameid);
+			if (.@size < 0)
+				.@size = 0;
+			for (.@i = 2; .@i < .@atcmd_numparameters; .@i++) {
+				.@nameid = atoi(.@atcmd_parameters$[.@i]);
+				if (getitemname(.@nameid) != "null") {
+					if (inarray(.@saved_nameid, .@nameid) != -1)
+						continue;
+					else if (.@size >= .max_alootid_item)
+						dispbottom "Atcommand: "+.@atcmd_command$+" "+.@atcmd_parameters$[0]+" <"+.@alootid_group+"> - skipped #"+.@nameid+" due to exceed max slot.";
+					else {
+						.@item_count++;
+						.@saved_nameid[.@size] = .@nameid;
+						.@size++;
+						.@sql$ = .@sql$ + ((.@item_count > 1) ? ", ":"") + "("+.@cid+", "+.@alootid_group+", "+.@nameid+")";
+						dispbottom "Atcommand: "+.@atcmd_command$+" "+.@atcmd_parameters$[0]+" <"+.@alootid_group+"> - adding #"+.@nameid+" - "+ getitemname(.@nameid);
+					}
+				}
+			}
+			if (.@sql$ == "")
+				dispbottom "Atcommand: "+.@atcmd_command$+" "+.@atcmd_parameters$[0]+" <"+.@alootid_group+"> - failed.";
+			else {
+				query_sql("INSERT INTO `ero_alootid` (`cid`,`no`, `nameid`) VALUES " + .@sql$);
+				dispbottom "Atcommand: "+.@atcmd_command$+" "+.@atcmd_parameters$[0]+" <"+.@alootid_group+"> - successfully.";
+			}
+			end;
+		}
+		
+		if (.@atcmd_parameters$[0] == "remove") {
+			for (.@i = 2; .@i < .@atcmd_numparameters; .@i++) {
+				.@nameid = atoi(.@atcmd_parameters$[.@i]);
+				if (getitemname(.@nameid) != "null") {
+					.@item_count++;
+					.@sql$ = .@sql$ + ((.@item_count > 1) ? ", ":"") + "" + .@nameid;
+				}
+			}
+			if (.@sql$ == "")
+				dispbottom "Atcommand: "+.@atcmd_command$+" remove <"+.@alootid_group+"> - failed.";
+			else {
+				query_sql("DELETE FROM `ero_alootid` WHERE `mode` = "+.saved_mode+" AND `cid` = "+.@cid+" AND `no` = "+.@alootid_group+" AND `nameid` IN ("+.@sql$+")");
+				dispbottom "Atcommand: "+.@atcmd_command$+" "+.@atcmd_parameters$[0]+" <"+.@alootid_group+"> - successfully.";
+			}
+			end;
+		}
+		if (.@atcmd_parameters$[0] == "clear" || .@atcmd_parameters$[0] == "reset") {
+			query_sql("DELETE FROM `ero_alootid` WHERE `mode` = "+.saved_mode+" AND `cid` = "+.@cid+" AND `no` = "+.@alootid_group);
+			dispbottom "Atcommand: "+.@atcmd_command$+" "+.@atcmd_parameters$[0]+" <"+.@alootid_group+"> - successfully.";
+			end;
+		}
+		
+		if (.@atcmd_parameters$[0] == "load") {
+			.@size = query_sql("SELECT `nameid` FROM `ero_alootid` WHERE `mode` = "+.saved_mode+" AND `cid` = "+.@cid+" AND `no` = "+.@alootid_group+" LIMIT "+.max_alootid_item, .@nameid);
+			if (!.@size) {
+				dispbottom "Atcommand: "+.@atcmd_command$+" "+.@atcmd_parameters$[0]+" <"+.@alootid_group+"> - settings not found.";
+			}
+			else {
+				atcommand("@alootid reset");
+				for (.@i = 0; .@i < .@size; .@i++)
+					atcommand("@alootid +"+.@nameid[.@i]);
+				dispbottom "Atcommand: "+.@atcmd_command$+" "+.@atcmd_parameters$[0]+" <"+.@alootid_group+"> - successfully.";
+			}
+			end;
+		}
+		
+		if (.@atcmd_parameters$[0] == "set") {
+			if (.@atcmd_parameters$[2] == "name") {
+				query_sql("UPDATE `ero_alootid` SET `name` = '"+escape_sql(.@atcmd_parameters$[3])+"' WHERE `mode` = "+.saved_mode+" AND `cid` = "+.@cid+" AND `no` = "+.@alootid_group);
+				dispbottom "Atcommand: "+.@atcmd_command$+" "+.@atcmd_parameters$[0]+" <"+.@alootid_group+"> name '"+.@atcmd_parameters$[3]+"' successfully.";
+			}
+			else if (.enable_login_autoload && .@atcmd_parameters$[2] == "autoload") {
+				query_sql("UPDATE `ero_alootid` SET `auto` = CASE WHEN `no` = "+.@alootid_group+" THEN "+(atoi(.@atcmd_parameters$[3]) > 0)+" ELSE 0 END WHERE `mode` = "+.saved_mode+" AND `cid` = "+.@cid);
+				dispbottom "Atcommand: "+.@atcmd_command$+" "+.@atcmd_parameters$[0]+" <"+.@alootid_group+"> autoload '"+((atoi(.@atcmd_parameters$[3]) > 0) ? "enabled":"disabled")+"' successfully.";
+			}
+			else {
+				dispbottom "Atcommand: "+.@atcmd_command$+" "+.@atcmd_parameters$[0]+" <"+.@alootid_group+"> invalid options.";
+				dispbottom "Atcommand: "+.@atcmd_command$+" "+.@atcmd_parameters$[0]+" <"+.@alootid_group+"> name <name>";
+				if (.enable_login_autoload)
+					dispbottom "Atcommand: "+.@atcmd_command$+" "+.@atcmd_parameters$[0]+" <"+.@alootid_group+"> autoload <1/0>";
+			}
+			end;
+		}
+		
+		dispbottom "Atcommand: "+.@atcmd_command$+" invalid options. Please refer the option below:";
+		dispbottom "Atcommand: "+.@atcmd_command$+" list";
+		dispbottom "Atcommand: "+.@atcmd_command$+" load <#>";
+		dispbottom "Atcommand: "+.@atcmd_command$+" save <#> <item1> ... <item"+.max_alootid_item+">";
+		dispbottom "Atcommand: "+.@atcmd_command$+" <add/remove> <#> <item1> ... <item"+.max_alootid_item+">";
+		dispbottom "Atcommand: "+.@atcmd_command$+" <clear/reset> <#>";
+		dispbottom "Atcommand: "+.@atcmd_command$+" set <#> name <name>";
+		if (.enable_login_autoload)
+			dispbottom "Atcommand: "+.@atcmd_command$+" set <#> autoload <1/0>";
+		end;
+		
+	OnPCLoginEvent:
+		if (.enable_login_autoload) {
+			sleep2 1000;
+			.@size = query_sql("SELECT `no`, `nameid` FROM `ero_alootid` WHERE `mode` = "+.saved_mode+" AND `cid` = "+getcharid(.saved_mode)+" AND `auto` = 1 ORDER BY `nameid` LIMIT "+.max_alootid_item, .@alootid_group, .@nameid);
+			if (.@size > 0) {
+				atcommand("@alootid reset");
+				for (.@i = 0; .@i < .@size; .@i++)
+					atcommand("@alootid +"+.@nameid[.@i]);
+				dispbottom "Atcommand: @alootid2 load <"+.@alootid_group+"> - load "+.@size+" item(s) successfully.";
+			}
+		}
+		end;
+}
+
+
