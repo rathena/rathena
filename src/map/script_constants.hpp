@@ -7420,6 +7420,8 @@
 	export_constant(IG_RT_CH01_YGGLEAF_A);
 	export_constant(IG_RT_CH01_YGGLEAF_C);
 	export_constant(IG_RT_CH01_YGGLEAF_3);
+	export_constant(IG_D_GW_EXTRACTOR);
+	export_constant(IG_C_PRO_GACHA_1);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
