@@ -37,8 +37,8 @@ OnTalk:
     mes "Don't let those junk costumes gather dust. I melt them down into precious Gacha Coins.";
     next;
     
-    // Get the base coin ID cleanly first
-    .coin_id = getitemid(.coin_aegis$);
+    // FIXED: Added 'set'
+    set .coin_id, getitemid(.coin_aegis$);
     
     mes .npc_name$;
     mes "My current exchange rate is:";
@@ -52,12 +52,13 @@ OnTalk:
         close;
     }
 
-    // FIXED: Check if player has any valid costumes in their inventory safely
-    .has_costume = 0;
-    for (.i = 0; .i < getarraysize(.valid_costumes$); .i++) {
-        .temp_id = getitemid(.valid_costumes$[.i]);
+    // FIXED: Added 'set'
+    set .has_costume, 0;
+    for (set .i, 0; .i < getarraysize(.valid_costumes$); set .i, .i + 1) {
+        // FIXED: Added 'set'
+        set .temp_id, getitemid(.valid_costumes$[.i]);
         if (countitem(.temp_id) > 0) {
-            .has_costume = 1;
+            set .has_costume, 1;
             break;
         }
     }
@@ -76,25 +77,26 @@ OnTalk:
     // Dynamically build menu of ONLY the items the player actually possesses
     deletearray .menu_items$[0], getarraysize(.menu_items$);
     deletearray .mapped_index[0], getarraysize(.mapped_index);
-    .menu_str$ = "";
-    .menu_count = 0;
+    set .menu_str$, "";
+    set .menu_count, 0;
 
-    for (.i = 0; .i < getarraysize(.valid_costumes$); .i++) {
-        .item_id = getitemid(.valid_costumes$[.i]);
+    for (set .i, 0; .i < getarraysize(.valid_costumes$); set .i, .i + 1) {
+        // FIXED: Added 'set'
+        set .item_id, getitemid(.valid_costumes$[.i]);
         if (countitem(.item_id) > 0) {
-            .menu_items$[.menu_count] = getitemname(.item_id) + " (Owned: " + countitem(.item_id) + ")";
-            .mapped_index[.menu_count] = .i; // Stores the original index
-            .menu_count++;
+            set .menu_items$[.menu_count], getitemname(.item_id) + " (Owned: " + countitem(.item_id) + ")";
+            set .mapped_index[.menu_count], .i; // Stores the original index
+            set .menu_count, .menu_count + 1;
         }
     }
 
     // Compile the menu string
-    for (.i = 0; .i < .menu_count; .i++) {
-        .menu_str$ = .menu_str$ + .menu_items$[.i] + ":";
+    for (set .i, 0; .i < .menu_count; set .i, .i + 1) {
+        set .menu_str$, .menu_str$ + .menu_items$[.i] + ":";
     }
-    .menu_str$ = .menu_str$ + "Cancel";
+    set .menu_str$, .menu_str$ + "Cancel";
 
-    .choice = select(.menu_str$) - 1;
+    set .choice, select(.menu_str$) - 1;
 
     // Player hit 'Cancel'
     if (.choice == .menu_count) {
@@ -104,8 +106,8 @@ OnTalk:
     }
 
     // Safe lookup of selected item using the mapping index
-    .selected_costume$ = .valid_costumes$[.mapped_index[.choice]];
-    .target_id = getitemid(.selected_costume$);
+    set .selected_costume$, .valid_costumes$[.mapped_index[.choice]];
+    set .target_id, getitemid(.selected_costume$);
 
     mes .npc_name$;
     mes "You selected: ^990000" + getitemname(.target_id) + "^000000.";
