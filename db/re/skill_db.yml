@@ -16684,6 +16684,7 @@ Body:
     Range: 11
     Hit: Multi_Hit
     HitCount: -20
+    Duration1: 100
     Duration2: 18000
     SplashArea: 9
     Knockback: 2
