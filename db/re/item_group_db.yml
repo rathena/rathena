@@ -133391,6 +133391,7 @@ Body:
   - Group: D_GW_EXTRACTOR
     SubGroups:
       - SubGroup: 0
+        Algorithm: All
         List:
           - Index: 0
             Item: EP19_D_P_Ore
@@ -133603,6 +133604,7 @@ Body:
   - Group: C_PRO_GACHA_1
     SubGroups:
       - SubGroup: 0
+        Algorithm: All
         List:
           - Index: 0
             Item: C_White_Drooping_Kitty
