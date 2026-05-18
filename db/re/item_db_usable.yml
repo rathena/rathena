@@ -88690,3 +88690,4 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_C_PRO_GACHA_1);
+      specialeffect2 159;
