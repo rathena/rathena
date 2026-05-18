@@ -6936,6 +6936,63 @@ static void mob_drop_ratio_adjust(void){
 
 	// Now that we are done we can delete the stored item ratios
 	mob_item_drop_ratio.clear();
+
+    // Process map drops
+    for (const auto& map_entry : map_drop_db) {  
+        std::shared_ptr<s_map_drops> mapdrops = map_entry.second;  
+        uint16 mapid = map_entry.first;  
+
+        // Process global drops  
+        for (const auto& global_drop : mapdrops->globals) {  
+            uint32 final_rate = global_drop.second->rate;  
+            item_data* id = itemdb_search(global_drop.second->nameid);  
+
+            if (!id) continue;  
+
+            int32 k;  
+            for (k = 0; k < MAX_SEARCH; k++) {  
+                if (id->map_drop[k].chance <= final_rate)  
+                    break;  
+            }  
+
+            if (k != MAX_SEARCH) {  
+                if (id->map_drop[k].mapid != mapid || id->map_drop[k].mob_id != 0) {  
+                    memmove(&id->map_drop[k+1], &id->map_drop[k],   
+                           (MAX_SEARCH-k-1)*sizeof(id->map_drop[0]));  
+                }  
+                id->map_drop[k].chance = final_rate;  
+                id->map_drop[k].mapid = mapid;  
+                id->map_drop[k].mob_id = 0;  
+            }  
+        }  
+
+        // Process specific drops  
+        for (const auto& specific_entry : mapdrops->specific) {  
+            uint16 mob_id = specific_entry.first;  
+            for (const auto& drop : specific_entry.second) {  
+                uint32 final_rate = drop.second->rate;  
+                item_data* id = itemdb_search(drop.second->nameid);  
+
+                if (!id) continue;  
+
+                int32 k;  
+                for (k = 0; k < MAX_SEARCH; k++) {  
+                    if (id->map_drop[k].chance <= final_rate)  
+                        break;  
+                }  
+
+                if (k != MAX_SEARCH) {  
+                    if (id->map_drop[k].mapid != mapid || id->map_drop[k].mob_id != mob_id) {  
+                        memmove(&id->map_drop[k+1], &id->map_drop[k],   
+                               (MAX_SEARCH-k-1)*sizeof(id->map_drop[0]));  
+                    }  
+                    id->map_drop[k].chance = final_rate;  
+                    id->map_drop[k].mapid = mapid;  
+                    id->map_drop[k].mob_id = mob_id;  
+                }  
+            }  
+        }  
+    }
 }
 
 const std::string MapDropDatabase::getDefaultLocation(){
@@ -7258,6 +7315,61 @@ void mob_reload_itemmob_data(void) {
 			id->mob[k].id = pair.first;
 		}
 	}
+    // Reload map drops
+    for (const auto& pair : item_db) {  
+        memset(pair.second->map_drop, 0, sizeof(pair.second->map_drop));  
+    }  
+
+    // Recalculate map drops from map_drop_db  
+    for (const auto& map_entry : map_drop_db) {  
+        std::shared_ptr<s_map_drops> mapdrops = map_entry.second;  
+        uint16 mapid = map_entry.first;  
+
+        for (const auto& global_drop : mapdrops->globals) {  
+            item_data* id = itemdb_search(global_drop.second->nameid);  
+            if (!id) continue;  
+
+            int32 k;  
+            for (k = 0; k < MAX_SEARCH; k++) {  
+                if (id->map_drop[k].chance <= global_drop.second->rate)  
+                    break;  
+            }  
+
+            if (k != MAX_SEARCH) {  
+                if (id->map_drop[k].mapid != mapid || id->map_drop[k].mob_id != 0) {  
+                    memmove(&id->map_drop[k+1], &id->map_drop[k],   
+                           (MAX_SEARCH-k-1)*sizeof(id->map_drop[0]));  
+                }  
+                id->map_drop[k].chance = global_drop.second->rate;  
+                id->map_drop[k].mapid = mapid;  
+                id->map_drop[k].mob_id = 0;  
+            }  
+        }  
+
+        for (const auto& specific_entry : mapdrops->specific) {  
+            uint16 mob_id = specific_entry.first;  
+            for (const auto& drop : specific_entry.second) {  
+                item_data* id = itemdb_search(drop.second->nameid);  
+                if (!id) continue;  
+                  
+                int32 k;  
+                for (k = 0; k < MAX_SEARCH; k++) {  
+                    if (id->map_drop[k].chance <= drop.second->rate)  
+                        break;  
+                }  
+                  
+                if (k != MAX_SEARCH) {  
+                    if (id->map_drop[k].mapid != mapid || id->map_drop[k].mob_id != mob_id) {  
+                        memmove(&id->map_drop[k+1], &id->map_drop[k],   
+                               (MAX_SEARCH-k-1)*sizeof(id->map_drop[0]));  
+                    }  
+                    id->map_drop[k].chance = drop.second->rate;  
+                    id->map_drop[k].mapid = mapid;  
+                    id->map_drop[k].mob_id = mob_id;  
+                }  
+            }  
+        }  
+    }
 }
 
 /**
