@@ -133390,7 +133390,7 @@ Body:
             Item: Cubic_Dia
   - Group: D_GW_EXTRACTOR
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 0
         List:
           - Index: 0
             Item: EP19_D_P_Ore
@@ -133602,7 +133602,7 @@ Body:
             Rate: 1
   - Group: C_PRO_GACHA_1
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 0
         List:
           - Index: 0
             Item: C_White_Drooping_Kitty
