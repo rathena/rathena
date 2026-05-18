@@ -3246,6 +3246,7 @@ enum e_random_item_group {
 	IG_RT_CH01_YGGLEAF_A,
 	IG_RT_CH01_YGGLEAF_C,
 	IG_RT_CH01_YGGLEAF_3,
+	D_GW_EXTRACTOR,
 
 	IG_MAX
 };
