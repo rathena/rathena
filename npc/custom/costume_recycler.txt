@@ -14,13 +14,13 @@
 OnInit:
     .npc_name$ = "^0000FF[Costume Recycler]^000000";
     .coins_reward = 1;         // How many Gacha Coins awarded per costume
-    .coin_aegis$ = "Gacha_Coin"; // The AegisName of your custom coin
+    .coin_aegis$ = "Play_RO_Gold_Coin_"; // The AegisName of your custom coin
 
     // Add the AegisNames of all valid costumes from your Gacha Egg here.
     // ANY costume NOT on this list will be rejected by the NPC.
     setarray .valid_costumes$[0], 
-        "C_Poring_Hat", 
-        "C_Angel_Wing", 
+        "C_White_Drooping_Kitty", 
+        "C_Blue_Bunny_Band", 
         "C_Deviruchi_Hat", 
         "C_Gorgon_Hair",
         "C_Koneko_Hat",
