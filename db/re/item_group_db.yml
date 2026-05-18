@@ -133600,3 +133600,127 @@ Body:
             Item: Snow_F_Stone3
             Amount: 4
             Rate: 1
+  - Group: C_PRO_GACHA_1
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Index: 0
+            Item: C_White_Drooping_Kitty
+            Amount: 1
+            Rate: 50
+          - Index: 1
+            Item: C_Blue_Bunny_Band
+            Amount: 1
+            Rate: 50
+          - Index: 2
+            Item: C_Elven_Ears
+            Amount: 1
+            Rate: 50
+          - Index: 3
+            Item: C_Glasses
+            Amount: 1
+            Rate: 50
+          - Index: 4
+            Item: C_Luxury_Sunglasses
+            Amount: 1
+            Rate: 50
+          - Index: 5
+            Item: C_Fried_Egg_Hat
+            Amount: 1
+            Rate: 50
+          - Index: 6
+            Item: C_Pair_Of_Red_Ribbon
+            Amount: 1
+            Rate: 50
+          - Index: 7
+            Item: C_Flowerpot_Mask
+            Amount: 1
+            Rate: 50
+          - Index: 8
+            Item: C_Ragdoll_Face_Bag
+            Amount: 1
+            Rate: 50
+          - Index: 9
+            Item: C_Helm_Of_Abyss
+            Amount: 1
+            Rate: 50
+          - Index: 10
+            Item: C_Candy_Cane_In_Mouth
+            Amount: 1
+            Rate: 50
+          - Index: 11
+            Item: C_Poison_Spore_Hat
+            Amount: 1
+            Rate: 50
+          - Index: 12
+            Item: C_Shrine_Maiden_Hat
+            Amount: 1
+            Rate: 20
+          - Index: 13
+            Item: C_Pencil_In_Mouth
+            Amount: 1
+            Rate: 20
+          - Index: 14
+            Item: C_Heart_Wing_Hairband
+            Amount: 1
+            Rate: 20
+          - Index: 15
+            Item: C_Whisper_Tall_Hat
+            Amount: 1
+            Rate: 20
+          - Index: 16
+            Item: C_Subject_Aura
+            Amount: 1
+            Rate: 20
+          - Index: 17
+            Item: C_BirthDay_Balloon_TW
+            Amount: 1
+            Rate: 20
+          - Index: 18
+            Item: C_Balloon_Wing
+            Amount: 1
+            Rate: 20
+          - Index: 19
+            Item: C_Santa_Backpack
+            Amount: 1
+            Rate: 20
+          - Index: 20
+            Item: C_Wing_Of_Angel_Move_BK
+            Amount: 1
+            Rate: 7
+          - Index: 21
+            Item: C_Wing_Of_Angel_Move_RD
+            Amount: 1
+            Rate: 7
+          - Index: 22
+            Item: C_Wing_Of_Angel_Move_GD
+            Amount: 1
+            Rate: 7
+          - Index: 23
+            Item: C_Carabao_MSP
+            Amount: 1
+            Rate: 7
+          - Index: 24
+            Item: C_Blinking_Eyes
+            Amount: 1
+            Rate: 7
+          - Index: 25
+            Item: C_Dragon_Green_Aura
+            Amount: 1
+            Rate: 
+          - Index: 26
+            Item: C_Dragon_Red_Aura
+            Amount: 1
+            Rate: 1
+          - Index: 27
+            Item: C_Dragon_Yellow_Aura
+            Amount: 1
+            Rate: 1
+          - Index: 28
+            Item: C_Con_of_Singapura_MSP
+            Amount: 1
+            Rate: 2
+          - Index: 29
+            Item: C_Shining_Angel_Wing
+            Amount: 1
+            Rate: 4
