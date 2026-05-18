@@ -1,0 +1,143 @@
+// ==========================================
+// rAthena Costume Recycler NPC
+// ==========================================
+// Recycles unwanted costumes into Gacha Coins.
+// Prevents market flooding and stabilizes economy.
+// ==========================================
+
+-	script	CostumeRecyclerSYS	-1,{
+    end;
+
+// ==========================================
+// CONFIGURATION SECTION
+// ==========================================
+OnInit:
+    .npc_name$ = "^0000FF[Costume Recycler]^000000";
+    .coins_reward = 1;         // How many Gacha Coins awarded per costume
+    .coin_aegis$ = "Gacha_Coin"; // The AegisName of your custom coin
+
+    // Add the AegisNames of all valid costumes from your Gacha Egg here.
+    // ANY costume NOT on this list will be rejected by the NPC.
+    setarray .valid_costumes$[0], 
+        "C_Poring_Hat", 
+        "C_Angel_Wing", 
+        "C_Deviruchi_Hat", 
+        "C_Gorgon_Hair",
+        "C_Koneko_Hat",
+        "C_Phoenix_Wing"; 
+    end;
+
+// ==========================================
+// NPC TALK FUNCTION
+// ==========================================
+OnTalk:
+    mes .npc_name$;
+    mes "Hello, adventurer!";
+    mes "Got bad luck with your Gacha Eggs?";
+    mes "Don't let those junk costumes gather dust. I melt them down into precious Gacha Coins.";
+    next;
+    
+    mes .npc_name$;
+    mes "My current exchange rate is:";
+    mes "^FF00001 Costume = " + .coins_reward + " " + getitemname(getitemid(.coin_aegis$)) + "(s)^000000";
+    mes "Would you like to recycle a costume?";
+    next;
+
+    if (select("Yes, please.:No, thank you.") == 2) {
+        mes .npc_name$;
+        mes "Suit yourself. Come back if your inventory gets too heavy!";
+        close;
+    }
+
+    // Check if player has any valid costumes in their inventory
+    .has_costume = 0;
+    for (.i = 0; .i < getarraysize(.valid_costumes$); .i++) {
+        if (countitem(getitemid(.valid_costumes$[.i])) > 0) {
+            .has_costume = 1;
+            break;
+        }
+    }
+
+    if (!.has_costume) {
+        mes .npc_name$;
+        mes "It looks like you don't have any of the accepted costumes in your inventory right now.";
+        mes "Make sure the costume is unequipped and try again.";
+        close;
+    }
+
+    mes .npc_name$;
+    mes "Please select the costume you want to scrap:";
+    next;
+
+    // Dynamically build menu of ONLY the items the player actually possesses
+    deletearray .menu_items$[0], getarraysize(.menu_items$);
+    deletearray .mapped_index[0], getarraysize(.mapped_index);
+    .menu_str$ = "";
+    .menu_count = 0;
+
+    for (.i = 0; .i < getarraysize(.valid_costumes$); .i++) {
+        .item_id = getitemid(.valid_costumes$[.i]);
+        if (countitem(.item_id) > 0) {
+            .menu_items$[.menu_count] = getitemname(.item_id) + " (Owned: " + countitem(.item_id) + ")";
+            .mapped_index[.menu_count] = .i; // Stores the original index
+            .menu_count++;
+        }
+    }
+
+    // Compile the menu string
+    for (.i = 0; .i < .menu_count; .i++) {
+        .menu_str$ = .menu_str$ + .menu_items$[.i] + ":";
+    }
+    .menu_str$ = .menu_str$ + "Cancel";
+
+    .choice = select(.menu_str$) - 1;
+
+    // Player hit 'Cancel'
+    if (.choice == .menu_count) {
+        mes .npc_name$;
+        mes "Change your mind? Alright then.";
+        close;
+    }
+
+    // Safe lookup of selected item using the mapping index
+    .selected_costume$ = .valid_costumes$[.mapped_index[.choice]];
+    .target_id = getitemid(.selected_costume$);
+
+    mes .npc_name$;
+    mes "You selected: ^990000" + getitemname(.target_id) + "^000000.";
+    mes "Are you absolutely sure? This action ^FF0000cannot be undone^000000.";
+    next;
+
+    if (select("Yes, melt it down!:Wait, cancel!") == 2) {
+        mes .npc_name$;
+        mes "Close call! Your costume is safe.";
+        close;
+    }
+
+    // Double-check item count right before deletion to prevent exploits/lag issues
+    if (countitem(.target_id) < 1) {
+        mes .npc_name$;
+        mes "Hey! Where did it go? You don't have that costume anymore.";
+        close;
+    }
+
+    // Execution
+    delitem .target_id, 1;
+    getitem getitemid(.coin_aegis$), .coins_reward;
+    
+    // Aesthetic flavor (Plays blacksmith refining sound effect)
+    specialeffect2 EF_REFINE_SUCCESS, AREA, player;
+    soundeffect "blacksmith.wav", 0;
+
+    mes .npc_name$;
+    mes "Done! Your costume has been recycled.";
+    mes "Here is your ^009900" + .coins_reward + " " + getitemname(getitemid(.coin_aegis$)) + "^000000.";
+    close;
+}
+
+// Map Spawn Anchor for the NPC
+prontera,141,186,4	script	Eco-Recycler	855,{
+    // Link directly to the main script controller logic
+    doevent "CostumeRecyclerSYS::OnTalk";
+    end;
+}
