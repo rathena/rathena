@@ -811,9 +811,10 @@ thana_step,154,367,3	script	Lumin#mot	4_M_AC_RUMIN,{
     .@party_id = getcharid(CHAR_ID_PARTY);
 
     // Modern check for party existence
-    if (!.@party_id) {
-        instance_warning(1);
-        end;
+	if (!.@party_id) {
+        mes "[ Lumin ]";
+        mes "You must be in a party to enter Thanatos Tower.";
+        close;
     }
 
     .@md_name$ = "Thanatos Tower";
