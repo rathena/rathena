@@ -807,28 +807,51 @@ thana_step,154,367,3	script	Lumin#mot	4_M_AC_RUMIN,{
 		mes "I'll open the way up to the top of the tower.";
 		close3;
 	}
-	.@party_id = getcharid(1);
-	if(!.@party_id) instance_warning(1);
-	.@md_name$ = "Thanatos Tower";
-	cutin "lumin_ac_04",2;
-	mes "[ Lumin ]";
-	mes "Now, it's time to explore the Thanatos Tower";
-	mes "Of course, if it's you, you'd be ready, right?";
-	next;
-	if(select("Apply for 'Thanatos Tower':Enter 'Thanatos Tower'") == 1){
-		if(!is_party_leader()) instance_warning(4);
-		if(instance_create(.@md_name$) == -3) instance_warning(2,.@md_name$);
-		mes "[ Lumin ]";
-		mes "If you're lucky, the upper floors will open soon. The stairs is not the usual that you use to go up.";
-	} else {
-		if(instance_enter(.@md_name$) == IE_OK){
-			.@party_name$ = getpartyname(.@party_id);
-			mapannounce "thana_step", strcharinfo(0) + " of the party, " + .@party_name$ + " is entering the " + .@md_name$ + ".", bc_map, "0x00FF99";
-		} else {
-			mes "[ Lumin ]";
-			mes "This place has been in dispute for hundreds of years causing the flow of mana to be always unstable. It may take some time open.";	
-		}
-	}
+// Get the player's party ID
+    .@party_id = getcharid(CHAR_ID_PARTY);
+
+    // Modern check for party existence
+    if (!.@party_id) {
+        instance_warning(1);
+        end;
+    }
+
+    .@md_name$ = "Thanatos Tower";
+    cutin "lumin_ac_04", 2;
+    mes "[ Lumin ]";
+    mes "Now, it's time to explore the Thanatos Tower";
+    mes "Of course, if it's you, you'd be ready, right?";
+    next;
+
+    // Use a clean menu select
+    if (select("Apply for 'Thanatos Tower':Enter 'Thanatos Tower'") == 1) {
+        if (!is_party_leader()) {
+            instance_warning(4);
+            end;
+        }
+        
+        // Modern instance creation
+        if (instance_create(.@md_name$) == INT_ANY) {
+            instance_warning(2, .@md_name$);
+            end;
+        }
+        
+        mes "[ Lumin ]";
+        mes "If you're lucky, the upper floors will open soon. The stairs is not the usual that you use to go up.";
+        close3;
+    } else {
+        // Modern instance entry handling
+        if (instance_enter(.@md_name$) == IE_OK) {
+            .@party_name$ = getpartyname(.@party_id);
+            
+            // Clean, safe map broadcast using modern format syntax
+            mapannounce "thana_step", sprintf("%s of the party, %s, is entering the %s.", strcharinfo(CHAR_INFO_NAME), .@party_name$, .@md_name$), bc_map, 0x00FF99;
+        } else {
+            mes "[ Lumin ]";
+            mes "This place has been in dispute for hundreds of years causing the flow of mana to be always unstable. It may take some time open.";
+            close3;
+        }
+    }
 	close3;
 }
 
