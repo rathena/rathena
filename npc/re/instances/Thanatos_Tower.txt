@@ -863,27 +863,32 @@ thana_step,154,367,3	script	Lumin#mot	4_M_AC_RUMIN,{
 	end;
 	
 OnInstanceInit:
-    // Safe-mode approach: Use standard NPC state toggles to bypass the broken instance text parser
-    enablenpc "Watcher#mot";
-    enablenpc "Sealed Hatred#mot";
+    // Simple, modern rAthena approach: Turn off targets directly
+    disablenpc "Watcher#mot";
+    disablenpc "Sealed Hatred#mot";
 
-    // Dynamic loop to disable memory targets safely without calling instance_enable
+    // Loop to handle all memory triggers safely
     for (.@i = 3; .@i <= 6; .@i++) {
-        enablenpc "mot_memory_" + .@i;
+        disablenpc "mot_memory_" + .@i;
     }
-	instance_enable("Memory Piece#mot_0",false);
-	instance_enable("Memory Piece#mot_1",false);
-	for(.@i = 0; .@i < 4; .@i++){
-		instance_enable("Shining Crystal#mot_0_" + .@i,false);
-		instance_enable("Shining Crystal#mot_1_" + .@i,false);
-		instance_enable("Shining Crystal#mot_2_" + .@i,false);
-		instance_enable("Shining Crystal#mot_3_" + .@i,false);
-	}
-	for(.@i = 0; .@i < 5; .@i++){
-		instance_enable("#mot_return_" + .@i,false);
-		instance_enable("#mot_exit_" + .@i,false);
-		instance_enable("Stone Barrier#mot_" + .@i + "-2",false);
-	}
+
+    // Turn off Memory Pieces
+    disablenpc "Memory Piece#mot_0";
+    disablenpc "Memory Piece#mot_1";
+
+    // Loop to cleanly disable all Shining Crystals (0 to 3, sub-indices 0 to 3)
+    for (.@i = 0; .@i <= 3; .@i++) {
+        for (.@j = 0; .@j <= 3; .@j++) {
+            disablenpc "Shining Crystal#mot_" + .@i + "_" + .@j;
+        }
+    }
+
+    // Loop to cleanly disable return warps, exit warps, and stone barriers
+    for (.@i = 0; .@i < 5; .@i++) {
+        disablenpc "#mot_return_" + .@i;
+        disablenpc "#mot_exit_" + .@i;
+        disablenpc "Stone Barrier#mot_" + .@i + "-2";
+    }
 	instance_enable("#mot_exit_5",false);
 	instance_enable("#mot_exit_6",false);
 	instance_enable("Lucille#motend",false);
