@@ -922,9 +922,9 @@ end;
 }
 
 1@thts,156,371,3	script	Lucille#mot	4_F_LUCILE,{
-	if(!is_party_leader()) end;
-	if(!get_instance_var("mot")){
-		set_instance_var("mot",1);
+	if (!is_party_leader()) end;
+    if (!instance_get_reg("mot")) {
+        instance_set_reg("mot", 1);
 		for(.@i = 0; .@i < 6; .@i++)
 			instance_enable("#mot_exit_" + .@i,true);
 		instance_enable("Watcher#mot",true);
