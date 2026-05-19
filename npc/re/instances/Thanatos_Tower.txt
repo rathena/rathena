@@ -912,7 +912,7 @@ OnInstanceInit:
     end;
 
 OnRandomize:
-    // Modern Fix: Use instance_set_reg / instance_get_reg to bypass compiler bugs
+    // Simple, Modern rAthena Approach: Isolate math calculations to avoid parser corruption
     instance_set_reg("exit_0", 2);
     
     for (.@i = 1; .@i < 5; .@i++) {
@@ -925,12 +925,17 @@ OnRandomize:
         if (.@i == 1) {
             instance_set_reg("exit_" + .@i, .@v);
         } else {
-            instance_set_reg("exit_" + (instance_get_reg("last_floor") - 1), .@v);
+            // Calculate the target registry key name cleanly beforehand
+            .@target_floor = instance_get_reg("last_floor") - 1;
+            instance_set_reg("exit_" + .@target_floor, .@v);
         }
         instance_set_reg("last_floor", .@v);
     }
     
-    instance_set_reg("exit_" + (instance_get_reg("last_floor") - 1), 7);
+    // Clean up trailing assignments using isolated calculations
+    .@target_floor = instance_get_reg("last_floor") - 1;
+    instance_set_reg("exit_" + .@target_floor, 7);
+    
     instance_set_reg("Hatred", 3);
     instance_set_reg("Agony", 4);
     instance_set_reg("Misery", 5);
