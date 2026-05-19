@@ -883,49 +883,59 @@ OnInstanceInit:
         }
     }
 
-    // Loop to cleanly disable return warps, exit warps, and stone barriers
+// Loop to cleanly disable return warps, exit warps, and stone barriers
     for (.@i = 0; .@i < 5; .@i++) {
         disablenpc "#mot_return_" + .@i;
         disablenpc "#mot_exit_" + .@i;
         disablenpc "Stone Barrier#mot_" + .@i + "-2";
     }
-	instance_enable("#mot_exit_5",false);
-	instance_enable("#mot_exit_6",false);
-	instance_enable("Lucille#motend",false);
-	//Top Floor Wall
-	.@map$ = instance_mapname("8@thts");
-	setcell .@map$,168,152,168,156,CELL_WALKABLE,0;
-	setcell .@map$,168,152,168,156,CELL_SHOOTABLE,0;
-	setcell .@map$,161,113,163,117,CELL_WALKABLE,0;
-	setcell .@map$,161,113,163,117,CELL_SHOOTABLE,0;
-	setcell .@map$,110,112,112,117,CELL_WALKABLE,0;
-	setcell .@map$,110,112,112,117,CELL_SHOOTABLE,0;
-	setcell .@map$,104,155,105,159,CELL_WALKABLE,0;
-	setcell .@map$,104,155,105,159,CELL_SHOOTABLE,0;
-	setcell .@map$,138,174,143,175,CELL_WALKABLE,0;
-	setcell .@map$,138,174,143,175,CELL_SHOOTABLE,0;
-	instance_event(strnpcinfo(0),"OnRandomize",false);
-end;
+
+    // Modern Fix: Turn off remaining instance targets directly via disablenpc
+    disablenpc "#mot_exit_5";
+    disablenpc "#mot_exit_6";
+    disablenpc "Lucille#motend";
+
+    // Top Floor Wall Configuration
+    .@map$ = instance_mapname("8@thts");
+    setcell .@map$, 168, 152, 168, 156, CELL_WALKABLE, 0;
+    setcell .@map$, 168, 152, 168, 156, CELL_SHOOTABLE, 0;
+    setcell .@map$, 161, 113, 163, 117, CELL_WALKABLE, 0;
+    setcell .@map$, 161, 113, 163, 117, CELL_SHOOTABLE, 0;
+    setcell .@map$, 110, 112, 112, 117, CELL_WALKABLE, 0;
+    setcell .@map$, 110, 112, 112, 117, CELL_SHOOTABLE, 0;
+    setcell .@map$, 104, 155, 104, 159, CELL_WALKABLE, 0;
+    setcell .@map$, 104, 155, 104, 159, CELL_SHOOTABLE, 0;
+    setcell .@map$, 138, 174, 143, 175, CELL_WALKABLE, 0;
+    setcell .@map$, 138, 174, 143, 175, CELL_SHOOTABLE, 0;
+    
+    instance_event(strnpcinfo(0), "OnRandomize", false);
+    end;
 
 OnRandomize:
-	set_instance_var("exit_0",2);
-	for(.@i = 1; .@i < 5; .@i++){
-		.@v = rand(3,6);
-		while(inarray(.@floor,.@v) != -1)
-			.@v = rand(3,6);
-		.@floor[getarraysize(.@floor)] = .@v;
-		if(.@i == 1)
-			set_instance_var("exit_" + .@i,.@v);	
-		else 
-			set_instance_var("exit_" + (get_instance_var("last_floor") - 1),.@v);
-		set_instance_var("last_floor",.@v);
-	}
-	set_instance_var("exit_" + (get_instance_var("last_floor") - 1),7);
-	set_instance_var("Hatred",3);
-	set_instance_var("Agony",4);
-	set_instance_var("Misery",5);
-	set_instance_var("Despair",6);
-end;
+    // Modern Fix: Use instance_set_reg / instance_get_reg to bypass compiler bugs
+    instance_set_reg("exit_0", 2);
+    
+    for (.@i = 1; .@i < 5; .@i++) {
+        .@v = rand(3, 6);
+        while (inarray(.@floor, .@v) != -1) {
+            .@v = rand(3, 6);
+        }
+        .@floor[getarraysize(.@floor)] = .@v;
+        
+        if (.@i == 1) {
+            instance_set_reg("exit_" + .@i, .@v);
+        } else {
+            instance_set_reg("exit_" + (instance_get_reg("last_floor") - 1), .@v);
+        }
+        instance_set_reg("last_floor", .@v);
+    }
+    
+    instance_set_reg("exit_" + (instance_get_reg("last_floor") - 1), 7);
+    instance_set_reg("Hatred", 3);
+    instance_set_reg("Agony", 4);
+    instance_set_reg("Misery", 5);
+    instance_set_reg("Despair", 6);
+    end;
 }
 
 1@thts,156,371,3	script	Lucille#mot	4_F_LUCILE,{
