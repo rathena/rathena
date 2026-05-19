@@ -1115,11 +1115,12 @@ if (!is_party_leader()) end;
 2@thts,57,171,3	script	Watcher#mot	20800,{
 if (!is_party_leader()) end;
     
-    // Modern Fix: Track observation count safely using direct NPC scopes
-    .@var = getvariableofnpc(.obs_count, "Watcher#mot");
+    // Modern Fix: Read the instance variable via safe string lookups
+    .@var = getd("'obs_count");
     if (.@var > 2) end;
     
-    setvariableofnpc(.obs_count, .@var + 1, "Watcher#mot");
+    // Increment the instance variable using clean command syntax (no function parentheses)
+    setd "'obs_count", .@var + 1;
     
     switch (.@var) {
         case 0:
@@ -1134,11 +1135,11 @@ if (!is_party_leader()) end;
             npctalk "Watcher : You will regret it. I will deal with you with all my might.";
             sleep 1000;
             
-            // Simple self-disable command
+            // Turn off this trigger node directly
             disablenpc strnpcinfo(0);
             
-            // Set instance type status tracking cleanly
-            setvariableofnpc(.mot_type, 2, "Watcher#mot");
+            // Set the instance type state variable safely
+            setd "'mot_type", 2;
             
             // Modern, single-quote safe event trigger routing
             donpcevent "#mot_mob::OnSummon";
