@@ -908,7 +908,7 @@ OnInstanceInit:
     setcell .@map$, 138, 174, 143, 175, CELL_WALKABLE, 0;
     setcell .@map$, 138, 174, 143, 175, CELL_SHOOTABLE, 0;
     
-    instance_event(strnpcinfo(0), "OnRandomize", false);
+	donpcevent instance_npcname(strnpcinfo(3)) + "::OnRandomize";
     end;
 
 OnRandomize:
