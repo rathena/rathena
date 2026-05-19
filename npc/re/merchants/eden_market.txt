@@ -1484,7 +1484,7 @@ paramk,59,100,2	script	Red Hugo#pmrf03	4_M_SIGNMCNT,{
 
             // Fetch structural data properties directly from database entries
             .@w_lvl = getiteminfo(.@item_id, ITEMINFO_WLV);
-            .@name$ = lower(getitemname(.@item_id));
+            .@name$ = getitemname(.@item_id);
 
             // Validate Weapon Rules (Crimson Level 3, Thanatos Lvl 4, Illusion Lvl 4, Vicious Mind Lvl 4)
             .@is_valid = 0;
