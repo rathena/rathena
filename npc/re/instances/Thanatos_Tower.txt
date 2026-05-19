@@ -912,8 +912,8 @@ OnInstanceInit:
     end;
 
 OnRandomize:
-    // Simple, Modern rAthena Approach: Isolate math calculations to avoid parser corruption
-    instance_set_reg("exit_0", 2);
+    // Safe-mode approach: Use native Instance Scope Variables (') to bypass the 'i' parser glitch completely
+    'exit_0 = 2;
     
     for (.@i = 1; .@i < 5; .@i++) {
         .@v = rand(3, 6);
@@ -923,33 +923,33 @@ OnRandomize:
         .@floor[getarraysize(.@floor)] = .@v;
         
         if (.@i == 1) {
-            instance_set_reg("exit_" + .@i, .@v);
+            // Dynamically assign instance variables using setd
+            setd("'exit_" + .@i, .@v);
         } else {
-            // Calculate the target registry key name cleanly beforehand
-            .@target_floor = instance_get_reg("last_floor") - 1;
-            instance_set_reg("exit_" + .@target_floor, .@v);
+            .@target_floor = 'last_floor - 1;
+            setd("'exit_" + .@target_floor, .@v);
         }
-        instance_set_reg("last_floor", .@v);
+        'last_floor = .@v;
     }
     
-    // Clean up trailing assignments using isolated calculations
-    .@target_floor = instance_get_reg("last_floor") - 1;
-    instance_set_reg("exit_" + .@target_floor, 7);
+    .@target_floor = 'last_floor - 1;
+    setd("'exit_" + .@target_floor, 7);
     
-    instance_set_reg("Hatred", 3);
-    instance_set_reg("Agony", 4);
-    instance_set_reg("Misery", 5);
-    instance_set_reg("Despair", 6);
+    'Hatred = 3;
+    'Agony = 4;
+    'Misery = 5;
+    'Despair = 6;
     end;
 }
 
 1@thts,156,371,3	script	Lucille#mot	4_F_LUCILE,{
 	if (!is_party_leader()) end;
-    if (!instance_get_reg("mot")) {
-        instance_set_reg("mot", 1);
-		for(.@i = 0; .@i < 6; .@i++)
-			instance_enable("#mot_exit_" + .@i,true);
-		instance_enable("Watcher#mot",true);
+    if (!'mot') {
+        'mot = 1;
+        for (.@i = 0; .@i < 6; .@i++) {
+            enablenpc "#mot_exit_" + .@i;
+        }
+        enablenpc "Watcher#mot";
 		mes "[ Lucille ]";
 		mes " ... ...";
 		sleep2 1000;
