@@ -1032,11 +1032,9 @@ if (!is_party_leader()) end;
 		mes "Don't forget to collect those 4 colored magic stones. It's necessary to reach the top of the tower.";
 		npctalk "You need the 4 colored magic stones to reach the top of the tower.";
 		close3;
-	}
 	mes "[ Lucille ]";
 	mes "The celestial beings interference will be quite strong, but I believe in your will that brought you all the way here.";
 	mes "Please climb the tower.";
-	cutin "tnm_lucile01",2;
 	next;
 	if(select("Leave it to me.:Ask for details.") == 1){
 		mes "[ Lucille ]";
