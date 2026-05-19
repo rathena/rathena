@@ -944,8 +944,8 @@ OnRandomize:
 
 1@thts,156,371,3	script	Lucille#mot	4_F_LUCILE,{
 	if (!is_party_leader()) end;
-    if (!'mot') {
-        'mot = 1;
+    if (!getd('mot')) {
+        setd 'mot, 1;
         for (.@i = 0; .@i < 6; .@i++) {
             enablenpc "#mot_exit_" + .@i;
         }
