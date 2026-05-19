@@ -419,15 +419,6 @@ S_Part:
 	}
 	for (.@i = 0; .@i < MAX_ITEM_RDM_OPT; .@i++) {
 		if ( getequiprandomoption(.@part, .@i, ROA_ID)) {
-Contributor
-@Pokye
-Pokye
-on Jun 23, 2022
-I think it's missing the equipment check. I tested it without any equipment.
-
-[Error]: buildin_getequiprandomoption: No item equipped at pos 7 (CID=150019/AID=2000000).
-[Debug]: Source (NPC): Susan Grey#odin at hu_in01 (97,322)
-[Debug]: Source (NPC): Susan Grey#odin is located in: npc/re/merchants/odin_enchanter.txt```
 			mes "^ff0000Random option found. The equipment cannot be enchanted.^000000";
 			close;
 		}
