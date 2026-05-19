@@ -825,16 +825,19 @@ thana_step,154,367,3	script	Lumin#mot	4_M_AC_RUMIN,{
     next;
 
     // Use a clean menu select
+// Use a clean menu select
     if (select("Apply for 'Thanatos Tower':Enter 'Thanatos Tower'") == 1) {
         if (!is_party_leader()) {
-            instance_warning(4);
-            end;
+            mes "[ Lumin ]";
+            mes "Only the party leader can apply for this instance.";
+            close;
         }
         
         // Modern instance creation
         if (instance_create(.@md_name$) == INT_ANY) {
-            instance_warning(2, .@md_name$);
-            end;
+            mes "[ Lumin ]";
+            mes "Failed to create the instance. It might already exist or the server limit is reached.";
+            close;
         }
         
         mes "[ Lumin ]";
