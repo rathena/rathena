@@ -1934,7 +1934,7 @@ end;
 	
 OnTouch:
 	.@id = atoi(replacestr(strnpcinfo(2),"mot_exit_",""));
-	.@z = get_instance_var("exit_" + .@id);
+	.@z = get_instance_var("exit_" + normalize_string(.@id));
 	switch(.@z){
 		case 2: .@x = 30; .@y = 166; break;
 		case 3: .@x = 28; .@y = 43; break;
