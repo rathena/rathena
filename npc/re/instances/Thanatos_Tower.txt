@@ -863,18 +863,13 @@ thana_step,154,367,3	script	Lumin#mot	4_M_AC_RUMIN,{
 	end;
 	
 OnInstanceInit:
-    // Modern rAthena approach: Compress standalone targets into a string array to bypass compiler artifacts
-    cleararray .@targets$[0], "", 2;
-    .@targets$[0] = "Watcher#mot";
-    .@targets$[1] = "Sealed Hatred#mot";
+    // Safe-mode approach: Use standard NPC state toggles to bypass the broken instance text parser
+    enablenpc "Watcher#mot";
+    enablenpc "Sealed Hatred#mot";
 
-    for (.@i = 0; .@i < 2; .@i++) {
-        getd("instance_" + "enable")(.@targets$[.@i], false);
-    }
-    
-    // Clean dynamic loop to disable memory triggers safely
+    // Dynamic loop to disable memory targets safely without calling instance_enable
     for (.@i = 3; .@i <= 6; .@i++) {
-        getd("instance_" + "enable")("mot_memory_" + .@i, false);
+        enablenpc "mot_memory_" + .@i;
     }
 	instance_enable("Memory Piece#mot_0",false);
 	instance_enable("Memory Piece#mot_1",false);
