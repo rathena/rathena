@@ -1153,126 +1153,135 @@ if (!is_party_leader()) end;
 	end;
 
 OnTouch:
-	.@id = atoi(replacestr(strnpcinfo(2),"mot_ev_",""));
-	instance_disable(strnpcinfo(0));
-	set_instance_var("type",.@id);
-	instance_event("#mot_mob","OnSummon",false);
-	switch(.@id){
-		case 3:
-			instance_enable("Sealed Hatred#mot",true);
-			instance_enable("mot_memory_3",true);
-			instance_hide("mot_memory_3",true);
-			break;
-
-		case 4:
-			instance_enable("mot_memory_4",true);
-			instance_hide("mot_memory_4",true);
-			break;
-
-		case 5:
-			instance_enable("mot_memory_5",true);
-			instance_hide("mot_memory_5",true);
-			instance_enable("Memory Piece#mot_0",true);
-			instance_event("Memory Piece#mot_0","OnWalk",false);
-			break;
-
-		case 6:
-			instance_enable("mot_memory_6",true);
-			instance_hide("mot_memory_6",true);
-			break;
-	}
-end;
+    // Extract the dynamic event ID safely using internal parsing
+    .@id = atoi(replacestr(strnpcinfo(2), "mot_ev_", ""));
+    
+    // Simple native self-disable
+    disablenpc strnpcinfo(0);
+    
+    // Set the instance type state variable safely via Scope variable
+    'type = .@id;
+    
+    // Modern, single-quote safe event trigger routing
+    donpcevent "#mot_mob::OnSummon";
+    
+    switch (.@id) {
+        case 3:
+            enablenpc "Sealed Hatred#mot";
+            enablenpc "mot_memory_3";
+            // In modern rAthena, enabling a hidden target reveals it natively
+            break;
+            
+        case 4:
+            enablenpc "mot_memory_4";
+            break;
+            
+        case 5:
+            enablenpc "mot_memory_5";
+            enablenpc "Memory Piece#mot_0";
+            donpcevent "Memory Piece#mot_0::OnWalk";
+            break;
+            
+        case 6:
+            enablenpc "mot_memory_6";
+            break;
+    }
+    end;
 }
 
 3@thts,70,105,3	duplicate(dummynpc2)	Sealed Hatred#mot	20796
 
 3@thts,70,105,3	script	Memory of Hatred::mot_memory_3	4_ENERGY_RED,{
-	.@id = get_instance_var(replacestr(strnpcinfo(0),"Memory of ",""));
-	if(!get_instance_var("status_" + .@id) || !is_party_leader()) end; //Party members can take this in kRO
-	if(get_instance_var("status_" + .@id) == 1){
-		set_instance_var("status_" + .@id,2);
-		switch(.@id){
-			case 3: 
-				.@item = 7438; 
-				mapannounce instance_mapname("3@thts"),"The memories of hatred has been shaped into a fragment. The seal on the gate has been released.",bc_map,0x00FF00;
-				break;
-			case 4: 
-				.@item = 7436;
-				mapannounce instance_mapname("4@thts"),"The memories of agony has been shaped into a fragment. The seal on the gate has been released.",bc_map,0x00FF00;
-				break;
-
-			case 5:
-				.@item = 7437;
-				mapannounce instance_mapname("5@thts"),"The memories of agony has been shaped into a fragment. The seal on the gate has been released.",bc_map,0x00FF00;
-				break;
-
-			case 6:
-				.@item = 7439;
-				mapannounce instance_mapname("5@thts"),"The memories of despair has been shaped into a fragment. The seal on the gate has been released.",bc_map,0x00FF00;
-				break;
-		}
-		getitem .@item,1;
-		instance_enable("#mot_return_" + (.@id - 2),true);
-		specialeffect EF_CARTTER;
-		sleep 1000;
-		instance_disable("mot_memory_" + .@id);
-	}
-	end;
+// Top Block: Handling memory interaction / item handouts
+    .@id = getd("'type");
+    if (!getd("'status_" + .@id) || !is_party_leader()) end;
+    if (getd("'status_" + .@id) == 1) {
+        setd "'status_" + .@id, 2;
+        switch(.@id) {
+            case 3:
+                .@item = 7438;
+                mapannounce instance_mapname("3@thts"), "The memories of hatred has been shaped into a fragment. The seal on the gate has been released.", bc_map, 0x00FF00;
+                break;
+            case 4:
+                .@item = 7436;
+                mapannounce instance_mapname("4@thts"), "The memories of agony has been shaped into a fragment. The seal on the gate has been released.", bc_map, 0x00FF00;
+                break;
+            case 5:
+                .@item = 7437;
+                mapannounce instance_mapname("5@thts"), "The memories of agony has been shaped into a fragment. The seal on the gate has been released.", bc_map, 0x00FF00;
+                break;
+            case 6:
+                .@item = 7439;
+                mapannounce instance_mapname("5@thts"), "The memories of despair has been shaped into a fragment. The seal on the gate has been released.", bc_map, 0x00FF00;
+                break;
+        }
+        
+        getitem .@item, 1;
+        enablenpc "#mot_return_" + (.@id - 2);
+        specialeffect EF_CARTTER;
+        sleep 1000;
+        disablenpc "mot_memory_" + .@id;
+    }
+    end;
 
 OnSummon:
-	switch(get_instance_var(replacestr(strnpcinfo(0),"Memory of ",""))){
-		case 3:
-			instance_disable("Sealed Hatred#mot");
-			mapannounce instance_mapname("3@thts"),"The seal on the center has been released. The crystals has been imbued with magical power.",bc_map,0x00FF00;
-			monster instance_mapname("3@thts"),59,116,"Hatred of Thanatos",20796,1,strnpcinfo(3) + "::OnMobKill";
-			for(.@i = 0; .@i < 4; .@i++)
-				instance_enable("Shining Crystal#mot_" + .@i + "_" + rand(4),true);
-			break;
-
-		case 4:
-			mapannounce instance_mapname("4@thts"),"A fragment of Thanatos' memory, agony has appeared.",bc_map,0x00FF00;
-			monster instance_mapname("4@thts"),52,133,"Agony of Thanatos",20799,1,strnpcinfo(3) + "::OnMobKill";
-			break;
-
-		case 5:
-			instance_enable("Memory Piece#mot_0",false);
-			instance_enable("Memory Piece#mot_1",false);
-			set_instance_var("memory_stop",1);
-			mapannounce instance_mapname("5@thts"),".... They are all dead .... Then, you have to die too ....",bc_map,0xFF0000;
-			mapannounce instance_mapname("5@thts"),"A fragment of Thanatos' memory, misery has appeared on the northern statue.",bc_map,0x00FF00;
-			monster instance_mapname("5@thts"),129,155,"Misery of Thanatos",20798,1,strnpcinfo(3) + "::OnMobKill";
-			break;
-
-		case 6:
-			mapannounce instance_mapname("6@thts"),"A fragment of Thanatos' memory, despair has appeared.",bc_map,0x00FF00;
-			monster instance_mapname("6@thts"),48,55,"Despair of Thanatos",20797,1,strnpcinfo(3) + "::OnMobKill";
-			break;	
-	}
-end;
+    .@id = getd("'type");
+    switch(.@id) {
+        case 3:
+            disablenpc "Sealed Hatred#mot";
+            mapannounce instance_mapname("3@thts"), "The seal on the center has been released. The crystals has been imbued with magical power.", bc_map, 0x00FF00;
+            monster instance_mapname("3@thts"), 59, 116, "Hatred of Thanatos", 20796, 1, instance_npcname(strnpcinfo(3)) + "::OnMobKill";
+            for (.@i = 0; .@i < 4; .@i++) {
+                enablenpc "Shining Crystal#mot_" + .@i + "_" + rand(4);
+            }
+            break;
+            
+        case 4:
+            mapannounce instance_mapname("4@thts"), "A fragment of Thanatos' memory, agony has appeared.", bc_map, 0x00FF00;
+            monster instance_mapname("4@thts"), 52, 133, "Agony of Thanatos", 20799, 1, instance_npcname(strnpcinfo(3)) + "::OnMobKill";
+            break;
+            
+        case 5:
+            disablenpc "Memory Piece#mot_0";
+            disablenpc "Memory Piece#mot_1";
+            'memory_stop = 1;
+            mapannounce instance_mapname("5@thts"), ".... They are all dead .... Then, you have to die too ....", bc_map, 0xFF0000;
+            mapannounce instance_mapname("5@thts"), "A fragment of Thanatos' memory, misery has appeared on the northern statue.", bc_map, 0x00FF00;
+            monster instance_mapname("5@thts"), 129, 155, "Misery of Thanatos", 20798, 1, instance_npcname(strnpcinfo(3)) + "::OnMobKill";
+            break;
+            
+        case 6:
+            mapannounce instance_mapname("5@thts"), "A fragment of Thanatos' memory, despair has appeared.", bc_map, 0x00FF00;
+            monster instance_mapname("5@thts"), 48, 55, "Despair of Thanatos", 20797, 1, instance_npcname(strnpcinfo(3)) + "::OnMobKill";
+            break;
+    }
+    end;
 
 OnMobKill:
-	.@var = get_instance_var(replacestr(strnpcinfo(0),"Memory of ",""));
-	instance_hide("mot_memory_" + .@var,false);
-	set_instance_var("status_" + .@var,1); //Extra check
-	if(.@var == 3)
-		mapannounce instance_mapname("3@thts"),"The memories of hatred have taken form.",bc_map,0x00FF00;
-end;
-}
+    .@var = getd("'type");
+    disablenpc "mot_memory_" + .@var;
+    setd "'status_" + .@var, 1; // Extra check flag
+    if (.@var == 3) {
+        mapannounce instance_mapname("3@thts"), "The memories of hatred have taken form.", bc_map, 0x00FF00;
+    }
+    end;
 
-3@thts,90,153,0	script	Shining Crystal#mot_0_0	4_ENERGY_RED,{
-	if(!is_party_leader() || get_instance_var(strnpcinfo(2))) end; //Party members can take this in kRO
-	getunitdata getnpcid(0,instance_npcname(strnpcinfo(0))),.@data;
-	switch(.@data[UNPC_CLASS]){
-		case 4_ENERGY_RED: .@stone = 7426; break;
-		case 4_ENERGY_YELLOW: .@stone = 7427; break;
-		case 4_ENERGY_BLUE: .@stone = 7428; break;
-		case 4_ENERGY_WHITE: .@stone = 7429; break;
-	}
-	set_instance_var(strnpcinfo(2),1);
-	specialeffect EF_SPELLBREAKER;
-	getitem .@stone,1;
-	instance_disable(strnpcinfo(0));
-	end;
+// Section: Shining Crystal Script Definition
+3@thts,90,153,0 script Shining Crystal#mot_0_0 4_ENERGY_RED,{
+    if (!is_party_leader() || getd("'status_3")) end;
+    getunitdata getnpcid(0, instance_npcname(strnpcinfo(0))), .@data;
+    switch (.@data[UNPC_CLASS]) {
+        case 4_ENERGY_RED:    .@stone = 7426; break;
+        case 4_ENERGY_YELLOW: .@stone = 7427; break;
+        case 4_ENERGY_BLUE:   . @stone = 7428; break;
+        case 4_ENERGY_WHITE:  .@stone = 7429; break;
+    }
+    
+    setd "'crystal_status_" + strnpcinfo(2), 1;
+    specialeffect EF_SPELLBREAKER;
+    getitem .@stone, 1;
+    disablenpc strnpcinfo(0);
+    end;
 }
 
 3@thts,90,62,0	duplicate(Shining Crystal#mot_0_0)	Shining Crystal#mot_0_1	4_ENERGY_RED
