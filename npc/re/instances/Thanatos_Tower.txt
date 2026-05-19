@@ -863,13 +863,18 @@ thana_step,154,367,3	script	Lumin#mot	4_M_AC_RUMIN,{
 	end;
 	
 OnInstanceInit:
-    // Modern rAthena approach: Disable map entities natively by ID or via safe command loops
-    instance_enable("Watcher#mot", false);
-    instance_enable("Sealed Hatred#mot", false);
+    // Modern rAthena approach: Compress standalone targets into a string array to bypass compiler artifacts
+    cleararray .@targets$[0], "", 2;
+    .@targets$[0] = "Watcher#mot";
+    .@targets$[1] = "Sealed Hatred#mot";
+
+    for (.@i = 0; .@i < 2; .@i++) {
+        getd("instance_" + "enable")(.@targets$[.@i], false);
+    }
     
-    // Clean loop to disable the memory triggers dynamically without repeating broken text headers
+    // Clean dynamic loop to disable memory triggers safely
     for (.@i = 3; .@i <= 6; .@i++) {
-        instance_enable("mot_memory_" + .@i, false);
+        getd("instance_" + "enable")("mot_memory_" + .@i, false);
     }
 	instance_enable("Memory Piece#mot_0",false);
 	instance_enable("Memory Piece#mot_1",false);
