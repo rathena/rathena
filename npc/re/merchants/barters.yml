@@ -66,4 +66,5 @@ Footer:
   - Path: npc/re/merchants/barters/Pet_Groomer.yml
   - Path: npc/re/merchants/barters/points_barter.yml
   - Path: npc/re/merchants/barters/thanatos-tower.yml
+  - Path: npc/re/merchants/barters/eden_market.yml
 

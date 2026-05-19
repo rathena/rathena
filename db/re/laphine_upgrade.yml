@@ -2399,14 +2399,15 @@ Body:
       - Item: S_R_Bearers_Earring
       - Item: S_Mega_Blitz_Shield
       - Item: S_Mega_Blitz_Weapon
-#  - Item: Abyss_Ddbox
-#    TargetItems:
-#      - Item: DragonA_Red
-#      - Item: DragonA_Green
-#      - Item: DragonA_Gold
-#      - Item: DragonA_Purple
-#      - Item: DragonA_Blue
-#      - Item: DragonA_Silver
+  - Item: Abyss_Ddbox
+    RandomOptionGroup: ABYSS_DDBOX
+    TargetItems:
+      - Item: DragonA_Red
+      - Item: DragonA_Green
+      - Item: DragonA_Gold
+      - Item: DragonA_Purple
+      - Item: DragonA_Blue
+      - Item: DragonA_Silver
   - Item: ILL_Piece_A
     RandomOptionGroup: ILL_PIECE_A
     TargetItems:
@@ -3046,20 +3047,23 @@ Body:
       - Item: Grace_Tiger_Suit
       - Item: Grace_Snovice_Suit
       - Item: Grace_Snovice_Robe
-#  - Item: Abyss_Ddbox2
-#    TargetItems:
-#      - Item: DragonA_Red
-#      - Item: DragonA_Green
-#      - Item: DragonA_Gold
-#      - Item: DragonA_Purple
-#      - Item: DragonA_Blue
-#      - Item: DragonA_Silver
-#  - Item: Abyss_Ddbox3
-#    TargetItems:
-#      - Item: Drag_Manteau
-#  - Item: Abyss_Ddbox4
-#    TargetItems:
-#      - Item: Dragon_Boots
+  - Item: Abyss_Ddbox2
+    RandomOptionGroup: ABYSS_DDBOX2
+    TargetItems:
+      - Item: DragonA_Red
+      - Item: DragonA_Green
+      - Item: DragonA_Gold
+      - Item: DragonA_Purple
+      - Item: DragonA_Blue
+      - Item: DragonA_Silver
+  - Item: Abyss_Ddbox3
+    RandomOptionGroup: ABYSS_DDBOX3
+    TargetItems:
+      - Item: Drag_Manteau
+  - Item: Abyss_Ddbox4
+    RandomOptionGroup: ABYSS_DDBOX4
+    TargetItems:
+      - Item: Dragon_Boots
   - Item: Auto_Imp_Melee_1
     RandomOptionGroup: AUTO_IMP_MELEE_1
     TargetItems:

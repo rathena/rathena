@@ -7422,6 +7422,7 @@
 	export_constant(IG_RT_CH01_YGGLEAF_3);
 	export_constant(IG_D_GW_EXTRACTOR);
 	export_constant(IG_C_PRO_GACHA_1);
+	export_constant(IG_ODIN_RELIC);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

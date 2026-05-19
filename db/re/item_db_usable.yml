@@ -66449,6 +66449,7 @@ Body:
     AegisName: Odin_itembox
     Name: Odin Relic
     Type: Usable
+    Buy: 20
     Weight: 100
     Flags:
       Container: true
@@ -66461,7 +66462,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getgroupitem(IG_ODIN_ITEMBOX);
+      getrandgroupitem(IG_Odin_Relic,1,1,1);
   - Id: 23992
     AegisName: Bio_W_Box
     Name: Experimental Weapon Box
