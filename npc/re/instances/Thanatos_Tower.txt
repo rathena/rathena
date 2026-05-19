@@ -823,7 +823,7 @@ thana_step,154,367,3	script	Lumin#mot	4_M_AC_RUMIN,{
 	} else {
 		if(instance_enter(.@md_name$) == IE_OK){
 			.@party_name$ = getpartyname(.@party_id);
-			mapannounce "thana_step", strcharinfo(0) + " of the party, "+ .@party_name$ +", is entering the " + .@md_name$ + ".", bc_map, "0x00FF99";
+			mapannounce "thana_step", strcharinfo(0) + " of the party, " + .@party_name$ + " is entering the " + .@md_name$ + ".", bc_map, "0x00FF99";
 		} else {
 			mes "[ Lumin ]";
 			mes "This place has been in dispute for hundreds of years causing the flow of mana to be always unstable. It may take some time open.";	
