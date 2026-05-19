@@ -1113,28 +1113,38 @@ if (!is_party_leader()) end;
 
 //= Floor 2
 2@thts,57,171,3	script	Watcher#mot	20800,{
-	if(!is_party_leader()) end;
-	.@var = get_instance_var("obs");
-	if(.@var > 2) end;
-	set_instance_var("obs",.@var + 1);
-	switch(.@var){
-		case 0:
-			npctalk "Watcher : Head back. This place is not for humans like you to be in.";
-			break;
-			
-		case 1:
-			npctalk "Watcher : Do not ignore my warning.";
-			break;
-			
-		case 2:
-			npctalk "Watcher : You will regret it. I will deal with you with all my might.";
-			sleep 1000;
-			instance_disable(strnpcinfo(0));
-			set_instance_var("type",2);
-			instance_event("#mot_mob","OnSummon",false);
-			break;
-	}
-	end;
+if (!is_party_leader()) end;
+    
+    // Modern Fix: Track observation count safely using direct NPC scopes
+    .@var = getvariableofnpc(.obs_count, "Watcher#mot");
+    if (.@var > 2) end;
+    
+    setvariableofnpc(.obs_count, .@var + 1, "Watcher#mot");
+    
+    switch (.@var) {
+        case 0:
+            npctalk "Watcher : Head back. This place is not for humans like you to be in.";
+            break;
+            
+        case 1:
+            npctalk "Watcher : Do not ignore my warning.";
+            break;
+            
+        case 2:
+            npctalk "Watcher : You will regret it. I will deal with you with all my might.";
+            sleep 1000;
+            
+            // Simple self-disable command
+            disablenpc strnpcinfo(0);
+            
+            // Set instance type status tracking cleanly
+            setvariableofnpc(.mot_type, 2, "Watcher#mot");
+            
+            // Modern, single-quote safe event trigger routing
+            donpcevent "#mot_mob::OnSummon";
+            break;
+    }
+    end;
 }
 
 //= Floor 3
