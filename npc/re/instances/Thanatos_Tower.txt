@@ -943,13 +943,17 @@ OnRandomize:
 }
 
 1@thts,156,371,3	script	Lucille#mot	4_F_LUCILE,{
-	if (!is_party_leader()) end;
-    if (!getvariableofnpc(.mot_active, "Lucille#mot")) {
-        setvariableofnpc(.mot_active, 1, "Lucille#mot");
-        for (.@i = 0; .@i < 6; .@i++) {
-            enablenpc "#mot_exit_" + .@i;
-        }
-        enablenpc "Watcher#mot";
+if (!is_party_leader()) end;
+    
+    // Fallthrough execution: if we make it here, trigger the entities
+    for (.@i = 0; .@i < 6; .@i++) {
+        enablenpc "#mot_exit_" + .@i;
+    }
+    enablenpc "Watcher#mot";
+
+    // Completely erase this trigger event so nobody can use it again
+    disablenpc strnpcinfo(0);
+    end;
 		mes "[ Lucille ]";
 		mes " ... ...";
 		sleep2 1000;
