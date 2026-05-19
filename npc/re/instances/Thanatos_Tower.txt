@@ -1308,57 +1308,58 @@ OnMobKill:
 5@thts,155,100,0	duplicate(#mot_ev_3)	#mot_ev_5	HIDDEN_WARP_NPC,2,2
 5@thts,129,155,3	duplicate(mot_memory_3)	Memory of Misery::mot_memory_5	20798
 5@thts,101,97,8	script	Memory Piece#mot_0	20798,{
-	instance_enable(strnpcinfo(0),false);
-	movenpc instance_npcname(strnpcinfo(0)),101,97,8;
-	instance_enable(strnpcinfo(0),true);
-	instance_event(strnpcinfo(0),"OnWalk",false);
-	end;
+// Top snippet continuation block
+    disablenpc strnpcinfo(0);
+    movenpc instance_npcname(strnpcinfo(0)), 101, 97, 8;
+    enablenpc strnpcinfo(0);
+    donpcevent instance_npcname(strnpcinfo(3)) + "::OnWalk";
+    end;
 
 OnWalk:
-	npcspeed 150;
-	unitwalk getnpcid(0,instance_npcname(strnpcinfo(0))),131,97,instance_npcname(strnpcinfo(0)) + "::OnContinueWalk";
-end;
+    npcspeed 150;
+    unitwalk getnpcid(0, instance_npcname(strnpcinfo(0))), 131, 97, instance_npcname(strnpcinfo(0)) + "::OnContinueWalk";
+    end;
 
 OnContinueWalk:
-	unitwalk getnpcid(0,instance_npcname(strnpcinfo(0))),156,97,instance_npcname(strnpcinfo(0)) + "::OnEvent";
-end;
+    unitwalk getnpcid(0, instance_npcname(strnpcinfo(0))), 156, 97, instance_npcname(strnpcinfo(0)) + "::OnEvent";
+    end;
 
 OnEvent:
-	instance_enable(strnpcinfo(0),false);
-	movenpc instance_npcname(strnpcinfo(0)),101,97,8;
-	if(get_instance_var("memory_stop")) end;
-	instance_event("#mot_floor_ev","OnEvent05",false);
-	mapannounce instance_mapname("5@thts"),"A memory fragment has activated the eastern statue.",bc_map,0x00FF00;
-	instance_enable("Memory Piece#mot_1",true);
-	instance_event("Memory Piece#mot_1","OnWalk",false);
-end;
+    disablenpc strnpcinfo(0);
+    movenpc instance_npcname(strnpcinfo(0)), 101, 97, 8;
+    if (getd("'memory_stop")) end;
+    donpcevent "#mot_floor_ev::OnEvent05";
+    mapannounce instance_mapname("5@thts"), "A memory fragment has activated the eastern statue.", bc_map, 0x00FF00;
+    enablenpc "Memory Piece#mot_1";
+    donpcevent "Memory Piece#mot_1::OnWalk";
+    end;
 }
 
-5@thts,156,97,2	script	Memory Piece#mot_1	20798,{
-	instance_enable(strnpcinfo(0),false);
-	movenpc instance_npcname(strnpcinfo(0)),156,97,2;
-	instance_enable(strnpcinfo(0),true);
-	instance_event(strnpcinfo(0),"OnWalk",false);
-	end;
+5@thts,156,97,2 script Memory Piece#mot_1 20798,{
+    disablenpc strnpcinfo(0);
+    movenpc instance_npcname(strnpcinfo(0)), 156, 97, 2;
+    enablenpc strnpcinfo(0);
+    donpcevent instance_npcname(strnpcinfo(3)) + "::OnWalk";
+    end;
 
 OnWalk:
-	npcspeed 150;
-	unitwalk getnpcid(0,instance_npcname(strnpcinfo(0))),131,97,instance_npcname(strnpcinfo(0)) + "::OnContinueWalk";
-end;
+    npcspeed 150;
+    unitwalk getnpcid(0, instance_npcname(strnpcinfo(0))), 131, 97, instance_npcname(strnpcinfo(0)) + "::OnContinueWalk";
+    end;
 
 OnContinueWalk:
-	unitwalk getnpcid(0,instance_npcname(strnpcinfo(0))),101,97,instance_npcname(strnpcinfo(0)) + "::OnEvent";
-end;
+    unitwalk getnpcid(0, instance_npcname(strnpcinfo(0))), 101, 97, instance_npcname(strnpcinfo(0)) + "::OnEvent";
+    end;
 
 OnEvent:
-	instance_enable(strnpcinfo(0),false);
-	movenpc instance_npcname(strnpcinfo(0)),156,97,2;
-	if(get_instance_var("memory_stop")) end;
-	instance_event("#mot_floor_ev","OnEvent05",false);
-	mapannounce instance_mapname("5@thts"),"A memory fragment has activated the western statue.",bc_map,0x00FF00;
-	instance_enable("Memory Piece#mot_0",true);
-	instance_event("Memory Piece#mot_0","OnWalk",false);
-end;
+    disablenpc strnpcinfo(0);
+    movenpc instance_npcname(strnpcinfo(0)), 156, 97, 2;
+    if (getd("'memory_stop")) end;
+    donpcevent "#mot_floor_ev::OnEvent05";
+    mapannounce instance_mapname("5@thts"), "A memory fragment has activated the western statue.", bc_map, 0x00FF00;
+    enablenpc "Memory Piece#mot_0";
+    donpcevent "Memory Piece#mot_0::OnWalk";
+    end;
 }
 
 //= Floor 6
@@ -1367,86 +1368,89 @@ end;
 
 //= Floor 7
 7@thts,161,57,0	script	Gold Religious Statue#mot_0	4_ENERGY_WHITE,{
-	.@id = atoi(replacestr(strnpcinfo(2),"mot_",""));
-	.@map$ = instance_mapname("7@thts");
-	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill";
-	switch(.@id){
-		case 0: 
-			mapannounce .@map$,"Do you resent fate?",bc_map,0x00FF00;
-			.@mob_id = 20794;
-			break;
-
-		case 1:
-			mapannounce .@map$,"Do you regret that choice?",bc_map,0x00FF00;
-			.@mob_id = 20795;
-			break;
-
-		case 2:
-			mapannounce .@map$,"Are you afraid?",bc_map,0x00FF00;
-			.@mob_id = 20793;
-			break;
-
-		case 3:
-			mapannounce .@map$,"Anger, fill yourself with anger...",bc_map,0x00FF00;
-			.@mob_id = 20792;
-			break;
-
-		case 4:
-			if(get_instance_var("statue") < 4) end;
-			instance_hide(strnpcinfo(0),true);
-			mapannounce .@map$,"Dark Devil Statue : Hahaha it's nothing but a useless struggle!!!",bc_map,0x00FF00;
-			set_instance_var("statue",5);
-			getitem 7430,1;
-			mapannounce .@map$,"The stone barriers has activated.",bc_map,0x00FF00;
-			instance_enable(strnpcinfo(0),false);
-			end;
-	}
-	instance_hide(strnpcinfo(0),true);
-	areamonster .@map$,120,45,140,60,"--ja--",.@mob_id,5,.@event$;
-	end;
+	.@id = atoi(replacestr(strnpcinfo(2), "mot_", ""));
+    .@map$ = instance_mapname("7@thts");
+    .@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill";
+    
+    switch(.@id) {
+        case 0:
+            mapannounce .@map$, "Do you resent fate?", bc_map, 0x00FF00;
+            .@mob_id = 20794;
+            break;
+        case 1:
+            mapannounce .@map$, "Do you regret that choice?", bc_map, 0x00FF00;
+            .@mob_id = 20795;
+            break;
+        case 2:
+            mapannounce .@map$, "Are you afraid?", bc_map, 0x00FF00;
+            .@mob_id = 20793;
+            break;
+        case 3:
+            mapannounce .@map$, "Anger, fill yourself with anger...", bc_map, 0x00FF00;
+            .@mob_id = 20792;
+            break;
+        case 4:
+            if ('statue < 4) end;
+            disablenpc strnpcinfo(0);
+            mapannounce .@map$, "Dark Devil Statue : Hahaha it's nothing but a useless struggle!!!", bc_map, 0x00FF00;
+            'statue = 5;
+            getitem 7430, 1;
+            mapannounce .@map$, "The stone barriers has activated.", bc_map, 0x00FF00;
+            disablenpc strnpcinfo(0);
+            end;
+    }
+    
+    disablenpc strnpcinfo(0);
+    areamonster .@map$, 120, 45, 140, 60, "--ja--", .@mob_id, 5, .@event$;
+    end;
 
 OnMobKill:
-	.@map$ = instance_mapname("7@thts");
-	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill";
-	if(!mobcount(.@map$,.@event$)){
-		set_instance_var("statue",get_instance_var("statue") + 1);
-		instance_enable(strnpcinfo(0),false);
-	}
-end;
-}
+    .@map$ = instance_mapname("7@thts");
+    .@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill";
+    if (!mobcount(.@map$, .@event$)) {
+        'statue = 'statue + 1;
+        disablenpc strnpcinfo(0);
+    }
+    end;
 
+// Section: Duplicate Declarations
 7@thts,154,17,0	duplicate(Gold Religious Statue#mot_0)	Green Wiseman Statue#mot_1	4_ENERGY_WHITE
 7@thts,103,17,0	duplicate(Gold Religious Statue#mot_0)	Blue Angel Statue#mot_2	4_ENERGY_WHITE
 7@thts,96,57,0	duplicate(Gold Religious Statue#mot_0)	Bloody Knight Statue#mot_3	4_ENERGY_WHITE
 7@thts,129,86,0	duplicate(Gold Religious Statue#mot_0)	Dark Devil Statue#mot_4	4_ENERGY_WHITE
 
 7@thts,134,52,0	script	Stone Barrier#mot_0	CLEAR_NPC,{
-	if(get_instance_var("statue") < 5) end;
-	.@id = atoi(replacestr(strnpcinfo(2),"mot_",""));
-	.@v = get_instance_var("barrier");
-	switch(.@id){
-		case 0: .@item_id = 7427; .@color$ = "Yellow"; break;
-		case 1: .@item_id = 7428; .@color$ = "Blue";break;
-		case 2: .@item_id = 7429; .@color$ = "Green";break;
-		case 3: .@item_id = 7426; .@color$ = "Red"; break;
-		case 4: .@item_id = 7430; .@color$ = "Black"; break;
-	}
-	if(!countitem(.@item_id)){
-		mes "A hint of " + .@color$ + " light is shining on the empty slot of the stone barrier.";
-		end;
-	}
-	delitem .@item_id,1;
-	set_instance_var("barrier", .@v + 1);
-	instance_disable(strnpcinfo(0));
-	instance_enable("Stone Barrier#mot_" + .@id + "-2",true);
-	specialeffect EF_BEGINSPELL3,AREA,instance_npcname("Stone Barrier#mot_" + .@id + "-2");
-	specialeffect EF_PINKBODY,AREA,instance_npcname("Stone Barrier#mot_" + .@id + "-2");
-	mapannounce instance_mapname("7@thts"),"A part of the seal has been unlocked.",bc_map,0x00FF00;
-	if(.@v + 1 == 5){
-		mapannounce instance_mapname("7@thts"),"All the seals have been unlocked, the gate has opened.",bc_map,0x00FF00;
-		instance_enable("#mot_exit_6",true);
-	}
-	end;
+    if ('statue < 5) end;
+    .@id = atoi(replacestr(strnpcinfo(2), "mot_", ""));
+    .@v = 'barrier;
+    
+    switch(.@id) {
+        case 0: .@item_id = 7427; .@color$ = "Yellow"; break;
+        case 1: .@item_id = 7428; .@color$ = "Blue"; break;
+        case 2: .@item_id = 7429; .@color$ = "Green"; break;
+        case 3: .@item_id = 7426; .@color$ = "Red"; break;
+        case 4: .@item_id = 7430; .@color$ = "Black"; break;
+    }
+    
+    if (!countitem(.@item_id)) {
+        mes "A hint of " + .@color$ + " light is shining on the empty slot of the stone barrier.";
+        end;
+    }
+    
+    delitem .@item_id, 1;
+    'barrier = .@v + 1;
+    disablenpc strnpcinfo(0);
+    
+    enablenpc "Stone Barrier#mot_" + (.@id + "-2");
+    specialeffect EF_BEGINSPELL3, AREA, instance_npcname("Stone Barrier#mot_" + (.@id + "-2"));
+    specialeffect EF_PINKBODY, AREA, instance_npcname("Stone Barrier#mot_" + (.@id + "-2"));
+    
+    mapannounce instance_mapname("7@thts"), "A part of the seal has been unlocked.", bc_map, 0x00FF00;
+    if (.@v + 1 == 5) {
+        mapannounce instance_mapname("7@thts"), "All the seals have been unlocked, the gate has opened.", bc_map, 0x00FF00;
+        enablenpc "#mot_exit_6";
+    }
+    end;
 }
 
 7@thts,132,47,0	duplicate(Stone Barrier#mot_0)	Stone Barrier#mot_1	CLEAR_NPC
