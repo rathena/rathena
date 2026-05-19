@@ -3728,20 +3728,6 @@ TIMER_FUNC(skill_timerskill){
 				case KN_AUTOCOUNTER:
 					clif_skill_nodamage(src,*target,skl->skill_id,skl->skill_lv);
 					break;
-				case NPC_MOVE_COORDINATE:
-					if (src != bl) {
-						int x = src->x, y = src->y;
-					if (unit_movepos(src,bl->x,bl->y,0,0)) {
-						clif_skill_nodamage(src,src,skill_id,skill_lv,1);
-						clif_blown(src);
-					if (unit_movepos(bl,x,y,0,0)) {
-						clif_skill_nodamage(bl,bl,skill_id,skill_lv,1);
-						clif_blown(bl);
-					}
-				map_foreachinallrange(unit_changetarget,src,AREA_SIZE,BL_MOB,bl,src);
-			}
-		}
-		break;
 				case RG_INTIMIDATE:
 					if (unit_warp(src,-1,-1,-1,CLR_TELEPORT) == 0) {
 						int16 x,y;
