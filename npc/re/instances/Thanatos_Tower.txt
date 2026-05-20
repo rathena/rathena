@@ -1,15 +1,3 @@
-Here is the corrected and modernized version of your script tailored for the latest rAthena standard.
-
-Core Corrections Made:
-Removed Deprecated Functions: Changed isbegin_quest to the modernized checkquest(<quest_id>, QUESTSTATUS) syntax used by rAthena.
-
-Fixed Broken Multi-line Strings: Split long, un-wrapped string variables that often trigger tokenization compilation errors.
-
-Fixed Logic Errors: Corrected a critical script bug in the switch(checkquest(...)) on line 480 (case 17420: was nested directly inside a switch looking for an integer status like 2, making it completely unreachable dead code).
-
-Code Optimization: Cleaned up unnecessary formatting to keep things simple, readable, and highly optimized for your server.
-
-Code snippet
 //===== rAthena script ===========================================|
 //= Memory of Thanatos                                           =|
 //===== By: ======================================================|
