@@ -38,7 +38,7 @@ OnTalk:
     next;
     
     // FIXED: Added 'set'
-    set .coin_id, getitemid(.coin_aegis$);
+    set .coin_id,50001;
     
     mes .npc_name$;
     mes "My current exchange rate is:";
