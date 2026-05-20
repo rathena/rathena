@@ -720,5 +720,9 @@ OnInit:
 	}
 	for(.@i = 490044; .@i < 490056; .@i++) .sin_id[getarraysize(..sin_id)] = .@i;
 	for(.@i = 490056; .@i < 490068; .@i++) .light_id[getarraysize(..light_id)] = .@i;
+	questinfo QTYPE_DAILYQUEST,QMARK_YELLOW,"isbegin_quest(17415) == 2 && isbegin_quest(17416) == 0 && (checkquest(17422,PLAYTIME) == -1 || checkquest(17422,PLAYTIME) == 2)";
+	questinfo QTYPE_DAILYQUEST,QMARK_YELLOW,"isbegin_quest(17415) == 2 && isbegin_quest(17417) == 0 && (checkquest(17423,PLAYTIME) == -1 || checkquest(17423,PLAYTIME) == 2)";
+	questinfo QTYPE_DAILYQUEST,QMARK_YELLOW,"isbegin_quest(17415) == 2 && isbegin_quest(17418) == 0 && (checkquest(17424,PLAYTIME) == -1 || checkquest(17424,PLAYTIME) == 2)";
+	questinfo QTYPE_DAILYQUEST,QMARK_YELLOW,"isbegin_quest(17415) == 2 && isbegin_quest(17420) == 0 && (checkquest(17425,PLAYTIME) == -1 || checkquest(17425,PLAYTIME) == 2)";
 end;
 }
