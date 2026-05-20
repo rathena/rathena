@@ -1252,8 +1252,8 @@ OnTimer2000:
 	}
 	end;
 OnTimer5000:
-	if (unitisforcewalk('boss_id))	// debug, the unit is idle but should be walking
-		unitstopwalk 'boss_id, USW_FORCE_STOP;
+//	if (unitisforcewalk('boss_id))	// debug, the unit is idle but should be walking
+//		unitstopwalk 'boss_id, USW_FORCE_STOP;
 	end;
 OnTimer150000:
 	'event_type[2] = false;
