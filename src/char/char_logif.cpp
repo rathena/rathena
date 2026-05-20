@@ -855,7 +855,7 @@ void do_init_chlogif(void) {
 /// Resets all the data.
 void chlogif_reset(void){
 	int32 id;
-	// TODO kick everyone out and reset everything or wait for connect and try to reaquire locks [FlavioJS]
+	// TODO kick everyone out and reset everything or wait for connect and try to reacquire locks [FlavioJS]
 	for( id = 0; id < ARRAYLENGTH(map_server); ++id )
 		chmapif_server_reset(id);
 	flush_fifos();

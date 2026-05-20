@@ -109053,6 +109053,7 @@ Body:
     AttackMotion: 960
     ClientAttackMotion: 480
     DamageMotion: 576
+    DamageTaken: 10
     Ai: 24
   - Id: 20849
     AegisName: SUMMON_WOODEN_FAIRY
@@ -109076,6 +109077,7 @@ Body:
     AttackMotion: 1152
     ClientAttackMotion: 864
     DamageMotion: 576
+    DamageTaken: 10
     Ai: 24
   - Id: 20850
     AegisName: SUMMON_CREEPER
@@ -109099,6 +109101,7 @@ Body:
     AttackMotion: 840
     ClientAttackMotion: 600
     DamageMotion: 576
+    DamageTaken: 10
     Ai: 24
   - Id: 20851
     AegisName: SUMMON_HELLTREE
@@ -109122,6 +109125,7 @@ Body:
     AttackMotion: 1080
     ClientAttackMotion: 840
     DamageMotion: 480
+    DamageTaken: 10
     Ai: 24
 #  - Id: 20856
 #    AegisName: MD_N_ARENA_1

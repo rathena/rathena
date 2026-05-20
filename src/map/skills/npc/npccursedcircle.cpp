@@ -28,7 +28,7 @@ void SkillNpcCursedCircle::castendNoDamageId(block_list *src, block_list *target
 		int32 count = 0;
 
 		clif_skill_damage( *src, *target, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, getSkillId(), skill_lv, DMG_SINGLE );
-		count = map_forcountinrange(skill_area_sub, src, skill_get_splash(getSkillId(),skill_lv), (sd)?sd->spiritball_old:15, // Assume 15 spiritballs in non-charactors
+		count = map_forcountinrange(skill_area_sub, src, skill_get_splash(getSkillId(),skill_lv), (sd)?sd->spiritball_old:15, // Assume 15 spiritballs in non-characters
 			BL_CHAR, src, getSkillId(), skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_nodamage_id);
 		if( sd ) pc_delspiritball(sd, count, 0);
 		clif_skill_nodamage(src, *src, getSkillId(), skill_lv,

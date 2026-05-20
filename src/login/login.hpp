@@ -166,7 +166,7 @@ struct online_login_data* login_get_online_user( uint32 account_id );
  * Function to add a user in online_db.
  *  Checking if the user is already registered in the db.
  *  Stop disconnection timer if set.
- * @param char_server: id of char-serv on wich the player is
+ * @param char_server: id of char-serv on which the player is
  * @param account_id: the account identifier
  * @return the new|registered online data
  */

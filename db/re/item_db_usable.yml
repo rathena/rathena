@@ -83695,6 +83695,214 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 106415
+    AegisName: Rt_Ch01_Chunk_A
+    Name: Junkyard Activation Reward
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    Script: |
+      getgroupitem(IG_RT_CH01_CHUNK_A);
+  - Id: 106416
+    AegisName: Rt_Ch01_Chunk_C
+    Name: Junkyard Completion Reward
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    Script: |
+      getgroupitem(IG_RT_CH01_CHUNK_C);
+  - Id: 106417
+    AegisName: Rt_Ch01_Noise_A
+    Name: Noise Activation Reward
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    Script: |
+      getgroupitem(IG_RT_CH01_NOISE_A);
+  - Id: 106418
+    AegisName: Rt_Ch01_Noise_C
+    Name: Noise Completion Reward
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    Script: |
+      getgroupitem(IG_RT_CH01_NOISE_C);
+  - Id: 106419
+    AegisName: Rt_Ch01_Noise_2
+    Name: Noise 2 Sets Reward
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    Script: |
+      getgroupitem(IG_RT_CH01_NOISE_2);
+  - Id: 106420
+    AegisName: Rt_Ch01_Flowers_A
+    Name: Creepy Flower Garden Activation Reward
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    Script: |
+      getgroupitem(IG_RT_CH01_FLOWERS_A);
+  - Id: 106421
+    AegisName: Rt_Ch01_Flowers_C
+    Name: Creepy Flower Garden Completion Reward
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    Script: |
+      getgroupitem(IG_RT_CH01_FLOWERS_C);
+  - Id: 106422
+    AegisName: Rt_Ch01_Toxic_A
+    Name: Toxic Sidekick Activation Reward
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    Script: |
+      getgroupitem(IG_RT_CH01_TOXIC_A);
+  - Id: 106423
+    AegisName: Rt_Ch01_Toxic_C
+    Name: Toxic Sidekick Completion Reward
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    Script: |
+      getgroupitem(IG_RT_CH01_TOXIC_C);
+  - Id: 106424
+    AegisName: Rt_Ch01_Toxic_3
+    Name: Toxic Sidekick 3 Sets Reward
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    Script: |
+      getgroupitem(IG_RT_CH01_TOXIC_3);
+  - Id: 106425
+    AegisName: Rt_Ch01_Yggleaf_A
+    Name: Small and Warm Activation Reward
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    Script: |
+      getgroupitem(IG_RT_CH01_YGGLEAF_A);
+  - Id: 106426
+    AegisName: Rt_Ch01_Yggleaf_C
+    Name: Small and Warm Completion Reward
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    Script: |
+      getgroupitem(IG_RT_CH01_YGGLEAF_C);
+  - Id: 106427
+    AegisName: Rt_Ch01_Yggleaf_3
+    Name: Small and Warm 3 Sets Reward
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    Script: |
+      getgroupitem(IG_RT_CH01_YGGLEAF_3);
   - Id: 200000
     AegisName: IDTest_Cash
     Name: IDTest Cash

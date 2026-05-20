@@ -39,3 +39,10 @@ void SkillCartCannon::splashSearch(block_list* src, block_list* target, uint16 s
 
 	SkillImplRecursiveDamageSplash::splashSearch(src, target, skill_lv, tick, flag);
 }
+
+void SkillCartCannon::modifyElement(const Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv, int32& element, int32 flag) const {
+	const map_session_data* sd = BL_CAST(BL_PC, &src);
+
+	if (sd != nullptr && sd->state.arrow_atk > 0)
+		element = sd->bonus.arrow_ele;
+}

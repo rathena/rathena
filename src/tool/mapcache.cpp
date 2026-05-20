@@ -158,7 +158,7 @@ int32 find_map(char *name)
 	fseek(map_cache_fp, sizeof(struct main_header), SEEK_SET);
 
 	for(i = 0; i < header.map_count; i++) {
-		if(fread(&info, sizeof(info), 1, map_cache_fp) != 1) printf("An error as occured in fread while reading map_cache\n");
+		if(fread(&info, sizeof(info), 1, map_cache_fp) != 1) printf("An error as occurred in fread while reading map_cache\n");
 		if(strcmp(name, info.name) == 0) // Map found
 			return 1;
 		else // Map not found, jump to the beginning of the next map info header
@@ -249,7 +249,7 @@ bool MapcacheTool::initialize( int32 argc, char* argv[] ){
 			header.file_size = sizeof(struct main_header);
 			header.map_count = 0;
 		} else {
-			if (fread(&header, sizeof(struct main_header), 1, map_cache_fp) != 1) { printf("An error as occured while reading map_cache_fp \n"); }
+			if (fread(&header, sizeof(struct main_header), 1, map_cache_fp) != 1) { printf("An error as occurred while reading map_cache_fp \n"); }
 			header.file_size = GetULong((unsigned char *)&(header.file_size));
 			header.map_count = GetUShort((unsigned char *)&(header.map_count));
 		}

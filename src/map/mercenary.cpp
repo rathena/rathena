@@ -345,8 +345,8 @@ void merc_contract_init(s_mercenary_data *md) {
 /**
  * Received mercenary data from char-serv
  * @param merc : mercenary datas
- * @param flag : if inter-serv request was sucessfull
- * @return false:failure, true:sucess
+ * @param flag : if inter-serv request was successful
+ * @return false:failure, true:success
  */
 bool mercenary_recv_data(s_mercenary *merc, bool flag)
 {

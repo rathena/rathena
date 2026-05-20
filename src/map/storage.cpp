@@ -300,7 +300,7 @@ static int32 storage_additem(map_session_data* sd, struct s_storage *stor, struc
  * @param sd : player
  * @param n : idx on storage to remove the item from
  * @param amount :number of item to remove
- * @return 0:sucess, 1:fail
+ * @return 0:success, 1:fail
  */
 int32 storage_delitem(map_session_data* sd, struct s_storage *stor, int32 index, int32 amount)
 {

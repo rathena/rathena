@@ -22,10 +22,10 @@ void SkillMayhemicThorns::calculateSkillRatio(const Damage *wd, const block_list
 	const status_data* sstatus = status_get_status_data(*src);
 	const status_change *sc = status_get_sc(src);
 
-	skillratio += -100 + 200 + 300 * skill_lv;
+	skillratio += -100 + 200 + 340 * skill_lv;
 	skillratio += 5 * sstatus->pow;
-	if (sc && sc->getSCE(SC_RESEARCHREPORT))
-		skillratio += 150;
+	if (sc != nullptr && sc->hasSCE(SC_RESEARCHREPORT))
+		skillratio += 200;
 	RE_LVL_DMOD(100);
 }
 

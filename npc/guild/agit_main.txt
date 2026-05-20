@@ -21,7 +21,7 @@
 //=
 //= - Guardian Spawning Template
 //=   Visible Name required: Guardian
-//=   Spawn guardians when guild castle data is recieved.
+//=   Spawn guardians when guild castle data is received.
 //=
 //= - Enables Kafra Services inside Guild Strongholds.
 //=   Visible Name required: Kafra Employee

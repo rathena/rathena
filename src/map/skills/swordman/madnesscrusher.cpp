@@ -16,8 +16,9 @@ void SkillMadnessCrusher::calculateSkillRatio(const Damage* wd, const block_list
 	const status_change* sc = status_get_sc(src);
 	const status_data* sstatus = status_get_status_data(*src);
 
-	skillratio += -100 + 1000 + 3800 * skill_lv;
+	skillratio += -100 + 1750 + 4350 * skill_lv;
 	skillratio += 10 * sstatus->pow;
+
 	if (sd != nullptr) {
 		int16 index = sd->equip_index[EQI_HAND_R];
 

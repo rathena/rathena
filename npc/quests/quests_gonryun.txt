@@ -2112,7 +2112,7 @@ gon_dun03,62,222,0	script	Strange dead body#gnbs	111,{
 			mes "^FF0000Damn I can't.. believe.. failed..";
 			mes "Sayum... I should've..";
 			mes "watchout.. ehhh.. but.. break";
-			mes "..pieces.. and seperate..";
+			mes "..pieces.. and separate..";
 			mes "I.. with";
 			mes "this...^000000";
 			next;

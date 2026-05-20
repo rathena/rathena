@@ -3873,14 +3873,14 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	sd->itemsphealrate.clear();
 	sd->itemgroupsphealrate.clear();
 
+	sd->sp_loss.clear();
+	sd->hp_regen.clear();
+	sd->sp_regen.clear();
+	sd->percent_hp_regen.clear();
+	sd->percent_sp_regen.clear();
+
 	// Zero up structures...
-	memset(&sd->hp_loss, 0, sizeof(sd->hp_loss)
-		+ sizeof(sd->sp_loss)
-		+ sizeof(sd->hp_regen)
-		+ sizeof(sd->sp_regen)
-		+ sizeof(sd->percent_hp_regen)
-		+ sizeof(sd->percent_sp_regen)
-		+ sizeof(sd->def_set_race)
+	memset(&sd->def_set_race, 0, sizeof(sd->def_set_race)
 		+ sizeof(sd->mdef_set_race)
 		+ sizeof(sd->norecover_state_race)
 		+ sizeof(sd->hp_vanish_race)
@@ -8195,9 +8195,6 @@ static uint16 status_calc_speed(block_list *bl, status_change *sc, int32 speed)
 				val = max(val, 20);
 			if (sc->getSCE(SC_GROUNDGRAVITY))
 				val = max(val, 20);
-			if( sc->getSCE( SC_SHADOW_CLOCK ) != nullptr ){
-				val = max( val, 30 );
-			}
 
 			if( sd && sd->bonus.speed_rate + sd->bonus.speed_add_rate > 0 ) // Permanent item-based speedup
 				val = max( val, sd->bonus.speed_rate + sd->bonus.speed_add_rate );
@@ -8256,6 +8253,9 @@ static uint16 status_calc_speed(block_list *bl, status_change *sc, int32 speed)
 		}
 		if( sc->getSCE(SC_WILD_WALK) != nullptr )
 			val = max( val, sc->getSCE(SC_WILD_WALK)->val2 );
+		if( sc->getSCE( SC_SHADOW_CLOCK ) != nullptr ){
+			val = max( val, 50 );
+		}
 
 		// !FIXME: official items use a single bonus for this [ultramage]
 		if( sd && sd->bonus.speed_rate + sd->bonus.speed_add_rate < 0 ) // Permanent item-based speedup
@@ -13887,7 +13887,7 @@ int32 status_change_end( block_list* bl, enum sc_type type, int32 tid ){
 			vending_closevending(sd);
 			map_quit(sd);
 			// Because map_quit calls status_change_end with tid -1
-			// from here it's not neccesary to continue
+			// from here it's not necessary to continue
 			return 1;
 			break;
 		case SC_STOP:
@@ -15590,10 +15590,10 @@ static int32 status_natural_heal(block_list* bl, va_list args)
 		flag = RGN_NONE;
 
 	if (sd) {
-		if (sd->hp_loss.value || sd->sp_loss.value)
-			pc_bleeding(sd, natural_heal_diff_tick);
-		if (sd->hp_regen.value || sd->sp_regen.value || sd->percent_hp_regen.value || sd->percent_sp_regen.value)
-			pc_regen(sd, natural_heal_diff_tick);
+		if (!sd->hp_loss.empty() || !sd->sp_loss.empty())
+			pc_bleeding(*sd, natural_heal_diff_tick);
+		if (!sd->hp_regen.empty() || !sd->sp_regen.empty() || !sd->percent_hp_regen.empty() || !sd->percent_sp_regen.empty())
+			pc_regen(*sd, natural_heal_diff_tick);
 	}
 
 	if(flag&(RGN_SHP|RGN_SSP) && regen->ssregen &&

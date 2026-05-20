@@ -93,7 +93,7 @@ static void MD5_Round_Calculate(const unsigned char *block,
 	uint32 X[16]; //512bit 64byte
 	int32 j,k;
 
-	//Save A as AA, B as BB, C as CC, and and D as DD (saving of A, B, C, and D)
+	//Save A as AA, B as BB, C as CC, and D as DD (saving of A, B, C, and D)
 	uint32 A=*A2, B=*B2, C=*C2, D=*D2;
 	uint32 AA = A,BB = B,CC = C,DD = D;
 
