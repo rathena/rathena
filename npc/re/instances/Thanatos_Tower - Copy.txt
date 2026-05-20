@@ -1,9 +1,7 @@
 //===== rAthena script ===========================================|
 //= Memory of Thanatos                                           =|
 //===== By: ======================================================|
-//= crazyarashi                                                  =|
-//===== Current Version: =========================================|
-//= 1.1 Fixed Compilation Typo & Scope Identifiers               =|
+//= crazyarashi / Cleaned up for Latest rAthena                   =|
 //================================================================|
 
 -	script	mot_init	-1,{
@@ -30,7 +28,7 @@ OnInit:
 		disablenpc "Memory Seal#tt" + .@i;
 		disablenpc "#tteffect0" + .@i;
 	}
-end;
+	end;
 }
 
 tha_t01,161,78,3	script	Solice#mot	4_F_CHNDOCTOR,{
@@ -41,12 +39,12 @@ tha_t01,161,78,3	script	Solice#mot	4_F_CHNDOCTOR,{
 		mes "^4D4DFFThe required level for this daily quest is Level 180 or above.^000000";
 		end;
 	}
-	if(isbegin_quest(17408) == 0){
+	if(checkquest(17408, QUESTSTATUS) == -1){
 		mes "[ Solice ]";
 		mes "Oh! You scared me! You're not currently in contract with us, so please go ahead and sign a contract.";
 		end;
 	}
-	if(isbegin_quest(17415) < 2){
+	if(checkquest(17415, QUESTSTATUS) < 2){
 		mes "[ Solice ]";
 		mes "Should I go up again? If I'm lucky again this time, I won't be blind and a victim.";
 		next;
@@ -61,7 +59,8 @@ tha_t01,161,78,3	script	Solice#mot	4_F_CHNDOCTOR,{
 		next;
 		select("Why are you welcoming me?");
 		mes "[ Solice ]";
-		mes "Oh, we're from the Uno Monster Society. We collect and organize data from new monsters and provide the information to adventurers. We are here because a new monster was discovered";
+		mes "Oh, we're from the Uno Monster Society. We collect and organize data from new monsters and provide the information to adventurers.";
+		mes "We are here because a new monster was discovered.";
 		next;
 		mes "[ Solice ]";
 		mes "When I came here, I heard that the tower is cool, mysterious, and the monsters are very strong.";
@@ -164,9 +163,7 @@ tha_t01,161,78,3	script	Solice#mot	4_F_CHNDOCTOR,{
 			end;
 	}
 	mes "[ Solice ]";
-	switch(checkquest(.@cid,PLAYTIME)){
-		case -1: break;
-
+	switch(checkquest(.@cid, PLAYTIME)){
 		case 0:
 		case 1:
 			mes "We are still organizing the data that you collected. Please come back here after dawn.";
@@ -176,157 +173,151 @@ tha_t01,161,78,3	script	Solice#mot	4_F_CHNDOCTOR,{
 			erasequest .@cid;
 			break;
 	}
-	switch(checkquest(.@qid,HUNTING)){
-		case -1:
-			switch(.@qid){
-				case 17416:
-					mes "The 9th floor? I was really curious about that place too! I couldn't even go in even though its right in front of me.";
-					break;
+	
+	.@qstatus = checkquest(.@qid, HUNTING);
+	if (.@qstatus == -1) {
+		switch(.@qid){
+			case 17416:
+				mes "The 9th floor? I was really curious about that place too! I couldn't even go in even though its right in front of me.";
+				break;
 
-				case 17417:
-					mes "The 10th floor? When we went there, we immediately turned around right away and left. I was so upset.";
-					break;
+			case 17417:
+				mes "The 10th floor? When we went there, we immediately turned around right away and left. I was so upset.";
+				break;
 
-				case 17418:
-					mes "The 11th floor? Wow~ We ran away as soon as we stepped in there. I was so frustrated when we went in there! Do you want to go to the 11th floor?";
-					break;
+			case 17418:
+				mes "The 11th floor? Wow~ We ran away as soon as we stepped in there. I was so frustrated when we went in there! Do you want to go to the 11th floor?";
+				break;
 
-				case 17420:
-					mes "The 12th floor? Oh, we couldn't even go in there. The adventurer is brave. Do you want to go to the 12th floor?";
-					break;
+			case 17420:
+				mes "The 12th floor? Oh, we couldn't even go in there. The adventurer is brave. Do you want to go to the 12th floor?";
+				break;
+		}
+		next;
+		if(checkquest(17415, QUESTSTATUS) == 2){
+			if(select("I'll go.:No.") == 2){
+				mes "[ Solice ]";
+				mes "You're not interested? Then, there's nothing we can do. If we meet again next time, please help me then.";
+				end;
 			}
-			next;
-			if(isbegin_quest(17415) == 2){
-				if(select("I'll go.:No.") == 2){
-					mes "[ Solice ]";
-					mes "You're not interested? Then, there's nothing we can do. If we meet again next time, please help me then.";
-					mes "Have a safe trip!";
-					end;
-				}
-			}
-			mes "[ Solice ]";
-			switch(.@qid){
-				case 17416:
-					mes "On the 9th floor, you will face the ^0000CDCrow Duke and Crow Baron^000000. I think ^0000CD20 of each^000000 should be enough.";
-					break;
+		}
+		mes "[ Solice ]";
+		switch(.@qid){
+			case 17416:
+				mes "On the 9th floor, you will face the ^0000CDCrow Duke and Crow Baron^000000. I think ^0000CD20 of each^000000 should be enough.";
+				break;
 
-				case 17417:
-					mes "On the 10th floor, you can deal with ^0000CDVoid Mimic, Book of Death, and Eldest^000000. I think ^0000CD20 of each^000000 should be enough.";
-					break;
+			case 17417:
+				mes "On the 10th floor, you can deal with ^0000CDVoid Mimic, Book of Death, and Eldest^000000. I think ^0000CD20 of each^000000 should be enough.";
+				break;
 
-				case 17418:
-					mes "On the 11th floor, I want you to deal the with the following ^0000CDEmpathizer, Happy Giver, Pray Giver, and Smile Giver^000000. I think ^0000CD15 of each^000000 should be enough.";
-					break;
+			case 17418:
+				mes "On the 11th floor, I want you to deal the with the following ^0000CDEmpathizer, Happy Giver, Pray Giver, and Smile Giver^000000. I think ^0000CD15 of each^000000 should be enough.";
+				break;
 
-				case 17420:
-					mes "On the 12th floor, It will be hard but please deal with ^0000CDThanatos of Anger, Horror, Resentment, and Regret^000000. I think ^0000CD10 of each^000000 should be enough.";
-					break;
-			}
+			case 17420:
+				mes "On the 12th floor, It will be hard but please deal with ^0000CDThanatos of Anger, Horror, Resentment, and Regret^000000. I think ^0000CD10 of each^000000 should be enough.";
+				break;
+		}
+		next;
+		mes "[ Solice ]";
+		mes "Oh, also if you have time. Can you also bring me ^0000CD10 " + getitemname(.@fragment) + "^000000. It's optional, so don't feel pressured. But if you bring I'll give you an ^0000CDadditional reward.^000000";
+		if(checkquest(17415, QUESTSTATUS) == -1){
+			setquest 17415;
+			completequest 17415;
+		}
+		setquest .@qid;
+		if(.@qid2) setquest .@qid2;
+		next;
+		mes "[ Solice ]";
+		mes "Have a safe trip!";
+		end;
+	}
+	else if (.@qstatus == 0 || .@qstatus == 1) {
+		switch(.@qid){
+			case 17416:
+				mes "Oh, right. It was ^0000CDCrow Duke and Crow Baron^000000. You said you'd take care ^0000CD20 of each^000000, right?";
+				break;			
+
+			case 17417:
+				mes "Hm, what was it again. Oh, right, it's ^0000CDVoid Mimic, Book of Death, and Eldest^000000. Please take care ^0000CD20 of each^000000.";
+				break;
+
+			case 17418:
+				mes "I know this is quite a lot, but it's ^0000CDEmpathizer, Happy Giver, Pray Giver, and Smile Giver^000000. Please take care ^0000CD10 of each^000000.";
+				break;
+
+			case 17420:
+				mes "This is quite hard. But please deal with ^0000CDThanatos of Anger, Horror, Resentment, and Regret^000000. ^0000CD10 of each^000000 should be enough.";
+				break;
+		}
+		next;
+		mes "[ Solice ]";
+		mes "Oh, also if you have time. Can you also bring me ^0000CD10 " + getitemname(.@fragment) + "^000000. It's optional, so don't feel pressured. But if you bring I'll give you an ^0000CDadditional reward.^000000";
+		next;
+		mes "[ Solice ]";
+		mes "Have a safe trip!";
+		end;
+	}
+	else if (.@qstatus == 2) {
+		// Individual adjustments for nested hunting targets
+		if (.@qid == 17418 && checkquest(.@qid2, HUNTING) < 2) {
+			mes "I know this is quite a lot, but it's ^0000CDEmpathizer, Happy Giver, Pray Giver, and Smile Giver^000000. Please take care ^0000CD10 of each^000000.";
 			next;
 			mes "[ Solice ]";
 			mes "Oh, also if you have time. Can you also bring me ^0000CD10 " + getitemname(.@fragment) + "^000000. It's optional, so don't feel pressured. But if you bring I'll give you an ^0000CDadditional reward.^000000";
-			if(isbegin_quest(17415) == 0){
-				setquest 17415;
-				completequest 17415;
-			}
-			setquest .@qid;
-			if(.@qid2) setquest .@qid2;
 			next;
 			mes "[ Solice ]";
 			mes "Have a safe trip!";
-			break;
-
-		case 0:
-		case 1:
-			switch(.@qid){
-				case 17416:
-					mes "Oh, right. It was ^0000CDCrow Duke and Crow Baron^000000. You said you'd take care ^0000CD20 of each^000000, right?";
-					break;			
-
-				case 17417:
-					mes "Hm, what was it again. Oh, right, it's ^0000CDVoid Mimic, Book of Death, and Eldest^000000. Please take care ^0000CD20 of each^000000.";
-					break;
-
-				case 17418:
-					mes "I know this is quite a lot, but it's ^0000CDEmpathizer, Happy Giver, Pray Giver, and Smile Giver^000000. Please take care ^0000CD10 of each^000000.";
-					break;
-
-				case 17420:
-					mes "This is quite hard. But please deal with ^0000CDThanatos of Anger, Horror, Resentment, and Regret^000000. ^0000CD10 of each^000000 should be enough.";
-					break;
-			}
-			next;
-			mes "[ Solice ]";
-			mes "Oh, also if you have time. Can you also bring me ^0000CD10 " + getitemname(.@fragment) + "^000000. It's optional, so don't feel pressured. But if you bring I'll give you an ^0000CDadditional reward.^000000";
-			next;
-			mes "[ Solice ]";
-			mes "Have a safe trip!";
-			break;
-
-		case 2:
-			switch(.@qid){
-				case 17418:
-					if(checkquest(.@qid2,HUNTING) < 2){
-						mes "I know this is quite a lot, but it's ^0000CDEmpathizer, Happy Giver, Pray Giver, and Smile Giver^000000. Please take care ^0000CD10 of each^000000.";
-						next;
-						mes "[ Solice ]";
-						mes "Oh, also if you have time. Can you also bring me ^0000CD10 " + getitemname(.@fragment) + "^000000. It's optional, so don't feel pressured. But if you bring I'll give you an ^0000CDadditional reward.^000000";
-						next;
-						mes "[ Solice ]";
-						mes "Have a safe trip!";
-						end;
-					}
-					break;
-
-				case 17420:
-					if(checkquest(.@qid2,HUNTING) < 2){
-						mes "This is quite hard. But please deal with ^0000CDThanatos of Anger, Horror, Resentment, and Regret^000000. ^0000CD10 of each^000000 should be enough.";
-						next;
-						mes "[ Solice ]";
-						mes "Oh, also if you have time. Can you also bring me ^0000CD10 " + getitemname(.@fragment) + "^000000. It's optional, so don't feel pressured. But if you bring I'll give you an ^0000CDadditional reward.^000000";
-						next;
-						mes "[ Solice ]";
-						mes "Have a safe trip!";
-						end;
-					}
-					break;
-			}
-			mes "Cool. It's beautiful. Thanks to this we are able to achieve more quantitive and qualitative development on the monsters science.";
-			mes "We'll be organizing the data, so please come back here after dawn.";
-			erasequest .@qid;
-			if(.@qid2) erasequest .@qid2;
-			setquest .@cid;
-			if(countitem(.@fragment) >= 10){
-				delitem .@fragment,10;
-				.@exp += 3000000;
-				.@jexp += 1000000;
-			}
-			getexp .@exp,.@jexp;
 			end;
+		}
+		if (.@qid == 17420 && checkquest(.@qid2, HUNTING) < 2) {
+			mes "This is quite hard. But please deal with ^0000CDThanatos of Anger, Horror, Resentment, and Regret^000000. ^0000CD10 of each^000000 should be enough.";
+			next;
+			mes "[ Solice ]";
+			mes "Oh, also if you have time. Can you also bring me ^0000CD10 " + getitemname(.@fragment) + "^000000. It's optional, so don't feel pressured. But if you bring I'll give you an ^0000CDadditional reward.^000000";
+			next;
+			mes "[ Solice ]";
+			mes "Have a safe trip!";
+			end;
+		}
+		
+		mes "Cool. It's beautiful. Thanks to this we are able to achieve more quantitive and qualitative development on the monsters science.";
+		mes "We'll be organizing the data, so please come back here after dawn.";
+		erasequest .@qid;
+		if(.@qid2) erasequest .@qid2;
+		setquest .@cid;
+		if(countitem(.@fragment) >= 10){
+			delitem .@fragment,10;
+			.@exp += 3000000;
+			.@jexp += 1000000;
+		}
+		getexp .@exp,.@jexp;
+		end;
 	}
 	end;
 
 OnTouch:
-	if(isbegin_quest(17415) < 2)
-		npctalk "Ah... I really need help. Please...","",bc_self;
-end;
+	if(checkquest(17415, QUESTSTATUS) < 2)
+		npctalk "Ah... I really need help. Please...", "", bc_self;
+	end;
 
 OnInit:
-	questinfo QTYPE_DAILYQUEST,QMARK_YELLOW,"BaseLevel >= 180 && isbegin_quest(17408) != 0 && isbegin_quest(17415) == 0";
-	questinfo QTYPE_DAILYQUEST,QMARK_YELLOW,"isbegin_quest(17415) == 2 && isbegin_quest(17416) == 0 && checkquest(17422,PLAYTIME) == -1 || checkquest(17422,PLAYTIME) == 2";
-	questinfo QTYPE_DAILYQUEST,QMARK_YELLOW,"isbegin_quest(17415) == 2 && isbegin_quest(17417) == 0 && checkquest(17423,PLAYTIME) == -1 || checkquest(17423,PLAYTIME) == 2";
-	questinfo QTYPE_DAILYQUEST,QMARK_YELLOW,"isbegin_quest(17415) == 2 && isbegin_quest(17418) == 0 && checkquest(17424,PLAYTIME) == -1 || checkquest(17424,PLAYTIME) == 2";
-	questinfo QTYPE_DAILYQUEST,QMARK_YELLOW,"isbegin_quest(17415) == 2 && isbegin_quest(17420) == 0 && checkquest(17425,PLAYTIME) == -1 || checkquest(17425,PLAYTIME) == 2";
+	questinfo QTYPE_DAILYQUEST,QMARK_YELLOW,"BaseLevel >= 180 && checkquest(17408,QUESTSTATUS) != -1 && checkquest(17415,QUESTSTATUS) == -1";
+	questinfo QTYPE_DAILYQUEST,QMARK_YELLOW,"checkquest(17415,QUESTSTATUS) == 2 && checkquest(17416,QUESTSTATUS) == -1 && (checkquest(17422,PLAYTIME) == -1 || checkquest(17422,PLAYTIME) == 2)";
+	questinfo QTYPE_DAILYQUEST,QMARK_YELLOW,"checkquest(17415,QUESTSTATUS) == 2 && checkquest(17417,QUESTSTATUS) == -1 && (checkquest(17423,PLAYTIME) == -1 || checkquest(17423,PLAYTIME) == 2)";
+	questinfo QTYPE_DAILYQUEST,QMARK_YELLOW,"checkquest(17415,QUESTSTATUS) == 2 && checkquest(17418,QUESTSTATUS) == -1 && (checkquest(17424,PLAYTIME) == -1 || checkquest(17424,PLAYTIME) == 2)";
+	questinfo QTYPE_DAILYQUEST,QMARK_YELLOW,"checkquest(17415,QUESTSTATUS) == 2 && checkquest(17420,QUESTSTATUS) == -1 && (checkquest(17425,PLAYTIME) == -1 || checkquest(17425,PLAYTIME) == 2)";
 	questinfo QTYPE_QUEST,QMARK_YELLOW,"checkquest(17416,HUNTING) == 2";
 	questinfo QTYPE_QUEST,QMARK_YELLOW,"checkquest(17417,HUNTING) == 2";
 	questinfo QTYPE_QUEST,QMARK_YELLOW,"checkquest(17418,HUNTING) == 2 && checkquest(17419,HUNTING) == 2";
 	questinfo QTYPE_QUEST,QMARK_YELLOW,"checkquest(17420,HUNTING) == 2 && checkquest(17421,HUNTING) == 2";
 	setunittitle getnpcid(0),"[Thanatos Tower Staff]";
-end;
+	end;
 }
 
 tha_t01,162,77,3	script	Jei#mot	4_F_HUWOMAN,{
-	if(isbegin_quest(17408) == 0){
+	if(checkquest(17408, QUESTSTATUS) == -1){
 		mes "[ Jei ]";
 		mes "We can't work together, since you haven't signed a contract yet. Hurry and get a contract from the guide next to us.";
 		end;
@@ -337,7 +328,7 @@ tha_t01,162,77,3	script	Jei#mot	4_F_HUWOMAN,{
 	
 OnInit:
 	setunittitle getnpcid(0),"[Thanatos Tower Staff]";
-end;
+	end;
 }
 
 tha_t01,139,83,5	script	Mini Robe#mot	4_F_02,{
@@ -387,7 +378,7 @@ tha_t01,139,83,5	script	Mini Robe#mot	4_F_02,{
 	
 OnInit:
 	setunittitle getnpcid(0),"[Thanatos Tower Staff]";
-end;
+	end;
 }
 
 tha_t01,135,83,5	script	Tamilla#mot	4064,{
@@ -427,11 +418,13 @@ tha_t01,135,83,5	script	Tamilla#mot	4064,{
 			function check_equipment;
 			function enchant;
 			check_equipment(false);
+			break;
 			
 		case 3:
 			function check_equipment;
 			function reset;
 			check_equipment(true);
+			break;
 	}
 	end;
 	
@@ -454,11 +447,11 @@ function	check_equipment	{
 		mes "Hm. You don't have anything there. Please come back once you have equipped your accessory.";
 		end;
 	}
-	.@idx = inarray(..sin_id,.@equip_id);
+	.@idx = inarray(.sin_id,.@equip_id);
 	if(.@idx != -1) 
 		.@type = 1;
 	else 
-		.@idx = inarray(..light_id,.@equip_id);
+		.@idx = inarray(.light_id,.@equip_id);
 	if(.@idx == -1){
 		mes "[ Tamilla ]";
 		mes "This equipment is not an item that can be processed by our branch.";
@@ -611,7 +604,7 @@ function	reset	{
 	mes "You can either pay with with " + .zeny_fee + " Zeny or pay with " + .premium_amount + " " + getitemname(.premium_reset) + ".";
 	mes "However, paying with zeny has a ^FF0000" + .break_chance + "% break chance^000000 upon initializing your equipment.";
 	next;
-	if(select("Pay with Zeny(" + (100 - .break_chance) + "%)","Pay with " + getitemname(.premium_reset) + "(100%)")){
+	if(select("Pay with Zeny(" + (100 - .break_chance) + "%)","Pay with " + getitemname(.premium_reset) + "(100%)") == 1){
 		mes "[ Tamilla ]";
 		mes "Are you sure you want to proceed initializing your ^0000CD" + .@equip_name$ + "^000000 using Zeny?";
 		mes "There is a ^FF0000" + .break_chance + " chance that your equipment will break^000000.";
@@ -659,66 +652,4 @@ function	reset	{
 		emotion ET_HUK;
 	}
 	end;
-}
-	
-OnInit:
-	.premium_reset = 6909; //ITEM ID FOR PREMIUM RESET
-	.premium_amount = 3;
-	.zeny_fee = 1000000;
-	.break_chance = 30;
-	setunittitle getnpcid(0),"[Thanatos Tower Staff]";
-	
-	setunitdata getnpcid(0),UNPC_SEX,SEX_FEMALE;
-	setunitdata getnpcid(0),UNPC_HAIRSTYLE,4; //kRO Palette
-	setunitdata getnpcid(0),UNPC_HAIRCOLOR,2; //kRO Palette
-	setunitdata getnpcid(0),UNPC_HEADTOP,547;
-	setarray .@weight,
-		35, //Level 1
-		30, //Level 2
-		20, //Level 3
-		10, //Level 4
-		5; // Level 5
-	setarray .@empathy,310217,310218,310219,310220,310221;
-	setarray .@happy,310222,310223,310224,310225,310226;
-	setarray .@shelter,310227,310228,310229,310230,310231;
-	setarray .@solace,310232,310233,310234,310235,310236;
-	setarray .@divine,310247,310248,310249,310250,310251;
-	setarray .@destructive,310252,310253,310254,310255,310256;
-	setarray .@anger,310197,310198,310199,310200,310201;
-	setarray .@horror,310202,310203,310204,310205,310206;
-	setarray .@resentment,310207,310208,310209,310210,310211;
-	setarray .@regret,310212,310213,310214,310215,310216;
-	setarray .@inverse,310237,310238,310239,310240,310241;
-	setarray .@dragon,310242,310243,310244,310245,310246;
-	for(.@i = 0; .@i < 5; .@i++){
-		for(.@j = 0; .@j < .@weight[.@i]; .@j++){
-			.light[getarraysize(.light)] = .@empathy[.@i];
-			.light[getarraysize(.light)] = .@happy[.@i];
-			.light[getarraysize(.light)] = .@shelter[.@i];
-			.light[getarraysize(.light)] = .@solace[.@i];
-			.light_2[getarraysize(.light_2)] = .@divine[.@i];
-			.light_2[getarraysize(.light_2)] = .@destructive[.@i];
-			.empathy[getarraysize(.empathy)] = .@empathy[.@i];
-			.happy[getarraysize(.happy)] = .@happy[.@i];
-			.shelter[getarraysize(.shelter)] = .@shelter[.@i];
-			.solace[getarraysize(.solace)] = .@solace[.@i];
-			.divine[getarraysize(.divine)] = .@divine[.@i];
-			.destructive[getarraysize(.destructive)] = .@destructive[.@i];
-			.sin[getarraysize(.sin)] = .@anger[.@i];
-			.sin[getarraysize(.sin)] = .@horror[.@i];
-			.sin[getarraysize(.sin)] = .@resentment[.@i];
-			.sin[getarraysize(.sin)] = .@regret[.@i];
-			.sin_2[getarraysize(.sin_2)] = .@inverse[.@i];
-			.sin_2[getarraysize(.sin_2)] = .@dragon[.@i];
-			.anger[getarraysize(.anger)] = .@anger[.@i];
-			.horror[getarraysize(.horror)] = .@horror[.@i];
-			.resentment[getarraysize(.resentment)] = .@resentment[.@i];
-			.regret[getarraysize(.regret)] = .@regret[.@i];
-			.inverse[getarraysize(.inverse)] = .@inverse[.@i];
-			.dragon[getarraysize(.dragon)] = .@dragon[.@i];
-		}
-	}
-	for(.@i = 490044; .@i < 490056; .@i++) .sin_id[getarraysize(..sin_id)] = .@i;
-	for(.@i = 490056; .@i < 490068; .@i++) .light_id[getarraysize(..light_id)] = .@i;
-end;
 }
