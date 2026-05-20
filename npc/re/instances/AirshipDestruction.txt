@@ -1283,8 +1283,8 @@ OnStop:
 	if (unitexists('boss_id) == true) {
 		'DE_BERSERKAIZER = 0;
 		setunitdata 'boss_id, UMOB_ATKRANGE, 1;
-		if (unitisforcewalk('boss_id))	// debug
-			unitstopwalk 'boss_id, USW_FORCE_STOP;
+		// if (unitisforcewalk('boss_id))	// debug
+			//unitstopwalk 'boss_id, USW_FORCE_STOP;
 	}
 	end;
 }
