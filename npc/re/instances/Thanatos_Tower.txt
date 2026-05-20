@@ -1189,7 +1189,6 @@ OnTouch:
     end;
 }
 
-3@thts,70,105,3	duplicate(dummynpc2)	Sealed Hatred#mot	20796
 
 3@thts,70,105,3	script	Memory of Hatred::mot_memory_3	4_ENERGY_RED,{
 // Top Block: Handling memory interaction / item handouts
