@@ -424,14 +424,12 @@ tha_t01,135,83,5	script	Tamilla#mot	4064,{
 			break;
 			
 		case 2:
-			function check_equipment;
-			function enchant;
-			check_equipment(false);
+			check_equipment(0);
+			break;
 			
 		case 3:
-			function check_equipment;
-			function reset;
-			check_equipment(true);
+			check_equipment(1);
+			break;
 	}
 	end;
 	
