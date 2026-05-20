@@ -424,16 +424,16 @@ tha_t01,135,83,5	script	Tamilla#mot	4064,{
 			break;
 			
 		case 2:
-			check_equipment(0);
+			callsub S_check_equipment,0;
 			break;
-			
+
 		case 3:
-			check_equipment(1);
+			callsub S_check_equipment,1;
 			break;
 	}
 	end;
 	
-function	check_equipment	{
+S_check_equipment:
 	mes "[ Tamilla ]";
 	mes "You can choose right or left accessory. Which side do you want to work on?";
 	next;
@@ -463,12 +463,11 @@ function	check_equipment	{
 		end;
 	}
 	if(!getarg(0))
-		enchant(.@part,.@equip_id,.@type);
+		callsub S_enchant,.@part,.@equip_id,.@type;
 	else
-		reset(.@part,.@equip_id);
-}
+		callsub S_reset,.@part,.@equip_id;
 	
-function	enchant	{
+S_enchant:
 	.@part = getarg(0);
 	.@equip_id = getarg(1);
 	.@type = getarg(2);
@@ -591,7 +590,7 @@ function	enchant	{
 	end;
 }
 
-function	reset	{
+S_reset:
 	.@part = getarg(0);
 	.@equip_id = getarg(1);
 	.@equip_name$ = getitemname(.@equip_id);
