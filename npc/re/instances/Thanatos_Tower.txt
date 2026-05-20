@@ -2032,5 +2032,5 @@ end;
 
 OnTouch:
 	warp instance_mapname("8@thts"),136,118;
-end;
+	end;
 }
