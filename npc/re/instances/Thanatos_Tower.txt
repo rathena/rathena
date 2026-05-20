@@ -2027,10 +2027,3 @@ end;
 1@thts,15,15,0	duplicate(#mot_exit_0)	#mot_exit_4	WARPNPC,1,1 //exit after 5@thts
 1@thts,181,15,0	duplicate(#mot_exit_0)	#mot_exit_5	WARPNPC,1,1 //exit after 6@thts
 
-7@thts,130,52,0	script	#mot_exit_6	WARPNPC,1,1,{
-	end;
-
-OnTouch:
-	warp instance_mapname("8@thts"),136,118;
-	end;
-}
