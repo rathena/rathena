@@ -434,6 +434,7 @@ tha_t01,135,83,5	script	Tamilla#mot	4064,{
 	end;
 	
 S_check_equipment:
+	.@mode = getarg(0);
 	mes "[ Tamilla ]";
 	mes "You can choose right or left accessory. Which side do you want to work on?";
 	next;
@@ -462,10 +463,11 @@ S_check_equipment:
 		mes "This equipment is not an item that can be processed by our branch.";
 		end;
 	}
-	if(!getarg(0))
+	if(!.@mode)
 		callsub S_enchant,.@part,.@equip_id,.@type;
 	else
 		callsub S_reset,.@part,.@equip_id;
+	return;
 	
 S_enchant:
 	.@part = getarg(0);
@@ -587,8 +589,8 @@ S_enchant:
 	getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@card[1],.@card[2],.@card[3];
 	mes "[ Tamilla ]";
 	mes "Thank you for using my services, If you're unhappy with the effects, you can use the initialize method to remove the enchants.";
+	return;
 	end;
-}
 
 S_reset:
 	.@part = getarg(0);
@@ -658,6 +660,7 @@ S_reset:
 		mes "Kak! I didn't mean to break it... I'm sorry, but it looks like reinforcing the slot broke it from the inside.";
 		emotion ET_HUK;
 	}
+	return;
 	end;
 }
 	
