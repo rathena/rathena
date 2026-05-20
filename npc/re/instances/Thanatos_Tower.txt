@@ -526,9 +526,12 @@ function	enchant	{
 			mes "Our branch supports fair services, I won't be able to empower your equipment since you don't have enough materials for the fee.";
 			end;
 		}
-		.@enchant = getd("." + .@enchant$ + "[" + rand(getarraysize(getd("." + .@enchant$))) + "]");
+		.@arr$ = "." + .@enchant$;
+		.@enchant = getd(.@arr$ + "[" + rand(getarraysize(getd(.@arr$))) + "]");
 		.@card[2] = .@enchant;
-		.@enchant = getd("." + .@enchant$ + "_2[" + rand(getarraysize(getd("." + .@enchant$ + "_2"))) + "]");
+		
+		.@arr2$ = "." + .@enchant$ + "_2";
+		.@enchant = getd(.@arr2$ + "[" + rand(getarraysize(getd(.@arr2$))) + "]");
 		.@card[3] = .@enchant;
 	} else {
 		.@slot = 2;
@@ -609,7 +612,7 @@ function	reset	{
 	mes "You can either pay with with " + .zeny_fee + " Zeny or pay with " + .premium_amount + " " + getitemname(.premium_reset) + ".";
 	mes "However, paying with zeny has a ^FF0000" + .break_chance + "% break chance^000000 upon initializing your equipment.";
 	next;
-	if(select("Pay with Zeny(" + (100 - .break_chance) + "%)","Pay with " + getitemname(.premium_reset) + "(100%)")){
+	if(select("Pay with Zeny(" + (100 - .break_chance) + "%):Pay with " + getitemname(.premium_reset) + "(100%)") == 1){
 		mes "[ Tamilla ]";
 		mes "Are you sure you want to proceed initializing your ^0000CD" + .@equip_name$ + "^000000 using Zeny?";
 		mes "There is a ^FF0000" + .break_chance + " chance that your equipment will break^000000.";
