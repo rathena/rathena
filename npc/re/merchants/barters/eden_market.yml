@@ -43,7 +43,7 @@
 
 Header:
   Type: BARTER_DB
-  Version: 1
+  Version: 3
 
 Body:
   - Name: para_pmi01
