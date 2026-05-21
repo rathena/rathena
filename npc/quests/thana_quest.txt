@@ -535,7 +535,7 @@ tha_t02,231,161,5	script	Entrance Guide	874,{
 		mes "Ah, you're "+strcharinfo(0)+", right?";
 		next;
 		mes "[Burled]";
-		if (getareausers("tha_t02",226,156,236,166) < 5) {
+		if (getareausers("tha_t02",226,156,236,166) < 1) {
 			mes "First, we need to wait until";
 			mes "at least 5 temps are gathered";
 			mes "to form a work group. Right";
