@@ -42,6 +42,11 @@ ba_in01,24,262,7	script(CLOAKED)	Rookie#ep181_rk01	4_M_ROOKIE,{
 // Main Quest: Step 2.
 rachel,182,176,3	script	Masked Girl	4_F_MASK,5,5,{
 	.@char_id = getcharid(0);
+	if (ep18_main == 57) {
+	#Ep18_Manual_Clear = 1;
+	mes "Adding manual completion";
+	end;
+	}
 	if (ep18_main == 1) {
 		if (getequipid(EQI_HEAD_TOP) != 400127) {	// Ep18_Mini_Elly
 			mes "Someone is giving a speech in a loud voice.";
@@ -4548,7 +4553,7 @@ wolfvill,140,112,5	script(CLOAKED)	Suad#sms01	4_EP18_SUAD,{
 		next;
 		cutin "ep18_maram_01.png",2;
 		mes "[Maram]";
-		mes "Let's go together. I know where it is! <NAVI>[어디에]<INFO>wolfvill,131,257,0,101,0</INFO></NAVI>Adventure, come with us. I have a feeling that we might need a third-party witness!";
+		mes "Let's go together. I know where it is! <NAVI>[   ]<INFO>wolfvill,131,257,0,101,0</INFO></NAVI>Adventure, come with us. I have a feeling that we might need a third-party witness!";
 		erasequest 16580;
 		setquest 17517;
 		ep18_main = 48;
@@ -5051,7 +5056,7 @@ rachel,116,200,5	script	Niren#sms01	4_F_MADAME,{
 		next;
 		cutin "ep18_miriam_01.png",1;
 		mes "[Miriam]";
-		mes "Let's go, adventurer. Before heading to the villa, there's someone who will accompany us. Let's meet at <NAVI>[오즈의 미로]<INFO>oz_dun01,223,116,0,101,0</INFO></NAVI>";
+		mes "Let's go, adventurer. Before heading to the villa, there's someone who will accompany us. Let's meet at <NAVI>[        肩 ]<INFO>oz_dun01,223,116,0,101,0</INFO></NAVI>";
 		erasequest 17521;
 		setquest 17525;
 		ep18_main = 53;
@@ -5736,6 +5741,7 @@ ra_temin,258,117,3	script(CLOAKED)	Elly's Figure#c12_02	4_EP17_TABLET,{
 		mes "I'll return to the administrator's main body. I'll give you this shell as a souvenir for the adventurer.";
 		mes "See you at the mansion.";
 		ep18_main = 57;
+		#Ep18_Manual_Clear == 1;
 		completequest 18085;
 		delitem 400127,1;	// Ep18_Mini_Elly
 		getitem 400128,1;	// Costume Dropping Elly
@@ -12174,7 +12180,7 @@ rachel,72,133,4	script(CLOAKED)	Half Flower#E18_6	4_EP18_HALFFLOWER,{
 		next;
 		npctalk "Mejai: Shall we start by cutting the stems of the Half Flowers?", "Mejai#E18_5", bc_self;
 		next;
-		if (select( "Cut at 10° angle.", "Cut at 20° angle.", "Cut at 30° angle.", "Cut at 40° angle." ) != .@good_answer[0])
+		if (select( "Cut at 10   angle.", "Cut at 20   angle.", "Cut at 30   angle.", "Cut at 40   angle." ) != .@good_answer[0])
 			.@time /= 2;
 		progressbar "FFFF00",1;
 		npctalk "Mejai: Thank you for your decision. Let's start by cutting the stem first.", "Mejai#E18_5", bc_self;
@@ -12411,7 +12417,7 @@ gw_fild01,325,376,1	script	Half Flower#EP18_R01	4_EP18_HALFFLOWER,7,7,{
 	next;
 	unittalk getcharid(3), "" + strcharinfo(0) + " : What angle should I cut the stem?", bc_self;
 	next;
-	if (select("Cut at 10° angle", "Cut at 20° angle", "Cut at 30° angle", "Cut at 40° angle" ) != .@good_answer[0])
+	if (select("Cut at 10   angle", "Cut at 20   angle", "Cut at 30   angle", "Cut at 40   angle" ) != .@good_answer[0])
 		.@time /= 2;
 	progressbar "FFFF00",1;
 	unittalk getcharid(3), "" + strcharinfo(0) + " : How many leaves should I leave?", bc_self;

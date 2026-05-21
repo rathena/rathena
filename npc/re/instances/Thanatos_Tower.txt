@@ -390,280 +390,138 @@ OnInit:
 end;
 }
 
+//============================================================
+//= Memories of Thanatos Accessory Enchanter
+//= Based on iRO / MuhRo systems
+//============================================================
+
 tha_t01,135,83,5	script	Tamilla#mot	4064,{
-	if(checkweight(1201,1) == 0 || MaxWeight - Weight < 1000){
-		mes "You can't proceed with the conversation because you have a large quantity of items.";
-		mes "Please organize your items and try again.";
+mes "[Tamilla]";
+	mes "I can awaken the hidden potential within your artifacts from the Tower.";
+	mes "Please choose which accessory slot you would like to manipulate:";
+	next;
+
+	// Step 1: Select Slot
+	.@slot_choice = select("Left Accessory Slot", "Right Accessory Slot", "Cancel");
+	if (.@slot_choice == 3) {
+		mes "[Tamilla]";
+		mes "Return to me when you are prepared.";
 		close;
 	}
-	disable_items;
-	mes "[ Tamilla ]";
-	mes "Welcome. Did you bring something that I can work on?";
-	next;
-	switch(select("Information.:Enchant Accessories.:Initialize Enchant.")){
-		case 1:
-			setarray .@sin,490044,490046,490048,490050,490052,490054,490045,490047,490049,490051,490053,490055;
-			setarray .@light,490056,490058,490060,490062,490064,490066,490057,490059,490061,490063,490065,490067;
-			mes "[ Tamilla ]";
-			mes "First and foremost, I have to tell you which equipments I can work on.";
-			next;
-			for(.@i = 0; .@i < getarraysize(.@sin); .@i++)
-				mes "[<ITEM>" + getitemname(.@sin[.@i]) + "<INFO>" + .@sin[.@i] + "</INFO></ITEM>]";
-			next;
-			for(.@i = 0; .@i < getarraysize(.@light); .@i++)
-				mes "[<ITEM>" + getitemname(.@light[.@i]) + "<INFO>" + .@light[.@i] + "</INFO></ITEM>]";
-			next;
-			mes "[ Tamilla ]";
-			mes "It's possible for me to enchant you equipments I described on the sockets 3~4, the required fee varies depending on the method. I'll let you know the right price when we're about to begin.";
-			next;
-			mes "[ Tamilla ]";
-			mes "I can also initialize the enchants on your equipments, so if you don't like the effect, you can always try again next time.";
-			next;
-			mes "[ Tamilla ]";
-			mes "It's best for you to try it yourself rather than me explaining it, no? If you're looking to strenghtening your equipment, you know where to find me.";
-			break;
-			
-		case 2:
-			callsub S_check_equipment,0;
-			break;
 
-		case 3:
-			callsub S_check_equipment,1;
-			break;
+	// Assign the actual rAthena equipment constants
+	.@equip_slot = (.@slot_choice == 1) ? EQI_ACC_L : EQI_ACC_R;
+	.@target_item = getequipid(.@equip_slot);
+
+	if (.@target_item == -1) {
+		mes "[Tamilla]";
+		mes "You do not have any accessory equipped in that slot!";
+		close;
 	}
-	end;
-	
-S_check_equipment:
-	.@mode = getarg(0);
-	mes "[ Tamilla ]";
-	mes "You can choose right or left accessory. Which side do you want to work on?";
+
+	// Validate Eligible Items
+	if (.@target_item != 490062 && .@target_item != 490063 && .@target_item != 490100 && .@target_item != 490101) {
+		mes "[Tamilla]";
+		mes "The item currently equipped in that slot cannot be enchanted.";
+		close;
+	}
+
+	// Setup Currency
+	if (.@target_item == 490062 || .@target_item == 490063) {
+		.@currency = 1000201; // Fragment of Goodwill
+		.@is_light = 1;
+	} else {
+		.@currency = 1000202; // Fragment of Sin
+		.@is_light = 0;
+	}
+
+	mes "[Tamilla]";
+	mes "Please select your enchantment method:";
 	next;
-	switch(select("Cancel.:Right.:Left")){
-		case 1:
-			mes "[ Tamilla ]";
-			mes "Please come back once you have decided.";
-			end;
-			
-		case 2: .@part = EQI_ACC_R; break;
-		case 3: .@part = EQI_ACC_L; break;
-	}
-	.@equip_id = getequipid(.@part);
-	if(!.@equip_id){
-		mes "[ Tamilla ]";
-		mes "Hm. You don't have anything there. Please come back once you have equipped your accessory.";
-		end;
-	}
-	.@idx = inarray(..sin_id,.@equip_id);
-	if(.@idx != -1) 
-		.@type = 1;
-	else 
-		.@idx = inarray(..light_id,.@equip_id);
-	if(.@idx == -1){
-		mes "[ Tamilla ]";
-		mes "This equipment is not an item that can be processed by our branch.";
-		end;
-	}
-	if(!.@mode)
-		callsub S_enchant,.@part,.@equip_id,.@type;
-	else
-		callsub S_reset,.@part,.@equip_id;
-	return;
 	
-S_enchant:
-	.@part = getarg(0);
-	.@equip_id = getarg(1);
-	.@type = getarg(2);
-	if(.@type)
-		.@enchant$ = "sin";
-	else
-		.@enchant$ = "light";
-	for(.@i = 0; .@i < 4; .@i++){
-		.@card[.@i] = getequipcardid(.@part,.@i);
-		.@check[.@i] = getequipcardid(.@part,.@i);
-	}
-	.@equip_name$ = getitemname(.@equip_id);
-	.@refine = getequiprefinerycnt(.@part);
-	if(.@card[2] || .@card[3]){
-		mes "[ Tamilla ]";
-		mes "I apologize but this equipment already has effects.";
-		mes "If you're unhappy with the effects, you can use the initialize method to remove the enchants.";
-		end;
-	}
-	mes "[ Tamilla ]";
-	mes "I can enchant your equipment with two methods. The first one is the normal method, the enchants will be completely random but there will be ^FF0000two enchants^000000 on the slot 3~4.";
-	mes "The other one is you'll be able to select a specific enchant. However, I will only be able to give it ^FF0000one enchant.^000000";
-	next;
-	switch(select("Proceed with normal method.:Specific enchant method.:Cancel")){
-		case 1:
-			break;
-		case 2:
-			.@method = 1;
-			break;
-		case 3:
-			mes "[ Tamilla ]";
-			mes "Please come back once you have decided.";
-			end;
-	}
-	if(!.@method){
-		.@amount = 10;
-		if(!.@type)
-			.@item_id = 1000263;
-		else
-			.@item_id = 1000257;
-		mes "[ Tamilla ]";
-		mes "The enchant fee for this specific equipment for this method will be, ";
-		mes "^0000CD" + .@amount + " " + getitemname(.@item_id) + "^000000.";
-		next;
-		mes "[ Tamilla ]";
-		mes "Do you want to proceed enchanting your ^0000CD" + .@equip_name$ + "^000000?";
-		next;
-		if(select("Cancel.:Proceed.") == 1){
-			mes "[ Tamilla ]";
-			mes "Please come back once you have decided.";
-			end;		
+	.@method = select(
+		"Normal Enchantment (10x " + getitemname(.@currency) + ")",
+		"Special Enchantment (50x " + getitemname(.@currency) + ")",
+		"Greater Enchantment (100x " + getitemname(.@currency) + ")",
+		"Reset Enchants (10x " + getitemname(.@currency) + " + 100,000 Zeny)"
+	);
+
+	// --- RESET ENCHANTS ---
+	if (.@method == 4) {
+		if (countitem(.@currency) < 10 || Zeny < 100000) {
+			mes "[Tamilla]";
+			mes "You do not have enough materials or Zeny.";
+			close;
 		}
-		if(countitem(.@item_id) < .@amount){
-			mes "[ Tamilla ]";
-			mes "Our branch supports fair services, I won't be able to empower your equipment since you don't have enough materials for the fee.";
-			end;
-		}
-		.@arr$ = "." + .@enchant$;
-		.@enchant = getd(.@arr$ + "[" + rand(getarraysize(getd(.@arr$))) + "]");
-		.@card[2] = .@enchant;
+		delitem .@currency, 10;
+		set Zeny, Zeny - 100000;
 		
-		.@arr2$ = "." + .@enchant$ + "_2";
-		.@enchant = getd(.@arr2$ + "[" + rand(getarraysize(getd(.@arr2$))) + "]");
-		.@card[3] = .@enchant;
-	} else {
-		.@slot = 2;
-		.@amount = 50;
-		if(!.@type){
-			setarray .@types$,"empathy","happy","shelter","solace","divine","destructive";
-			.@item_id = 1000263;
-		} else {
-			setarray .@types$,"anger","horror","resentment","regret","inverse","dragon";
-			.@item_id = 1000257;
-		}
-		.@size = getarraysize(.@types$);
-		.@menu$ = "Cancel:";
-		for(.@i = 0; .@i < .@size; .@i++)
-			.@menu$ += setchar(.@types$[.@i],strtoupper(charat(.@types$[.@i],0)),0) + ":";
-		mes "[ Tamilla ]";
-		mes "The enchant fee for this specific equipment for this method will be, ";
-		mes "^0000CD" + .@amount + " " + getitemname(.@item_id) + "^000000.";
-		mes "Then, please select the type of enchant you want to add in your equipment.";
-		next;
-		.@s = select(.@menu$);
-		switch(.@s){
-			case 1:
-				mes "[ Tamilla ]";
-				mes "Please come back once you have decided.";
-				end;
+		// 0 clears the slot on the Item ID directly
+		enchantitem .@target_item,0,2; 
+		enchantitem .@target_item,0,3; 
+		
+		mes "[Tamilla]";
+		mes "The item's slate has been wiped clean.";
+		close;
+	}
 
-			default:
-				.@s -= 2;
-				mes "[ Tamilla ]";
-				mes "Are you sure you want to proceed with the " + .@types$[.@s] + " enchant for your ^0000CD" + .@equip_name$ + "^000000?";
-				next;
-				if(select("Cancel.:Proceed.") == 1){
-					mes "[ Tamilla ]";
-					mes "Please come back once you have decided.";
-					end;
-				}
-				if(countitem(.@item_id) < .@amount){
-					mes "[ Tamilla ]";
-					mes "Our branch supports fair services, I won't be able to empower your equipment since you don't have enough for the fee.";
-					end;
-				}
-				if(.@s >= 4) .@slot = 3;
-				.@enchant = getd("." + .@types$[.@s] + "[" + rand(getarraysize(getd("." + .@types$[.@s]))) + "]");
-				.@card[.@slot] = .@enchant;
-				break;
-		}
-	}
-	delitem .@item_id,.@amount;
-	if(callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipRefineHack", .@part, .@refine) || callfunc("F_IsEquipCardHack", .@part, .@check[0], .@check[1], .@check[2], .@check[3]))
-		end;
-	specialeffect2 EF_REPAIRWEAPON;
-	delequip .@part;
-	getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@card[1],.@card[2],.@card[3];
-	mes "[ Tamilla ]";
-	mes "Thank you for using my services, If you're unhappy with the effects, you can use the initialize method to remove the enchants.";
-	return;
-	end;
+	// Cost Check
+	if (.@method == 1)      { .@cost = 10;  }
+	else if (.@method == 2) { .@cost = 50;  }
+	else if (.@method == 3) { .@cost = 100; }
 
-S_reset:
-	.@part = getarg(0);
-	.@equip_id = getarg(1);
-	.@equip_name$ = getitemname(.@equip_id);
-	for(.@i = 0; .@i < 4; .@i++){
-		.@card[.@i] = getequipcardid(.@part,.@i);
-		.@check[.@i] = getequipcardid(.@part,.@i);
+	if (countitem(.@currency) < .@cost) {
+		mes "[Tamilla]";
+		mes "You require " + .@cost + "x " + getitemname(.@currency) + " to proceed.";
+		close;
 	}
-	if(!.@card[2] && !.@card[3]){
-		mes "[ Tamilla ]";
-		mes "Hm. Adventurer, this equipment doesn't have any enchants in it. Please talk to me again when you find the correct one.";
-		end;
-	}
-	mes "[ Tamilla ]";
-	mes "Initializing your equipment, removes the 3~4 slot enchants of your equipment.";
-	mes "Same with the enchanting, our branch offers two method for initializing your equipment.";
-	next;
-	mes "[ Tamilla ]";
-	mes "You can either pay with with " + .zeny_fee + " Zeny or pay with " + .premium_amount + " " + getitemname(.premium_reset) + ".";
-	mes "However, paying with zeny has a ^FF0000" + .break_chance + "% break chance^000000 upon initializing your equipment.";
-	next;
-	if(select("Pay with Zeny(" + (100 - .break_chance) + "%):Pay with " + getitemname(.premium_reset) + "(100%)") == 1){
-		mes "[ Tamilla ]";
-		mes "Are you sure you want to proceed initializing your ^0000CD" + .@equip_name$ + "^000000 using Zeny?";
-		mes "There is a ^FF0000" + .break_chance + " chance that your equipment will break^000000.";
-		next;
-		if(select("Cancel.:Proceed.") == 1){
-			mes "[ Tamilla ]";
-			mes "Please come back once you have decided.";
-			end;
-		}
-		if(Zeny < .zeny_fee){
-			mes "[ Tamilla ]";
-			mes "Our branch supports fair services, I won't be able to empower your equipment since you don't have enough for the fee.";
-			end;
-		}
-		Zeny -= .zeny_fee;
-		.@break_chance = .break_chance;
+
+	// Load Pool Databases
+	if (.@is_light) {
+		setarray .enchants_slot4[0], 4980, 4981, 4982; 
+		setarray .enchants_slot3[0], 4985, 4986, 4987; 
 	} else {
-		mes "[ Tamilla ]";
-		mes "Are you sure you want to initialize your " + .@equip_name$ + " using " + getitemname(.premium_reset) + "?";
+		setarray .enchants_slot4[0], 4990, 4991, 4992; 
+		setarray .enchants_slot3[0], 4995, 4996, 4997; 
+	}
+
+	delitem .@currency, .@cost;
+
+	// --- ENCHANTING PATHS ---
+	if (.@method == 1) {
+		// Normal (RNG Levels 1~3)
+		.@final_enchant4 = .enchants_slot4[rand(getarraysize(.enchants_slot4))] + rand(1, 3);
+		.@final_enchant3 = .enchants_slot3[rand(getarraysize(.enchants_slot3))] + rand(1, 3);
+
+	} else if (.@method == 2) {
+		// Special (Prefix Selection, Levels 2~4)
+		mes "[Tamilla]";
+		mes "Select the type of prefix energy you wish to focus on Slot 4:";
 		next;
-		if(select("Cancel.:Proceed.") == 1){
-			mes "[ Tamilla ]";
-			mes "Please come back once you have decided.";
-			end;
-		}
-		if(countitem(.premium_reset) < .premium_amount){
-			mes "[ Tamilla ]";
-			mes "Our branch supports fair services, I won't be able to empower your equipment since you don't have enough for the fee.";
-			end;
-		}
-		delitem .premium_reset,.premium_amount;
-		.@break_chance = 0;
+		.@prefix = select("Physical Type", "Magical Type", "Ranged/Special Type") - 1;
+		
+		.@final_enchant4 = .enchants_slot4[.@prefix] + rand(2, 4);
+		.@final_enchant3 = .enchants_slot3[rand(getarraysize(.enchants_slot3))] + rand(2, 4);
+
+	} else if (.@method == 3) {
+		// Greater (Prefix Selection, Peak Levels 3~5)
+		mes "[Tamilla]";
+		mes "Select the type of peak prefix energy you wish to focus on Slot 4:";
+		next;
+		.@prefix = select("Physical Type", "Magical Type", "Ranged/Special Type") - 1;
+		
+		.@final_enchant4 = .enchants_slot4[.@prefix] + rand(3, 5);
+		.@final_enchant3 = .enchants_slot3[rand(getarraysize(.enchants_slot3))] + rand(3, 5);
 	}
-	if(rand(1,100) > .@break_chance){
-		specialeffect EF_REPAIRWEAPON;
-		delequip .@part;
-		getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@card[1],0,0;
-		mes "[ Tamilla ]";
-		mes "Thank you for using my services, With this you can try enchant this piece of equipment again.";
-	} else {
-		specialeffect EF_REFINEFAIL;
-		delequip .@part;
-		mes "[ Tamilla ]";
-		mes "Kak! I didn't mean to break it... I'm sorry, but it looks like reinforcing the slot broke it from the inside.";
-		emotion ET_HUK;
-	}
-	return;
-	end;
-}
-	
+
+	// Apply enchants safely using official direct Item ID syntax
+	enchantitem .@target_item, .@final_enchant3, 2; // Slot 3
+	enchantitem .@target_item, .@final_enchant4, 3; // Slot 4
+
+	specialeffect EF_COCONUT;
+	mes "[Tamilla]";
+	mes "The procedure was completely successful!";
+	close;	
 OnInit:
 	.premium_reset = 6909; //ITEM ID FOR PREMIUM RESET
 	.premium_amount = 3;
