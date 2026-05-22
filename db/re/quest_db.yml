@@ -5429,17 +5429,17 @@ Body:
     Title: Mineworm Research - Standby
     TimeLimit: 4h
   - Id: 7889
-    Title: X century XX gold-waiting
+    Title: X century XX golt
     Targets:
       - Mob: ANGELGOLT
         Count: 30
       - Mob: ANGELGOLT2
         Count: 40
   - Id: 7890
-    Title: X century XX gold-waiting
+    Title: X century XX golt-waiting
     TimeLimit: 4h
   - Id: 7891
-    Title: X century XX gold-waiting
+    Title: What is Valkyrie
     Targets:
       - Mob: HOLY_FRUS
         Count: 30
