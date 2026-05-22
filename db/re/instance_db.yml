@@ -598,3 +598,84 @@ Body:
       6@thts: true
       7@thts: true
       8@thts: true
+  - Id: 130
+    Name: Maze of Oz
+    TimeLimit: 7200
+    Enter:
+      Map: 1@oz
+      X: 284
+      Y: 167
+  - Id: 131
+    Name: Thor Military Base
+    TimeLimit: 7200
+    Enter:
+      Map: 1@tcamp
+      X: 103
+      Y: 237
+  - Id: 132
+    Name: Gathering of Wolves
+    TimeLimit: 7200
+    Enter:
+      Map: 1@nyr
+      X: 194
+      Y: 30
+    AdditionalMaps:
+      2@nyr: true
+  - Id: 133
+    Name: Pontifex Villa
+    TimeLimit: 7200
+    Enter:
+      Map: 1@adv
+      X: 123
+      Y: 17
+  - Id: 134
+    Name: Sanctuary Purification
+    TimeLimit: 3600
+    Enter:
+      Map: 1@nyr
+      X: 196
+      Y: 30
+    AdditionalMaps:
+      2@nyr: true
+  - Id: 135
+    Name: Villa of Deceit
+    TimeLimit: 7200
+    Enter:
+      Map: 1@adv
+      X: 111
+      Y: 19
+  - Id: 136
+    Name: Villa of Deceit(Advance)
+    TimeLimit: 7200
+    Enter:
+      Map: 1@adv
+      X: 134
+      Y: 19
+  - Id: 137
+    Name: Iwin Patrol
+    TimeLimit: 3600
+    Enter:
+      Map: 1@iwp
+      X: 380
+      Y: 229
+  - Id: 138
+    Name: Bagot's Laboratory
+    TimeLimit: 3600
+    Enter:
+      Map: 1@jorlab
+      X: 57
+      Y: 45
+  - Id: 139
+    Name: Chaotic Snake Nest
+    TimeLimit: 3600
+    Enter:
+      Map: 1@jorchs
+      X: 272
+      Y: 20
+  - Id: 140
+    Name: Airship Sabotage Operation
+    TimeLimit: 3600
+    Enter:
+      Map: 1@whl
+      X: 32
+      Y: 53

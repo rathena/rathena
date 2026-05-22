@@ -457,8 +457,8 @@ mes "[Tamilla]";
 		set Zeny, Zeny - 100000;
 		
 		// 0 clears the slot on the Item ID directly
-		enchantitem .@target_item,0,2; 
-		enchantitem .@target_item,0,3; 
+		enchantitem .@target_item, 0, 2; 
+		enchantitem .@target_item, 0, 3; 
 		
 		mes "[Tamilla]";
 		mes "The item's slate has been wiped clean.";

@@ -1,0 +1,38 @@
+//===== rAthena Script ======================================= 
+//= Abyss Lake Dungeon Warp Script
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Capuche]
+//============================================================
+
+abyss_03,91,110,5	script	Sign#Abs03ToAbs04	2_BULLETIN_BOARD,1,1,{
+	mes "A sign placed in front of a small hole indicates:";
+	mes "- I made a shortcut because it was cumbersome to turn around, but it is very high and deep, so I don't recommend it to others. -";
+	mes "^4d4dffRecommended level is 190 or higher.^000000";
+	next;
+	if (select( "I'm going!", "I'll have to be careful not to fall." ) == 2)
+		end;
+	if (BaseLevel < 190) {
+		mes "Your level is not high enough.";
+		mes "^4d4dffRecommended level is 190 or higher.^000000";
+		close;
+	}
+	warp "abyss_04",169,161;
+	end;
+
+OnTouch:
+	unittalk getcharid(3), "" + strcharinfo(0) + " : I see a rope pointing down.", bc_self;
+	end;
+}
+
+abyss_04,168,166,3	script	#Abs04ToAbs03	1_SHADOW_NPC,1,1,{
+	mes "I see a rope that can be climbed.";
+	next;
+	if (select( "Grab the rope and climb up.", "Stay longer." ) == 2)
+		end;
+	warp "abyss_03",87,107;
+	end;
+
+OnTouch:
+	unittalk getcharid(3), "" + strcharinfo(0) + " : You can see a rope that you can climb.", bc_self;
+	end;
+}

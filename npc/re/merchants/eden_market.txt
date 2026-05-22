@@ -1397,7 +1397,7 @@ paramk,53,104,3	script	Dus the Smith#ref02	2_M_OLDBLSMITH,{
 // Eden Para Market - Red Hugo (Armor & Weapon Extraction)
 // =========================================================
 
-paramk,59,100,2	script	Red Hugo#pmrf03	4_M_SIGNMCNT,{
+paramk,59,100,2	script	Red Hugo#pmrf03	1_M_SIGNMCNT,{
     mes "[Red Hugo]";
     mes "Are you interested in extracting the latent energy";
     mes "of your highly refined equipment?";
