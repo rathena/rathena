@@ -1,7 +1,7 @@
 // Folklorist Cinnamon - Ancient Odin's Temple Daily Hunts
 // Map: odin_tem01 | Coordinates: 108, 152
 
-odin_tem01,108,152,4	script	Folklorist Cinnamon	4_F_OLDWOMAN,{
+odin_tem01,108,152,4	script	Folklorist Cinnamon	881,{
 
     mes "[Folklorist Cinnamon]";
     mes "Greetings, adventurer. The spatial distortion at the center of the third floor leads to Odin's Temple of the past.";
