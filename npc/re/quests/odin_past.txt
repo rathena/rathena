@@ -1,6 +1,3 @@
-// Folklorist Cinnamon - Ancient Odin's Temple Daily Hunts
-// Map: odin_tem01 | Coordinates: 108, 152
-
 odin_tem01,108,152,4	script	Folklorist Cinnamon	881,{
 
     mes "[Folklorist Cinnamon]";
@@ -14,28 +11,29 @@ L_MainMenu:
     next;
 
     switch(select(
-        "Quest 1: Xth Century XXgolt (Angelgolts)",
-        "Quest 2: What is Valkyrie? (Frus & Skogul)",
+        "Xth Century XXgolt (Angelgolts)",
+        "What is Valkyrie? (Frus & Skogul)",
         "Leave"
     )) {
 
         case 1: // --- QUEST 1: ANGELGOLT HUNT ---
-            if (checkquest(7889,HUNTING) == 2) {
+            if (checkquest(7889, HUNTING) == 2) {
                 mes "[Folklorist Cinnamon]";
                 mes "You have completed your quest tracking the Angelgolts!";
                 erasequest 7889;
-                setquest 7890;            // Sets the dedicated Angelgolt cooldown flag
+                setquest 7890; // Sets the dedicated Angelgolt cooldown flag
                 getexp 50190276, 35133280; // Official Base & Job EXP
                 close;
             }
-            if (checkquest(7890,PLAYTIME) == 2) {
+            if (checkquest(7890, PLAYTIME) == 2) {
                 mes "[Folklorist Cinnamon]";
                 mes "Your timeout lock for the Angelgolt assignment has expired.";
                 erasequest 7890;
                 mes "The option is now unlocked.";
-                next; goto L_MainMenu;
+                next;
+                goto L_MainMenu;
             }
-            if (isbegin_quest(7889) == 0 && checkquest(7890,PLAYTIME) == -1) {
+            if (isbegin_quest(7889) == 0 && checkquest(7890, PLAYTIME) == -1) {
                 mes "[Folklorist Cinnamon]";
                 mes "Please enter Odin Past and cull ^FF000030x Angelgolt (Blue)^000000 and ^FF000040x Angelgolt (Pink)^000000.";
                 next;
@@ -44,29 +42,31 @@ L_MainMenu:
                     mes "[Folklorist Cinnamon]";
                     mes "Task assigned. Bring back the field logs.";
                 }
-                next; goto L_MainMenu;
+                next; 
+                goto L_MainMenu;
             }
             mes "[Folklorist Cinnamon]";
             mes "You are currently tracking the Angelgolts or waiting for the daily timeout to clear.";
             close;
 
         case 2: // --- QUEST 2: VALKYRIE SERVANTS ---
-            if (checkquest(7891,HUNTING) == 2) {
+            if (checkquest(7891, HUNTING) == 2) {
                 mes "[Folklorist Cinnamon]";
                 mes "You have completed your quest tracking the Holy Servants!";
                 erasequest 7891;
-                setquest 7892;            // Sets the dedicated Skogul cooldown flag
+                setquest 7892; // Sets the dedicated Skogul cooldown flag
                 getexp 44210156, 30947160; // Official Base & Job EXP
                 close;
             }
-            if (checkquest(7892,PLAYTIME) == 2) {
+            if (checkquest(7892, PLAYTIME) == 2) {
                 mes "[Folklorist Cinnamon]";
                 mes "Your timeout lock for the Holy Servants assignment has expired.";
                 erasequest 7892;
                 mes "The option is now unlocked.";
-                next; goto L_MainMenu;
+                next;
+                goto L_MainMenu;
             }
-            if (isbegin_quest(7891) == 0 && checkquest(7892,PLAYTIME) == -1) {
+            if (isbegin_quest(7891) == 0 && checkquest(7892, PLAYTIME) == -1) {
                 mes "[Folklorist Cinnamon]";
                 mes "The Valkyrie specters are out of control. Purify ^FF000030x Holy Frus^000000 and ^FF000030x Holy Skogul^000000.";
                 next;
@@ -75,7 +75,8 @@ L_MainMenu:
                     mes "[Folklorist Cinnamon]";
                     mes "Task assigned. Stay alert out there.";
                 }
-                next; goto L_MainMenu;
+                next; 
+                goto L_MainMenu;
             }
             mes "[Folklorist Cinnamon]";
             mes "You are currently tracking the Holy Servants or waiting for the daily timeout to clear.";
