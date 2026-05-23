@@ -127,7 +127,7 @@ end;
 
 OnEvent:
 	instance_destroy(strnpcinfo(0));
-	set ep19_airship_sabotage 0;
+	set ep19_airship_sabotage "0";
 	sleep 3000;
 	instance_announce false,"Airship Management Doll: A fake airline ticket has been brought into the airship! All dolls are to enter a freeloader response sequence.",bc_map,0xFFDDAA;
 	sleep 3000;
@@ -205,7 +205,7 @@ end;
 		close2;
 		setnpcdisplay instance_npcname(strnpcinfo(0)),CLEAR_NPC;
 		instance_destroy(strnpcinfo(0));
-		set ep19_airship_sabotage 0;
+		set ep19_airship_sabotage "0";
 		instance_event("#19_airship_boss","OnBossSummon",false);
 		end;
 	}
