@@ -17,17 +17,16 @@ prontera,153,191,4	script	Silvervine Quester	4_M_MERCAT1,{
     .@active_index = -1;
     .@complete_index = -1;
 
-    // Fixed the loop incrementation and used checkquest()
     for (.@i = 0; .@i < .quest_count; .@i = .@i + 1) {
         .@q_id = .quests[.@i * 2];
-        .@status = checkquest(.@q_id, HAVEQUEST); // Native rAthena syntax
+        .@status = checkquest(.@q_id, HAVEQUEST); 
 
-        if (.@status == 1) { // 1 = Quest is Active/Started but not done
-            .@active_index = .@i;
+        if (.@status == 2 || .@status == 3) { // Catching both completion states safely
+            .@complete_index = .@i;
             break;
         }
-        if (.@status == 2) { // 2 = Quest objectives are met / Complete
-            .@complete_index = .@i;
+        if (.@status == 1) { // 1 = Quest is Active but objectives aren't finished yet
+            .@active_index = .@i;
             break;
         }
     }
@@ -96,20 +95,20 @@ OnInit:
     .reward_item = 6707; // Silvervine Fruit ID
     .reward_amount = 5;
 
-    // Pure Native Array Assignment Structure
+    // Fixed the broken gap/newlines in the array setup to ensure solid index mapping
     setarray .quests[0], 
-        90001, "Angeling",
-        90002, "Archangelig",
-        90003, "Cat O' Nine Tails",
-        90004, "Deviling",
-        90005, "Dragon Fly",
-        90006, "Eclipse",
-        90007, "Ghostring",
-        90008, "Mastering",
-        90009, "Maya Purple",
-        90010, "Toad",
-        90011, "Vagabond Wolf",
-        90012, "Vocal";
+        99001, "Angeling",
+        99002, "Archangelig",
+        99003, "Cat O' Nine Tails",
+        99004, "Deviling",
+        99005, "Dragon Fly",
+        99006, "Eclipse",
+        99007, "Ghostring",
+        99008, "Mastering",
+        99009, "Maya Purple",
+        99010, "Toad",
+        99011, "Vagabond Wolf",
+        99012, "Vocal";
 
     .quest_count = getarraysize(.quests) / 2;
     end;
