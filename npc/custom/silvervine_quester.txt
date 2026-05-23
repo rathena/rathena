@@ -1,0 +1,115 @@
+prontera,165,165,4	script	Silvervine Quester	10022,{
+
+    // ==========================================
+    // CONFIGURATION
+    // ==========================================
+    .max_daily_quests = 10;
+    .reward_item = 6707; // Silvervine Fruit ID
+    .reward_amount = 5;  // Reward set to 5 per your table
+
+    // Array Layout: QuestID, "Monster Name Display"
+    setarray .quests[0], 
+        90001, "Angeling",
+        90002, "Archangelig",
+        90003, "Cat O' Nine Tails",
+        90004, "Deviling",
+        90005, "Dragon Fly",
+        90006, "Eclipse",
+        90007, "Ghostring",
+        90008, "Mastering",
+        90009, "Maya Purple",
+        90010, "Toad",
+        90011, "Vagabond Wolf",
+        90012, "Vocal";
+
+    .quest_count = getarraysize(.quests) / 2;
+
+    // ==========================================
+    // DAILY LIMIT TRACKER (Midnight Reset)
+    // ==========================================
+    if (Silvervine_LastDate != gettime(DT_YYYYMMDD)) {
+        Silvervine_LastDate = gettime(DT_YYYYMMDD);
+        Silvervine_DailyCount = 0;
+    }
+
+    // ==========================================
+    // CORE LOGIC
+    // ==========================================
+    mes "[Silvervine Quester]";
+    mes "Greetings! I hand out rewards to players who can take down elusive mini-bosses.";
+    next;
+
+    // Evaluate current state across all potential database entries
+    .@active_index = -1;
+    .@complete_index = -1;
+
+    for (.@i = 0; .@i < .quest_count; .@i++) {
+        .@q_id = .quests[.@i * 2];
+        .@status = queststatus(.@q_id);
+
+        if (.@status == Q_ACTIVE) {
+            .@active_index = .@i;
+            break;
+        }
+        if (.@status == Q_COMPLETE) {
+            .@complete_index = .@i;
+            break;
+        }
+    }
+
+    // Hand in complete quest rewards
+    if (.@complete_index != -1) {
+        .@q_id = .quests[.@complete_index * 2];
+
+        mes "[Silvervine Quester]";
+        mes "Superb work! You successfully hunted down the target.";
+        erasequest .@q_id;
+        
+        getitem .reward_item, .reward_amount;
+        Silvervine_DailyCount++;
+        
+        mes "Received: ^00FF00" + .reward_amount + "x Silvervine Fruit^000000";
+        mes "Completed Today: ^00FF00" + Silvervine_DailyCount + "/" + .max_daily_quests + "^000000";
+        close;
+    }
+
+    // Block if user is already holding an incomplete target assignment
+    if (.@active_index != -1) {
+        mes "[Silvervine Quester]";
+        mes "Your current target is: ^FF0000" + .quests[(.@active_index * 2) + 1] + "^000000.";
+        mes "Please eliminate them and check back with me.";
+        close;
+    }
+
+    // Enforce daily hard ceiling
+    if (Silvervine_DailyCount >= .max_daily_quests) {
+        mes "[Silvervine Quester]";
+        mes "You have reached your limit of ^FF0000" + .max_daily_quests + " hunts^000000 for today.";
+        mes "Come back tomorrow after midnight server time!";
+        close;
+    }
+
+    // Roll a new contract
+    mes "[Silvervine Quester]";
+    mes "Are you ready to hunt a random mini-boss?";
+    mes "Progress today: " + Silvervine_DailyCount + " / " + .max_daily_quests;
+    next;
+
+    if (select("Give me a target!:Maybe later.") == 2) {
+        mes "[Silvervine Quester]";
+        mes "Be safe out there.";
+        close;
+    }
+
+    // Secure random generation mapping
+    .@rand = rand(0, .quest_count - 1);
+    .@chosen_quest = .quests[.@rand * 2];
+    .@monster_name = .quests[(.@rand * 2) + 1];
+
+    setquest .@chosen_quest;
+
+    mes "[Silvervine Quester]";
+    mes "Your new assignment: ^FF0000" + .@monster_name + "^000000.";
+    mes "Track your kill status directly inside your ^0000FFQuest Log (Alt+U)^000000.";
+    close;
+}
