@@ -1,4 +1,4 @@
-prontera,165,165,4	script	Silvervine Quester	10022,{
+prontera,153,191,4	script	Silvervine Quester	4_M_MERCAT1,{
 
     // ==========================================
     // DIALOGUE CORE LOGIC
