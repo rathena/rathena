@@ -2,7 +2,7 @@ moc_para01,53,37,4	script	Eat Gear Mimic	464,{
     mes "[Eat Gear Mimic]";
     
     // 1. Check if player has joined the Eden Group
-    if (!callfunc(\"F_HasEdenGroupMark\")) {
+    if (!callfunc("F_HasEdenGroupMark")) {
         mes "Grrr... You smell like an outsider!";
         mes "I only deal with registered members of the ^0000FFEden Group^000000!";
         close;
@@ -22,80 +22,83 @@ moc_para01,53,37,4	script	Eat Gear Mimic	464,{
     setarray .blacklist, 
         2301, 2302, 2303, 2304, 2305, 2307, 2308, 2309, 2310, 2311, 
         2312, 2314, 2316, 2318, 2319, 2320, 2321, 2324, 2326, 2252, 
-        2101, 2103, 2105, 2107, 2109, 2111, 2113, 2114, 2116, 2117,
-        2119, 2121, 2123, 2125, 2127, 2129, 2131, 2133, 2135, 2137,
-        2139, 2141, 2143, 2145, 2147, 2149, 2151, 2153, 2155, 2157,
-        2159, 2161, 2163, 2165, 2167, 2169, 2171, 2173, 2175, 2177,
-        2181, 2183, 2185, 2187, 2189, 2191, 2193, 2195, 2197, 2199;
+        2101, 2103, 2105, 2187, 2189, 2201, 2203, 2205, 2212, 2218, 
+        2506, 5054, 5087, 5107;
 
-    // Retrieve full character inventory data mapping
+    // Clear tracking arrays safely
+    cleararray .@items, 0, 128;
+    cleararray .@refines, 0, 128;
+    cleararray .@indices, 0, 128;
+    cleararray .@types, 0, 128;
+    .@menus$ = "";
+    .@count = 0;
+
+    // Populates native character temporary inventory arrays
     getinventorylist;
-    .@eligible_count = 0;
-    clearinit;
 
-    // Gather qualifying equipment profiles
+    // Bypass loop timeout engine limits safely
+    freeloop(1);
+
+    // Loop through player inventory
     for (.@i = 0; .@i < @inventorylist_count; .@i++) {
         .@item_id = @inventorylist_id[.@i];
         .@refine  = @inventorylist_refine[.@i];
-        .@type    = @inventorylist_type[.@i];
+        .@type    = getiteminfo(.@item_id, ITEMINFO_TYPE);
 
-        // Filter out non-equips, zero refines, or broken status variables
-        if (.@refine < 7 || @inventorylist_isbroken[.@i]) continue;
-        if (.@type != IT_WEAPON && .@type != IT_ARMOR) continue;
+        // 1. Safety: Do not process items that are actively equipped by the player
+        if (@inventorylist_equip[.@i]) continue;
 
-        // Run checking arrays against safety blacklist definitions
+        // 2. Custom Rule: Only accept gear with refines (+7 or higher)
+        if (.@refine < 7) continue;
+
+        // 3. Simple Broad Category Check: Must be standard armor or weapon
+        if (.@type != IT_ARMOR && .@type != IT_WEAPON) continue;
+
+        // 4. Blacklist Array Cross-Check
         .@is_blacklisted = 0;
-        for (.@j = 0; .@j < getarraysize(.blacklist); .@j++) {
-            if (.@item_id == .blacklist[.@j]) {
+        for (.@b = 0; .@b < 34; .@b++) { 
+            if (.@item_id == .blacklist[.@b]) {
                 .@is_blacklisted = 1;
                 break;
             }
         }
-        if (.@is_blacklisted) continue;
+        if (.@is_blacklisted) continue; 
 
-        // Custom validation check rules for item-database weapon tier lines
-        if (.@type == IT_WEAPON) {
-            .@w_lv = getiteminfo(.@item_id, ITEMINFO_ELV);
-            if (.@w_lv < 3) continue;
+        // 5. Exclude Upper/Middle/Lower Headgears cleanly via common mask evaluation
+        .@loc = getiteminfo(.@item_id, ITEMINFO_LOC);
+        if (.@type == IT_ARMOR && (.@loc & EQP_HEAD_TOP || .@loc & EQP_HEAD_MID || .@loc & EQP_HEAD_LOW)) continue;
+
+        // Store selected variables safely inside local index pointers
+        .@items[.@count]   = .@item_id;
+        .@refines[.@count] = .@refine;
+        .@indices[.@count] = .@i;        
+        .@types[.@count]   = .@type;      
+
+        // Build the option choice loop window sequence cleanly without leaving a trailing separator
+        if (.@menus$ == "") {
+            .@menus$ = getitemname(.@item_id) + " (+" + .@refine + ")";
+        } else {
+            .@menus$ = .@menus$ + ":" + getitemname(.@item_id) + " (+" + .@refine + ")";
         }
-
-        // Map selection options array
-        .@menu_display$[.@eligible_count] = "[Slot " + (.@i + 1) + "] +" + .@refine + " " + getitemname(.@item_id);
-        .@inventory_indices[.@eligible_count] = .@i;
-        .@eligible_count++;
+        .@count++;
     }
 
-    if (.@eligible_count == 0) {
+    // Turn safety guards back on
+    freeloop(0);
+
+    // Safely exit if no eligible items passed all requirements
+    if (.@count == 0) {
         mes "[Eat Gear Mimic]";
-        mes "Bah! You don't have anything appetizing.";
-        mes "Bring me ^FF0000+7 or higher Level 3/4 weapons, or highly refined armors^000000 that aren't broken!";
+        mes "You don't have any suitable, unequipped gear (+7 or higher) in your bag!";
         close;
     }
 
-    mes "[Eat Gear Mimic]";
-    mes "Oho! Which gear should I snack on?";
-    mes "^666666(Warning: The mimic will eat your gear, but only has a 25% chance to spit out a reward!)^000000";
-    next;
-
-    // Render selection target mapping
-    .@selection$ = "";
-    for (.@i = 0; .@i < .@eligible_count; .@i++) {
-        .@selection$ = .@selection$ + .@menu_display$[.@i] + ":";
-    }
-    .@selection$ = .@selection$ + "Cancel";
-
-    .@chosen = select(.@selection$) - 1;
-    if (.@chosen == .@eligible_count) {
-        mes "[Eat Gear Mimic]";
-        mes "Hmph. Changed your mind?";
-        close;
-    }
-
-    // Assign internal validation indices for execution logic
-    .@selected_index  = .@inventory_indices[.@chosen];
-    .@selected_item   = @inventorylist_id[.@selected_index];
-    .@selected_refine = @inventorylist_refine[.@selected_index];
-    .@selected_type   = @inventorylist_type[.@selected_index];
+    // Process user selection index cleanly from choices
+    .@choice = select(.@menus$);
+    .@selected_item   = .@items[.@choice - 1];
+    .@selected_refine = .@refines[.@choice - 1];
+    .@selected_index  = .@indices[.@choice - 1];
+    .@selected_type    = .@types[.@choice - 1];
 
     mes "[Eat Gear Mimic]";
     mes "Are you sure you want me to eat your ^FF0000(+" + .@selected_refine + " " + getitemname(.@selected_item) + ")^000000?";
@@ -111,46 +114,39 @@ moc_para01,53,37,4	script	Eat Gear Mimic	464,{
     getinventorylist;
     if (@inventorylist_id[.@selected_index] == .@selected_item && @inventorylist_refine[.@selected_index] == .@selected_refine) {
         
-        // Remove item from inventory via index slot mapping (Gear is lost here!)
+        // Remove item from inventory via index slot mapping
         delitemidx(@inventorylist_idx[.@selected_index], 1);
 
         mes "[Eat Gear Mimic]";
-        mes "*CRUNCH* *MUNCH* ... Gulp.";
-        next;
-
-        // 25% Chance Validation Engine
-        if (rand(1, 100) <= 20) {
-            // SUCCESS LOGIC (20% Rate)
-            if (.@selected_type == IT_WEAPON) {
-                // Weapon Rewards
-                if (.@selected_refine == 7)       getitem 6230, 1;
-                else if (.@selected_refine == 8)  getitem 6230, 2;
-                else if (.@selected_refine >= 9)  getitem 6230, 5;
-            } else {
-                // Armor / Shield / Garment / Shoe Rewards
-                if (.@selected_refine == 7)       getitem 6231, 1;
-                else if (.@selected_refine == 8)  getitem 6231, 2;
-                else if (.@selected_refine >= 9)  getitem 6231, 5;
-            }
-
-            specialeffect EF_ORANGESPARK;
-            soundeffect "item_store.wav", 0;
-
-            mes "[Eat Gear Mimic]";
-            mes "Puuuh!! That tasted awesome! Here, take this something extra I found in my teeth!";
-            close;
-        } else {
-            // FAILURE LOGIC (80% Rate)
+        mes "*CRUNCH* *MUNCH* ... Delicious!";
+	if (rand(1, 100) <= 20) {
+        // Reward Logic engine
+        	if (.@selected_type == IT_WEAPON) {
+         		if (.@selected_refine == 7)       getitem 6230, 1;
+            		else if (.@selected_refine == 8)  getitem 6230, 2;
+            		else if (.@selected_refine >= 9)  getitem 6230, 5;
+       			} else {
+            		// Armor / Shield / Garment / Shoe Rewards
+            		if (.@selected_refine == 7)       getitem 6234, 1;
+            		else if (.@selected_refine == 8)  getitem 6234, 2;
+           		else if (.@selected_refine >= 9)  getitem 6234, 5;
+        	}
+		specialeffect EF_ORANGESPARK;
+            	mes "[Eat Gear Mimic]";
+            	mes "Puuuh!! That tasted awesome! Here, take this something extra I found in my teeth!";
+            	close;
+	} else {
+            // FAILURE LOGIC (75% Rate)
             specialeffect EF_BOMBER;
+            soundeffect "break.wav", 0;
 
             mes "[Eat Gear Mimic]";
             mes "*BURP* ... Ah, that hit the spot! Too bad it completely dissolved in my stomach acid. Thanks for the meal, adventurer!";
             close;
         }
     } else {
-        // Fallback error validation loop handler
         mes "[Eat Gear Mimic]";
-        mes "Hey... your inventory inventory layout shifted! Stop messing around.";
-        close;
+        mes "Hey! Stop moving things around in your bag! The item changed positions!";
     }
+    close;
 }
