@@ -1518,7 +1518,7 @@ paramk,59,100,2	script	Red Hugo#pmrf03	1_M_SIGNMCNT,{
             mes "[Red Hugo]";
             mes "What would you like to exchange it for?";
 	    callshop "pmrf10";
-            close2;
+            end;
 
         default:
             close;
