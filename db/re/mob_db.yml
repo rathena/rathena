@@ -118439,64 +118439,906 @@ Body:
 #    AegisName: 2301_EV_RICE_FLOUR
 #  - Id: 21965
 #    AegisName: EP20_COPO
-#  - Id: 21966
-#    AegisName: EP20_ICEWIND1
-#  - Id: 21967
-#    AegisName: EP20_ICEWIND2
-#  - Id: 21968
-#    AegisName: EP20_EGGCOPO
-#  - Id: 21969
-#    AegisName: EP20_RABBIT_ICESLUG
-#  - Id: 21970
-#    AegisName: EP20_MELIBE_ICESLUG
-#  - Id: 21971
-#    AegisName: EP20_ICEBEAR
-#  - Id: 21972
-#    AegisName: EP20_JORMUNGUARD1
-#  - Id: 21973
-#    AegisName: EP20_JORMUNGUARD2
-#  - Id: 21974
-#    AegisName: EP20_FAKE_IWIN_SN
-#  - Id: 21975
-#    AegisName: EP20_FAKE_IWIN_SY
-#  - Id: 21976
-#    AegisName: EP20_FAKE_IWIN_SB
-#  - Id: 21977
-#    AegisName: EP20_FAKE_IWIN_SG
-#  - Id: 21978
-#    AegisName: EP20_FAKE_IWIN_SR
-#  - Id: 21979
-#    AegisName: EP20_DEMIGOD_LASGAND
-#  - Id: 21980
-#    AegisName: EP20_BOSS_CLANER
-#  - Id: 21981
-#    AegisName: MD_EP20_BOSS_LASGAND
-#  - Id: 21982
-#    AegisName: MD_EP20_FALLENANGEL
-#  - Id: 21983
-#    AegisName: EP20_ANGEL_ICESLUG
-#  - Id: 21984
-#    AegisName: EP20_ICEEGG
-#  - Id: 21985
-#    AegisName: EP20_RGAN_WARLOCK
-#  - Id: 21986
-#    AegisName: EP20_RGAN_HEALER
-#  - Id: 21987
-#    AegisName: EP20_JORGAN_WARLOCK
-#  - Id: 21988
-#    AegisName: EP20_JORGAN_HEALER
-#  - Id: 21989
-#    AegisName: EP20_JORGAN_GUARDIAN
-#  - Id: 21990
-#    AegisName: EP20_JORGAN_CLEANER
-#  - Id: 21991
-#    AegisName: MD_EP20_JOR_G_P
-#  - Id: 21992
-#    AegisName: MD_EP20_JOR_G_Y
-#  - Id: 21993
-#    AegisName: MD_EP20_JOR_WARLOCK
-#  - Id: 21994
-#    AegisName: EP20_MD_HEARTHUNTER1
+- Id: 21966
+    AegisName: EP20_COPO
+    Name: Copo
+    Level: 235
+    Hp: 42105000
+    BaseExp: 82340000
+    JobExp: 65120000
+    Attack: 6450
+    Attack2: 4120
+    Defense: 185
+    MagicDefense: 120
+    Str: 165
+    Agi: 140
+    Vit: 155
+    Int: 110
+    Dex: 280
+    Luk: 75
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1200
+    AttackMotion: 600
+    DamageMotion: 300
+    Ai: 01
+  - Id: 21967
+    AegisName: EP20_ICEWIND1
+    Name: Grey Icewind
+    Level: 240
+    Hp: 87344773
+    BaseExp: 141592920
+    JobExp: 106194690
+    Attack: 9150
+    Attack2: 5890
+    Defense: 297
+    MagicDefense: 159
+    Str: 210
+    Agi: 185
+    Vit: 190
+    Int: 140
+    Dex: 340
+    Luk: 95
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Animal
+    Element: Wind
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 1000
+    AttackMotion: 500
+    DamageMotion: 250
+    Class: Boss
+  - Id: 21968
+    AegisName: EP20_ICEWIND2
+    Name: Ancient Icewind
+    Level: 241
+    Hp: 92450000
+    BaseExp: 145320000
+    JobExp: 109200000
+    Attack: 9540
+    Attack2: 6100
+    Defense: 310
+    MagicDefense: 165
+    Str: 220
+    Agi: 190
+    Vit: 195
+    Int: 145
+    Dex: 350
+    Luk: 100
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Animal
+    Element: Wind
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 1000
+    AttackMotion: 500
+    DamageMotion: 250
+    Class: Boss
+  - Id: 21969
+    AegisName: EP20_EGGCOPO
+    Name: Copo Egg
+    Level: 230
+    Hp: 5000000
+    BaseExp: 10000
+    JobExp: 10000
+    Attack: 0
+    Attack2: 0
+    Defense: 500
+    MagicDefense: 300
+    Str: 1
+    Agi: 0
+    Vit: 200
+    Int: 50
+    Dex: 1
+    Luk: 0
+    AttackRange: 0
+    SkillRange: 0
+    ChaseRange: 0
+    Size: Small
+    Race: Formless
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 4000
+    AttackMotion: 1000
+    DamageMotion: 500
+    Ai: 06
+  - Id: 21970
+    AegisName: EP20_RABBIT_ICESLUG
+    Name: Frost Ice Slug
+    Level: 236
+    Hp: 17545012
+    BaseExp: 380041
+    JobExp: 264699
+    Attack: 9330
+    Attack2: 6328
+    Defense: 336
+    MagicDefense: 128
+    Str: 104
+    Agi: 87
+    Vit: 82
+    Int: 67
+    Dex: 89
+    Luk: 87
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 140
+    AttackDelay: 1149
+    AttackMotion: 650
+    DamageMotion: 320
+    Ai: 01
+    Drops:
+      - Item: Single_Cell
+        Rate: 2500
+      - Item: Ep20_Fluor_Cell_Sweet
+        Rate: 1500
+      - Item: Cool_Liquid
+        Rate: 1050
+      - Item: EP19_Unknown_Cell
+        Rate: 550
+      - Item: Rabbit_Iceslug_card
+        Rate: 1
+  - Id: 21971
+    AegisName: EP20_MELIBE_ICESLUG
+    Name: Melibe Ice Slug
+    Level: 236
+    Hp: 46200000
+    BaseExp: 85900000
+    JobExp: 68500000
+    Attack: 6950
+    Attack2: 4500
+    Defense: 192
+    MagicDefense: 128
+    Str: 172
+    Agi: 138
+    Vit: 162
+    Int: 118
+    Dex: 292
+    Luk: 82
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Insect
+    Element: Water
+    ElementLevel: 2
+    WalkSpeed: 220
+    AttackDelay: 1300
+    AttackMotion: 650
+    DamageMotion: 320
+    Ai: 01
+  - Id: 21972
+    AegisName: EP20_ICEBEAR
+    Name: Glacial Ice Bear
+    Level: 243
+    Hp: 25609178
+    BaseExp: 586912
+    JobExp: 409813
+    Attack: 12575
+    Attack2: 3378
+    Defense: 255
+    MagicDefense: 134
+    Str: 145
+    Agi: 171
+    Vit: 95
+    Int: 122
+    Dex: 156
+    Luk: 149
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Insect
+    Element: Fire
+    ElementLevel: 2
+    WalkSpeed: 180
+    AttackDelay: 1400
+    AttackMotion: 700
+    DamageMotion: 350
+    Ai: 01
+    Drops:
+      - Item: Ep20_Ice_Bearskin
+        Rate: 2000
+      - Item: Animal's_Skin
+        Rate: 2500
+      - Item: Sticky_Mucus
+        Rate: 2500
+      - Item: Slicky_Fluid
+        Rate: 550
+      - Item: Icebear_Card
+        Rate: 10
+  - Id: 21973
+    AegisName: EP20_JORMUNGARD1
+    Name: Jormungandr Guardian-Y
+    Level: 222
+    Hp: 17847680
+    BaseExp: 412612
+    JobExp: 288685
+    Attack: 8658
+    Attack2: 4025
+    Defense: 223
+    MagicDefense: 230
+    Str: 83
+    Agi: 90
+    Vit: 94
+    Int: 127
+    Dex: 112
+    Luk: 127
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 14
+    Size: Small
+    Race: Demon
+    Element: Ghost
+    ElementLevel: 2
+    WalkSpeed: 130
+    AttackDelay: 900
+    AttackMotion: 450
+    DamageMotion: 200
+    Class: Boss
+    Drops:
+      - Item: Ep20_Mystic_Spl_Colt
+        Rate: 1500
+      - Item: Light_Granule
+        Rate: 750
+      - Item: Fluorescent_Liquid
+        Rate: 2500
+      - Item: Transparent_Cloth
+        Rate: 2500
+      - Item: Jormun_Guardian_Card
+        Rate: 10
+  - Id: 21974
+    AegisName: EP20_JORMUNGARD2
+    Name: Jormungandr Guardian-Y
+    Level: 222
+    Hp: 17847680
+    BaseExp: 412612
+    JobExp: 288685
+    Attack: 8658
+    Attack2: 4025
+    Defense: 223
+    MagicDefense: 230
+    Str: 83
+    Agi: 90
+    Vit: 94
+    Int: 127
+    Dex: 112
+    Luk: 127
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 14
+    Size: Small
+    Race: Demon
+    Element: Ghost
+    ElementLevel: 2
+    WalkSpeed: 130
+    AttackDelay: 900
+    AttackMotion: 450
+    DamageMotion: 200
+    Class: Boss
+  - Id: 21975
+    AegisName: EP20_FAKE_IWIN_SN
+    Name: Disguised Iwin Scout
+    Level: 237
+    Hp: 51000000
+    BaseExp: 91000000
+    JobExp: 71000000
+    Attack: 7200
+    Attack2: 4600
+    Defense: 210
+    MagicDefense: 135
+    Str: 180
+    Agi: 165
+    Vit: 160
+    Int: 110
+    Dex: 300
+    Luk: 90
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Dark
+    ElementLevel: 1
+    WalkSpeed: 160
+    AttackDelay: 1100
+    AttackMotion: 500
+    DamageMotion: 300
+    Ai: 01
+  - Id: 21976
+    AegisName: EP20_FAKE_IWIN_SY
+    Name: Disguised Iwin Sorcerer
+    Level: 237
+    Hp: 48500000
+    BaseExp: 91000000
+    JobExp: 71000000
+    Attack: 5100
+    Attack2: 8200
+    Defense: 160
+    MagicDefense: 185
+    Str: 130
+    Agi: 140
+    Vit: 140
+    Int: 210
+    Dex: 320
+    Luk: 105
+    AttackRange: 4
+    SkillRange: 12
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Dark
+    ElementLevel: 1
+    WalkSpeed: 180
+    AttackDelay: 1400
+    AttackMotion: 700
+    DamageMotion: 350
+    Ai: 01
+  - Id: 21977
+    AegisName: EP20_FAKE_IWIN_SB
+    Name: Disguised Iwin Bowyer
+    Level: 237
+    Hp: 49000000
+    BaseExp: 91000000
+    JobExp: 71000000
+    Attack: 7900
+    Attack2: 3800
+    Defense: 175
+    MagicDefense: 140
+    Str: 195
+    Agi: 180
+    Vit: 150
+    Int: 100
+    Dex: 350
+    Luk: 95
+    AttackRange: 7
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Dark
+    ElementLevel: 1
+    WalkSpeed: 170
+    AttackDelay: 1000
+    AttackMotion: 450
+    DamageMotion: 280
+    Ai: 05
+  - Id: 21978
+    AegisName: EP20_FAKE_IWIN_SG
+    Name: Disguised Iwin Guard
+    Level: 238
+    Hp: 54000000
+    BaseExp: 94000000
+    JobExp: 73000000
+    Attack: 7500
+    Attack2: 4100
+    Defense: 260
+    MagicDefense: 130
+    Str: 200
+    Agi: 130
+    Vit: 190
+    Int: 105
+    Dex: 280
+    Luk: 85
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 1500
+    AttackMotion: 800
+    DamageMotion: 400
+    Ai: 04
+  - Id: 21979
+    AegisName: EP20_FAKE_IWIN_SR
+    Name: Disguised Iwin Commander
+    Level: 239
+    Hp: 62000000
+    BaseExp: 105000000
+    JobExp: 81000000
+    Attack: 8800
+    Attack2: 5200
+    Defense: 280
+    MagicDefense: 150
+    Str: 220
+    Agi: 150
+    Vit: 210
+    Int: 130
+    Dex: 310
+    Luk: 95
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 180
+    AttackDelay: 1300
+    AttackMotion: 600
+    DamageMotion: 350
+    Ai: 04
+  - Id: 21980
+    AegisName: EP20_DEMIGOD_LASGAND
+    Name: Demigod Lasgand
+    Level: 250
+    Hp: 480000000
+    BaseExp: 850000000
+    JobExp: 620000000
+    Attack: 18500
+    Attack2: 14200
+    Defense: 450
+    MagicDefense: 280
+    Str: 380
+    Agi: 260
+    Vit: 290
+    Int: 280
+    Dex: 450
+    Luk: 160
+    AttackRange: 2
+    SkillRange: 12
+    ChaseRange: 14
+    Size: Large
+    Race: Demihuman
+    Element: Ghost
+    ElementLevel: 3
+    WalkSpeed: 110
+    AttackDelay: 700
+    AttackMotion: 350
+    DamageMotion: 150
+    Class: Boss
+  - Id: 21981
+    AegisName: EP20_BOSS_CLANER
+    Name: Commander Claner
+    Level: 243
+    Hp: 110000000
+    BaseExp: 180000000
+    JobExp: 135000000
+    Attack: 10500
+    Attack2: 5900
+    Defense: 330
+    MagicDefense: 170
+    Str: 250
+    Agi: 180
+    Vit: 230
+    Int: 140
+    Dex: 350
+    Luk: 100
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Fire
+    ElementLevel: 3
+    WalkSpeed: 140
+    AttackDelay: 1000
+    AttackMotion: 500
+    DamageMotion: 250
+    Class: Boss
+  - Id: 21982
+    AegisName: MD_EP20_BOSS_LASGAND
+    Name: Phantom Lasgand
+    Level: 250
+    Hp: 650000000
+    BaseExp: 1200000000
+    JobExp: 900000000
+    Attack: 22000
+    Attack2: 17500
+    Defense: 520
+    MagicDefense: 320
+    Str: 420
+    Agi: 290
+    Vit: 330
+    Int: 320
+    Dex: 480
+    Luk: 180
+    AttackRange: 2
+    SkillRange: 12
+    ChaseRange: 16
+    Size: Large
+    Race: Demihuman
+    Element: Ghost
+    ElementLevel: 4
+    WalkSpeed: 100
+    AttackDelay: 600
+    AttackMotion: 300
+    DamageMotion: 120
+    Class: Boss
+  - Id: 21983
+    AegisName: MD_EP20_FALLENANGEL
+    Name: Corrupted Iwin Angel
+    Level: 242
+    Hp: 95000000
+    BaseExp: 150000000
+    JobExp: 110000000
+    Attack: 9800
+    Attack2: 8200
+    Defense: 310
+    MagicDefense: 240
+    Str: 230
+    Agi: 200
+    Vit: 195
+    Int: 220
+    Dex: 360
+    Luk: 130
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Angel
+    Element: Dark
+    ElementLevel: 3
+    WalkSpeed: 130
+    AttackDelay: 950
+    AttackMotion: 450
+    DamageMotion: 220
+    Class: Boss
+  - Id: 21984
+    AegisName: EP20_ANGEL_ICESLUG
+    Name: Seraphic Ice Slug
+    Level: 236
+    Hp: 44000000
+    BaseExp: 84000000
+    JobExp: 67000000
+    Attack: 6500
+    Attack2: 5800
+    Defense: 180
+    MagicDefense: 160
+    Str: 160
+    Agi: 145
+    Vit: 150
+    Int: 155
+    Dex: 295
+    Luk: 90
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Angel
+    Element: Water
+    ElementLevel: 2
+    WalkSpeed: 210
+    AttackDelay: 1300
+    AttackMotion: 650
+    DamageMotion: 320
+    Ai: 01
+  - Id: 21985
+    AegisName: EP20_ICEEGG
+    Name: Icewind Egg
+    Level: 215
+    Hp: 6951869
+    BaseExp: 0
+    JobExp: 0
+    Attack: 8003
+    Attack2: 2324
+    Defense: 300
+    MagicDefense: 161
+    Str: 83
+    Agi: 69
+    Vit: 79
+    Int: 83
+    Dex: 80
+    Luk: 79
+    AttackRange: 0
+    SkillRange: 0
+    ChaseRange: 0
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 4000
+    AttackMotion: 1000
+    DamageMotion: 500
+    Ai: 06
+    Modes:
+      CanMove: false
+      FixedMonster: true
+      NoRandomWalk: true
+    Drops:
+      - Item: Ep20_Copo_Egg_Shell
+        Rate: 1500
+      - Item: Solid_Shell
+        Rate: 2500
+      - Item: Cool_Liquid
+        Rate: 500
+      - Item: Piece_Of_Egg_Shell
+        Rate: 2500
+      - Item: Icewind_Egg_Card
+        Rate: 10
+  - Id: 21986
+    AegisName: EP20_RGAN_WARLOCK
+    Name: Superior Rgan Warlock
+    Level: 239
+    Hp: 20283828
+    BaseExp: 420481
+    JobExp: 294337
+    Attack: 10241
+    Attack2: 2903
+    Defense: 305
+    MagicDefense: 164
+    Str: 82
+    Agi: 67
+    Vit: 78
+    Int: 82
+    Dex: 101
+    Luk: 78
+    AttackRange: 7
+    SkillRange: 12
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Poison
+    ElementLevel: 1
+    WalkSpeed: 170
+    AttackDelay: 1350
+    AttackMotion: 650
+    DamageMotion: 330
+    Ai: 01
+    Drops:
+      - Item: Ep20_Coral_Bangle
+        Rate: 1000
+      - Item: Ep20_Rgan_Core_F
+        Rate: 1250
+      - Item: EP19_Shell_Of_Rgan
+        Rate: 1500
+      - Item: EP19_Unknown_Cell
+        Rate: 1000
+      - Item: S_Rgan_Warlock_Card
+        Rate: 10
+  - Id: 21987
+    AegisName: EP20_RGAN_HEALER
+    Name: Rgan High Priest
+    Level: 239
+    Hp: 61000000
+    BaseExp: 102000000
+    JobExp: 79000000
+    Attack: 6100
+    Attack2: 8500
+    Defense: 210
+    MagicDefense: 220
+    Str: 150
+    Agi: 150
+    Vit: 170
+    Int: 220
+    Dex: 310
+    Luk: 120
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Undead
+    ElementLevel: 2
+    WalkSpeed: 170
+    AttackDelay: 1300
+    AttackMotion: 600
+    DamageMotion: 330
+    Ai: 01
+  - Id: 21988
+    AegisName: EP20_JORGAN_WARLOCK
+    Name: Ancient Rgan Occultist
+    Level: 242
+    Hp: 78000000
+    BaseExp: 130000000
+    JobExp: 98000000
+    Attack: 6800
+    Attack2: 10500
+    Defense: 220
+    MagicDefense: 240
+    Str: 160
+    Agi: 170
+    Vit: 180
+    Int: 260
+    Dex: 360
+    Luk: 120
+    AttackRange: 5
+    SkillRange: 12
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Undead
+    ElementLevel: 3
+    WalkSpeed: 160
+    AttackDelay: 1200
+    AttackMotion: 550
+    DamageMotion: 300
+    Ai: 01
+  - Id: 21989
+    AegisName: EP20_JORGAN_HEALER
+    Name: Ancient Rgan Restorer
+    Level: 242
+    Hp: 81000000
+    BaseExp: 130000000
+    JobExp: 98000000
+    Attack: 7100
+    Attack2: 9800
+    Defense: 240
+    MagicDefense: 250
+    Str: 170
+    Agi: 165
+    Vit: 190
+    Int: 250
+    Dex: 340
+    Luk: 130
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Undead
+    ElementLevel: 3
+    WalkSpeed: 160
+    AttackDelay: 1200
+    AttackMotion: 550
+    DamageMotion: 300
+    Ai: 01
+  - Id: 21990
+    AegisName: EP20_JORGAN_GUARDIAN
+    Name: Ancient Rgan Bulwark
+    Level: 243
+    Hp: 89000000
+    BaseExp: 136000000
+    JobExp: 102000000
+    Attack: 9500
+    Attack2: 4800
+    Defense: 340
+    MagicDefense: 180
+    Str: 260
+    A0gi: 130
+    Vit: 230
+    Int: 120
+    Dex: 300
+    Luk: 95
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demihuman
+    Element: Undead
+    ElementLevel: 3
+    WalkSpeed: 190
+    AttackDelay: 1600
+    AttackMotion: 850
+    DamageMotion: 420
+    Ai: 04
+  - Id: 21991
+    AegisName: EP20_JORGAN_CLEANER
+    Name: Ancient Rgan Executioner
+    Level: 243
+    Hp: 86000000
+    BaseExp: 136000000
+    JobExp: 102000000
+    Attack: 9900
+    Attack2: 4500
+    Defense: 290
+    MagicDefense: 190
+    Str: 270
+    Agi: 145
+    Vit: 210
+    Int: 110
+    Dex: 310
+    Luk: 100
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demihuman
+    Element: Undead
+    ElementLevel: 3
+    WalkSpeed: 180
+    AttackDelay: 1400
+    AttackMotion: 700
+    DamageMotion: 380
+    Ai: 04
+  - Id: 21992
+    AegisName: MD_EP20_JOR_G_P
+    Name: Phantasm Rgan Guard P
+    Level: 245
+    Hp: 105000000
+    BaseExp: 165000000
+    JobExp: 122000000
+    Attack: 11200
+    Attack2: 5600
+    Defense: 360
+    MagicDefense: 200
+    Str: 290
+    Agi: 160
+    Vit: 240
+    Int: 130
+    Dex: 340
+    Luk: 110
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demihuman
+    Element: Undead
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 1200
+    AttackMotion: 600
+    DamageMotion: 300
+    Class: Boss
+  - Id: 21993
+    AegisName: MD_EP20_JOR_G_Y
+    Name: Phantasm Rgan Guard Y
+    Level: 245
+    Hp: 105000000
+    BaseExp: 165000000
+    JobExp: 122000000
+    Attack: 11200
+    Attack2: 5600
+    Defense: 360
+    MagicDefense: 200
+    Str: 290
+    Agi: 160
+    Vit: 240
+    Int: 130
+    Dex: 340
+    Luk: 110
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demihuman
+    Element: Undead
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 1200
+    AttackMotion: 600
+    DamageMotion: 300
+    Class: Boss
+  - Id: 21994
+    AegisName: MD_EP20_JOR_WARLOCK
+    Name: Superior Rgan Warlock
+    Level: 246
+    Hp: 112000000
+    BaseExp: 0
+    JobExp: 0
+    Attack: 8500
+    Attack2: 12400
+    Defense: 260
+    MagicDefense: 290
+    Str: 190
+    Agi: 185
+    Vit: 210
+    Int: 290
+    Dex: 380
+    Luk: 130
+    AttackRange: 5
+    SkillRange: 12
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Undead
+    ElementLevel: 4
+    WalkSpeed: 140
+    AttackDelay: 1100
+    AttackMotion: 500
+    DamageMotion: 250
+    Class: Boss
 #  - Id: 21995
 #    AegisName: EP20_NPC_COCOPO
 #  - Id: 21996

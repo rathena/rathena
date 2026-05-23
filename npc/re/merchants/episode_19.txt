@@ -35,7 +35,7 @@ icas_in,188,60,3	script	Forr#ep19	4_EP19_IWIN,{
 		mes "It's something you can't get here, so you might ask for it often.";
 		close2;
 		cutin "",255;
-		callshop "barter_ep19_new_content";
+		callshop( "barter_ep19_new_content" );
 		end;
 	case 2:
 		mes "[Forr]";
