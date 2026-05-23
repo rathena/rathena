@@ -1,0 +1,116 @@
+// mob db
+20536,MD_ED_B_YGNIZEM,Nameless Swordsman,Nameless Swordsman,180,75000000,1,1500000000,900000000,1,5030,7310,585,235,290,227,254,219,429,186,10,14,1,7,43,538757,145,576,432,288,67500000,0,0,0,0,0,0,25786,1,25787,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+20537,MD_ED_YGNIZEM,Nameless Swordsman,Nameless Swordsman,176,1519762,1,6217200,4352040,1,4422,6422,340,109,246,207,216,186,364,129,10,14,1,7,43,14469,145,576,432,288,0,0,0,0,0,0,0,7347,1,25127,1,25128,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+20538,MD_ED_EREND,Nameless Acolyte,Nameless Acolyte,176,1500486,1,4090200,2863140,1,3085,4485,278,113,109,81,127,205,185,81,10,14,1,7,46,14469,145,576,432,288,0,0,0,0,0,0,0,7347,1,6820,1,25127,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+20539,MD_ED_ARMAIA,Nameless Merchant,Nameless Merchant,175,1507840,1,4323060,3026130,1,3951,5751,397,103,176,73,121,93,206,81,10,14,1,7,43,14469,145,576,432,288,0,0,0,0,0,0,0,25127,1,7347,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+20541,MD_ED_LGTHIGHGUARD,Rekenber Senior Guard,Rekenber Senior Guard,174,1475486,1,4052040,2836410,9,3161,4561,339,98,187,218,87,110,251,106,10,14,1,7,40,14469,145,576,432,288,0,0,0,0,0,0,0,608,1,7347,1,607,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+20542,MD_ED_LGTGUARD,Rekenber Guard,Rekenber Guard,176,1475486,1,5700690,3990480,1,3067,4409,346,96,207,100,75,110,251,88,10,14,1,7,40,14469,145,576,432,288,0,0,0,0,0,0,0,7347,1,607,1,608,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+20543,MD_ED_M_SCIENCE,Rengenschirm Scientist,Rengenschirm Scientist,172,1469107,1,4006620,2804640,1,2950,4292,346,96,94,96,91,277,236,74,10,14,1,7,40,14469,145,576,432,288,0,0,0,0,0,0,0,7347,1,607,1,608,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+// mob skill db
+20536,Nameless Swordsman@LK_SPIRALPIERCE,attack,397,2,2000,0,5000,yes,target,always,0,,,,,,,
+20536,Nameless Swordsman@NPC_ALLHEAL,idle,687,-1,500,1000,0,yes,target,always,0,,,,,,,
+20536,Nameless Swordsman@NPC_CHANGEWATER,any,162,-1,500,500,0,no,self,myhpltmaxrate,30,,,,,,,
+20536,Nameless Swordsman@NPC_CHANGEWIND,any,165,-1,500,500,0,no,self,myhpltmaxrate,30,,,,,,,
+20536,Nameless Swordsman@NPC_CRITICALSLASH,attack,170,1,2000,0,5000,no,target,always,0,,,,,,,
+20536,Nameless Swordsman@NPC_SHIELDBRAKE,chase,346,10,500,0,0,no,target,always,0,,,,,,,
+20536,Nameless Swordsman@NPC_SHIELDBRAKE,attack,346,10,500,0,0,no,target,always,0,,,,,,,
+20536,Nameless Swordsman@NPC_SHIELDBRAKE,attack,346,10,2000,0,0,no,target,always,0,,,,,,,
+20536,Nameless Swordsman@SM_BASH,attack,5,10,1000,0,5000,no,target,always,0,,,,,,,
+20536,Nameless Swordsman@SM_BASH,attack,5,10,10000,0,1000,no,target,afterskill,5,,,,,,,
+20536,Nameless Swordsman@SM_MAGNUM,attack,7,25,500,500,5000,no,self,always,0,,,,,,,
+//
+20537,Nameless Swordsman@NPC_FIREATTACK,attack,186,5,500,0,5000,no,self,always,0,,,,,,,
+20537,Nameless Swordsman@NPC_CRITICALSLASH,attack,170,1,2000,0,5000,no,target,always,0,,,,,,,
+20537,Nameless Swordsman@NPC_SHIELDBRAKE,attack,346,10,2000,0,0,no,target,always,0,,,,,,,
+20537,Nameless Swordsman@NPC_SHIELDBRAKE,chase,346,10,500,0,0,no,target,always,0,,,,,,,
+20537,Nameless Swordsman@NPC_SHIELDBRAKE,attack,346,10,500,0,0,no,target,always,0,,,,,,,
+20537,Nameless Swordsman@SM_BASH,attack,5,10,500,0,1000,no,target,always,,,,,,,,
+20537,Nameless Swordsman@SM_MAGNUM,attack,7,1,500,500,5000,no,self,always,0,,,,,,,
+// 
+20538,Nameless Acolyte@NPC_SILENCEATTACK,attack,178,5,500,0,5000,no,target,always,0,,,,,,,
+20538,Nameless Acolyte@AL_PNEUMA,any,25,1,5000,0,0,no,self,longrangeattacked,,,,,,,,
+//20538,Nameless Acolyte@NPC_CHEAL,attack,729,5,2000,500,2000,no,target,myhpltmaxrate,99,,,,,,,
+20538,Nameless Acolyte@NPC_HOLYATTACK,attack,189,5,500,0,5000,no,target,always,0,,,,,,,
+//
+20538,Nameless Acolyte@MC_MAMMONITE,attack,42,9,2000,0,5000,no,target,always,0,,,,,,,
+20538,Nameless Acolyte@NPC_GROUNDATTACK,attack,185,3,2000,0,5000,no,target,always,0,,,,,,,
+20538,Nameless Acolyte@NPC_HELMBRAKE,attack,345,9,2000,0,5000,no,target,always,0,,,,,,,
+20538,Nameless Acolyte@NPC_STUNATTACK,attack,179,3,2000,0,5000,no,target,always,0,,,,,,,
+//
+20541,Rekenber Senior Guard@NPC_WINDATTACK,attack,187,5,2000,0,5000,no,target,always,0,,,,,,,
+20541,Rekenber Senior Guard@NPC_GUIDEDATTACK,attack,172,5,500,0,5000,no,target,always,0,,,,,,,
+20541,Rekenber Senior Guard@SN_SHARPSHOOTING,attack,382,5,2000,0,5000,no,target,always,0,,,,,,,
+20541,Rekenber Senior Guard@AC_SHOWER,attack,47,10,2000,0,3000,no,target,always,0,,,,,,,
+20541,Rekenber Senior Guard@NPC_STUNATTACK,attack,179,5,2000,0,5000,no,target,always,0,,,,,,,
+20541,Rekenber Senior Guard@MG_FIREBALL,chase,17,44,10000,500,10000,no,target,always,0,,,,,,,
+20541,Rekenber Senior Guard@MG_FIREBALL,idle,17,44,3000,500,10000,no,randomtarget,always,0,,,,,,,
+20541,Rekenber Senior Guard@MG_FIREBALL,attack,17,44,3000,500,10000,no,target,always,0,,,,,,,
+20541,Rekenber Senior Guard@MG_FIREBALL,chase,17,44,3000,500,10000,no,target,always,0,,,,,,,
+20541,Rekenber Senior Guard@NPC_COMBOATTACK,attack,171,5,2000,0,5000,no,target,always,0,,,,,,,
+20541,Rekenber Senior Guard@NPC_CRITICALSLASH,attack,170,1,2000,0,5000,no,target,always,0,,,,,,,
+20541,Rekenber Senior Guard@AC_CHARGEARROW,attack,148,1,2000,0,3000,no,target,always,0,,,,,,,
+20541,Rekenber Senior Guard@AC_DOUBLE,attack,46,10,2000,0,3000,no,target,always,0,,,,,,,
+20541,Rekenber Senior Guard@NPC_AGIUP,any,350,1,7000,0,3000,no,target,always,0,,,,,,,
+//
+20542,Rekenber Guard@LK_SPIRALPIERCE,attack,397,1,2000,0,5000,yes,target,always,0,,,,,,,
+20542,Rekenber Guard@NPC_FIREATTACK,attack,186,5,2000,0,5000,no,target,always,0,,,,,,,
+20542,Rekenber Guard@NPC_STUNATTACK,attack,179,5,2000,0,5000,no,target,always,0,,,,,,,
+20542,Rekenber Guard@NPC_CRITICALSLASH,attack,170,1,2000,0,5000,no,target,always,0,,,,,,,
+20542,Rekenber Guard@SM_MAGNUM,attack,7,25,500,500,5000,no,self,always,0,,,,,,,
+20542,Rekenber Guard@SM_BASH,attack,5,10,1000,0,5000,no,target,always,0,,,,,,,
+20542,Rekenber Guard@KN_SPEARBOOMERANG,attack,59,5,2000,0,5000,yes,target,always,0,,,,,,,
+//
+20543,Rengenschirm Scientist@MG_LIGHTNINGBOLT,chase,20,10,2000,0,5000,no,target,always,0,,,,,,,
+20543,Rengenschirm Scientist@HW_NAPALMVULCAN,attack,400,5,2000,0,5000,no,target,always,0,,,,,,,
+20543,Rengenschirm Scientist@MG_COLDBOLT,attack,14,10,2000,0,5000,no,target,always,0,,,,,,,
+20543,Rengenschirm Scientist@MG_COLDBOLT,chase,14,10,2000,0,5000,no,target,always,0,,,,,,,
+20543,Rengenschirm Scientist@MG_FIREBOLT,chase,19,10,2000,0,5000,no,target,always,0,,,,,,,
+20543,Rengenschirm Scientist@MG_FIREBOLT,attack,19,10,2000,0,5000,no,target,always,0,,,,,,,
+20543,Rengenschirm Scientist@MG_FROSTDIVER,attack,15,10,2000,0,5000,no,target,always,0,,,,,,,
+20543,Rengenschirm Scientist@MG_FROSTDIVER,chase,15,10,2000,0,5000,no,target,always,0,,,,,,,
+20543,Rengenschirm Scientist@MG_LIGHTNINGBOLT,attack,20,10,2000,0,5000,no,target,always,0,,,,,,,
+20543,Rengenschirm Scientist@MG_SAFETYWALL,any,12,5,5000,0,5000,no,target,closedattacked,0,,,,,,,
+20543,Rengenschirm Scientist@WZ_EARTHSPIKE,attack,80,5,2000,0,5000,no,target,always,0,,,,,,,
+20543,Rengenschirm Scientist@WZ_EARTHSPIKE,chase,80,5,2000,0,5000,no,target,always,0,,,,,,,
+20543,Rengenschirm Scientist@WZ_EARTHSPIKE,attack,80,5,2000,0,5000,no,target,always,0,,,,,,,
+20543,Rengenschirm Scientist@WZ_FROSTNOVA,attack,88,10,2000,0,5000,no,target,always,0,,,,,,,
+20543,Rengenschirm Scientist@WZ_JUPITEL,attack,84,10,2000,0,5000,no,target,always,0,,,,,,,
+// item db
+25786,Somatology_Research_Document,Somatology Research Document,3,0,,,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+25787,Somatology_Experimental_Fragment,Somatology Experimental Fragment,3,0,,,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+// TODO enchants
+
+// quest db
+- Id: 16400
+  Title: Road of Battle
+  TimeLimit: +23h
+
+// instance db
+- Id: 1
+  Name: Edda Bio
+  Enter:
+    Map: 1@gol1
+    X: 196
+    Y: 32
+  AdditionalMaps:
+    1@gol2: true
+
+// maps athena
+map: 1@gol1
+map: 1@gol2
+
+// map index
+1@gol1
+1@gol2
+
+// resnametable
+
+// EDDA 생체연구소 - 원정의 여로
+1@gol1.gnd#1@gol1.gnd#
+1@gol1.gat#1@gol1.gat#
+1@gol1.rsw#1@gol1.rsw#
+유저인터페이스\map\1@gol1.bmp#유저인터페이스\map\1@gol1.bmp#
+1@gol2.gnd#1@gol2.gnd#
+1@gol2.gat#1@gol2.gat#
+1@gol2.rsw#1@gol2.rsw#
+유저인터페이스\map\1@gol2.bmp#유저인터페이스\map\1@gol2.bmp#
