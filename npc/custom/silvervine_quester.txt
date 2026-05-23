@@ -87,7 +87,7 @@ OnInit:
     // CONFIGURATION
     // ==========================================
     .max_daily_quests = 10;
-    .reward_item = 6707; // Silvervine Fruit ID
+    .reward_item = 6417; // Silvervine Fruit ID
     .reward_amount = 5;  // 5 Silvervine Reward per your list
 
     // Unified Clean Array Layout (IDs updated to 99001+ to avoid client UI overlapping conflicts)
