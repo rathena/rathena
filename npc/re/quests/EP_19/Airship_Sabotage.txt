@@ -133,6 +133,30 @@ OnEvent:
 	instance_announce false,"Airship Management Doll: The person has forged into " + get_instance_var("class$") + ". The corresponding response level is grade " + get_instance_var("difficulty$") + ".",bc_map,0xFFDDAA;
 	set_instance_var("airship",1);
 end;
+OnSetMode:
+	// This runs inside the controller scope, so it saves perfectly with 2 arguments!
+	set_instance_var("mode", @chosen_mode);
+	
+	if (get_instance_var("mode") == 1) {
+		set_instance_var("difficulty$", "C");
+		set_instance_var("class$", "Economy");
+		set_instance_var("mob_hp", 2600000);
+		set_instance_var("mob_def", 62);
+		set_instance_var("mob_mdef", 30);
+	} else if (get_instance_var("mode") == 2) {
+		set_instance_var("difficulty$", "B");
+		set_instance_var("class$", "Business");
+		set_instance_var("mob_hp", 5200000);
+		set_instance_var("mob_def", 63);
+		set_instance_var("mob_mdef", 31);
+	} else if (get_instance_var("mode") == 3) {
+		set_instance_var("difficulty$", "A");
+		set_instance_var("class$", "First Class");
+		set_instance_var("mob_hp", 7800000);
+		set_instance_var("mob_def", 64);
+		set_instance_var("mob_mdef", 32);
+	}
+end;
 }
 
 1@whl,53,74,0	script	#191_wh1_wp_1	WARPNPC,2,2,{
