@@ -7,7 +7,7 @@ prontera,165,165,4	script	Silvervine Quester	10022,{
     mes "Greetings! I hand out rewards to players who can take down elusive mini-bosses.";
     next;
 
-    // Daily Limit Check & Reset (Native Server Midnight Flagging)
+    // Daily Limit Check & Reset
     if (#Silvervine_LastDate != gettime(DT_YYYYMMDD)) {
         #Silvervine_LastDate = gettime(DT_YYYYMMDD);
         #Silvervine_DailyCount = 0;
@@ -17,15 +17,16 @@ prontera,165,165,4	script	Silvervine Quester	10022,{
     .@active_index = -1;
     .@complete_index = -1;
 
-    for (.@i = 0; .@i < .quest_count; .@i++) {
+    // Fixed the loop incrementation and used checkquest()
+    for (.@i = 0; .@i < .quest_count; .@i = .@i + 1) {
         .@q_id = .quests[.@i * 2];
-        .@status = queststatus(.@q_id);
+        .@status = checkquest(.@q_id, HAVEQUEST); // Native rAthena syntax
 
-        if (.@status == Q_ACTIVE) {
+        if (.@status == 1) { // 1 = Quest is Active/Started but not done
             .@active_index = .@i;
             break;
         }
-        if (.@status == Q_COMPLETE) {
+        if (.@status == 2) { // 2 = Quest objectives are met / Complete
             .@complete_index = .@i;
             break;
         }
@@ -89,7 +90,7 @@ prontera,165,165,4	script	Silvervine Quester	10022,{
 
 OnInit:
     // ==========================================
-    // CONFIGURATION (Loads once at server init)
+    // CONFIGURATION
     // ==========================================
     .max_daily_quests = 10;
     .reward_item = 6707; // Silvervine Fruit ID
