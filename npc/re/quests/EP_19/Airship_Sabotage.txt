@@ -612,7 +612,7 @@ end;
 				getitem .@rewards[.@i],.@rewards[.@i+1];
 			}
 			mes "You have gained an experience and job experience.";
-			getexp 5096730 * get_instance_var("mode"),3644000 * get_instance_var("mode");
+			getexp 5096730 * get_instance_var("mode",1),3644000 * get_instance_var("mode",1);
 			next;
 			.@reputation = 5 + (get_instance_var("mode") * 5);
 			mes "^0000CDYour Ice Castle reputation has increased by " + .@reputation + " points.^000000";
