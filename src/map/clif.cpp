@@ -25677,7 +25677,7 @@ void clif_parse_emotion2(const int fd, map_session_data* const sd)
 #endif
 }
 
-void clif_emotion2(block_list* const bl, const uint16 ExpantionId, const uint16 EmotionId)
+void clif_emotion2(const block_list* bl, const uint16 ExpantionId, const uint16 EmotionId)
 {
 #if (PACKETVER_MAIN_NUM >= 20230925)
 	nullpo_retv(bl);

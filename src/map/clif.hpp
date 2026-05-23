@@ -966,7 +966,7 @@ void clif_refresh(map_session_data *sd);	// self
 
 void clif_emotion( const block_list& bl, emotion_type type );
 void clif_parse_emotion2(const int fd, map_session_data* const sd);
-void clif_emotion2(block_list* const bl, const uint16 ExpantionId, const uint16 EmotionId);
+void clif_emotion2(const block_list* bl, const uint16 ExpantionId, const uint16 EmotionId);
 void clif_emotion2_fail(map_session_data* const sd, const uint16 ExpantionId, const uint16 EmotionId, const EEmotionStatus Status);
 void clif_parse_emotion2_expantion(const int fd, map_session_data* const sd);
 void clif_emotion2_expantion(map_session_data* const sd, const uint16 ExpantionId, const bool bRented, const uint32 RentEndTime);
