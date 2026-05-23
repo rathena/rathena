@@ -31,7 +31,7 @@ end;
 	end;
 	
 OnTouch:
-if (!getcharid(1) || getpartyleader(getcharid(1), 2) != getcharid(3)) {
+if (is_party_leader() == false) {
 		end;
 	}
     instance_disable(strnpcinfo(0));
