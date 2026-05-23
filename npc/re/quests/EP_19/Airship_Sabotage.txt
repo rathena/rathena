@@ -2,20 +2,20 @@
 	end;
 	
 OnInstanceInit:
-	'map$ = instance_mapname("1@whl");
+	instance_set_reg("map$", instance_mapname("1@whl"));
 	enablenpc instance_npcname("#st_warp");
-	'mode = 1;
-	'shield = 1;  
-	'class$ = "Economy";
-	'difficulty$ = "C";
-	'airship = 0;
-	'status = 0;
-	'summon = 0;
-	'summon_1 = 0;
-	'summon_2 = 0;
-	'summon_3 = 0;
-	'summon_4 = 0;
-	'walk = 0;
+	instance_set_reg("mode", 1);
+	instance_set_reg("shield", 1);  
+	instance_set_reg("class$", "Economy");
+	instance_set_reg("difficulty$", "C");
+	instance_set_reg("airship", 0);
+	instance_set_reg("status", 0);
+	instance_set_reg("summon", 0);
+	instance_set_reg("summon_1", 0);
+	instance_set_reg("summon_2", 0);
+	instance_set_reg("summon_3", 0);
+	instance_set_reg("summon_4", 0);
+	instance_set_reg("walk", 0);
 	disablenpc instance_npcname("#19_g_1");
 	disablenpc instance_npcname("#19_g_2");
 	disablenpc instance_npcname("#19_g_3");
@@ -36,20 +36,20 @@ OnTouch:
 	disablenpc instance_npcname(strnpcinfo(0));
 	enablenpc instance_npcname("#start_control");
 	donpcevent strcat(instance_npcname("#start_control"),"::OnWalk");
-	warp 'map$,160,160;
-	'airship = 5;
+	warp instance_get_reg("map$"),160,160;
+	instance_set_reg("airship", 5);
 end;
 }
 
 1@whl,46,55,6	script	#start_control	20637,{
-	if (!getcharid(1) || getpartyleader(getcharid(1), 2) != getcharid(3) || !'walk) {
+	if (!getcharid(1) || getpartyleader(getcharid(1), 2) != getcharid(3) || !instance_get_reg("walk")) {
 		end;
 	}
-	if('status > 0) end;
+	if(instance_get_reg("status") > 0) end;
 	mes "[Airship Management Doll]";
 	mes "Are you a passenger? I will check your seat class. May I see your ticket?";
 	mes "------------------";
-	mes "Current Class - ^0000FF" + 'class$ + "^000000";
+	mes "Current Class - ^0000FF" + instance_get_reg("class$") + "^000000";
 	next;
 	switch(select("Wait a moment:Show a random note:Change your seat's class")){
 		case 1:
@@ -87,12 +87,12 @@ end;
 						donpcevent strcat(instance_npcname(strnpcinfo(0)),"::OnStart");
 						end;
 					}
-					'mode = .@s;
-					'difficulty$ = .@dif$[.@s];
-					'class$ = .@class$[.@s];
-					'mob_hp = 2600000 * .@s;
-					'mob_def = 62 + .@s;
-					'mob_mdef = 30 + .@s;
+					instance_set_reg("mode", .@s);
+					instance_set_reg("difficulty$", .@dif$[.@s]);
+					instance_set_reg("class$", .@class$[.@s]);
+					instance_set_reg("mob_hp", 2600000 * .@s);
+					instance_set_reg("mob_def", 62 + .@s);
+					instance_set_reg("mob_mdef", 30 + .@s);
 					mes "[Airship Management Doll]";
 					mes "The seat upgrade process has been completed. Could you please show me your flight ticket?";
 					next;
@@ -108,14 +108,14 @@ OnWalk:
 	sleep 800;
 	emotion ET_THROB;
 	sleep 2000;
-	'walk = 1;
+	instance_set_reg("walk", 1);
 end;
 
 OnStart:
 	mes "[Airship Management Doll]";
 	mes "This. It looks a little different from our flight ticket. I will get back to you after I go through the verification process. Please wait a moment.";
 	close2;
-	'status = 1;
+	instance_set_reg("status", 1);
 	emotion ET_PROFUSELY_SWAT;
 	sleep 1500;
 	npctalk "...I've never seen a ticket like this before. I'll be right back after verifying it, so please wait a moment.";
@@ -128,8 +128,8 @@ OnEvent:
 	sleep 3000;
 	instance_announce false,"Airship Management Doll: A fake airline ticket has been brought into the airship! All dolls are to enter a freeloader response sequence.",bc_map,0xFFDDAA;
 	sleep 3000;
-	instance_announce false,"Airship Management Doll: The person has forged into " + 'class$ + ". The corresponding response level is grade " + 'difficulty$ + ".",bc_map,0xFFDDAA;
-	'airship = 1;
+	instance_announce false,"Airship Management Doll: The person has forged into " + instance_get_reg("class$") + ". The corresponding response level is grade " + instance_get_reg("difficulty$") + ".",bc_map,0xFFDDAA;
+	instance_set_reg("airship", 1);
 end;
 }
 
@@ -138,14 +138,14 @@ end;
 	
 OnTouch:
 	.@id = atoi(replacestr(strnpcinfo(2),"191_wh1_wp_",""));
-	if('airship < .@id){
+	if(instance_get_reg("airship") < .@id){
 		if(.@id > 1)
 			instance_announce false,"SYSTEM: Warping is prohibited in the airship in an active combat situation",bc_map,0xFF4444;
 		end;
 	}
 	switch(.@id){
 		case 1:
-			if('airship >= 6){
+			if(instance_get_reg("airship") >= 6){
 				.@x = 160; .@y = 140;
 			} else {				
 				.@x = 53; .@y = 86;
@@ -155,12 +155,14 @@ OnTouch:
 		case 3: .@x = 139; .@y = 24; break;
 		case 4: .@x = 160; .@y = 53; break;
 		case 5:
-			warp 'map$,160,140;
+			warp instance_get_reg("map$"),160,140;
 			end;
 	}
-	warp 'map$,.@x,.@y;
-	if(!'summon_ [.@id]){
-		'summon_[.@id] = 1;
+	warp instance_get_reg("map$"),.@x,.@y;
+	
+	// Replaced array notation safely using concatenated strings
+	if(!instance_get_reg("summon_" + .@id)){
+		instance_set_reg("summon_" + .@id, 1);
 		donpcevent strcat(instance_npcname("#19_airship_mob"),"::OnSummon");
 	}
 end;
@@ -175,7 +177,7 @@ end;
 	if (!getcharid(1) || getpartyleader(getcharid(1), 2) != getcharid(3)) {
 		end;
 	}
-	if('airship == 5){
+	if(instance_get_reg("airship") == 5){
 		mes "[Aquila]";
 		mes "It's still not too late. If you stop destroying and head back, I will not take any further action.";
 		next;
@@ -183,7 +185,7 @@ end;
 			mes "[Aquila]";
 			mes "A wise decision.";
 			close2;
-			warp 'map$,31,54;
+			warp instance_get_reg("map$"),31,54;
 			end;
 		}
 		close2;
@@ -200,7 +202,8 @@ end;
 	
 OnSummon:
 	sleep 2000;
-	switch('summon){
+	.@summon = instance_get_reg("summon");
+	switch(.@summon){
 		case 0:
 			.@zone = 2;
 			setarray .@mob, 56,88,20342, 51,93,20631, 65,84,20633, 42,96,20639, 43,90,20641, 48,90,20641, 41,96,20641, 67,87,20641, 60,90,20633, 57,85,20639, 37,96,20639, 54,97,20641, 54,83,20639, 56,96,20631, 56,93,20641, 57,87,20633, 67,80,20641;
@@ -223,58 +226,65 @@ OnSummon:
 			break;
 	}
 	.@size = getarraysize(.@mob);
-	'count = .@size/3;
+	instance_set_reg("count", .@size/3);
+	.@mode = instance_get_reg("mode");
+	.@hp = instance_get_reg("mob_hp");
+	.@def = instance_get_reg("mob_def");
+	.@mdef = instance_get_reg("mob_mdef");
+	.@shield = instance_get_reg("shield");
+	
 	for(.@i = 0; .@i < .@size; .@i += 3){
-		monster 'map$,.@mob[.@i],.@mob[.@i+1],"Zone " + .@zone + " " + (.@i == 0 ? "Key":"Patrol"),.@mob[.@i+2],1,strcat(instance_npcname(strnpcinfo(0)),"::OnMobKill");
+		monster instance_get_reg("map$"),.@mob[.@i],.@mob[.@i+1],"Zone " + .@zone + " " + (.@i == 0 ? "Key":"Patrol"),.@mob[.@i+2],1,strcat(instance_npcname(strnpcinfo(0)),"::OnMobKill");
 		
-		setunitdata $@mobid[0],UMOB_MAXHP,'mob_hp;
-		setunitdata $@mobid[0],UMOB_HP,'mob_hp;
-		setunitdata $@mobid[0],UMOB_DEF,'mob_def;
-		setunitdata $@mobid[0],UMOB_MDEF,'mob_mdef;
+		setunitdata $@mobid[0],UMOB_MAXHP,.@hp;
+		setunitdata $@mobid[0],UMOB_HP,.@hp;
+		setunitdata $@mobid[0],UMOB_DEF,.@def;
+		setunitdata $@mobid[0],UMOB_MDEF,.@mdef;
 		getunitdata $@mobid[0],.@data;
-		setunitdata $@mobid[0],UMOB_STR,.@data[UMOB_STR] * (30 + 'mode);
-		setunitdata $@mobid[0],UMOB_AGI,.@data[UMOB_AGI] * (30 + 'mode); 
-		setunitdata $@mobid[0],UMOB_VIT,.@data[UMOB_VIT] * (20 + 'mode); 
-		setunitdata $@mobid[0],UMOB_INT,.@data[UMOB_INT] * (30 + 'mode);
-		setunitdata $@mobid[0],UMOB_DEX,.@data[UMOB_DEX] * (50 + 'mode); 
-		setunitdata $@mobid[0],UMOB_LUK,.@data[UMOB_LUK] * (10 + 'mode);
-		setunitdata $@mobid[0],UMOB_ATKMIN,.@data[UMOB_ATKMIN] * (2000 + 'mode);
-		setunitdata $@mobid[0],UMOB_ATKMAX,.@data[UMOB_ATKMAX] * (2000 + 'mode); 
-		unitskilluseid $@mobid[0],"NPC_RELIEVE_ON",(.@i == 0 ? 9 : 'shield);
+		setunitdata $@mobid[0],UMOB_STR,.@data[UMOB_STR] * (30 + .@mode);
+		setunitdata $@mobid[0],UMOB_AGI,.@data[UMOB_AGI] * (30 + .@mode); 
+		setunitdata $@mobid[0],UMOB_VIT,.@data[UMOB_VIT] * (20 + .@mode); 
+		setunitdata $@mobid[0],UMOB_INT,.@data[UMOB_INT] * (30 + .@mode);
+		setunitdata $@mobid[0],UMOB_DEX,.@data[UMOB_DEX] * (50 + .@mode); 
+		setunitdata $@mobid[0],UMOB_LUK,.@data[UMOB_LUK] * (10 + .@mode);
+		setunitdata $@mobid[0],UMOB_ATKMIN,.@data[UMOB_ATKMIN] * (2000 + .@mode);
+		setunitdata $@mobid[0],UMOB_ATKMAX,.@data[UMOB_ATKMAX] * (2000 + .@mode); 
+		unitskilluseid $@mobid[0],"NPC_RELIEVE_ON",(.@i == 0 ? 9 : .@shield);
 		unitskilluseid $@mobid[0],(rand(1,2) == 1 ? "NPC_CHANGEDARKNESS" : "NPC_CHANGEHOLY"),1;
 		sleep 500;
 	}
 end;
 
 OnMobKill:
-	'count = 'count - 1;
-	if('count == 0){
-		'summon = 'summon + 1;
-		'airship = 'airship + 1;
+	.@count = instance_get_reg("count") - 1;
+	instance_set_reg("count", .@count);
+	if(.@count == 0){
+		instance_set_reg("summon", instance_get_reg("summon") + 1);
+		instance_set_reg("airship", instance_get_reg("airship") + 1);
 	} else {
-		switch('summon){
+		switch(instance_get_reg("summon")){
 			case 1:
-				if('count == 43)
+				if(.@count == 43)
 					instance_announce false,"???: How about we have a peaceful conversation, foreign organisms? Violence does not resolve the situation.",bc_map,0x00CCFF;
-				if('count == 38)
+				if(.@count == 38)
 					instance_announce false,"???: It seems that you intend to keep moving forward. If you do not stop, we will have no choice but to respond with force.",bc_map,0x00CCFF;
-				if('count == 28)
+				if(.@count == 28)
 					instance_announce false,"???: Put your everything into it, little pitiful patrols. Your fate belongs in this airship, If the airship is destroyed, you will go down with it.",bc_map,0xFFDD66;
-				if('count == 5)
+				if(.@count == 5)
 					instance_announce false,"???: We better ignore the life response in the cargo hold. Do not expense anymore combat force. Attack all the prohibited foreign organisms that are headed in the engine room.",bc_map,0xFFDD66;
 				end;
 				
 			case 2:
-				if('count == 11)
+				if(.@count == 11)
 					instance_announce false,"???: Thank you patrols for not learning the emotion, anger. If you had that emotion, you would immediately become powdered with this airship.",bc_map,0xFFDD66;
-				if('count == 5)
+				if(.@count == 5)
 					instance_announce false,"???: It seems that you intend to keep moving forward. If you do not stop, we will have no choice but to respond with force.",bc_map,0x00CCFF;
 				end;
 				
 			case 3:
-				if('count == 50)
+				if(.@count == 50)
 					instance_announce false,"???: I wonder what were you doing before entering this airship. Foreign organism, you're completely used to destroying the patrols. Was your life about collecting scrap metals in Einbech?",bc_map,0x00CCFF;
-				if('count == 25)
+				if(.@count == 25)
 					instance_announce false,"???: If you go back now, I will spare your life, foreign organism. Choose wisely.",bc_map,0x00CCFF;
 				end;
 		}
@@ -286,22 +296,23 @@ end;
 	end;
 	
 OnBossSummon:
-	monster 'map$,159,158,"Aquila",21531,1,strcat(instance_npcname(strnpcinfo(0)),"::OnBossKill");
-	'gid = $@mobid[0];
-	if('mode > 1){
+	monster instance_get_reg("map$"),159,158,"Aquila",21531,1,strcat(instance_npcname(strnpcinfo(0)),"::OnBossKill");
+	instance_set_reg("gid", $@mobid[0]);
+	.@mode = instance_get_reg("mode");
+	if(.@mode > 1){
 		getunitdata $@mobid[0],.@data;
-		setunitdata $@mobid[0],UMOB_MAXHP,.@data[UMOB_MAXHP] * 'mode;
-		setunitdata $@mobid[0],UMOB_HP,.@data[UMOB_HP] * 'mode;
-		setunitdata $@mobid[0],UMOB_STR,.@data[UMOB_STR] * (50 + 'mode); 
-		setunitdata $@mobid[0],UMOB_AGI,.@data[UMOB_AGI] * (20 + 'mode); 
-		setunitdata $@mobid[0],UMOB_VIT,.@data[UMOB_VIT] * (20 + 'mode);
-		setunitdata $@mobid[0],UMOB_INT,.@data[UMOB_INT] * (50 + 'mode); 
-		setunitdata $@mobid[0],UMOB_DEX,.@data[UMOB_DEX] * (50 + 'mode); 
-		setunitdata $@mobid[0],UMOB_LUK,.@data[UMOB_LUK] * (20 + 'mode);
-		setunitdata $@mobid[0],UMOB_RES,.@data[UMOB_RES] * (50 + 'mode); 
-		setunitdata $@mobid[0],UMOB_MRES,.@data[UMOB_MRES] * (50 + 'mode); 
-		setunitdata $@mobid[0],UMOB_ATKMIN,.@data[UMOB_ATKMIN] * (3000 + 'mode);
-		setunitdata $@mobid[0],UMOB_ATKMAX,.@data[UMOB_ATKMAX] * (3000 + 'mode);
+		setunitdata $@mobid[0],UMOB_MAXHP,.@data[UMOB_MAXHP] * .@mode;
+		setunitdata $@mobid[0],UMOB_HP,.@data[UMOB_HP] * .@mode;
+		setunitdata $@mobid[0],UMOB_STR,.@data[UMOB_STR] * (50 + .@mode); 
+		setunitdata $@mobid[0],UMOB_AGI,.@data[UMOB_AGI] * (20 + .@mode); 
+		setunitdata $@mobid[0],UMOB_VIT,.@data[UMOB_VIT] * (20 + .@mode);
+		setunitdata $@mobid[0],UMOB_INT,.@data[UMOB_INT] * (50 + .@mode); 
+		setunitdata $@mobid[0],UMOB_DEX,.@data[UMOB_DEX] * (50 + .@mode); 
+		setunitdata $@mobid[0],UMOB_LUK,.@data[UMOB_LUK] * (20 + .@mode);
+		setunitdata $@mobid[0],UMOB_RES,.@data[UMOB_RES] * (50 + .@mode); 
+		setunitdata $@mobid[0],UMOB_MRES,.@data[UMOB_MRES] * (50 + .@mode); 
+		setunitdata $@mobid[0],UMOB_ATKMIN,.@data[UMOB_ATKMIN] * (3000 + .@mode);
+		setunitdata $@mobid[0],UMOB_ATKMAX,.@data[UMOB_ATKMAX] * (3000 + .@mode);
 	}
 	unitskilluseid $@mobid[0],"NPC_RELIEVE_ON",9;
 	donpcevent strcat(instance_npcname(strnpcinfo(0)),"::OnBossSkill");
@@ -310,32 +321,34 @@ end;
 
 OnBossKill:
 	.@event$ = strcat(instance_npcname(strnpcinfo(0)),"::OnSkillDead");
-	killmonster 'map$,.@event$;
-	'airship = 8;
+	killmonster instance_get_reg("map$"),.@event$;
+	instance_set_reg("airship", 8);
 	enablenpc instance_npcname("#19_box_control");
 	end;
 
 OnBossSkill:
 	.@event$ = strcat(instance_npcname(strnpcinfo(0)),"::OnSkillDead");
-	while(unitexists('gid)){
+	.@gid = instance_get_reg("gid");
+	while(unitexists(.@gid)){
 		sleep 1000;
-		getunitdata 'gid,.@data;
+		getunitdata .@gid,.@data;
 		.@DAMAGE = (.@data[UMOB_MAXHP]/10) * 9;
 		if(.@data[UMOB_HP] > .@DAMAGE) continue;
 		instance_announce false,"The unauthorized outsiders have already intruded the core management room. Cleaning robots are requested to proceed with the cleaning procedure immediately.",bc_map,0x00FFFF;
-		'amount = rand(15,25);
-		'clear = rand(1,2);
-		for(.@i = 0; .@i < 'amount; .@i++){
-			if(!unitexists('gid')){
-				killmonster 'map$,.@event$;
+		.@amount = rand(15,25);
+		instance_set_reg("amount", .@amount);
+		instance_set_reg("clear", rand(1,2));
+		for(.@i = 0; .@i < .@amount; .@i++){
+			if(!unitexists(.@gid)){
+				killmonster instance_get_reg("map$"),.@event$;
 				end;
 			}
 			switch(rand(1,3)){
-				case 1: areamonster 'map$,140,140,179,179,"Broken Cleaning Robot",20641,1,.@event$; break;
-				case 2: areamonster 'map$,134,148,185,170,"Broken Cleaning Robot",20641,1,.@event$; break;
-				case 3: areamonster 'map$,152,134,167,187,"Broken Cleaning Robot",20641,1,.@event$; break;
+				case 1: areamonster instance_get_reg("map$"),140,140,179,179,"Broken Cleaning Robot",20641,1,.@event$; break;
+				case 2: areamonster instance_get_reg("map$"),134,148,185,170,"Broken Cleaning Robot",20641,1,.@event$; break;
+				case 3: areamonster instance_get_reg("map$"),152,134,167,187,"Broken Cleaning Robot",20641,1,.@event$; break;
 			}
-			'robot_[.@i] = $@mobid[0];
+			instance_set_reg("robot_" + .@i, $@mobid[0]);
 			setunitdata $@mobid[0],UMOB_MODE,(.@mode|MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC);
 			unitskilluseid $@mobid[0],"NPC_RELIEVE_ON",1;
 			unitskilluseid $@mobid[0],"LK_AURABLADE",1;
@@ -344,48 +357,51 @@ OnBossSkill:
 		instance_announce false,"The robots that are already in place will proceed with the self-purification sequence.",0x00FFFF;
 		sleep 10000;
 		instance_announce false,"Running the purification sequence.",bc_map,0x00FFFF;
-		for(.@i = 0; .@i < 'amount; .@i++){
-			if(unitexists('robot_[.@i])){
-				unittalk 'robot_[.@i],"Purifying contaminants!!";
-				unitskilluseid 'robot_[.@i],"SJ_LIGHTOFSUN",1;
+		for(.@i = 0; .@i < .@amount; .@i++){
+			.@bot = instance_get_reg("robot_" + .@i);
+			if(unitexists(.@bot)){
+				unittalk .@bot,"Purifying contaminants!!";
+				unitskilluseid .@bot,"SJ_LIGHTOFSUN",1;
 			}
 		}
 		sleep 1000;
-		for(.@i = 0; .@i < 'amount; .@i++){
-			if(unitexists('robot_[.@i]))
-				unitskilluseid 'robot_[.@i],"NPC_SELFDESTRUCTION",1;
+		for(.@i = 0; .@i < .@amount; .@i++){
+			.@bot = instance_get_reg("robot_" + .@i);
+			if(unitexists(.@bot))
+				unitskilluseid .@bot,"NPC_SELFDESTRUCTION",1;
 		}
-		'clear = 0;
+		instance_set_reg("clear", 0);
 		sleep 19000;
 	}
 OnSkillDead:
 end;
 
 OnBossSkill2:
-	while(unitexists('gid)){
+	.@gid = instance_get_reg("gid");
+	while(unitexists(.@gid)){
 		sleep 1000;
-		getunitdata 'gid,.@data;
+		getunitdata .@gid,.@data;
 		.@DAMAGE = (.@data[UMOB_MAXHP]/10) * 8;
 		if(.@data[UMOB_HP] > .@DAMAGE) continue;
-		if(!'berserk){
-			unitskilluseid 'gid,"DE_BERSERKAIZER",1;
-			'berserk = 1;
-			setunitdata 'gid,UMOB_ATKRANGE,6;
+		if(!instance_get_reg("berserk")){
+			unitskilluseid .@gid,"DE_BERSERKAIZER",1;
+			instance_set_reg("berserk", 1);
+			setunitdata .@gid,UMOB_ATKRANGE,6;
 		}
-		if('pattern_1 && 'pattern_2) continue;
+		if(instance_get_reg("pattern_1") && instance_get_reg("pattern_2")) continue;
 		.@type = rand(1,2);
 		if(.@type == 1){
-			if(!'pattern_1)
+			if(!instance_get_reg("pattern_1"))
 				donpcevent strcat(instance_npcname(strnpcinfo(0)),"::OnYellow");
 			else {
-				if(!'pattern_2)
+				if(!instance_get_reg("pattern_2"))
 					donpcevent strcat(instance_npcname(strnpcinfo(0)),"::OnGreen");
 			}
 		} else {
-			if(!'pattern_2)
+			if(!instance_get_reg("pattern_2"))
 				donpcevent strcat(instance_npcname(strnpcinfo(0)),"::OnGreen");
 			else {
-				if(!'pattern_1)
+				if(!instance_get_reg("pattern_1"))
 					donpcevent strcat(instance_npcname(strnpcinfo(0)),"::OnYellow");
 			}
 		}
@@ -395,13 +411,15 @@ end;
 
 OnYellow:
 	.@x = rand(130,189); .@y = rand(140,185);
-	while(!checkcell('map$,.@x,.@y,cell_chkpass)){
+	.@map$ = instance_get_reg("map$");
+	.@gid = instance_get_reg("gid");
+	while(!checkcell(.@map$,.@x,.@y,cell_chkpass)){
 		.@x = rand(130,189); .@y = rand(140,185);
 		sleep 10;
 	}
-	'yellow = 2;
-	unitwarp 'gid,'map$,.@x,.@y;
-	unitskilluseid 'gid,"LK_BERSERK",1;
+	instance_set_reg("yellow", 2);
+	unitwarp .@gid,.@map$,.@x,.@y;
+	unitskilluseid .@gid,"LK_BERSERK",1;
 	instance_announce false,"The core's yellow ether has depleted due to long operations. Please recharge it immediately. The ether depletion will make the core go into overload mode.",bc_map,0xFFCC00;
 	enablenpc instance_npcname("#19_y_1");
 	enablenpc instance_npcname("#19_y_2");
@@ -409,7 +427,7 @@ end;
 
 OnGreen:
 	.@amount = rand(1,4);
-	'green = .@amount;
+	instance_set_reg("green", .@amount);
 	for(.@i = 0; .@i < .@amount; .@i++){
 		.@var = rand(1,4);
 		while(inarray(.@rand,.@var) != -1)
@@ -417,16 +435,18 @@ OnGreen:
 		.@rand[getarraysize(.@rand)] = .@var;
 		enablenpc instance_npcname("#19_g_" + .@var);
 	}
-	unitskilluseid 'gid,"NPC_RELIEVE_OFF",1;
-	unitskilluseid 'gid,"NPC_RELIEVE_ON",10;
+	.@gid = instance_get_reg("gid");
+	unitskilluseid .@gid,"NPC_RELIEVE_OFF",1;
+	unitskilluseid .@gid,"NPC_RELIEVE_ON",10;
 	instance_announce false,"The core's green ether has depleted due to long operations. The core will enter in defense mode until the ether is recharged.",bc_map,0xFFDDAA;
 	end;
 }
 
 1@whl,159,173,1	script	#19_b_memo	CLEAR_NPC,{
-	if('airship == 8){
+	if(instance_get_reg("airship") == 8){
 		if(checkquest(12561,HUNTING) == 2){
-			switch('mode){
+			.@mode = instance_get_reg("mode");
+			switch(.@mode){
 				case 1: setarray .@rewards,1000608,4,1000811,1; break;
 				case 2: setarray .@rewards,1000608,9,1000811,2; break;
 				case 3: setarray .@rewards,1000608,20,1000811,5; break;
@@ -438,24 +458,24 @@ OnGreen:
 				getitem .@rewards[.@i],.@rewards[.@i+1];
 			}
 			mes "You have gained an experience and job experience.";
-			getexp 5096730 * 'mode,3644000 * 'mode;
+			getexp 5096730 * .@mode,3644000 * .@mode;
 			next;
-			.@reputation = 5 + ('mode * 5);
+			.@reputation = 5 + (.@mode * 5);
 			mes "^0000CDYour Ice Castle reputation has increased by " + .@reputation + " points.^000000";
 			EP19_Isgard_Rep = EP19_Isgard_Rep + .@reputation;
 			close;
 		}
 		end;
 	}
-	if('berserk){
+	if(instance_get_reg("berserk")){
 		mes "Press this switch when the core is in remote mode and is out of control.";
 		close;
 	}
 	specialeffect EF_HOMUNCASTING;
 	specialeffect EF_STORMKICK7;
 	progressbar "3132FF",2;
-	'berserk = 0;
-	setunitdata 'gid,UMOB_ATKRANGE,1;
+	instance_set_reg("berserk", 0);
+	setunitdata instance_get_reg("gid"),UMOB_ATKRANGE,1;
 	specialeffect EF_STORMKICK7;
 	specialeffect EF_CHIMTO2;
 	end;
@@ -463,21 +483,23 @@ OnGreen:
 
 1@whl,146,181,5	script	#19_clear_1	CLEAR_NPC,{
 	.@id = atoi(replacestr(strnpcinfo(2),"19_clear_",""));
-	if(.@id != 'clear){
+	if(.@id != instance_get_reg("clear")){
 		mes "Press this switch to send a dispatch signal to another zone, if the amount of the cleaning robots are high.";
 		close;
 	}
 	progressbar "3132FF",3;
-	'clear = 0;
+	instance_set_reg("clear", 0);
+	.@amount = instance_get_reg("amount");
 	
-	for(.@i = 0; .@i < 'amount/2; .@i++){
-		.@var = rand('amount');
+	for(.@i = 0; .@i < .@amount/2; .@i++){
+		.@var = rand(.@amount);
 		while(inarray(.@index,.@var) != -1)
-			.@var = rand('amount');
+			.@var = rand(.@amount);
 		.@index[getarraysize(.@index)] = .@var;
-		if(unitexists('robot_[.@var])){
-			unitkill 'robot_[.@var];
-			'robot_[.@var] = 0;
+		.@bot = instance_get_reg("robot_" + .@var);
+		if(unitexists(.@bot)){
+			unitkill .@bot;
+			instance_set_reg("robot_" + .@var, 0);
 		}
 	}
 	end;
@@ -486,9 +508,10 @@ OnGreen:
 1@whl,173,181,5	duplicate(#19_clear_1)	#19_clear_2	CLEAR_NPC
 
 1@whl,160,160,5	script	#19_box_control	PORTAL,{
-	if('airship == 8){
+	if(instance_get_reg("airship") == 8){
 		if(checkquest(12561,HUNTING) == 2){
-			switch('mode){
+			.@mode = instance_get_reg("mode");
+			switch(.@mode){
 				case 1: setarray .@rewards,1000608,4,1000811,1; break;
 				case 2: setarray .@rewards,1000608,9,1000811,2; break;
 				case 3: setarray .@rewards,1000608,20,1000811,5; break;
@@ -500,9 +523,9 @@ OnGreen:
 				getitem .@rewards[.@i],.@rewards[.@i+1];
 			}
 			mes "You have gained an experience and job experience.";
-			getexp 5096730 * 'mode,3644000 * 'mode;
+			getexp 5096730 * .@mode,3644000 * .@mode;
 			next;
-			.@reputation = 5 + ('mode * 5);
+			.@reputation = 5 + (.@mode * 5);
 			mes "^0000CDYour Ice Castle reputation has increased by " + .@reputation + " points.^000000";
 			EP19_Isgard_Rep = EP19_Isgard_Rep + .@reputation;
 			next;
@@ -521,20 +544,24 @@ OnGreen:
 	end;
 	
 OnTouchNPC:
-	if(!'green) end;
+	.@green = instance_get_reg("green");
+	if(!.@green) end;
 	disablenpc instance_npcname(strnpcinfo(0));
-	'green = 'green - 1;
-	if('green > 0) end;
-	if(!unitexists('gid')) end;
-	specialeffect2 EF_TETRA,AREA,'gid';
+	.@green = .@green - 1;
+	instance_set_reg("green", .@green);
+	if(.@green > 0) end;
+	.@gid = instance_get_reg("gid");
+	if(!unitexists(.@gid)) end;
+	specialeffect2 EF_TETRA,AREA,.@gid;
 	.@x = rand(130,189); .@y = rand(140,185);
-	while(!checkcell('map$,.@x,.@y,cell_chkpass)){
+	.@map$ = instance_get_reg("map$");
+	while(!checkcell(.@map$,.@x,.@y,cell_chkpass)){
 		.@x = rand(130,189); .@y = rand(140,185);
 		sleep 10;
 	}
-	unitwarp 'gid,'map$,.@x,.@y;
-	unitskilluseid 'gid,"NPC_RELIEVE_OFF",1;
-	unitskilluseid 'gid,"NPC_RELIEVE_ON",9;
+	unitwarp .@gid,.@map$,.@x,.@y;
+	unitskilluseid .@gid,"NPC_RELIEVE_OFF",1;
+	unitskilluseid .@gid,"NPC_RELIEVE_ON",9;
 end;
 }
 
@@ -546,19 +573,23 @@ end;
 	end;
 	
 OnTouchNPC:
-	if(!'yellow) end;
+	.@yellow = instance_get_reg("yellow");
+	if(!.@yellow) end;
 	disablenpc instance_npcname(strnpcinfo(0));
-	'yellow = 'yellow - 1;
-	if('yellow > 0) end;
-	if(!unitexists('gid')) end;
-	specialeffect2 EF_TETRA,AREA,'gid';
+	.@yellow = .@yellow - 1;
+	instance_set_reg("yellow", .@yellow);
+	if(.@yellow > 0) end;
+	.@gid = instance_get_reg("gid");
+	if(!unitexists(.@gid)) end;
+	specialeffect2 EF_TETRA,AREA,.@gid;
 	.@x = rand(130,189); .@y = rand(140,185);
-	while(!checkcell('map$,.@x,.@y,cell_chkpass)){
+	.@map$ = instance_get_reg("map$");
+	while(!checkcell(.@map$,.@x,.@y,cell_chkpass)){
 		.@x = rand(130,189); .@y = rand(140,185);
 		sleep 10;
 	}
-	unitwarp 'gid,'map$,.@x,.@y;
-	sc_end SC_BERSERK,'gid';
+	unitwarp .@gid,.@map$,.@x,.@y;
+	sc_end SC_BERSERK,.@gid;
 end;
 }
 
