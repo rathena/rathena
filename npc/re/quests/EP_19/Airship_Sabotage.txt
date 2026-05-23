@@ -705,7 +705,7 @@ OnTouchNPC:
 	set_instance_var("green",get_instance_var("green") - 1);
 	if(get_instance_var("green") > 0) end;
 	if(!unitexists(get_instance_var("gid"))) end;
-	specialeffect3 EF_TETRA,AREA,get_instance_var("gid");
+	specialeffect2 EF_TETRA,AREA,get_instance_var("gid");
 	.@map$ = get_instance_var("map$");
 	.@x = rand(130,189);
 	.@y = rand(140,185);
@@ -733,7 +733,7 @@ OnTouchNPC:
 	set_instance_var("yellow",get_instance_var("yellow") - 1);
 	if(get_instance_var("yellow") > 0) end;
 	if(!unitexists(get_instance_var("gid"))) end;
-	specialeffect3 EF_TETRA,AREA,get_instance_var("gid");
+	specialeffect2 EF_TETRA,AREA,get_instance_var("gid");
 	.@map$ = get_instance_var("map$");
 	.@x = rand(130,189);
 	.@y = rand(140,185);
