@@ -105,23 +105,6 @@ function	script	F_queststatus_between	{
 }
 
 // NEW EP Functions
-//= Function for accessing npc variables from another NPC without using 'getvariableofnpc' and can have dynamic names
-//= Use Cases:
-/* 
-//===== getnpc_var("<Variable Name>",{,<Target NPC>});
-**
-** .@value = getnpc_var("target_var","npc_name");
-** .@value$ = getnpc_var("target_var$","npc_name");
-** .@value$ = getnpc_var("target_var$[2]","npc_name");
-** .@size = getarraysize(getnpcvar("target_array","npc_name"));
-**
-//===== setnpc_var("<Variable Name>",<New Value>,{,<Target NPC>});
-**
-** setnpc_var("target_var",10,"npc_name");
-** setnpc_var("target_var$","HELLO","npc_name");
-** setnpc_var("target_var$[2]","Change Array Value 2","npc_name");
-**
-*/
 
 function	script	getnpc_var	{
 	return getvariableofnpc(getd((compare(getarg(0),".")?"":".") + getarg(0)),getarg(1,strnpcinfo(3)));
@@ -132,9 +115,6 @@ function	script	setnpc_var	{
 	return;
 }
 
-//= Function for copying an array from another NPC and return the size of the copied array
-//= getnpc_array("<Target Array Variable>",<Copied Array Variable>{,<"Target NPC">});
-//= .@array_size = getnpc_array(".target_array",.@temp_array,"npc_name");
 function	script	getnpc_array	{
 	.@type$ = (compare(getarg(0),"$") ? "$" : "");
 	copyarray getd(".@temp_array" + .@type$ + "[0]"),getnpc_var(getarg(0),getarg(2,strnpcinfo(3))),getarraysize(getnpc_var(getarg(0),getarg(2,strnpcinfo(3))));
@@ -148,9 +128,6 @@ function	script	getnpc_array	{
 	return .@size;
 }
 
-//= Basically inarray but for the target npc
-//= getnpc_arrindex("<Target Array Variable>",<Search Value>{,<"Target NPC">});
-//= .@array_size = getnpc_array(".target_array",.@temp_array,"npc_name");
 function	script	getnpc_arrindex	{
 	return inarray(getnpc_var(getarg(0),getarg(2,strnpcinfo(3))),getarg(1));
 }
@@ -161,28 +138,6 @@ function	script	array_push	{
 	return .@size;
 }
 
-/* Functions for storing/fetching multiple array of data without using unreadable getd
-** SprintVar("<Base Array Variable>",<Value>{,<"NPC Name">};
-** SprintIndex"<Base Array Variable>",<Value>,<Index>{,<"NPC Name">};
-
--- Use Cases
-set SprintVar(".var", 1), 20;
-Equivalent : .var_1 = 20;
-.@value = SprintVar(".var", 1); //Returns 20
-
-set SprintVar(".name$, 1), "Hello";
-Equivalent : .name_1$ = "Hello";
-.@value$ = SprintVar(".name$, 1); //Returns Hello
-
-//= Usage with array_push function
-array_push(SprintVar(".var", 1), 30);
-.@index_0 = SprintIndex(".var", 1, 0); //Returns 20
-.@index_1 = SprintIndex(".var", 1, 1); //Returns 30
-
-//= Usage with getarraysize
-.@size = getarraysize(SprintVar(".var", 1)); // Returns 2
-*/
-
 function	script	SprintVar	{
     return getvariableofnpc(getd(sprintf((compare(getarg(0), "$") ? (delchar(getarg(0), getstrlen(getarg(0)) - 1) + "_%d$") : (getarg(0) + "_%d")), getarg(1))), getarg(2,strnpcinfo(3)));
 }
@@ -191,12 +146,6 @@ function	script	SprintIndex	{
     return getvariableofnpc(getd(sprintf((compare(getarg(0), "$") ? (delchar(getarg(0), getstrlen(getarg(0)) - 1) + "_%d$[%d]") : (getarg(0) + "_%d[%d]")), getarg(1), getarg(2))), getarg(3,strnpcinfo(3)));
 }
 
-/* Instance commands shorcuts
-instance_warning(<TYPE>);
-instance_hide(<NPC Name>,<bool>);
-instance_enable(<NPC Name>,<bool>);
-instance_event(<NPC Name>,<Event Name>,<Attach Player Bool>);
-*/
 function	script	instance_warning	{
 	.@type = (getargcount() < 1 ? 0 : getarg(0));
 	.@md_name$ = (getargcount() == 2 ? getarg(1,"") : "");
@@ -227,7 +176,6 @@ function	script	instance_warning	{
 	return;
 }
 
-//= Instance event control so I don't have to type instance_npcname and concatinate something every single time I have to do an event call.
 function	script	instance_hide	{
 	if(getarg(1))
 		hideonnpc instance_npcname(getarg(0));
@@ -252,7 +200,6 @@ function	script	instance_event	{
 	return;
 }
 
-//= Instance variable control because I hate how 'variables breaks my IDE.
 function	script	get_instance_var	{
 	return getd("'" + getarg(0));
 }
@@ -295,19 +242,6 @@ function	script	pcblock	{
 		setpcblock PCBLOCK_NPC,getarg(0),getarg(1);
 	return;
 }
-
-/* Search the index of a value in from another NPC Variable
-** npc_resize(<SIZE>);
-Sizes :
-Size_Small
-Size_Medium
-Size_Large
-
--- Use Cases
-OnInit:
-OnInstanceInit:
-	npc_resize(Size_Large);
-*/
 
 function	script	npc_resize	{
 	.@npc$ = .@name$ = strnpcinfo(0);
