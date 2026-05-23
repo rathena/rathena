@@ -13,44 +13,39 @@ prontera,153,191,4	script	Silvervine Quester	4_M_MERCAT1,{
         #Silvervine_DailyCount = 0;
     }
 
-    // Evaluate current state across native arrays
-    .@active_index = -1;
-    .@complete_index = -1;
+    // PHASE 1: Check if player has an assigned quest tracked in their variable
+    if (SilvQuest_ID > 0) {
+        
+        // Check if that specific quest is complete
+        // rAthena returns: 2 = Complete (Objectives Met), 3 = Complete (No reward yet)
+        .@status = checkquest(SilvQuest_ID, HAVEQUEST);
 
-    for (.@i = 0; .@i < .quest_count; .@i = .@i + 1) {
-        .@q_id = .quests[.@i * 2];
-        .@status = checkquest(.@q_id, HAVEQUEST); 
-
-        if (.@status == 2 || .@status == 3) { // Catching both completion states safely
-            .@complete_index = .@i;
-            break;
+        if (.@status == 2 || .@status == 3) {
+            mes "[Silvervine Quester]";
+            mes "Superb work! You successfully hunted down the target.";
+            
+            erasequest SilvQuest_ID; // Remove from client quest log
+            SilvQuest_ID = 0;       // Reset active tracking variable
+            
+            getitem .reward_item, .reward_amount;
+            #Silvervine_DailyCount = #Silvervine_DailyCount + 1;
+            
+            mes "Received: ^00FF00" + .reward_amount + "x Silvervine Fruit^000000";
+            mes "Completed Today: ^00FF00" + #Silvervine_DailyCount + "/" + .max_daily_quests + "^000000";
+            close;
         }
-        if (.@status == 1) { // 1 = Quest is Active but objectives aren't finished yet
-            .@active_index = .@i;
-            break;
+        
+        // If it isn't complete, look up its name from our array to display it
+        .@active_name$ = "Unknown Target";
+        for (.@i = 0; .@i < .quest_count; .@i = .@i + 1) {
+            if (.quests[.@i * 2] == SilvQuest_ID) {
+                .@active_name$ = .quests[(.@i * 2) + 1];
+                break;
+            }
         }
-    }
-
-    // Hand in complete quest rewards
-    if (.@complete_index != -1) {
-        .@q_id = .quests[.@complete_index * 2];
 
         mes "[Silvervine Quester]";
-        mes "Superb work! You successfully hunted down the target.";
-        erasequest .@q_id;
-        
-        getitem .reward_item, .reward_amount;
-        #Silvervine_DailyCount = #Silvervine_DailyCount + 1;
-        
-        mes "Received: ^00FF00" + .reward_amount + "x Silvervine Fruit^000000";
-        mes "Completed Today: ^00FF00" + #Silvervine_DailyCount + "/" + .max_daily_quests + "^000000";
-        close;
-    }
-
-    // Block if user is already holding an incomplete target assignment
-    if (.@active_index != -1) {
-        mes "[Silvervine Quester]";
-        mes "Your current target is: ^FF0000" + .quests[(.@active_index * 2) + 1] + "^000000.";
+        mes "Your current target is: ^FF0000" + .@active_name$ + "^000000.";
         mes "Please eliminate them and check back with me.";
         close;
     }
@@ -77,13 +72,13 @@ prontera,153,191,4	script	Silvervine Quester	4_M_MERCAT1,{
 
     // Secure native random generation mapping
     .@rand = rand(.quest_count);
-    .@chosen_quest = .quests[.@rand * 2];
-    .@monster_name = .quests[(.@rand * 2) + 1];
+    SilvQuest_ID = .quests[.@rand * 2]; // Store active quest ID permanently on the character
+    .@monster_name$ = .quests[(.@rand * 2) + 1];
 
-    setquest .@chosen_quest;
+    setquest SilvQuest_ID;
 
     mes "[Silvervine Quester]";
-    mes "Your new assignment: ^FF0000" + .@monster_name + "^000000.";
+    mes "Your new assignment: ^FF0000" + .@monster_name$ + "^000000.";
     mes "Track your kill status directly inside your ^0000FFQuest Log (Alt+U)^000000.";
     close;
 
@@ -95,7 +90,7 @@ OnInit:
     .reward_item = 6707; // Silvervine Fruit ID
     .reward_amount = 5;
 
-    // Fixed the broken gap/newlines in the array setup to ensure solid index mapping
+    // Fixed array syntax formatting
     setarray .quests[0], 
         90001, "Angeling",
         90002, "Archangelig",
