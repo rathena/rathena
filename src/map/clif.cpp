@@ -16829,8 +16829,13 @@ void clif_parse_Mail_send(int32 fd, map_session_data *sd){
 	mail_send(sd, RFIFOCP(fd,info->pos[1]), RFIFOCP(fd,info->pos[2]), RFIFOCP(fd,info->pos[4]), RFIFOB(fd,info->pos[3]));
 #else
 	uint16 length = RFIFOW(fd, 2);
+#if PACKETVER <= 20160330
+	constexpr uint16 headerLength = 64;
+#else
+	constexpr uint16 headerLength = 68;
+#endif
 
-	if( length < 0x3e ){
+	if( length < headerLength ){
 		ShowWarning("Too short...\n");
 		clif_Mail_send(sd, WRITE_MAIL_FAILED);
 		return;
@@ -16856,20 +16861,21 @@ void clif_parse_Mail_send(int32 fd, map_session_data *sd){
 	uint64 zeny = RFIFOQ(fd, 52);
 	uint16 titleLength = RFIFOW(fd, 60);
 	uint16 textLength = RFIFOW(fd, 62);
+
+	if( titleLength > length - headerLength || textLength > length - headerLength - titleLength ){
+		ShowWarning("Invalid Rodex mail content length from account %d.\n", sd->status.account_id);
+		clif_Mail_send(sd, WRITE_MAIL_FAILED);
+		return;
+	}
+
 	uint16 realTitleLength = min(titleLength, MAIL_TITLE_LENGTH);
 	uint16 realTextLength = min(textLength, MAIL_BODY_LENGTH);
 
 	char title[MAIL_TITLE_LENGTH];
 	char text[MAIL_BODY_LENGTH];
 
-#if PACKETVER <= 20160330
-	safestrncpy(title, RFIFOCP(fd, 64), realTitleLength);
-	safestrncpy(text, RFIFOCP(fd, 64 + titleLength), realTextLength);
-#else
-	// 64 = <char id>.L
-	safestrncpy(title, RFIFOCP(fd, 68), realTitleLength);
-	safestrncpy(text, RFIFOCP(fd, 68 + titleLength), realTextLength);
-#endif
+	safestrncpy(title, RFIFOCP(fd, headerLength), realTitleLength);
+	safestrncpy(text, RFIFOCP(fd, headerLength + titleLength), realTextLength);
 
 	if( zeny > 0 ){
 		if( mail_setitem(sd,0,(uint32)zeny) != MAIL_ATTACH_SUCCESS ){
