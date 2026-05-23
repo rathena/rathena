@@ -13,19 +13,19 @@ prontera,153,191,4	script	Silvervine Quester	4_M_MERCAT1,{
         #Silvervine_DailyCount = 0;
     }
 
-    // PHASE 1: Check if player has an assigned quest tracked in their variable
+    // Check if the player currently has an assigned hunt target stored
     if (SilvQuest_ID > 0) {
         
-        // Check if that specific quest is complete
-        // rAthena returns: 2 = Complete (Objectives Met), 3 = Complete (No reward yet)
-        .@status = checkquest(SilvQuest_ID, HAVEQUEST);
+        // Use the explicit HUNTING parameter from your documentation
+        // Returns 2 = You have killed all of the target monsters
+        .@hunt_status = checkquest(SilvQuest_ID, HUNTING);
 
-        if (.@status == 2 || .@status == 3) {
+        if (.@hunt_status == 2) {
             mes "[Silvervine Quester]";
             mes "Superb work! You successfully hunted down the target.";
             
-            erasequest SilvQuest_ID; // Remove from client quest log
-            SilvQuest_ID = 0;       // Reset active tracking variable
+            erasequest SilvQuest_ID; // Remove from client quest log UI
+            SilvQuest_ID = 0;       // Clear character tracking flag
             
             getitem .reward_item, .reward_amount;
             #Silvervine_DailyCount = #Silvervine_DailyCount + 1;
@@ -35,7 +35,7 @@ prontera,153,191,4	script	Silvervine Quester	4_M_MERCAT1,{
             close;
         }
         
-        // If it isn't complete, look up its name from our array to display it
+        // Lookup the monster name string from our internal array block to display
         .@active_name$ = "Unknown Target";
         for (.@i = 0; .@i < .quest_count; .@i = .@i + 1) {
             if (.quests[.@i * 2] == SilvQuest_ID) {
@@ -50,7 +50,7 @@ prontera,153,191,4	script	Silvervine Quester	4_M_MERCAT1,{
         close;
     }
 
-    // Enforce daily hard ceiling
+    // Enforce daily hard ceiling limit
     if (#Silvervine_DailyCount >= .max_daily_quests) {
         mes "[Silvervine Quester]";
         mes "You have reached your limit of ^FF0000" + .max_daily_quests + " hunts^000000 for today.";
@@ -70,9 +70,9 @@ prontera,153,191,4	script	Silvervine Quester	4_M_MERCAT1,{
         close;
     }
 
-    // Secure native random generation mapping
+    // Select a secure random assignment mapping
     .@rand = rand(.quest_count);
-    SilvQuest_ID = .quests[.@rand * 2]; // Store active quest ID permanently on the character
+    SilvQuest_ID = .quests[.@rand * 2]; // Keep record of the Quest ID directly on the character data
     .@monster_name$ = .quests[(.@rand * 2) + 1];
 
     setquest SilvQuest_ID;
@@ -88,9 +88,9 @@ OnInit:
     // ==========================================
     .max_daily_quests = 10;
     .reward_item = 6707; // Silvervine Fruit ID
-    .reward_amount = 5;
+    .reward_amount = 5;  // 5 Silvervine Reward per your list
 
-    // Fixed array syntax formatting
+    // Unified Clean Array Layout (IDs updated to 99001+ to avoid client UI overlapping conflicts)
     setarray .quests[0], 
         90001, "Angeling",
         90002, "Archangelig",
