@@ -97,18 +97,18 @@ OnInit:
 
     // Fixed the broken gap/newlines in the array setup to ensure solid index mapping
     setarray .quests[0], 
-        99001, "Angeling",
-        99002, "Archangelig",
-        99003, "Cat O' Nine Tails",
-        99004, "Deviling",
-        99005, "Dragon Fly",
-        99006, "Eclipse",
-        99007, "Ghostring",
-        99008, "Mastering",
-        99009, "Maya Purple",
-        99010, "Toad",
-        99011, "Vagabond Wolf",
-        99012, "Vocal";
+        90001, "Angeling",
+        90002, "Archangelig",
+        90003, "Cat O' Nine Tails",
+        90004, "Deviling",
+        90005, "Dragon Fly",
+        90006, "Eclipse",
+        90007, "Ghostring",
+        90008, "Mastering",
+        90009, "Maya Purple",
+        90010, "Toad",
+        90011, "Vagabond Wolf",
+        90012, "Vocal";
 
     .quest_count = getarraysize(.quests) / 2;
     end;
