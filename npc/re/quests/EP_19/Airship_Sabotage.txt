@@ -31,7 +31,9 @@ end;
 	end;
 	
 OnTouch:
-if (!getcharid(1) || getpartyleader(getcharid(1), 2) != getcharid(3)) end;
+if (!getcharid(1) || getpartyleader(getcharid(1), 2) != getcharid(3)) {
+		end;
+	}
     instance_disable(strnpcinfo(0));
     instance_enable("#start_control",true);
     instance_event("#start_control","OnWalk",false);
