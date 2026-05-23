@@ -80,6 +80,8 @@ function	script	F_CoolDown	{
 -	marketshop	para_mag20	FAKE_NPC,12118:50000:100,12119:30000:100,12121:30000:100,12120:30000:100,12114:80000:100,12115:80000:100,12116:80000:100,12117:80000:100
 -	marketshop	para_plt01	FAKE_NPC,6236:300000:10,7211:300000:10,7566:300000:10,6649:300000:10,968:300000:10,25508:300000:10,7510:300000:10,7754:300000:10,7020:300000:10,7450:300000:10,7109:300000:10,751:300000:10,7036:300000:10,7513:300000:10,750:300000:10,7019:300000:10,1030:300000:10,25622:300000:10,7300:300000:10,7018:300000:10,7169:300000:10,7562:300000:10,6091:300000:10,7114:300000:10,7113:300000:10,7451:300000:10,25629:300000:10,7108:300000:10,23817:100000:10
 -	marketshop	para_ist01	FAKE_NPC,25786:900000:2,25787:20000:20,6608:300000:10,6607:20000:20,6755:2000000:2
+-	marketshop	red_hugo01	FAKE_NPC,100381:2000000:4,100382:3000000:2,100383:4000000:2,100384:6000000:1,100385:2000000:4,100386:3000000:2,100387:4000000:2,50030:6000000:1
+
 
 // Update Market Shop
 -	script	Update_Shop	-1,{
@@ -214,6 +216,14 @@ OnClock0000:
 	npcshopupdate "para_plt01",7935,0,99999;
 	npcshopupdate "para_plt01",7936,0,99999;
 	npcshopupdate "para_plt01",7937,0,99999;
+	npcshopupdate "red_hugo01",50030,0,1;
+	npcshopupdate "red_hugo01",100381,0,4;
+	npcshopupdate "red_hugo01",100382,0,3;
+	npcshopupdate "red_hugo01",100383,0,2;
+	npcshopupdate "red_hugo01",100384,0,1;
+	npcshopupdate "red_hugo01",100385,0,4;
+	npcshopupdate "red_hugo01",100386,0,3;
+	npcshopupdate "red_hugo01",100387,0,2;
 	end;
 }
 
@@ -1431,7 +1441,7 @@ paramk,59,100,2	script	Red Hugo#pmrf03	1_M_SIGNMCNT,{
         22019, // Heroic Manteau
         22037; // Heroic Unbound Upgrade Boots
 
-    switch(select("Extract Armor Certificate:Extract Weapon Certificate:Cancel")) {
+    switch(select("Extract Armor Certificate:Extract Weapon Certificate:Exchange Refine Tickets:Cancel")) {
         case 1: // ==================== ARMOR EXTRACTION ====================
             mes "[Red Hugo]";
             mes "Please equip the valid Armor piece you want to convert.";
@@ -1504,6 +1514,12 @@ paramk,59,100,2	script	Red Hugo#pmrf03	1_M_SIGNMCNT,{
             }
 
             .@is_weapon = 1;
+            break;
+        case 3: // ==================== TICKET EXCHANGE ====================
+            mes "[Red Hugo]";
+            mes "What would you like to exchange it for?";
+            next;
+	    callshop "pmrf10";
             break;
 
         default:
