@@ -118439,7 +118439,7 @@ Body:
 #    AegisName: 2301_EV_RICE_FLOUR
 #  - Id: 21965
 #    AegisName: EP20_COPO
-- Id: 21966
+  - Id: 21966
     AegisName: EP20_COPO
     Name: Copo
     Level: 235
