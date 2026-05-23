@@ -4674,10 +4674,12 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	// Anti-element and anti-race
 	if((skill=pc_checkskill(sd,CR_TRUST))>0)
 		sd->indexed_bonus.subele[ELE_HOLY] += skill*5;
-	int skill_lv = pc_checkskill(sd, BS_SKINTEMPER);
-	if (skill_lv > 0) {
-    	sd->indexed_bonus.subele[ELE_NEUTRAL] += skill_lv;
-    	sd->indexed_bonus.subele[ELE_FIRE] += skill_lv * 5;
+	if ((skill = pc_checkskill(sd, BS_SKINTEMPER)) > 0) {
+    	// Gives +skill% Neutral Resistance
+    	sd->bonus.subele[ELE_NEUTRAL] += skill; 
+    
+    	// Gives +(skill * 5)% Fire Resistance
+    	sd->bonus.subele[ELE_FIRE] += skill * 5; 
 	}
 	if((skill=pc_checkskill(sd,SA_DRAGONOLOGY))>0) {
 		uint8 dragon_matk = skill * 2;
