@@ -140,7 +140,17 @@ moc_para01,53,37,4	script	Eat Gear Mimic	464,{
             specialeffect EF_BOMBER;
             mes "[Eat Gear Mimic]";
             mes "*BURP* ... Ah, that hit the spot! Too bad it completely dissolved in my stomach acid. Thanks for the meal, adventurer!";
-            close;
+        	if (.@selected_type == IT_WEAPON) {
+         		if (.@selected_refine == 7)       getitem 985, 10;
+            		else if (.@selected_refine == 8)  getitem 6230, 1;
+            		else if (.@selected_refine >= 9)  getitem 6230, 2;
+       			} else {
+            		// Armor / Shield / Garment / Shoe Rewards
+            		if (.@selected_refine == 7)       getitem 984, 10;
+            		else if (.@selected_refine == 8)  getitem 6234, 1;
+           		else if (.@selected_refine >= 9)  getitem 6234, 2;
+        	}
+	    close;
         }
     } else {
         mes "[Eat Gear Mimic]";
