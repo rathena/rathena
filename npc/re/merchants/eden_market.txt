@@ -1440,7 +1440,7 @@ paramk,59,100,2	script	Red Hugo#pmrf03	1_M_SIGNMCNT,{
         22019, // Heroic Manteau
         22037; // Heroic Unbound Upgrade Boots
 
-    switch(select("Extract Armor Certificate:Extract Weapon Certificate:Exchange Refine Tickets:Cancel")) {
+    switch(select("Extract Armor Certificate:Extract Weapon Certificate:Exchange Refine Tickets:Buy Refine Hammer:Cancel")) {
         case 1: // ==================== ARMOR EXTRACTION ====================
             mes "[Red Hugo]";
             mes "Please equip the valid Armor piece you want to convert.";
@@ -1518,6 +1518,11 @@ paramk,59,100,2	script	Red Hugo#pmrf03	1_M_SIGNMCNT,{
             mes "[Red Hugo]";
             mes "What would you like to exchange it for?";
 	    callshop "pmrf10";
+            end;
+        case 4: // ==================== TICKET EXCHANGE ====================
+            mes "[Red Hugo]";
+            mes "What would you like to exchange it for?";
+	   callshop "red_hugo01";
             end;
 
         default:
