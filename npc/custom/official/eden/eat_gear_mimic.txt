@@ -136,10 +136,8 @@ moc_para01,53,37,4	script	Eat Gear Mimic	464,{
             	mes "Puuuh!! That tasted awesome! Here, take this something extra I found in my teeth!";
             	close;
 	} else {
-            // FAILURE LOGIC (75% Rate)
+            // FAILURE LOGIC (80% Rate)
             specialeffect EF_BOMBER;
-            soundeffect "break.wav", 0;
-
             mes "[Eat Gear Mimic]";
             mes "*BURP* ... Ah, that hit the spot! Too bad it completely dissolved in my stomach acid. Thanks for the meal, adventurer!";
             close;
