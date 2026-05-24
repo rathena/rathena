@@ -1,6 +1,6 @@
 //============================================================
 // kRO Eden Group Leveling Board (Level 70 ~ 99) - PART 1
-// Complete Set: Yuno, Clock, GH, Geffen, Einbroch, Lhz, Turtle, Global, Others
+// Simplified & Error-Free Version: Menus and Quests
 //============================================================
 
 moc_para01,44,15,0	script	Mission Board 70~99	1121,{
@@ -23,18 +23,18 @@ moc_para01,44,15,0	script	Mission Board 70~99	1121,{
     mes "Please select a region to view available assignments:";
     next;
     
-    switch(select("Yuno Field:Clock Tower:Glast Heim:Geffen Fields/Dungeon:Einbroch & Lighthalzen:Turtle Island:Global Cities (Amatsu/Louyang/etc):Other Fields:Turn in Completed Missions:Cancel")) {
+    switch(select("Yuno Field:Clock Tower:Glast Heim:Geffen & Einbroch:Lighthalzen & Turtle Island:Global Cities:Other Fields:Turn in Completed Missions:Cancel")) {
         
         // ==========================================
         // YUNO FIELD
         // ==========================================
         case 1:
             mes "[Mission Board 70~99]";
+            mes "Select a target to hunt on Yuno Fields:";
             next;
-            switch(select("Hunt 15 Harpy & 15 Sleeper:Hunt 10 Antelope Skin & 10 PecoFeather Bundle:Hunt 20 Goat & 20 Grand Peco")) {
-                case 1: callsub L_AssignQuest, 80100, 80200, "Harpy & Sleeper", 70; break;
-                case 2: callsub L_AssignQuest, 80101, 80201, "Yuno Item Collection", 70; break;
-                case 3: callsub L_AssignQuest, 80102, 80202, "Goat & Grand Peco", 70; break;
+            switch(select("Hunt 20 Goat:Hunt 20 Sleeper")) {
+                case 1: callsub L_AssignQuest, 80100, "Goat", 20;
+                case 2: callsub L_AssignQuest, 80101, "Sleeper", 20;
             }
             break;
 
@@ -43,12 +43,11 @@ moc_para01,44,15,0	script	Mission Board 70~99	1121,{
         // ==========================================
         case 2:
             mes "[Mission Board 70~99]";
+            mes "Select a target to hunt in the Clock Tower:";
             next;
-            switch(select("Hunt 20 Rideword & 15 Punk:Hunt 15 Clock (Lv80+):Hunt 20 Alarm (Lv80+):Hunt 20 Bathory (Lv80+)")) {
-                case 1: callsub L_AssignQuest, 80103, 80203, "Rideword & Punk", 70; break;
-                case 2: callsub L_AssignQuest, 80104, 80204, "Clock", 80; break;
-                case 3: callsub L_AssignQuest, 80105, 80205, "Alarm", 80; break;
-                case 4: callsub L_AssignQuest, 80106, 80206, "Bathory", 80; break;
+            switch(select("Hunt 20 Alarm:Hunt 20 Punk")) {
+                case 1: callsub L_AssignQuest, 80102, "Alarm", 20;
+                case 2: callsub L_AssignQuest, 80103, "Punk", 20;
             }
             break;
 
@@ -57,222 +56,199 @@ moc_para01,44,15,0	script	Mission Board 70~99	1121,{
         // ==========================================
         case 3:
             mes "[Mission Board 70~99]";
+            mes "Select a target to hunt in Glast Heim:";
             next;
-            switch(select("Hunt 15 Wraith & 15 Evil Druid:Hunt 10 Zombie & Skeleton Prisoner (Lv85+):Hunt 20 Injustice (Lv85+):Hunt 10 Dark Priest (Lv90+)")) {
-                case 1: callsub L_AssignQuest, 80107, 80207, "Wraith & Evil Druid", 70; break;
-                case 2: callsub L_AssignQuest, 80108, 80208, "Prisoners Hunt", 85; break;
-                case 3: callsub L_AssignQuest, 80109, 80209, "Injustice Hunt", 85; break;
-                case 4: callsub L_AssignQuest, 80110, 80210, "Dark Priest Contract", 90; break;
+            switch(select("Hunt 20 Injustice:Hunt 15 Wraith")) {
+                case 1: callsub L_AssignQuest, 80104, "Injustice", 20;
+                case 2: callsub L_AssignQuest, 80105, "Wraith", 15;
             }
             break;
 
         // ==========================================
-        // GEFFEN
+        // GEFFEN & EINBROCH
         // ==========================================
         case 4:
             mes "[Mission Board 70~99]";
+            mes "Select an assignment area:";
             next;
-            switch(select("Hunt 10 Sky Petite (Lv75+):Hunt 10 Ground Petite (Lv75+):Hunt 10 Marionette & Deviruchi (Lv80+):Hunt 10 Nightmare (Lv80+)")) {
-                case 1: callsub L_AssignQuest, 80111, 80211, "Sky Petite", 75; break;
-                case 2: callsub L_AssignQuest, 80112, 80212, "Ground Petite", 75; break;
-                case 3: callsub L_AssignQuest, 80113, 80213, "Marionette & Deviruchi", 80; break;
-                case 4: callsub L_AssignQuest, 80114, 80214, "Nightmare", 80; break;
+            switch(select("Geffen: 10 Sky Petite:Geffen: 10 Ground Petite:Geffen: 10 Marionette & Deviruchi:Geffen: 10 Nightmare:Einbroch: 20 Metaling & 10 Holden:Einbroch: 20 Noxious:Einbroch: 20 Venomous:Einbroch: 15 Teddy Bear:Einbroch: 20 Pitman:Einbroch: 15 Waste Stove:Einbroch: 15 Mineral & 5 Obsidian")) {
+                case 1:  callsub L_AssignQuest, 80106, "Sky Petite", 10;
+                case 2:  callsub L_AssignQuest, 80107, "Ground Petite", 10;
+                case 3:  callsub L_AssignQuest, 80108, "Marionette & Deviruchi", 10;
+                case 4:  callsub L_AssignQuest, 80109, "Nightmare", 10;
+                case 5:  callsub L_AssignQuest, 80110, "Metaling & Holden", 20;
+                case 6:  callsub L_AssignQuest, 80111, "Noxious", 20;
+                case 7:  callsub L_AssignQuest, 80112, "Venomous", 20;
+                case 8:  callsub L_AssignQuest, 80113, "Teddy Bear", 15;
+                case 9:  callsub L_AssignQuest, 80114, "Pitman", 20;
+                case 10: callsub L_AssignQuest, 80115, "Waste Stove", 15;
+                case 11: callsub L_AssignQuest, 80116, "Mineral & Obsidian", 15;
             }
             break;
 
         // ==========================================
-        // EINBROCH & LIGHTHALZEN
+        // LIGHTHALZEN & TURTLE ISLAND
         // ==========================================
         case 5:
             mes "[Mission Board 70~99]";
+            mes "Select an assignment area:";
             next;
-            switch(select("Hunt 20 Metaling & 10 Holden (Lv80+):Hunt 20 Noxious (Lv80+):Hunt 20 Venomous (Lv80+):Hunt 15 Teddy Bear (Lv80+):Hunt 20 Pitman (Lv85+):Hunt 15 Waste Stove (Lv85+):Hunt 15 Mineral & 5 Obsidian (Lv85+):Hunt 20 Rafflesia (Lv80+):Hunt 20 Stem Worm (Lv80+):Hunt 20 Breeze (Lv80+)")) {
-                case 1: callsub L_AssignQuest, 80115, 80215, "Metaling & Holden", 80; break;
-                case 2: callsub L_AssignQuest, 80116, 80216, "Noxious", 80; break;
-                case 3: callsub L_AssignQuest, 80117, 80217, "Venomous", 80; break;
-                case 4: callsub L_AssignQuest, 80118, 80218, "Teddy Bear", 80; break;
-                case 5: callsub L_AssignQuest, 80119, 80219, "Pitman", 85; break;
-                case 6: callsub L_AssignQuest, 80120, 80220, "Waste Stove", 85; break;
-                case 7: callsub L_AssignQuest, 80121, 80221, "Mineral & Obsidian", 85; break;
-                case 8: callsub L_AssignQuest, 80122, 80222, "Rafflesia", 80; break;
-                case 9: callsub L_AssignQuest, 80123, 80223, "Stem Worm", 80; break;
-                case 10: callsub L_AssignQuest, 80124, 80224, "Breeze", 80; break;
+            switch(select("Lhz: 20 Rafflesia:Lhz: 20 Stem Worm:Lhz: 20 Breeze:Turtle: 10 Dragon Tail & Spring Rabbit:Turtle: 10 Solider, Permeter, Freezer, Heater:Turtle: 10 Assaulter")) {
+                case 1: callsub L_AssignQuest, 80117, "Rafflesia", 20;
+                case 2: callsub L_AssignQuest, 80118, "Stem Worm", 20;
+                case 3: callsub L_AssignQuest, 80119, "Breeze", 20;
+                case 4: callsub L_AssignQuest, 80120, "Dragon Tail & Spring Rabbit", 10;
+                case 5: callsub L_AssignQuest, 80121, "Turtle Dungeon Group", 10;
+                case 6: callsub L_AssignQuest, 80122, "Assaulter", 10;
             }
             break;
-
-        // ==========================================
-        // TURTLE ISLAND
-        // ==========================================
-        case 6:
-            mes "[Mission Board 70~99]";
-            next;
-            switch(select("Hunt 10 Dragon Tail & 10 Spring Rabbit (Lv90+):Hunt 10 Solider, Permeter, Freezer & Heater (Lv90+):Hunt 10 Assaulter (Lv90+)")) {
-                case 1: callsub L_AssignQuest, 80125, 80225, "Dragon Tail & Spring Rabbit", 90; break;
-                case 2: callsub L_AssignQuest, 80126, 80226, "Turtle Dungeon Group", 90; break;
-                case 3: callsub L_AssignQuest, 80127, 80227, "Assaulter", 90; break;
-            }
-            break;
-
         // ==========================================
         // GLOBAL CITIES
         // ==========================================
-        case 7:
+        case 6:
             mes "[Mission Board 70~99]";
+            mes "Select a Global localization target:";
             next;
-            switch(select("Ayothaya: 20 Tamruan (Lv70+):Brasilis: 20 Toucan (Lv70+):Brasilis: 20 Headless Mule (Lv80+):Moscovia: 20 Uzhas (Lv80+):Moscovia: 20 Baba Yaga (Lv80+):Louyang: 20 Increase Soil (Lv80+):Louyang: 15 Hyegun & 15 Jing Guai (Lv80+):Amatsu: 20 Miyabi (Lv80+):Amatsu: 20 Antique Firelock (Lv80+):Amatsu: 20 Shinobi (Lv90+):Gonryun: 20 Wicked Nymph (Lv90+):Gonryun: 20 Enchanted Peach Tree (Lv90+):Gonryun: 20 Evil Cloud Hermit (Lv90+)")) {
-                case 1: callsub L_AssignQuest, 80128, 80228, "Tamruan", 70; break;
-                case 2: callsub L_AssignQuest, 80129, 80229, "Toucan", 70; break;
-                case 3: callsub L_AssignQuest, 80130, 80230, "Headless Mule", 80; break;
-                case 4: callsub L_AssignQuest, 80131, 80231, "Uzhas", 80; break;
-                case 5: callsub L_AssignQuest, 80132, 80232, "Baba Yaga", 80; break;
-                case 6: callsub L_AssignQuest, 80133, 80233, "Increase Soil", 80; break;
-                case 7: callsub L_AssignQuest, 80134, 80234, "Hyegun & Jing Guai", 80; break;
-                case 8: callsub L_AssignQuest, 80135, 80235, "Miyabi", 80; break;
-                case 9: callsub L_AssignQuest, 80136, 80236, "Antique Firelock", 80; break;
-                case 10: callsub L_AssignQuest, 80137, 80237, "Shinobi", 90; break;
-                case 11: callsub L_AssignQuest, 80138, 80238, "Wicked Nymph", 90; break;
-                case 12: callsub L_AssignQuest, 80139, 80239, "Enchanted Peach Tree", 90; break;
-                case 13: callsub L_AssignQuest, 80140, 80240, "Evil Cloud Hermit", 90; break;
+            switch(select("Ayothaya: 20 Tamruan:Brasilis: 20 Toucan:Brasilis: 20 Headless Mule:Moscovia: 20 Uzhas:Moscovia: 20 Baba Yaga:Louyang: 20 Increase Soil:Louyang: 15 Hyegun & Jing Guai:Amatsu: 20 Miyabi:Amatsu: 20 Antique Firelock:Amatsu: 20 Shinobi:Gonryun: 20 Wicked Nymph:Gonryun: 20 Enchanted Peach Tree:Gonryun: 20 Evil Cloud Hermit")) {
+                case 1:  callsub L_AssignQuest, 80123, "Tamruan", 20;
+                case 2:  callsub L_AssignQuest, 80124, "Toucan", 20;
+                case 3:  callsub L_AssignQuest, 80125, "Headless Mule", 20;
+                case 4:  callsub L_AssignQuest, 80126, "Uzhas", 20;
+                case 5:  callsub L_AssignQuest, 80127, "Baba Yaga", 20;
+                case 6:  callsub L_AssignQuest, 80128, "Increase Soil", 20;
+                case 7:  callsub L_AssignQuest, 80129, "Hyegun & Jing Guai", 15;
+                case 8:  callsub L_AssignQuest, 80130, "Miyabi", 20;
+                case 9:  callsub L_AssignQuest, 80131, "Antique Firelock", 20;
+                case 10: callsub L_AssignQuest, 80132, "Shinobi", 20;
+                case 11: callsub L_AssignQuest, 80133, "Wicked Nymph", 20;
+                case 12: callsub L_AssignQuest, 80134, "Enchanted Peach Tree", 20;
+                case 13: callsub L_AssignQuest, 80135, "Evil Cloud Hermit", 20;
             }
             break;
 
         // ==========================================
         // OTHER FIELDS
         // ==========================================
-        case 8:
+        case 7:
             mes "[Mission Board 70~99]";
+            mes "Select a target field assignment:";
             next;
-            switch(select("Hunt 10 Geographer & 10 Mantis (Lv70+):Hunt 10 Red Novus & 10 Yellow Novus (Lv80+):Hunt 30 Roween (Lv90+):Hunt 30 Siroma (Lv90+):Hunt 30 Stapo (Lv90+)")) {
-                case 1: callsub L_AssignQuest, 80141, 80241, "Geographer & Mantis", 70; break;
-                case 2: callsub L_AssignQuest, 80142, 80242, "Red & Yellow Novus", 80; break;
-                case 3: callsub L_AssignQuest, 80143, 80243, "Roween", 90; break;
-                case 4: callsub L_AssignQuest, 80144, 80244, "Siroma", 90; break;
-                case 5: callsub L_AssignQuest, 80145, 80245, "Stapo", 90; break;
+            switch(select("Hunt 10 Geographer & Mantis:Hunt 10 Red & Yellow Novus:Hunt 30 Roween:Hunt 30 Siroma:Hunt 30 Stapo")) {
+                case 1: callsub L_AssignQuest, 80136, "Geographer & Mantis", 10;
+                case 2: callsub L_AssignQuest, 80137, "Red & Yellow Novus", 10;
+                case 3: callsub L_AssignQuest, 80138, "Roween", 30;
+                case 4: callsub L_AssignQuest, 80139, "Siroma", 30;
+                case 5: callsub L_AssignQuest, 80140, "Stapo", 30;
             }
             break;
+
         // ==========================================
         // TURN IN COMPLETED MISSIONS
         // ==========================================
-        case 9:
+        case 8:
             mes "[Mission Board 70~99]";
             mes "Checking your quest progress...";
             next;
             
-            // Evaluates active hunting quest list limits safely across the full 80100 ~ 80145 range
-            for (.@i = 80100; .@i <= 80145; .@i++) {
+            // Loop cleanly across the sequential tracking bounds (80100 ~ 80140)
+            for (.@i = 80100; .@i <= 80140; .@i++) {
                 if (checkquest(.@i, HUNTING) == 2) {
-                    
-                    if (.@i == 80101 && (countitem(7008) < 10 || countitem(949) < 10)) goto L_ItemFail;
-
-                    if (.@i == 80101) { delitem 7008, 10; delitem 949, 10; }
-
                     callsub L_RewardQuest, .@i;
-                    setquest (.@i + 100); // Triggers matching individual 24H Cooldown Quest (80200 ~ 80245)
                     .@rewarded = 1;
                 }
             }
             
             if (!.@rewarded) {
                 mes "[Mission Board 70~99]";
-                mes "No completed assignments available to process.";
+                mes "You do not have any completed hunting missions to turn in yet.";
                 close;
             }
             
             mes "[Mission Board 70~99]";
-            mes "Rewards distributed. Cooldown timers applied.";
+            mes "All completed tasks processed.";
             close;
 
-        case 10:
+        case 9:
             close;
     }
     end;
-
-L_ItemFail:
-    mes "^ff0000[Turn-in Failed]^000000";
-    mes "You fulfilled the hunting numbers but you lack the auxiliary required item pieces.";
-    close;
 
 // ==========================================
 // SUB-ROUTINES
 // ==========================================
 L_AssignQuest:
-    .@q_id = getarg(0); .@cd_id = getarg(1); .@mob_name\$ = getarg(2); .@min_lv = getarg(3);
+    .@q_id = getarg(0);
+    .@mob_name$ = getarg(1);
+    .@count = getarg(2);
 
-    if (BaseLevel < .@min_lv) {
+    .@state = checkquest(.@q_id);
+    if (.@state == 0 || .@state == 1) {
         mes "[Mission Board 70~99]";
-        mes "You must be at least Base Level " + .@min_lv + " for this mission.";
+        mes "You are already hunting " + .@mob_name$ + ".";
         close;
     }
-    if (checkquest(.@cd_id) == 0 || checkquest(.@cd_id) == 1) {
+    if (.@state == 2) {
         mes "[Mission Board 70~99]";
-        mes "This mission is currently on a 24-hour cooldown lock.";
-        close;
-    }
-    if (checkquest(.@cd_id) == 2) erasequest .@cd_id;
-    if (checkquest(.@q_id) == 0 || checkquest(.@q_id) == 1) {
-        mes "[Mission Board 70~99]";
-        mes "You are already active on this target assignment.";
+        mes "You have already completed this task today.";
         close;
     }
 
     setquest .@q_id;
     mes "[Mission Board 70~99]";
-    mes "Task Confirmed: " + .@mob_name\$ + ". Good luck!";
+    mes "Task Registered: Defeat " + .@count + " " + .@mob_name$ + ".";
     close;
 
 L_RewardQuest:
     .@q_id = getarg(0);
     
     switch(.@q_id) {
-        case 80100: .@b_exp = 36840; .@j_exp = 40200; break; // Harpy & Sleeper
-        case 80101: .@b_exp = 14200; .@j_exp = 14200; break; // Yuno Item Collection
-        case 80102: .@b_exp = 42960; .@j_exp = 43880; break; // Goat & Grand Peco
-        case 80103: .@b_exp = 33820; .@j_exp = 40650; break; // Rideword & Punk
-        case 80104: .@b_exp = 20310; .@j_exp = 17370; break; // Clock
-        case 80105: .@b_exp = 28320; .@j_exp = 27960; break; // Alarm
-        case 80106: .@b_exp = 25720; .@j_exp = 27280; break; // Bathory
-        case 80107: .@b_exp = 37640; .@j_exp = 37050; break; // Wraith & Evil Druid
-        case 80108: .@b_exp = 72000; .@j_exp = 72000; break; // Prisoners Hunt
-        case 80109: .@b_exp = 72000; .@j_exp = 72000; break; // Injustice
-        case 80110: .@b_exp = 96220; .@j_exp = 91630; break; // Dark Priest
-        case 80111: .@b_exp = 9900;  .@j_exp = 10120; break; // Sky Petite
-        case 80112: .@b_exp = 12860; .@j_exp = 13160; break; // Ground Petite
-        case 80113: .@b_exp = 37520; .@j_exp = 41740; break; // Marionette & Deviruchi
-        case 80114: .@b_exp = 42000; .@j_exp = 38000; break; // Nightmare
-        case 80115: .@b_exp = 40920; .@j_exp = 38220; break; // Metaling & Holden
-        case 80116: .@b_exp = 38220; .@j_exp = 33440; break; // Noxious
-        case 80117: .@b_exp = 39200; .@j_exp = 35680; break; // Venomous
-        case 80118: .@b_exp = 48600; .@j_exp = 51420; break; // Teddy Bear
-        case 80119: .@b_exp = 77500; .@j_exp = 69780; break; // Pitman
-        case 80120: .@b_exp = 72040; .@j_exp = 71084; break; // Waste Stove
-        case 80121: .@b_exp = 72530; .@j_exp = 89290; break; // Mineral & Obsidian
-        case 80122: .@b_exp = 51440; .@j_exp = 52640; break; // Rafflesia
-        case 80123: .@b_exp = 49890; .@j_exp = 53416; break; // Stem Worm
-        case 80124: .@b_exp = 84392; .@j_exp = 79024; break; // Breeze
-        // Turtle Island (New)
-        case 80125: .@b_exp = 76000;  .@j_exp = 72000;  break; // Dragon Tail & Spring Rabbit
-        case 80126: .@b_exp = 102000; .@j_exp = 104000; break; // Solider, Permeter, Freezer, Heater
-        case 80127: .@b_exp = 52000;  .@j_exp = 67000;  break; // Assaulter
-        // Global Localizations (New)
-        case 80128: .@b_exp = 30000; .@j_exp = 30000; break; // Tamruan
-        case 80129: .@b_exp = 30000; .@j_exp = 30000; break; // Toucan
-        case 80130: .@b_exp = 35000; .@j_exp = 35000; break; // Headless Mule
-        case 80131: .@b_exp = 42660; .@j_exp = 43600; break; // Uzhas
-        case 80132: .@b_exp = 45700; .@j_exp = 46700; break; // Baba Yaga
-        case 80133: .@b_exp = 39600; .@j_exp = 35000; break; // Increase Soil
-        case 80134: .@b_exp = 72000; .@j_exp = 72000; break; // Hyegun & Jing Guai
-        case 80135: .@b_exp = 36800; .@j_exp = 40100; break; // Miyabi
-        case 80136: .@b_exp = 47500; .@j_exp = 48300; break; // Antique Firelock
-        case 80137: .@b_exp = 81120; .@j_exp = 72000; break; // Shinobi
-        case 80138: .@b_exp = 76600; .@j_exp = 83700; break; // Wicked Nymph
-        case 80139: .@b_exp = 63000; .@j_exp = 71900; break; // Enchanted Peach Tree
-        case 80140: .@b_exp = 72000; .@j_exp = 72000; break; // Evil Cloud Hermit
-        // Other Fields (New)
-        case 80141: .@b_exp = 19760; .@j_exp = 15150; break; // Geographer & Mantis
-        case 80142: .@b_exp = 43080; .@j_exp = 40160; break; // Red & Yellow Novus
-        case 80143: .@b_exp = 86000; .@j_exp = 82000; break; // Roween
-        case 80144: .@b_exp = 92000; .@j_exp = 82000; break; // Siroma
-        case 80145: .@b_exp = 86000; .@j_exp = 82000; break; // Stapo
+        case 80100: .@b_exp = 42960; .@j_exp = 43880; break; // Goat
+        case 80101: .@b_exp = 36840; .@j_exp = 40200; break; // Sleeper
+        case 80102: .@b_exp = 28320; .@j_exp = 27960; break; // Alarm
+        case 80103: .@b_exp = 33820; .@j_exp = 40650; break; // Punk
+        case 80104: .@b_exp = 72000; .@j_exp = 72000; break; // Injustice
+        case 80105: .@b_exp = 37640; .@j_exp = 37050; break; // Wraith
+        // Geffen
+        case 80106: .@b_exp = 9900;  .@j_exp = 10120; break; // Sky Petite
+        case 80107: .@b_exp = 12860; .@j_exp = 13160; break; // Ground Petite
+        case 80108: .@b_exp = 37520; .@j_exp = 41740; break; // Marionette Duo
+        case 80109: .@b_exp = 42000; .@j_exp = 38000; break; // Nightmare
+        // Einbroch
+        case 80110: .@b_exp = 40920; .@j_exp = 38220; break; // Metaling Group
+        case 80111: .@b_exp = 38220; .@j_exp = 33440; break; // Noxious
+        case 80112: .@b_exp = 39200; .@j_exp = 35680; break; // Venomous
+        case 80113: .@b_exp = 48600; .@j_exp = 51420; break; // Teddy Bear
+        case 80114: .@b_exp = 77500; .@j_exp = 69780; break; // Pitman
+        case 80115: .@b_exp = 72040; .@j_exp = 71084; break; // Waste Stove
+        case 80116: .@b_exp = 72530; .@j_exp = 89290; break; // Mineral Group
+        // Lighthalzen
+        case 80117: .@b_exp = 51440; .@j_exp = 52640; break; // Rafflesia
+        case 80118: .@b_exp = 49890; .@j_exp = 53416; break; // Stem Worm
+        case 80119: .@b_exp = 84392; .@j_exp = 79024; break; // Breeze
+        // Turtle Island
+        case 80120: .@b_exp = 76000;  .@j_exp = 72000;  break; // Dragon Tail Group
+        case 80121: .@b_exp = 102000; .@j_exp = 104000; break; // Turtle Dungeon Group
+        case 80122: .@b_exp = 52000;  .@j_exp = 67000;  break; // Assaulter
+        // Global Localizations
+        case 80123: .@b_exp = 30000; .@j_exp = 30000; break; // Tamruan
+        case 80124: .@b_exp = 30000; .@j_exp = 30000; break; // Toucan
+        case 80125: .@b_exp = 35000; .@j_exp = 35000; break; // Headless Mule
+        case 80126: .@b_exp = 42660; .@j_exp = 43600; break; // Uzhas
+        case 80127: .@b_exp = 45700; .@j_exp = 46700; break; // Baba Yaga
+        case 80128: .@b_exp = 39600; .@j_exp = 35000; break; // Increase Soil
+        case 80129: .@b_exp = 72000; .@j_exp = 72000; break; // Hyegun Group
+        case 80130: .@b_exp = 36800; .@j_exp = 40100; break; // Miyabi
+        case 80131: .@b_exp = 47500; .@j_exp = 48300; break; // Antique Firelock
+        case 80132: .@b_exp = 81120; .@j_exp = 72000; break; // Shinobi
+        case 80133: .@b_exp = 76600; .@j_exp = 83700; break; // Wicked Nymph
+        case 80134: .@b_exp = 63000; .@j_exp = 71900; break; // Peach Tree
+        case 80135: .@b_exp = 72000; .@j_exp = 72000; break; // Cloud Hermit
+        // Other Fields
+        case 80136: .@b_exp = 19760; .@j_exp = 15150; break; // Geographer Combo
+        case 80137: .@b_exp = 43080; .@j_exp = 40160; break; // Novus Combo
+        case 80138: .@b_exp = 86000; .@j_exp = 82000; break; // Roween
+        case 80139: .@b_exp = 92000; .@j_exp = 82000; break; // Siroma
+        case 80140: .@b_exp = 86000; .@j_exp = 82000; break; // Stapo
     }
 
     .@b_exp = (.@b_exp * getbattleflag("base_exp_rate")) / 100;
@@ -281,4 +257,5 @@ L_RewardQuest:
     completequest .@q_id;
     getexp .@b_exp, .@j_exp;
     return;
+}
 }
