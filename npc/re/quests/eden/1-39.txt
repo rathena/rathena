@@ -104,26 +104,26 @@ moc_para01,40,15,0	script	Mission Board 1~39	4_BOARD3,{
                 if (checkquest(.@i, HUNTING) == 2) {
                     
                     // Prior item checks
-                    if (.@i == 80000 && countitem(1013) < 3) { // Barren Trunk
+                    if (.@i == 80000 && countitem(1068) < 3) { // Barren Trunk
                         mes "^ff0000[Mission Failed]^000000";
                         mes "You finished hunting Willows, but you lack ^0000ff3 Barren Trunks^000000.";
                         next; continue;
                     }
-                    if (.@i == 80009 && countitem(948) < 10) { // Sticky Webfoot
+                    if (.@i == 80009 && countitem(918) < 10) { // Sticky Webfoot
                         mes "^ff0000[Mission Failed]^000000";
                         mes "You finished hunting Thara Frogs, but you lack ^0000ff10 Sticky Webfoots^000000.";
                         next; continue;
                     }
-                    if (.@i == 80010 && countitem(953) < 5) { // Tentacle
+                    if (.@i == 80010 && countitem(962) < 5) { // Tentacle
                         mes "^ff0000[Mission Failed]^000000";
                         mes "You finished hunting Hydras, but you lack ^0000ff5 Tentacles^000000.";
                         next; continue;
                     }
 
                     // Delete required items
-                    if (.@i == 80000) delitem 1013, 3;
-                    if (.@i == 80009) delitem 948, 10;
-                    if (.@i == 80010) delitem 953, 5;
+                    if (.@i == 80000) delitem 1068, 3;
+                    if (.@i == 80009) delitem 918, 10;
+                    if (.@i == 80010) delitem 962, 5;
 
                     // Calculate matching Cooldown Quest ID (Hunting ID + 12)
                     .@cd_id = .@i + 12;
