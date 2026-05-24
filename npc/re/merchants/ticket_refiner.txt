@@ -65,8 +65,8 @@ prontera,182,174,6	script	Refine Master	851,{
 		mes "Hello!";
 		mes "What's up?";
 		mes "I'm a specialist";
-		mes "for refining items,";
-		mes "but I don't work anymore.";
+		mes "for refining items.";
+		mes "I can't see any refine tickets. Come back when you have one.";
 		next;
 		switch(select("I'll go on my way.:Hmm... this makes me curious.")) {
 		case 1:
