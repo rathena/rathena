@@ -82,7 +82,7 @@ moc_para01,42,15,0	script	Mission Board 40~69	1121,{
             next;
             switch(select("Payon: 15 Munak & Bongun (Lv50+):Payon: 10 Purified Bottles (Lv50+):Payon: 12 Sohee (Lv50+):Geffen: 10 Hunter Fly (Lv55+):Geffen: 10 Ghoul & Jakk (Lv55+)")) {
                 case 1: callsub L_AssignQuest, 80043, 80070, "Munak & Bongun", 15;
-                case 2: callsub L_AssignQuest, 80044, 80071, "Purified Bottles of Ghost", 10;
+                case 2: callsub L_AssignQuest, 80044, 80071, "Purified Bottles of Ghost", 0;
                 case 3: callsub L_AssignQuest, 80045, 80072, "Sohee", 12;
                 case 4: callsub L_AssignQuest, 80046, 80073, "Hunter Fly", 10;
                 case 5: callsub L_AssignQuest, 80047, 80074, "Ghoul & Jakk", 10;
