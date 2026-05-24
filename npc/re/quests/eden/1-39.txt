@@ -1,9 +1,9 @@
 //============================================================
 // kRO Eden Group Leveling Board (Level 1 ~ 39)
-// Exact match with user image definitions & requirements
+// Individual 24-Hour Cooldown per Quest (IDs 80012 ~ 80023)
 //============================================================
 
-moc_para01,40,15,0	script	Mission Board 1~39	1121,{
+moc_para01,40,15,0	script	Mission Board 1~39	4_BOARD3,{
 
     if (!callfunc("F_HasEdenGroupMark")) {
         mes "- You need to have an -";
@@ -15,13 +15,6 @@ moc_para01,40,15,0	script	Mission Board 1~39	1121,{
     if (BaseLevel < 1) {
         mes "[Mission Board 1~39]";
         mes "This board contains missions for novice adventurers.";
-        close;
-    }
-
-    if (Eden_Board1_Cooldown > gettime(DT_DAYOFYEAR) && Eden_Board1_Year == gettime(DT_YEAR)) {
-        mes "[Mission Board 1~39]";
-        mes "You have already completed missions from this board today.";
-        mes "Please come back tomorrow after 04:00 AM.";
         close;
     }
 
@@ -39,10 +32,10 @@ moc_para01,40,15,0	script	Mission Board 1~39	1121,{
             mes "Select a target to hunt in the Payon fields:";
             next;
             switch(select("Hunt 5 Willows (Req: 3 Barren Trunk):Hunt 5 Boa:Hunt 5 Wormtail:Hunt 10 Spore")) {
-                case 1: callsub L_AssignQuest, 80000, "Willow", 5, 15, 1; break;
-                case 2: callsub L_AssignQuest, 800001, "Boa", 5, 15, 15; break;
-                case 3: callsub L_AssignQuest, 800002, "Wormtail", 5, 15, 15; break;
-                case 4: callsub L_AssignQuest, 800003, "Spore", 10, 15, 15; break;
+                case 1: callsub L_AssignQuest, 80000, 80012, "Willow", 5, 15, 1; break;
+                case 2: callsub L_AssignQuest, 80001, 80013, "Boa", 5, 15, 15; break;
+                case 3: callsub L_AssignQuest, 80002, 80014, "Wormtail", 5, 15, 15; break;
+                case 4: callsub L_AssignQuest, 80003, 80015, "Spore", 10, 15, 15; break;
             }
             break;
 
@@ -54,9 +47,9 @@ moc_para01,40,15,0	script	Mission Board 1~39	1121,{
             mes "Select a target to hunt in the Prontera fields:";
             next;
             switch(select("Hunt 10 Hornet:Hunt 10 Rocker:Hunt 10 Ambernite")) {
-                case 1: callsub L_AssignQuest, 800004, "Hornet", 10, 15, 10; break;
-                case 2: callsub L_AssignQuest, 800005, "Rocker", 10, 15, 10; break;
-                case 3: callsub L_AssignQuest, 800006, "Ambernite", 10, 15, 10; break;
+                case 1: callsub L_AssignQuest, 80004, 80016, "Hornet", 10, 15, 10; break;
+                case 2: callsub L_AssignQuest, 80005, 80017, "Rocker", 10, 15, 10; break;
+                case 3: callsub L_AssignQuest, 80006, 80018, "Ambernite", 10, 15, 10; break;
             }
             break;
 
@@ -68,7 +61,7 @@ moc_para01,40,15,0	script	Mission Board 1~39	1121,{
             mes "Select a target to hunt in Payon Dungeon:";
             next;
             switch(select("Hunt 10 Zombie & 20 Skeleton")) {
-                case 1: callsub L_AssignQuest, 800007, "Zombie & Skeleton", 10, 15, 15; break;
+                case 1: callsub L_AssignQuest, 80007, 80019, "Zombie & Skeleton", 10, 15, 15; break;
             }
             break;
 
@@ -80,7 +73,7 @@ moc_para01,40,15,0	script	Mission Board 1~39	1121,{
             mes "Select a target to hunt in the Morroc fields:";
             next;
             switch(select("Hunt 10 Muka & 20 Pecopeco")) {
-                case 1: callsub L_AssignQuest, 800008, "Muka & Pecopeco", 10, 15, 20; break;
+                case 1: callsub L_AssignQuest, 80008, 80020, "Muka & Pecopeco", 10, 15, 20; break;
             }
             break;
 
@@ -92,9 +85,9 @@ moc_para01,40,15,0	script	Mission Board 1~39	1121,{
             mes "Select a target to hunt in Comodo Dungeon:";
             next;
             switch(select("Hunt 10 Thara Frog (Req: 10 Sticky Webfoot):Hunt 10 Hydra (Req: 5 Tentacle):Hunt 10 Megalodon")) {
-                case 1: callsub L_AssignQuest, 800009, "Thara Frog", 10, 15, 30; break;
-                case 2: callsub L_AssignQuest, 800010, "Hydra", 10, 15, 30; break;
-                case 3: callsub L_AssignQuest, 800011, "Megalodon", 10, 15, 30; break;
+                case 1: callsub L_AssignQuest, 80009, 80021, "Thara Frog", 10, 15, 30; break;
+                case 2: callsub L_AssignQuest, 80010, 80022, "Hydra", 10, 15, 30; break;
+                case 3: callsub L_AssignQuest, 80011, 80023, "Megalodon", 10, 15, 30; break;
             }
             break;
 
@@ -106,36 +99,37 @@ moc_para01,40,15,0	script	Mission Board 1~39	1121,{
             mes "Checking your quest progress...";
             next;
             
-            // Loop through all active quest IDs assigned to this board (80000 ~ 80011)
+            // Loop through all hunting quests (80000 ~ 80011)
             for (.@i = 80000; .@i <= 80011; .@i++) {
                 if (checkquest(.@i, HUNTING) == 2) {
                     
-                    // Prior item check validation routine before rewarding
-                    if (.@i == 80000 && countitem(1013) < 3) { // Barren Trunk ID: 1013
+                    // Prior item checks
+                    if (.@i == 80000 && countitem(1013) < 3) { // Barren Trunk
                         mes "^ff0000[Mission Failed]^000000";
                         mes "You finished hunting Willows, but you lack ^0000ff3 Barren Trunks^000000.";
-                        next;
-                        continue;
+                        next; continue;
                     }
-                    if (.@i == 80009 && countitem(948) < 10) { // Sticky Webfoot ID: 948
+                    if (.@i == 80009 && countitem(948) < 10) { // Sticky Webfoot
                         mes "^ff0000[Mission Failed]^000000";
                         mes "You finished hunting Thara Frogs, but you lack ^0000ff10 Sticky Webfoots^000000.";
-                        next;
-                        continue;
+                        next; continue;
                     }
-                    if (.@i == 80010 && countitem(953) < 5) { // Tentacle ID: 953
+                    if (.@i == 80010 && countitem(953) < 5) { // Tentacle
                         mes "^ff0000[Mission Failed]^000000";
                         mes "You finished hunting Hydras, but you lack ^0000ff5 Tentacles^000000.";
-                        next;
-                        continue;
+                        next; continue;
                     }
 
-                    // Delete item prior to finalizing completion
+                    // Delete required items
                     if (.@i == 80000) delitem 1013, 3;
                     if (.@i == 80009) delitem 948, 10;
                     if (.@i == 80010) delitem 953, 5;
 
+                    // Calculate matching Cooldown Quest ID (Hunting ID + 12)
+                    .@cd_id = .@i + 12;
+
                     callsub L_RewardQuest, .@i;
+                    setquest .@cd_id; // Set individual 24H cooldown
                     .@rewarded = 1;
                 }
             }
@@ -147,9 +141,8 @@ moc_para01,40,15,0	script	Mission Board 1~39	1121,{
             }
             
             mes "[Mission Board 1~39]";
-            mes "All completed tasks processed successfully.";
-            Eden_Board1_Cooldown = gettime(DT_DAYOFYEAR);
-            Eden_Board1_Year = gettime(DT_YEAR);
+            mes "Your completed tasks have been rewarded.";
+            mes "Individual 24-hour cooldowns applied to completed missions.";
             close;
 
         case 7:
@@ -162,10 +155,11 @@ moc_para01,40,15,0	script	Mission Board 1~39	1121,{
 // ==========================================
 L_AssignQuest:
     .@q_id = getarg(0);
-    .@mob_name$ = getarg(1);
-    .@count = getarg(2);
-    .@max_lv = getarg(3);
-    .@min_lv = getarg(4);
+    .@cd_id = getarg(1);
+    .@mob_name$ = getarg(2);
+    .@count = getarg(3);
+    .@max_lv = getarg(4);
+    .@min_lv = getarg(5);
 
     if (BaseLevel < .@min_lv) {
         mes "[Mission Board 1~39]";
@@ -173,15 +167,22 @@ L_AssignQuest:
         close;
     }
 
+    // Cooldown verification check for this specific mission
+    if (checkquest(.@cd_id) == 0 || checkquest(.@cd_id) == 1) {
+        mes "[Mission Board 1~39]";
+        mes "This mission is on a 24-hour cooldown.";
+        close;
+    }
+
+    // Clear yesterday's expired cooldown tracker if it exists
+    if (checkquest(.@cd_id) == 2) {
+        erasequest .@cd_id;
+    }
+
     .@state = checkquest(.@q_id);
     if (.@state == 0 || .@state == 1) {
         mes "[Mission Board 1~39]";
         mes "You are already tracking " + .@mob_name$ + ".";
-        close;
-    }
-    if (.@state == 2) {
-        mes "[Mission Board 1~39]";
-        mes "You have already completed this task today.";
         close;
     }
 
@@ -193,7 +194,6 @@ L_AssignQuest:
 L_RewardQuest:
     .@q_id = getarg(0);
     
-    // Reward settings exactly aligned with the image values
     switch(.@q_id) {
         case 80000: .@b_exp = 800;  .@j_exp = 800;  break; // Willows
         case 80001: .@b_exp = 1600; .@j_exp = 1400; break; // Boa
