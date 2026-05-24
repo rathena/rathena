@@ -1,6 +1,6 @@
 //============================================================
 // kRO Eden Group Leveling Board (Level 120 ~ 140) - PART 1
-// Simplified Version matching the working 1~39 structure
+// Individual 24H Cooldown Quest Tracking (80500 ~ 80543)
 //============================================================
 
 moc_para01,48,15,0	script	Mission Board 120~140	1121,{
@@ -33,16 +33,16 @@ moc_para01,48,15,0	script	Mission Board 120~140	1121,{
             mes "Select a target to hunt:";
             next;
             switch(select("Odin: 20 Skogul:Odin: 20 Frus:Odin: 5 Blue & Brown Skeggiold:Abyss: 30 Green & Red Ferus:Abyss: 30 Yellow & Blue Acidus:Abyss: 1 Hydrolancer:Thanatos: 30 Baroness of Retribution:Thanatos: 30 Lady Solace:Thanatos: 30 Mistress of Shelter:Thanatos: 30 Dame of Sentinel")) {
-                case 1:  callsub L_AssignQuest, 80500, "Skogul", 20;
-                case 2:  callsub L_AssignQuest, 80501, "Frus", 20;
-                case 3:  callsub L_AssignQuest, 80502, "Skeggiold Duo", 5;
-                case 4:  callsub L_AssignQuest, 80503, "Ferus Group", 30;
-                case 5:  callsub L_AssignQuest, 80504, "Acidus Group", 30;
-                case 6:  callsub L_AssignQuest, 80505, "Hydrolancer", 1;
-                case 7:  callsub L_AssignQuest, 80506, "Baroness of Retribution", 30;
-                case 8:  callsub L_AssignQuest, 80507, "Lady Solace", 30;
-                case 9:  callsub L_AssignQuest, 80508, "Mistress of Shelter", 30;
-                case 10: callsub L_AssignQuest, 80509, "Dame of Sentinel", 30;
+                case 1:  callsub L_AssignQuest, 80500, 80544, "Skogul", 20;
+                case 2:  callsub L_AssignQuest, 80501, 80545, "Frus", 20;
+                case 3:  callsub L_AssignQuest, 80502, 80546, "Skeggiold Duo", 5;
+                case 4:  callsub L_AssignQuest, 80503, 80547, "Ferus Group", 30;
+                case 5:  callsub L_AssignQuest, 80504, 80548, "Acidus Group", 30;
+                case 6:  callsub L_AssignQuest, 80505, 80549, "Hydrolancer", 1;
+                case 7:  callsub L_AssignQuest, 80506, 80550, "Baroness of Retribution", 30;
+                case 8:  callsub L_AssignQuest, 80507, 80551, "Lady Solace", 30;
+                case 9:  callsub L_AssignQuest, 80508, 80552, "Mistress of Shelter", 30;
+                case 10: callsub L_AssignQuest, 80509, 80553, "Dame of Sentinel", 30;
             }
             break;
 
@@ -54,15 +54,15 @@ moc_para01,48,15,0	script	Mission Board 120~140	1121,{
             mes "Select a target to hunt in the New World:";
             next;
             switch(select("Hunt 30 Centipede:Hunt 30 Tatacho:Hunt 30 Dolomedes:Hunt 30 Horn Scaraba Spear:Hunt 30 Horn Scaraba Dagger:Hunt 30 Antler Scaraba:Hunt 30 Rake Scaraba:Hunt 15 Fire Condor & Frilldora:Hunt 15 Fire Sandman & Golem")) {
-                case 1: callsub L_AssignQuest, 80510, "Centipede", 30;
-                case 2: callsub L_AssignQuest, 80511, "Tatacho", 30;
-                case 3: callsub L_AssignQuest, 80512, "Dolomedes", 30;
-                case 4: callsub L_AssignQuest, 80513, "Horn Scaraba (Spear)", 30;
-                case 5: callsub L_AssignQuest, 80514, "Horn Scaraba (Dagger)", 30;
-                case 6: callsub L_AssignQuest, 80515, "Antler Scaraba", 30;
-                case 7: callsub L_AssignQuest, 80516, "Rake Scaraba", 30;
-                case 8: callsub L_AssignQuest, 80517, "Desert Canyon Duo", 15;
-                case 9: callsub L_AssignQuest, 80518, "Desert Magma Duo", 15;
+                case 1: callsub L_AssignQuest, 80510, 80554, "Centipede", 30;
+                case 2: callsub L_AssignQuest, 80511, 80555, "Tatacho", 30;
+                case 3: callsub L_AssignQuest, 80512, 80556, "Dolomedes", 30;
+                case 4: callsub L_AssignQuest, 80513, 80557, "Horn Scaraba (Spear)", 30;
+                case 5: callsub L_AssignQuest, 80514, 80558, "Horn Scaraba (Dagger)", 30;
+                case 6: callsub L_AssignQuest, 80515, 80559, "Antler Scaraba", 30;
+                case 7: callsub L_AssignQuest, 80516, 80560, "Rake Scaraba", 30;
+                case 8: callsub L_AssignQuest, 80517, 80561, "Desert Canyon Duo", 15;
+                case 9: callsub L_AssignQuest, 80518, 80562, "Desert Magma Duo", 15;
             }
             break;
         // ==========================================
@@ -73,12 +73,12 @@ moc_para01,48,15,0	script	Mission Board 120~140	1121,{
             mes "Select a target to hunt:";
             next;
             switch(select("Nameless: 30 Ragged Zombie & Slaughter:Nameless: 30 Banshee:Nameless: 20 Necromancer:Rachel: 20 Vanberk & Isilla:Rachel: 30 Hodremlin:Rachel: 20 Agav & Echinio")) {
-                case 1: callsub L_AssignQuest, 80519, "Nameless Undead Trio", 30;
-                case 2: callsub L_AssignQuest, 80520, "Banshee", 30;
-                case 3: callsub L_AssignQuest, 80521, "Necromancer", 20;
-                case 4: callsub L_AssignQuest, 80522, "Rachel Servants Duo", 20;
-                case 5: callsub L_AssignQuest, 80523, "Hodremlin", 30;
-                case 6: callsub L_AssignQuest, 80524, "Rachel Fanatics Duo", 20;
+                case 1: callsub L_AssignQuest, 80519, 80563, "Nameless Undead Trio", 30;
+                case 2: callsub L_AssignQuest, 80520, 80564, "Banshee", 30;
+                case 3: callsub L_AssignQuest, 80521, 80565, "Necromancer", 20;
+                case 4: callsub L_AssignQuest, 80522, 80566, "Rachel Servants Duo", 20;
+                case 5: callsub L_AssignQuest, 80523, 80567, "Hodremlin", 30;
+                case 6: callsub L_AssignQuest, 80524, 80568, "Rachel Fanatics Duo", 20;
             }
             break;
 
@@ -90,28 +90,27 @@ moc_para01,48,15,0	script	Mission Board 120~140	1121,{
             mes "Select an assignment target:";
             next;
             switch(select("Bio: 30 Egnigem Cenia:Bio: 30 Armeyer Dinze:Bio: 30 Wickebine Tres:Bio: 30 Kavach Icarus:Bio: 30 Errende Ebecee:Bio: 30 Laurell Weinder:Bio: 2 Cecil Damon:Bio: 2 Kathryne Keyron:Bio: 2 Margaretha Sorin:Bio: 2 Seyren Windsor:Bio: 2 Eremes Guile:Bio: 2 Howard Alt-Eisen:Morroc: 30 Incarnation Valkyrie:Morroc: 30 Incarnation Mud:Morroc: 30 Incarnation Excorcist:Morroc: 30 Incarnation Ghost:Other: 5 Incubus & Succubus:Other: 20 Miming:Other: 20 Little Fatum")) {
-                case 1:  callsub L_AssignQuest, 80525, "Egnigem Cenia", 30;
-                case 2:  callsub L_AssignQuest, 80526, "Armeyer Dinze", 30;
-                case 3:  callsub L_AssignQuest, 80527, "Wickebine Tres", 30;
-                case 4:  callsub L_AssignQuest, 80528, "Kavach Icarus", 30;
-                case 5:  callsub L_AssignQuest, 80529, "Errende Ebecee", 30;
-                case 6:  callsub L_AssignQuest, 80530, "Laurell Weinder", 30;
-                case 7:  callsub L_AssignQuest, 80531, "Cecil Damon", 2;
-                case 8:  callsub L_AssignQuest, 80532, "Kathryne Keyron", 2;
-                case 9:  callsub L_AssignQuest, 80533, "Margaretha Sorin", 2;
-                case 10: callsub L_AssignQuest, 80534, "Seyren Windsor", 2;
-                case 11: callsub L_AssignQuest, 80535, "Eremes Guile", 2;
-                case 12: callsub L_AssignQuest, 80536, "Howard Alt-Eisen", 2;
-                case 13: callsub L_AssignQuest, 80537, "Morroc Valkyrie", 30;
-                case 14: callsub L_AssignQuest, 80538, "Morroc Mud", 30;
-                case 15: callsub L_AssignQuest, 80539, "Morroc Excorcist", 30;
-                case 16: callsub L_AssignQuest, 80540, "Morroc Ghost", 30;
-                case 17: callsub L_AssignQuest, 80541, "Incubus & Succubus", 5;
-                case 18: callsub L_AssignQuest, 80542, "Miming", 20;
-                case 19: callsub L_AssignQuest, 80543, "Little Fatum", 20;
+                case 1:  callsub L_AssignQuest, 80525, 80569, "Egnigem Cenia", 30;
+                case 2:  callsub L_AssignQuest, 80526, 80570, "Armeyer Dinze", 30;
+                case 3:  callsub L_AssignQuest, 80527, 80571, "Wickebine Tres", 30;
+                case 4:  callsub L_AssignQuest, 80528, 80572, "Kavach Icarus", 30;
+                case 5:  callsub L_AssignQuest, 80529, 80573, "Errende Ebecee", 30;
+                case 6:  callsub L_AssignQuest, 80530, 80574, "Laurell Weinder", 30;
+                case 7:  callsub L_AssignQuest, 80531, 80575, "Cecil Damon", 2;
+                case 8:  callsub L_AssignQuest, 80532, 80576, "Kathryne Keyron", 2;
+                case 9:  callsub L_AssignQuest, 80533, 80577, "Margaretha Sorin", 2;
+                case 10: callsub L_AssignQuest, 80534, 80578, "Seyren Windsor", 2;
+                case 11: callsub L_AssignQuest, 80535, 80579, "Eremes Guile", 2;
+                case 12: callsub L_AssignQuest, 80536, 80580, "Howard Alt-Eisen", 2;
+                case 13: callsub L_AssignQuest, 80537, 80581, "Morroc Valkyrie", 30;
+                case 14: callsub L_AssignQuest, 80538, 80582, "Morroc Mud", 30;
+                case 15: callsub L_AssignQuest, 80539, 80583, "Morroc Excorcist", 30;
+                case 16: callsub L_AssignQuest, 80540, 80584, "Morroc Ghost", 30;
+                case 17: callsub L_AssignQuest, 80541, 80585, "Incubus & Succubus", 5;
+                case 18: callsub L_AssignQuest, 80542, 80586, "Miming", 20;
+                case 19: callsub L_AssignQuest, 80543, 80587, "Little Fatum", 20;
             }
             break;
-
         // ==========================================
         // TURN IN COMPLETED MISSIONS
         // ==========================================
@@ -120,10 +119,15 @@ moc_para01,48,15,0	script	Mission Board 120~140	1121,{
             mes "Checking your quest progress...";
             next;
             
-            // Loop cleanly across the full sequential tracking bounds (80500 ~ 80543)
+            // Loop tracks safely across the full 80500 ~ 80543 array boundaries
             for (.@i = 80500; .@i <= 80543; .@i++) {
                 if (checkquest(.@i, HUNTING) == 2) {
+                    
+                    // Direct non-jumping calculation formula (Hunting ID + 44)
+                    .@cd_id = .@i + 44;
+
                     callsub L_RewardQuest, .@i;
+                    setquest .@cd_id; // Registers the explicit unique 24H cooldown tracking entry
                     .@rewarded = 1;
                 }
             }
@@ -135,7 +139,8 @@ moc_para01,48,15,0	script	Mission Board 120~140	1121,{
             }
             
             mes "[Mission Board 120~140]";
-            mes "All completed tasks processed.";
+            mes "Your completed tasks have been rewarded.";
+            mes "Individual 24-hour cooldowns applied to completed missions.";
             close;
 
         case 6:
@@ -148,24 +153,29 @@ moc_para01,48,15,0	script	Mission Board 120~140	1121,{
 // ==========================================
 L_AssignQuest:
     .@q_id = getarg(0);
-    .@mob_name$ = getarg(1);
-    .@count = getarg(2);
+    .@cd_id = getarg(1);
+    .@mob_name\$ = getarg(2);
+    .@count = getarg(3);
+
+    if (checkquest(.@cd_id) == 0 || checkquest(.@cd_id) == 1) {
+        mes "[Mission Board 120~140]";
+        mes "This mission is currently on an active 24-hour cooldown lock.";
+        close;
+    }
+    if (checkquest(.@cd_id) == 2) {
+        erasequest .@cd_id;
+    }
 
     .@state = checkquest(.@q_id);
     if (.@state == 0 || .@state == 1) {
         mes "[Mission Board 120~140]";
-        mes "You are already hunting " + .@mob_name$ + ".";
-        close;
-    }
-    if (.@state == 2) {
-        mes "[Mission Board 120~140]";
-        mes "You have already completed this task today.";
+        mes "You are already active on this hunting assignment.";
         close;
     }
 
     setquest .@q_id;
     mes "[Mission Board 120~140]";
-    mes "Task Registered: Defeat " + .@count + " " + .@mob_name$ + ".";
+    mes "Task Registered: Defeat " + .@count + " " + .@mob_name\$ + ".";
     close;
 
 L_RewardQuest:

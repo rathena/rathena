@@ -1,6 +1,6 @@
 //============================================================
-// kRO Eden Group Leveling Board (Level 40 ~ 69)
-// Simplified Version matching the working 1~39 structure
+// kRO Eden Group Leveling Board (Level 40 ~ 69) - PART 1
+// Complete Version with Individual 24H Cooldown Quest Tracking
 //============================================================
 
 moc_para01,42,15,0	script	Mission Board 40~69	1121,{
@@ -23,59 +23,102 @@ moc_para01,42,15,0	script	Mission Board 40~69	1121,{
     mes "Please select a region to view available assignments:";
     next;
     
-    switch(select("Shipwreck:Lighthouse:Orc Village:Turn in Completed Missions:Cancel")) {
+    switch(select("Shipwreck & Lighthouse & Orc:Izlude Dungeon:Morroc Fields/Dungeon:Payon & Geffen Dungeons:Comodo Fields/Dungeon:Turn in Completed Missions:Cancel")) {
         
         // ==========================================
-        // SHIPWRECK
+        // SHIPWRECK & LIGHTHOUSE & ORC (Original Group)
         // ==========================================
         case 1:
             mes "[Mission Board 40~69]";
-            mes "Select a target to hunt in the Shipwreck:";
             next;
-            switch(select("Hunt 20 Pirate Skeleton:Hunt 10 Kukre")) {
-                case 1: callsub L_AssignQuest, 80030, "Pirate Skeleton", 20;
-                case 2: callsub L_AssignQuest, 80031, "Kukre", 10;
+            switch(select("Hunt 20 Pirate Skeleton:Hunt 10 Kukre:Hunt 10 Aster:Hunt 10 Crab:Hunt 20 Orc Skeleton:Hunt 20 Orc Zombie")) {
+                case 1: callsub L_AssignQuest, 80030, 80057, "Pirate Skeleton", 20;
+                case 2: callsub L_AssignQuest, 80031, 80058, "Kukre", 10;
+                case 3: callsub L_AssignQuest, 80032, 80059, "Aster", 10;
+                case 4: callsub L_AssignQuest, 80033, 80060, "Crab", 10;
+                case 5: callsub L_AssignQuest, 80034, 80061, "Orc Skeleton", 20;
+                case 6: callsub L_AssignQuest, 80035, 80062, "Orc Zombie", 20;
             }
             break;
 
         // ==========================================
-        // LIGHTHOUSE
+        // IZLUDE DUNGEON
         // ==========================================
         case 2:
             mes "[Mission Board 40~69]";
-            mes "Select a target to hunt near the Lighthouse:";
             next;
-            switch(select("Hunt 10 Aster:Hunt 10 Crab")) {
-                case 1: callsub L_AssignQuest, 80032, "Aster", 10;
-                case 2: callsub L_AssignQuest, 80033, "Crab", 10;
+            switch(select("Hunt 10 Magnolia & Metaller:Hunt 10 Marina & Plankton:Hunt 10 Vadon:Hunt 10 Swordfish & Marc (Lv50+):Hunt 20 Marse (Lv50+):Hunt 10 Obeanue (Lv50+):Hunt 10 Stouf & Merman (Lv50+)")) {
+                case 1: callsub L_AssignQuest, 80036, 80063, "Magnolia & Metaller", 10;
+                case 2: callsub L_AssignQuest, 80037, 80064, "Marina & Plankton", 10;
+                case 3: callsub L_AssignQuest, 80038, 80065, "Vadon", 10;
+                case 4: callsub L_AssignQuest, 80039, 80066, "Swordfish & Marc", 10;
+                case 5: callsub L_AssignQuest, 80040, 80067, "Marse", 20;
+                case 6: callsub L_AssignQuest, 80041, 80068, "Obeanue", 10;
+                case 7: callsub L_AssignQuest, 80042, 80069, "Stouf & Merman", 10;
             }
             break;
 
         // ==========================================
-        // ORC VILLAGE
+        // MORROC
         // ==========================================
         case 3:
             mes "[Mission Board 40~69]";
-            mes "Select a target to hunt in the Orc Village:";
             next;
-            switch(select("Hunt 20 Orc Skeleton:Hunt 20 Orc Zombie")) {
-                case 1: callsub L_AssignQuest, 80034, "Orc Skeleton", 20;
-                case 2: callsub L_AssignQuest, 80035, "Orc Zombie", 20;
+            switch(select("Hunt 10 Mummy:Hunt 10 Verit & Minorous (Lv50+):Hunt 20 Isis (Lv60+):Hunt 15 Zerom & Requiem (Lv60+):Hunt 15 Marduk & Pasana (Lv60+):Hunt 10 Sandman (Lv50+)")) {
+                case 1: callsub L_AssignQuest, 80043, 80070, "Mummy", 10;
+                case 2: callsub L_AssignQuest, 80044, 80071, "Verit & Minorous", 10;
+                case 3: callsub L_AssignQuest, 80045, 80072, "Isis", 20;
+                case 4: callsub L_AssignQuest, 80046, 80073, "Zerom & Requiem", 15;
+                case 5: callsub L_AssignQuest, 80047, 80074, "Marduk & Pasana", 15;
+                case 6: callsub L_AssignQuest, 80048, 80075, "Sandman", 10;
             }
             break;
 
         // ==========================================
-        // TURN IN COMPLETED MISSIONS
+        // PAYON & GEFFEN DUNGEONS
         // ==========================================
         case 4:
+            mes "[Mission Board 40~69]";
+            next;
+            switch(select("Payon: 15 Munak & Bongun (Lv50+):Payon: 10 Purified Bottles (Lv50+):Payon: 12 Sohee (Lv50+):Geffen: 10 Hunter Fly (Lv55+):Geffen: 10 Ghoul & Jakk (Lv55+)")) {
+                case 1: callsub L_AssignQuest, 80049, 80076, "Munak & Bongun", 15;
+                case 2: callsub L_AssignQuest, 80050, 80077, "Purified Bottles of Ghost", 10;
+                case 3: callsub L_AssignQuest, 80051, 80078, "Sohee", 12;
+                case 4: callsub L_AssignQuest, 80052, 80079, "Hunter Fly", 10;
+                case 5: callsub L_AssignQuest, 80053, 80080, "Ghoul & Jakk", 10;
+            }
+            break;
+
+        // ==========================================
+        // COMODO
+        // ==========================================
+        case 5:
+            mes "[Mission Board 40~69]";
+            next;
+            switch(select("Hunt 10 Seal & Sea-Otter (Lv60+):Hunt 10 Stalactic Golem Trio (Lv60+):Hunt 15 Grove & Alligator (Lv60+)")) {
+                case 1: callsub L_AssignQuest, 80054, 80081, "Seal & Sea-Otter", 10;
+                case 2: callsub L_AssignQuest, 80055, 80082, "Stalactic Golem Trio", 10;
+                case 3: callsub L_AssignQuest, 80056, 80083, "Grove & Alligator", 15;
+            }
+            break;
+        // ==========================================
+        // TURN IN COMPLETED MISSIONS
+        // ==========================================
+        case 6:
             mes "[Mission Board 40~69]";
             mes "Checking your quest progress...";
             next;
             
-            // Loop through all quest IDs assigned to this board (80030 ~ 80035)
-            for (.@i = 80030; .@i <= 80035; .@i++) {
+            // Loop cleanly tracks across the full 80030 ~ 80056 range boundaries
+            for (.@i = 80030; .@i <= 80056; .@i++) {
                 if (checkquest(.@i, HUNTING) == 2) {
+                    
+                    // Non-jumping index math tracks directly (Hunting ID + 27)
+                    // Maps 80030 strictly to 80057, up to 80056 mapping to 80083
+                    .@cd_id = .@i + 27;
+
                     callsub L_RewardQuest, .@i;
+                    setquest .@cd_id; // Registers the explicit unique 24H cooldown tracking entry
                     .@rewarded = 1;
                 }
             }
@@ -87,10 +130,11 @@ moc_para01,42,15,0	script	Mission Board 40~69	1121,{
             }
             
             mes "[Mission Board 40~69]";
-            mes "All completed tasks processed.";
+            mes "Your completed tasks have been rewarded.";
+            mes "Individual 24-hour cooldowns applied to completed missions.";
             close;
 
-        case 5:
+        case 7:
             close;
     }
     end;
@@ -100,18 +144,23 @@ moc_para01,42,15,0	script	Mission Board 40~69	1121,{
 // ==========================================
 L_AssignQuest:
     .@q_id = getarg(0);
-    .@mob_name$ = getarg(1);
-    .@count = getarg(2);
+    .@cd_id = getarg(1);
+    .@mob_name$ = getarg(2);
+    .@count = getarg(3);
+
+    if (checkquest(.@cd_id) == 0 || checkquest(.@cd_id) == 1) {
+        mes "[Mission Board 40~69]";
+        mes "This mission is currently on an active 24-hour cooldown lock.";
+        close;
+    }
+    if (checkquest(.@cd_id) == 2) {
+        erasequest .@cd_id;
+    }
 
     .@state = checkquest(.@q_id);
     if (.@state == 0 || .@state == 1) {
         mes "[Mission Board 40~69]";
-        mes "You are already hunting " + .@mob_name$ + ".";
-        close;
-    }
-    if (.@state == 2) {
-        mes "[Mission Board 40~69]";
-        mes "You have already completed this task today.";
+        mes "You are already active on this hunting target.";
         close;
     }
 
@@ -123,7 +172,6 @@ L_AssignQuest:
 L_RewardQuest:
     .@q_id = getarg(0);
     
-    // Base and Job Exp rewards multiplied by server rates
     switch(.@q_id) {
         case 80030: .@b_exp = 8600;  .@j_exp = 9600;  break; // Pirate Skeleton
         case 80031: .@b_exp = 6500;  .@j_exp = 6500;  break; // Kukre
@@ -131,6 +179,32 @@ L_RewardQuest:
         case 80033: .@b_exp = 8400;  .@j_exp = 8380;  break; // Crab
         case 80034: .@b_exp = 14350; .@j_exp = 13700; break; // Orc Skeleton
         case 80035: .@b_exp = 14350; .@j_exp = 13700; break; // Orc Zombie
+        // Izlude Dungeon
+        case 80036: .@b_exp = 8400;  .@j_exp = 8380;  break; // Magnolia/Metaller
+        case 80037: .@b_exp = 9600;  .@j_exp = 8380;  break; // Marina/Plankton
+        case 80038: .@b_exp = 7800;  .@j_exp = 8380;  break; // Vadon
+        case 80039: .@b_exp = 12400; .@j_exp = 14380; break; // Swordfish/Marc
+        case 80040: .@b_exp = 10640; .@j_exp = 10240; break; // Marse
+        case 80041: .@b_exp = 9600;  .@j_exp = 9600;  break; // Obeanue
+        case 80042: .@b_exp = 17200; .@j_exp = 15600; break; // Stouf/Merman
+        // Morroc
+        case 80043: .@b_exp = 7200;  .@j_exp = 7800;  break; // Mummy
+        case 80044: .@b_exp = 12000; .@j_exp = 12800; break; // Verit/Minorous
+        case 80045: .@b_exp = 16740; .@j_exp = 17880; break; // Isis
+        case 80046: .@b_exp = 19450; .@j_exp = 20090; break; // Zerom/Requiem
+        case 80047: .@b_exp = 25640; .@j_exp = 24210; break; // Marduk/Pasana
+        case 80048: .@b_exp = 10800; .@j_exp = 9600;  break; // Sandman
+        // Payon Dungeon
+        case 80049: .@b_exp = 13200; .@j_exp = 12300; break; // Munak/Bongun
+        case 80050: .@b_exp = 9600;  .@j_exp = 9600;  break; // Purified Bottles
+        case 80051: .@b_exp = 10480; .@j_exp = 12400; break; // Sohee
+        // Geffen Dungeon
+        case 80052: .@b_exp = 8000;  .@j_exp = 6800;  break; // Hunter Fly
+        case 80053: .@b_exp = 14800; .@j_exp = 13600; break; // Ghoul/Jakk
+        // Comodo
+        case 80054: .@b_exp = 10000; .@j_exp = 10000; break; // Seal/Sea-Otter
+        case 80055: .@b_exp = 20000; .@j_exp = 20000; break; // Golem Trio
+        case 80056: .@b_exp = 15000; .@j_exp = 15000; break; // Grove/Alligator
     }
 
     .@b_exp = (.@b_exp * getbattleflag("base_exp_rate")) / 100;

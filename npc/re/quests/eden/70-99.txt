@@ -1,6 +1,6 @@
 //============================================================
 // kRO Eden Group Leveling Board (Level 70 ~ 99) - PART 1
-// Simplified & Error-Free Version: Menus and Quests
+// Complete Version with Individual 24H Cooldown Quest Tracking
 //============================================================
 
 moc_para01,44,15,0	script	Mission Board 70~99	1121,{
@@ -23,137 +23,116 @@ moc_para01,44,15,0	script	Mission Board 70~99	1121,{
     mes "Please select a region to view available assignments:";
     next;
     
-    switch(select("Yuno Field:Clock Tower:Glast Heim:Geffen & Einbroch:Lighthalzen & Turtle Island:Global Cities:Other Fields:Turn in Completed Missions:Cancel")) {
+    switch(select("Yuno & Clock & GH:Geffen & Einbroch:Lighthalzen & Turtle Island:Global Cities:Other Fields:Turn in Completed Missions:Cancel")) {
         
         // ==========================================
-        // YUNO FIELD
+        // YUNO & CLOCK & GH (Original Core Maps)
         // ==========================================
         case 1:
             mes "[Mission Board 70~99]";
-            mes "Select a target to hunt on Yuno Fields:";
             next;
-            switch(select("Hunt 20 Goat:Hunt 20 Sleeper")) {
-                case 1: callsub L_AssignQuest, 80100, "Goat", 20;
-                case 2: callsub L_AssignQuest, 80101, "Sleeper", 20;
-            }
-            break;
-
-        // ==========================================
-        // CLOCK TOWER
-        // ==========================================
-        case 2:
-            mes "[Mission Board 70~99]";
-            mes "Select a target to hunt in the Clock Tower:";
-            next;
-            switch(select("Hunt 20 Alarm:Hunt 20 Punk")) {
-                case 1: callsub L_AssignQuest, 80102, "Alarm", 20;
-                case 2: callsub L_AssignQuest, 80103, "Punk", 20;
-            }
-            break;
-
-        // ==========================================
-        // GLAST HEIM
-        // ==========================================
-        case 3:
-            mes "[Mission Board 70~99]";
-            mes "Select a target to hunt in Glast Heim:";
-            next;
-            switch(select("Hunt 20 Injustice:Hunt 15 Wraith")) {
-                case 1: callsub L_AssignQuest, 80104, "Injustice", 20;
-                case 2: callsub L_AssignQuest, 80105, "Wraith", 15;
+            switch(select("Hunt 20 Goat:Hunt 20 Sleeper:Hunt 20 Alarm:Hunt 20 Punk:Hunt 20 Injustice:Hunt 15 Wraith")) {
+                case 1: callsub L_AssignQuest, 80100, 80141, "Goat", 20;
+                case 2: callsub L_AssignQuest, 80101, 80142, "Sleeper", 20;
+                case 3: callsub L_AssignQuest, 80102, 80143, "Alarm", 20;
+                case 4: callsub L_AssignQuest, 80103, 80144, "Punk", 20;
+                case 5: callsub L_AssignQuest, 80104, 80145, "Injustice", 20;
+                case 6: callsub L_AssignQuest, 80105, 80146, "Wraith", 15;
             }
             break;
 
         // ==========================================
         // GEFFEN & EINBROCH
         // ==========================================
-        case 4:
+        case 2:
             mes "[Mission Board 70~99]";
-            mes "Select an assignment area:";
             next;
             switch(select("Geffen: 10 Sky Petite:Geffen: 10 Ground Petite:Geffen: 10 Marionette & Deviruchi:Geffen: 10 Nightmare:Einbroch: 20 Metaling & 10 Holden:Einbroch: 20 Noxious:Einbroch: 20 Venomous:Einbroch: 15 Teddy Bear:Einbroch: 20 Pitman:Einbroch: 15 Waste Stove:Einbroch: 15 Mineral & 5 Obsidian")) {
-                case 1:  callsub L_AssignQuest, 80106, "Sky Petite", 10;
-                case 2:  callsub L_AssignQuest, 80107, "Ground Petite", 10;
-                case 3:  callsub L_AssignQuest, 80108, "Marionette & Deviruchi", 10;
-                case 4:  callsub L_AssignQuest, 80109, "Nightmare", 10;
-                case 5:  callsub L_AssignQuest, 80110, "Metaling & Holden", 20;
-                case 6:  callsub L_AssignQuest, 80111, "Noxious", 20;
-                case 7:  callsub L_AssignQuest, 80112, "Venomous", 20;
-                case 8:  callsub L_AssignQuest, 80113, "Teddy Bear", 15;
-                case 9:  callsub L_AssignQuest, 80114, "Pitman", 20;
-                case 10: callsub L_AssignQuest, 80115, "Waste Stove", 15;
-                case 11: callsub L_AssignQuest, 80116, "Mineral & Obsidian", 15;
+                case 1:  callsub L_AssignQuest, 80106, 80147, "Sky Petite", 10;
+                case 2:  callsub L_AssignQuest, 80107, 80148, "Ground Petite", 10;
+                case 3:  callsub L_AssignQuest, 80108, 80149, "Marionette & Deviruchi", 10;
+                case 4:  callsub L_AssignQuest, 80109, 80150, "Nightmare", 10;
+                case 5:  callsub L_AssignQuest, 80110, 80151, "Metaling & Holden", 20;
+                case 6:  callsub L_AssignQuest, 80111, 80152, "Noxious", 20;
+                case 7:  callsub L_AssignQuest, 80112, 80153, "Venomous", 20;
+                case 8:  callsub L_AssignQuest, 80113, 80154, "Teddy Bear", 15;
+                case 9:  callsub L_AssignQuest, 80114, 80155, "Pitman", 20;
+                case 10: callsub L_AssignQuest, 80115, 80156, "Waste Stove", 15;
+                case 11: callsub L_AssignQuest, 80116, 80157, "Mineral & Obsidian", 15;
             }
             break;
 
         // ==========================================
         // LIGHTHALZEN & TURTLE ISLAND
         // ==========================================
-        case 5:
+        case 3:
             mes "[Mission Board 70~99]";
-            mes "Select an assignment area:";
             next;
             switch(select("Lhz: 20 Rafflesia:Lhz: 20 Stem Worm:Lhz: 20 Breeze:Turtle: 10 Dragon Tail & Spring Rabbit:Turtle: 10 Solider, Permeter, Freezer, Heater:Turtle: 10 Assaulter")) {
-                case 1: callsub L_AssignQuest, 80117, "Rafflesia", 20;
-                case 2: callsub L_AssignQuest, 80118, "Stem Worm", 20;
-                case 3: callsub L_AssignQuest, 80119, "Breeze", 20;
-                case 4: callsub L_AssignQuest, 80120, "Dragon Tail & Spring Rabbit", 10;
-                case 5: callsub L_AssignQuest, 80121, "Turtle Dungeon Group", 10;
-                case 6: callsub L_AssignQuest, 80122, "Assaulter", 10;
+                case 1: callsub L_AssignQuest, 80117, 80158, "Rafflesia", 20;
+                case 2: callsub L_AssignQuest, 80118, 80159, "Stem Worm", 20;
+                case 3: callsub L_AssignQuest, 80119, 80160, "Breeze", 20;
+                case 4: callsub L_AssignQuest, 80120, 80161, "Dragon Tail & Spring Rabbit", 10;
+                case 5: callsub L_AssignQuest, 80121, 80162, "Turtle Dungeon Group", 10;
+                case 6: callsub L_AssignQuest, 80122, 80163, "Assaulter", 10;
             }
             break;
         // ==========================================
         // GLOBAL CITIES
         // ==========================================
-        case 6:
+        case 4:
             mes "[Mission Board 70~99]";
-            mes "Select a Global localization target:";
             next;
             switch(select("Ayothaya: 20 Tamruan:Brasilis: 20 Toucan:Brasilis: 20 Headless Mule:Moscovia: 20 Uzhas:Moscovia: 20 Baba Yaga:Louyang: 20 Increase Soil:Louyang: 15 Hyegun & Jing Guai:Amatsu: 20 Miyabi:Amatsu: 20 Antique Firelock:Amatsu: 20 Shinobi:Gonryun: 20 Wicked Nymph:Gonryun: 20 Enchanted Peach Tree:Gonryun: 20 Evil Cloud Hermit")) {
-                case 1:  callsub L_AssignQuest, 80123, "Tamruan", 20;
-                case 2:  callsub L_AssignQuest, 80124, "Toucan", 20;
-                case 3:  callsub L_AssignQuest, 80125, "Headless Mule", 20;
-                case 4:  callsub L_AssignQuest, 80126, "Uzhas", 20;
-                case 5:  callsub L_AssignQuest, 80127, "Baba Yaga", 20;
-                case 6:  callsub L_AssignQuest, 80128, "Increase Soil", 20;
-                case 7:  callsub L_AssignQuest, 80129, "Hyegun & Jing Guai", 15;
-                case 8:  callsub L_AssignQuest, 80130, "Miyabi", 20;
-                case 9:  callsub L_AssignQuest, 80131, "Antique Firelock", 20;
-                case 10: callsub L_AssignQuest, 80132, "Shinobi", 20;
-                case 11: callsub L_AssignQuest, 80133, "Wicked Nymph", 20;
-                case 12: callsub L_AssignQuest, 80134, "Enchanted Peach Tree", 20;
-                case 13: callsub L_AssignQuest, 80135, "Evil Cloud Hermit", 20;
+                case 1:  callsub L_AssignQuest, 80123, 80164, "Tamruan", 20;
+                case 2:  callsub L_AssignQuest, 80124, 80165, "Toucan", 20;
+                case 3:  callsub L_AssignQuest, 80125, 80166, "Headless Mule", 20;
+                case 4:  callsub L_AssignQuest, 80126, 80167, "Uzhas", 20;
+                case 5:  callsub L_AssignQuest, 80127, 80168, "Baba Yaga", 20;
+                case 6:  callsub L_AssignQuest, 80128, 80169, "Increase Soil", 20;
+                case 7:  callsub L_AssignQuest, 80129, 80170, "Hyegun & Jing Guai", 15;
+                case 8:  callsub L_AssignQuest, 80130, 80171, "Miyabi", 20;
+                case 9:  callsub L_AssignQuest, 80131, 80172, "Antique Firelock", 20;
+                case 10: callsub L_AssignQuest, 80132, 80173, "Shinobi", 20;
+                case 11: callsub L_AssignQuest, 80133, 80174, "Wicked Nymph", 20;
+                case 12: callsub L_AssignQuest, 80134, 80175, "Enchanted Peach Tree", 20;
+                case 13: callsub L_AssignQuest, 80135, 80176, "Evil Cloud Hermit", 20;
             }
             break;
 
         // ==========================================
         // OTHER FIELDS
         // ==========================================
-        case 7:
+        case 5:
             mes "[Mission Board 70~99]";
-            mes "Select a target field assignment:";
             next;
             switch(select("Hunt 10 Geographer & Mantis:Hunt 10 Red & Yellow Novus:Hunt 30 Roween:Hunt 30 Siroma:Hunt 30 Stapo")) {
-                case 1: callsub L_AssignQuest, 80136, "Geographer & Mantis", 10;
-                case 2: callsub L_AssignQuest, 80137, "Red & Yellow Novus", 10;
-                case 3: callsub L_AssignQuest, 80138, "Roween", 30;
-                case 4: callsub L_AssignQuest, 80139, "Siroma", 30;
-                case 5: callsub L_AssignQuest, 80140, "Stapo", 30;
+                case 1: callsub L_AssignQuest, 80136, 80177, "Geographer & Mantis", 10;
+                case 2: callsub L_AssignQuest, 80137, 80178, "Red & Yellow Novus", 10;
+                case 3: callsub L_AssignQuest, 80138, 80179, "Roween", 30;
+                case 4: callsub L_AssignQuest, 80139, 80180, "Siroma", 30;
+                case 5: callsub L_AssignQuest, 80140, 80181, "Stapo", 30;
             }
             break;
 
         // ==========================================
         // TURN IN COMPLETED MISSIONS
         // ==========================================
-        case 8:
+        case 6:
             mes "[Mission Board 70~99]";
             mes "Checking your quest progress...";
             next;
             
-            // Loop cleanly across the sequential tracking bounds (80100 ~ 80140)
+            // Loop tracks safely across the full 80100 ~ 80140 range boundaries
             for (.@i = 80100; .@i <= 80140; .@i++) {
                 if (checkquest(.@i, HUNTING) == 2) {
+                    
+                    // Non-jumping tracking index logic (Hunting ID + 41)
+                    // Maps 80100 strictly to 80141, up to 80140 mapping to 80181
+                    .@cd_id = .@i + 41;
+
                     callsub L_RewardQuest, .@i;
+                    setquest .@cd_id; // Trigger explicit unique 24H cooldown tracking entry
                     .@rewarded = 1;
                 }
             }
@@ -165,10 +144,11 @@ moc_para01,44,15,0	script	Mission Board 70~99	1121,{
             }
             
             mes "[Mission Board 70~99]";
-            mes "All completed tasks processed.";
+            mes "Your completed tasks have been rewarded.";
+            mes "Individual 24-hour cooldowns applied to completed missions.";
             close;
 
-        case 9:
+        case 7:
             close;
     }
     end;
@@ -178,18 +158,23 @@ moc_para01,44,15,0	script	Mission Board 70~99	1121,{
 // ==========================================
 L_AssignQuest:
     .@q_id = getarg(0);
-    .@mob_name$ = getarg(1);
-    .@count = getarg(2);
+    .@cd_id = getarg(1);
+    .@mob_name$ = getarg(2);
+    .@count = getarg(3);
+
+    if (checkquest(.@cd_id) == 0 || checkquest(.@cd_id) == 1) {
+        mes "[Mission Board 70~99]";
+        mes "This mission is currently on an active 24-hour cooldown lock.";
+        close;
+    }
+    if (checkquest(.@cd_id) == 2) {
+        erasequest .@cd_id;
+    }
 
     .@state = checkquest(.@q_id);
     if (.@state == 0 || .@state == 1) {
         mes "[Mission Board 70~99]";
-        mes "You are already hunting " + .@mob_name$ + ".";
-        close;
-    }
-    if (.@state == 2) {
-        mes "[Mission Board 70~99]";
-        mes "You have already completed this task today.";
+        mes "You are already tracking this specific assignment target.";
         close;
     }
 

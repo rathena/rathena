@@ -1,6 +1,6 @@
 //============================================================
 // kRO Eden Group Leveling Board (Level 130 ~ 190) - PART 1
-// Simplified & Error-Free Version matching your active structure
+// Complete Version with Individual 24H Cooldown Quest Tracking
 //============================================================
 
 moc_para01,50,15,0	script	Mission Board 130~190	1121,{
@@ -23,7 +23,7 @@ moc_para01,50,15,0	script	Mission Board 130~190	1121,{
     mes "Please select a difficulty range to view available assignments:";
     next;
     
-    switch(select("Above Lv 130 ~ 140 Quests:Above Lv 150 Quests:Above Lv 160 Quests:Above Lv 170~190 Quests:Turn in Completed Missions:Cancel")) {
+    switch(select("Above Lv 130 ~ 140 Quests:Above Lv 150 & 160 Quests:Above Lv 170 ~ 190 Quests:Turn in Completed Missions:Cancel")) {
         
         // ==========================================
         // ABOVE LEVEL 130 ~ 140
@@ -33,86 +33,80 @@ moc_para01,50,15,0	script	Mission Board 130~190	1121,{
             mes "Select an assignment target:";
             next;
             switch(select("Lv130+: 60 Monsters in ecl_fild01:Lv130+: 60 Monsters in ba_bath:Lv130+: 60 Monsters in ba_lib:Lv130+: 60 Monsters in ba_pw02:Lv130+: 60 Monsters in ba_pw01:Lv130+: 60 Monsters in lasa_dun02:Lv140+: 30 Cenere & Antique Book:Lv140+: 120 Monsters in lasa_dun03:Lv140+: 120 Monsters in prt_prison:Lv140+: 120 Monsters in prt_q:Lv140+: 120 Monsters in rockmi1")) {
-                case 1:  callsub L_AssignQuest, 80700, "ecl_fild01 Hunt", 60;
-                case 2:  callsub L_AssignQuest, 80701, "ba_bath Hunt", 60;
-                case 3:  callsub L_AssignQuest, 80702, "ba_lib Hunt", 60;
-                case 4:  callsub L_AssignQuest, 80703, "ba_pw02 Hunt", 60;
-                case 5:  callsub L_AssignQuest, 80704, "ba_pw01 Hunt", 60;
-                case 6:  callsub L_AssignQuest, 80705, "lasa_dun02 Hunt", 60;
-                case 7:  callsub L_AssignQuest, 80706, "Cenere & Antique Book", 30;
-                case 8:  callsub L_AssignQuest, 80707, "lasa_dun03 Hunt", 120;
-                case 9:  callsub L_AssignQuest, 80708, "prt_prison Hunt", 120;
-                case 10: callsub L_AssignQuest, 80709, "prt_q Hunt", 120;
-                case 11: callsub L_AssignQuest, 80710, "rockmi1 Hunt", 120;
+                case 1:  callsub L_AssignQuest, 80700, 80733, "ecl_fild01 Hunt", 60;
+                case 2:  callsub L_AssignQuest, 80701, 80734, "ba_bath Hunt", 60;
+                case 3:  callsub L_AssignQuest, 80702, 80735, "ba_lib Hunt", 60;
+                case 4:  callsub L_AssignQuest, 80703, 80736, "ba_pw02 Hunt", 60;
+                case 5:  callsub L_AssignQuest, 80704, 80737, "ba_pw01 Hunt", 60;
+                case 6:  callsub L_AssignQuest, 80705, 80738, "lasa_dun02 Hunt", 60;
+                case 7:  callsub L_AssignQuest, 80706, 80739, "Cenere & Antique Book", 30;
+                case 8:  callsub L_AssignQuest, 80707, 80740, "lasa_dun03 Hunt", 120;
+                case 9:  callsub L_AssignQuest, 80708, 80741, "prt_prison Hunt", 120;
+                case 10: callsub L_AssignQuest, 80709, 80742, "prt_q Hunt", 120;
+                case 11: callsub L_AssignQuest, 80710, 80743, "rockmi1 Hunt", 120;
             }
             break;
-
         // ==========================================
-        // ABOVE LEVEL 150
+        // ABOVE LEVEL 150 & 160
         // ==========================================
         case 2:
             mes "[Mission Board 130~190]";
             mes "Select an assignment target:";
             next;
-            switch(select("Hunt 30 Wanderer (Nightmare):Hunt 30 Smelly Zombie:Hunt 20 Repair Robot & 30 Green Cenere:Hunt 40 Big Ben & Neo-Punk:Hunt 160 Monsters in ba_lost")) {
-                case 1: callsub L_AssignQuest, 80711, "Wanderer (Nightmare)", 30;
-                case 2: callsub L_AssignQuest, 80712, "Smelly Zombie", 30;
-                case 3: callsub L_AssignQuest, 80713, "Repair Robot & Green Cenere", 20;
-                case 4: callsub L_AssignQuest, 80714, "Big Ben & Neo-Punk", 40;
-                case 5: callsub L_AssignQuest, 80715, "ba_lost Hunt", 160;
-            }
-            break;
-        // ==========================================
-        // ABOVE LEVEL 160
-        // ==========================================
-        case 3:
-            mes "[Mission Board 130~190]";
-            mes "Select an assignment target:";
-            next;
-            switch(select("Hunt 50 Big Bell:Hunt 40 Grey Goat & Wolf Baby:Hunt 80 Monsters in sp_rudus2:Hunt 50 Recon Robot:Hunt 40 Exploration Rover Duo")) {
-                case 1: callsub L_AssignQuest, 80716, "Big Bell", 50;
-                case 2: callsub L_AssignQuest, 80717, "Grey Goat & Wolf Baby", 40;
-                case 3: callsub L_AssignQuest, 80718, "sp_rudus2 Hunt", 80;
-                case 4: callsub L_AssignQuest, 80719, "Recon Robot", 50;
-                case 5: callsub L_AssignQuest, 80720, "Exploration Rover Duo", 40;
+            switch(select("Lv150+: 30 Wanderer (Nightmare):Lv150+: 30 Smelly Zombie:Lv150+: 20 Repair Robot & 30 Green Cenere:Lv150+: 40 Big Ben & Neo-Punk:Lv150+: 160 Monsters in ba_lost:Lv160+: 50 Big Bell:Lv160+: 40 Grey Goat & Wolf Baby:Lv160+: 80 Monsters in sp_rudus2:Lv160+: 50 Recon Robot:Lv160+: 40 Exploration Rover Duo")) {
+                case 1:  callsub L_AssignQuest, 80711, 80744, "Wanderer (Nightmare)", 30;
+                case 2:  callsub L_AssignQuest, 80712, 80745, "Smelly Zombie", 30;
+                case 3:  callsub L_AssignQuest, 80713, 80746, "Repair Robot & Green Cenere", 20;
+                case 4:  callsub L_AssignQuest, 80714, 80747, "Big Ben & Neo-Punk", 40;
+                case 5:  callsub L_AssignQuest, 80715, 80748, "ba_lost Hunt", 160;
+                case 6:  callsub L_AssignQuest, 80716, 80749, "Big Bell", 50;
+                case 7:  callsub L_AssignQuest, 80717, 80750, "Grey Goat & Wolf Baby", 40;
+                case 8:  callsub L_AssignQuest, 80718, 80751, "sp_rudus2 Hunt", 80;
+                case 9:  callsub L_AssignQuest, 80719, 80752, "Recon Robot", 50;
+                case 10: callsub L_AssignQuest, 80720, 80753, "Exploration Rover Duo", 40;
             }
             break;
 
         // ==========================================
         // ABOVE LEVEL 170 ~ 190
         // ==========================================
-        case 4:
+        case 3:
             mes "[Mission Board 130~190]";
             mes "Select an assignment target:";
             next;
             switch(select("Lv170+: 160 Monsters in ba_2whs01:Lv170+: 80 Monsters in oz_dun01:Lv170+: 160 Monsters in sp_rudus3:Lv175+: 160 Monsters in mag_dun03:Lv180+: 160 Monsters in ba_2whs02:Lv180+: 160 Monsters in gl_cas01_:Lv180+: 80 Monsters in gw_fild01:Lv180+: 80 Monsters in gw_fild02:Lv180+: 160 Monsters in ein_dun03:Lv190+: 240 Monsters in odin_past:Lv190+: 240 Monsters in abyss_04:Lv190+: 240 Monsters in ba_pw03")) {
-                case 1:  callsub L_AssignQuest, 80721, "ba_2whs01 Hunt", 160;
-                case 2:  callsub L_AssignQuest, 80722, "oz_dun01 Hunt", 80;
-                case 3:  callsub L_AssignQuest, 80723, "sp_rudus3 Hunt", 160;
-                case 4:  callsub L_AssignQuest, 80724, "mag_dun03 Hunt", 160;
-                case 5:  callsub L_AssignQuest, 80725, "ba_2whs02 Hunt", 160;
-                case 6:  callsub L_AssignQuest, 80726, "gl_cas01_ Hunt", 160;
-                case 7:  callsub L_AssignQuest, 80727, "gw_fild01 Hunt", 80;
-                case 8:  callsub L_AssignQuest, 80728, "gw_fild02 Hunt", 80;
-                case 9:  callsub L_AssignQuest, 80729, "ein_dun03 Hunt", 160;
-                case 10: callsub L_AssignQuest, 80730, "odin_past Hunt", 240;
-                case 11: callsub L_AssignQuest, 80731, "abyss_04 Hunt", 240;
-                case 12: callsub L_AssignQuest, 80732, "ba_pw03 Hunt", 240;
+                case 1:  callsub L_AssignQuest, 80721, 80754, "ba_2whs01 Hunt", 160;
+                case 2:  callsub L_AssignQuest, 80722, 80755, "oz_dun01 Hunt", 80;
+                case 3:  callsub L_AssignQuest, 80723, 80756, "sp_rudus3 Hunt", 160;
+                case 4:  callsub L_AssignQuest, 80724, 80757, "mag_dun03 Hunt", 160;
+                case 5:  callsub L_AssignQuest, 80725, 80758, "ba_2whs02 Hunt", 160;
+                case 6:  callsub L_AssignQuest, 80726, 80759, "gl_cas01_ Hunt", 160;
+                case 7:  callsub L_AssignQuest, 80727, 80760, "gw_fild01 Hunt", 80;
+                case 8:  callsub L_AssignQuest, 80728, 80761, "gw_fild02 Hunt", 80;
+                case 9:  callsub L_AssignQuest, 80729, 80762, "ein_dun03 Hunt", 160;
+                case 10: callsub L_AssignQuest, 80730, 80763, "odin_past Hunt", 240;
+                case 11: callsub L_AssignQuest, 80731, 80764, "abyss_04 Hunt", 240;
+                case 12: callsub L_AssignQuest, 80732, 80765, "ba_pw03 Hunt", 240;
             }
             break;
-
         // ==========================================
         // TURN IN COMPLETED MISSIONS
         // ==========================================
-        case 5:
+        case 4:
             mes "[Mission Board 130~190]";
             mes "Checking your quest progress...";
             next;
             
-            // Loop tracks cleanly from 80700 through 80732
+            // Loop tracks safely across the full 80700 ~ 80732 range boundaries
             for (.@i = 80700; .@i <= 80732; .@i++) {
                 if (checkquest(.@i, HUNTING) == 2) {
+                    
+                    // Direct non-jumping calculation formula (Hunting ID + 33)
+                    // Maps 80700 strictly to Cooldown 80733, up to 80732 mapping to 80765
+                    .@cd_id = .@i + 33;
+
                     callsub L_RewardQuest, .@i;
+                    setquest .@cd_id; // Registers individual unique 24H cooldown quest
                     .@rewarded = 1;
                 }
             }
@@ -124,10 +118,11 @@ moc_para01,50,15,0	script	Mission Board 130~190	1121,{
             }
             
             mes "[Mission Board 130~190]";
-            mes "All completed tasks processed.";
+            mes "Your completed tasks have been rewarded.";
+            mes "Individual 24-hour cooldowns applied to completed missions.";
             close;
 
-        case 6:
+        case 5:
             close;
     }
     end;
@@ -137,18 +132,23 @@ moc_para01,50,15,0	script	Mission Board 130~190	1121,{
 // ==========================================
 L_AssignQuest:
     .@q_id = getarg(0);
-    .@mob_name$ = getarg(1);
-    .@count = getarg(2);
+    .@cd_id = getarg(1);
+    .@mob_name$ = getarg(2);
+    .@count = getarg(3);
+
+    if (checkquest(.@cd_id) == 0 || checkquest(.@cd_id) == 1) {
+        mes "[Mission Board 130~190]";
+        mes "This mission is currently on an active 24-hour cooldown lock.";
+        close;
+    }
+    if (checkquest(.@cd_id) == 2) {
+        erasequest .@cd_id;
+    }
 
     .@state = checkquest(.@q_id);
     if (.@state == 0 || .@state == 1) {
         mes "[Mission Board 130~190]";
-        mes "You are already hunting " + .@mob_name$ + ".";
-        close;
-    }
-    if (.@state == 2) {
-        mes "[Mission Board 130~190]";
-        mes "You have already completed this task today.";
+        mes "You are already active on this hunting assignment.";
         close;
     }
 

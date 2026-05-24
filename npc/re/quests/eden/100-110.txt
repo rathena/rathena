@@ -1,6 +1,6 @@
 //============================================================
 // kRO Eden Group Leveling Board (Level 100 ~ 110) - PART 1
-// Simplified Version matching the working 1~39 structure
+// Complete Version with Individual 24H Cooldown Quest Tracking
 //============================================================
 
 moc_para01,46,15,0	script	Mission Board 100~110	1121,{
@@ -33,17 +33,17 @@ moc_para01,46,15,0	script	Mission Board 100~110	1121,{
             mes "Select a target to hunt:";
             next;
             switch(select("Nogg: 30 Nightmare Terror:Nogg: 30 Ground & Sky Deleter:GH: 30 Carat:GH: 30 Arclouse:GH: 30 Anolian:GH: 30 Sting:GH: 30 Majorous:GH: 30 Raydric:GH: 30 Khalitzburg:GH: 30 Wanderer:GH: 10 Abysmal Knight")) {
-                case 1:  callsub L_AssignQuest, 80300, "Nightmare Terror", 30;
-                case 2:  callsub L_AssignQuest, 80301, "Deleter Duo", 30;
-                case 3:  callsub L_AssignQuest, 80302, "Carat", 30;
-                case 4:  callsub L_AssignQuest, 80303, "Arclouse", 30;
-                case 5:  callsub L_AssignQuest, 80304, "Anolian", 30;
-                case 6:  callsub L_AssignQuest, 80305, "Sting", 30;
-                case 7:  callsub L_AssignQuest, 80306, "Majorous", 30;
-                case 8:  callsub L_AssignQuest, 80307, "Raydric", 30;
-                case 9:  callsub L_AssignQuest, 80308, "Khalitzburg", 30;
-                case 10: callsub L_AssignQuest, 80309, "Wanderer", 30;
-                case 11: callsub L_AssignQuest, 80310, "Abysmal Knight", 10;
+                case 1:  callsub L_AssignQuest, 80300, 80326, "Nightmare Terror", 30;
+                case 2:  callsub L_AssignQuest, 80301, 80327, "Deleter Duo", 30;
+                case 3:  callsub L_AssignQuest, 80302, 80328, "Carat", 30;
+                case 4:  callsub L_AssignQuest, 80303, 80329, "Arclouse", 30;
+                case 5:  callsub L_AssignQuest, 80304, 80330, "Anolian", 30;
+                case 6:  callsub L_AssignQuest, 80305, 80331, "Sting", 30;
+                case 7:  callsub L_AssignQuest, 80306, 80332, "Majorous", 30;
+                case 8:  callsub L_AssignQuest, 80307, 80333, "Raydric", 30;
+                case 9:  callsub L_AssignQuest, 80308, 80334, "Khalitzburg", 30;
+                case 10: callsub L_AssignQuest, 80309, 80335, "Wanderer", 30;
+                case 11: callsub L_AssignQuest, 80310, 80336, "Abysmal Knight", 10;
             }
             break;
 
@@ -55,14 +55,14 @@ moc_para01,46,15,0	script	Mission Board 100~110	1121,{
             mes "Select a target to hunt in the New World:";
             next;
             switch(select("Hunt 30 Pinguicula:Hunt 30 Luciola Vespa:Hunt 1 Tendrillion:Hunt 30 Dark Pinguicula:Hunt 30 Nepenthes:Hunt 30 Naga:Hunt 30 Cornus:Hunt 20 Centipede Larva")) {
-                case 1: callsub L_AssignQuest, 80311, "Pinguicula", 30;
-                case 2: callsub L_AssignQuest, 80312, "Luciola Vespa", 30;
-                case 3: callsub L_AssignQuest, 80313, "Tendrillion", 1;
-                case 4: callsub L_AssignQuest, 80314, "Dark Pinguicula", 30;
-                case 5: callsub L_AssignQuest, 80315, "Nepenthes", 30;
-                case 6: callsub L_AssignQuest, 80316, "Naga", 30;
-                case 7: callsub L_AssignQuest, 80317, "Cornus", 30;
-                case 8: callsub L_AssignQuest, 80318, "Centipede Larva", 20;
+                case 1: callsub L_AssignQuest, 80311, 80337, "Pinguicula", 30;
+                case 2: callsub L_AssignQuest, 80312, 80338, "Luciola Vespa", 30;
+                case 3: callsub L_AssignQuest, 80313, 80339, "Tendrillion", 1;
+                case 4: callsub L_AssignQuest, 80314, 80340, "Dark Pinguicula", 30;
+                case 5: callsub L_AssignQuest, 80315, 80341, "Nepenthes", 30;
+                case 6: callsub L_AssignQuest, 80316, 80342, "Naga", 30;
+                case 7: callsub L_AssignQuest, 80317, 80343, "Cornus", 30;
+                case 8: callsub L_AssignQuest, 80318, 80344, "Centipede Larva", 20;
             }
             break;
         // ==========================================
@@ -73,13 +73,13 @@ moc_para01,46,15,0	script	Mission Board 100~110	1121,{
             mes "Select an assignment target:";
             next;
             switch(select("Thanatos: 30 Ancient Mimic:Thanatos: 30 Deathword:Thanatos: 20 Owl Baron:Juperos: 20 Orange & Green Venatu:Juperos: 20 Red & Blue Venatu:Juperos: 10 Blue & Orange Dimik:Juperos: 10 Green & Red Dimik")) {
-                case 1: callsub L_AssignQuest, 80319, "Ancient Mimic", 30;
-                case 2: callsub L_AssignQuest, 80320, "Deathword", 30;
-                case 3: callsub L_AssignQuest, 80321, "Owl Baron", 20;
-                case 4: callsub L_AssignQuest, 80322, "Orange & Green Venatu", 20;
-                case 5: callsub L_AssignQuest, 80323, "Red & Blue Venatu", 20;
-                case 6: callsub L_AssignQuest, 80324, "Blue & Orange Dimik", 10;
-                case 7: callsub L_AssignQuest, 80325, "Green & Red Dimik", 10;
+                case 1: callsub L_AssignQuest, 80319, 80345, "Ancient Mimic", 30;
+                case 2: callsub L_AssignQuest, 80320, 80346, "Deathword", 30;
+                case 3: callsub L_AssignQuest, 80321, 80347, "Owl Baron", 20;
+                case 4: callsub L_AssignQuest, 80322, 80348, "Orange & Green Venatu", 20;
+                case 5: callsub L_AssignQuest, 80323, 80349, "Red & Blue Venatu", 20;
+                case 6: callsub L_AssignQuest, 80324, 80350, "Blue & Orange Dimik", 10;
+                case 7: callsub L_AssignQuest, 80325, 80351, "Green & Red Dimik", 10;
             }
             break;
 
@@ -91,10 +91,16 @@ moc_para01,46,15,0	script	Mission Board 100~110	1121,{
             mes "Checking your quest progress...";
             next;
             
-            // Loop targets array sequential boundaries (80300 ~ 80325)
+            // Loop tracks safely across the full 80300 ~ 80325 array boundaries
             for (.@i = 80300; .@i <= 80325; .@i++) {
                 if (checkquest(.@i, HUNTING) == 2) {
+                    
+                    // Non-jumping index tracking formula (Hunting ID + 26)
+                    // Maps 80300 directly to Cooldown 80326, up to 80325 mapping to 80351
+                    .@cd_id = .@i + 26;
+
                     callsub L_RewardQuest, .@i;
+                    setquest .@cd_id; // Registers individual unique 24H cooldown quest
                     .@rewarded = 1;
                 }
             }
@@ -106,7 +112,8 @@ moc_para01,46,15,0	script	Mission Board 100~110	1121,{
             }
             
             mes "[Mission Board 100~110]";
-            mes "All completed tasks processed.";
+            mes "Your completed tasks have been rewarded.";
+            mes "Individual 24-hour cooldowns applied to completed missions.";
             close;
 
         case 5:
@@ -119,18 +126,23 @@ moc_para01,46,15,0	script	Mission Board 100~110	1121,{
 // ==========================================
 L_AssignQuest:
     .@q_id = getarg(0);
-    .@mob_name$ = getarg(1);
-    .@count = getarg(2);
+    .@cd_id = getarg(1);
+    .@mob_name$ = getarg(2);
+    .@count = getarg(3);
+
+    if (checkquest(.@cd_id) == 0 || checkquest(.@cd_id) == 1) {
+        mes "[Mission Board 100~110]";
+        mes "This mission is currently on an active 24-hour cooldown lock.";
+        close;
+    }
+    if (checkquest(.@cd_id) == 2) {
+        erasequest .@cd_id;
+    }
 
     .@state = checkquest(.@q_id);
     if (.@state == 0 || .@state == 1) {
         mes "[Mission Board 100~110]";
-        mes "You are already hunting " + .@mob_name$ + ".";
-        close;
-    }
-    if (.@state == 2) {
-        mes "[Mission Board 100~110]";
-        mes "You have already completed this task today.";
+        mes "You are already active on this hunting assignment.";
         close;
     }
 
