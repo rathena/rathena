@@ -42,7 +42,7 @@
 /// Leave this line to enable renewal item drop rate algorithms
 /// While enabled a special modified based on the difference between the player and monster level is applied
 /// Based on the http://irowiki.org/wiki/Drop_System#Level_Factor table
-#define RENEWAL_DROP
+//#define RENEWAL_DROP
 
 /// Renewal exp rate algorithms
 /// (disable by commenting the line)
