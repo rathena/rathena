@@ -209,8 +209,8 @@ L_RewardQuest:
         case 80011: .@b_exp = 5500; .@j_exp = 5500; break; // Megalodon
     }
 
-    .@b_exp = (.@b_exp * getbattleflag("base_exp_rate")) / 100;
-    .@j_exp = (.@j_exp * getbattleflag("job_exp_rate")) / 100;
+    .@b_exp = (.@b_exp * getbattleflag("base_exp_rate")) / 200;
+    .@j_exp = (.@j_exp * getbattleflag("job_exp_rate")) / 200;
 
     completequest .@q_id;
     getexp .@b_exp, .@j_exp;
