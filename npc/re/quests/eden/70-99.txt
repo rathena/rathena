@@ -258,4 +258,3 @@ L_RewardQuest:
     getexp .@b_exp, .@j_exp;
     return;
 }
-}
