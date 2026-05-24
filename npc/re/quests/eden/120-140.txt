@@ -1,6 +1,6 @@
 //============================================================
 // kRO Eden Group Leveling Board (Level 120 ~ 140) - PART 1
-// Individual 24H Cooldown Quest Tracking (80500 ~ 80543)
+// Fixed Syntax: Corrected Stray Backslashes & String Variable
 //============================================================
 
 moc_para01,48,15,0	script	Mission Board 120~140	1121,{
@@ -119,15 +119,13 @@ moc_para01,48,15,0	script	Mission Board 120~140	1121,{
             mes "Checking your quest progress...";
             next;
             
-            // Loop tracks safely across the full 80500 ~ 80543 array boundaries
             for (.@i = 80500; .@i <= 80543; .@i++) {
                 if (checkquest(.@i, HUNTING) == 2) {
                     
-                    // Direct non-jumping calculation formula (Hunting ID + 44)
                     .@cd_id = .@i + 44;
 
                     callsub L_RewardQuest, .@i;
-                    setquest .@cd_id; // Registers the explicit unique 24H cooldown tracking entry
+                    setquest .@cd_id;
                     .@rewarded = 1;
                 }
             }
@@ -154,7 +152,7 @@ moc_para01,48,15,0	script	Mission Board 120~140	1121,{
 L_AssignQuest:
     .@q_id = getarg(0);
     .@cd_id = getarg(1);
-    .@mob_name\$ = getarg(2);
+    .@mob_name$ = getarg(2); // String notation fixed
     .@count = getarg(3);
 
     if (checkquest(.@cd_id) == 0 || checkquest(.@cd_id) == 1) {
@@ -175,57 +173,57 @@ L_AssignQuest:
 
     setquest .@q_id;
     mes "[Mission Board 120~140]";
-    mes "Task Registered: Defeat " + .@count + " " + .@mob_name\$ + ".";
+    mes "Task Registered: Defeat " + .@count + " " + .@mob_name$ + ".";
     close;
 
 L_RewardQuest:
     .@q_id = getarg(0);
     
     switch(.@q_id) {
-        case 80500: .@b_exp = 600000;  .@j_exp = 600000;  .@coin = 1; break; // Skogul
-        case 80501: .@b_exp = 600000;  .@j_exp = 600000;  .@coin = 1; break; // Frus
-        case 80502: .@b_exp = 600000;  .@j_exp = 600000;  .@coin = 2; break; // Skeggiold Duo
-        case 80503: .@b_exp = 500000;  .@j_exp = 500000;  .@coin = 2; break; // Green & Red Ferus
-        case 80504: .@b_exp = 500000;  .@j_exp = 500000;  .@coin = 2; break; // Yellow & Blue Acidus
-        case 80505: .@b_exp = 500000;  .@j_exp = 500000;  .@coin = 1; break; // Hydrolancer
-        case 80506: .@b_exp = 600000;  .@j_exp = 600000;  .@coin = 1; break; // Baroness
-        case 80507: .@b_exp = 600000;  .@j_exp = 600000;  .@coin = 1; break; // Lady Solace
-        case 80508: .@b_exp = 600000;  .@j_exp = 600000;  .@coin = 1; break; // Mistress of Shelter
-        case 80509: .@b_exp = 600000;  .@j_exp = 600000;  .@coin = 1; break; // Dame of Sentinel
-        case 80510: .@b_exp = 600000;  .@j_exp = 600000;  .@coin = 1; break; // Centipede
-        case 80511: .@b_exp = 600000;  .@j_exp = 600000;  .@coin = 1; break; // Tatacho
-        case 80512: .@b_exp = 800000;  .@j_exp = 800000;  .@coin = 1; break; // Dolomedes
-        case 80513: .@b_exp = 800000;  .@j_exp = 800000;  .@coin = 1; break; // Horn Scaraba (Spear)
-        case 80514: .@b_exp = 800000;  .@j_exp = 800000;  .@coin = 1; break; // Horn Scaraba (Dagger)
-        case 80515: .@b_exp = 800000;  .@j_exp = 800000;  .@coin = 1; break; // Antler Scaraba
-        case 80516: .@b_exp = 800000;  .@j_exp = 800000;  .@coin = 1; break; // Rake Scaraba
-        case 80517: .@b_exp = 1000000; .@j_exp = 1000000; .@coin = 1; break; // Desert Canyon Duo
-        case 80518: .@b_exp = 1000000; .@j_exp = 1000000; .@coin = 1; break; // Desert Magma Duo
-        case 80519: .@b_exp = 1000000; .@j_exp = 600000;  .@coin = 2; break; // Ragged Zombie & Slaughter
-        case 80520: .@b_exp = 500000;  .@j_exp = 300000;  .@coin = 1; break; // Banshee
-        case 80521: .@b_exp = 600000;  .@j_exp = 500000;  .@coin = 1; break; // Necromancer
-        case 80522: .@b_exp = 500000;  .@j_exp = 500000;  .@coin = 1; break; // Vanberk & Isilla
-        case 80523: .@b_exp = 500000;  .@j_exp = 500000;  .@coin = 1; break; // Hodremlin
-        case 80524: .@b_exp = 500000;  .@j_exp = 500000;  .@coin = 1; break; // Agav & Echio
-        case 80525: .@b_exp = 850000;  .@j_exp = 850000;  .@coin = 1; break; // Egnigem Cenia
-        case 80526: .@b_exp = 850000;  .@j_exp = 850000;  .@coin = 1; break; // Armeyer Dinze
-        case 80527: .@b_exp = 850000;  .@j_exp = 850000;  .@coin = 1; break; // Wickebine Tres
-        case 80528: .@b_exp = 850000;  .@j_exp = 850000;  .@coin = 1; break; // Kavach Icarus
-        case 80529: .@b_exp = 850000;  .@j_exp = 850000;  .@coin = 1; break; // Errende Ebecee
-        case 80530: .@b_exp = 850000;  .@j_exp = 850000;  .@coin = 1; break; // Laurell Weinder
-        case 80531: .@b_exp = 1000000; .@j_exp = 1000000; .@coin = 1; break; // Cecil Damon
-        case 80532: .@b_exp = 1000000; .@j_exp = 1000000; .@coin = 1; break; // Kathryne Keyron
-        case 80533: .@b_exp = 1000000; .@j_exp = 1000000; .@coin = 1; break; // Margaretha Sorin
-        case 80534: .@b_exp = 1000000; .@j_exp = 1000000; .@coin = 1; break; // Seyren Windsor
-        case 80535: .@b_exp = 1000000; .@j_exp = 1000000; .@coin = 1; break; // Eremes Guile
-        case 80536: .@b_exp = 1000000; .@j_exp = 1000000; .@coin = 1; break; // Howard Alt-Eisen
-        case 80537: .@b_exp = 800000;  .@j_exp = 800000;  .@coin = 1; break; // Morroc Valkyrie
-        case 80538: .@b_exp = 800000;  .@j_exp = 800000;  .@coin = 1; break; // Morroc Mud
-        case 80539: .@b_exp = 800000;  .@j_exp = 800000;  .@coin = 1; break; // Morroc Excorcist
-        case 80540: .@b_exp = 800000;  .@j_exp = 800000;  .@coin = 1; break; // Morroc Ghost
-        case 80541: .@b_exp = 400000;  .@j_exp = 400000;  .@coin = 1; break; // Incubus & Succubus
-        case 80542: .@b_exp = 850000;  .@j_exp = 850000;  .@coin = 1; break; // Miming
-        case 80543: .@b_exp = 850000;  .@j_exp = 850000;  .@coin = 1; break; // Little Fatum
+        case 80500: .@b_exp = 600000;  .@j_exp = 600000;  .@coin = 1; break;
+        case 80501: .@b_exp = 600000;  .@j_exp = 600000;  .@coin = 1; break;
+        case 80502: .@b_exp = 600000;  .@j_exp = 600000;  .@coin = 2; break;
+        case 80503: .@b_exp = 500000;  .@j_exp = 500000;  .@coin = 2; break;
+        case 80504: .@b_exp = 500000;  .@j_exp = 500000;  .@coin = 2; break;
+        case 80505: .@b_exp = 500000;  .@j_exp = 500000;  .@coin = 1; break;
+        case 80506: .@b_exp = 600000;  .@j_exp = 600000;  .@coin = 1; break;
+        case 80507: .@b_exp = 600000;  .@j_exp = 600000;  .@coin = 1; break;
+        case 80508: .@b_exp = 600000;  .@j_exp = 600000;  .@coin = 1; break;
+        case 80509: .@b_exp = 600000;  .@j_exp = 600000;  .@coin = 1; break;
+        case 80510: .@b_exp = 600000;  .@j_exp = 600000;  .@coin = 1; break;
+        case 80511: .@b_exp = 600000;  .@j_exp = 600000;  .@coin = 1; break;
+        case 80512: .@b_exp = 800000;  .@j_exp = 800000;  .@coin = 1; break;
+        case 80513: .@b_exp = 800000;  .@j_exp = 800000;  .@coin = 1; break;
+        case 80514: .@b_exp = 800000;  .@j_exp = 800000;  .@coin = 1; break;
+        case 80515: .@b_exp = 800000;  .@j_exp = 800000;  .@coin = 1; break;
+        case 80516: .@b_exp = 800000;  .@j_exp = 800000;  .@coin = 1; break;
+        case 80517: .@b_exp = 1000000; .@j_exp = 1000000; .@coin = 1; break;
+        case 80518: .@b_exp = 1000000; .@j_exp = 1000000; .@coin = 1; break;
+        case 80519: .@b_exp = 1000000; .@j_exp = 600000;  .@coin = 2; break;
+        case 80520: .@b_exp = 500000;  .@j_exp = 300000;  .@coin = 1; break;
+        case 80521: .@b_exp = 600000;  .@j_exp = 500000;  .@coin = 1; break;
+        case 80522: .@b_exp = 500000;  .@j_exp = 500000;  .@coin = 1; break;
+        case 80523: .@b_exp = 500000;  .@j_exp = 500000;  .@coin = 1; break;
+        case 80524: .@b_exp = 500000;  .@j_exp = 500000;  .@coin = 1; break;
+        case 80525: .@b_exp = 850000;  .@j_exp = 850000;  .@coin = 1; break;
+        case 80526: .@b_exp = 850000;  .@j_exp = 850000;  .@coin = 1; break;
+        case 80527: .@b_exp = 850000;  .@j_exp = 850000;  .@coin = 1; break;
+        case 80528: .@b_exp = 850000;  .@j_exp = 850000;  .@coin = 1; break;
+        case 80529: .@b_exp = 850000;  .@j_exp = 850000;  .@coin = 1; break;
+        case 80530: .@b_exp = 850000;  .@j_exp = 850000;  .@coin = 1; break;
+        case 80531: .@b_exp = 1000000; .@j_exp = 1000000; .@coin = 1; break;
+        case 80532: .@b_exp = 1000000; .@j_exp = 1000000; .@coin = 1; break;
+        case 80533: .@b_exp = 1000000; .@j_exp = 1000000; .@coin = 1; break;
+        case 80534: .@b_exp = 1000000; .@j_exp = 1000000; .@coin = 1; break;
+        case 80535: .@b_exp = 1000000; .@j_exp = 1000000; .@coin = 1; break;
+        case 80536: .@b_exp = 1000000; .@j_exp = 1000000; .@coin = 1; break;
+        case 80537: .@b_exp = 800000;  .@j_exp = 800000;  .@coin = 1; break;
+        case 80538: .@b_exp = 800000;  .@j_exp = 800000;  .@coin = 1; break;
+        case 80539: .@b_exp = 800000;  .@j_exp = 800000;  .@coin = 1; break;
+        case 80540: .@b_exp = 800000;  .@j_exp = 800000;  .@coin = 1; break;
+        case 80541: .@b_exp = 400000;  .@j_exp = 400000;  .@coin = 1; break;
+        case 80542: .@b_exp = 850000;  .@j_exp = 850000;  .@coin = 1; break;
+        case 80543: .@b_exp = 850000;  .@j_exp = 850000;  .@coin = 1; break;
     }
 
     .@b_exp = (.@b_exp * getbattleflag("base_exp_rate")) / 100;
