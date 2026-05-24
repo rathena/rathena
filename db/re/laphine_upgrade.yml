@@ -4934,6 +4934,8 @@ Body:
       - Item: Thorn_Staff_IL
       - Item: Dea_Staff_IL
       - Item: Sprint_Mail_IL
+      - Item: Guard_IL
+      - Item: Siver_Guard_IL
   - Item: S_Twins_Box_IL
     ResultRefineMinimum: 9
     ResultRefineMaximum: 12
