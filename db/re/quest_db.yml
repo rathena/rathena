@@ -14255,6 +14255,118 @@ Body:
   - Id: 62238
     Title: Midgardian Mercenary timer
     TimeLimit: +3h
+  - Id: 80000
+    Title: "Eden Quest Board : Hunt Willows"
+    Targets:
+      - Mob: WILOW
+        Count: 5
+    TimeLimit: 4h
+  - Id: 80001
+    Title: "Eden Quest Board : Hunt Boas"
+    Targets:
+      - Mob: SNAKE
+        Count: 5
+    TimeLimit: 4h
+  - Id: 80002
+    Title: "Eden Quest Board: Hunt Wormtails"
+    Targets:
+      - Mob: WORM_TAIL
+        Count: 5
+    TimeLimit: 4h
+  - Id: 80003
+    Title: "Eden Quest Board: Hunt Spores"
+    Targets:
+      - Mob: SPORE
+        Count: 10
+    TimeLimit: 4h
+  - Id: 80004
+    Title: "Eden Quest Board: Hunt Hornets"
+    Targets:
+      - Mob: HORNET
+        Count: 10
+    TimeLimit: 4h
+  - Id: 80005
+    Title: "Eden Quest Board: Hunt Rockers"
+    Targets:
+      - Mob: ROCKER
+        Count: 10
+    TimeLimit: 4h
+  - Id: 80006
+    Title: "Eden Quest Board: Hunt Ambernites"
+    Targets:
+      - Mob: AMBERNITE
+        Count: 10
+    TimeLimit: 4h
+  - Id: 80007
+    Title: "Eden Quest Board: Hunt Zombies & Skeleton"
+    Targets:
+      - Mob: ZOMBIE
+        Count: 10
+      - Mob: SKELETON
+        Count: 20
+    TimeLimit: 4h
+  - Id: 80008
+    Title: "Eden Quest Board: Hunt Muka & Pecopeco"
+    Targets:
+      - Mob: MUKA
+        Count: 10
+      - Mob: PECOPECO
+        Count: 20
+    TimeLimit: 4h
+  - Id: 80009
+    Title: "Eden Quest Board: Hunt Thara Frog"
+    Targets:
+      - Mob: THARA_FROG
+        Count: 10
+    TimeLimit: 4h
+  - Id: 80010
+    Title: "Eden Quest Board: Hunt Hydra"
+    Targets:
+      - Mob: HYDRA
+        Count: 10
+    TimeLimit: 4h
+  - Id: 80011
+    Title: "Eden Quest Board: Hunt Megalodon"
+    Targets:
+      - Mob: MEGALODON
+        Count: 10
+    TimeLimit: 4h
+  - Id: 80012
+    Title: "Eden Quest Board : Hunt Willows - Waiting"
+    TimeLimit: +4h
+  - Id: 80013
+    Title: "Eden Quest Board : Hunt Boas - Waiting"
+    TimeLimit: +4h
+  - Id: 80014
+    Title: "Eden Quest Board : Hunt Wormtails - Waiting"
+    TimeLimit: +4h
+  - Id: 80015
+    Title: "Eden Quest Board : Hunt Spores - Waiting"
+    TimeLimit: +4h
+  - Id: 80016
+    Title: "Eden Quest Board : Hunt Hornet - Waiting"
+    TimeLimit: +4h
+  - Id: 80017
+    Title: "Eden Quest Board : Hunt Rocker - Waiting"
+    TimeLimit: +4h
+  - Id: 80018
+    Title: "Eden Quest Board : Hunt Ambernite - Waiting"
+    TimeLimit: +4h
+  - Id: 80019
+    Title: "Eden Quest Board : Hunt Zombie & Skeleton - Waiting"
+    TimeLimit: +4h
+  - Id: 80020
+    Title: "Eden Quest Board : Hunt Muka & Pecopeco - Waiting"
+    TimeLimit: +4h
+  - Id: 80021
+    Title: "Eden Quest Board : Hunt Thara Frog - Waiting"
+    TimeLimit: +4h
+  - Id: 80022
+    Title: "Eden Quest Board : Hunt Hydra - Waiting"
+    TimeLimit: +4h
+  - Id: 80023
+    Title: "Eden Quest Board : Hunt Megalodon - Waiting"
+    TimeLimit: +4h
   - Id: 90001
     Title: "Silvervine Hunt: Angeling"
     Targets:
@@ -14273,6 +14385,7 @@ Body:
       - Mob: CAT_O_NINE_TAIL
         Count: 1
     TimeLimit: 4h
+  - Id: 90004
     Title: "Silvervine Hunt: Deviling"
     Targets:
       - Mob: DEVILING

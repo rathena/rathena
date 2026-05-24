@@ -31,7 +31,7 @@ moc_para01,40,15,0	script	Mission Board 1~39	4_BOARD3,{
             mes "[Mission Board 1~39]";
             mes "Select a target to hunt in the Payon fields:";
             next;
-            switch(select("Hunt 5 Willows (Req: 3 Barren Trunk):Hunt 5 Boa:Hunt 5 Wormtail:Hunt 10 Spore")) {
+            switch(select("Hunt Willows:Hunt Boa:Hunt Wormtail:Hunt Spore")) {
                 case 1: callsub L_AssignQuest, 80000, 80012, "Willow", 5, 15, 1; break;
                 case 2: callsub L_AssignQuest, 80001, 80013, "Boa", 5, 15, 15; break;
                 case 3: callsub L_AssignQuest, 80002, 80014, "Wormtail", 5, 15, 15; break;
