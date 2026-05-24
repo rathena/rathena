@@ -1,0 +1,223 @@
+//============================================================
+// kRO Eden Group Leveling Board (Level 130 ~ 190) - PART 1
+// Categorized Strictly by Base Level Requirements
+//============================================================
+
+moc_para01,50,15,0	script	Mission Board 130~190	1121,{
+
+    if (!callfunc("F_HasEdenGroupMark")) {
+        mes "- You need to have an -";
+        mes "- ^4d4dff'Eden Group Mark'^000000 -";
+        mes "- to receive these missions. -";
+        close;
+    }
+
+    if (BaseLevel < 130) {
+        mes "[Mission Board 130~190]";
+        mes "This board contains missions for legendary adventurers.";
+        mes "You must be at least Base Level 130.";
+        close;
+    }
+
+    mes "[Mission Board 130~190]";
+    mes "Please select a difficulty range to view available assignments:";
+    next;
+    
+    switch(select("Above Lv 130 Quests:Above Lv 140 Quests:Above Lv 150 Quests:Above Lv 160 Quests:Above Lv 170~190 Quests:Turn in Completed Missions:Cancel")) {
+        
+        // ==========================================
+        // ABOVE LEVEL 130
+        // ==========================================
+        case 1:
+            mes "[Mission Board 130~190]";
+            next;
+            switch(select("Hunt 60 Monsters in ecl_fild01:Hunt 60 Monsters in ba_bath:Hunt 60 Monsters in ba_lib:Hunt 60 Monsters in ba_pw02:Hunt 60 Monsters in ba_pw01:Hunt 60 Monsters in lasa_dun02")) {
+                case 1: callsub L_AssignQuest, 80700, 80734, "ecl_fild01 Hunt", 130; break;
+                case 2: callsub L_AssignQuest, 80701, 80735, "ba_bath Hunt", 130; break;
+                case 3: callsub L_AssignQuest, 80702, 80736, "ba_lib Hunt", 130; break;
+                case 4: callsub L_AssignQuest, 80703, 80737, "ba_pw02 Hunt", 130; break;
+                case 5: callsub L_AssignQuest, 80704, 80738, "ba_pw01 Hunt", 130; break;
+                case 6: callsub L_AssignQuest, 80705, 80739, "lasa_dun02 Hunt", 130; break;
+            }
+            break;
+
+        // ==========================================
+        // ABOVE LEVEL 140
+        // ==========================================
+        case 2:
+            mes "[Mission Board 130~190]";
+            next;
+            switch(select("Hunt 30 Cenere & 30 Antique Book:Hunt 120 Monsters in lasa_dun03:Hunt 120 Monsters in prt_prison:Hunt 120 Monsters in prt_q:Hunt 120 Monsters in rockmi1")) {
+                case 1: callsub L_AssignQuest, 80706, 80740, "Cenere & Antique Book", 140; break;
+                case 2: callsub L_AssignQuest, 80707, 80741, "lasa_dun03 Hunt", 140; break;
+                case 3: callsub L_AssignQuest, 80708, 80742, "prt_prison Hunt", 140; break;
+                case 4: callsub L_AssignQuest, 80709, 80743, "prt_q Hunt", 140; break;
+                case 5: callsub L_AssignQuest, 80710, 80744, "rockmi1 Hunt", 140; break;
+            }
+            break;
+
+        // ==========================================
+        // ABOVE LEVEL 150
+        // ==========================================
+        case 3:
+            mes "[Mission Board 130~190]";
+            next;
+            switch(select("Hunt 30 Wanderer (Nightmare):Hunt 30 Smelly Zombie (un_bunker):Hunt 20 Repair Robot Turbo & 30 Green Cenere:Hunt 40 Big Ben & 40 Neo-Punk:Hunt 160 Monsters in ba_lost")) {
+                case 1: callsub L_AssignQuest, 80711, 80745, "Wanderer (Nightmare)", 150; break;
+                case 2: callsub L_AssignQuest, 80712, 80746, "Smelly Zombie", 150; break;
+                case 3: callsub L_AssignQuest, 80713, 80747, "Repair Robot Turbo & Green Cenere", 150; break;
+                case 4: callsub L_AssignQuest, 80714, 80748, "Big Ben & Neo-Punk", 150; break;
+                case 5: callsub L_AssignQuest, 80715, 80749, "ba_lost Hunt", 150; break;
+            }
+            break;
+
+        // ==========================================
+        // ABOVE LEVEL 160
+        // ==========================================
+        case 4:
+            mes "[Mission Board 130~190]";
+            next;
+            switch(select("Hunt 50x Big Bell:Hunt 40 Grey Goat & 40 Grey Wolf Baby:Hunt 80 Monsters in sp_rudus2:Hunt 50 Recon Robot (ver_eju):Hunt 40 Exploration Rover & 40 Exploration Rover Turbo")) {
+                case 1: callsub L_AssignQuest, 80716, 80750, "Big Bell", 160; break;
+                case 2: callsub L_AssignQuest, 80717, 80751, "Grey Goat & Wolf Baby", 160; break;
+                case 3: callsub L_AssignQuest, 80718, 80752, "sp_rudus2 Hunt", 160; break;
+                case 4: callsub L_AssignQuest, 80719, 80753, "Recon Robot", 160; break;
+                case 5: callsub L_AssignQuest, 80720, 80754, "Exploration Rover Duo", 160; break;
+            }
+            break;
+        // ==========================================
+        // ABOVE LEVEL 170 ~ 190
+        // ==========================================
+        case 5:
+            mes "[Mission Board 130~190]";
+            next;
+            switch(select("Lv170+: 160 Monsters in ba_2whs01:Lv170+: 80 Monsters in oz_dun01:Lv170+: 160 Monsters in sp_rudus3:Lv175+: 160 Monsters in mag_dun03:Lv180+: 160 Monsters in ba_2whs02:Lv180+: 160 Monsters in gl_cas01_:Lv180+: 80 Monsters in gw_fild01:Lv180+: 80 Monsters in gw_fild02:Lv180+: 160 Monsters in ein_dun03:Lv190+: 240 Monsters in odin_past:Lv190+: 240 Monsters in abyss_04:Lv190+: 240 Monsters in ba_pw03")) {
+                case 1:  callsub L_AssignQuest, 80721, 80755, "ba_2whs01 Hunt", 170; break;
+                case 2:  callsub L_AssignQuest, 80722, 80756, "oz_dun01 Hunt", 170; break;
+                case 3:  callsub L_AssignQuest, 80723, 80757, "sp_rudus3 Hunt", 170; break;
+                case 4:  callsub L_AssignQuest, 80724, 80758, "mag_dun03 Hunt", 175; break;
+                case 5:  callsub L_AssignQuest, 80725, 80759, "ba_2whs02 Hunt", 180; break;
+                case 6:  callsub L_AssignQuest, 80726, 80760, "gl_cas01_ Hunt", 180; break;
+                case 7:  callsub L_AssignQuest, 80727, 80761, "gw_fild01 Hunt", 180; break;
+                case 8:  callsub L_AssignQuest, 80728, 80762, "gw_fild02 Hunt", 180; break;
+                case 9:  callsub L_AssignQuest, 80729, 80763, "ein_dun03 Hunt", 180; break;
+                case 10: callsub L_AssignQuest, 80730, 80764, "odin_past Hunt", 190; break;
+                case 11: callsub L_AssignQuest, 80731, 80765, "abyss_04 Hunt", 190; break;
+                case 12: callsub L_AssignQuest, 80732, 80766, "ba_pw03 Hunt", 190; break;
+            }
+            break;
+
+        // ==========================================
+        // TURN IN COMPLETED MISSIONS
+        // ==========================================
+        case 6:
+            mes "[Mission Board 130~190]";
+            mes "Checking your quest progress...";
+            next;
+            
+            // Evaluates quest parameters perfectly across the full 80700 ~ 80732 hunting array range
+            for (.@i = 80700; .@i <= 80732; .@i++) {
+                if (checkquest(.@i, HUNTING) == 2) {
+
+                    // Aligns non-jumping cooldown sequence counters perfectly above hunting upper bound limits
+                    // 80700 maps directly to 80734, up to 80732 mapping to 80766
+                    .@cd_id = .@i + 34;
+
+                    callsub L_RewardQuest, .@i;
+                    setquest .@cd_id;
+                    .@rewarded = 1;
+                }
+            }
+            
+            if (!.@rewarded) {
+                mes "[Mission Board 130~190]";
+                mes "No completed assignments available to process.";
+                close;
+            }
+            
+            mes "[Mission Board 130~190]";
+            mes "Rewards distributed. Cooldown timers applied.";
+            close;
+
+        case 7:
+            close;
+    }
+    end;
+
+// ==========================================
+// SUB-ROUTINES
+// ==========================================
+L_AssignQuest:
+    .@q_id = getarg(0); .@cd_id = getarg(1); .@mob_name\$ = getarg(2); .@min_lv = getarg(3);
+
+    if (BaseLevel < .@min_lv) {
+        mes "[Mission Board 130~190]";
+        mes "You must be at least Base Level " + .@min_lv + " for this mission.";
+        close;
+    }
+    if (checkquest(.@cd_id) == 0 || checkquest(.@cd_id) == 1) {
+        mes "[Mission Board 130~190]";
+        mes "This mission is currently on a 24-hour cooldown lock.";
+        close;
+    }
+    if (checkquest(.@cd_id) == 2) erasequest .@cd_id;
+    if (checkquest(.@q_id) == 0 || checkquest(.@q_id) == 1) {
+        mes "[Mission Board 130~190]";
+        mes "You are already active on this target assignment.";
+        close;
+    }
+
+    setquest .@q_id;
+    mes "[Mission Board 130~190]";
+    mes "Task Confirmed: " + .@mob_name\$ + ". Good luck!";
+    close;
+
+L_RewardQuest:
+    .@q_id = getarg(0);
+    
+    switch(.@q_id) {
+        case 80700: .@b_exp = 1042488; .@j_exp = 2760588; .@coin = 2; break; // ecl_fild01
+        case 80701: .@b_exp = 1163508; .@j_exp = 814463;  .@coin = 2; break; // ba_bath
+        case 80702: .@b_exp = 1700618; .@j_exp = 1190430; .@coin = 2; break; // ba_lib
+        case 80703: .@b_exp = 1685862; .@j_exp = 1180080; .@coin = 2; break; // ba_pw02
+        case 80704: .@b_exp = 1845139; .@j_exp = 1291584; .@coin = 2; break; // ba_pw01
+        case 80705: .@b_exp = 1110729; .@j_exp = 1413414; .@coin = 2; break; // lasa_dun02
+        case 80706: .@b_exp = 2940165; .@j_exp = 3741390; .@coin = 2; break; // Cenere combo
+        case 80707: .@b_exp = 3892320; .@j_exp = 4530780; .@coin = 2; break; // lasa_dun03
+        case 80708: .@b_exp = 3024000; .@j_exp = 3024000; .@coin = 2; break; // prt_prison
+        case 80709: .@b_exp = 3584280; .@j_exp = 2409120; .@coin = 2; break; // prt_q
+        case 80710: .@b_exp = 3154932; .@j_exp = 3178296; .@coin = 2; break; // rockmi1
+        case 80711: .@b_exp = 6092805; .@j_exp = 17482113;.@coin = 2; break; // Wanderer NM
+        case 80712: .@b_exp = 1258659; .@j_exp = 1303554; .@coin = 2; break; // Smelly Zombie
+        case 80713: .@b_exp = 1145250; .@j_exp = 1154700; .@coin = 2; break; // Repair Robot combo
+        case 80714: .@b_exp = 1971508; .@j_exp = 2016352; .@coin = 3; break; // Big Ben combo
+        case 80715: .@b_exp = 25429197;.@j_exp = 17800499;.@coin = 3; break; // ba_lost
+        case 80716: .@b_exp = 7513000; .@j_exp = 8457500; .@coin = 2; break; // Big Bell
+        case 80717: .@b_exp = 13866768;.@j_exp = 9706824; .@coin = 3; break; // Grey Goat combo
+        case 80718: .@b_exp = 13603464;.@j_exp = 9522360; .@coin = 3; break; // sp_rudus2
+        case 80719: .@b_exp = 21257100;.@j_exp = 14880024;.@coin = 2; break; // Recon Robot
+        case 80720: .@b_exp = 12216160;.@j_exp = 16305872;.@coin = 3; break; // Exploration Rover combo
+        case 80721: .@b_exp = 44954533;.@j_exp = 31468133;.@coin = 3; break; // ba_2whs01
+        case 80722: .@b_exp = 28732040;.@j_exp = 20112390;.@coin = 3; break; // oz_dun01
+        case 80723: .@b_exp = 30639280;.@j_exp = 21447552;.@coin = 3; break; // sp_rudus3
+        case 80724: .@b_exp = 43520973;.@j_exp = 30464573;.@coin = 3; break; // mag_dun03
+        case 80725: .@b_exp = 33749488;.@j_exp = 23624560;.@coin = 3; break; // ba_2whs02
+        case 80726: .@b_exp = 35686094;.@j_exp = 24863418;.@coin = 3; break; // gl_cas01_
+        case 80727: .@b_exp = 26550614;.@j_exp = 18585440;.@coin = 3; break; // gw_fild01
+        case 80728: .@b_exp = 26878720;.@j_exp = 18815104;.@coin = 3; break; // gw_fild02
+        case 80729: .@b_exp = 93011586;.@j_exp = 65108094;.@coin = 3; break; // ein_dun03
+        case 80730: .@b_exp = 98882731;.@j_exp = 69217943;.@coin = 4; break; // odin_past
+        case 80731: .@b_exp = 79912332;.@j_exp = 55938546;.@coin = 4; break; // abyss_04
+        case 80732: .@b_exp = 63975339;.@j_exp = 44782794;.@coin = 4; break; // ba_pw03
+    }
+
+    // Dynamic Server Exp Rate scaling (via conf/battle/exp.conf settings)
+    .@b_exp = (.@b_exp * getbattleflag("base_exp_rate")) / 100;
+    .@j_exp = (.@j_exp * getbattleflag("job_exp_rate")) / 100;
+
+    completequest .@q_id;
+    getexp .@b_exp, .@j_exp;
+    getitem 6223, .@coin; // Eden Coin ID: 6223
+    return;
+}
+}

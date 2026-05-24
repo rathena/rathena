@@ -1,0 +1,247 @@
+//============================================================
+// kRO Eden Group Leveling Board (Level 120 ~ 140) - PART 1
+// Complete Version: Odin, Abyss, Thanatos, NW, Bio, Crack, Others
+//============================================================
+
+moc_para01,48,15,0	script	Mission Board 120~140	1121,{
+
+    if (!callfunc("F_HasEdenGroupMark")) {
+        mes "- You need to have an -";
+        mes "- ^4d4dff'Eden Group Mark'^000000 -";
+        mes "- to receive these missions. -";
+        close;
+    }
+
+    if (BaseLevel < 120) {
+        mes "[Mission Board 120~140]";
+        mes "This board contains missions for master adventurers.";
+        mes "You must be at least Base Level 120.";
+        close;
+    }
+
+    mes "[Mission Board 120~140]";
+    mes "Please select a region to view available assignments:";
+    next;
+    
+    switch(select("Odin / Abyss / Thanatos:New World Fields:Nameless & Rachel:Biolab Dungeon:Dimensional Crack & Others:Turn in Completed Missions:Cancel")) {
+        
+        // ==========================================
+        // ODIN, ABYSS & THANATOS
+        // ==========================================
+        case 1:
+            mes "[Mission Board 120~140]";
+            next;
+            switch(select("Hunt 20 Skogul:Hunt 20 Frus:Hunt 5 Blue & 5 Brown Skeggiold:Hunt 30 Green & 30 Red Ferus:Hunt 30 Yellow & 30 Blue Acidus:Hunt 1 Hydrolancer:Hunt 30 Baroness of Retribution:Hunt 30 Lady Solace:Hunt 30 Mistress of Shelter:Hunt 30 Dame of Sentinel")) {
+                case 1: callsub L_AssignQuest, 80500, 80544, "Skogul", 120; break;
+                case 2: callsub L_AssignQuest, 80501, 80545, "Frus", 120; break;
+                case 3: callsub L_AssignQuest, 80502, 80546, "Skeggiold Duo", 120; break;
+                case 4: callsub L_AssignQuest, 80503, 80547, "Ferus Group", 120; break;
+                case 5: callsub L_AssignQuest, 80504, 80548, "Acidus Group", 120; break;
+                case 6: callsub L_AssignQuest, 80505, 80549, "Hydrolancer", 120; break;
+                case 7: callsub L_AssignQuest, 80506, 80550, "Baroness of Retribution", 120; break;
+                case 8: callsub L_AssignQuest, 80507, 80551, "Lady Solace", 120; break;
+                case 9: callsub L_AssignQuest, 80508, 80552, "Mistress of Shelter", 120; break;
+                case 10: callsub L_AssignQuest, 80509, 80553, "Dame of Sentinel", 120; break;
+            }
+            break;
+
+        // ==========================================
+        // NEW WORLD FIELDS
+        // ==========================================
+        case 2:
+            mes "[Mission Board 120~140]";
+            next;
+            switch(select("Hunt 30 Centipede:Hunt 30 Tatacho:Hunt 30 Dolomedes (Lv130+):Hunt 30 Horn Scaraba Spear (Lv130+):Hunt 30 Horn Scaraba Dagger (Lv130+):Hunt 30 Antler Scaraba (Lv130+):Hunt 30 Rake Scaraba (Lv130+):Hunt 15 Fire Condor & 15 Fire Frilldora (Lv140+):Hunt 15 Fire Sandman & 15 Fire Golem (Lv140+)")) {
+                case 1: callsub L_AssignQuest, 80510, 80554, "Centipede", 120; break;
+                case 2: callsub L_AssignQuest, 80511, 80555, "Tatacho", 120; break;
+                case 3: callsub L_AssignQuest, 80512, 80556, "Dolomedes", 130; break;
+                case 4: callsub L_AssignQuest, 80513, 80557, "Horn Scaraba (Spear)", 130; break;
+                case 5: callsub L_AssignQuest, 80514, 80558, "Horn Scaraba (Dagger)", 130; break;
+                case 6: callsub L_AssignQuest, 80515, 80559, "Antler Scaraba", 130; break;
+                case 7: callsub L_AssignQuest, 80516, 80560, "Rake Scaraba", 130; break;
+                case 8: callsub L_AssignQuest, 80517, 80561, "Desert Canyon Duo", 140; break;
+                case 9: callsub L_AssignQuest, 80518, 80562, "Desert Magma Duo", 140; break;
+            }
+            break;
+
+        // ==========================================
+        // NAMELESS ISLAND & RACHEL SANCTUARY
+        // ==========================================
+        case 3:
+            mes "[Mission Board 120~140]";
+            next;
+            switch(select("Hunt 30 Ragged Zombie & 30 Zombie Slaughter:Hunt 30 Banshee:Hunt 20 Necromancer:Hunt 20 Vanberk & 20 Isilla:Hunt 30 Hodremlin:Hunt 20 Agav & 20 Echinio")) {
+                case 1: callsub L_AssignQuest, 80519, 80563, "Nameless Undead Trio", 120; break;
+                case 2: callsub L_AssignQuest, 80520, 80564, "Banshee", 120; break;
+                case 3: callsub L_AssignQuest, 80521, 80565, "Necromancer", 120; break;
+                case 4: callsub L_AssignQuest, 80522, 80566, "Rachel Servants Duo", 120; break;
+                case 5: callsub L_AssignQuest, 80523, 80567, "Hodremlin", 120; break;
+                case 6: callsub L_AssignQuest, 80524, 80568, "Rachel Fanatics Duo", 120; break;
+            }
+            break;
+
+        // ==========================================
+        // BIOLAB DUNGEON (New)
+        // ==========================================
+        case 4:
+            mes "[Mission Board 120~140]";
+            next;
+            switch(select("Hunt 30 Egnigem Cenia (Lv130+):Hunt 30 Armeyer Dinze (Lv130+):Hunt 30 Wickebine Tres (Lv130+):Hunt 30 Kavach Icarus (Lv130+):Hunt 30 Errende Ebecee (Lv130+):Hunt 30 Laurell Weinder (Lv130+):Hunt 2 Cecil Damon (Lv140+):Hunt 2 Kathryne Keyron (Lv140+):Hunt 2 Margaretha Sorin (Lv140+):Hunt 2 Seyren Windsor (Lv140+):Hunt 2 Eremes Guile (Lv140+):Hunt 2 Howard Alt-Eisen (Lv140+)")) {
+                case 1: callsub L_AssignQuest, 80525, 80569, "Egnigem Cenia", 130; break;
+                case 2: callsub L_AssignQuest, 80526, 80570, "Armeyer Dinze", 130; break;
+                case 3: callsub L_AssignQuest, 80527, 80571, "Wickebine Tres", 130; break;
+                case 4: callsub L_AssignQuest, 80528, 80572, "Kavach Icarus", 130; break;
+                case 5: callsub L_AssignQuest, 80529, 80573, "Errende Ebecee", 130; break;
+                case 6: callsub L_AssignQuest, 80530, 80574, "Laurell Weinder", 130; break;
+                case 7: callsub L_AssignQuest, 80531, 80575, "Cecil Damon", 140; break;
+                case 8: callsub L_AssignQuest, 80532, 80576, "Kathryne Keyron", 140; break;
+                case 9: callsub L_AssignQuest, 80533, 80577, "Margaretha Sorin", 140; break;
+                case 10: callsub L_AssignQuest, 80534, 80578, "Seyren Windsor", 140; break;
+                case 11: callsub L_AssignQuest, 80535, 80579, "Eremes Guile", 140; break;
+                case 12: callsub L_AssignQuest, 80536, 80580, "Howard Alt-Eisen", 140; break;
+            }
+            break;
+
+        // ==========================================
+        // DIMENSIONAL CRACK & OTHERS (New)
+        // ==========================================
+        case 5:
+            mes "[Mission Board 120~140]";
+            next;
+            switch(select("Hunt 30 Incarnation of Morroc Valkyrie (Lv140+):Hunt 30 Incarnation of Morroc Mud (Lv140+):Hunt 30 Incarnation of Morroc Excorcist (Lv140+):Hunt 30 Incarnation of Morroc Ghost (Lv140+):Hunt 5 Incubus & 5 Succubus:Hunt 20 Miming (Lv130+):Hunt 20 Little Fatum (Lv130+)")) {
+                case 1: callsub L_AssignQuest, 80537, 80581, "Morroc Valkyrie", 140; break;
+                case 2: callsub L_AssignQuest, 80538, 80582, "Morroc Mud", 140; break;
+                case 3: callsub L_AssignQuest, 80539, 80583, "Morroc Excorcist", 140; break;
+                case 4: callsub L_AssignQuest, 80540, 80584, "Morroc Ghost", 140; break;
+                case 5: callsub L_AssignQuest, 80541, 80585, "Incubus & Succubus", 120; break;
+                case 6: callsub L_AssignQuest, 80542, 80586, "Miming", 130; break;
+                case 7: callsub L_AssignQuest, 80543, 80587, "Little Fatum", 130; break;
+            }
+            break;
+        // ==========================================
+        // TURN IN COMPLETED MISSIONS
+        // ==========================================
+        case 6:
+            mes "[Mission Board 120~140]";
+            mes "Checking your quest progress...";
+            next;
+            
+            // Loop array expanded smoothly across the full 80500 ~ 80543 hunting sequence boundaries
+            for (.@i = 80500; .@i <= 80543; .@i++) {
+                if (checkquest(.@i, HUNTING) == 2) {
+
+                    // Aligns non-jumping cooldown sequence counters perfectly above hunting upper bound limits
+                    // 80500 maps directly to 80544, up to 80543 mapping to 80587
+                    .@cd_id = .@i + 44;
+
+                    callsub L_RewardQuest, .@i;
+                    setquest .@cd_id;
+                    .@rewarded = 1;
+                }
+            }
+            
+            if (!.@rewarded) {
+                mes "[Mission Board 120~140]";
+                mes "No completed assignments available to process.";
+                close;
+            }
+            
+            mes "[Mission Board 120~140]";
+            mes "Rewards distributed. Cooldown timers applied.";
+            close;
+
+        case 7:
+            close;
+    }
+    end;
+
+// ==========================================
+// SUB-ROUTINES
+// ==========================================
+L_AssignQuest:
+    .@q_id = getarg(0); .@cd_id = getarg(1); .@mob_name\$ = getarg(2); .@min_lv = getarg(3);
+
+    if (BaseLevel < .@min_lv) {
+        mes "[Mission Board 120~140]";
+        mes "You must be at least Base Level " + .@min_lv + " for this mission.";
+        close;
+    }
+    if (checkquest(.@cd_id) == 0 || checkquest(.@cd_id) == 1) {
+        mes "[Mission Board 120~140]";
+        mes "This mission is currently on a 24-hour cooldown lock.";
+        close;
+    }
+    if (checkquest(.@cd_id) == 2) erasequest .@cd_id;
+    if (checkquest(.@q_id) == 0 || checkquest(.@q_id) == 1) {
+        mes "[Mission Board 120~140]";
+        mes "You are already active on this target assignment.";
+        close;
+    }
+
+    setquest .@q_id;
+    mes "[Mission Board 120~140]";
+    mes "Task Confirmed: " + .@mob_name\$ + ". Good luck!";
+    close;
+
+L_RewardQuest:
+    .@q_id = getarg(0);
+    
+    switch(.@q_id) {
+        case 80500: .@b_exp = 600000;  .@j_exp = 600000;  .@coin = 1; break; // Skogul
+        case 80501: .@b_exp = 600000;  .@j_exp = 600000;  .@coin = 1; break; // Frus
+        case 80502: .@b_exp = 600000;  .@j_exp = 600000;  .@coin = 2; break; // Skeggiold Duo
+        case 80503: .@b_exp = 500000;  .@j_exp = 500000;  .@coin = 2; break; // Green & Red Ferus
+        case 80504: .@b_exp = 500000;  .@j_exp = 500000;  .@coin = 2; break; // Yellow & Blue Acidus
+        case 80505: .@b_exp = 500000;  .@j_exp = 500000;  .@coin = 1; break; // Hydrolancer
+        case 80506: .@b_exp = 600000;  .@j_exp = 600000;  .@coin = 1; break; // Baroness
+        case 80507: .@b_exp = 600000;  .@j_exp = 600000;  .@coin = 1; break; // Lady Solace
+        case 80508: .@b_exp = 600000;  .@j_exp = 600000;  .@coin = 1; break; // Mistress of Shelter
+        case 80509: .@b_exp = 600000;  .@j_exp = 600000;  .@coin = 1; break; // Dame of Sentinel
+        case 80510: .@b_exp = 600000;  .@j_exp = 600000;  .@coin = 1; break; // Centipede
+        case 80511: .@b_exp = 600000;  .@j_exp = 600000;  .@coin = 1; break; // Tatacho
+        case 80512: .@b_exp = 800000;  .@j_exp = 800000;  .@coin = 1; break; // Dolomedes
+        case 80513: .@b_exp = 800000;  .@j_exp = 800000;  .@coin = 1; break; // Horn Scaraba (Spear)
+        case 80514: .@b_exp = 800000;  .@j_exp = 800000;  .@coin = 1; break; // Horn Scaraba (Dagger)
+        case 80515: .@b_exp = 800000;  .@j_exp = 800000;  .@coin = 1; break; // Antler Scaraba
+        case 80516: .@b_exp = 800000;  .@j_exp = 800000;  .@coin = 1; break; // Rake Scaraba
+        case 80517: .@b_exp = 1000000; .@j_exp = 1000000; .@coin = 1; break; // Desert Canyon Duo
+        case 80518: .@b_exp = 1000000; .@j_exp = 1000000; .@coin = 1; break; // Desert Magma Duo
+        case 80519: .@b_exp = 1000000; .@j_exp = 600000;  .@coin = 2; break; // Ragged Zombie & Slaughter
+        case 80520: .@b_exp = 500000;  .@j_exp = 300000;  .@coin = 1; break; // Banshee
+        case 80521: .@b_exp = 600000;  .@j_exp = 500000;  .@coin = 1; break; // Necromancer
+        case 80522: .@b_exp = 500000;  .@j_exp = 500000;  .@coin = 1; break; // Vanberk & Isilla
+        case 80523: .@b_exp = 500000;  .@j_exp = 500000;  .@coin = 1; break; // Hodremlin
+        case 80524: .@b_exp = 500000;  .@j_exp = 500000;  .@coin = 1; break; // Agav & Echio
+        // Biolab Dungeon (New)
+        case 80525: .@b_exp = 850000;  .@j_exp = 850000;  .@coin = 1; break; // Egnigem Cenia
+        case 80526: .@b_exp = 850000;  .@j_exp = 850000;  .@coin = 1; break; // Armeyer Dinze
+        case 80527: .@b_exp = 850000;  .@j_exp = 850000;  .@coin = 1; break; // Wickebine Tres
+        case 80528: .@b_exp = 850000;  .@j_exp = 850000;  .@coin = 1; break; // Kavach Icarus
+        case 80529: .@b_exp = 850000;  .@j_exp = 850000;  .@coin = 1; break; // Errende Ebecee
+        case 80530: .@b_exp = 850000;  .@j_exp = 850000;  .@coin = 1; break; // Laurell Weinder
+        case 80531: .@b_exp = 1000000; .@j_exp = 1000000; .@coin = 1; break; // Cecil Damon
+        case 80532: .@b_exp = 1000000; .@j_exp = 1000000; .@coin = 1; break; // Kathryne Keyron
+        case 80533: .@b_exp = 1000000; .@j_exp = 1000000; .@coin = 1; break; // Margaretha Sorin
+        case 80534: .@b_exp = 1000000; .@j_exp = 1000000; .@coin = 1; break; // Seyren Windsor
+        case 80535: .@b_exp = 1000000; .@j_exp = 1000000; .@coin = 1; break; // Eremes Guile
+        case 80536: .@b_exp = 1000000; .@j_exp = 1000000; .@coin = 1; break; // Howard Alt-Eisen
+        // Dimensional Crack (New)
+        case 80537: .@b_exp = 800000;  .@j_exp = 800000;  .@coin = 1; break; // Morroc Valkyrie
+        case 80538: .@b_exp = 800000;  .@j_exp = 800000;  .@coin = 1; break; // Morroc Mud
+        case 80539: .@b_exp = 800000;  .@j_exp = 800000;  .@coin = 1; break; // Morroc Excorcist
+        case 80540: .@b_exp = 800000;  .@j_exp = 800000;  .@coin = 1; break; // Morroc Ghost
+        // Other (New)
+        case 80541: .@b_exp = 400000;  .@j_exp = 400000;  .@coin = 1; break; // Incubus & Succubus
+        case 80542: .@b_exp = 850000;  .@j_exp = 850000;  .@coin = 1; break; // Miming
+        case 80543: .@b_exp = 850000;  .@j_exp = 850000;  .@coin = 1; break; // Little Fatum
+    }
+
+    .@b_exp = (.@b_exp * getbattleflag("base_exp_rate")) / 100;
+    .@j_exp = (.@j_exp * getbattleflag("job_exp_rate")) / 100;
+
+    completequest .@q_id;
+    getexp .@b_exp, .@j_exp;
+    getitem 6223, .@coin; // Eden Coin ID: 6223
+    return;
+}
+}

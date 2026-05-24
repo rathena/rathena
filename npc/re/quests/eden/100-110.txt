@@ -1,0 +1,238 @@
+//============================================================
+// kRO Eden Group Leveling Board (Level 100 ~ 110) - PART 1
+// Complete Version: Nogg, GH, New World, Thanatos, Juperos
+//============================================================
+
+moc_para01,46,15,0	script	Mission Board 100~110	1121,{
+
+    if (!callfunc("F_HasEdenGroupMark")) {
+        mes "- You need to have an -";
+        mes "- ^4d4dff'Eden Group Mark'^000000 -";
+        mes "- to receive these missions. -";
+        close;
+    }
+
+    if (BaseLevel < 100) {
+        mes "[Mission Board 100~110]";
+        mes "This board contains missions for expert adventurers.";
+        mes "You must be at least Base Level 100.";
+        close;
+    }
+
+    mes "[Mission Board 100~110]";
+    mes "Please select a region to view available assignments:";
+    next;
+    
+    switch(select("Nogg Road:Glast Heim:New World:Thanatos Tower:Juperos Dungeon:Turn in Completed Missions:Cancel")) {
+        
+        // ==========================================
+        // NOGG ROAD
+        // ==========================================
+        case 1:
+            mes "[Mission Board 100~110]";
+            next;
+            switch(select("Hunt 30 Nightmare Terror:Hunt 30 Ground & 30 Sky Deleter:Hunt 10 Lava")) {
+                case 1: callsub L_AssignQuest, 80300, 80331, "Nightmare Terror", 100; break;
+                case 2: callsub L_AssignQuest, 80301, 80332, "Deleter Duo", 100; break;
+                case 3: callsub L_AssignQuest, 80302, 80333, "Lava Hunt", 100; break;
+            }
+            break;
+
+        // ==========================================
+        // GLAST HEIM
+        // ==========================================
+        case 2:
+            mes "[Mission Board 100~110]";
+            next;
+            switch(select("Hunt 30 Carat:Hunt 30 Arclouse:Hunt 30 Anolian:Hunt 30 Sting:Hunt 30 Majorous:Hunt 30 Raydric (Lv110+):Hunt 30 Khalitzburg (Lv110+):Hunt 30 Wanderer (Lv110+):Hunt 10 Abysmal Knight (Lv110+)")) {
+                case 1: callsub L_AssignQuest, 80303, 80334, "Carat", 100; break;
+                case 2: callsub L_AssignQuest, 80304, 80335, "Arclouse", 100; break;
+                case 3: callsub L_AssignQuest, 80305, 80336, "Anolian", 100; break;
+                case 4: callsub L_AssignQuest, 80306, 80337, "Sting", 100; break;
+                case 5: callsub L_AssignQuest, 80307, 80338, "Majorous", 100; break;
+                case 6: callsub L_AssignQuest, 80308, 80339, "Raydric", 110; break;
+                case 7: callsub L_AssignQuest, 80309, 80340, "Khalitzburg", 110; break;
+                case 8: callsub L_AssignQuest, 80310, 80341, "Wanderer", 110; break;
+                case 9: callsub L_AssignQuest, 80311, 80342, "Abysmal Knight", 110; break;
+            }
+            break;
+
+        // ==========================================
+        // NEW WORLD
+        // ==========================================
+        case 3:
+            mes "[Mission Board 100~110]";
+            next;
+            switch(select("Hunt 30 Pinguicula:Hunt 30 Luciola Vespa:Hunt 1 Tendrillion:Hunt 30 Dark Pinguicula (Lv110+):Hunt 30 Nepenthes (Lv110+):Hunt 30 Naga (Lv110+):Hunt 30 Cornus (Lv110+):Hunt 20 Centipede Larva (Lv110+):Hunt 20 Mystic Horn Item Delivery (Lv110+)")) {
+                case 1: callsub L_AssignQuest, 80312, 80343, "Pinguicula", 100; break;
+                case 2: callsub L_AssignQuest, 80313, 80344, "Luciola Vespa", 100; break;
+                case 3: callsub L_AssignQuest, 80314, 80345, "Tendrillion", 100; break;
+                case 4: callsub L_AssignQuest, 80315, 80346, "Dark Pinguicula", 110; break;
+                case 5: callsub L_AssignQuest, 80316, 80347, "Nepenthes", 110; break;
+                case 6: callsub L_AssignQuest, 80317, 80348, "Naga", 110; break;
+                case 7: callsub L_AssignQuest, 80318, 80349, "Cornus", 110; break;
+                case 8: callsub L_AssignQuest, 80319, 80350, "Centipede Larva", 110; break;
+                case 9: callsub L_AssignQuest, 80320, 80351, "Mystic Horn Delivery", 110; break;
+            }
+            break;
+
+        // ==========================================
+        // THANATOS TOWER (New)
+        // ==========================================
+        case 4:
+            mes "[Mission Board 100~110]";
+            next;
+            switch(select("Hunt 30 Ancient Mimic (Lv110+):Hunt 30 Deathword (Lv110+):Hunt 20 Owl Baron (Lv110+):Hunt 10 Bloody Page Delivery (Lv110+):Hunt 10 Worn-out Magic Scroll Delivery (Lv110+):Hunt 30 Tattered Clothes Delivery (Lv110+)")) {
+                case 1: callsub L_AssignQuest, 80321, 80352, "Ancient Mimic", 110; break;
+                case 2: callsub L_AssignQuest, 80322, 80353, "Deathword", 110; break;
+                case 3: callsub L_AssignQuest, 80323, 80354, "Owl Baron", 110; break;
+                case 4: callsub L_AssignQuest, 80324, 80355, "Bloody Page Delivery", 110; break;
+                case 5: callsub L_AssignQuest, 80325, 80356, "Worn-out Magic Scroll Delivery", 110; break;
+                case 6: callsub L_AssignQuest, 80326, 80357, "Tattered Clothes Delivery", 110; break;
+            }
+            break;
+
+        // ==========================================
+        // JUPEROS (New)
+        // ==========================================
+        case 5:
+            mes "[Mission Board 100~110]";
+            next;
+            switch(select("Hunt 20 Orange & 20 Green Venatu (Lv110+):Hunt 20 Red & 20 Blue Venatu (Lv110+):Hunt 10 Blue & 10 Orange Dimik (Lv110+):Hunt 10 Green & 10 Red Dimik (Lv110+)")) {
+                case 1: callsub L_AssignQuest, 80327, 80358, "Orange & Green Venatu", 110; break;
+                case 2: callsub L_AssignQuest, 80328, 80359, "Red & Blue Venatu", 110; break;
+                case 3: callsub L_AssignQuest, 80329, 80360, "Blue & Orange Dimik", 110; break;
+                case 4: callsub L_AssignQuest, 80330, 80361, "Green & Red Dimik", 110; break;
+            }
+            break;
+        // ==========================================
+        // TURN IN COMPLETED MISSIONS
+        // ==========================================
+        case 6:
+            mes "[Mission Board 100~110]";
+            mes "Checking your quest progress...";
+            next;
+            
+            // Loop tracks tightly across the entire 80300 ~ 80330 spectrum
+            for (.@i = 80300; .@i <= 80330; .@i++) {
+                if (checkquest(.@i, HUNTING) == 2) {
+                    
+                    // Inventory Validation Filters
+                    if (.@i == 80302 && countitem(7099) < 10) goto L_ItemFail; // Lava
+                    if (.@i == 80320 && countitem(6215) < 20) goto L_ItemFail; // Mystic Horn
+                    if (.@i == 80324 && countitem(7441) < 10) goto L_ItemFail; // Bloody Page ID: 7441
+                    if (.@i == 80325 && countitem(7442) < 10) goto L_ItemFail; // Worn-out Magic Scroll ID: 7442
+                    if (.@i == 80326 && countitem(7114) < 30) goto L_ItemFail; // Tattered Clothes ID: 7114
+
+                    // Item Deletion Execution
+                    if (.@i == 80302) delitem 7099, 10;
+                    if (.@i == 80320) delitem 6215, 20;
+                    if (.@i == 80324) delitem 7441, 10;
+                    if (.@i == 80325) delitem 7442, 10;
+                    if (.@i == 80326) delitem 7114, 30;
+
+                    // Perfect calculation modifier to link sequential 24H cooldowns (80331 ~ 80361)
+                    .@cd_id = .@i + 31;
+
+                    callsub L_RewardQuest, .@i;
+                    setquest .@cd_id;
+                    .@rewarded = 1;
+                }
+            }
+            
+            if (!.@rewarded) {
+                mes "[Mission Board 100~110]";
+                mes "No completed assignments available to process.";
+                close;
+            }
+            
+            mes "[Mission Board 100~110]";
+            mes "Rewards distributed. Cooldown timers applied.";
+            close;
+
+        case 7:
+            close;
+    }
+    end;
+
+L_ItemFail:
+    mes "^ff0000[Turn-in Failed]^000000";
+    mes "You fulfilled the hunting numbers but you lack the auxiliary required item pieces.";
+    close;
+
+// ==========================================
+// SUB-ROUTINES
+// ==========================================
+L_AssignQuest:
+    .@q_id = getarg(0); .@cd_id = getarg(1); .@mob_name\$ = getarg(2); .@min_lv = getarg(3);
+
+    if (BaseLevel < .@min_lv) {
+        mes "[Mission Board 100~110]";
+        mes "You must be at least Base Level " + .@min_lv + " for this mission.";
+        close;
+    }
+    if (checkquest(.@cd_id) == 0 || checkquest(.@cd_id) == 1) {
+        mes "[Mission Board 100~110]";
+        mes "This mission is currently on a 24-hour cooldown lock.";
+        close;
+    }
+    if (checkquest(.@cd_id) == 2) erasequest .@cd_id;
+    if (checkquest(.@q_id) == 0 || checkquest(.@q_id) == 1) {
+        mes "[Mission Board 100~110]";
+        mes "You are already active on this target assignment.";
+        close;
+    }
+
+    setquest .@q_id;
+    mes "[Mission Board 100~110]";
+    mes "Task Confirmed: " + .@mob_name\$ + ". Good luck!";
+    close;
+
+L_RewardQuest:
+    .@q_id = getarg(0);
+    
+    switch(.@q_id) {
+        case 80300: .@b_exp = 160000; .@j_exp = 160000; .@coin = 1; break; // Nightmare Terror
+        case 80301: .@b_exp = 160000; .@j_exp = 160000; .@coin = 2; break; // Deleter Duo
+        case 80302: .@b_exp = 160000; .@j_exp = 160000; .@coin = 1; break; // Lava Collection
+        case 80303: .@b_exp = 160000; .@j_exp = 160000; .@coin = 1; break; // Carat
+        case 80304: .@b_exp = 160000; .@j_exp = 160000; .@coin = 1; break; // Arclouse
+        case 80305: .@b_exp = 200000; .@j_exp = 200000; .@coin = 1; break; // Anolian
+        case 80306: .@b_exp = 200000; .@j_exp = 200000; .@coin = 1; break; // Sting
+        case 80307: .@b_exp = 260000; .@j_exp = 260000; .@coin = 1; break; // Majorous
+        case 80308: .@b_exp = 300000; .@j_exp = 300000; .@coin = 1; break; // Raydric
+        case 80309: .@b_exp = 300000; .@j_exp = 300000; .@coin = 1; break; // Khalitzburg
+        case 80310: .@b_exp = 300000; .@j_exp = 300000; .@coin = 1; break; // Wanderer
+        case 80311: .@b_exp = 300000; .@j_exp = 300000; .@coin = 1; break; // Abysmal Knight
+        case 80312: .@b_exp = 160000; .@j_exp = 160000; .@coin = 1; break; // Pinguicula
+        case 80313: .@b_exp = 200000; .@j_exp = 200000; .@coin = 1; break; // Luciola Vespa
+        case 80314: .@b_exp = 260000; .@j_exp = 260000; .@coin = 1; break; // Tendrillion
+        case 80315: .@b_exp = 300000; .@j_exp = 300000; .@coin = 1; break; // Dark Pinguicula
+        case 80316: .@b_exp = 300000; .@j_exp = 300000; .@coin = 1; break; // Nepenthes
+        case 80317: .@b_exp = 300000; .@j_exp = 300000; .@coin = 1; break; // Naga
+        case 80318: .@b_exp = 300000; .@j_exp = 300000; .@coin = 1; break; // Cornus
+        case 80319: .@b_exp = 300000; .@j_exp = 300000; .@coin = 1; break; // Centipede Larva
+        case 80320: .@b_exp = 300000; .@j_exp = 300000; .@coin = 1; break; // Mystic Horn Delivery
+        // Thanatos Tower (New Rewards)
+        case 80321: .@b_exp = 400000; .@j_exp = 400000; .@coin = 1; break; // Ancient Mimic
+        case 80322: .@b_exp = 400000; .@j_exp = 400000; .@coin = 1; break; // Deathword
+        case 80323: .@b_exp = 500000; .@j_exp = 500000; .@coin = 1; break; // Owl Baron
+        case 80324: .@b_exp = 400000; .@j_exp = 400000; .@coin = 1; break; // Bloody Page Delivery
+        case 80325: .@b_exp = 400000; .@j_exp = 400000; .@coin = 1; break; // Worn-out Scroll Delivery
+        case 80326: .@b_exp = 400000; .@j_exp = 400000; .@coin = 1; break; // Tattered Clothes Delivery
+        // Juperos Dungeon (New Rewards)
+        case 80327: .@b_exp = 300000; .@j_exp = 250000; .@coin = 1; break; // Orange & Green Venatu
+        case 80328: .@b_exp = 300000; .@j_exp = 250000; .@coin = 1; break; // Red & Blue Venatu
+        case 80329: .@b_exp = 300000; .@j_exp = 250000; .@coin = 1; break; // Blue & Orange Dimik
+        case 80330: .@b_exp = 300000; .@j_exp = 250000; .@coin = 1; break; // Green & Red Dimik
+    }
+
+    .@b_exp = (.@b_exp * getbattleflag("base_exp_rate")) / 100;
+    .@j_exp = (.@j_exp * getbattleflag("job_exp_rate")) / 100;
+
+    completequest .@q_id;
+    getexp .@b_exp, .@j_exp;
+    getitem 6223, .@coin; // Eden Coin ID: 6223
+    return;
+}
+}
