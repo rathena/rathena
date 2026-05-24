@@ -179,4 +179,3 @@ L_RewardQuest:
     getitem 6223, .@coin; // Eden Coin ID: 6223
     return;
 }
-}
