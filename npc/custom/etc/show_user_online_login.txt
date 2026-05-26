@@ -1,0 +1,5 @@
+-	script	ShowUserOnlineLogin	-1,{
+OnPCLoginEvent:
+	announce "Player Online : "+ getusers(1) +" People",0;
+end;
+}
