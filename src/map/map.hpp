@@ -608,6 +608,7 @@ enum _look {
 	LOOK_ROBE,
 	// LOOK_FLOOR,	// TODO : fix me!! offcial use this ?
 	LOOK_BODY2,
+	LOOK_GENDER,
 	LOOK_MAX
 };
 
