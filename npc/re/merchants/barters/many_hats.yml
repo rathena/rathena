@@ -1,0 +1,1762 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2022 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Barter Database
+###########################################################################
+#
+# Barter Settings
+#
+###########################################################################
+#  - Name               NPC name.
+#    Map                Map name. (Default: not on a map)
+#    X                  Map x coordinate. (Default: 0)
+#    Y                  Map y coordinate. (Default: 0)
+#    Direction          Direction the NPC is looking. (Default: North)
+#    Sprite             Sprite name of the NPC. (Default: FakeNpc)
+#    Items:             List of sold items.
+#      - Index          Index of the item inside the shop. (0-...)
+#                       Maximum index depends on client.
+#        Item           Aegis name of the item.
+#        Stock          Amount of item in stock. 0 means unlimited. (Default: 0)
+#        Zeny           Cost of them item in Zeny. (Default: 0)
+#        Refine         Refine level of the item. (Default: 0)
+#        RequiredItems: List of required items (Optional)
+#          - Index      Index of the required item. (0-4)
+#            Item       Aegis name of required item.
+#            Amount     Amount of required item. (Default: 1)
+#            Refine     Refine level of required item. (Default: 0)
+###########################################################################
+
+Header:
+  Type: BARTER_DB
+  Version: 2
+
+Body:
+###########################################################################
+##= Cachua Coupon Exchanges
+###########################################################################
+  - Name: CachuaCoupon01
+    Items:
+      - Index: 0
+        Item: S_Ignition_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 1
+        Item: S_W_Breath_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 2
+        Item: S_F_Breath_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 3
+        Item: S_Sonic_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 4
+        Item: S_Strain_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 5
+        Item: S_Jack_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 6
+        Item: S_Chain_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 7
+        Item: S_Crimson_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 8
+        Item: S_Vulcan_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 9
+        Item: S_Boomerang_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 10
+        Item: S_Arms_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 11
+        Item: S_Tornado_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 12
+        Item: S_Duplelight_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 13
+        Item: S_Magnus_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 14
+        Item: S_Adoramus_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 15
+        Item: S_Judex_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 16
+        Item: S_Rolling_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 17
+        Item: S_Ripper_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 18
+        Item: S_Slash_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 19
+        Item: S_Katar_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 20
+        Item: S_Shooting_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 21
+        Item: S_Arrow_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 22
+        Item: S_Aimed_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 23
+        Item: S_Cluster_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+  - Name: CachuaCoupon02
+    Items:
+      - Index: 0
+        Item: S_Banish_Cannon_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 1
+        Item: S_Brand_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 2
+        Item: S_Genesis_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 3
+        Item: S_Chain_Press_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 4
+        Item: S_Grave_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 5
+        Item: S_Dust_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 6
+        Item: S_Varetyr_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 7
+        Item: S_Psychic_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 8
+        Item: S_Spore_Bomb_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 9
+        Item: S_Cannon_Cart_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 10
+        Item: S_Crazy_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 11
+        Item: S_Cart_Tornado_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 12
+        Item: S_Knucklearrow_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 13
+        Item: S_Skynetblow_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 14
+        Item: S_Rampage_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 15
+        Item: S_TigerCannon_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 16
+        Item: S_Menace_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 17
+        Item: S_Shadowspell_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 18
+        Item: S_Triangle_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 19
+        Item: S_Paint_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 20
+        Item: S_Rainstorm_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 21
+        Item: S_Metalic_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 22
+        Item: S_Arrowvulcan_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 23
+        Item: S_Reverberation_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+  - Name: CachuaCoupon03
+    Items:
+      - Index: 0
+        Item: S_Moonlight_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 1
+        Item: S_Sunshine_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 2
+        Item: S_Stardust_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 3
+        Item: S_S_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 4
+        Item: S_Evilcurse_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 5
+        Item: S_Syuriken_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 6
+        Item: S_Kunai_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 7
+        Item: S_Huusouka_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 8
+        Item: S_Kamaenraku_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 9
+        Item: S_God_Hammer_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 10
+        Item: S_Shatter_Buster_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 11
+        Item: S_Tail_Dragon_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 12
+        Item: S_Trip_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 13
+        Item: S_Flare_Dance_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 14
+        Item: S_Super_Magic_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 15
+        Item: S_Super_Power_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 16
+        Item: S_Silvervine_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 17
+        Item: S_Catnip_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 18
+        Item: S_SavageRabbit_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 19
+        Item: S_Pickyrush_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+  - Name: CachuaCoupon04
+    Items:
+      - Index: 0
+        Item: S_RuneKnight_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 30
+      - Index: 1
+        Item: S_RoyalGuard_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 30
+      - Index: 2
+        Item: S_Warlock_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 30
+      - Index: 3
+        Item: S_Sorcerer_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 30
+      - Index: 4
+        Item: S_Mechanic_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 30
+      - Index: 5
+        Item: S_Generic_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 30
+      - Index: 6
+        Item: S_ArchBishop_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 30
+      - Index: 7
+        Item: S_Sura_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 30
+      - Index: 8
+        Item: S_GuillotineCross_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 30
+      - Index: 9
+        Item: S_ShadowChaser_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 30
+      - Index: 10
+        Item: S_Ranger_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 30
+      - Index: 11
+        Item: S_Wanderer_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 30
+      - Index: 12
+        Item: S_Minstrel_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 30
+      - Index: 13
+        Item: S_Star_Emperor_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 20
+      - Index: 14
+        Item: S_Soul_Reaper_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 20
+      - Index: 15
+        Item: S_Kagerou_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 20
+      - Index: 16
+        Item: S_Oboro_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 20
+      - Index: 17
+        Item: S_Rebellion_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 20
+      - Index: 18
+        Item: S_SuperNovice_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 10
+      - Index: 19
+        Item: S_Doram_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 40
+  - Name: CachuaCoupon05
+    Items:
+      - Index: 0
+        Item: S_Mammoth_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 40
+      - Index: 1
+        Item: S_Gemstone_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 40
+      - Index: 2
+        Item: S_Pene1_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 35
+      - Index: 3
+        Item: S_Pene2_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 35
+      - Index: 4
+        Item: S_Temp1_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 35
+      - Index: 5
+        Item: S_Temp2_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 35
+  - Name: CachuaCoupon06
+    Items:
+      - Index: 0
+        Item: Thanos_Refine_Hammer
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 20
+      - Index: 1
+        Item: Thanos_Upgrade_Box
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 30
+      - Index: 2
+        Item: Hero_Weapon_Up_Box_1
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 100
+      - Index: 3
+        Item: Hero_Weapon_Up_Box_2
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 100
+      - Index: 4
+        Item: Hero_Weapon_Up_Box_3
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 100
+      - Index: 5
+        Item: Hero_Weapon_Up_Box_4
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 100
+      - Index: 6
+        Item: Hero_Weapon_Up_Box_5
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 100
+      - Index: 7
+        Item: Hero_Weapon_Up_Box_6
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 100
+      - Index: 8
+        Item: Adulter_Weapon_Up_Box
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 100
+      - Index: 9
+        Item: Hero_Weapon_Hammer_1
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 50
+      - Index: 10
+        Item: Hero_Weapon_Hammer_2
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 50
+      - Index: 11
+        Item: Hero_Weapon_Hammer_3
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 50
+      - Index: 12
+        Item: Hero_Weapon_Hammer_4
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 50
+      - Index: 13
+        Item: Hero_Weapon_Hammer_5
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 50
+      - Index: 14
+        Item: Hero_Weapon_Hammer_6
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 50
+      # - Index: 15
+        # Item: OS_Helm_Hammer
+        # RequiredItems:
+          # - Index: 0
+            # Item: Cachua_Coupon
+            # Amount: 50
+      # - Index: 16
+        # Item: OS_Weapon_Hammer
+        # RequiredItems:
+          # - Index: 0
+            # Item: Cachua_Coupon
+            # Amount: 50
+      - Index: 17
+        Item: Poenitentia_Hammer
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 50
+      - Index: 18
+        Item: Barmund_Hammer
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 50
+      - Index: 19
+        Item: Special_Hat_Hammer
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 50
+      - Index: 20
+        Item: Vivatus_Weapon_Hammer
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 50
+      - Index: 21
+        Item: Bio_Helm_Refine_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 75
+      - Index: 22
+        Item: Circlet_Refine_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 75
+      - Index: 23
+        Item: Bio_Weapon_Refine_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 75
+      - Index: 24
+        Item: Auto_Armor_Refine_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 75
+      - Index: 25
+        Item: Old_Refine_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 75
+      - Index: 26
+        Item: Geffen_Refine_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 75
+      - Index: 27
+        Item: Temporal_Refine_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 75
+      - Index: 28
+        Item: OS_Weapon_Refine_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 75
+      - Index: 29
+        Item: Racecap_Refine_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 75
+      - Index: 30
+        Item: Blacksmith_Bless_Box_3
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 20
+      - Index: 31
+        Item: Shadow_Hammer_Box_3
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 20
+      - Index: 32
+        Item: Sillit_Pong_Box
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 200
+      - Index: 33
+        Item: Shadow_Exchange_Ticket
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 50
+      # - Index: 34
+        # Item: aegis_101399
+        # RequiredItems:
+          # - Index: 0
+            # Item: Cachua_Coupon
+            # Amount: 100
+  - Name: CachuaCoupon07
+    Items:
+      - Index: 0
+        Item: SLD_Card_Recipe
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 50
+      - Index: 1
+        Item: FullPeneShadow_Mix
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 75
+      - Index: 2
+        Item: FullTempShadow_Mix
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 75
+      - Index: 3
+        Item: Mammoth_Mix
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 75
+      - Index: 4
+        Item: True_GemShadow_Mix
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 75
+      - Index: 5
+        Item: MajorAutoSpell_Mix
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 75
+      - Index: 6
+        Item: Hasty_Mix
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 75
+      - Index: 7
+        Item: PhysicalShadow_Mix
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 75
+      - Index: 8
+        Item: PerfectSize_Mix
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 75
+      - Index: 9
+        Item: EXPShadow_Mix
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 75
+      - Index: 10
+        Item: MagicalShadow_Mix
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 75
+      - Index: 11
+        Item: InfinityShadow_Mix
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 75
+      - Index: 12
+        Item: R_BearersShadow_Mix
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 75
+      - Index: 13
+        Item: M_BlitzShadow_Mix
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 75
+      - Index: 14
+        Item: AbsorbShadow_Mix
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 75
+      - Index: 15
+        Item: ReloadShadow_Mix
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 75
+      - Index: 16
+        Item: SpellCasterShadow_Mix
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 75
+  - Name: CachuaCoupon08
+    Items:
+      - Index: 0
+        Item: MajorAutoSpell_Up
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 10
+      - Index: 1
+        Item: Hasty_Up
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 10
+      - Index: 2
+        Item: PhysicalShadow_Up
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 10
+      - Index: 3
+        Item: PerfectSize_Up
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 10
+      - Index: 4
+        Item: True_GemShadow_Up
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 10
+      - Index: 5
+        Item: EXPShadow_Up
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 10
+      - Index: 6
+        Item: MagicalShadow_Up
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 10
+      - Index: 7
+        Item: InfinityShadow_Up
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 10
+      - Index: 8
+        Item: R_Bearers_Shadow_Up
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 10
+      - Index: 9
+        Item: M_Blitz_Shadow_Up
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 10
+      - Index: 10
+        Item: Absorb_Shadow_Up
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 10
+      - Index: 11
+        Item: Mammoth_Shadow_Up
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 10
+      - Index: 12
+        Item: FullPenest_Shadow_Up
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 10
+      - Index: 13
+        Item: Reload_Shadow_Up
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 10
+      - Index: 14
+        Item: SpellCaster_Shadow_Up
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 10
+      - Index: 15
+        Item: Ex_Status_Shadow_Up
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 10
+  - Name: barter_mall_coupon_1
+    Items:
+      - Index: 0
+        Item: FateSin_Boots_CD
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_FateSinBoots
+      - Index: 1
+        Item: FateSin_Boots_IQ
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_FateSinBoots
+      - Index: 2
+        Item: FateSin_Boots_SOA
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_FateSinBoots
+      - Index: 3
+        Item: FateSin_Boots_BO
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_FateSinBoots
+      - Index: 4
+        Item: FateSin_Boots_DK
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_FateSinBoots
+      - Index: 5
+        Item: FateSin_Boots_SH
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_FateSinBoots
+      - Index: 6
+        Item: FateSin_Boots_EM
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_FateSinBoots
+      - Index: 7
+        Item: FateSin_Boots_WH
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_FateSinBoots
+      - Index: 8
+        Item: FateSin_Boots_SKE
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_FateSinBoots
+      - Index: 9
+        Item: FateSin_Boots_IG
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_FateSinBoots
+      - Index: 10
+        Item: FateSin_Boots_AG
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_FateSinBoots
+      - Index: 11
+        Item: FateSin_Boots_NW
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_FateSinBoots
+      - Index: 12
+        Item: FateSin_Boots_MT
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_FateSinBoots
+      - Index: 13
+        Item: FateSin_Boots_SHC
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_FateSinBoots
+      - Index: 14
+        Item: FateSin_Boots_SS
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_FateSinBoots
+      - Index: 15
+        Item: FateSin_Boots_ABC
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_FateSinBoots
+      - Index: 16
+        Item: FateSin_Boots_TR
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_FateSinBoots
+      - Index: 17
+        Item: FateSin_Boots_HN
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_FateSinBoots
+  - Name: barter_mall_coupon_2
+    Items:
+      - Index: 0
+        Item: GoodnEvil_Circlet_DK
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_GoodnEvil_Helm
+      - Index: 1
+        Item: GoodnEvil_Circlet_IG
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_GoodnEvil_Helm
+      - Index: 2
+        Item: GoodnEvil_Circlet_AG
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_GoodnEvil_Helm
+      - Index: 3
+        Item: GoodnEvil_Circlet_EM
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_GoodnEvil_Helm
+      - Index: 4
+        Item: GoodnEvil_Circlet_CD
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_GoodnEvil_Helm
+      - Index: 5
+        Item: GoodnEvil_Circlet_IQ
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_GoodnEvil_Helm
+      - Index: 6
+        Item: GoodnEvil_Circlet_MT
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_GoodnEvil_Helm
+      - Index: 7
+        Item: GoodnEvil_Circlet_BO
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_GoodnEvil_Helm
+      - Index: 8
+        Item: GoodnEvil_Circlet_SHC
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_GoodnEvil_Helm
+      - Index: 9
+        Item: GoodnEvil_Circlet_ABC
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_GoodnEvil_Helm
+      - Index: 10
+        Item: GoodnEvil_Circlet_WH
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_GoodnEvil_Helm
+      - Index: 11
+        Item: GoodnEvil_Circlet_TR
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_GoodnEvil_Helm
+      - Index: 12
+        Item: GoodnEvil_Circlet_SS
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_GoodnEvil_Helm
+      - Index: 13
+        Item: GoodnEvil_Circlet_SKE
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_GoodnEvil_Helm
+      - Index: 14
+        Item: GoodnEvil_Circlet_SOA
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_GoodnEvil_Helm
+      - Index: 15
+        Item: GoodnEvil_Circlet_HN
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_GoodnEvil_Helm
+      - Index: 16
+        Item: GoodnEvil_Circlet_SH
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_GoodnEvil_Helm
+      - Index: 17
+        Item: GoodnEvil_Circlet_NW
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_GoodnEvil_Helm
+      - Index: 18
+        Item: GoodnEvil_Circlet_NW2
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_GoodnEvil_Helm
+      - Index: 19
+        Item: GoodnEvil_Circlet_NW3
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_GoodnEvil_Helm
+      - Index: 20
+        Item: GoodnEvil_Circlet_NW4
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_GoodnEvil_Helm
+      - Index: 21
+        Item: GoodnEvil_Circlet_NW5
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_GoodnEvil_Helm
+  - Name: barter_mall_coupon_3
+    Items:
+      - Index: 0
+        Item: Punish_Hall
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Justice_Weapon
+      - Index: 1
+        Item: Saint_Bringer
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Justice_Weapon
+      - Index: 2
+        Item: Humma_Brilliance
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Justice_Weapon
+      - Index: 3
+        Item: Luppiter_Spear
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Justice_Weapon
+      - Index: 4
+        Item: Holy_Raise_Spear
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Justice_Weapon
+      - Index: 5
+        Item: Lightforce_Foxtail_Wand
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Justice_Weapon
+      - Index: 6
+        Item: Shining_Light_Katar
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Justice_Weapon
+      - Index: 7
+        Item: Angel_Wing_Bow
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Justice_Weapon
+      - Index: 8
+        Item: Guardian_Saber
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Justice_Weapon
+      - Index: 9
+        Item: Holy_Light_Dagger
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Justice_Weapon
+      - Index: 10
+        Item: Light_Power_Harp
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Justice_Weapon
+      - Index: 11
+        Item: Light_Power_Spark
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Justice_Weapon
+      - Index: 12
+        Item: Lighting_Splatter
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Justice_Weapon
+      - Index: 13
+        Item: Justice_Bomber
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Justice_Weapon
+      - Index: 14
+        Item: Last_Dawn
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Justice_Weapon
+      - Index: 15
+        Item: Devil_Hunter
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Justice_Weapon
+      - Index: 16
+        Item: Road_Of_Glory
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Justice_Weapon
+      - Index: 17
+        Item: Victory_Sword
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Justice_Weapon
+      - Index: 18
+        Item: Divine_Buster
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Justice_Weapon
+      - Index: 19
+        Item: Orign_Of_Life
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Justice_Weapon
+      - Index: 20
+        Item: Destiny_Staff
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Justice_Weapon
+      - Index: 21
+        Item: Blessed_Bible
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Justice_Weapon
+      - Index: 22
+        Item: Soul_Liberator
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Justice_Weapon
+  - Name: barter_mall_coupon_4
+    Items:
+      - Index: 0
+        Item: Demonic_Claw
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Injustice_Weapon
+      - Index: 1
+        Item: Sealed_Bible
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Injustice_Weapon
+      - Index: 2
+        Item: Darkness_Tablet
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Injustice_Weapon
+      - Index: 3
+        Item: Devil_Wing_Staff
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Injustice_Weapon
+      - Index: 4
+        Item: Doom_Bible
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Injustice_Weapon
+      - Index: 5
+        Item: Soul_Harvest
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Injustice_Weapon
+      - Index: 6
+        Item: The_Reaper
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Injustice_Weapon
+      - Index: 7
+        Item: Underworld_Knife
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Injustice_Weapon
+      - Index: 8
+        Item: Devil_Cursed_Sword
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Injustice_Weapon
+      - Index: 9
+        Item: Dark_Angel_Ray_Bow
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Injustice_Weapon
+      - Index: 10
+        Item: Crime_Violine
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Injustice_Weapon
+      - Index: 11
+        Item: Crime_Whip
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Injustice_Weapon
+      - Index: 12
+        Item: RG_5649
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Injustice_Weapon
+      - Index: 13
+        Item: Devil_L_Launcher
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Injustice_Weapon
+      - Index: 14
+        Item: Screaming_Rifle
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Injustice_Weapon
+      - Index: 15
+        Item: Devils_Bullet
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Injustice_Weapon
+      - Index: 16
+        Item: Outlaw_Cursed_Shotgun
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Injustice_Weapon
+      - Index: 17
+        Item: Blood_Rapier
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Injustice_Weapon
+      - Index: 18
+        Item: Destruction_Axe
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Injustice_Weapon
+      - Index: 19
+        Item: Devil_Claw
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Injustice_Weapon
+      - Index: 20
+        Item: Execution_Great_Sword
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Injustice_Weapon
+      - Index: 21
+        Item: Devil_Guardian_Sword
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Injustice_Weapon
+      - Index: 22
+        Item: Darkness_Foxtail_Model
+        RequiredItems:
+          - Index: 0
+            Item: Coupon_Injustice_Weapon
+  - Name: barter_mall_coupon_5
+    Items:
+      - Index: 0
+        Item: StormBow_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 1
+        Item: TornadoBow_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 2
+        Item: SaintBook_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 3
+        Item: SaintWand_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 4
+        Item: SunBook_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 5
+        Item: MoonBook_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 6
+        Item: Slayer_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 7
+        Item: Trident_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 8
+        Item: Demonius_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 9
+        Item: Demonsword_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 10
+        Item: Foxtail_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 11
+        Item: Setaria_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 12
+        Item: OverSpear_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 13
+        Item: aegis_103033
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 14
+        Item: Impact_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 15
+        Item: aegis_103034
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 16
+        Item: Humma_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 17
+        Item: WheelHumma_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 18
+        Item: GiganticAxe_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 19
+        Item: Hammer_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 20
+        Item: MasterSpellBook_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 21
+        Item: Grimoire_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 22
+        Item: Soul_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 23
+        Item: SpiritStick_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 24
+        Item: MetalVilolin_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 25
+        Item: MetalWhip_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 26
+        Item: Harp_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 27
+        Item: Whip_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 28
+        Item: Lapier_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 29
+        Item: SharpSword_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 30
+        Item: Stick_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 31
+        Item: WhiteSword_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 32
+        Item: Flame_Staff_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 33
+        Item: Specter_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 34
+        Item: GaleClaw_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 35
+        Item: Exterminate_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 36
+        Item: Gatling_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+      - Index: 37
+        Item: Rifle_Furious
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001809
+  - Name: barter_mall_coupon_6
+    Items:
+      - Index: 0
+        Item: FuriousCirclet_WH
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001810
+      - Index: 1
+        Item: FuriousCirclet_CD
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001810
+      - Index: 2
+        Item: FuriousCirclet_SKE
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001810
+      - Index: 3
+        Item: FuriousCirclet_DK
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001810
+      - Index: 4
+        Item: FuriousCirclet_ABC
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001810
+      - Index: 5
+        Item: FuriousCirclet_SH
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001810
+      - Index: 6
+        Item: FuriousCirclet_IG
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001810
+      - Index: 7
+        Item: FuriousCirclet_SHC
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001810
+      - Index: 8
+        Item: FuriousCirclet_SS
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001810
+      - Index: 9
+        Item: FuriousCirclet_MT
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001810
+      - Index: 10
+        Item: FuriousCirclet_EM
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001810
+      - Index: 11
+        Item: FuriousCirclet_SOA
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001810
+      - Index: 12
+        Item: FuriousCirclet_TR
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001810
+      - Index: 13
+        Item: FuriousCirclet_BO
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001810
+      - Index: 14
+        Item: FuriousCirclet_HN
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001810
+      - Index: 15
+        Item: FuriousCirclet_AG
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001810
+      - Index: 16
+        Item: FuriousCirclet_IQ
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001810
+      - Index: 17
+        Item: FuriousCirclet_NW
+        RequiredItems:
+          - Index: 0
+            Item: aegis_1001810
