@@ -26,6 +26,7 @@
 #   Options                  Possible options to select from.
 #     - Index                Client side index of the option.
 #       Value                Value of the look (can also be an item name).
+#       RequiredJob          Jobs can buy that.
 #       CostsHuman:          Costs for human players.
 #           Price            Required zeny. (Default: 0)
 #           RequiredItem     Required item. (Default: None)
@@ -38,4 +39,4 @@
 
 Header:
   Type: STYLIST_DB
-  Version: 1
+  Version: 2

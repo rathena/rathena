@@ -118489,7 +118489,7 @@ Body:
     SkillRange: 10
     ChaseRange: 12
     Size: Large
-    Race: Animal
+    Race: Formless
     Element: Wind
     ElementLevel: 1
     WalkSpeed: 150
@@ -118518,7 +118518,7 @@ Body:
     SkillRange: 10
     ChaseRange: 12
     Size: Large
-    Race: Animal
+    Race: Formless
     Element: Wind
     ElementLevel: 2
     WalkSpeed: 150
@@ -119054,7 +119054,6 @@ Body:
     Ai: 06
     Modes:
       CanMove: false
-      FixedMonster: true
       NoRandomWalk: true
     Drops:
       - Item: Ep20_Copo_Egg_Shell

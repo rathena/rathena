@@ -764,7 +764,7 @@ Body:
     GlobalDrops:
       - Index: 0
         Item: Play_RO_Gold_Coin_
-        Rate: 10000
+        Rate: 1000
     SpecificDrops:
       - Monster: ILL_SEDORA
         Drops:
@@ -2947,3 +2947,375 @@ Body:
       - Index: 0
         Item: Ep18_Amethyst_Fragment
         Rate: 25000
+  - Map: jor_tail
+    GlobalDrops:
+      - Index: 0
+        Item: Ep19_Snow_Flower
+        Rate: 70000
+      - Index: 1
+        Item: Etel_Dust
+        Rate: 60000
+  - Map: jor_back1
+    GlobalDrops:
+      - Index: 0
+        Item: Ep19_Snow_Flower
+        Rate: 75000
+      - Index: 1
+        Item: Etel_Dust
+        Rate: 70000
+  - Map: jor_back2
+    GlobalDrops:
+      - Index: 0
+        Item: Ep19_Snow_Flower
+        Rate: 80000
+      - Index: 1
+        Item: Etel_Dust
+        Rate: 75000
+  - Map: jor_back3
+    GlobalDrops:
+      - Index: 0
+        Item: Ep19_Snow_Flower
+        Rate: 85000
+      - Index: 1
+        Item: Etel_Dust
+        Rate: 80000
+  - Map: jor_dun01
+    GlobalDrops:
+      - Index: 0
+        Item: Etel_Dust
+        Rate: 70000
+      - Index: 1
+        Item: D_Glacier_T_Sword
+        Rate: 1000
+      - Index: 2
+        Item: D_Glacier_Lance
+        Rate: 1000
+      - Index: 3
+        Item: D_Glacier_Sword
+        Rate: 1000
+      - Index: 4
+        Item: D_Glacier_B_Sword
+        Rate: 1000
+      - Index: 5
+        Item: D_Glacier_Spear
+        Rate: 1000
+      - Index: 6
+        Item: D_Glacier_T_Axe
+        Rate: 1000
+      - Index: 7
+        Item: D_Glacier_Axe
+        Rate: 1000
+      - Index: 8
+        Item: D_Glacier_Mace
+        Rate: 1000
+      - Index: 9
+        Item: D_Glacier_M_Mace
+        Rate: 1000
+      - Index: 10
+        Item: D_Glacier_R_Knife
+        Rate: 1000
+      - Index: 11
+        Item: D_Glacier_B_Knife
+        Rate: 1000
+      - Index: 12
+        Item: D_Glacier_Bow
+        Rate: 1000
+      - Index: 13
+        Item: D_Glacier_Knuckle
+        Rate: 1000
+      - Index: 14
+        Item: D_Glacier_Book
+        Rate: 1000
+      - Index: 15
+        Item: D_Glacier_Katar
+        Rate: 1000
+      - Index: 16
+        Item: D_Glacier_Wand
+        Rate: 1000
+      - Index: 17
+        Item: D_Glacier_Staff
+        Rate: 1000
+      - Index: 18
+        Item: D_Glacier_Foxtail
+        Rate: 1000
+      - Index: 19
+        Item: D_Glacier_Violin
+        Rate: 1000
+      - Index: 20
+        Item: D_Glacier_Whip
+        Rate: 1000
+      - Index: 21
+        Item: D_Glacier_Humma
+        Rate: 1000
+      - Index: 22
+        Item: D_Glacier_Revolver
+        Rate: 1000
+      - Index: 23
+        Item: D_Glacier_Rifle
+        Rate: 1000
+      - Index: 24
+        Item: D_Glacier_Shotgun
+        Rate: 1000
+      - Index: 25
+        Item: D_Glacier_Gatling
+        Rate: 1000
+      - Index: 26
+        Item: D_Glacier_Launcher
+        Rate: 1000
+  - Map: jor_dun02
+    GlobalDrops:
+      - Index: 0
+        Item: Etel_Dust
+        Rate: 70000
+      - Index: 1
+        Item: D_Glacier_T_Sword
+        Rate: 1000
+      - Index: 2
+        Item: D_Glacier_Lance
+        Rate: 1000
+      - Index: 3
+        Item: D_Glacier_Sword
+        Rate: 1000
+      - Index: 4
+        Item: D_Glacier_B_Sword
+        Rate: 1000
+      - Index: 5
+        Item: D_Glacier_Spear
+        Rate: 1000
+      - Index: 6
+        Item: D_Glacier_T_Axe
+        Rate: 1000
+      - Index: 7
+        Item: D_Glacier_Axe
+        Rate: 1000
+      - Index: 8
+        Item: D_Glacier_Mace
+        Rate: 1000
+      - Index: 9
+        Item: D_Glacier_M_Mace
+        Rate: 1000
+      - Index: 10
+        Item: D_Glacier_R_Knife
+        Rate: 1000
+      - Index: 11
+        Item: D_Glacier_B_Knife
+        Rate: 1000
+      - Index: 12
+        Item: D_Glacier_Bow
+        Rate: 1000
+      - Index: 13
+        Item: D_Glacier_Knuckle
+        Rate: 1000
+      - Index: 14
+        Item: D_Glacier_Book
+        Rate: 1000
+      - Index: 15
+        Item: D_Glacier_Katar
+        Rate: 1000
+      - Index: 16
+        Item: D_Glacier_Wand
+        Rate: 1000
+      - Index: 17
+        Item: D_Glacier_Staff
+        Rate: 1000
+      - Index: 18
+        Item: D_Glacier_Foxtail
+        Rate: 1000
+      - Index: 19
+        Item: D_Glacier_Violin
+        Rate: 1000
+      - Index: 20
+        Item: D_Glacier_Whip
+        Rate: 1000
+      - Index: 21
+        Item: D_Glacier_Humma
+        Rate: 1000
+      - Index: 22
+        Item: D_Glacier_Revolver
+        Rate: 1000
+      - Index: 23
+        Item: D_Glacier_Rifle
+        Rate: 1000
+      - Index: 24
+        Item: D_Glacier_Shotgun
+        Rate: 1000
+      - Index: 25
+        Item: D_Glacier_Gatling
+        Rate: 1000
+      - Index: 26
+        Item: D_Glacier_Launcher
+        Rate: 1000
+  - Map: jor_ab01
+    GlobalDrops:
+      - Index: 0
+        Item: Etel_Dust
+        Rate: 70000
+      - Index: 1
+        Item: D_Glacier_T_Sword
+        Rate: 1000
+      - Index: 2
+        Item: D_Glacier_Lance
+        Rate: 1000
+      - Index: 3
+        Item: D_Glacier_Sword
+        Rate: 1000
+      - Index: 4
+        Item: D_Glacier_B_Sword
+        Rate: 1000
+      - Index: 5
+        Item: D_Glacier_Spear
+        Rate: 1000
+      - Index: 6
+        Item: D_Glacier_T_Axe
+        Rate: 1000
+      - Index: 7
+        Item: D_Glacier_Axe
+        Rate: 1000
+      - Index: 8
+        Item: D_Glacier_Mace
+        Rate: 1000
+      - Index: 9
+        Item: D_Glacier_M_Mace
+        Rate: 1000
+      - Index: 10
+        Item: D_Glacier_R_Knife
+        Rate: 1000
+      - Index: 11
+        Item: D_Glacier_B_Knife
+        Rate: 1000
+      - Index: 12
+        Item: D_Glacier_Bow
+        Rate: 1000
+      - Index: 13
+        Item: D_Glacier_Knuckle
+        Rate: 1000
+      - Index: 14
+        Item: D_Glacier_Book
+        Rate: 1000
+      - Index: 15
+        Item: D_Glacier_Katar
+        Rate: 1000
+      - Index: 16
+        Item: D_Glacier_Wand
+        Rate: 1000
+      - Index: 17
+        Item: D_Glacier_Staff
+        Rate: 1000
+      - Index: 18
+        Item: D_Glacier_Foxtail
+        Rate: 1000
+      - Index: 19
+        Item: D_Glacier_Violin
+        Rate: 1000
+      - Index: 20
+        Item: D_Glacier_Whip
+        Rate: 1000
+      - Index: 21
+        Item: D_Glacier_Humma
+        Rate: 1000
+      - Index: 22
+        Item: D_Glacier_Revolver
+        Rate: 1000
+      - Index: 23
+        Item: D_Glacier_Rifle
+        Rate: 1000
+      - Index: 24
+        Item: D_Glacier_Shotgun
+        Rate: 1000
+      - Index: 25
+        Item: D_Glacier_Gatling
+        Rate: 1000
+      - Index: 26
+        Item: D_Glacier_Launcher
+        Rate: 1000
+  - Map: jor_ab02
+    GlobalDrops:
+      - Index: 0
+        Item: Etel_Dust
+        Rate: 70000
+      - Index: 1
+        Item: D_Glacier_T_Sword
+        Rate: 1000
+      - Index: 2
+        Item: D_Glacier_Lance
+        Rate: 1000
+      - Index: 3
+        Item: D_Glacier_Sword
+        Rate: 1000
+      - Index: 4
+        Item: D_Glacier_B_Sword
+        Rate: 1000
+      - Index: 5
+        Item: D_Glacier_Spear
+        Rate: 1000
+      - Index: 6
+        Item: D_Glacier_T_Axe
+        Rate: 1000
+      - Index: 7
+        Item: D_Glacier_Axe
+        Rate: 1000
+      - Index: 8
+        Item: D_Glacier_Mace
+        Rate: 1000
+      - Index: 9
+        Item: D_Glacier_M_Mace
+        Rate: 1000
+      - Index: 10
+        Item: D_Glacier_R_Knife
+        Rate: 1000
+      - Index: 11
+        Item: D_Glacier_B_Knife
+        Rate: 1000
+      - Index: 12
+        Item: D_Glacier_Bow
+        Rate: 1000
+      - Index: 13
+        Item: D_Glacier_Knuckle
+        Rate: 1000
+      - Index: 14
+        Item: D_Glacier_Book
+        Rate: 1000
+      - Index: 15
+        Item: D_Glacier_Katar
+        Rate: 1000
+      - Index: 16
+        Item: D_Glacier_Wand
+        Rate: 1000
+      - Index: 17
+        Item: D_Glacier_Staff
+        Rate: 1000
+      - Index: 18
+        Item: D_Glacier_Foxtail
+        Rate: 1000
+      - Index: 19
+        Item: D_Glacier_Violin
+        Rate: 1000
+      - Index: 20
+        Item: D_Glacier_Whip
+        Rate: 1000
+      - Index: 21
+        Item: D_Glacier_Humma
+        Rate: 1000
+      - Index: 22
+        Item: D_Glacier_Revolver
+        Rate: 1000
+      - Index: 23
+        Item: D_Glacier_Rifle
+        Rate: 1000
+      - Index: 24
+        Item: D_Glacier_Shotgun
+        Rate: 1000
+      - Index: 25
+        Item: D_Glacier_Gatling
+        Rate: 1000
+      - Index: 26
+        Item: D_Glacier_Launcher
+        Rate: 1000
+  - Map: odin_past
+    GlobalDrops:
+      - Index: 0
+        Item: Zelunium
+        Rate: 20000
+      - Index: 1
+        Item: Zelunium_Ore
+        Rate: 50000

@@ -584,7 +584,7 @@ Body:
       X: 90
       Y: 35
   - Id: 118
-    Name: Thanatos Tower
+    Name: Memory of Thanatos
     TimeLimit: 3600
     Enter:
       Map: 1@thts
@@ -605,13 +605,6 @@ Body:
       Map: 1@oz
       X: 284
       Y: 167
-  - Id: 131
-    Name: Thor Military Base
-    TimeLimit: 7200
-    Enter:
-      Map: 1@tcamp
-      X: 103
-      Y: 237
   - Id: 132
     Name: Gathering of Wolves
     TimeLimit: 7200
@@ -628,15 +621,6 @@ Body:
       Map: 1@adv
       X: 123
       Y: 17
-  - Id: 134
-    Name: Sanctuary Purification
-    TimeLimit: 3600
-    Enter:
-      Map: 1@nyr
-      X: 196
-      Y: 30
-    AdditionalMaps:
-      2@nyr: true
   - Id: 135
     Name: Villa of Deceit
     TimeLimit: 7200
@@ -651,13 +635,6 @@ Body:
       Map: 1@adv
       X: 134
       Y: 19
-  - Id: 137
-    Name: Iwin Patrol
-    TimeLimit: 3600
-    Enter:
-      Map: 1@iwp
-      X: 380
-      Y: 229
   - Id: 138
     Name: Bagot's Laboratory
     TimeLimit: 3600

@@ -6922,13 +6922,8 @@ BUILDIN_FUNC(changelook){
 			break;
 
 		case LOOK_BODY2:
-			if( val < JOB_NOVICE ){
-				ShowError( "buildin_changelook: Invalid body style. Minimum: %d\n", JOB_NOVICE );
-				return SCRIPT_CMD_FAILURE;
-			}
-
-			if( val >= JOB_MAX ){
-				ShowError( "buildin_changelook: Invalid body style. Maximum: %d\n", ( JOB_MAX - 1 ) );
+			if (!job_db.exists(val) && (val <= JOB_SECOND_JOB_START || val >= JOB_SECOND_JOB_END)){
+				ShowError("buildin_changelook: Invalid body style: %d.\n", val);
 				return SCRIPT_CMD_FAILURE;
 			}
 			break;

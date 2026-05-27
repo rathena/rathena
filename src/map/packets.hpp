@@ -2208,6 +2208,21 @@ struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO {
 	struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub items[];
 } __attribute__((packed));
 
+struct CZ_REQ_STYLE_CHANGE3_SUB {
+	int16 action;   // 2 bytes - action 
+	int16 unknown;  // 2 bytes - unused
+	int16 value;    // 2 bytes - value 
+	int16 unknown2; // 2 bytes - unused  
+} __attribute__((packed));
+
+struct PACKET_CZ_REQ_STYLE_CHANGE3 {
+	int16 packetType;
+	int16 packetLength;
+	int16 count;
+	struct CZ_REQ_STYLE_CHANGE3_SUB data[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_STYLE_CHANGE3, 0x0bf7);
+
 DEFINE_PACKET_HEADER(ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO, 0x0b79);
 #elif PACKETVER_MAIN_NUM >= 20210203 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024
 struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub2 {

@@ -15720,7 +15720,7 @@ Body:
         Count: 10
     TimeLimit: 4h
   - Id: 80707
-    Title:7 "Eden Quest Board: Hunt Ground Petite"
+    Title: "Eden Quest Board: Hunt Ground Petite"
     Targets:
       - Mob: MAGNOLIA
         Count: 10
