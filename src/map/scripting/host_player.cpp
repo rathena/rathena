@@ -3,6 +3,7 @@
 #include "host_player.hpp"
 
 #include "arg_helpers.hpp"
+#include "../clan.hpp"
 #include "../clif.hpp"
 #include "../itemdb.hpp"
 #include "../log.hpp"
@@ -13,6 +14,8 @@
 #include "../pc_groups.hpp"
 #include "../status.hpp"
 #include "../storage.hpp"
+#include "../unit.hpp"
+#include "../../common/utils.hpp"
 #include "../../common/mapindex.hpp"
 #include "../../common/showmsg.hpp"
 #include "../../common/socket.hpp"
@@ -181,11 +184,29 @@ void PlayerHost::getSavePoint_cb(const v8::FunctionCallbackInfo<v8::Value>& info
 }
 
 void PlayerHost::pushPc_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
-    (void)info;  // TODO: skill_blown / unit_blown
+    UNWRAP;
+    int dir = int_arg(info, 0);
+    int cells = int_arg(info, 1);
+    if (dir >= DIR_MAX) dir %= DIR_MAX;
+    if (cells == 0) return;
+    if (cells < 0) {
+        dir = direction_opposite(static_cast<directions>(dir));
+        cells = -cells;
+    }
+    unit_blown(&sd.bl, dirx[dir], diry[dir], cells, BLOWN_NONE);
 }
 
 void PlayerHost::warpPartner_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
-    (void)info;  // TODO: locate partner_id and warp
+    UNWRAP;
+    if (!pc_ismarried(&sd)) { ret_int(info, 0); return; }
+    auto* psd = map_charid2sd(sd.status.partner_id);
+    if (!psd) { ret_int(info, 0); return; }
+    auto mn = str_arg(info, 0);
+    int x = int_arg(info, 1), y = int_arg(info, 2);
+    int idx = mapindex_name2id(mn.c_str());
+    if (!idx) { ret_int(info, 0); return; }
+    pc_setpos(psd, idx, x, y, CLR_OUTSIGHT);
+    ret_int(info, 1);
 }
 
 // =====================================================================
@@ -219,7 +240,19 @@ void PlayerHost::giveRentItem_cb(const v8::FunctionCallbackInfo<v8::Value>& info
 }
 
 void PlayerHost::giveNamedItem_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
-    (void)info;  // TODO: pc_additem with card_name set
+    UNWRAP;
+    t_itemid nameid = static_cast<t_itemid>(uint_arg(info, 0));
+    int char_id = int_arg(info, 1, 0);
+    auto* tsd = char_id ? map_charid2sd(char_id) : &sd;
+    if (!item_db.exists(nameid) || !tsd) { ret_int(info, 0); return; }
+    struct item it{};
+    it.nameid   = nameid;
+    it.amount   = 1;
+    it.identify = 1;
+    it.card[0]  = CARD0_CREATE;
+    it.card[2]  = GetWord(tsd->status.char_id, 0);
+    it.card[3]  = GetWord(tsd->status.char_id, 1);
+    ret_int(info, pc_additem(&sd, &it, 1, LOG_TYPE_SCRIPT) ? 0 : 1);
 }
 
 void PlayerHost::giveRandomGroupItem_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
@@ -320,7 +353,17 @@ void PlayerHost::consumeItem_cb(const v8::FunctionCallbackInfo<v8::Value>& info)
 
 void PlayerHost::searchItem_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     auto* iso = info.GetIsolate();
-    info.GetReturnValue().Set(v8::Array::New(iso, 0));  // TODO: name-substring search
+    auto ctx_ = iso->GetCurrentContext();
+    auto out = v8::Array::New(iso);
+    auto name = str_arg(info, 0);
+    std::map<t_itemid, std::shared_ptr<item_data>> items;
+    itemdb_searchname_array(items, MAX_SEARCH, name.c_str());
+    uint32 idx_out = 0;
+    for (const auto& it : items) {
+        (void)out->Set(ctx_, idx_out++,
+            v8::Integer::NewFromUnsigned(iso, it.first));
+    }
+    info.GetReturnValue().Set(out);
 }
 
 void PlayerHost::getInventory_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
@@ -353,7 +396,8 @@ void PlayerHost::getInventory_cb(const v8::FunctionCallbackInfo<v8::Value>& info
 }
 
 void PlayerHost::mergeItems_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
-    (void)info;  // TODO: trigger merge UI
+    UNWRAP;
+    clif_merge_item_open(sd);
 }
 
 void PlayerHost::identifyAll_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
@@ -473,7 +517,11 @@ void PlayerHost::equip_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
 }
 
 void PlayerHost::autoEquip_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
-    (void)info;  // TODO: autoequip flag
+    t_itemid nameid = static_cast<t_itemid>(uint_arg(info, 0));
+    int flag = int_arg(info, 1);
+    auto id = item_db.find(nameid);
+    if (!id || !itemdb_isequip2(id.get())) return;
+    id->flag.autoequip = flag > 0 ? 1 : 0;
 }
 
 void PlayerHost::unequip_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
@@ -811,10 +859,23 @@ void PlayerHost::openRefineUi_cb(const v8::FunctionCallbackInfo<v8::Value>& info
 void PlayerHost::openStylist_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ UNWRAP; clif_ui_open(sd, OUT_UI_STYLIST, 0); }
 void PlayerHost::openDressRoom_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ UNWRAP; clif_dressing_room(sd); }
 void PlayerHost::openRoulette_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ UNWRAP; clif_roulette_open(&sd); }
-void PlayerHost::openQuestUi_cb(const v8::FunctionCallbackInfo<v8::Value>& info)    { (void)info; }
+void PlayerHost::openQuestUi_cb(const v8::FunctionCallbackInfo<v8::Value>& info)    {
+    UNWRAP;
+    clif_ui_open(sd, OUT_UI_QUEST, int_arg(info, 0, 0));
+}
 void PlayerHost::openEnchantGrade_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ UNWRAP; clif_ui_open(sd, OUT_UI_ENCHANTGRADE, 0); }
-void PlayerHost::openLaphineSynthesis_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ (void)info; }
-void PlayerHost::openLaphineUpgrade_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { (void)info; }
+void PlayerHost::openLaphineSynthesis_cb(const v8::FunctionCallbackInfo<v8::Value>& info){
+    UNWRAP;
+    t_itemid id = static_cast<t_itemid>(uint_arg(info, 0));
+    auto syn = laphine_synthesis_db.find(id);
+    if (syn) clif_laphine_synthesis_open(&sd, syn);
+}
+void PlayerHost::openLaphineUpgrade_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   {
+    UNWRAP;
+    t_itemid id = static_cast<t_itemid>(uint_arg(info, 0));
+    auto upg = laphine_upgrade_db.find(id);
+    if (upg) clif_laphine_upgrade_open(&sd, upg);
+}
 void PlayerHost::openItemEnchant_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     UNWRAP;
     clif_ui_open(sd, OUT_UI_ENCHANT, int_arg(info, 0));
@@ -824,7 +885,14 @@ void PlayerHost::openItemReform_cb(const v8::FunctionCallbackInfo<v8::Value>& in
     clif_item_reform_open(sd, static_cast<t_itemid>(uint_arg(info, 0)));
 }
 void PlayerHost::specialPopup_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ UNWRAP; clif_specialpopup(sd, int_arg(info, 0)); }
-void PlayerHost::openTips_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { (void)info; }
+void PlayerHost::openTips_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   {
+#if PACKETVER >= 20171122
+    UNWRAP;
+    clif_ui_open(sd, OUT_UI_TIP, int_arg(info, 0));
+#else
+    (void)info;
+#endif
+}
 void PlayerHost::readBook_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   {
     UNWRAP;
     clif_readbook(sd.fd, int_arg(info, 0), int_arg(info, 1, 0));
@@ -846,12 +914,42 @@ void PlayerHost::delSpiritBall_cb(const v8::FunctionCallbackInfo<v8::Value>& inf
 }
 void PlayerHost::countSpiritBall_cb(const v8::FunctionCallbackInfo<v8::Value>& info) { UNWRAP; ret_int(info, sd.spiritball); }
 
-void PlayerHost::getReputation_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { ret_int(info, 0); }
-void PlayerHost::setReputation_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { (void)info; }
-void PlayerHost::addReputation_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { (void)info; }
+void PlayerHost::getReputation_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   {
+    UNWRAP;
+    int64 type = int_arg(info, 0);
+    auto rep = reputation_db.find(type);
+    if (!rep) { ret_int(info, 0); return; }
+    int64 pts = pc_readreg2(&sd, rep->variable.c_str());
+    pts = cap_value(pts, rep->minimum, rep->maximum);
+    ret_int(info, static_cast<int32_t>(pts));
+}
+void PlayerHost::setReputation_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   {
+    UNWRAP;
+    int64 type = int_arg(info, 0);
+    int64 pts  = int_arg(info, 1);
+    auto rep = reputation_db.find(type);
+    if (!rep) return;
+    pts = cap_value(pts, rep->minimum, rep->maximum);
+    if (pc_setreg2(&sd, rep->variable.c_str(), pts))
+        clif_reputation_type(sd, type, pts);
+}
+void PlayerHost::addReputation_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   {
+    UNWRAP;
+    int64 type = int_arg(info, 0);
+    int64 add  = int_arg(info, 1);
+    auto rep = reputation_db.find(type);
+    if (!rep) return;
+    int64 pts = pc_readreg2(&sd, rep->variable.c_str()) + add;
+    pts = cap_value(pts, rep->minimum, rep->maximum);
+    if (pc_setreg2(&sd, rep->variable.c_str(), pts))
+        clif_reputation_type(sd, type, pts);
+}
 void PlayerHost::getFame_cb(const v8::FunctionCallbackInfo<v8::Value>& info)         { UNWRAP; ret_int(info, sd.status.fame); }
 void PlayerHost::addFame_cb(const v8::FunctionCallbackInfo<v8::Value>& info)         { UNWRAP; sd.status.fame += int_arg(info, 0); }
-void PlayerHost::getFameRank_cb(const v8::FunctionCallbackInfo<v8::Value>& info)     { ret_int(info, 0); }
+void PlayerHost::getFameRank_cb(const v8::FunctionCallbackInfo<v8::Value>& info)     {
+    UNWRAP;
+    ret_int(info, pc_famerank(sd.status.char_id, sd.class_ & MAPID_UPPERMASK));
+}
 
 void PlayerHost::marry_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     UNWRAP;
@@ -862,7 +960,19 @@ void PlayerHost::marry_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
 void PlayerHost::divorce_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     UNWRAP; pc_divorce(&sd);
 }
-void PlayerHost::adopt_cb(const v8::FunctionCallbackInfo<v8::Value>& info) { (void)info; /* requires both parent sds; skip */ }
+void PlayerHost::adopt_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    UNWRAP;
+    int baby_id = int_arg(info, 0);
+    auto* baby = map_charid2sd(baby_id);
+    if (!baby) { ret_int(info, ADOPT_CHARACTER_NOT_FOUND); return; }
+    auto* partner = map_charid2sd(sd.status.partner_id);
+    auto resp = pc_try_adopt(&sd, partner, baby);
+    if (resp == ADOPT_ALLOWED && partner) {
+        baby->adopt_invite = sd.status.account_id;
+        clif_Adopt_request(baby, &sd, partner->status.account_id);
+    }
+    ret_int(info, resp);
+}
 void PlayerHost::getPartnerId_cb(const v8::FunctionCallbackInfo<v8::Value>& info)    { UNWRAP; ret_int(info, sd.status.partner_id); }
 void PlayerHost::getMotherId_cb(const v8::FunctionCallbackInfo<v8::Value>& info)     { UNWRAP; ret_int(info, sd.status.mother); }
 void PlayerHost::getFatherId_cb(const v8::FunctionCallbackInfo<v8::Value>& info)     { UNWRAP; ret_int(info, sd.status.father); }
@@ -873,14 +983,24 @@ void PlayerHost::isPartnerOn_cb(const v8::FunctionCallbackInfo<v8::Value>& info)
 // Permissions / VIP / misc
 // =====================================================================
 
-void PlayerHost::permissionCheck_cb(const v8::FunctionCallbackInfo<v8::Value>& info) { ret_bool(info, false); }
+void PlayerHost::permissionCheck_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    UNWRAP;
+    int p = int_arg(info, 0);
+    ret_bool(info, pc_has_permission(&sd, static_cast<e_pc_permission>(p)));
+}
+// Permission add/remove operate on the pc_group, which is read-only at
+// runtime — exposing them as scripted ops would mean rewriting the group
+// table. Keep as no-op rather than silently failing.
 void PlayerHost::permissionAdd_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { (void)info; }
 void PlayerHost::permissionRemove_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ (void)info; }
 void PlayerHost::guildHasPermission_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ ret_bool(info, false); }
 
 void PlayerHost::vipStatus_cb(const v8::FunctionCallbackInfo<v8::Value>& info)       { ret_int(info, 0); }
 void PlayerHost::vipTime_cb(const v8::FunctionCallbackInfo<v8::Value>& info)         { (void)info; }
-void PlayerHost::macroDetector_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { (void)info; }
+void PlayerHost::macroDetector_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   {
+    UNWRAP;
+    pc_macro_reporter_process(sd);
+}
 
 void PlayerHost::charInfo_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     UNWRAP;
@@ -924,9 +1044,33 @@ void PlayerHost::jobCanEnterMap_cb(const v8::FunctionCallbackInfo<v8::Value>& in
 void PlayerHost::checkVending_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ UNWRAP; ret_bool(info, sd.state.vending != 0); }
 void PlayerHost::checkChatting_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ UNWRAP; ret_bool(info, sd.chatID != 0); }
 void PlayerHost::checkIdle_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { ret_bool(info, false); }
-void PlayerHost::navigateTo_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  { (void)info; }
-void PlayerHost::clanJoin_cb(const v8::FunctionCallbackInfo<v8::Value>& info)    { (void)info; }
-void PlayerHost::clanLeave_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { (void)info; }
+void PlayerHost::navigateTo_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  {
+#if PACKETVER >= 20111010
+    UNWRAP;
+    auto mn = str_arg(info, 0);
+    int x = int_arg(info, 1, 0);
+    int y = int_arg(info, 2, 0);
+    int flag = int_arg(info, 3, NAV_KAFRA_AND_AIRSHIP);
+    bool hide = bool_arg(info, 4);
+    int monster_id = int_arg(info, 5, 0);
+    clif_navigateTo(&sd, mn.c_str(),
+        static_cast<uint16>(x), static_cast<uint16>(y),
+        static_cast<uint8>(flag), hide,
+        static_cast<uint16>(monster_id));
+#else
+    (void)info;
+#endif
+}
+void PlayerHost::clanJoin_cb(const v8::FunctionCallbackInfo<v8::Value>& info)    {
+    UNWRAP;
+    int clan_id = int_arg(info, 0);
+    ret_bool(info, clan_member_join(sd, clan_id, sd.status.account_id, sd.status.char_id));
+}
+void PlayerHost::clanLeave_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   {
+    UNWRAP;
+    ret_bool(info, clan_member_leave(sd, sd.status.clan_id,
+        sd.status.account_id, sd.status.char_id));
+}
 void PlayerHost::cameraInfo_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  { ret_null(info); }
 
 // =====================================================================
