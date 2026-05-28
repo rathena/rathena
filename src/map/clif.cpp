@@ -867,7 +867,7 @@ void clif_dropflooritem( const flooritem_data* fitem, bool canShowEffect ){
 	
 	if (next_dropitem_special.drop_effect != -1) {
 		fitem->showdropeffect = true;
-		fitem->dropeffectmode = next_dropitem_special.drop_effect - 1;
+		fitem->item.dropeffectmode = next_dropitem_special.drop_effect - 1;
 		next_dropitem_special.drop_effect = -1;
 	}
 
@@ -26041,7 +26041,7 @@ void do_init_clif(void) {
 // Author:      Sola丶小克(CairoLee)  2020/09/26 16:38
 //************************************
 }
-}
+
 void clif_send_auras_single(struct block_list* bl, map_session_data* tsd) {
 	if (!bl || !tsd || bl->m == -1) return;
 	struct s_unit_common_data* ucd = status_get_ucd(bl);
