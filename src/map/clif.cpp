@@ -867,7 +867,7 @@ void clif_dropflooritem( const flooritem_data* fitem, bool canShowEffect ){
 	
 	if (next_dropitem_special.drop_effect != -1) {
 		fitem->showdropeffect = true;
-		p.dropeffectmode = next_dropitem_special.drop_effect - 1;
+		fitem->dropeffectmode = next_dropitem_special.drop_effect - 1;
 		next_dropitem_special.drop_effect = -1;
 	}
 
@@ -26041,12 +26041,12 @@ void do_init_clif(void) {
 // Author:      Sola丶小克(CairoLee)  2020/09/26 16:38
 //************************************
 }
-
+}
 void clif_send_auras_single(struct block_list* bl, map_session_data* tsd) {
 	if (!bl || !tsd || bl->m == -1) return;
 	struct s_unit_common_data* ucd = status_get_ucd(bl);
 	if (!ucd) return;
-	if (aura_need_hiding(bl, &tsd->bl)) return;
+	if (aura_need_hiding(bl, (struct block_list *)tsd)) return;
 #ifdef Pandas_MapFlag_NoAura
 	if (map_getmapflag(bl->m, MF_NOAURA)) return;
 #endif // Pandas_MapFlag_NoAura
