@@ -712,17 +712,44 @@ void BattlegroundHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context
     bind_null(iso, ctx, obj, "info");
 }
 
+namespace {
+void channel_create_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto name = args::str_arg(info, 0);
+    auto pass = args::str_arg(info, 2);
+    char nbuf[64] = {}, pbuf[64] = {};
+    safestrncpy(nbuf, name.c_str(), sizeof(nbuf));
+    safestrncpy(pbuf, pass.c_str(), sizeof(pbuf));
+    channel_create_simple(nbuf, pbuf, CHAN_TYPE_PUBLIC, 0);
+}
+void channel_join_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<ChannelHost>(info);
+    if (!self || !self->sd()) return;
+    auto name = args::str_arg(info, 0);
+    auto* c = channel_name2channel(const_cast<char*>(name.c_str()), self->sd(), 0);
+    if (c) channel_join(c, self->sd());
+}
+void channel_chat_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<ChannelHost>(info);
+    if (!self || !self->sd()) return;
+    auto name = args::str_arg(info, 0);
+    auto msg  = args::str_arg(info, 1);
+    auto* c = channel_name2channel(const_cast<char*>(name.c_str()), self->sd(), 0);
+    if (c) channel_send(c, self->sd(), msg.c_str());
+}
+} // namespace
+
 void ChannelHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx,
                                     v8::Local<v8::Object> obj) {
-    (void)sd_;
-    bind_void(iso, ctx, obj, "create");
-    bind_void(iso, ctx, obj, "join");
+    args::bind_method<ChannelHost>(iso, ctx, obj, this, "create", &channel_create_cb);
+    args::bind_method<ChannelHost>(iso, ctx, obj, this, "join",   &channel_join_cb);
+    args::bind_method<ChannelHost>(iso, ctx, obj, this, "chat",   &channel_chat_cb);
+    // Setters / kick / ban / unban / setGroups need channel field
+    // mutators that aren't surfaced — placeholder for now.
     bind_void(iso, ctx, obj, "setOption");
     bind_int0(iso, ctx, obj, "getOption");
     bind_void(iso, ctx, obj, "setColor");
     bind_void(iso, ctx, obj, "setPassword");
     bind_void(iso, ctx, obj, "setGroups");
-    bind_void(iso, ctx, obj, "chat");
     bind_void(iso, ctx, obj, "ban");
     bind_void(iso, ctx, obj, "unban");
     bind_void(iso, ctx, obj, "kick");
