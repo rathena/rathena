@@ -6,6 +6,7 @@
 #include "../achievement.hpp"
 #include "../channel.hpp"
 #include "../chat.hpp"
+#include "../elemental.hpp"
 #include "../clif.hpp"
 #include "../guild.hpp"
 #include "../instance.hpp"
@@ -292,6 +293,131 @@ void npc_npcInfo_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     }
 }
 
+bool nd_is_shop(npc_data* nd) {
+    return nd && (nd->subtype == NPCTYPE_SHOP || nd->subtype == NPCTYPE_CASHSHOP ||
+                  nd->subtype == NPCTYPE_ITEMSHOP || nd->subtype == NPCTYPE_POINTSHOP ||
+                  nd->subtype == NPCTYPE_MARKETSHOP);
+}
+
+struct shop_row { t_itemid id; int32 price; };
+std::vector<shop_row> parse_shop_items(const v8::FunctionCallbackInfo<v8::Value>& info, int arg_index) {
+    std::vector<shop_row> out;
+    if (info.Length() <= arg_index || !info[arg_index]->IsArray()) return out;
+    auto iso_ = args::iso(info); auto cx = args::ctx(info);
+    auto arr = v8::Local<v8::Array>::Cast(info[arg_index]);
+    uint32 len = arr->Length();
+    out.reserve(len);
+    auto key_id    = v8::String::NewFromUtf8(iso_, "itemId").ToLocalChecked();
+    auto key_price = v8::String::NewFromUtf8(iso_, "price").ToLocalChecked();
+    for (uint32 i = 0; i < len; ++i) {
+        v8::Local<v8::Value> v;
+        if (!arr->Get(cx, i).ToLocal(&v) || !v->IsObject()) continue;
+        auto obj = v8::Local<v8::Object>::Cast(v);
+        v8::Local<v8::Value> id_v, price_v;
+        if (!obj->Get(cx, key_id).ToLocal(&id_v))    continue;
+        if (!obj->Get(cx, key_price).ToLocal(&price_v)) continue;
+        out.push_back({
+            static_cast<t_itemid>(id_v->Uint32Value(cx).FromMaybe(0)),
+            price_v->Int32Value(cx).FromMaybe(0),
+        });
+    }
+    return out;
+}
+
+void npc_shopSet_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<NpcInfoHost>(info);
+    if (!self || !nd_is_shop(&self->nd())) return;
+    auto& nd = self->nd();
+    auto rows = parse_shop_items(info, 0);
+    RECREATE(nd.u.shop.shop_item, struct npc_item_list, rows.size());
+    nd.u.shop.count = 0;
+    for (auto& r : rows) {
+        auto id = item_db.find(r.id);
+        if (!id) continue;
+        int price = r.price < 0 ? static_cast<int>(id->value_buy) : r.price;
+        nd.u.shop.shop_item[nd.u.shop.count].nameid = r.id;
+        nd.u.shop.shop_item[nd.u.shop.count].value  = price;
+        nd.u.shop.count++;
+    }
+}
+
+void npc_shopAdd_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<NpcInfoHost>(info);
+    if (!self || !nd_is_shop(&self->nd())) return;
+    auto& nd = self->nd();
+    auto rows = parse_shop_items(info, 0);
+    if (rows.empty()) return;
+    RECREATE(nd.u.shop.shop_item, struct npc_item_list, nd.u.shop.count + rows.size());
+    for (auto& r : rows) {
+        auto id = item_db.find(r.id);
+        if (!id) continue;
+        int price = r.price < 0 ? static_cast<int>(id->value_buy) : r.price;
+        nd.u.shop.shop_item[nd.u.shop.count].nameid = r.id;
+        nd.u.shop.shop_item[nd.u.shop.count].value  = price;
+        nd.u.shop.count++;
+    }
+}
+
+void npc_shopDel_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<NpcInfoHost>(info);
+    if (!self || !nd_is_shop(&self->nd())) return;
+    auto& nd = self->nd();
+    if (info.Length() < 1 || !info[0]->IsArray()) return;
+    auto iso_ = args::iso(info); auto cx = args::ctx(info);
+    auto arr = v8::Local<v8::Array>::Cast(info[0]);
+    for (uint32 j = 0; j < arr->Length(); ++j) {
+        v8::Local<v8::Value> v;
+        if (!arr->Get(cx, j).ToLocal(&v)) continue;
+        t_itemid id = static_cast<t_itemid>(v->Uint32Value(cx).FromMaybe(0));
+        for (int n = 0; n < nd.u.shop.count; ++n) {
+            if (nd.u.shop.shop_item[n].nameid != id) continue;
+            if (n + 1 != nd.u.shop.count)
+                std::memmove(&nd.u.shop.shop_item[n], &nd.u.shop.shop_item[n + 1],
+                             sizeof(struct npc_item_list) * (nd.u.shop.count - n - 1));
+            nd.u.shop.count--;
+            break;
+        }
+    }
+    if (nd.u.shop.count > 0)
+        RECREATE(nd.u.shop.shop_item, struct npc_item_list, nd.u.shop.count);
+}
+
+void npc_shopAttach_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<NpcInfoHost>(info);
+    if (!self || !nd_is_shop(&self->nd())) return;
+    bool flag = args::bool_arg(info, 0);
+    self->nd().master_nd = flag ? &self->nd() : nullptr;
+}
+
+void npc_shopUpdate_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<NpcInfoHost>(info);
+    if (!self || !nd_is_shop(&self->nd())) return;
+    auto& nd = self->nd();
+    if (!nd.u.shop.count) return;
+    t_itemid id = static_cast<t_itemid>(args::uint_arg(info, 0));
+    int price   = args::int_arg(info, 1);
+    for (int i = 0; i < nd.u.shop.count; ++i) {
+        if (nd.u.shop.shop_item[i].nameid != id) continue;
+        if (price != 0) {
+            if (price < 0) {
+                auto entry = item_db.find(id);
+                if (!entry) return;
+                price = entry->value_buy;
+            }
+            nd.u.shop.shop_item[i].value = price;
+        }
+    }
+}
+
+void npc_duplicateDynamic_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<NpcInfoHost>(info);
+    if (!self) return;
+    int char_id = args::int_arg(info, 0, 0);
+    auto* sd = char_id ? map_charid2sd(char_id) : nullptr;
+    if (!sd) return;
+    npc_duplicate_npc_for_player(self->nd(), *sd);
+}
+
 void npc_warpWaitingPc_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     auto* cd = npc_cd(args::unwrap<NpcInfoHost>(info));
     if (!cd) return;
@@ -342,15 +468,16 @@ void NpcInfoHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx
     args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "speed",      &npc_speed_cb);
     args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "walkTo",     &npc_walkTo_cb);
     args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "stop",       &npc_stop_cb);
-    args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "moveTo",     &npc_moveTo_cb);
-    bind_void(iso, ctx, obj, "duplicateDynamic");
+    args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "moveTo",           &npc_moveTo_cb);
+    args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "duplicateDynamic", &npc_duplicateDynamic_cb);
 
-    // Shop
-    bind_void(iso, ctx, obj, "shopSet");
-    bind_void(iso, ctx, obj, "shopAdd");
-    bind_void(iso, ctx, obj, "shopDel");
-    bind_void(iso, ctx, obj, "shopAttach");
-    bind_void(iso, ctx, obj, "shopUpdate");
+    // Shop — these only mutate state if the underlying NPC is a shop type;
+    // for our SCRIPT-type registerNpc NPCs they're no-ops.
+    args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "shopSet",    &npc_shopSet_cb);
+    args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "shopAdd",    &npc_shopAdd_cb);
+    args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "shopDel",    &npc_shopDel_cb);
+    args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "shopAttach", &npc_shopAttach_cb);
+    args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "shopUpdate", &npc_shopUpdate_cb);
 
     // Waiting room
     args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "createWaitingRoom",   &npc_createWaitingRoom_cb);
@@ -557,18 +684,79 @@ void storage_countItem_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
 }
 } // namespace
 
+namespace {
+void storage_openExtra_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<StorageHost>(info);
+    if (!self) return;
+    int num = args::int_arg(info, 0, 0);
+    int mode = args::int_arg(info, 1, 1);
+    if (num > 0) storage_premiumStorage_load(&self->sd(), static_cast<uint8>(num), static_cast<uint8>(mode));
+    else          storage_premiumStorage_open(&self->sd());
+}
+void storage_delItem_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<StorageHost>(info);
+    if (!self) return;
+    t_itemid id = static_cast<t_itemid>(args::uint_arg(info, 0));
+    int amount  = args::int_arg(info, 1);
+    auto& sd = self->sd();
+    for (int i = 0; i < MAX_STORAGE && amount > 0; ++i) {
+        auto& it = sd.storage.u.items_storage[i];
+        if (it.nameid != id) continue;
+        int take = std::min(amount, static_cast<int>(it.amount));
+        storage_delitem(&sd, &sd.storage, i, take);
+        amount -= take;
+    }
+}
+void storage_countGuildItem_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<StorageHost>(info);
+    if (!self) { args::ret_int(info, 0); return; }
+    auto& sd = self->sd();
+    if (sd.status.guild_id == 0) { args::ret_int(info, 0); return; }
+    auto gstor = guild2storage(sd.status.guild_id);
+    if (!gstor) { args::ret_int(info, 0); return; }
+    t_itemid id = static_cast<t_itemid>(args::uint_arg(info, 0));
+    int total = 0;
+    for (int i = 0; i < MAX_GUILD_STORAGE; ++i) {
+        if (gstor->u.items_guild[i].nameid == id) total += gstor->u.items_guild[i].amount;
+    }
+    args::ret_int(info, total);
+}
+void storage_delGuildItem_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<StorageHost>(info);
+    if (!self) return;
+    auto& sd = self->sd();
+    if (sd.status.guild_id == 0) return;
+    auto gstor = guild2storage(sd.status.guild_id);
+    if (!gstor) return;
+    t_itemid id = static_cast<t_itemid>(args::uint_arg(info, 0));
+    int amount  = args::int_arg(info, 1);
+    for (int i = 0; i < MAX_GUILD_STORAGE && amount > 0; ++i) {
+        auto& it = gstor->u.items_guild[i];
+        if (it.nameid != id) continue;
+        int take = std::min(amount, static_cast<int>(it.amount));
+        storage_delitem(&sd, gstor, i, take);
+        amount -= take;
+    }
+}
+void storage_guildLog_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<StorageHost>(info);
+    auto iso_ = args::iso(info);
+    auto out = v8::Array::New(iso_, 0);
+    if (self) storage_guild_log_read(&self->sd());
+    info.GetReturnValue().Set(out);
+}
+} // namespace
+
 void StorageHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx,
                                     v8::Local<v8::Object> obj) {
     args::bind_method<StorageHost>(iso, ctx, obj, this, "open",             &storage_open_cb);
     args::bind_method<StorageHost>(iso, ctx, obj, this, "openGuildStorage", &storage_openGuild_cb);
     args::bind_method<StorageHost>(iso, ctx, obj, this, "countItem",        &storage_countItem_cb);
-    // The rest depend on storage_delitem helpers + extended storage IDs;
-    // deferred until needed by an actual script.
-    bind_void(iso, ctx, obj, "openExtra");
-    bind_void(iso, ctx, obj, "delItem");
-    bind_int0(iso, ctx, obj, "countGuildItem");
-    bind_void(iso, ctx, obj, "delGuildItem");
-    bind_arr (iso, ctx, obj, "guildLog");
+    args::bind_method<StorageHost>(iso, ctx, obj, this, "openExtra",        &storage_openExtra_cb);
+    args::bind_method<StorageHost>(iso, ctx, obj, this, "delItem",          &storage_delItem_cb);
+    args::bind_method<StorageHost>(iso, ctx, obj, this, "countGuildItem",   &storage_countGuildItem_cb);
+    args::bind_method<StorageHost>(iso, ctx, obj, this, "delGuildItem",     &storage_delGuildItem_cb);
+    args::bind_method<StorageHost>(iso, ctx, obj, this, "guildLog",         &storage_guildLog_cb);
 }
 
 namespace {
@@ -1003,6 +1191,19 @@ void merc_setFaith_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
         clif_mercenary_updatestatus(&self->sd(), SP_MERCFAITH);
 }
 
+void merc_elementalInfo_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<MercHost>(info);
+    int type = args::int_arg(info, 0);
+    if (!self || !self->sd().ed) { args::ret_int(info, 0); return; }
+    auto* ed = self->sd().ed;
+    switch (type) {
+        case 0: args::ret_int(info, ed->elemental.elemental_id); return;
+        case 1: args::ret_int(info, ed->bl.id);                   return;
+        case 2: args::ret_int(info, ed->elemental.class_);        return;
+        default: args::ret_int(info, 0);
+    }
+}
+
 void merc_info_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     auto* self = args::unwrap<MercHost>(info);
     int type = args::int_arg(info, 0);
@@ -1038,10 +1239,8 @@ void MercHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx,
     args::bind_method<MercHost>(iso, ctx, obj, this, "setCalls", &merc_setCalls_cb);
     args::bind_method<MercHost>(iso, ctx, obj, this, "getFaith", &merc_getFaith_cb);
     args::bind_method<MercHost>(iso, ctx, obj, this, "setFaith", &merc_setFaith_cb);
-    args::bind_method<MercHost>(iso, ctx, obj, this, "info",     &merc_info_cb);
-    // Elemental info is part of a separate elemental.cpp subsystem,
-    // not the mercenary one — keep as placeholder.
-    bind_null(iso, ctx, obj, "elementalInfo");
+    args::bind_method<MercHost>(iso, ctx, obj, this, "info",          &merc_info_cb);
+    args::bind_method<MercHost>(iso, ctx, obj, this, "elementalInfo", &merc_elementalInfo_cb);
 }
 
 // =====================================================================
@@ -1714,6 +1913,64 @@ void bg_info_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
         default: args::ret_null(info);
     }
 }
+
+void bg_waitingRoomToBg_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto map_name = args::str_arg(info, 0);
+    int x = args::int_arg(info, 1);
+    int y = args::int_arg(info, 2);
+    auto quit_event  = args::str_arg(info, 3);
+    auto death_event = args::str_arg(info, 4);
+    auto npc_name = args::str_arg(info, 5);
+    auto* nd = npc_name2id(npc_name.c_str());
+    chat_data* cd = nullptr;
+    if (!nd || (cd = reinterpret_cast<chat_data*>(map_id2bl(nd->chat_id))) == nullptr) {
+        args::ret_int(info, 0); return;
+    }
+    int mapindex = 0;
+    if (map_name != "-" && (mapindex = mapindex_name2id(map_name.c_str())) == 0) {
+        args::ret_int(info, 0); return;
+    }
+    s_battleground_team team;
+    team.warp_x = x;
+    team.warp_y = y;
+    team.quit_event  = quit_event;
+    team.death_event = death_event;
+    int bg_id = bg_create(static_cast<uint16>(mapindex), &team);
+    if (!bg_id) { args::ret_int(info, 0); return; }
+    for (int i = 0; i < cd->users; ++i) {
+        auto* psd = cd->usersd[i];
+        if (psd) bg_team_join(bg_id, psd, false);
+    }
+    args::ret_int(info, bg_id);
+}
+
+void bg_waitingRoomToBgSingle_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    int bg_id = args::int_arg(info, 0);
+    auto bg = util::umap_find(bg_team_db, bg_id);
+    if (!bg) return;
+    int mapindex, x, y;
+    if (info.Length() >= 4 && info[1]->IsString()) {
+        auto map_name = args::str_arg(info, 1);
+        mapindex = mapindex_name2id(map_name.c_str());
+        if (!mapindex) return;
+        x = args::int_arg(info, 2);
+        y = args::int_arg(info, 3);
+    } else {
+        mapindex = bg->cemetery.map;
+        x = bg->cemetery.x;
+        y = bg->cemetery.y;
+    }
+    if (!map_getmapflag(map_mapindex2mapid(mapindex), MF_BATTLEGROUND)) return;
+    auto npc_name = args::str_arg(info, 4);
+    auto* nd = npc_name2id(npc_name.c_str());
+    chat_data* cd = nullptr;
+    if (!nd || (cd = reinterpret_cast<chat_data*>(map_id2bl(nd->chat_id))) == nullptr ||
+        cd->users <= 0) return;
+    auto* psd = cd->usersd[0];
+    if (!psd) return;
+    if (bg_team_join(bg_id, psd, false))
+        pc_setpos(psd, static_cast<uint16>(mapindex), x, y, CLR_TELEPORT);
+}
 } // namespace
 
 void BattlegroundHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx,
@@ -1733,10 +1990,8 @@ void BattlegroundHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context
     args::bind_method<BattlegroundHost>(iso, ctx, obj, this, "updateScore",    &bg_updateScore_cb);
     args::bind_method<BattlegroundHost>(iso, ctx, obj, this, "getData",        &bg_getData_cb);
     args::bind_method<BattlegroundHost>(iso, ctx, obj, this, "info",           &bg_info_cb);
-    // waitingRoomToBg / waitingRoomToBgSingle need chat_data / npc context
-    // wiring that lives in npc_chat — placeholder for now.
-    bind_void(iso, ctx, obj, "waitingRoomToBgSingle");
-    bind_void(iso, ctx, obj, "waitingRoomToBg");
+    args::bind_method<BattlegroundHost>(iso, ctx, obj, this, "waitingRoomToBg",       &bg_waitingRoomToBg_cb);
+    args::bind_method<BattlegroundHost>(iso, ctx, obj, this, "waitingRoomToBgSingle", &bg_waitingRoomToBgSingle_cb);
 }
 
 namespace {
