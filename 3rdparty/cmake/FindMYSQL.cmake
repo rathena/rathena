@@ -11,6 +11,12 @@ find_path( MYSQL_INCLUDE_DIRS "mysql.h"
 		"/usr/include/mysql"
 		"/usr/local/include/mysql"
 		"/usr/mysql/include/mysql"
+		# Homebrew (Apple Silicon + Intel)
+		"/opt/homebrew/opt/mysql/include/mysql"
+		"/opt/homebrew/opt/mysql@8.4/include/mysql"
+		"/opt/homebrew/opt/mysql-client/include/mysql"
+		"/usr/local/opt/mysql/include/mysql"
+		"/usr/local/opt/mysql-client/include/mysql"
 		"$ENV{PROGRAMFILES}/MySQL/*/include"
 		"$ENV{SYSTEMDRIVE}/MySQL/*/include" )
 
@@ -20,6 +26,12 @@ find_library( MYSQL_LIBRARIES
 		"/usr/lib/mysql"
 		"/usr/local/lib/mysql"
 		"/usr/mysql/lib/mysql"
+		# Homebrew (Apple Silicon + Intel)
+		"/opt/homebrew/opt/mysql/lib"
+		"/opt/homebrew/opt/mysql@8.4/lib"
+		"/opt/homebrew/opt/mysql-client/lib"
+		"/usr/local/opt/mysql/lib"
+		"/usr/local/opt/mysql-client/lib"
 		"$ENV{PROGRAMFILES}/MySQL/*/lib"
 		"$ENV{SYSTEMDRIVE}/MySQL/*/lib" )
 mark_as_advanced( MYSQL_LIBRARIES  MYSQL_INCLUDE_DIRS )

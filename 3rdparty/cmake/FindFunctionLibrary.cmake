@@ -16,11 +16,17 @@
 include( CheckFunctionExists )
 
 macro( find_function_library FUNC VAR )
-	if( "${VAR}" MATCHES "^${VAR}$" )
+	# Guard against re-entry: the macro uses `0` as a sentinel meaning
+	# "found in global libraries, no extra link library needed", but on
+	# reconfigure CMake reads `0` and evaluates `if(0)` as false, sending
+	# us into the failure path even though we already succeeded. The
+	# _FOUND companion cache var pins down the "already passed" state.
+	if( NOT DEFINED ${VAR}_FOUND )
 		CHECK_FUNCTION_EXISTS( ${FUNC} ${VAR} )
 		if( ${VAR} )
 			message( STATUS "Found ${FUNC} in global libraries" )
 			set( ${VAR} 0 CACHE INTERNAL "Found ${FUNC} in global libraries" )# global
+			set( ${VAR}_FOUND TRUE CACHE INTERNAL "" )
 		else()
 			foreach( LIB IN ITEMS ${ARGN} )
 				message( STATUS "Looking for ${FUNC} in ${LIB}" )
@@ -34,6 +40,7 @@ macro( find_function_library FUNC VAR )
 					if( ${VAR} )
 						message( STATUS "Found ${FUNC} in ${LIB}: ${${LIB}_LIBRARY}" )
 						set( ${VAR} ${${LIB}_LIBRARY} CACHE INTERNAL "Found ${FUNC} in ${LIB}" )# lib
+						set( ${VAR}_FOUND TRUE CACHE INTERNAL "" )
 						break()
 					endif()
 				endif()

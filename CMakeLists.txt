@@ -232,6 +232,56 @@ endif()
 option( ENABLE_WEB_SERVER "Build web-server (default=ON)" ON )
 
 #
+# enable TypeScript scripting host (default=OFF)
+#
+# When ON, the map-server gains a V8-backed scripting layer that loads
+# a TS bundle at startup (default: ../npc-ts/dist/main.js) and lets
+# scripts register NPC handlers via `registerNpc({ ..., onClick })`.
+# See src/map/scripting/README.md for the full surface.
+#
+# Requires:
+#   - libv8 + libv8_libplatform on the system (e.g. `brew install v8`)
+#   - the v8pp headers (3rdparty/v8pp/src, see 3rdparty/v8pp/README.md)
+#
+option( ENABLE_TS_SCRIPTING "Build the V8 TypeScript scripting host (default=OFF)" OFF )
+if( ENABLE_TS_SCRIPTING )
+    find_package( V8 REQUIRED )
+    set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DHAVE_TS_SCRIPTING" )
+    # System V8 headers (Homebrew, modern Debian/Ubuntu) use C++20
+    # constructs (concept/requires, defaulted comparisons). Bump the
+    # whole project — V8 headers leak into ScriptHost public surfaces,
+    # so we can't isolate this to a sub-library.
+    set( CMAKE_CXX_STANDARD 20 )
+    set( CMAKE_CXX_STANDARD_REQUIRED ON )
+    # Embedder build flags MUST match the V8 library's build flags or
+    # V8::Initialize() aborts at runtime ("Embedder-vs-V8 build
+    # configuration mismatch"). Homebrew's V8 (and most distros' default
+    # builds) ship with pointer compression + sandbox + 31-bit SMIs on
+    # 64-bit ARCH enabled. If you link against a custom V8 built with a
+    # different config, override these via -DV8_COMPRESS_POINTERS=OFF
+    # etc.
+    # NOTE: Homebrew's V8 ships with COMPRESS_POINTERS=ON but SANDBOX=OFF.
+    # V8 hard-aborts at Initialize() on any mismatch — adjust per distro.
+    set( V8_COMPRESS_POINTERS    ON  CACHE BOOL "V8 was built with V8_COMPRESS_POINTERS" )
+    set( V8_ENABLE_SANDBOX       OFF CACHE BOOL "V8 was built with V8_ENABLE_SANDBOX" )
+    set( V8_31BIT_SMIS_ON_64BIT_ARCH ON CACHE BOOL "V8 was built with V8_31BIT_SMIS_ON_64BIT_ARCH" )
+    set( _TS_DEFS "${GLOBAL_DEFINITIONS} -DHAVE_TS_SCRIPTING" )
+    if( V8_COMPRESS_POINTERS )
+        set( _TS_DEFS "${_TS_DEFS} -DV8_COMPRESS_POINTERS" )
+    endif()
+    if( V8_ENABLE_SANDBOX )
+        set( _TS_DEFS "${_TS_DEFS} -DV8_ENABLE_SANDBOX" )
+    endif()
+    if( V8_31BIT_SMIS_ON_64BIT_ARCH )
+        set( _TS_DEFS "${_TS_DEFS} -DV8_31BIT_SMIS_ON_64BIT_ARCH" )
+    endif()
+    set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${_TS_DEFS}" )
+    message( STATUS "Enabled TS scripting host (V8 ${V8_LIBRARY}, v8pp ${V8PP_INCLUDE_DIR_RESOLVED})" )
+    message( STATUS "  → bumped CMAKE_CXX_STANDARD to 20 for V8 headers" )
+    message( STATUS "  → V8 build flags: COMPRESS_POINTERS=${V8_COMPRESS_POINTERS} ENABLE_SANDBOX=${V8_ENABLE_SANDBOX} 31BIT_SMIS=${V8_31BIT_SMIS_ON_64BIT_ARCH}" )
+endif()
+
+#
 # Test for big endian
 #
 TEST_BIG_ENDIAN( BIG_ENDIAN )
@@ -260,7 +310,12 @@ file( READ "${CMAKE_SOURCE_DIR}/3rdparty/cmake/tests/HAVE_MONOTONIC_CLOCK.c" _SO
 CHECK_C_SOURCE_RUNS( "${_SOURCE}" HAVE_MONOTONIC_CLOCK )
 if( HAVE_MONOTONIC_CLOCK )
 	message( STATUS "Check for monotonic clock - yes" )
-	set_property( CACHE GLOBAL_LIBRARIES    PROPERTY VALUE ${GLOBAL_LIBRARIES} ${RT_LIBRARY} )
+	# RT_LIBRARY is only present on Linux/Debian; macOS exposes
+	# clock_gettime via libSystem. Skip the append when not found
+	# so we don't leak a `RT_LIBRARY-NOTFOUND` token into the link line.
+	if( RT_LIBRARY )
+		set_property( CACHE GLOBAL_LIBRARIES    PROPERTY VALUE ${GLOBAL_LIBRARIES} ${RT_LIBRARY} )
+	endif()
 	set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DHAVE_MONOTONIC_CLOCK" )
 else()
 	message( STATUS "Check for monotonic clock - no" )
