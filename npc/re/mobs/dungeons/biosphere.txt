@@ -1,0 +1,45 @@
+//===== rAthena Script =======================================
+//= Varmundt's Biosphere 
+//===== Description: =========================================
+//= [Walkthrough Conversion]
+//= Varmundt's Biosphere dungeons Monster Spawn Script.
+//= Note: Boss respawn time is unknown.
+//===== Changelog: ===========================================
+//= 1.0 First version. [Capuche]
+//============================================================
+
+bl_death	monster	--ja--	21572,30	//  ECO_ANCIENT_MUMMY
+bl_death	monster	--ja--	21573,35	//  ECO_LUDE
+bl_death	monster	--ja--	21574,30	//  ECO_RAGGED_ZOMBIE
+bl_death	monster	--ja--	21575,35	//  ECO_WRAITH
+bl_death	monster	--ja--	21576,35	//  ECO_FLAME_SKULL
+bl_death	monster	--ja--	21577,45	//  ECO_BANSHEE
+bl_death	monster	--ja--	21578,15	//  ECO_KNIGHT_OF_ABYSS
+bl_death	boss_monster	--ja--	21579,1,21600000,600000,0	//  ECO_LORD_OF_DEATH
+
+bl_grass	monster	--ja--	21548,40	//  ECO_CORNUS
+bl_grass	monster	--ja--	21549,45	//  ECO_PINGUICULA
+bl_grass	monster	--ja--	21550,25	//  ECO_HUNTER_FLY
+bl_grass	monster	--ja--	21551,40	//  ECO_ROCKER
+bl_grass	monster	--ja--	21552,40	//  ECO_SAVAGE
+bl_grass	monster	--ja--	21553,25	//  ECO_FLORA
+bl_grass	monster	--ja--	21554,45	//  ECO_HILL_WIND
+bl_grass	boss_monster	--ja--	21555,1,21600000,600000,0	//  ECO_MISTRESS
+
+bl_ice	monster	--ja--	21564,35	//  ECO_ICE_TITAN
+bl_ice	monster	--ja--	21565,35	//  ECO_SIROMA
+bl_ice	monster	--ja--	21566,35	//  ECO_SNOWIER
+bl_ice	monster	--ja--	21567,35	//  ECO_CENTIPEDE
+bl_ice	monster	--ja--	21568,45	//  ECO_AQUA_ELEMENTAL
+bl_ice	monster	--ja--	21569,25	//  ECO_ANGELGOLT
+bl_ice	monster	--ja--	21570,15	//  ECO_RHYNCHO
+bl_ice	boss_monster	--ja--	21571,1,21600000,600000,0	//  ECO_KTULLANUX
+
+bl_lava	monster	--ja--	21556,40	//  ECO_EXPLOSION
+bl_lava	monster	--ja--	21557,40	//  ECO_DELETER
+bl_lava	monster	--ja--	21558,30	//  ECO_JAKK
+bl_lava	monster	--ja--	21559,35	//  ECO_LAVA_GOLEM
+bl_lava	monster	--ja--	21560,30	//  ECO_MAJORUROS
+bl_lava	monster	--ja--	21561,15	//  ECO_HYDRO
+bl_lava	monster	--ja--	21562,35	//  ECO_ACIDUS
+bl_lava	boss_monster	--ja--	21563,1,21600000,600000,0	//  ECO_DETALE
