@@ -115,7 +115,8 @@ export interface NpcContext {
     /**
      * Numeric input dialog. The client shows a number-only field.
      *
-     * Mirrors rAthena's `input`. NOT YET WIRED — stub returns undefined.
+     * Mirrors rAthena's `input`. Suspends until the client returns the
+     * entered integer; the auto-await transform makes this read as sync.
      *
      * @param min Lower bound (inclusive). Default 0.
      * @param max Upper bound (inclusive). Default `INT32_MAX`.
@@ -130,7 +131,8 @@ export interface NpcContext {
     input(min?: number, max?: number, defaultValue?: number): number;
 
     /**
-     * Text input dialog (free-form string). NOT YET WIRED — stub.
+     * Text input dialog (free-form string). Suspends until the client
+     * sends the typed text back.
      *
      * @param defaultValue Pre-filled string.
      * @returns The entered text.
