@@ -163,6 +163,18 @@ v8::Local<v8::Promise> DialogContext::close(v8::Isolate* iso) {
     return arm_pending(iso, iso->GetCurrentContext(), session_, PendingKind::Close);
 }
 
+v8::Local<v8::Promise> DialogContext::input(v8::Isolate* iso) {
+    sd_.state.menu_or_input = 1;
+    clif_scriptinput(sd_, static_cast<uint32>(nd_.bl.id));
+    return arm_pending(iso, iso->GetCurrentContext(), session_, PendingKind::Input);
+}
+
+v8::Local<v8::Promise> DialogContext::inputString(v8::Isolate* iso) {
+    sd_.state.menu_or_input = 1;
+    clif_scriptinputstr(sd_, static_cast<uint32>(nd_.bl.id));
+    return arm_pending(iso, iso->GetCurrentContext(), session_, PendingKind::InputStr);
+}
+
 // ---- JS wrapper construction ----------------------------------------------
 
 v8::Local<v8::Object> DialogContext::to_js(v8::Isolate* iso, v8::Local<v8::Context> ctx) {
@@ -291,6 +303,11 @@ v8::Local<v8::Object> DialogContext::to_js(v8::Isolate* iso, v8::Local<v8::Conte
 // here rather than in a separate host class.
 
 namespace {
+DialogContext* unwrap_dialog(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto ext = v8::Local<v8::External>::Cast(info.Data());
+    return static_cast<DialogContext*>(ext->Value(v8::kExternalPointerTypeTagDefault));
+}
+
 void rand_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     using namespace args;
     int max = int_arg(info, 0, 1);
@@ -304,14 +321,25 @@ void randRange_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     if (hi < lo) std::swap(lo, hi);
     ret_int(info, rnd_value<int>(lo, hi));
 }
+void input_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = unwrap_dialog(info);
+    if (!self) { args::ret_int(info, 0); return; }
+    info.GetReturnValue().Set(self->input(info.GetIsolate()));
+}
+void inputString_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = unwrap_dialog(info);
+    if (!self) { args::ret_str(info, ""); return; }
+    info.GetReturnValue().Set(self->inputString(info.GetIsolate()));
+}
+void doevent_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = unwrap_dialog(info);
+    if (!self) return;
+    auto ev = args::str_arg(info, 0);
+    if (!ev.empty()) npc_event(&self->sd(), ev.c_str(), 0);
+}
 void flow_void_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
-    (void)info;  // input / inputString / sleep / doevent / timers / end / clear
-}
-void flow_zero_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
-    args::ret_int(info, 0);
-}
-void flow_str_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
-    args::ret_str(info, "");
+    (void)info;  // sleep / timers / end / clear — see comment in
+                 // bind_flow_utils below for why each is still a stub.
 }
 void flow_undefined_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     info.GetReturnValue().SetUndefined();
@@ -328,10 +356,16 @@ void DialogContext::bind_flow_utils(v8::Isolate* iso, v8::Local<v8::Context> ctx
     };
     bind("rand",            &rand_cb);
     bind("randRange",       &randRange_cb);
-    bind("input",           &flow_zero_cb);
-    bind("inputString",     &flow_str_cb);
+    bind("input",           &input_cb);
+    bind("inputString",     &inputString_cb);
+    bind("doevent",         &doevent_cb);
+    // sleep / addTimer / delTimer / addPlayerTimer / end / clear / callfunc:
+    // all need additional plumbing — sleep needs a timer + microtask hop;
+    // addTimer / delTimer hook into the npc timer subsystem (timerid /
+    // timeramount fields); end terminates the dialog without sending
+    // close; callfunc dispatches by name into a TS-side function registry.
+    // Keep as void stubs until each one is actually needed by a script.
     bind("sleep",           &flow_void_cb);
-    bind("doevent",         &flow_void_cb);
     bind("addTimer",        &flow_void_cb);
     bind("delTimer",        &flow_void_cb);
     bind("addPlayerTimer",  &flow_void_cb);

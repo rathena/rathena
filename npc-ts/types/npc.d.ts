@@ -154,8 +154,7 @@ export interface NpcContext {
     sleep(milliseconds: number): void;
 
     /**
-     * Fire an event label on another (floating or placed) NPC. NOT YET
-     * WIRED — stub.
+     * Fire an event label on another (floating or placed) NPC.
      *
      * Mirrors rAthena's `doevent`.
      *

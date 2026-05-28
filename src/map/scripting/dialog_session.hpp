@@ -24,9 +24,11 @@ class DialogContext;
 
 enum class PendingKind {
     None,
-    Next,   // ctx.next() — resume with `undefined`
-    Menu,   // ctx.select(...) — resume with the chosen index (0-based)
-    Close,  // ctx.close() — resume with `undefined`, then teardown
+    Next,    // ctx.next() — resume with `undefined`
+    Menu,    // ctx.select(...) — resume with the chosen index (0-based)
+    Input,   // ctx.input() — resume with the entered integer
+    InputStr,// ctx.inputString() — resume with the entered string
+    Close,   // ctx.close() — resume with `undefined`, then teardown
 };
 
 // One per in-flight TS dialog. Lives from onClick until the script

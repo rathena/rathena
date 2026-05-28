@@ -49,6 +49,12 @@ public:
     v8::Local<v8::Promise> next(v8::Isolate* iso);
     v8::Local<v8::Promise> select(v8::Isolate* iso, v8::Local<v8::Value> options);
     v8::Local<v8::Promise> close(v8::Isolate* iso);
+    v8::Local<v8::Promise> input(v8::Isolate* iso);        // returns int
+    v8::Local<v8::Promise> inputString(v8::Isolate* iso);  // returns string
+
+    // Accessors for the top-level flow callbacks (doevent etc).
+    map_session_data& sd() { return sd_; }
+    npc_data& nd() { return nd_; }
 
     // Build a freshly-allocated JS object that proxies into this C++
     // DialogContext. Used by ScriptHost when invoking onClick.

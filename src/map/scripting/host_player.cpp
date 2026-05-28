@@ -1152,39 +1152,54 @@ void PlayerHost::clanLeave_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  
 void PlayerHost::cameraInfo_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  { ret_null(info); }
 
 // =====================================================================
-// `ctx.player.perm` — proxy backed by character-permanent regs.
-// Reading returns int (or 0) — keep simple; the d.ts says number|string,
-// but lib/player.bumpPermCounter coerces to Number anyway and integer
-// regs are what rAthena persists across logout.
+// `ctx.player.{perm,session,account,accountGlobal}` — proxies backed by
+// rAthena's reg scopes:
+//   perm           → no prefix       (character permanent — saved on logout)
+//   session        → "@" prefix      (character temporary — not saved)
+//   account        → "#" prefix      (account permanent)
+//   accountGlobal  → "##" prefix     (cross-server account permanent)
+// Reading returns int (or 0); writing stores int. Strings round-trip
+// through Number() — what lib/player and Prometheus assume anyway.
 // =====================================================================
 
 namespace {
-v8::Intercepted perm_getter(v8::Local<v8::Name> property,
-                            const v8::PropertyCallbackInfo<v8::Value>& info) {
+// VarProxySlot is now declared in the header so std::unique_ptr in
+// PlayerHost::slots_ can destruct it. The struct stays trivial.
+
+std::string scoped_name(const char* prefix, const char* key) {
+    std::string out;
+    out.reserve(strlen(prefix) + strlen(key));
+    out.append(prefix);
+    out.append(key);
+    return out;
+}
+
+v8::Intercepted var_getter(v8::Local<v8::Name> property,
+                           const v8::PropertyCallbackInfo<v8::Value>& info) {
     auto* iso = info.GetIsolate();
     auto ext = v8::Local<v8::External>::Cast(info.Data());
-    auto* host = static_cast<PlayerHost*>(ext->Value(v8::kExternalPointerTypeTagDefault));
-    if (!host) return v8::Intercepted::kNo;
+    auto* slot = static_cast<VarProxySlot*>(ext->Value(v8::kExternalPointerTypeTagDefault));
+    if (!slot || !slot->host) return v8::Intercepted::kNo;
     v8::String::Utf8Value name(iso, property);
-    if (*name == nullptr) return v8::Intercepted::kNo;
-    // Skip reserved JS internals (then/Symbol.* lookups arrive as Names).
-    if ((*name)[0] == 0) return v8::Intercepted::kNo;
-    int64 v = pc_readreg2(&host->sd(), *name);
+    if (*name == nullptr || (*name)[0] == 0) return v8::Intercepted::kNo;
+    auto full = scoped_name(slot->prefix, *name);
+    int64 v = pc_readreg2(&slot->host->sd(), full.c_str());
     info.GetReturnValue().Set(v8::Integer::New(iso, static_cast<int32_t>(v)));
     return v8::Intercepted::kYes;
 }
 
-v8::Intercepted perm_setter(v8::Local<v8::Name> property,
-                            v8::Local<v8::Value> value,
-                            const v8::PropertyCallbackInfo<v8::Boolean>& info) {
+v8::Intercepted var_setter(v8::Local<v8::Name> property,
+                           v8::Local<v8::Value> value,
+                           const v8::PropertyCallbackInfo<v8::Boolean>& info) {
     auto* iso = info.GetIsolate();
     auto ext = v8::Local<v8::External>::Cast(info.Data());
-    auto* host = static_cast<PlayerHost*>(ext->Value(v8::kExternalPointerTypeTagDefault));
-    if (!host) return v8::Intercepted::kNo;
+    auto* slot = static_cast<VarProxySlot*>(ext->Value(v8::kExternalPointerTypeTagDefault));
+    if (!slot || !slot->host) return v8::Intercepted::kNo;
     v8::String::Utf8Value name(iso, property);
     if (*name == nullptr || (*name)[0] == 0) return v8::Intercepted::kNo;
+    auto full = scoped_name(slot->prefix, *name);
     int64 v = value->IntegerValue(iso->GetCurrentContext()).FromMaybe(0);
-    pc_setreg2(&host->sd(), *name, v);
+    pc_setreg2(&slot->host->sd(), full.c_str(), v);
     info.GetReturnValue().Set(true);
     return v8::Intercepted::kYes;
 }
@@ -1192,12 +1207,23 @@ v8::Intercepted perm_setter(v8::Local<v8::Name> property,
 
 void PlayerHost::install_perm_proxy(v8::Isolate* iso, v8::Local<v8::Context> ctx,
                                     v8::Local<v8::Object> obj) {
-    auto tmpl = v8::ObjectTemplate::New(iso);
-    auto data = v8::External::New(iso, this, v8::kExternalPointerTypeTagDefault);
-    tmpl->SetHandler(v8::NamedPropertyHandlerConfiguration(
-        perm_getter, perm_setter, nullptr, nullptr, nullptr, data));
-    auto inst = tmpl->NewInstance(ctx).ToLocalChecked();
-    (void)obj->Set(ctx, v8::String::NewFromUtf8(iso, "perm").ToLocalChecked(), inst);
+    auto install = [&](const char* key, const char* prefix) {
+        // The slot lives as long as the PlayerHost — the slots_ vector
+        // owns it so callbacks can dereference safely across the click's
+        // lifetime.
+        slots_.push_back(std::make_unique<VarProxySlot>(VarProxySlot{this, prefix}));
+        auto tmpl = v8::ObjectTemplate::New(iso);
+        auto data = v8::External::New(iso, slots_.back().get(),
+                                      v8::kExternalPointerTypeTagDefault);
+        tmpl->SetHandler(v8::NamedPropertyHandlerConfiguration(
+            var_getter, var_setter, nullptr, nullptr, nullptr, data));
+        auto inst = tmpl->NewInstance(ctx).ToLocalChecked();
+        (void)obj->Set(ctx, v8::String::NewFromUtf8(iso, key).ToLocalChecked(), inst);
+    };
+    install("perm",          "");    // character permanent
+    install("session",       "@");   // character temp
+    install("account",       "#");   // account perm
+    install("accountGlobal", "##");  // cross-server account perm
 }
 
 // =====================================================================

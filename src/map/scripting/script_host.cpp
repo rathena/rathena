@@ -218,9 +218,11 @@ bool ScriptHostImpl::dispatch_npc_resume(map_session_data& sd, int npc_id, bool 
     }
     const char* kind_str = "?";
     switch (session->pending_kind) {
-        case PendingKind::Next:  kind_str = "next"; break;
-        case PendingKind::Menu:  kind_str = "menu"; break;
-        case PendingKind::Close: kind_str = "close"; break;
+        case PendingKind::Next:     kind_str = "next"; break;
+        case PendingKind::Menu:     kind_str = "menu"; break;
+        case PendingKind::Input:    kind_str = "input"; break;
+        case PendingKind::InputStr: kind_str = "inputStr"; break;
+        case PendingKind::Close:    kind_str = "close"; break;
         default: break;
     }
     ShowStatus("[ts-scripting] resume %s for aid=%d npc=%d closing=%d npc_menu=%d\n",
@@ -243,6 +245,10 @@ bool ScriptHostImpl::dispatch_npc_resume(map_session_data& sd, int npc_id, bool 
         int chosen = sd.npc_menu;
         int normalized = (chosen == 0xff) ? -1 : (chosen - 1);
         resume_value = v8::Integer::New(isolate_, normalized);
+    } else if (kind == PendingKind::Input) {
+        resume_value = v8::Integer::New(isolate_, sd.npc_amount);
+    } else if (kind == PendingKind::InputStr) {
+        resume_value = v8::String::NewFromUtf8(isolate_, sd.npc_str).ToLocalChecked();
     }
 
     v8::TryCatch try_catch(isolate_);

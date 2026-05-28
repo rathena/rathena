@@ -16,16 +16,16 @@ export interface QuestOps {
     /**
      * Add a quest to the player's log.
      *
-     * Mirrors rAthena's `setquest`. NOT YET WIRED — stub.
+     * Mirrors rAthena's `setquest`.
      *
      * @example ctx.player.quest.add(7001);
      */
     add(questId: number): void;
-    /** Mark a quest as complete. NOT YET WIRED — stub. */
+    /** Mark a quest as complete. */
     complete(questId: number): void;
-    /** Remove a quest from the log. NOT YET WIRED — stub. */
+    /** Remove a quest from the log. */
     erase(questId: number): void;
-    /** Replace one quest entry with another. NOT YET WIRED — stub. */
+    /** Replace one quest entry with another. */
     change(fromId: number, toId: number): void;
     /**
      * Query quest progress.
@@ -36,13 +36,13 @@ export interface QuestOps {
      * @returns 0 = not active, 1 = active, 2 = completed.
      */
     check(questId: number, mode?: "any" | "playtime" | "hunting"): number;
-    /** True if the quest is currently in the BEGIN state. NOT YET WIRED — stub. */
+    /** True if the quest is currently in the BEGIN state. */
     isBegin(questId: number): boolean;
-    /** Show a quest-marker on the NPC head. NOT YET WIRED — stub. */
+    /** Show a quest-marker on the NPC head. */
     showEvent(icon: number, markColor?: number): void;
-    /** Force the client to re-fetch its quest list. NOT YET WIRED — stub. */
+    /** Force the client to re-fetch its quest list. */
     refreshInfo(): void;
-    /** Show a navigation marker tied to a quest. NOT YET WIRED — stub. */
+    /** Show a navigation marker tied to a quest. */
     showInfo(icon: number, markColor?: number, condition?: string): void;
 }
 
@@ -54,17 +54,17 @@ export interface QuestOps {
  * Achievement system. Accessed as `ctx.player.achievement`.
  */
 export interface AchievementOps {
-    /** Grant the achievement. NOT YET WIRED — stub. */
+    /** Grant the achievement. */
     add(achievementId: number): void;
-    /** Revoke. NOT YET WIRED — stub. */
+    /** Revoke. */
     remove(achievementId: number): void;
-    /** Mark as complete. NOT YET WIRED — stub. */
+    /** Mark as complete. */
     complete(achievementId: number): void;
-    /** True if the player has the achievement (any state). NOT YET WIRED — stub. */
+    /** True if the player has the achievement (any state). */
     exists(achievementId: number): boolean;
-    /** Read an achievement field by type code. NOT YET WIRED — stub. */
+    /** Read an achievement field by type code. */
     info(achievementId: number, type: number): number;
-    /** Bump a tracker counter (kill N of mob X, etc). NOT YET WIRED — stub. */
+    /** Bump a tracker counter (kill N of mob X, etc). */
     update(achievementId: number, type: number, value: number): void;
 }
 
@@ -77,19 +77,19 @@ export interface AchievementOps {
  * opening from a script, see also `ctx.player.openStorage()`.
  */
 export interface StorageOps {
-    /** Open the storage window. NOT YET WIRED — stub. */
+    /** Open the storage window. */
     open(mode?: number): void;
-    /** Open an extended storage (premium/event). NOT YET WIRED — stub. */
+    /** Open an extended storage (premium/event). */
     openExtra(storageId: number, mode?: number): void;
-    /** Count items in storage. NOT YET WIRED — stub. */
+    /** Count items in storage. */
     countItem(itemId: number, opts?: ItemOpts): number;
-    /** Remove from storage. NOT YET WIRED — stub. */
+    /** Remove from storage. */
     delItem(itemId: number, amount: number, opts?: ItemOpts): void;
-    /** Open the guild's shared storage. NOT YET WIRED — stub. */
+    /** Open the guild's shared storage. */
     openGuildStorage(): void;
     countGuildItem(itemId: number, opts?: ItemOpts): number;
     delGuildItem(itemId: number, amount: number, opts?: ItemOpts): void;
-    /** Read the guild-storage audit log. NOT YET WIRED — stub. */
+    /** Read the guild-storage audit log. */
     guildLog(): unknown[];
 }
 
@@ -111,7 +111,7 @@ export interface CartOps {
 // ============================================================================
 
 export interface MailOps {
-    /** Open the mailbox UI. NOT YET WIRED — stub. */
+    /** Open the mailbox UI. */
     open(): void;
 }
 
@@ -126,14 +126,14 @@ export interface MailOps {
  * declarations in `db/(pre-)re/pet_db.yml`.
  */
 export interface PetOps {
-    /** Attempt to catch a wild pet. NOT YET WIRED — stub. */
+    /** Attempt to catch a wild pet. */
     catchPet(itemId: number, flag?: number): void;
-    /** Spawn an egg item for the pet id. NOT YET WIRED — stub. */
+    /** Spawn an egg item for the pet id. */
     makePet(petId: number): void;
-    /** Hatch the player's first un-hatched egg. NOT YET WIRED — stub. */
+    /** Hatch the player's first un-hatched egg. */
     birthPet(): void;
     openIncubator(): void;
-    /** Read pet info by type code (mirrors `getpetinfo`). NOT YET WIRED — stub. */
+    /** Read pet info by type code (mirrors `getpetinfo`). */
     info(type: number): unknown;
     /** Pet AI: timed stat bonus. */
     skillBonus(bonusType: number, value: number, durationMs: number, delayMs: number): void;
@@ -159,15 +159,15 @@ export interface HomOps {
     exists(): boolean;
     isCalled(): boolean;
     info(type: number): unknown;
-    /** Evolve from baby form. NOT YET WIRED — stub. */
+    /** Evolve from baby form. */
     evolve(): void;
-    /** Apply a Mutate (homunculus S). NOT YET WIRED — stub. */
+    /** Apply a Mutate (homunculus S). */
     morph(): void;
-    /** Mutate into a specific form by id. NOT YET WIRED — stub. */
+    /** Mutate into a specific form by id. */
     mutate(id?: number): void;
-    /** Re-roll Homunculus stats. NOT YET WIRED — stub. */
+    /** Re-roll Homunculus stats. */
     shuffle(): void;
-    /** Adjust intimacy points. NOT YET WIRED — stub. */
+    /** Adjust intimacy points. */
     addIntimacy(amount: number): void;
 }
 
@@ -179,12 +179,12 @@ export interface HomOps {
  * Mercenary ops. Accessed as `ctx.player.merc`.
  */
 export interface MercOps {
-    /** Hire a mercenary for `contractTimeSec` seconds. NOT YET WIRED — stub. */
+    /** Hire a mercenary for `contractTimeSec` seconds. */
     create(classId: number, contractTimeSec: number): void;
-    /** Dismiss the active mercenary. NOT YET WIRED — stub. */
+    /** Dismiss the active mercenary. */
     delete(reply?: number): void;
     heal(hp: number, sp?: number): void;
-    /** Apply a status effect to the mercenary. NOT YET WIRED — stub. */
+    /** Apply a status effect to the mercenary. */
     scStart(type: number, durationMs: number, val1: number): void;
     /** Total kill count for a guild type (1 = neutral, 2 = morocc, 3 = orc). */
     getCalls(guildType: number): number;
@@ -192,7 +192,7 @@ export interface MercOps {
     /** Faith score for a guild type. */
     getFaith(guildType: number): number;
     setFaith(guildType: number, value: number): void;
-    /** Read mercenary info by type code. NOT YET WIRED — stub. */
+    /** Read mercenary info by type code. */
     info(type: number): unknown;
     elementalInfo(type: number): unknown;
 }

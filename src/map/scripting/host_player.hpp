@@ -10,11 +10,24 @@
 
 #ifdef HAVE_TS_SCRIPTING
 
+#include <memory>
 #include <v8.h>
+#include <vector>
 
 struct map_session_data;
 
 namespace rathena::scripting {
+
+class PlayerHost;
+
+// One slot per var-bag proxy on ctx.player (perm / session / account /
+// accountGlobal). The External pointer in each property-handler
+// callback dereferences into this; the host owns the slots so they
+// outlive every JS access for the dialog's lifetime.
+struct VarProxySlot {
+    PlayerHost* host;
+    const char* prefix;
+};
 
 class PlayerHost {
 public:
@@ -26,9 +39,10 @@ public:
     void install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx,
                            v8::Local<v8::Object> obj);
 
-    // Install `ctx.player.perm` — a JS proxy that reads/writes character-
-    // permanent regs (`pc_setreg2` / `pc_readreg2`). Called from
-    // install_on_object after the regular method bindings.
+    // Install `ctx.player.{perm,session,account,accountGlobal}` — JS
+    // proxies that read/write rAthena's reg scopes via pc_setreg2 /
+    // pc_readreg2. Called from install_on_object after the regular
+    // method bindings.
     void install_perm_proxy(v8::Isolate* iso, v8::Local<v8::Context> ctx,
                             v8::Local<v8::Object> obj);
 
@@ -36,6 +50,10 @@ public:
 
 private:
     map_session_data& sd_;
+    // One slot per var-bag proxy (perm/session/account/accountGlobal).
+    // External pointers in V8 callbacks dereference into these — they
+    // must outlive every JS access, so the host owns them.
+    std::vector<std::unique_ptr<VarProxySlot>> slots_;
 
     // V8 callbacks. Each is a static thunk that unwraps `this` from
     // FunctionCallbackInfo::Data and forwards to a member function.

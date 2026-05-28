@@ -107,7 +107,7 @@ export interface PlayerContext {
     /**
      * Restore HP and (optionally) SP. Bypasses the no-heal mapflag.
      *
-     * Mirrors rAthena's `heal`. NOT YET WIRED — stub.
+     * Mirrors rAthena's `heal`.
      *
      * @param hp Amount of HP to restore. Negative damages.
      * @param sp Amount of SP to restore.
@@ -117,19 +117,19 @@ export interface PlayerContext {
      */
     heal(hp: number, sp?: number): void;
 
-    /** Restore activity points (4th-job). NOT YET WIRED — stub. */
+    /** Restore activity points (4th-job). */
     healAp(ap: number): void;
 
     /**
      * Heal as if from an item — respects no-heal mapflags and uses
-     * itemheal_rate / vit_def_rate. NOT YET WIRED — stub.
+     * itemheal_rate / vit_def_rate.
      *
      * Mirrors rAthena's `itemheal`.
      */
     itemHeal(hp: number, sp: number): void;
 
     /**
-     * Heal by percentage of max. NOT YET WIRED — stub.
+     * Heal by percentage of max.
      *
      * Mirrors rAthena's `percentheal`.
      *
@@ -140,7 +140,7 @@ export interface PlayerContext {
 
     /**
      * Composite "revive / restore" op — same parameter shape as
-     * rAthena's `recovery`. NOT YET WIRED — stub.
+     * rAthena's `recovery`.
      *
      * @param type Recovery target type (0 = self, 1 = party, 2 = guild, 3 = map, …).
      */
@@ -152,7 +152,6 @@ export interface PlayerContext {
      * Award base / job experience.
      *
      * Mirrors rAthena's `getexp` (+ `getexp2` when both are negative).
-     * NOT YET WIRED — stub.
      *
      * @param baseExp Base XP to award.
      * @param jobExp Job XP to award.
@@ -163,9 +162,9 @@ export interface PlayerContext {
      */
     giveExp(baseExp: number, jobExp: number, opts?: { quest?: boolean }): void;
 
-    /** % of the current level's base XP per unit. NOT YET WIRED — stub. */
+    /** % of the current level's base XP per unit. */
     baseExpRatio(percent: number, level?: number): number;
-    /** Same as `baseExpRatio` but for job XP. NOT YET WIRED — stub. */
+    /** Same as `baseExpRatio` but for job XP. */
     jobExpRatio(percent: number, level?: number): number;
 
     // ========== Job / class ================================================
@@ -173,12 +172,12 @@ export interface PlayerContext {
     /**
      * Change the player's job/class.
      *
-     * Mirrors rAthena's `jobchange`. NOT YET WIRED — stub.
+     * Mirrors rAthena's `jobchange`.
      */
     jobChange(jobId: number, opts?: { upper?: number }): void;
     changeBase(classId: number): void;
     changeSex(): void;
-    /** Human-readable name of a job id. NOT YET WIRED — stub. */
+    /** Human-readable name of a job id. */
     jobName(jobId: number): string;
 
     // ========== Movement ===================================================
@@ -186,7 +185,7 @@ export interface PlayerContext {
     /**
      * Teleport the player to a specific map+tile.
      *
-     * Mirrors rAthena's `warp`. NOT YET WIRED — stub.
+     * Mirrors rAthena's `warp`.
      *
      * @example
      * ctx.player.warp("prontera", 156, 191);
@@ -198,16 +197,16 @@ export interface PlayerContext {
     /**
      * Set the player's respawn point.
      *
-     * Mirrors rAthena's `savepoint`. NOT YET WIRED — stub.
+     * Mirrors rAthena's `savepoint`.
      */
     savePoint(map: string, x: number, y: number, rangeX?: number, rangeY?: number): void;
-    /** Alias of {@link savePoint}. NOT YET WIRED — stub. */
+    /** Alias of {@link savePoint}. */
     save(map: string, x: number, y: number): void;
-    /** Read the player's save point. NOT YET WIRED — stub. */
+    /** Read the player's save point. */
     getSavePoint(): { map: string; x: number; y: number } | null;
-    /** Push the player N cells in a direction. NOT YET WIRED — stub. */
+    /** Push the player N cells in a direction. */
     pushPc(direction: number, cells: number): void;
-    /** Warp the player's spouse to the same destination. NOT YET WIRED — stub. */
+    /** Warp the player's spouse to the same destination. */
     warpPartner(map: string, x: number, y: number): void;
 
     // ========== Items: give / take / count =================================
@@ -215,7 +214,7 @@ export interface PlayerContext {
     /**
      * Give an item to the player.
      *
-     * Mirrors rAthena's `getitem`. NOT YET WIRED — stub.
+     * Mirrors rAthena's `getitem`.
      *
      * @param itemId rAthena `item_db.id`.
      * @param amount Quantity (default 1).
@@ -227,31 +226,31 @@ export interface PlayerContext {
      * ctx.player.giveItem(1124, 1, { cards: [4001, 4001, 4001, 4001] });
      */
     giveItem(itemId: number, amount?: number, opts?: ItemOpts): void;
-    /** Give a time-limited rental item. NOT YET WIRED — stub. */
+    /** Give a time-limited rental item. */
     giveRentItem(itemId: number, seconds: number, opts?: ItemOpts): void;
-    /** Give an item with a custom inscription. NOT YET WIRED — stub. */
+    /** Give an item with a custom inscription. */
     giveNamedItem(itemId: number, inscribeName: string): void;
-    /** Draw a random item from a group. NOT YET WIRED — stub. */
+    /** Draw a random item from a group. */
     giveRandomGroupItem(groupId: number, qty?: number, opts?: { subGroup?: number; identify?: boolean }): void;
-    /** Give every item in a group. NOT YET WIRED — stub. */
+    /** Give every item in a group. */
     giveGroupItem(groupId: number, opts?: { identify?: boolean }): void;
 
     /**
      * Remove items from the player's inventory.
      *
-     * Mirrors rAthena's `delitem`. NOT YET WIRED — stub.
+     * Mirrors rAthena's `delitem`.
      *
      * @example
      * ctx.player.delItem(501, 1);  // consume one Red Potion
      */
     delItem(itemId: number, amount?: number, opts?: ItemOpts): void;
-    /** Remove items by inventory index. NOT YET WIRED — stub. */
+    /** Remove items by inventory index. */
     delItemAtIndex(index: number, amount?: number): void;
 
     /**
      * Count items in the player's inventory.
      *
-     * Mirrors rAthena's `countitem`. NOT YET WIRED — stub.
+     * Mirrors rAthena's `countitem`.
      *
      * @example
      * if (ctx.player.countItem(501) >= 5) {
@@ -259,76 +258,76 @@ export interface PlayerContext {
      * }
      */
     countItem(itemId: number, opts?: ItemOpts): number;
-    /** Count account-/character-/guild-bound items. NOT YET WIRED — stub. */
+    /** Count account-/character-/guild-bound items. */
     countBound(boundType?: number): number;
-    /** True if the player has at least `amount` of the item. NOT YET WIRED — stub. */
+    /** True if the player has at least `amount` of the item. */
     hasItem(itemId: number, amount?: number, opts?: ItemOpts): boolean;
-    /** Wipe the player's entire inventory. NOT YET WIRED — stub. */
+    /** Wipe the player's entire inventory. */
     clearItems(): void;
-    /** Consume a single item (decrement by 1). NOT YET WIRED — stub. */
+    /** Consume a single item (decrement by 1). */
     consumeItem(itemId: number): void;
-    /** Item ids matching the name substring. NOT YET WIRED — stub. */
+    /** Item ids matching the name substring. */
     searchItem(namePart: string): number[];
-    /** Snapshot of the entire inventory. NOT YET WIRED — stub. */
+    /** Snapshot of the entire inventory. */
     getInventory(): InventoryEntry[];
-    /** Re-stack mergeable items. NOT YET WIRED — stub. */
+    /** Re-stack mergeable items. */
     mergeItems(itemId?: number): void;
-    /** Identify all unidentified items (or those of a specific type). NOT YET WIRED — stub. */
+    /** Identify all unidentified items (or those of a specific type). */
     identifyAll(type?: number): void;
-    /** Predicate: can the player carry N more of this item? NOT YET WIRED — stub. */
+    /** Predicate: can the player carry N more of this item? */
     checkWeight(itemId: number, amount: number, more?: Array<{ itemId: number; amount: number }>): boolean;
 
     // ========== Equipment ==================================================
 
-    /** Item id in equip slot. NOT YET WIRED — stub. */
+    /** Item id in equip slot. */
     getEquipId(slot: number): number;
-    /** Item name in equip slot. NOT YET WIRED — stub. */
+    /** Item name in equip slot. */
     getEquipName(slot: number): string;
-    /** Inventory unique id of the equipped item. NOT YET WIRED — stub. */
+    /** Inventory unique id of the equipped item. */
     getEquipUniqueId(slot: number): number;
-    /** Refine level of the equipped item. NOT YET WIRED — stub. */
+    /** Refine level of the equipped item. */
     getEquipRefine(slot: number): number;
     getEquipWeaponLv(slot?: number): number;
     getEquipArmorLv(slot?: number): number;
-    /** How many cards are slotted. NOT YET WIRED — stub. */
+    /** How many cards are slotted. */
     getEquipCardCount(slot: number): number;
-    /** Card id in a specific card slot. NOT YET WIRED — stub. */
+    /** Card id in a specific card slot. */
     getEquipCardId(slot: number, cardSlot: number): number;
-    /** Enchant grade for the slot. NOT YET WIRED — stub. */
+    /** Enchant grade for the slot. */
     getEnchantGrade(slot?: number): number;
-    /** True if anything is equipped in the slot. NOT YET WIRED — stub. */
+    /** True if anything is equipped in the slot. */
     isEquipped(slot: number): boolean;
     /** True if the slot's item is refinable. NOT YET WIRED — stub. */
     isEquipEnableRef(slot: number): boolean;
-    /** Inventory index of the slot's item. NOT YET WIRED — stub. */
+    /** Inventory index of the slot's item. */
     getItemPos(slot: number): number;
 
     /**
-     * Equip a specific item. NOT YET WIRED — stub.
+     * Equip a specific item.
      * Mirrors rAthena's `equip`.
      */
     equip(itemId: number): void;
-    /** Auto-equip an item on level-up. NOT YET WIRED — stub. */
+    /** Auto-equip an item on level-up. */
     autoEquip(itemId: number, enable: boolean): void;
-    /** Unequip the item in the slot. NOT YET WIRED — stub. */
+    /** Unequip the item in the slot. */
     unequip(slot: number): void;
-    /** Delete the item in the slot. NOT YET WIRED — stub. */
+    /** Delete the item in the slot. */
     delEquip(slot: number): void;
-    /** Break the item in the slot. NOT YET WIRED — stub. */
+    /** Break the item in the slot. */
     breakEquip(slot: number): void;
-    /** Refine up the slot's item. NOT YET WIRED — stub. */
+    /** Refine up the slot's item. */
     successRefine(slot: number, count?: number): void;
-    /** Refine fail (item breaks at the refine level). NOT YET WIRED — stub. */
+    /** Refine fail (item breaks at the refine level). */
     failRefine(slot: number): void;
-    /** Refine down. NOT YET WIRED — stub. */
+    /** Refine down. */
     downRefine(slot: number, count?: number): void;
-    /** Repair a specific broken item. NOT YET WIRED — stub. */
+    /** Repair a specific broken item. */
     repair(brokenIndex: number): void;
-    /** Repair every broken item. NOT YET WIRED — stub. */
+    /** Repair every broken item. */
     repairAll(): void;
-    /** Pop cards out of a slot. NOT YET WIRED — stub. */
+    /** Pop cards out of a slot. */
     removeCards(slot: number, success: boolean, type?: number): void;
-    /** Inventory id of a broken item. NOT YET WIRED — stub. */
+    /** Inventory id of a broken item. */
     getBrokenId(number: number): number;
 
     // ========== Skills =====================================================
@@ -336,16 +335,16 @@ export interface PlayerContext {
     /**
      * Skill level the player has (0 if not learned).
      *
-     * Mirrors rAthena's `getskilllv`. NOT YET WIRED — stub.
+     * Mirrors rAthena's `getskilllv`.
      */
     skillLv(skillId: number): number;
-    /** Grant / set a skill's level. NOT YET WIRED — stub. */
+    /** Grant / set a skill's level. */
     addSkill(skillId: number, level: number, opts?: { permanent?: boolean }): void;
-    /** Use a skill as if cast from an item (no SP cost). NOT YET WIRED — stub. */
+    /** Use a skill as if cast from an item (no SP cost). */
     itemSkill(skillId: number, level: number, keepRequirement?: boolean): void;
     getSkillList(): SkillEntry[];
     skillPointCount(): number;
-    /** Has Basic Skill (chat, party, trade, …). NOT YET WIRED — stub. */
+    /** Has Basic Skill (chat, party, trade, …). */
     basicSkillCheck(): boolean;
 
     // ========== Looks / mounts =============================================
@@ -353,13 +352,13 @@ export interface PlayerContext {
     /**
      * Change a "look" param (hair, clothes, weapon view, …).
      *
-     * Mirrors rAthena's `setlook` / `changelook`. NOT YET WIRED — stub.
+     * Mirrors rAthena's `setlook` / `changelook`.
      */
     setLook(type: number, value: number): void;
     changeLook(type: number, value: number): void;
     getLook(type: number): number;
     setFont(font: number): void;
-    /** Attach / detach a cart (and pick its sprite). NOT YET WIRED — stub. */
+    /** Attach / detach a cart (and pick its sprite). */
     setCart(type?: number): void;
     setFalcon(flag?: boolean): void;
     setRiding(flag?: boolean): void;
@@ -381,7 +380,7 @@ export interface PlayerContext {
     checkOption1(option: number): boolean;
     checkOption2(option: number): boolean;
     /**
-     * Apply a status effect. NOT YET WIRED — stub.
+     * Apply a status effect.
      *
      * Mirrors rAthena's `sc_start` family.
      *
@@ -389,26 +388,26 @@ export interface PlayerContext {
      * @param durationMs Effect duration.
      */
     scStart(type: number, durationMs: number, opts?: { val1?: number; val2?: number; val3?: number; val4?: number }): void;
-    /** End a status effect (or all if `type` omitted). NOT YET WIRED — stub. */
+    /** End a status effect (or all if `type` omitted). */
     scEnd(type?: number): void;
     /** Query a SC's runtime info. NOT YET WIRED — stub. */
     getStatus(effectType: number, infoType?: number): number;
-    /** True if the player is dead. NOT YET WIRED — stub. */
+    /** True if the player is dead. */
     isDead(): boolean;
-    /** Force a stat recalc. NOT YET WIRED — stub. */
+    /** Force a stat recalc. */
     recalculateStat(): void;
     /** Status points required to raise a stat to `value`. NOT YET WIRED — stub. */
     needStatusPoint(statType: number, value: number): number;
 
     // ========== Reset ======================================================
 
-    /** Reset all stat allocations and refund points. NOT YET WIRED — stub. */
+    /** Reset all stat allocations and refund points. */
     resetStatus(): void;
-    /** Reset all skills and refund points. NOT YET WIRED — stub. */
+    /** Reset all skills and refund points. */
     resetSkill(): void;
-    /** Reset the Star Gladiator feel-the-stars. NOT YET WIRED — stub. */
+    /** Reset the Star Gladiator feel-the-stars. */
     resetFeel(): void;
-    /** Reset the Star Gladiator hate-the-mob. NOT YET WIRED — stub. */
+    /** Reset the Star Gladiator hate-the-mob. */
     resetHate(): void;
 
     // ========== Display effects ============================================
@@ -416,33 +415,33 @@ export interface PlayerContext {
     /**
      * Show a server-side text message in the player's chat box.
      *
-     * Mirrors rAthena's `message`. NOT YET WIRED — stub.
+     * Mirrors rAthena's `message`.
      */
     message(text: string): void;
-    /** Bottom-of-screen message with optional color. NOT YET WIRED — stub. */
+    /** Bottom-of-screen message with optional color. */
     dispBottom(text: string, color?: number): void;
-    /** Show a quest-style "script" tooltip. NOT YET WIRED — stub. */
+    /** Show a quest-style "script" tooltip. */
     showScript(text: string, flag?: number): void;
-    /** Display a cutin BMP. NOT YET WIRED — stub. */
+    /** Display a cutin BMP. */
     cutin(filename: string, position: number): void;
-    /** Play an emotion (sweat drop, exclamation, …). NOT YET WIRED — stub. */
+    /** Play an emotion (sweat drop, exclamation, …). */
     emotion(emoNum: number, target?: number): void;
-    /** Play a misc effect by id. NOT YET WIRED — stub. */
+    /** Play a misc effect by id. */
     miscEffect(effectNum: number): void;
-    /** Play a sound effect file. NOT YET WIRED — stub. */
+    /** Play a sound effect file. */
     soundEffect(filename: string, type?: number): void;
-    /** Start playing a BGM file. NOT YET WIRED — stub. */
+    /** Start playing a BGM file. */
     playBgm(filename: string): void;
-    /** Display a map viewpoint marker. NOT YET WIRED — stub. */
+    /** Display a map viewpoint marker. */
     viewpoint(action: number, x: number, y: number, point: number, color: number): void;
-    /** Show a digit-roll overlay (lottery / quest). NOT YET WIRED — stub. */
+    /** Show a digit-roll overlay (lottery / quest). */
     showDigit(value: number, type?: number): void;
-    /** Toggle a hat effect. NOT YET WIRED — stub. */
+    /** Toggle a hat effect. */
     hatEffect(hatEffectId: number, state: boolean): void;
 
     // ========== UI windows =================================================
 
-    /** Open the storage window (mode = 0..N for kafra type). NOT YET WIRED — stub. */
+    /** Open the storage window (mode = 0..N for kafra type). */
     openStorage(mode?: number): void;
     openBank(): void;
     openMail(): void;
@@ -457,11 +456,11 @@ export interface PlayerContext {
     openLaphineUpgrade(): void;
     openItemEnchant(luaIndex: number): void;
     openItemReform(itemId?: number): void;
-    /** Special-popup macro hint. NOT YET WIRED — stub. */
+    /** Special-popup macro hint. */
     specialPopup(popupId: number): void;
-    /** Show a tip pop-up. NOT YET WIRED — stub. */
+    /** Show a tip pop-up. */
     openTips(tipId: number): void;
-    /** Open a book item. NOT YET WIRED — stub. */
+    /** Open a book item. */
     readBook(bookId: number, page?: number): void;
 
     // ========== Spirit balls ===============================================
@@ -475,18 +474,18 @@ export interface PlayerContext {
     getReputation(type: number): number;
     setReputation(type: number, points: number): void;
     addReputation(type: number, points: number): void;
-    /** Total fame score (sum across categories). NOT YET WIRED — stub. */
+    /** Total fame score (sum across categories). */
     getFame(): number;
     addFame(amount: number): void;
-    /** Rank position in the global fame list. NOT YET WIRED — stub. */
+    /** Rank position in the global fame list. */
     getFameRank(): number;
 
     // ========== Marriage / family ==========================================
 
-    /** Marry the named partner. NOT YET WIRED — stub. */
+    /** Marry the named partner. */
     marry(spouseName: string): void;
     divorce(): void;
-    /** Adopt — `parentName` must be married. NOT YET WIRED — stub. */
+    /** Adopt — `parentName` must be married. */
     adopt(parentName: string, babyName: string): void;
     getPartnerId(): number;
     getMotherId(): number;
@@ -497,7 +496,7 @@ export interface PlayerContext {
 
     // ========== Permissions ================================================
 
-    /** True if the player holds the named permission. NOT YET WIRED — stub. */
+    /** True if the player holds the named permission. */
     permissionCheck(permission: string): boolean;
     permissionAdd(permission: string): void;
     permissionRemove(permission: string): void;
@@ -506,20 +505,20 @@ export interface PlayerContext {
     // ========== VIP / macro ================================================
 
     vipStatus(type: number): number;
-    /** Award VIP time (in seconds). NOT YET WIRED — stub. */
+    /** Award VIP time (in seconds). */
     vipTime(seconds: number): void;
-    /** Force-trigger the anti-bot macro detector. NOT YET WIRED — stub. */
+    /** Force-trigger the anti-bot macro detector. */
     macroDetector(): void;
 
     // ========== Misc =======================================================
 
-    /** String info about the character (name, party name, guild, map, …). NOT YET WIRED — stub. */
+    /** String info about the character (name, party name, guild, map, …). */
     charInfo(type: number): string;
-    /** Read an SP_* param. NOT YET WIRED — stub. */
+    /** Read an SP_* param. */
     readParam(paramNumber: number): number;
     charId4Type(type: number): number;
     charIp(): string;
-    /** Kick the player from the server. NOT YET WIRED — stub. */
+    /** Kick the player from the server. */
     kick(): void;
     ignoreTimeout(flag: boolean): void;
     autoLoot(rate?: number): number;
@@ -529,7 +528,7 @@ export interface PlayerContext {
     checkVending(): boolean;
     checkChatting(): boolean;
     checkIdle(): boolean;
-    /** Show a navigation arrow to a map+tile. NOT YET WIRED — stub. */
+    /** Show a navigation arrow to a map+tile. */
     navigateTo(map: string, x?: number, y?: number, flag?: number, hideWindow?: boolean, monsterId?: number): void;
     clanJoin(clanId: number): void;
     clanLeave(): void;
