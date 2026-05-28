@@ -11,12 +11,15 @@
 #include "host_world.hpp"
 #include "js_object_reader.hpp"
 #include "player_binding.hpp"
+#include "npc_registry.hpp"
+#include "script_host.hpp"
 #include "../clif.hpp"
 #include "../map.hpp"
 #include "../npc.hpp"
 #include "../pc.hpp"
 #include "../../common/random.hpp"
 #include "../../common/showmsg.hpp"
+#include "../../common/timer.hpp"
 // Auto-generated header that defines surface_stubs::install_all().
 // Walks the api.d.ts interface tree and installs stub object
 // templates for every method we haven't hand-implemented. Lives at
@@ -173,6 +176,28 @@ v8::Local<v8::Promise> DialogContext::inputString(v8::Isolate* iso) {
     sd_.state.menu_or_input = 1;
     clif_scriptinputstr(sd_, static_cast<uint32>(nd_.bl.id));
     return arm_pending(iso, iso->GetCurrentContext(), session_, PendingKind::InputStr);
+}
+
+namespace { TIMER_FUNC(ts_sleep_timer_cb_fwd); } // defined further down
+
+v8::Local<v8::Promise> DialogContext::sleep(v8::Isolate* iso, int ms) {
+    auto promise = arm_pending(iso, iso->GetCurrentContext(), session_, PendingKind::Sleep);
+    add_timer(gettick() + ms, ts_sleep_timer_cb_fwd, sd_.bl.id, 0);
+    return promise;
+}
+
+v8::Local<v8::Promise> DialogContext::resolved(v8::Isolate* iso) {
+    return resolved_promise(iso, iso->GetCurrentContext());
+}
+
+void DialogContext::end_session() {
+    // The session is owned by ScriptHostImpl::sessions_. Clearing the
+    // sd's npc_id is enough — the next click will start fresh, and
+    // the leftover dialog window is the player's to dismiss. We don't
+    // touch session.pending_resolver: if a promise was armed when the
+    // script called end(), it'll dangle but the session destructor
+    // releases the Global so V8 reclaims it on the next GC.
+    sd_.npc_id = 0;
 }
 
 // ---- JS wrapper construction ----------------------------------------------
@@ -335,14 +360,111 @@ void doevent_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     auto* self = unwrap_dialog(info);
     if (!self) return;
     auto ev = args::str_arg(info, 0);
-    if (!ev.empty()) npc_event(&self->sd(), ev.c_str(), 0);
+    if (ev.empty()) return;
+    // Prefer the TS-side registry: that's where bundle-loaded scripts
+    // register OnLabel handlers. If we don't have one, fall through to
+    // rAthena's classic npc_event so legacy NPCs still work.
+    if (!ScriptHost::instance().dispatch_event(ev, &self->sd()))
+        npc_event(&self->sd(), ev.c_str(), 0);
 }
+
+TIMER_FUNC(ts_sleep_timer_cb_fwd) {
+    (void)tick; (void)data;
+    ScriptHost::instance().dispatch_sleep_resume(static_cast<int>(id));
+    return 0;
+}
+void sleep_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = unwrap_dialog(info);
+    if (!self) return;
+    int ms = args::int_arg(info, 0, 0);
+    if (ms <= 0) {
+        info.GetReturnValue().Set(self->resolved(info.GetIsolate()));
+        return;
+    }
+    info.GetReturnValue().Set(self->sleep(info.GetIsolate(), ms));
+}
+
+void end_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = unwrap_dialog(info);
+    if (!self) return;
+    // `end` terminates the script without sending a close packet — the
+    // dialog window stays open client-side until the user dismisses it
+    // manually, mirroring legacy `end`. We just teardown the session.
+    self->end_session();
+}
+
+void clear_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = unwrap_dialog(info);
+    if (!self) return;
+    clif_scriptclear(self->sd(), static_cast<int32>(self->nd().bl.id));
+}
+
+TIMER_FUNC(ts_npc_timer_cb) {
+    (void)tick;
+    auto* event_target = reinterpret_cast<std::string*>(data);
+    if (!event_target) return 0;
+    map_session_data* sd = map_id2sd(static_cast<int>(id));
+    ScriptHost::instance().dispatch_event(*event_target, sd);
+    delete event_target;
+    return 0;
+}
+void addTimer_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = unwrap_dialog(info);
+    if (!self) return;
+    int ms = args::int_arg(info, 0, 0);
+    auto target = args::str_arg(info, 1);
+    if (ms < 0 || target.empty()) return;
+    // The string is leaked into the timer arg; we delete it in the cb.
+    auto* heap_target = new std::string(target);
+    int tid = add_timer(gettick() + ms, ts_npc_timer_cb,
+                       self->sd().bl.id,
+                       reinterpret_cast<intptr_t>(heap_target));
+    args::ret_int(info, tid);
+}
+void delTimer_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    // Caller passes the tid returned by addTimer. Best-effort cancel —
+    // returns 1 if the timer was alive, 0 if it had already fired.
+    int tid = args::int_arg(info, 0);
+    if (tid <= 0) { args::ret_int(info, 0); return; }
+    delete_timer(tid, ts_npc_timer_cb);
+    args::ret_int(info, 1);
+}
+void addPlayerTimer_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    // npc_addtimer-style: the timer is keyed on the player. For now we
+    // share the same scheduler as addTimer — the difference becomes
+    // material once we expose npc.cpp's timerevent_list helpers.
+    addTimer_cb(info);
+}
+
 void flow_void_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
-    (void)info;  // sleep / timers / end / clear — see comment in
-                 // bind_flow_utils below for why each is still a stub.
+    (void)info;  // callfunc fallback (the registry path handles it).
 }
 void flow_undefined_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     info.GetReturnValue().SetUndefined();
+}
+
+void callfunc_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    // Look up a TS function by name and invoke with the remaining args.
+    auto* self = unwrap_dialog(info);
+    if (!self || info.Length() < 1) { info.GetReturnValue().SetUndefined(); return; }
+    auto name = args::str_arg(info, 0);
+    auto* handler = global_npc_registry().find_event_handler(name);
+    if (!handler) { info.GetReturnValue().SetUndefined(); return; }
+    auto iso = info.GetIsolate();
+    auto ctx = iso->GetCurrentContext();
+    auto fn = handler->Get(iso);
+    std::vector<v8::Local<v8::Value>> argv;
+    argv.reserve(info.Length() - 1);
+    for (int i = 1; i < info.Length(); ++i) argv.push_back(info[i]);
+    v8::TryCatch tc(iso);
+    v8::Local<v8::Value> result;
+    if (fn->Call(ctx, ctx->Global(),
+                 static_cast<int>(argv.size()),
+                 argv.empty() ? nullptr : argv.data()).ToLocal(&result)) {
+        info.GetReturnValue().Set(result);
+    } else {
+        info.GetReturnValue().SetUndefined();
+    }
 }
 } // namespace
 
@@ -359,19 +481,13 @@ void DialogContext::bind_flow_utils(v8::Isolate* iso, v8::Local<v8::Context> ctx
     bind("input",           &input_cb);
     bind("inputString",     &inputString_cb);
     bind("doevent",         &doevent_cb);
-    // sleep / addTimer / delTimer / addPlayerTimer / end / clear / callfunc:
-    // all need additional plumbing — sleep needs a timer + microtask hop;
-    // addTimer / delTimer hook into the npc timer subsystem (timerid /
-    // timeramount fields); end terminates the dialog without sending
-    // close; callfunc dispatches by name into a TS-side function registry.
-    // Keep as void stubs until each one is actually needed by a script.
-    bind("sleep",           &flow_void_cb);
-    bind("addTimer",        &flow_void_cb);
-    bind("delTimer",        &flow_void_cb);
-    bind("addPlayerTimer",  &flow_void_cb);
-    bind("callfunc",        &flow_undefined_cb);
-    bind("end",             &flow_void_cb);
-    bind("clear",           &flow_void_cb);
+    bind("sleep",           &sleep_cb);
+    bind("addTimer",        &addTimer_cb);
+    bind("delTimer",        &delTimer_cb);
+    bind("addPlayerTimer",  &addPlayerTimer_cb);
+    bind("callfunc",        &callfunc_cb);
+    bind("end",             &end_cb);
+    bind("clear",           &clear_cb);
 }
 
 } // namespace rathena::scripting

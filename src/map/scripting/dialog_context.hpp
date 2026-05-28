@@ -51,6 +51,13 @@ public:
     v8::Local<v8::Promise> close(v8::Isolate* iso);
     v8::Local<v8::Promise> input(v8::Isolate* iso);        // returns int
     v8::Local<v8::Promise> inputString(v8::Isolate* iso);  // returns string
+    v8::Local<v8::Promise> sleep(v8::Isolate* iso, int ms);
+
+    // Resolved-immediately promise (sleep(0) and a few other paths use this).
+    v8::Local<v8::Promise> resolved(v8::Isolate* iso);
+
+    // Terminate the session without sending a close packet (legacy `end`).
+    void end_session();
 
     // Accessors for the top-level flow callbacks (doevent etc).
     map_session_data& sd() { return sd_; }

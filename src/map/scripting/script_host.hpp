@@ -47,6 +47,17 @@ public:
     // was handled. False = not a TS dialog, fall through.
     bool dispatch_npc_resume(map_session_data& sd, int npc_id, bool closing);
 
+    // Resume a session whose pending kind is Sleep — fired from an
+    // rAthena timer callback after the ms duration has elapsed. Looks
+    // up by account_id and resolves the suspended promise with `undefined`.
+    void dispatch_sleep_resume(int account_id);
+
+    // Fire a registered TS event-label callback ("NpcName::OnLabel").
+    // Returns true if a handler was registered + invoked. Used by
+    // ctx.doevent / ctx.addTimer fires.
+    bool dispatch_event(const std::string& event_target,
+                       map_session_data* attached_sd);
+
     // Tear down. Disposes the isolate + platform. Call once at shutdown.
     void shutdown();
 

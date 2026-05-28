@@ -45,8 +45,17 @@ public:
         for (auto& [_, reg] : by_name_) fn(*reg);
     }
 
+    // Event-label registry. Keyed by "NpcName::OnLabel" — the same
+    // shape rAthena's doevent / addtimer use. Populated by the TS
+    // bundle at load time and looked up by ScriptHost::dispatch_event /
+    // sleep timer / addtimer fires.
+    void add_event_handler(const std::string& target,
+                           v8::Global<v8::Function> fn);
+    v8::Global<v8::Function>* find_event_handler(const std::string& target);
+
 private:
     std::unordered_map<std::string, std::unique_ptr<NpcRegistration>> by_name_;
+    std::unordered_map<std::string, v8::Global<v8::Function>> events_;
 };
 
 NpcRegistry& global_npc_registry();

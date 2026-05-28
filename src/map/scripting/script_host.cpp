@@ -35,7 +35,15 @@ public:
     void load_entry_point(const std::string& entry_path);
     bool dispatch_npc_click(map_session_data& sd, npc_data& nd);
     bool dispatch_npc_resume(map_session_data& sd, int npc_id, bool closing);
+    void dispatch_sleep_resume(int account_id);
+    bool dispatch_event(const std::string& event_target, map_session_data* attached_sd);
     void shutdown();
+
+    // Public accessors used by dialog_context.cpp's TIMER_FUNC entry
+    // points (which run on the rAthena timer thread, then re-enter V8).
+    v8::Isolate* isolate() { return isolate_; }
+    DialogSessionStore& sessions() { return sessions_; }
+    v8::Global<v8::Context>& context() { return context_; }
 
 private:
     static std::unique_ptr<v8::Platform> platform_;
@@ -267,6 +275,65 @@ bool ScriptHostImpl::dispatch_npc_resume(map_session_data& sd, int npc_id, bool 
     return true;
 }
 
+void ScriptHostImpl::dispatch_sleep_resume(int account_id) {
+    if (!initialized_) return;
+    auto* session = sessions_.find(account_id);
+    if (!session || session->pending_kind != PendingKind::Sleep) return;
+
+    v8::Isolate::Scope iso_scope(isolate_);
+    v8::HandleScope handle_scope(isolate_);
+    auto context = context_.Get(isolate_);
+    v8::Context::Scope ctx_scope(context);
+
+    auto resolver = session->pending_resolver.Get(isolate_);
+    session->pending_resolver.Reset();
+    session->pending_kind = PendingKind::None;
+
+    v8::TryCatch try_catch(isolate_);
+    (void)resolver->Resolve(context, v8::Undefined(isolate_));
+    isolate_->PerformMicrotaskCheckpoint();
+    if (try_catch.HasCaught()) log_exception(isolate_, try_catch, "sleep_resume");
+}
+
+bool ScriptHostImpl::dispatch_event(const std::string& event_target,
+                                    map_session_data* attached_sd) {
+    if (!initialized_) return false;
+    auto& registry = global_npc_registry();
+    auto* handler = registry.find_event_handler(event_target);
+    if (!handler) return false;
+
+    v8::Isolate::Scope iso_scope(isolate_);
+    v8::HandleScope handle_scope(isolate_);
+    auto context = context_.Get(isolate_);
+    v8::Context::Scope ctx_scope(context);
+
+    auto fn = handler->Get(isolate_);
+    // If there's an attached player, find/spawn a dialog session so
+    // ctx.player is available. If not, invoke with a "null" ctx for
+    // npc-side ticking events.
+    DialogSession* session = attached_sd ? sessions_.get_or_create(attached_sd->bl.id) : nullptr;
+    if (session && !session->ctx) {
+        // No active dialog — events fired outside an onClick need a
+        // bare ctx (no nd). We don't expose ctx.npc in this path; only
+        // ctx.player and ctx.world.
+        session->sd = attached_sd;
+        session->account_id = attached_sd->bl.id;
+    }
+    v8::Local<v8::Value> argv[] = {
+        session && !session->ctx_js.IsEmpty()
+            ? static_cast<v8::Local<v8::Value>>(session->ctx_js.Get(isolate_))
+            : static_cast<v8::Local<v8::Value>>(v8::Undefined(isolate_)),
+    };
+    v8::TryCatch try_catch(isolate_);
+    (void)fn->Call(context, context->Global(), 1, argv);
+    isolate_->PerformMicrotaskCheckpoint();
+    if (try_catch.HasCaught()) {
+        log_exception(isolate_, try_catch, ("event:" + event_target).c_str());
+        return true;
+    }
+    return true;
+}
+
 void ScriptHostImpl::shutdown() {
     if (!initialized_) return;
     sessions_.clear();
@@ -328,6 +395,10 @@ bool ScriptHost::dispatch_npc_click(map_session_data& sd, npc_data& nd) {
 }
 bool ScriptHost::dispatch_npc_resume(map_session_data& sd, int npc_id, bool closing) {
     return impl_->dispatch_npc_resume(sd, npc_id, closing);
+}
+void ScriptHost::dispatch_sleep_resume(int aid) { impl_->dispatch_sleep_resume(aid); }
+bool ScriptHost::dispatch_event(const std::string& target, map_session_data* sd) {
+    return impl_->dispatch_event(target, sd);
 }
 void ScriptHost::shutdown() { impl_->shutdown(); }
 

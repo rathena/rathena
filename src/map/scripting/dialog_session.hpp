@@ -28,6 +28,7 @@ enum class PendingKind {
     Menu,    // ctx.select(...) — resume with the chosen index (0-based)
     Input,   // ctx.input() — resume with the entered integer
     InputStr,// ctx.inputString() — resume with the entered string
+    Sleep,   // ctx.sleep(ms) — resume from add_timer callback after ms
     Close,   // ctx.close() — resume with `undefined`, then teardown
 };
 

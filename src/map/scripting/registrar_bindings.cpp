@@ -116,6 +116,25 @@ read_npc_with_duplicates(v8::Isolate* iso, v8::Local<v8::Context> ctx,
     auto hooks = extract_hooks(iso, ctx, obj, trace);
     install_hooks(iso, *primary, hooks);
 
+    // Walk every `OnXxx` property and register it in the global event
+    // registry as "NpcName::OnXxx". This is how rAthena's NPCs expose
+    // their timer/script labels — TS NPCs do the same so doevent /
+    // addTimer / OnTimer N can fire them.
+    auto& events = global_npc_registry();
+    auto own_names = obj->GetOwnPropertyNames(ctx).ToLocalChecked();
+    for (uint32_t i = 0; i < own_names->Length(); ++i) {
+        v8::Local<v8::Value> key_v;
+        if (!own_names->Get(ctx, i).ToLocal(&key_v) || !key_v->IsString()) continue;
+        v8::String::Utf8Value key_utf8(iso, key_v);
+        if (*key_utf8 == nullptr) continue;
+        if (strncmp(*key_utf8, "On", 2) != 0) continue;
+        v8::Local<v8::Value> val_v;
+        if (!obj->Get(ctx, key_v).ToLocal(&val_v) || !val_v->IsFunction()) continue;
+        std::string label = primary->name + "::" + *key_utf8;
+        v8::Global<v8::Function> g(iso, val_v.As<v8::Function>());
+        events.add_event_handler(label, std::move(g));
+    }
+
     std::vector<std::unique_ptr<NpcRegistration>> out;
     out.push_back(std::move(primary));
 
