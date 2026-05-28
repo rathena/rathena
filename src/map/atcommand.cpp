@@ -11380,7 +11380,7 @@ ACMD_FUNC(aura) {
 		clif_displaymessage(fd, "Sorry, the specified aura number is invalid, please re-enter after checking.");
 		return -1;
 	}
-	aura_make_effective(&sd->bl, aura_id);
+	aura_make_effective((struct block_list *)sd, aura_id);
 	if (aura_id != 0) {
 		clif_displaymessage(fd, "Activated the specified aura effect.");
 	}
@@ -11567,13 +11567,13 @@ ACMD_FUNC(macrochecker){
 #define ACMD_DEFR(x, r) { #x, atcommand_ ## x, nullptr, nullptr, r }
 #define ACMD_DEF2R(x2, x, r) { x2, atcommand_ ## x, nullptr, nullptr, r }
 void atcommand_basecommands(void) {
-		ACMD_DEF(aura),
 	/**
 	 * Command reference list, place the base of your commands here
 	 * TODO: List all commands that causing crash
 	 **/
 	AtCommandInfo atcommand_base[] = {
 #include <custom/atcommand_def.inc>
+		ACMD_DEF(aura),
 		ACMD_DEF(mapmove),
 		ACMD_DEF(where),
 		ACMD_DEF(jumpto),
