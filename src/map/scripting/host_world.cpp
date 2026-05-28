@@ -200,10 +200,29 @@ void WorldHost::spawnAreaMob_cb(const v8::FunctionCallbackInfo<v8::Value>& info)
     ret_int(info, gid);
 }
 void WorldHost::spawnGuardian_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
-    ret_int(info, 0);  // TODO: mob_spawn_guardian
+    auto mn      = str_arg(info, 0);
+    int x        = int_arg(info, 1);
+    int y        = int_arg(info, 2);
+    auto display = str_arg(info, 3);
+    int mob      = int_arg(info, 4);
+    auto evt     = str_arg(info, 5);
+    int guard_idx= int_arg(info, 6, -1);
+    ret_int(info, mob_spawn_guardian(mn.c_str(),
+        static_cast<int16>(x), static_cast<int16>(y),
+        display.c_str(), mob, evt.c_str(),
+        guard_idx, guard_idx >= 0));
 }
 void WorldHost::guardianInfo_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
-    ret_null(info);
+    auto mn = str_arg(info, 0);
+    int idx = int_arg(info, 1);
+    int type = int_arg(info, 2, 0);
+    auto gc = castle_db.mapname2gc(mn.c_str());
+    if (!gc || idx < 0 || idx >= MAX_GUARDIANS) { ret_null(info); return; }
+    switch (type) {
+        case 0: ret_int(info, gc->guardian[idx].visible ? 1 : 0); return;
+        case 1: ret_int(info, gc->guardian[idx].id); return;
+        default: ret_null(info);
+    }
 }
 
 namespace {
@@ -515,14 +534,66 @@ void WorldHost::setUnitData_cb(const v8::FunctionCallbackInfo<v8::Value>& info) 
         default: break;
     }
 }
+namespace {
+int32 collect_units_sub(struct block_list* bl, va_list ap) {
+    auto* out = va_arg(ap, std::vector<int>*);
+    if (bl) out->push_back(bl->id);
+    return 0;
+}
+
+v8::Local<v8::Array> ids_to_array(v8::Isolate* iso_, v8::Local<v8::Context> cx,
+                                  const std::vector<int>& ids) {
+    auto out = v8::Array::New(iso_, static_cast<int>(ids.size()));
+    for (uint32 i = 0; i < ids.size(); ++i) {
+        (void)out->Set(cx, i, v8::Integer::New(iso_, ids[i]));
+    }
+    return out;
+}
+} // namespace
+
 void WorldHost::getUnits_cb(const v8::FunctionCallbackInfo<v8::Value>& info)     {
-    info.GetReturnValue().Set(v8::Array::New(iso(info), 0));
+    // (type, map?, x1?, y1?, x2?, y2?) — variadic; if map omitted we
+    // scan the whole world via map_foreachmap, which is expensive but
+    // mirrors getunits' all-server semantics.
+    int type = int_arg(info, 0, BL_PC);
+    std::vector<int> ids;
+    if (info.Length() < 2) {
+        // No map filter — iterate sd map, parking on attached player.
+        UNWRAP_OPT;
+        if (self && self->sd())
+            map_foreachinmap(collect_units_sub, self->sd()->bl.m, type, &ids);
+    } else {
+        auto mn = str_arg(info, 1);
+        int m = map_mapname2mapid(mn.c_str());
+        if (m >= 0) {
+            if (info.Length() >= 6) {
+                int x1 = int_arg(info, 2), y1 = int_arg(info, 3);
+                int x2 = int_arg(info, 4), y2 = int_arg(info, 5);
+                map_foreachinallarea(collect_units_sub, m, x1, y1, x2, y2, type, &ids);
+            } else {
+                map_foreachinmap(collect_units_sub, m, type, &ids);
+            }
+        }
+    }
+    info.GetReturnValue().Set(ids_to_array(iso(info), ctx(info), ids));
 }
 void WorldHost::getMapUnits_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  {
-    info.GetReturnValue().Set(v8::Array::New(iso(info), 0));
+    int type = int_arg(info, 0, BL_PC);
+    auto mn  = str_arg(info, 1);
+    int m = map_mapname2mapid(mn.c_str());
+    std::vector<int> ids;
+    if (m >= 0) map_foreachinmap(collect_units_sub, m, type, &ids);
+    info.GetReturnValue().Set(ids_to_array(iso(info), ctx(info), ids));
 }
 void WorldHost::getAreaUnits_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
-    info.GetReturnValue().Set(v8::Array::New(iso(info), 0));
+    int type = int_arg(info, 0, BL_PC);
+    auto mn  = str_arg(info, 1);
+    int x1 = int_arg(info, 2), y1 = int_arg(info, 3);
+    int x2 = int_arg(info, 4), y2 = int_arg(info, 5);
+    int m = map_mapname2mapid(mn.c_str());
+    std::vector<int> ids;
+    if (m >= 0) map_foreachinallarea(collect_units_sub, m, x1, y1, x2, y2, type, &ids);
+    info.GetReturnValue().Set(ids_to_array(iso(info), ctx(info), ids));
 }
 
 // =====================================================================
@@ -556,8 +627,33 @@ void WorldHost::ridToName_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     auto* sd = map_id2sd(rid);
     ret_str(info, sd ? sd->status.name : "");
 }
+namespace {
+int32 collect_drops_sub(struct block_list* bl, va_list ap) {
+    t_itemid filter = va_arg(ap, t_itemid);
+    auto* total = va_arg(ap, int*);
+    auto* drop = reinterpret_cast<flooritem_data*>(bl);
+    if (!drop) return 0;
+    if (filter == 0 || drop->item.nameid == filter) *total += drop->item.amount;
+    return 0;
+}
+} // namespace
+
 void WorldHost::getAreaDropItem_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
-    info.GetReturnValue().Set(v8::Array::New(iso(info), 0));
+    auto mn = str_arg(info, 0);
+    int x1 = int_arg(info, 1), y1 = int_arg(info, 2);
+    int x2 = int_arg(info, 3), y2 = int_arg(info, 4);
+    t_itemid filter = static_cast<t_itemid>(uint_arg(info, 5, 0));
+    int16 m = map_mapname2mapid(mn.c_str());
+    auto out = v8::Array::New(iso(info), 0);
+    if (m < 0) { info.GetReturnValue().Set(out); return; }
+    int total = 0;
+    map_foreachinallarea(collect_drops_sub, m, x1, y1, x2, y2, BL_ITEM, filter, &total);
+    // d.ts says `unknown[]` — for parity with the buildin we surface a
+    // single-element array with the total count. Callers that want the
+    // legacy "amount" int can pull `.length`-style or `[0]`.
+    auto cx = ctx(info);
+    (void)out->Set(cx, 0, v8::Integer::New(iso(info), total));
+    info.GetReturnValue().Set(out);
 }
 
 // =====================================================================
@@ -612,7 +708,25 @@ void WorldHost::checkCell_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  {
     if (m < 0) { ret_int(info, 0); return; }
     ret_int(info, map_getcell(m, x, y, static_cast<cell_chk>(type)));
 }
-void WorldHost::getFreeCell_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ ret_null(info); }
+void WorldHost::getFreeCell_cb(const v8::FunctionCallbackInfo<v8::Value>& info){
+    auto mn = str_arg(info, 0);
+    int x = int_arg(info, 1, 0), y = int_arg(info, 2, 0);
+    int rx = int_arg(info, 3, -1), ry = int_arg(info, 4, -1);
+    int flag = int_arg(info, 5, 1);
+    int16 m = map_mapname2mapid(mn.c_str());
+    if (m < 0) { ret_null(info); return; }
+    int16 fx = static_cast<int16>(x), fy = static_cast<int16>(y);
+    if (!map_search_freecell(nullptr, m, &fx, &fy, rx, ry, flag)) {
+        ret_null(info); return;
+    }
+    auto iso_ = iso(info); auto cx = ctx(info);
+    auto obj = v8::Object::New(iso_);
+    (void)obj->Set(cx, v8::String::NewFromUtf8(iso_, "x").ToLocalChecked(),
+                   v8::Integer::New(iso_, fx));
+    (void)obj->Set(cx, v8::String::NewFromUtf8(iso_, "y").ToLocalChecked(),
+                   v8::Integer::New(iso_, fy));
+    info.GetReturnValue().Set(obj);
+}
 void WorldHost::setWall_cb(const v8::FunctionCallbackInfo<v8::Value>& info)    {
     auto mname = str_arg(info, 0);
     int x = int_arg(info, 1), y = int_arg(info, 2);
@@ -1029,7 +1143,38 @@ void WorldHost::gmLevel_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     ret_int(info, self->sd() ? self->sd()->group_id : 0);
 }
 void WorldHost::groupId_cb(const v8::FunctionCallbackInfo<v8::Value>& info) { gmLevel_cb(info); }
-void WorldHost::itemLink_cb(const v8::FunctionCallbackInfo<v8::Value>& info) { ret_str(info, ""); }
+void WorldHost::itemLink_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    struct item it = {};
+    it.nameid = static_cast<t_itemid>(uint_arg(info, 0));
+    if (!item_db.exists(it.nameid)) { ret_str(info, ""); return; }
+    // Optional ItemOpts object — pull refine / cards / enchantgrade if
+    // provided as a plain object literal (the d.ts shape).
+    if (info.Length() > 1 && info[1]->IsObject()) {
+        auto iso_ = iso(info); auto cx = ctx(info);
+        auto opts = info[1].As<v8::Object>();
+        auto pick = [&](const char* k, int def) {
+            v8::Local<v8::Value> v;
+            if (!opts->Get(cx, v8::String::NewFromUtf8(iso_, k).ToLocalChecked()).ToLocal(&v))
+                return def;
+            if (v->IsUndefined() || v->IsNull()) return def;
+            return v->Int32Value(cx).FromMaybe(def);
+        };
+        it.refine = static_cast<char>(pick("refine", 0));
+        it.enchantgrade = static_cast<char>(pick("enchantgrade", 0));
+        // cards[0..3] — accept either a flat array or numbered keys.
+        v8::Local<v8::Value> cards_v;
+        if (opts->Get(cx, v8::String::NewFromUtf8(iso_, "cards").ToLocalChecked())
+                .ToLocal(&cards_v) && cards_v->IsArray()) {
+            auto arr = cards_v.As<v8::Array>();
+            for (uint32 i = 0; i < std::min<uint32>(4, arr->Length()); ++i) {
+                v8::Local<v8::Value> cv;
+                if (arr->Get(cx, i).ToLocal(&cv))
+                    it.card[i] = static_cast<short>(cv->Int32Value(cx).FromMaybe(0));
+            }
+        }
+    }
+    ret_str(info, item_db.create_item_link(it).c_str());
+}
 
 // =====================================================================
 // install_on_object
