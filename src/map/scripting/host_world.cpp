@@ -11,8 +11,10 @@
 #include "../map.hpp"
 #include "../mob.hpp"
 #include "../npc.hpp"
+#include "../homunculus.hpp"
 #include "../party.hpp"
 #include "../pc.hpp"
+#include "../pet.hpp"
 #include "../status.hpp"
 #include "../unit.hpp"
 #include "../../common/mapindex.hpp"
@@ -410,9 +412,30 @@ void WorldHost::getUnitName_cb(const v8::FunctionCallbackInfo<v8::Value>& info) 
     auto* bl = map_id2bl(gid);
     ret_str(info, bl ? status_get_name(*bl) : "");
 }
-void WorldHost::setUnitName_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  { (void)info; }
+void WorldHost::setUnitName_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  {
+    int gid = int_arg(info, 0);
+    auto name = str_arg(info, 1);
+    auto* bl = map_id2bl(gid);
+    if (!bl) return;
+    switch (bl->type) {
+        case BL_MOB: { auto* md = map_id2md(gid); if (md) safestrncpy(md->name, name.c_str(), NAME_LENGTH); break; }
+        case BL_HOM: { auto* hd = map_id2hd(gid); if (hd) safestrncpy(hd->homunculus.name, name.c_str(), NAME_LENGTH); break; }
+        case BL_PET: { auto* pd = map_id2pd(gid); if (pd) safestrncpy(pd->pet.name, name.c_str(), NAME_LENGTH); break; }
+        default: return;
+    }
+    clif_name_area(bl);
+}
 void WorldHost::getUnitTitle_cb(const v8::FunctionCallbackInfo<v8::Value>& info) { ret_str(info, ""); }
-void WorldHost::setUnitTitle_cb(const v8::FunctionCallbackInfo<v8::Value>& info) { (void)info; }
+void WorldHost::setUnitTitle_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    int gid = int_arg(info, 0);
+    auto title = str_arg(info, 1);
+    auto* bl = map_id2bl(gid);
+    if (!bl) return;
+    auto* ud = unit_bl2ud(bl);
+    if (!ud) return;
+    safestrncpy(ud->title, title.c_str(), NAME_LENGTH);
+    clif_name_area(bl);
+}
 void WorldHost::getUnitData_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  { ret_null(info); }
 void WorldHost::setUnitData_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  { (void)info; }
 void WorldHost::getUnits_cb(const v8::FunctionCallbackInfo<v8::Value>& info)     {
