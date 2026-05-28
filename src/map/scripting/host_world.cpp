@@ -16,6 +16,7 @@
 #include "../pc.hpp"
 #include "../pet.hpp"
 #include "../script.hpp"
+#include "../skill.hpp"
 #include "../status.hpp"
 #include "../unit.hpp"
 #include "../../common/mapindex.hpp"
@@ -259,10 +260,38 @@ void WorldHost::mobCount_cb(const v8::FunctionCallbackInfo<v8::Value>& info)    
     const char* ev = (event == "all" || event.empty()) ? nullptr : event.c_str();
     ret_int(info, map_foreachinmap(mobcount_sub, m, BL_MOB, ev));
 }
+namespace {
+int32 respawnguild_pc_sub(map_session_data* sd, va_list ap) {
+    int16 m  = va_arg(ap, int32);
+    int32 gid = va_arg(ap, int32);
+    int32 flag = va_arg(ap, int32);
+    if (!sd || sd->bl.m != m) return 0;
+    if ((static_cast<int32>(sd->status.guild_id) == gid && flag & 1) ||
+        (static_cast<int32>(sd->status.guild_id) != gid && flag & 2) ||
+        (sd->status.guild_id == 0 && flag & 2)) {
+        pc_setpos(sd, mapindex_name2id(sd->status.save_point.map),
+                  sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT);
+    }
+    return 1;
+}
+int32 respawnguild_mob_sub(struct block_list* bl, va_list ap) {
+    (void)ap;
+    auto* md = reinterpret_cast<mob_data*>(bl);
+    if (!md->guardian_data && md->mob_id != MOBID_EMPERIUM &&
+        (!mob_is_clone(md->mob_id) || battle_config.guild_maprespawn_clones))
+        status_kill(bl);
+    return 1;
+}
+} // namespace
+
 void WorldHost::respawnGuildOwned_cb(const v8::FunctionCallbackInfo<v8::Value>& info){
-    // Respawning guild-owned mob spawns is wired through guardian
-    // spawning + WoE state — not a single helper call. Placeholder.
-    (void)info;
+    auto mname = str_arg(info, 0);
+    int gid    = int_arg(info, 1);
+    int flag   = int_arg(info, 2, 3);
+    int16 m = map_mapname2mapid(mname.c_str());
+    if (m < 0) return;
+    map_foreachpc(respawnguild_pc_sub, m, gid, flag);
+    if (flag & 4) map_foreachinmap(respawnguild_mob_sub, m, BL_MOB);
 }
 void WorldHost::getRandomMobId_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  {
     int type = int_arg(info, 0);
@@ -438,7 +467,52 @@ void WorldHost::setUnitTitle_cb(const v8::FunctionCallbackInfo<v8::Value>& info)
     clif_name_area(bl);
 }
 void WorldHost::getUnitData_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  { ret_null(info); }
-void WorldHost::setUnitData_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  { (void)info; }
+void WorldHost::setUnitData_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  {
+    int gid = int_arg(info, 0);
+    int type = int_arg(info, 1);
+    int value = int_arg(info, 2);
+    auto* bl = map_id2bl(gid);
+    if (!bl || bl->type != BL_MOB) return;
+    auto* md = reinterpret_cast<mob_data*>(bl);
+    if (!md->base_status) {
+        md->base_status = static_cast<status_data*>(aCalloc(1, sizeof(status_data)));
+        memcpy(md->base_status, &md->db->status, sizeof(status_data));
+    }
+    // Cover the most common MOB type codes. The full multiplexer mirrors
+    // 700 LOC across MOB/HOM/PET/MER/ELE/NPC types — this is the slice
+    // that's actually exercised by typical scripts.
+    switch (type) {
+        case UMOB_SIZE:    md->status.size = md->base_status->size = static_cast<unsigned char>(value); break;
+        case UMOB_LEVEL:   md->level = static_cast<uint16>(value); clif_name_area(&md->bl); break;
+        case UMOB_HP:      md->base_status->hp = value; status_set_hp(bl, value, 0); clif_name_area(&md->bl); break;
+        case UMOB_MAXHP:   md->base_status->hp = md->base_status->max_hp = value; status_set_maxhp(bl, value, 0); clif_name_area(&md->bl); break;
+        case UMOB_X:       unit_movepos(bl, static_cast<int16>(value), md->bl.y, 0, 0); break;
+        case UMOB_Y:       unit_movepos(bl, md->bl.x, static_cast<int16>(value), 0, 0); break;
+        case UMOB_SPEED:   md->base_status->speed = static_cast<uint16>(value); status_calc_misc(bl, &md->status, md->level); break;
+        case UMOB_MODE:    md->base_status->mode = static_cast<e_mode>(value); unit_refresh(bl); break;
+        case UMOB_CLASS:   status_set_viewdata(bl, static_cast<uint16>(value)); unit_refresh(bl); break;
+        case UMOB_LOOKDIR: unit_setdir(bl, static_cast<uint8>(value)); break;
+        case UMOB_MASTERAID: md->master_id = value; break;
+        case UMOB_DMGIMMUNE: md->ud.immune_attack = value > 0; break;
+        case UMOB_STR: md->base_status->str = static_cast<uint16>(value); status_calc_misc(bl, &md->status, md->level); break;
+        case UMOB_AGI: md->base_status->agi = static_cast<uint16>(value); status_calc_misc(bl, &md->status, md->level); break;
+        case UMOB_VIT: md->base_status->vit = static_cast<uint16>(value); status_calc_misc(bl, &md->status, md->level); break;
+        case UMOB_INT: md->base_status->int_ = static_cast<uint16>(value); status_calc_misc(bl, &md->status, md->level); break;
+        case UMOB_DEX: md->base_status->dex = static_cast<uint16>(value); status_calc_misc(bl, &md->status, md->level); break;
+        case UMOB_LUK: md->base_status->luk = static_cast<uint16>(value); status_calc_misc(bl, &md->status, md->level); break;
+        case UMOB_ATKMIN: md->base_status->rhw.atk  = static_cast<uint16>(value); break;
+        case UMOB_ATKMAX: md->base_status->rhw.atk2 = static_cast<uint16>(value); break;
+        case UMOB_DEF:    md->base_status->def     = static_cast<defType>(value); break;
+        case UMOB_MDEF:   md->base_status->mdef    = static_cast<defType>(value); break;
+        case UMOB_HIT:    md->base_status->hit     = static_cast<int16>(value); break;
+        case UMOB_FLEE:   md->base_status->flee    = static_cast<int16>(value); break;
+        case UMOB_CRIT:   md->base_status->cri     = static_cast<int16>(value); break;
+        case UMOB_AMOTION: md->base_status->amotion = static_cast<int16>(value); break;
+        case UMOB_ADELAY:  md->base_status->adelay  = static_cast<int16>(value); break;
+        case UMOB_DMOTION: md->base_status->dmotion = static_cast<int16>(value); break;
+        default: break;
+    }
+}
 void WorldHost::getUnits_cb(const v8::FunctionCallbackInfo<v8::Value>& info)     {
     info.GetReturnValue().Set(v8::Array::New(iso(info), 0));
 }
@@ -608,9 +682,19 @@ void WorldHost::cleanMap_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   {
     map_foreachinmap(clearfloor_sub, m, BL_ITEM);
 }
 void WorldHost::warpPortal_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
-    // warpportal/setportal creates a click-warp entity; needs npc.cpp
-    // helpers we haven't surfaced yet. Placeholder.
-    (void)info;
+    UNWRAP_REQ;
+    int spx = int_arg(info, 0), spy = int_arg(info, 1);
+    auto dest = str_arg(info, 2);
+    int tpx = int_arg(info, 3), tpy = int_arg(info, 4);
+    int mapindex = mapindex_name2id(dest.c_str());
+    if (!mapindex) return;
+    auto* nd_bl = map_id2bl(sd->npc_id);
+    if (!nd_bl) return;
+    auto group = skill_unitsetting(nd_bl, AL_WARP, 4, spx, spy, 0);
+    if (!group) return;
+    group->val1 = (group->val1 << 16) | static_cast<int16>(0);
+    group->val2 = (tpx << 16) | tpy;
+    group->val3 = mapindex;
 }
 void WorldHost::mapWarp_cb(const v8::FunctionCallbackInfo<v8::Value>& info)    {
     auto src = str_arg(info, 0);
