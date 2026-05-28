@@ -594,7 +594,53 @@ void PlayerHost::repairAll_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     }
     clif_equiplist(&sd);
 }
-void PlayerHost::removeCards_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ (void)info; }
+void PlayerHost::removeCards_cb(const v8::FunctionCallbackInfo<v8::Value>& info){
+    UNWRAP;
+    int slot = int_arg(info, 0);
+    if (!equip_index_check(slot)) return;
+    int i = pc_checkequip(&sd, equip_bitmask[slot]);
+    if (i < 0 || !sd.inventory_data[i]) return;
+    if (itemdb_isspecial(sd.inventory.u.items_inventory[i].card[0])) return;
+    int cardflag = 0;
+    for (int c = sd.inventory_data[i]->slots - 1; c >= 0; --c) {
+        auto cid = sd.inventory.u.items_inventory[i].card[c];
+        if (cid && itemdb_type(cid) == IT_CARD) {
+            cardflag = 1;
+            struct item it{};
+            it.nameid   = cid;
+            it.identify = 1;
+            auto flag = pc_additem(&sd, &it, 1, LOG_TYPE_SCRIPT);
+            if (flag != ADDITEM_SUCCESS) {
+                clif_additem(&sd, 0, 0, flag);
+                return;
+            }
+        }
+    }
+    if (cardflag != 1) return;
+    struct item it{};
+    auto& src = sd.inventory.u.items_inventory[i];
+    it.nameid       = src.nameid;
+    it.identify     = 1;
+    it.refine       = src.refine;
+    it.attribute    = src.attribute;
+    it.expire_time  = src.expire_time;
+    it.bound        = src.bound;
+    it.enchantgrade = src.enchantgrade;
+    for (int j = sd.inventory_data[i]->slots; j < MAX_SLOTS; ++j)
+        it.card[j] = src.card[j];
+    for (int j = 0; j < MAX_ITEM_RDM_OPT; ++j) {
+        it.option[j].id    = src.option[j].id;
+        it.option[j].value = src.option[j].value;
+        it.option[j].param = src.option[j].param;
+    }
+    pc_delitem(&sd, i, 1, 0, 3, LOG_TYPE_SCRIPT);
+    auto flag = pc_additem(&sd, &it, 1, LOG_TYPE_SCRIPT);
+    if (flag != ADDITEM_SUCCESS) {
+        clif_additem(&sd, 0, 0, flag);
+        return;
+    }
+    clif_misceffect(sd.bl, NOTIFYEFFECT_REFINE_SUCCESS);
+}
 void PlayerHost::getBrokenId_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     UNWRAP;
     int wanted = int_arg(info, 0);
