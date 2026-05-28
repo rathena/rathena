@@ -135,9 +135,15 @@ api_surface:
 
   # "InterfaceName.methodName" — these have hand-written impls; the
   # codegen MUST NOT shadow them with stubs.
+  # "InterfaceName.*" wildcards every method on that interface (used
+  # when a whole host class takes over the surface).
   hand_impl:
     - NpcContext.mes
     - NpcContext.next
     - NpcContext.select
     - NpcContext.menu
     - NpcContext.close
+    # PlayerHost.cpp implements every PlayerContext method (real bodies
+    # for the most-used ops; silent type-correct placeholders for the
+    # rest until the underlying rAthena subsystem is wired in).
+    - PlayerContext.*

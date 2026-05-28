@@ -11,6 +11,7 @@
 
 #ifdef HAVE_TS_SCRIPTING
 
+#include <memory>
 #include <v8.h>
 
 struct map_session_data;
@@ -19,10 +20,12 @@ struct npc_data;
 namespace rathena::scripting {
 
 struct DialogSession;
+class PlayerHost;
 
 class DialogContext {
 public:
     DialogContext(map_session_data& sd, npc_data& nd, DialogSession& session);
+    ~DialogContext();
 
     // Returns the JS Promise + arms the session's resolver. Caller is
     // expected to send the corresponding clif_script* packet right
@@ -40,6 +43,7 @@ private:
     map_session_data& sd_;
     npc_data& nd_;
     DialogSession& session_;
+    std::unique_ptr<PlayerHost> player_host_;
 
     static void mes_callback(const v8::FunctionCallbackInfo<v8::Value>& info);
     static void next_callback(const v8::FunctionCallbackInfo<v8::Value>& info);

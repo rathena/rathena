@@ -525,9 +525,11 @@ def render_surface_hpp(reachable: list[TsInterface],
     for iface in reachable:
         out.append(f"inline void install_{iface.name}(")
         out.append("        v8::Isolate* iso, v8::Local<v8::ObjectTemplate> tmpl) {")
+        # `Interface.*` wildcard — host class fully takes over.
+        iface_wildcard = f"{iface.name}.*"
         for m in iface.members:
             qualified = f"{iface.name}.{m.name}"
-            if qualified in hand_impl:
+            if qualified in hand_impl or iface_wildcard in hand_impl:
                 out.append(f'    // skip {qualified} — hand-implemented')
                 continue
             if m.kind == "method":

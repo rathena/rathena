@@ -5,6 +5,7 @@
 #include <sstream>
 
 #include "dialog_session.hpp"
+#include "host_player.hpp"
 #include "js_object_reader.hpp"
 #include "player_binding.hpp"
 #include "../clif.hpp"
@@ -70,6 +71,8 @@ v8::Local<v8::Promise> arm_pending(v8::Isolate* iso, v8::Local<v8::Context> ctx,
 
 DialogContext::DialogContext(map_session_data& sd, npc_data& nd, DialogSession& session)
     : sd_(sd), nd_(nd), session_(session) {}
+
+DialogContext::~DialogContext() = default;
 
 // ---- callback shims --------------------------------------------------------
 
@@ -181,13 +184,21 @@ v8::Local<v8::Object> DialogContext::to_js(v8::Isolate* iso, v8::Local<v8::Conte
     obj->SetInternalField(0, v8::External::New(iso, this, v8::kExternalPointerTypeTagDefault));
 
     // ctx.player was auto-instantiated by V8 from the ObjectTemplate
-    // tree above (carries all the surface_stubs methods). Decorate it
-    // with the live snapshot fields. Names that collide between the
-    // stub and the snapshot are won by the snapshot (later set wins).
+    // tree above (carries the surface_stubs methods). Override the
+    // method stubs with PlayerHost's real implementations, then
+    // decorate with the live snapshot fields.
     auto player_key = v8::String::NewFromUtf8(iso, "player").ToLocalChecked();
     auto player_val = obj->Get(ctx, player_key).ToLocalChecked();
     if (player_val->IsObject()) {
-        populate_player_object(iso, ctx, player_val.As<v8::Object>(), sd_);
+        auto player_obj = player_val.As<v8::Object>();
+        // Lifetime: PlayerHost lives in the DialogSession (owns this
+        // DialogContext), so the External pointer stays valid for the
+        // duration of the dialog.
+        if (!player_host_) {
+            player_host_ = std::make_unique<PlayerHost>(sd_);
+        }
+        player_host_->install_on_object(iso, ctx, player_obj);
+        populate_player_object(iso, ctx, player_obj, sd_);
     }
 
     return obj;
