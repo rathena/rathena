@@ -11,6 +11,7 @@
 #include "../map.hpp"
 #include "../mob.hpp"
 #include "../npc.hpp"
+#include "../party.hpp"
 #include "../pc.hpp"
 #include "../status.hpp"
 #include "../unit.hpp"
@@ -133,8 +134,34 @@ void WorldHost::logMessage_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
 // Sound / BGM
 // =====================================================================
 
-void WorldHost::soundEffectAll_cb(const v8::FunctionCallbackInfo<v8::Value>& info) { (void)info; }
-void WorldHost::playBgmAll_cb(const v8::FunctionCallbackInfo<v8::Value>& info)     { (void)info; }
+namespace {
+int32 soundeffect_map_sub(struct block_list* bl, va_list ap) {
+    const char* name = va_arg(ap, const char*);
+    int32 type       = va_arg(ap, int32);
+    if (bl && bl->type == BL_PC) clif_soundeffect(*bl, name, type, SELF);
+    return 0;
+}
+int32 playbgm_map_sub(map_session_data* sd, va_list ap) {
+    const char* name = va_arg(ap, const char*);
+    if (sd) clif_playBGM(*sd, name);
+    return 0;
+}
+} // namespace
+
+void WorldHost::soundEffectAll_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto fn = str_arg(info, 0);
+    int type = int_arg(info, 1, 0);
+    if (info.Length() >= 3 && info[2]->IsString()) {
+        auto map_name = str_arg(info, 2);
+        int m = map_mapname2mapid(map_name.c_str());
+        if (m < 0) return;
+        map_foreachinmap(soundeffect_map_sub, m, BL_PC, fn.c_str(), type);
+    }
+}
+void WorldHost::playBgmAll_cb(const v8::FunctionCallbackInfo<v8::Value>& info)     {
+    auto fn = str_arg(info, 0);
+    map_foreachpc(playbgm_map_sub, fn.c_str());
+}
 
 // =====================================================================
 // Spawning
@@ -175,23 +202,132 @@ void WorldHost::guardianInfo_cb(const v8::FunctionCallbackInfo<v8::Value>& info)
     ret_null(info);
 }
 
+namespace {
+int32 killmob_sub_strip(struct block_list* bl, va_list ap) {
+    auto* md = BL_CAST(BL_MOB, bl);
+    const char* event = va_arg(ap, const char*);
+    int allflag = va_arg(ap, int);
+    if (!md) return 0;
+    md->state.npc_killmonster = 1;
+    if (!allflag) {
+        if (strcmp(event, md->npc_event) == 0) status_kill(bl);
+    } else if (!md->spawn) {
+        status_kill(bl);
+    }
+    md->state.npc_killmonster = 0;
+    return 0;
+}
+int32 killmob_all_sub(struct block_list* bl, va_list ap) {
+    (void)ap;
+    auto* md = BL_CAST(BL_MOB, bl);
+    if (md) { strcpy(md->npc_event, ""); status_kill(bl); }
+    return 0;
+}
+int32 mobcount_sub(struct block_list* bl, va_list ap) {
+    auto* md = BL_CAST(BL_MOB, bl);
+    const char* event = va_arg(ap, const char*);
+    if (!md || md->status.hp < 1) return 0;
+    if (event && strcmp(event, md->npc_event) != 0) return 0;
+    return 1;
+}
+} // namespace
+
 void WorldHost::killMonster_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
-    ret_int(info, 0);  // TODO: map_foreachinmap + atcommand_killmonster_sub
+    auto mapn = str_arg(info, 0);
+    auto event = str_arg(info, 1);
+    int allflag = (event == "All") ? 1 : 0;
+    int m = map_mapname2mapid(mapn.c_str());
+    if (m < 0) return;
+    map_freeblock_lock();
+    map_foreachinmap(killmob_sub_strip, m, BL_MOB, event.c_str(), allflag);
+    map_freeblock_unlock();
 }
 void WorldHost::killMonsterAll_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
-    (void)str_arg(info, 0);
-    // TODO: map_foreachinmap with a kill-mob lambda — atcommand_killmonster_sub
-    // is file-static in atcommand.cpp; the simpler path is a local lambda.
-    ret_int(info, 0);
+    auto mapn = str_arg(info, 0);
+    int m = map_mapname2mapid(mapn.c_str());
+    if (m < 0) return;
+    map_foreachinmap(killmob_all_sub, m, BL_MOB);
 }
-void WorldHost::mobCount_cb(const v8::FunctionCallbackInfo<v8::Value>& info)        { ret_int(info, 0); }
-void WorldHost::respawnGuildOwned_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ (void)info; }
-void WorldHost::getRandomMobId_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  { ret_int(info, 0); }
-void WorldHost::getMonsterInfo_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  { ret_null(info); }
+void WorldHost::mobCount_cb(const v8::FunctionCallbackInfo<v8::Value>& info)        {
+    auto mapn = str_arg(info, 0);
+    auto event = str_arg(info, 1);
+    int m = map_mapname2mapid(mapn.c_str());
+    if (m < 0) { ret_int(info, 0); return; }
+    const char* ev = (event == "all" || event.empty()) ? nullptr : event.c_str();
+    ret_int(info, map_foreachinmap(mobcount_sub, m, BL_MOB, ev));
+}
+void WorldHost::respawnGuildOwned_cb(const v8::FunctionCallbackInfo<v8::Value>& info){
+    // Respawning guild-owned mob spawns is wired through guardian
+    // spawning + WoE state — not a single helper call. Placeholder.
+    (void)info;
+}
+void WorldHost::getRandomMobId_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  {
+    int type = int_arg(info, 0);
+    int flag = int_arg(info, 1, RMF_NONE);
+    int lv   = int_arg(info, 2, 0);
+    ret_int(info, mob_get_random_id(type, static_cast<e_random_monster_flags>(flag), lv));
+}
+void WorldHost::getMonsterInfo_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  {
+    int id = int_arg(info, 0);
+    int type = int_arg(info, 1);
+    if (mob_is_clone(id)) { ret_null(info); return; }
+    auto mob = mob_db.find(id);
+    if (!mob) {
+        if (type == MOB_NAME) ret_str(info, "null");
+        else                  ret_int(info, -1);
+        return;
+    }
+    switch (type) {
+        case MOB_NAME:    ret_str(info, mob->jname.c_str()); return;
+        case MOB_LV:      ret_int(info, mob->lv); return;
+        case MOB_MAXHP:   ret_int(info, mob->status.max_hp); return;
+        case MOB_BASEEXP: ret_int(info, mob->base_exp); return;
+        case MOB_JOBEXP:  ret_int(info, mob->job_exp); return;
+        case MOB_ATK1:    ret_int(info, mob->status.rhw.atk); return;
+        case MOB_ATK2:    ret_int(info, mob->status.rhw.atk2); return;
+        case MOB_DEF:     ret_int(info, mob->status.def); return;
+        case MOB_MDEF:    ret_int(info, mob->status.mdef); return;
+        case MOB_RACE:    ret_int(info, mob->status.race); return;
+        case MOB_ELEMENT: ret_int(info, mob->status.def_ele); return;
+        case MOB_MODE:    ret_int(info, mob->status.mode); return;
+        case MOB_ID:      ret_int(info, mob->id); return;
+        default: ret_int(info, -1);
+    }
+}
 void WorldHost::getMobDrops_cb(const v8::FunctionCallbackInfo<v8::Value>& info)     {
-    info.GetReturnValue().Set(v8::Array::New(iso(info), 0));
+    int cls = int_arg(info, 0);
+    auto* iso_ = iso(info);
+    auto cx = ctx(info);
+    auto out = v8::Array::New(iso_);
+    if (!mobdb_checkid(cls)) { info.GetReturnValue().Set(out); return; }
+    auto mob = mob_db.find(cls);
+    if (!mob) { info.GetReturnValue().Set(out); return; }
+    uint32 idx_out = 0;
+    for (int i = 0; i < MAX_MOB_DROP_TOTAL; ++i) {
+        if (mob->dropitem[i].nameid == 0) continue;
+        if (!item_db.exists(mob->dropitem[i].nameid)) continue;
+        auto row = v8::Object::New(iso_);
+        (void)row->Set(cx, v8::String::NewFromUtf8(iso_, "itemId").ToLocalChecked(),
+            v8::Integer::NewFromUnsigned(iso_, mob->dropitem[i].nameid));
+        (void)row->Set(cx, v8::String::NewFromUtf8(iso_, "rate").ToLocalChecked(),
+            v8::Integer::New(iso_, mob->dropitem[i].rate));
+        (void)out->Set(cx, idx_out++, row);
+    }
+    info.GetReturnValue().Set(out);
 }
-void WorldHost::mobInfo_cb(const v8::FunctionCallbackInfo<v8::Value>& info)         { ret_str(info, ""); }
+void WorldHost::mobInfo_cb(const v8::FunctionCallbackInfo<v8::Value>& info)         {
+    int cls = int_arg(info, 0);
+    int type = int_arg(info, 1, 1);
+    if (!mobdb_checkid(cls)) { ret_str(info, ""); return; }
+    auto mob = mob_db.find(cls);
+    if (!mob) { ret_str(info, ""); return; }
+    switch (type) {
+        case 1: ret_str(info, mob->name.c_str());  return;
+        case 2: ret_str(info, mob->jname.c_str()); return;
+        case 3: ret_str(info, ""); return; // sprite — not in db
+        default: ret_str(info, "");
+    }
+}
 
 // =====================================================================
 // Unit-level ops — all placeholders for now (need unit_walktoxy / etc.)
@@ -354,12 +490,48 @@ void WorldHost::distance_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     int dx = x1 - x0, dy = y1 - y0;
     ret_int(info, (dx*dx + dy*dy));
 }
-void WorldHost::setCell_cb(const v8::FunctionCallbackInfo<v8::Value>& info)    { (void)info; }
-void WorldHost::checkCell_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  { ret_int(info, 0); }
+void WorldHost::setCell_cb(const v8::FunctionCallbackInfo<v8::Value>& info)    {
+    auto mname = str_arg(info, 0);
+    int x1 = int_arg(info, 1), y1 = int_arg(info, 2);
+    int x2 = int_arg(info, 3), y2 = int_arg(info, 4);
+    int type = int_arg(info, 5);
+    bool flag = bool_arg(info, 6);
+    int16 m = map_mapname2mapid(mname.c_str());
+    if (m < 0) return;
+    if (x1 > x2) std::swap(x1, x2);
+    if (y1 > y2) std::swap(y1, y2);
+    for (int y = y1; y <= y2; ++y)
+        for (int x = x1; x <= x2; ++x)
+            map_setcell(m, x, y, static_cast<cell_t>(type), flag);
+}
+void WorldHost::checkCell_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  {
+    auto mname = str_arg(info, 0);
+    int x = int_arg(info, 1), y = int_arg(info, 2);
+    int type = int_arg(info, 3);
+    int16 m = map_mapname2mapid(mname.c_str());
+    if (m < 0) { ret_int(info, 0); return; }
+    ret_int(info, map_getcell(m, x, y, static_cast<cell_chk>(type)));
+}
 void WorldHost::getFreeCell_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ ret_null(info); }
-void WorldHost::setWall_cb(const v8::FunctionCallbackInfo<v8::Value>& info)    { (void)info; }
-void WorldHost::delWall_cb(const v8::FunctionCallbackInfo<v8::Value>& info)    { (void)info; }
-void WorldHost::checkWall_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  { ret_bool(info, false); }
+void WorldHost::setWall_cb(const v8::FunctionCallbackInfo<v8::Value>& info)    {
+    auto mname = str_arg(info, 0);
+    int x = int_arg(info, 1), y = int_arg(info, 2);
+    int size = int_arg(info, 3, 1);
+    int dir  = int_arg(info, 4, 0);
+    bool shootable = bool_arg(info, 5);
+    auto name = str_arg(info, 6);
+    int16 m = map_mapname2mapid(mname.c_str());
+    if (m < 0) return;
+    map_iwall_set(m, x, y, size, dir, shootable, name.c_str());
+}
+void WorldHost::delWall_cb(const v8::FunctionCallbackInfo<v8::Value>& info)    {
+    auto name = str_arg(info, 0);
+    map_iwall_remove(name.c_str());
+}
+void WorldHost::checkWall_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  {
+    auto name = str_arg(info, 0);
+    ret_bool(info, map_iwall_exist(name.c_str()));
+}
 void WorldHost::makeItem_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     t_itemid id = static_cast<t_itemid>(uint_arg(info, 0));
     int amount  = int_arg(info, 1, 1);
@@ -373,14 +545,104 @@ void WorldHost::makeItem_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     it.identify = 1;
     map_addflooritem(&it, amount, m, x, y, 0, 0, 0, 0, 0);
 }
-void WorldHost::cleanArea_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  { (void)info; }
-void WorldHost::cleanMap_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { (void)info; }
-void WorldHost::warpPortal_cb(const v8::FunctionCallbackInfo<v8::Value>& info) { (void)info; }
-void WorldHost::mapWarp_cb(const v8::FunctionCallbackInfo<v8::Value>& info)    { (void)info; }
-void WorldHost::areaWarp_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { (void)info; }
-void WorldHost::warpParty_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  { (void)info; }
-void WorldHost::warpGuild_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  { (void)info; }
-void WorldHost::areaPercentHeal_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ (void)info; }
+namespace {
+int32 clearfloor_sub(struct block_list* bl, va_list ap) {
+    (void)ap;
+    if (bl) map_clearflooritem(bl);
+    return 0;
+}
+int32 areapercentheal_sub(struct block_list* bl, va_list ap) {
+    int hp = va_arg(ap, int);
+    int sp = va_arg(ap, int);
+    if (bl && bl->type == BL_PC)
+        pc_percentheal(reinterpret_cast<map_session_data*>(bl), hp, sp);
+    return 0;
+}
+int32 mapwarp_sub(struct block_list* bl, va_list ap) {
+    int mapindex = va_arg(ap, int);
+    int x = va_arg(ap, int);
+    int y = va_arg(ap, int);
+    if (bl && bl->type == BL_PC)
+        pc_setpos(reinterpret_cast<map_session_data*>(bl),
+                  static_cast<uint16>(mapindex), x, y, CLR_TELEPORT);
+    return 0;
+}
+} // namespace
+
+void WorldHost::cleanArea_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  {
+    auto mname = str_arg(info, 0);
+    int x0 = int_arg(info, 1), y0 = int_arg(info, 2);
+    int x1 = int_arg(info, 3), y1 = int_arg(info, 4);
+    int m = map_mapname2mapid(mname.c_str());
+    if (m < 0) return;
+    map_foreachinallarea(clearfloor_sub, m, x0, y0, x1, y1, BL_ITEM);
+}
+void WorldHost::cleanMap_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   {
+    auto mname = str_arg(info, 0);
+    int m = map_mapname2mapid(mname.c_str());
+    if (m < 0) return;
+    map_foreachinmap(clearfloor_sub, m, BL_ITEM);
+}
+void WorldHost::warpPortal_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    // warpportal/setportal creates a click-warp entity; needs npc.cpp
+    // helpers we haven't surfaced yet. Placeholder.
+    (void)info;
+}
+void WorldHost::mapWarp_cb(const v8::FunctionCallbackInfo<v8::Value>& info)    {
+    auto src = str_arg(info, 0);
+    auto dst = str_arg(info, 1);
+    int x = int_arg(info, 2), y = int_arg(info, 3);
+    int m = map_mapname2mapid(src.c_str());
+    int idx = mapindex_name2id(dst.c_str());
+    if (m < 0 || !idx) return;
+    map_foreachinmap(mapwarp_sub, m, BL_PC, idx, x, y);
+}
+void WorldHost::areaWarp_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   {
+    auto src = str_arg(info, 0);
+    int x0 = int_arg(info, 1), y0 = int_arg(info, 2);
+    int x1 = int_arg(info, 3), y1 = int_arg(info, 4);
+    auto dst = str_arg(info, 5);
+    int x = int_arg(info, 6), y = int_arg(info, 7);
+    int m = map_mapname2mapid(src.c_str());
+    int idx = mapindex_name2id(dst.c_str());
+    if (m < 0 || !idx) return;
+    map_foreachinallarea(mapwarp_sub, m, x0, y0, x1, y1, BL_PC, idx, x, y);
+}
+void WorldHost::warpParty_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  {
+    int pid = int_arg(info, 0);
+    auto dst = str_arg(info, 1);
+    int x = int_arg(info, 2), y = int_arg(info, 3);
+    auto* p = party_search(pid);
+    int idx = mapindex_name2id(dst.c_str());
+    if (!p || !idx) return;
+    for (int i = 0; i < MAX_PARTY; ++i) {
+        auto* pl = p->data[i].sd;
+        if (pl) pc_setpos(pl, static_cast<uint16>(idx), x, y, CLR_TELEPORT);
+    }
+}
+void WorldHost::warpGuild_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  {
+    int gid = int_arg(info, 0);
+    auto dst = str_arg(info, 1);
+    int x = int_arg(info, 2), y = int_arg(info, 3);
+    auto g = guild_search(gid);
+    int idx = mapindex_name2id(dst.c_str());
+    if (!g || !idx) return;
+    for (int i = 0; i < g->guild.max_member; ++i) {
+        auto* pl = g->guild.member[i].sd;
+        if (pl) pc_setpos(pl, static_cast<uint16>(idx), x, y, CLR_TELEPORT);
+    }
+}
+void WorldHost::areaPercentHeal_cb(const v8::FunctionCallbackInfo<v8::Value>& info){
+    auto mname = str_arg(info, 0);
+    int x0 = int_arg(info, 1), y0 = int_arg(info, 2);
+    int x1 = int_arg(info, 3), y1 = int_arg(info, 4);
+    int hp = int_arg(info, 5), sp = int_arg(info, 6);
+    int m = map_mapname2mapid(mname.c_str());
+    if (m < 0) return;
+    map_foreachinallarea(areapercentheal_sub, m, x0, y0, x1, y1, BL_PC, hp, sp);
+}
+// attachRid / addRid: the V8 host doesn't have a script-state to switch
+// the attached rid into. Placeholder.
 void WorldHost::attachRid_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  { (void)info; }
 void WorldHost::addRid_cb(const v8::FunctionCallbackInfo<v8::Value>& info)     { (void)info; }
 void WorldHost::playerAttached_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
@@ -413,7 +675,20 @@ void WorldHost::getMapFlag_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     int16 m = map_mapname2mapid(mname.c_str());
     ret_int(info, m >= 0 ? map_getmapflag(m, static_cast<e_mapflag>(flag)) : 0);
 }
-void WorldHost::setMapFlagNoSave_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ (void)info; }
+void WorldHost::setMapFlagNoSave_cb(const v8::FunctionCallbackInfo<v8::Value>& info){
+    auto src  = str_arg(info, 0);
+    auto dest = str_arg(info, 1);
+    int x = int_arg(info, 2);
+    int y = int_arg(info, 3);
+    int16 m = map_mapname2mapid(src.c_str());
+    int dest_index = mapindex_name2id(dest.c_str());
+    if (m < 0 || !dest_index) return;
+    union u_mapflag_args u{};
+    u.nosave.map = static_cast<uint16>(dest_index);
+    u.nosave.x = static_cast<int16>(x);
+    u.nosave.y = static_cast<int16>(y);
+    map_setmapflag_sub(m, MF_NOSAVE, true, &u);
+}
 
 void WorldHost::day_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { (void)info; map_night_timer(0, 0, 0, 1); }
 void WorldHost::night_cb(const v8::FunctionCallbackInfo<v8::Value>& info) { (void)info; map_day_timer(0, 0, 0, 1); }
@@ -446,7 +721,17 @@ void WorldHost::agitCheck_cb(const v8::FunctionCallbackInfo<v8::Value>& info){
     bool on = (era >= 3) ? agit3_flag : (era == 2 ? agit2_flag : agit_flag);
     ret_bool(info, on);
 }
-void WorldHost::flagEmblem_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ (void)info; }
+void WorldHost::flagEmblem_cb(const v8::FunctionCallbackInfo<v8::Value>& info){
+    auto npc_name = str_arg(info, 0);
+    int gid = int_arg(info, 1);
+    auto* nd = npc_name2id(npc_name.c_str());
+    if (!nd || nd->subtype != NPCTYPE_SCRIPT || gid < 0) return;
+    bool changed = (nd->u.scr.guild_id != gid);
+    nd->u.scr.guild_id = gid;
+    clif_guild_emblem_area(&nd->bl);
+    if (gid)         guild_flag_add(nd);
+    else if (changed) guild_flag_remove(nd);
+}
 void WorldHost::castleName_cb(const v8::FunctionCallbackInfo<v8::Value>& info){
     auto mname = str_arg(info, 0);
     auto castle = castle_db.mapname2gc(mname.c_str());
@@ -496,8 +781,54 @@ void WorldHost::atCommand_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
 }
 void WorldHost::charCommand_cb(const v8::FunctionCallbackInfo<v8::Value>& info) { atCommand_cb(info); }
 void WorldHost::useAtCommand_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ atCommand_cb(info); }
-void WorldHost::bindAtCommand_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  { (void)info; }
-void WorldHost::unbindAtCommand_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ (void)info; }
+void WorldHost::bindAtCommand_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  {
+    auto cmd = str_arg(info, 0);
+    auto event = str_arg(info, 1);
+    int level  = int_arg(info, 2, 0);
+    int level2 = int_arg(info, 3, 100);
+    const char* c = cmd.c_str();
+    if (*c == atcommand_symbol || *c == charcommand_symbol) ++c;
+    // Look up existing
+    int i = 0;
+    for (; i < atcmd_binding_count; ++i)
+        if (strcmp(atcmd_binding[i]->command, c) == 0) break;
+    if (i < atcmd_binding_count) {
+        safestrncpy(atcmd_binding[i]->npc_event, event.c_str(), EVENT_NAME_LENGTH);
+        atcmd_binding[i]->level  = level;
+        atcmd_binding[i]->level2 = level2;
+        return;
+    }
+    if (atcmd_binding_count == 0) {
+        CREATE(atcmd_binding, struct atcmd_binding_data*, 1);
+    } else {
+        RECREATE(atcmd_binding, struct atcmd_binding_data*, atcmd_binding_count + 1);
+    }
+    i = atcmd_binding_count++;
+    CREATE(atcmd_binding[i], struct atcmd_binding_data, 1);
+    safestrncpy(atcmd_binding[i]->command,   c,             50);
+    safestrncpy(atcmd_binding[i]->npc_event, event.c_str(), EVENT_NAME_LENGTH);
+    atcmd_binding[i]->level  = level;
+    atcmd_binding[i]->level2 = level2;
+}
+void WorldHost::unbindAtCommand_cb(const v8::FunctionCallbackInfo<v8::Value>& info){
+    auto cmd = str_arg(info, 0);
+    const char* c = cmd.c_str();
+    if (*c == atcommand_symbol || *c == charcommand_symbol) ++c;
+    if (atcmd_binding_count == 0) return;
+    int i = 0;
+    for (; i < atcmd_binding_count; ++i)
+        if (strcmp(atcmd_binding[i]->command, c) == 0) break;
+    if (i >= atcmd_binding_count) return;
+    aFree(atcmd_binding[i]);
+    atcmd_binding[i] = nullptr;
+    int cursor = 0;
+    for (int j = 0; j < atcmd_binding_count; ++j) {
+        if (!atcmd_binding[j]) continue;
+        if (cursor != j) atcmd_binding[cursor] = atcmd_binding[j];
+        ++cursor;
+    }
+    atcmd_binding_count = cursor;
+}
 
 // =====================================================================
 // Game info
@@ -538,7 +869,33 @@ void WorldHost::itemInfo_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
         default: ret_int(info, 0); return;
     }
 }
-void WorldHost::setItemInfo_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { (void)info; }
+void WorldHost::setItemInfo_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   {
+    int item_id = int_arg(info, 0);
+    int type    = int_arg(info, 1);
+    int value   = int_arg(info, 2);
+    auto i_data = item_db.find(item_id);
+    if (!i_data) { ret_int(info, -1); return; }
+    switch (type) {
+        case ITEMINFO_BUY:           i_data->value_buy  = value; break;
+        case ITEMINFO_SELL:          i_data->value_sell = value; break;
+        case ITEMINFO_TYPE:          i_data->type    = static_cast<item_types>(value); break;
+        case ITEMINFO_MAXCHANCE:     i_data->maxchance = value; break;
+        case ITEMINFO_GENDER:        i_data->sex     = static_cast<uint8>(value); break;
+        case ITEMINFO_LOCATIONS:     i_data->equip   = value; break;
+        case ITEMINFO_WEIGHT:        i_data->weight  = value; break;
+        case ITEMINFO_ATTACK:        i_data->atk     = value; break;
+        case ITEMINFO_DEFENSE:       i_data->def     = value; break;
+        case ITEMINFO_RANGE:         i_data->range   = static_cast<uint16>(value); break;
+        case ITEMINFO_SLOT:          i_data->slots   = static_cast<uint16>(value); break;
+        case ITEMINFO_EQUIPLEVELMIN: i_data->elv     = static_cast<uint16>(value); break;
+        case ITEMINFO_EQUIPLEVELMAX: i_data->elvmax  = static_cast<uint16>(value); break;
+        case ITEMINFO_SUBTYPE:       i_data->subtype = static_cast<uint8>(value); break;
+        default: ret_int(info, -1); return;
+    }
+    ret_int(info, value);
+}
+// setItemScript requires parse_script() which depends on a script state
+// context — we cross that bridge once TS scripts can emit AST snippets.
 void WorldHost::setItemScript_cb(const v8::FunctionCallbackInfo<v8::Value>& info) { (void)info; }
 void WorldHost::gmLevel_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     UNWRAP_OPT;
