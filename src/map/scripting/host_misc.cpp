@@ -5,6 +5,7 @@
 #include "arg_helpers.hpp"
 #include "../achievement.hpp"
 #include "../channel.hpp"
+#include "../chat.hpp"
 #include "../clif.hpp"
 #include "../guild.hpp"
 #include "../instance.hpp"
@@ -22,6 +23,7 @@
 #include "../pet.hpp"
 #include "../quest.hpp"
 #include "../script.hpp"
+#include "../log.hpp"
 #include "../skill.hpp"
 #include "../status.hpp"
 #include "../storage.hpp"
@@ -195,6 +197,65 @@ void npc_moveTo_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     unit_warp(&self->nd().bl, self->nd().bl.m, x, y, CLR_TELEPORT);
     self->nd().ud.dir = static_cast<uint8>(dir);
 }
+
+chat_data* npc_cd(NpcInfoHost* self) {
+    if (!self) return nullptr;
+    return reinterpret_cast<chat_data*>(map_id2bl(self->nd().chat_id));
+}
+
+void npc_createWaitingRoom_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<NpcInfoHost>(info);
+    if (!self) return;
+    auto title  = args::str_arg(info, 0);
+    int limit   = args::int_arg(info, 1);
+    auto ev     = args::str_arg(info, 2);
+    int trigger = args::int_arg(info, 3, limit);
+    int zeny    = args::int_arg(info, 4, 0);
+    int minLvl  = args::int_arg(info, 5, 1);
+    int maxLvl  = args::int_arg(info, 6, MAX_LEVEL);
+    chat_createnpcchat(&self->nd(), title.c_str(), limit, 1,
+                       trigger, ev.c_str(), zeny, minLvl, maxLvl);
+}
+void npc_removeWaitingRoom_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<NpcInfoHost>(info);
+    if (self) chat_deletenpcchat(&self->nd());
+}
+void npc_enableWaitingRoom_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* cd = npc_cd(args::unwrap<NpcInfoHost>(info));
+    if (cd) chat_enableevent(cd);
+}
+void npc_disableWaitingRoom_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* cd = npc_cd(args::unwrap<NpcInfoHost>(info));
+    if (cd) chat_disableevent(cd);
+}
+void npc_kickWaitingRoomUser_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* cd = npc_cd(args::unwrap<NpcInfoHost>(info));
+    if (!cd) return;
+    auto user = args::str_arg(info, 0);
+    chat_npckickchat(cd, user.c_str());
+}
+void npc_kickAllWaitingRoom_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* cd = npc_cd(args::unwrap<NpcInfoHost>(info));
+    if (cd) chat_npckickall(cd);
+}
+void npc_getWaitingRoomUsers_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* cd = npc_cd(args::unwrap<NpcInfoHost>(info));
+    args::ret_int(info, cd ? cd->users : 0);
+}
+void npc_getWaitingRoomState_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* cd = npc_cd(args::unwrap<NpcInfoHost>(info));
+    if (!cd) { args::ret_int(info, -1); return; }
+    int type = args::int_arg(info, 0);
+    switch (type) {
+        case 0:  args::ret_int(info, cd->users); return;
+        case 1:  args::ret_int(info, cd->limit); return;
+        case 2:  args::ret_int(info, cd->trigger & 0x7f); return;
+        case 3:  args::ret_int(info, (cd->trigger & 0x80) != 0); return;
+        case 32: args::ret_int(info, cd->users >= cd->limit); return;
+        case 33: args::ret_int(info, cd->users >= cd->trigger); return;
+        default: args::ret_int(info, -1);
+    }
+}
 } // namespace
 
 void NpcInfoHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx,
@@ -218,15 +279,17 @@ void NpcInfoHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx
     bind_void(iso, ctx, obj, "shopUpdate");
 
     // Waiting room
-    bind_void(iso, ctx, obj, "createWaitingRoom");
-    bind_void(iso, ctx, obj, "removeWaitingRoom");
-    bind_void(iso, ctx, obj, "enableWaitingRoom");
-    bind_void(iso, ctx, obj, "disableWaitingRoom");
-    bind_int0(iso, ctx, obj, "getWaitingRoomState");
+    args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "createWaitingRoom",   &npc_createWaitingRoom_cb);
+    args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "removeWaitingRoom",   &npc_removeWaitingRoom_cb);
+    args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "enableWaitingRoom",   &npc_enableWaitingRoom_cb);
+    args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "disableWaitingRoom",  &npc_disableWaitingRoom_cb);
+    args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "getWaitingRoomState", &npc_getWaitingRoomState_cb);
+    args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "kickWaitingRoomUser", &npc_kickWaitingRoomUser_cb);
+    args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "kickAllWaitingRoom",  &npc_kickAllWaitingRoom_cb);
+    args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "getWaitingRoomUsers", &npc_getWaitingRoomUsers_cb);
+    // warpWaitingPc body lives mostly in script.cpp w/ NPC->oid lookup —
+    // leave as a placeholder until we move that into chat.cpp.
     bind_void(iso, ctx, obj, "warpWaitingPc");
-    bind_void(iso, ctx, obj, "kickWaitingRoomUser");
-    bind_void(iso, ctx, obj, "kickAllWaitingRoom");
-    bind_int0(iso, ctx, obj, "getWaitingRoomUsers");
 
     bind_int0(iso, ctx, obj, "npcTimer");
     bind_int0(iso, ctx, obj, "getNpcId");
@@ -276,21 +339,43 @@ void quest_isBegin_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     if (!self) { args::ret_bool(info, false); return; }
     args::ret_bool(info, quest_check(&self->sd(), args::int_arg(info, 0), HAVEQUEST) == Q_ACTIVE);
 }
+void quest_showEvent_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<QuestHost>(info);
+    if (!self) return;
+    int icon  = args::int_arg(info, 0);
+    int color = args::int_arg(info, 1, QMARK_NONE);
+    if (color < QMARK_NONE || color >= QMARK_MAX) color = QMARK_NONE;
+#if PACKETVER >= 20120410
+    if (icon < 0 || (icon > 8 && icon != QTYPE_NONE) || icon == 7)
+        icon = QTYPE_NONE;
+#else
+    if (icon < 0 || icon > 7) icon = 0;
+    else icon += 1;
+#endif
+    clif_quest_show_event(&self->sd(), &self->sd().bl,
+        static_cast<e_questinfo_types>(icon),
+        static_cast<e_questinfo_markcolor>(color));
+}
+void quest_refreshInfo_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<QuestHost>(info);
+    if (!self) return;
+    pc_show_questinfo(&self->sd());
+}
 } // namespace
 
 void QuestHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx,
                                   v8::Local<v8::Object> obj) {
-    args::bind_method<QuestHost>(iso, ctx, obj, this, "add",      &quest_add_cb);
-    args::bind_method<QuestHost>(iso, ctx, obj, this, "complete", &quest_complete_cb);
-    args::bind_method<QuestHost>(iso, ctx, obj, this, "erase",    &quest_erase_cb);
-    args::bind_method<QuestHost>(iso, ctx, obj, this, "change",   &quest_change_cb);
-    args::bind_method<QuestHost>(iso, ctx, obj, this, "check",    &quest_check_cb);
-    args::bind_method<QuestHost>(iso, ctx, obj, this, "isBegin",  &quest_isBegin_cb);
-    // Quest UI hooks — clif_quest_show_event etc. — need event-marker
-    // helpers we haven't surfaced yet.
-    bind_void(iso, ctx, obj, "showEvent");
-    bind_void(iso, ctx, obj, "refreshInfo");
-    bind_void(iso, ctx, obj, "showInfo");
+    args::bind_method<QuestHost>(iso, ctx, obj, this, "add",         &quest_add_cb);
+    args::bind_method<QuestHost>(iso, ctx, obj, this, "complete",    &quest_complete_cb);
+    args::bind_method<QuestHost>(iso, ctx, obj, this, "erase",       &quest_erase_cb);
+    args::bind_method<QuestHost>(iso, ctx, obj, this, "change",      &quest_change_cb);
+    args::bind_method<QuestHost>(iso, ctx, obj, this, "check",       &quest_check_cb);
+    args::bind_method<QuestHost>(iso, ctx, obj, this, "isBegin",     &quest_isBegin_cb);
+    args::bind_method<QuestHost>(iso, ctx, obj, this, "showEvent",   &quest_showEvent_cb);
+    args::bind_method<QuestHost>(iso, ctx, obj, this, "refreshInfo", &quest_refreshInfo_cb);
+    // showInfo is the area-marker variant requiring a registerquest cond
+    // — placeholder for now (uses pc_show_questinfo too in practice).
+    args::bind_method<QuestHost>(iso, ctx, obj, this, "showInfo",    &quest_refreshInfo_cb);
 }
 
 namespace {
@@ -321,6 +406,49 @@ void ach_info_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     int type = args::int_arg(info, 1);
     args::ret_int(info, achievement_check_progress(&self->sd(), id, type));
 }
+void ach_complete_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<AchievementHost>(info);
+    if (!self) { args::ret_bool(info, false); return; }
+    int id = args::int_arg(info, 0);
+    if (!achievement_db.exists(id)) { args::ret_bool(info, false); return; }
+    if (!self->sd().state.pc_loaded) { args::ret_bool(info, false); return; }
+    auto& ad = self->sd().achievement_data;
+    uint16 i = 0;
+    for (; i < ad.count; ++i) {
+        if (ad.achievements[i].achievement_id == id) break;
+    }
+    if (i == ad.count) achievement_add(&self->sd(), id);
+    achievement_update_achievement(&self->sd(), id, true);
+    args::ret_bool(info, true);
+}
+void ach_update_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<AchievementHost>(info);
+    if (!self) { args::ret_bool(info, false); return; }
+    int id    = args::int_arg(info, 0);
+    int type  = args::int_arg(info, 1);
+    int value = args::int_arg(info, 2);
+    if (!achievement_db.exists(id)) { args::ret_bool(info, false); return; }
+    if (!self->sd().state.pc_loaded) { args::ret_bool(info, false); return; }
+    auto& ad = self->sd().achievement_data;
+    uint16 i = 0;
+    for (; i < ad.count; ++i)
+        if (ad.achievements[i].achievement_id == id) break;
+    if (i == ad.count) {
+        achievement_add(&self->sd(), id);
+        for (i = 0; i < ad.count; ++i)
+            if (ad.achievements[i].achievement_id == id) break;
+        if (i == ad.count) { args::ret_bool(info, false); return; }
+    }
+    if (type >= ACHIEVEINFO_COUNT1 && type <= ACHIEVEINFO_COUNT10)
+        ad.achievements[i].count[type - 1] = value;
+    else if (type == ACHIEVEINFO_COMPLETE || type == ACHIEVEINFO_COMPLETEDATE)
+        ad.achievements[i].completed = value;
+    else if (type == ACHIEVEINFO_GOTREWARD)
+        ad.achievements[i].rewarded = value;
+    else { args::ret_bool(info, false); return; }
+    achievement_update_achievement(&self->sd(), id, false);
+    args::ret_bool(info, true);
+}
 } // namespace
 
 void AchievementHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx,
@@ -329,10 +457,8 @@ void AchievementHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context>
     args::bind_method<AchievementHost>(iso, ctx, obj, this, "remove",   &ach_remove_cb);
     args::bind_method<AchievementHost>(iso, ctx, obj, this, "exists",   &ach_exists_cb);
     args::bind_method<AchievementHost>(iso, ctx, obj, this, "info",     &ach_info_cb);
-    // achievement_update needs the full update_data shape; complete uses
-    // a check-then-finish path. Both deferred.
-    bind_void(iso, ctx, obj, "complete");
-    bind_void(iso, ctx, obj, "update");
+    args::bind_method<AchievementHost>(iso, ctx, obj, this, "complete", &ach_complete_cb);
+    args::bind_method<AchievementHost>(iso, ctx, obj, this, "update",   &ach_update_cb);
 }
 
 namespace {
@@ -621,18 +747,68 @@ void hom_shuffle_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     auto* self = args::unwrap<HomHost>(info);
     if (self && self->sd().hd) hom_shuffle(self->sd().hd);
 }
+void hom_info_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<HomHost>(info);
+    int type = args::int_arg(info, 0);
+    if (!self || !self->sd().hd) {
+        if (type == 2) args::ret_str(info, "null");
+        else            args::ret_int(info, 0);
+        return;
+    }
+    auto* hd = self->sd().hd;
+    switch (type) {
+        case 0: args::ret_int(info, hd->homunculus.hom_id); return;
+        case 1: args::ret_int(info, hd->homunculus.class_); return;
+        case 2: args::ret_str(info, hd->homunculus.name);   return;
+        case 3: args::ret_int(info, hd->homunculus.intimacy); return;
+        case 4: args::ret_int(info, hd->homunculus.hunger);   return;
+        case 5: args::ret_int(info, hd->homunculus.rename_flag); return;
+        case 6: args::ret_int(info, hd->homunculus.level);    return;
+        case 7: args::ret_int(info, hd->bl.id);               return;
+        default: args::ret_int(info, 0);
+    }
+}
+void hom_morph_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<HomHost>(info);
+    if (!self || self->sd().hd == nullptr) return;
+    auto& sd = self->sd();
+    if (!hom_is_active(sd.hd)) { clif_emotion(sd.bl, ET_SWEAT); return; }
+    int m_class = hom_class2mapid(sd.hd->homunculus.class_);
+    if (m_class == -1 || !(m_class & HOM_EVO) || sd.hd->homunculus.level < 99) {
+        clif_emotion(sd.hd->bl, ET_SWEAT); return;
+    }
+    struct item item_tmp{};
+    item_tmp.nameid   = ITEMID_STRANGE_EMBRYO;
+    item_tmp.identify = 1;
+    char i = pc_additem(&sd, &item_tmp, 1, LOG_TYPE_SCRIPT);
+    if (i) {
+        clif_additem(&sd, 0, 0, i);
+        clif_emotion(sd.bl, ET_SWEAT);
+    } else {
+        hom_vaporize(&sd, HOM_ST_MORPH);
+    }
+}
+void hom_addIntimacy_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<HomHost>(info);
+    if (!self || self->sd().hd == nullptr) return;
+    int value = args::int_arg(info, 0);
+    if (value == 0) return;
+    if (value > 0) hom_increase_intimacy(self->sd().hd, static_cast<uint32>(value));
+    else            hom_decrease_intimacy(self->sd().hd, static_cast<uint32>(std::abs(value)));
+    clif_send_homdata(*self->sd().hd, SP_INTIMATE);
+}
 } // namespace
 
 void HomHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx,
                                 v8::Local<v8::Object> obj) {
-    args::bind_method<HomHost>(iso, ctx, obj, this, "exists",   &hom_exists_cb);
-    args::bind_method<HomHost>(iso, ctx, obj, this, "isCalled", &hom_isCalled_cb);
-    args::bind_method<HomHost>(iso, ctx, obj, this, "evolve",   &hom_evolve_cb);
-    args::bind_method<HomHost>(iso, ctx, obj, this, "mutate",   &hom_mutate_cb);
-    args::bind_method<HomHost>(iso, ctx, obj, this, "shuffle",  &hom_shuffle_cb);
-    bind_null(iso, ctx, obj, "info");
-    bind_void(iso, ctx, obj, "morph");
-    bind_void(iso, ctx, obj, "addIntimacy");
+    args::bind_method<HomHost>(iso, ctx, obj, this, "exists",      &hom_exists_cb);
+    args::bind_method<HomHost>(iso, ctx, obj, this, "isCalled",    &hom_isCalled_cb);
+    args::bind_method<HomHost>(iso, ctx, obj, this, "evolve",      &hom_evolve_cb);
+    args::bind_method<HomHost>(iso, ctx, obj, this, "mutate",      &hom_mutate_cb);
+    args::bind_method<HomHost>(iso, ctx, obj, this, "shuffle",     &hom_shuffle_cb);
+    args::bind_method<HomHost>(iso, ctx, obj, this, "info",        &hom_info_cb);
+    args::bind_method<HomHost>(iso, ctx, obj, this, "morph",       &hom_morph_cb);
+    args::bind_method<HomHost>(iso, ctx, obj, this, "addIntimacy", &hom_addIntimacy_cb);
 }
 
 namespace {
