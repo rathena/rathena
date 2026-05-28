@@ -4,7 +4,7 @@
 #pragma once
 
 #include <common/database.hpp>
-+#include <common/timer.hpp>
+#include <common/timer.hpp>
 #include <common/mmo.hpp>
 
 struct s_aura {
