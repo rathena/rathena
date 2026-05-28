@@ -982,26 +982,212 @@ void instance_id_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
 }
 } // namespace
 
+namespace {
+void instance_npcName_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto name = args::str_arg(info, 0);
+    int instance_id = args::int_arg(info, 1, 0);
+    auto* nd = npc_name2id(name.c_str());
+    if (instance_id <= 0 || !nd) { args::ret_str(info, ""); return; }
+    char buf[NAME_LENGTH];
+    snprintf(buf, sizeof(buf), "dup_%d_%d", instance_id, nd->bl.id);
+    args::ret_str(info, buf);
+}
+
+void instance_mapName_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto name = args::str_arg(info, 0);
+    int instance_id = args::int_arg(info, 1, 0);
+    int16 m;
+    if (instance_id <= 0 ||
+        (m = instance_mapid(map_mapname2mapid(name.c_str()), instance_id)) < 0) {
+        args::ret_str(info, "");
+        return;
+    }
+    args::ret_str(info, map_getmapdata(m)->name);
+}
+
+int32 instance_warpall_sub(struct block_list* bl, va_list ap) {
+    uint32 m  = va_arg(ap, uint32);
+    int32  x  = va_arg(ap, int32);
+    int32  y  = va_arg(ap, int32);
+    int32  id = va_arg(ap, int32);
+    if (!bl || bl->type != BL_PC) return 0;
+    auto* sd = reinterpret_cast<map_session_data*>(bl);
+    auto idata = util::umap_find(instances, id);
+    if (!idata) return 0;
+    int owner = idata->owner_id;
+    switch (idata->mode) {
+        case IM_NONE: break;
+        case IM_CHAR:  if ((int)sd->status.char_id  != owner) return 0; break;
+        case IM_PARTY: if ((int)sd->status.party_id != owner) return 0; break;
+        case IM_GUILD: if ((int)sd->status.guild_id != owner) return 0; break;
+        case IM_CLAN:  if ((int)sd->status.clan_id  != owner) return 0; break;
+        default: break;
+    }
+    pc_setpos(sd, m, x, y, CLR_TELEPORT);
+    return 1;
+}
+
+void instance_warpAll_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto mapn = args::str_arg(info, 0);
+    int x = args::int_arg(info, 1);
+    int y = args::int_arg(info, 2);
+    int id = args::int_arg(info, 3, 0);
+    int16 m;
+    if (id <= 0 || (m = map_mapname2mapid(mapn.c_str())) < 0 ||
+        (m = instance_mapid(m, id)) < 0) return;
+    auto idata = util::umap_find(instances, id);
+    if (!idata) return;
+    for (const auto& it : idata->map)
+        map_foreachinmap(instance_warpall_sub, it.m, BL_PC,
+                         map_id2index(m), x, y, id);
+}
+
+int32 instance_announce_sub(struct block_list* bl, va_list ap) {
+    const char* mes = va_arg(ap, const char*);
+    int32 type      = va_arg(ap, int32);
+    if (!bl || bl->type != BL_PC) return 0;
+    auto* sd = reinterpret_cast<map_session_data*>(bl);
+    clif_broadcast(bl, mes, static_cast<int>(strlen(mes)+1), type, SELF);
+    (void)sd;
+    return 1;
+}
+
+void instance_announce_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    int id = args::int_arg(info, 0, 0);
+    auto mes = args::str_arg(info, 1);
+    int flag = args::int_arg(info, 2, 0);
+    auto idata = util::umap_find(instances, id);
+    if (!idata) return;
+    for (const auto& it : idata->map)
+        map_foreachinmap(instance_announce_sub, it.m, BL_PC,
+                         mes.c_str(), flag & BC_COLOR_MASK);
+}
+
+void instance_checkParty_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    int party_id = args::int_arg(info, 0);
+    int amount = args::int_arg(info, 1, 1);
+    int min    = args::int_arg(info, 2, 1);
+    int max    = args::int_arg(info, 3, MAX_LEVEL);
+    if (amount < 1 || amount > MAX_PARTY ||
+        min < 1 || min > MAX_LEVEL ||
+        max < 1 || max > MAX_LEVEL) { args::ret_bool(info, false); return; }
+    auto* p = party_search(party_id);
+    if (!p) { args::ret_bool(info, false); return; }
+    int count = 0;
+    for (size_t i = 0; i < MAX_PARTY; i++) {
+        auto* sd = p->data[i].sd;
+        if (!sd || sd->state.autotrade) continue;
+        if (sd->status.base_level < min || sd->status.base_level > max) {
+            args::ret_bool(info, false); return;
+        }
+        ++count;
+    }
+    args::ret_bool(info, count >= amount);
+}
+
+void instance_checkGuild_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    int guild_id = args::int_arg(info, 0);
+    int amount = args::int_arg(info, 1, 1);
+    int min    = args::int_arg(info, 2, 1);
+    int max    = args::int_arg(info, 3, MAX_LEVEL);
+    auto g = guild_search(guild_id);
+    if (!g) { args::ret_bool(info, false); return; }
+    int c = 0;
+    for (int i = 0; i < MAX_GUILD; ++i) {
+        auto* pl_sd = g->guild.member[i].sd;
+        if (!pl_sd || !map_id2bl(pl_sd->bl.id) || pl_sd->state.autotrade) continue;
+        if (pl_sd->status.base_level < min || pl_sd->status.base_level > max) {
+            args::ret_bool(info, false); return;
+        }
+        ++c;
+    }
+    args::ret_bool(info, c >= amount);
+}
+
+void instance_info_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto name = args::str_arg(info, 0);
+    int type  = args::int_arg(info, 1);
+    int index = args::int_arg(info, 2, 0);
+    auto db = instance_search_db_name(name.c_str());
+    if (!db) { args::ret_int(info, -1); return; }
+    switch (type) {
+        case IIT_ID:           args::ret_int(info, db->id); return;
+        case IIT_TIME_LIMIT:   args::ret_int(info, static_cast<int>(db->limit)); return;
+        case IIT_IDLE_TIMEOUT: args::ret_int(info, static_cast<int>(db->timeout)); return;
+        case IIT_ENTER_MAP:    args::ret_str(info, map_mapid2mapname(db->enter.map)); return;
+        case IIT_ENTER_X:      args::ret_int(info, db->enter.x); return;
+        case IIT_ENTER_Y:      args::ret_int(info, db->enter.y); return;
+        case IIT_MAPCOUNT:     args::ret_int(info, static_cast<int>(db->maplist.size())); return;
+        case IIT_MAP:
+            if (index < 0 || index >= (int)db->maplist.size()) {
+                args::ret_str(info, ""); return;
+            }
+            args::ret_str(info, map_mapid2mapname(db->maplist[index]));
+            return;
+        default: args::ret_int(info, -1);
+    }
+}
+
+void instance_liveInfo_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    int type = args::int_arg(info, 0);
+    int id   = args::int_arg(info, 1, 0);
+    if (type < ILI_NAME || type > ILI_OWNER) { args::ret_int(info, -1); return; }
+    auto im = util::umap_find(instances, id);
+    auto db = im ? instance_db.find(im->id) : nullptr;
+    if (!im || !db) {
+        if (type == ILI_NAME) args::ret_str(info, "");
+        else                   args::ret_int(info, -1);
+        return;
+    }
+    switch (type) {
+        case ILI_NAME:  args::ret_str(info, db->name.c_str()); return;
+        case ILI_MODE:  args::ret_int(info, im->mode);          return;
+        case ILI_OWNER: args::ret_int(info, im->owner_id);      return;
+    }
+}
+
+void instance_list_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto map_name = args::str_arg(info, 0);
+    int mode = args::int_arg(info, 1, IM_MAX);
+    int src_id = map_mapname2mapid(map_name.c_str());
+    auto iso_ = args::iso(info); auto cx = args::ctx(info);
+    auto out = v8::Array::New(iso_);
+    if (src_id == 0) { info.GetReturnValue().Set(out); return; }
+    uint32 idx_out = 0;
+    for (int i = instance_start; i < map_num; ++i) {
+        auto* md = &map[i];
+        if (md->instance_src_map != src_id) continue;
+        auto idata = util::umap_find(instances, md->instance_id);
+        if (!idata) continue;
+        if (mode != IM_MAX && idata->mode != mode) continue;
+        (void)out->Set(cx, idx_out++,
+            v8::Integer::New(iso_, md->instance_id));
+    }
+    info.GetReturnValue().Set(out);
+}
+} // namespace
+
 void InstanceHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx,
                                      v8::Local<v8::Object> obj) {
-    args::bind_method<InstanceHost>(iso, ctx, obj, this, "create",  &instance_create_cb);
-    args::bind_method<InstanceHost>(iso, ctx, obj, this, "destroy", &instance_destroy_cb);
-    args::bind_method<InstanceHost>(iso, ctx, obj, this, "enter",   &instance_enter_cb);
-    args::bind_method<InstanceHost>(iso, ctx, obj, this, "id",      &instance_id_cb);
-    // npcName / mapName / warpAll / announce / checks / info / vars
-    // need helper exposure from instance.cpp not in the header.
-    bind_str (iso, ctx, obj, "npcName");
-    bind_str (iso, ctx, obj, "mapName");
-    bind_void(iso, ctx, obj, "warpAll");
-    bind_void(iso, ctx, obj, "announce");
-    bind_false(iso, ctx, obj, "checkParty");
-    bind_false(iso, ctx, obj, "checkGuild");
+    args::bind_method<InstanceHost>(iso, ctx, obj, this, "create",     &instance_create_cb);
+    args::bind_method<InstanceHost>(iso, ctx, obj, this, "destroy",    &instance_destroy_cb);
+    args::bind_method<InstanceHost>(iso, ctx, obj, this, "enter",      &instance_enter_cb);
+    args::bind_method<InstanceHost>(iso, ctx, obj, this, "id",         &instance_id_cb);
+    args::bind_method<InstanceHost>(iso, ctx, obj, this, "npcName",    &instance_npcName_cb);
+    args::bind_method<InstanceHost>(iso, ctx, obj, this, "mapName",    &instance_mapName_cb);
+    args::bind_method<InstanceHost>(iso, ctx, obj, this, "warpAll",    &instance_warpAll_cb);
+    args::bind_method<InstanceHost>(iso, ctx, obj, this, "announce",   &instance_announce_cb);
+    args::bind_method<InstanceHost>(iso, ctx, obj, this, "checkParty", &instance_checkParty_cb);
+    args::bind_method<InstanceHost>(iso, ctx, obj, this, "checkGuild", &instance_checkGuild_cb);
+    args::bind_method<InstanceHost>(iso, ctx, obj, this, "info",       &instance_info_cb);
+    args::bind_method<InstanceHost>(iso, ctx, obj, this, "liveInfo",   &instance_liveInfo_cb);
+    args::bind_method<InstanceHost>(iso, ctx, obj, this, "list",       &instance_list_cb);
+    // checkClan needs clan.hpp clan_search exposure path that's
+    // platform-quirky; getVar/setVar would need scope_t reg helpers
+    // exposed — placeholder for now.
     bind_false(iso, ctx, obj, "checkClan");
-    bind_null(iso, ctx, obj, "info");
-    bind_null(iso, ctx, obj, "liveInfo");
-    bind_arr (iso, ctx, obj, "list");
-    bind_null(iso, ctx, obj, "getVar");
-    bind_void(iso, ctx, obj, "setVar");
+    bind_null (iso, ctx, obj, "getVar");
+    bind_void (iso, ctx, obj, "setVar");
 }
 
 namespace {
