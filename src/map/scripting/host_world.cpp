@@ -628,12 +628,14 @@ void WorldHost::ridToName_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     ret_str(info, sd ? sd->status.name : "");
 }
 namespace {
+struct drop_entry { t_itemid id; int amount; int x; int y; };
 int32 collect_drops_sub(struct block_list* bl, va_list ap) {
     t_itemid filter = va_arg(ap, t_itemid);
-    auto* total = va_arg(ap, int*);
+    auto* out = va_arg(ap, std::vector<drop_entry>*);
     auto* drop = reinterpret_cast<flooritem_data*>(bl);
     if (!drop) return 0;
-    if (filter == 0 || drop->item.nameid == filter) *total += drop->item.amount;
+    if (filter == 0 || drop->item.nameid == filter)
+        out->push_back({drop->item.nameid, drop->item.amount, bl->x, bl->y});
     return 0;
 }
 } // namespace
@@ -644,15 +646,23 @@ void WorldHost::getAreaDropItem_cb(const v8::FunctionCallbackInfo<v8::Value>& in
     int x2 = int_arg(info, 3), y2 = int_arg(info, 4);
     t_itemid filter = static_cast<t_itemid>(uint_arg(info, 5, 0));
     int16 m = map_mapname2mapid(mn.c_str());
-    auto out = v8::Array::New(iso(info), 0);
+    auto* iso_ = iso(info); auto cx = ctx(info);
+    auto out = v8::Array::New(iso_, 0);
     if (m < 0) { info.GetReturnValue().Set(out); return; }
-    int total = 0;
-    map_foreachinallarea(collect_drops_sub, m, x1, y1, x2, y2, BL_ITEM, filter, &total);
-    // d.ts says `unknown[]` — for parity with the buildin we surface a
-    // single-element array with the total count. Callers that want the
-    // legacy "amount" int can pull `.length`-style or `[0]`.
-    auto cx = ctx(info);
-    (void)out->Set(cx, 0, v8::Integer::New(iso(info), total));
+    std::vector<drop_entry> drops;
+    map_foreachinallarea(collect_drops_sub, m, x1, y1, x2, y2, BL_ITEM, filter, &drops);
+    for (uint32 i = 0; i < drops.size(); ++i) {
+        auto row = v8::Object::New(iso_);
+        (void)row->Set(cx, v8::String::NewFromUtf8(iso_, "itemId").ToLocalChecked(),
+                       v8::Integer::NewFromUnsigned(iso_, drops[i].id));
+        (void)row->Set(cx, v8::String::NewFromUtf8(iso_, "amount").ToLocalChecked(),
+                       v8::Integer::New(iso_, drops[i].amount));
+        (void)row->Set(cx, v8::String::NewFromUtf8(iso_, "x").ToLocalChecked(),
+                       v8::Integer::New(iso_, drops[i].x));
+        (void)row->Set(cx, v8::String::NewFromUtf8(iso_, "y").ToLocalChecked(),
+                       v8::Integer::New(iso_, drops[i].y));
+        (void)out->Set(cx, i, row);
+    }
     info.GetReturnValue().Set(out);
 }
 

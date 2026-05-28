@@ -23,6 +23,7 @@ const NpcRegistration* NpcRegistry::find_by_name(std::string_view name) const {
 void NpcRegistry::clear() {
     by_name_.clear();
     events_.clear();
+    functions_.clear();
 }
 
 void NpcRegistry::add_event_handler(const std::string& target,
@@ -33,6 +34,16 @@ void NpcRegistry::add_event_handler(const std::string& target,
 v8::Global<v8::Function>* NpcRegistry::find_event_handler(const std::string& target) {
     auto it = events_.find(target);
     return it == events_.end() ? nullptr : &it->second;
+}
+
+void NpcRegistry::add_function(const std::string& name,
+                               v8::Global<v8::Function> fn) {
+    functions_[name] = std::move(fn);
+}
+
+v8::Global<v8::Function>* NpcRegistry::find_function(const std::string& name) {
+    auto it = functions_.find(name);
+    return it == functions_.end() ? nullptr : &it->second;
 }
 
 NpcRegistry& global_npc_registry() {

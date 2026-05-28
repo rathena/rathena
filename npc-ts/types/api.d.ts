@@ -46,6 +46,17 @@ declare global {
      */
     function registerFloatingNpc(...npcs: FloatingNpcRegistration[]): void;
 
+    /**
+     * Register a named user-function callable via `ctx.callfunc(name, ...args)`.
+     * Mirrors rAthena's `function<Name>` script-side declarations — used by
+     * scripts to share logic without going through an NPC's event-label tree.
+     *
+     * @example
+     * registerFunction("F_GetWeekDay", (ctx, day) => ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][day]);
+     * // Anywhere: const name = ctx.callfunc("F_GetWeekDay", 3);  // "Wed"
+     */
+    function registerFunction(name: string, fn: (ctx: NpcContext, ...args: unknown[]) => unknown): void;
+
     /** Register one or more declarative shops. */
     function registerShop(...shops: ShopRegistration[]): void;
 

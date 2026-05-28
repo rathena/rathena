@@ -186,16 +186,39 @@ void register_npc_callback(const v8::FunctionCallbackInfo<v8::Value>& info) {
 
 } // namespace
 
+namespace {
+void register_function_callback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* iso = info.GetIsolate();
+    if (info.Length() < 2 || !info[0]->IsString() || !info[1]->IsFunction()) {
+        iso->ThrowException(v8::Exception::Error(
+            v8::String::NewFromUtf8(iso, "registerFunction(name, fn) requires a string and a function").ToLocalChecked()));
+        return;
+    }
+    v8::String::Utf8Value name(iso, info[0]);
+    auto* registry = static_cast<NpcRegistry*>(
+        info.Data().As<v8::External>()->Value(v8::kExternalPointerTypeTagDefault));
+    v8::Global<v8::Function> g(iso, info[1].As<v8::Function>());
+    registry->add_function(std::string(*name), std::move(g));
+}
+} // namespace
+
 void bind_registrars(v8::Isolate* isolate, v8::Local<v8::Context> context,
                      NpcRegistry& registry) {
     auto external = v8::External::New(isolate, &registry, v8::kExternalPointerTypeTagDefault);
-
-    auto tmpl = v8::FunctionTemplate::New(isolate, &register_npc_callback, external);
-    auto fn = tmpl->GetFunction(context).ToLocalChecked();
-
     auto global = context->Global();
-    auto key = v8::String::NewFromUtf8(isolate, "registerNpc").ToLocalChecked();
-    (void)global->Set(context, key, fn);
+
+    {
+        auto tmpl = v8::FunctionTemplate::New(isolate, &register_npc_callback, external);
+        auto fn = tmpl->GetFunction(context).ToLocalChecked();
+        auto key = v8::String::NewFromUtf8(isolate, "registerNpc").ToLocalChecked();
+        (void)global->Set(context, key, fn);
+    }
+    {
+        auto tmpl = v8::FunctionTemplate::New(isolate, &register_function_callback, external);
+        auto fn = tmpl->GetFunction(context).ToLocalChecked();
+        auto key = v8::String::NewFromUtf8(isolate, "registerFunction").ToLocalChecked();
+        (void)global->Set(context, key, fn);
+    }
 }
 
 } // namespace rathena::scripting

@@ -53,9 +53,17 @@ public:
                            v8::Global<v8::Function> fn);
     v8::Global<v8::Function>* find_event_handler(const std::string& target);
 
+    // User-function registry — bare names without "::" (legacy
+    // `function<Name>` declarations). Populated by registerFunction()
+    // and looked up by ctx.callfunc(name, ...).
+    void add_function(const std::string& name,
+                      v8::Global<v8::Function> fn);
+    v8::Global<v8::Function>* find_function(const std::string& name);
+
 private:
     std::unordered_map<std::string, std::unique_ptr<NpcRegistration>> by_name_;
     std::unordered_map<std::string, v8::Global<v8::Function>> events_;
+    std::unordered_map<std::string, v8::Global<v8::Function>> functions_;
 };
 
 NpcRegistry& global_npc_registry();

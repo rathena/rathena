@@ -448,7 +448,11 @@ void callfunc_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     auto* self = unwrap_dialog(info);
     if (!self || info.Length() < 1) { info.GetReturnValue().SetUndefined(); return; }
     auto name = args::str_arg(info, 0);
-    auto* handler = global_npc_registry().find_event_handler(name);
+    auto& reg = global_npc_registry();
+    // Plain function name (e.g. "F_GetWeekDay") → user-function table;
+    // colon-qualified name (e.g. "MyNpc::OnTalk") → event-label table.
+    auto* handler = reg.find_function(name);
+    if (!handler) handler = reg.find_event_handler(name);
     if (!handler) { info.GetReturnValue().SetUndefined(); return; }
     auto iso = info.GetIsolate();
     auto ctx = iso->GetCurrentContext();

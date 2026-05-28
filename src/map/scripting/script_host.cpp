@@ -302,35 +302,68 @@ bool ScriptHostImpl::dispatch_event(const std::string& event_target,
     auto* handler = registry.find_event_handler(event_target);
     if (!handler) return false;
 
+    // Resolve the NPC the event is attached to (everything before "::"
+    // in the event_target). We need it to build a DialogContext; without
+    // it we can't expose ctx.npc / ctx.mes / etc.
+    auto colon = event_target.find("::");
+    if (colon == std::string::npos) return false;
+    std::string npc_name = event_target.substr(0, colon);
+    auto* nd = npc_name2id(npc_name.c_str());
+    if (!nd) {
+        ShowWarning("[ts-scripting] event '%s' fired but NPC '%s' isn't live.\n",
+                    event_target.c_str(), npc_name.c_str());
+        return false;
+    }
+
+    if (!attached_sd) {
+        // Player-less events (OnInit / OnAgitStart / OnTimer ticks on a
+        // floating NPC). Skip with a TODO log — exposing this cleanly
+        // would need a player-less ctx variant that scripts opt into.
+        ShowDebug("[ts-scripting] event '%s' fired without an attached player — skipped (player-less events not yet exposed).\n",
+                  event_target.c_str());
+        return false;
+    }
+
     v8::Isolate::Scope iso_scope(isolate_);
     v8::HandleScope handle_scope(isolate_);
     auto context = context_.Get(isolate_);
     v8::Context::Scope ctx_scope(context);
 
-    auto fn = handler->Get(isolate_);
-    // If there's an attached player, find/spawn a dialog session so
-    // ctx.player is available. If not, invoke with a "null" ctx for
-    // npc-side ticking events.
-    DialogSession* session = attached_sd ? sessions_.get_or_create(attached_sd->bl.id) : nullptr;
-    if (session && !session->ctx) {
-        // No active dialog — events fired outside an onClick need a
-        // bare ctx (no nd). We don't expose ctx.npc in this path; only
-        // ctx.player and ctx.world.
-        session->sd = attached_sd;
-        session->account_id = attached_sd->bl.id;
+    // For events fired against an already-clicking player we want to
+    // REUSE their session — so a script timer that fires while the
+    // player is in mid-dialog can call ctx.mes on the same ctx. But
+    // we also need to make sure the session's NPC matches the event's
+    // NPC; if it doesn't, build a transient session for the event.
+    auto* existing = sessions_.find(attached_sd->bl.id);
+    bool reuse = existing && existing->ctx && existing->nd == nd;
+    DialogSession* session = nullptr;
+    std::unique_ptr<DialogSession> transient;
+    if (reuse) {
+        session = existing;
+    } else {
+        transient = std::make_unique<DialogSession>();
+        transient->account_id = attached_sd->bl.id;
+        transient->npc_id = nd->bl.id;
+        transient->sd = attached_sd;
+        transient->nd = nd;
+        transient->ctx = std::make_unique<DialogContext>(*attached_sd, *nd, *transient);
+        auto ctx_js = transient->ctx->to_js(isolate_, context);
+        transient->ctx_js.Reset(isolate_, ctx_js);
+        session = transient.get();
     }
+
+    auto fn = handler->Get(isolate_);
     v8::Local<v8::Value> argv[] = {
-        session && !session->ctx_js.IsEmpty()
-            ? static_cast<v8::Local<v8::Value>>(session->ctx_js.Get(isolate_))
-            : static_cast<v8::Local<v8::Value>>(v8::Undefined(isolate_)),
+        session->ctx_js.Get(isolate_),
     };
     v8::TryCatch try_catch(isolate_);
     (void)fn->Call(context, context->Global(), 1, argv);
     isolate_->PerformMicrotaskCheckpoint();
     if (try_catch.HasCaught()) {
         log_exception(isolate_, try_catch, ("event:" + event_target).c_str());
-        return true;
     }
+    // Transient sessions are dropped on this scope's exit; reused
+    // sessions stay alive and continue to be owned by sessions_.
     return true;
 }
 
