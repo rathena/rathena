@@ -25,6 +25,7 @@
 #include "../skill.hpp"
 #include "../status.hpp"
 #include "../storage.hpp"
+#include "../unit.hpp"
 #include "../../common/showmsg.hpp"
 #include "../../common/timer.hpp"
 #include "../../common/utils.hpp"
@@ -1003,26 +1004,208 @@ void InstanceHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ct
     bind_void(iso, ctx, obj, "setVar");
 }
 
+namespace {
+void bg_create_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto name = args::str_arg(info, 0);
+    int x = args::int_arg(info, 1);
+    int y = args::int_arg(info, 2);
+    int mapindex = 0;
+    if (name != "-" && (mapindex = mapindex_name2id(name.c_str())) == 0) {
+        args::ret_int(info, 0); return;
+    }
+    s_battleground_team team;
+    team.warp_x = x;
+    team.warp_y = y;
+    team.quit_event  = args::str_arg(info, 3);
+    team.death_event = args::str_arg(info, 4);
+    args::ret_int(info, bg_create(static_cast<uint16>(mapindex), &team));
+}
+
+void bg_join_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<BattlegroundHost>(info);
+    int bg_id = args::int_arg(info, 0);
+    auto bg = util::umap_find(bg_team_db, bg_id);
+    if (!bg) { args::ret_int(info, 0); return; }
+    int mapindex, x, y;
+    if (info.Length() > 1 && info[1]->IsString()) {
+        auto map_name = args::str_arg(info, 1);
+        mapindex = mapindex_name2id(map_name.c_str());
+        if (!mapindex) { args::ret_int(info, 0); return; }
+        x = args::int_arg(info, 2);
+        y = args::int_arg(info, 3);
+    } else {
+        mapindex = bg->cemetery.map;
+        x = bg->cemetery.x;
+        y = bg->cemetery.y;
+    }
+    int char_id = args::int_arg(info, 4, 0);
+    map_session_data* sd = char_id ? map_charid2sd(char_id) : self ? self->sd() : nullptr;
+    if (!sd) { args::ret_int(info, 0); return; }
+    if (!map_getmapflag(map_mapindex2mapid(mapindex), MF_BATTLEGROUND)) {
+        args::ret_int(info, 0); return;
+    }
+    bool ok = bg_team_join(bg_id, sd, false) &&
+              pc_setpos(sd, mapindex, x, y, CLR_TELEPORT) == SETPOS_OK;
+    args::ret_int(info, ok ? 1 : 0);
+}
+
+void bg_setTeamXY_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    int bg_id = args::int_arg(info, 0);
+    auto bg = util::umap_find(bg_team_db, bg_id);
+    if (!bg) return;
+    bg->cemetery.x = args::int_arg(info, 1);
+    bg->cemetery.y = args::int_arg(info, 2);
+}
+
+void bg_reserve_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto name  = args::str_arg(info, 0);
+    bool ended = args::bool_arg(info, 1);
+    args::ret_int(info, bg_queue_reserve(name.c_str(), ended) ? 1 : 0);
+}
+
+void bg_unbook_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto name = args::str_arg(info, 0);
+    bg_queue_unbook(name.c_str());
+}
+
+void bg_desert_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<BattlegroundHost>(info);
+    int char_id = args::int_arg(info, 0, 0);
+    map_session_data* sd = char_id ? map_charid2sd(char_id) : self ? self->sd() : nullptr;
+    if (!sd || !sd->bg_id) return;
+    bg_team_leave(sd, false, true);
+}
+
+void bg_warp_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    int bg_id = args::int_arg(info, 0);
+    auto name = args::str_arg(info, 1);
+    int x = args::int_arg(info, 2);
+    int y = args::int_arg(info, 3);
+    int mapindex = mapindex_name2id(name.c_str());
+    if (!mapindex) return;
+    bg_team_warp(bg_id, static_cast<uint16>(mapindex),
+                 static_cast<int16>(x), static_cast<int16>(y));
+}
+
+void bg_spawnMonster_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    int bg_id = args::int_arg(info, 0);
+    auto mapn = args::str_arg(info, 1);
+    int x  = args::int_arg(info, 2);
+    int y  = args::int_arg(info, 3);
+    auto disp = args::str_arg(info, 4);
+    int cls = args::int_arg(info, 5);
+    auto evt = args::str_arg(info, 6);
+    args::ret_int(info, mob_spawn_bg(mapn.c_str(),
+        static_cast<int16>(x), static_cast<int16>(y),
+        disp.c_str(), cls, evt.c_str(),
+        static_cast<uint32>(bg_id)));
+}
+
+void bg_setMonsterTeam_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    int id    = args::int_arg(info, 0);
+    int bg_id = args::int_arg(info, 1);
+    auto* mbl = map_id2bl(id);
+    if (!mbl || mbl->type != BL_MOB) return;
+    auto* md = reinterpret_cast<mob_data*>(mbl);
+    md->bg_id = static_cast<uint32>(bg_id);
+    unit_stop_attack(&md->bl);
+    unit_stop_walking(&md->bl, USW_NONE);
+    md->target_id = md->attacked_id = 0;
+    clif_name_area(&md->bl);
+}
+
+void bg_leave_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<BattlegroundHost>(info);
+    int char_id = args::int_arg(info, 0, 0);
+    map_session_data* sd = char_id ? map_charid2sd(char_id) : self ? self->sd() : nullptr;
+    if (!sd || !sd->bg_id) return;
+    bg_team_leave(sd, false, false);
+}
+
+void bg_destroy_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    int bg_id = args::int_arg(info, 0);
+    if (bg_id > 0) bg_team_delete(bg_id);
+}
+
+void bg_areaUsers_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    int bg_id = args::int_arg(info, 0);
+    auto map_name = args::str_arg(info, 1);
+    int x0 = args::int_arg(info, 2), y0 = args::int_arg(info, 3);
+    int x1 = args::int_arg(info, 4), y1 = args::int_arg(info, 5);
+    int m = map_mapname2mapid(map_name.c_str());
+    auto bg = util::umap_find(bg_team_db, bg_id);
+    if (!bg || m < 0) { args::ret_int(info, 0); return; }
+    int c = 0;
+    for (const auto& member : bg->members) {
+        if (member.sd->bl.m != m) continue;
+        if (member.sd->bl.x < x0 || member.sd->bl.y < y0 ||
+            member.sd->bl.x > x1 || member.sd->bl.y > y1) continue;
+        ++c;
+    }
+    args::ret_int(info, c);
+}
+
+void bg_updateScore_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto map_name = args::str_arg(info, 0);
+    int m = map_mapname2mapid(map_name.c_str());
+    if (m < 0) return;
+    auto* mapdata = map_getmapdata(m);
+    mapdata->bgscore_lion  = args::int_arg(info, 1);
+    mapdata->bgscore_eagle = args::int_arg(info, 2);
+    clif_bg_updatescore(m);
+}
+
+void bg_getData_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    int bg_id = args::int_arg(info, 0);
+    int type  = args::int_arg(info, 1);
+    auto bg = util::umap_find(bg_team_db, bg_id);
+    if (!bg) { args::ret_int(info, 0); return; }
+    switch (type) {
+        case 0: args::ret_int(info, static_cast<int>(bg->members.size())); return;
+        case 1: args::ret_int(info, static_cast<int>(bg->members.size())); return;
+        default: args::ret_int(info, 0);
+    }
+}
+
+void bg_info_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto name = args::str_arg(info, 0);
+    int type  = args::int_arg(info, 1);
+    auto bg = bg_search_name(name.c_str());
+    if (!bg) { args::ret_null(info); return; }
+    switch (type) {
+        case BG_INFO_ID:               args::ret_int(info, bg->id); return;
+        case BG_INFO_REQUIRED_PLAYERS: args::ret_int(info, bg->required_players); return;
+        case BG_INFO_MAX_PLAYERS:      args::ret_int(info, bg->max_players);      return;
+        case BG_INFO_MIN_LEVEL:        args::ret_int(info, bg->min_lvl);          return;
+        case BG_INFO_MAX_LEVEL:        args::ret_int(info, bg->max_lvl);          return;
+        case BG_INFO_DESERTER_TIME:    args::ret_int(info, bg->deserter_time);    return;
+        case BG_INFO_MAPS:             args::ret_int(info, static_cast<int>(bg->maps.size())); return;
+        default: args::ret_null(info);
+    }
+}
+} // namespace
+
 void BattlegroundHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx,
                                          v8::Local<v8::Object> obj) {
-    (void)sd_;
-    bind_int0(iso, ctx, obj, "create");
-    bind_int0(iso, ctx, obj, "join");
-    bind_void(iso, ctx, obj, "setTeamXY");
-    bind_int0(iso, ctx, obj, "reserve");
-    bind_void(iso, ctx, obj, "unbook");
-    bind_void(iso, ctx, obj, "desert");
-    bind_void(iso, ctx, obj, "warp");
-    bind_int0(iso, ctx, obj, "spawnMonster");
-    bind_void(iso, ctx, obj, "setMonsterTeam");
-    bind_void(iso, ctx, obj, "leave");
-    bind_void(iso, ctx, obj, "destroy");
+    args::bind_method<BattlegroundHost>(iso, ctx, obj, this, "create",         &bg_create_cb);
+    args::bind_method<BattlegroundHost>(iso, ctx, obj, this, "join",           &bg_join_cb);
+    args::bind_method<BattlegroundHost>(iso, ctx, obj, this, "setTeamXY",      &bg_setTeamXY_cb);
+    args::bind_method<BattlegroundHost>(iso, ctx, obj, this, "reserve",        &bg_reserve_cb);
+    args::bind_method<BattlegroundHost>(iso, ctx, obj, this, "unbook",         &bg_unbook_cb);
+    args::bind_method<BattlegroundHost>(iso, ctx, obj, this, "desert",         &bg_desert_cb);
+    args::bind_method<BattlegroundHost>(iso, ctx, obj, this, "warp",           &bg_warp_cb);
+    args::bind_method<BattlegroundHost>(iso, ctx, obj, this, "spawnMonster",   &bg_spawnMonster_cb);
+    args::bind_method<BattlegroundHost>(iso, ctx, obj, this, "setMonsterTeam", &bg_setMonsterTeam_cb);
+    args::bind_method<BattlegroundHost>(iso, ctx, obj, this, "leave",          &bg_leave_cb);
+    args::bind_method<BattlegroundHost>(iso, ctx, obj, this, "destroy",        &bg_destroy_cb);
+    args::bind_method<BattlegroundHost>(iso, ctx, obj, this, "areaUsers",      &bg_areaUsers_cb);
+    args::bind_method<BattlegroundHost>(iso, ctx, obj, this, "updateScore",    &bg_updateScore_cb);
+    args::bind_method<BattlegroundHost>(iso, ctx, obj, this, "getData",        &bg_getData_cb);
+    args::bind_method<BattlegroundHost>(iso, ctx, obj, this, "info",           &bg_info_cb);
+    // waitingRoomToBg / waitingRoomToBgSingle need chat_data / npc context
+    // wiring that lives in npc_chat — placeholder for now.
     bind_void(iso, ctx, obj, "waitingRoomToBgSingle");
     bind_void(iso, ctx, obj, "waitingRoomToBg");
-    bind_int0(iso, ctx, obj, "getData");
-    bind_int0(iso, ctx, obj, "areaUsers");
-    bind_void(iso, ctx, obj, "updateScore");
-    bind_null(iso, ctx, obj, "info");
 }
 
 namespace {
