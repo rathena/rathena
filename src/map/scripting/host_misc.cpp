@@ -12,13 +12,22 @@
 #include "../npc.hpp"
 #include "../homunculus.hpp"
 #include "../mail.hpp"
+#include "../battle.hpp"
+#include "../battleground.hpp"
+#include "../intif.hpp"
 #include "../mercenary.hpp"
+#include "../mob.hpp"
 #include "../party.hpp"
 #include "../pc.hpp"
 #include "../pet.hpp"
 #include "../quest.hpp"
+#include "../script.hpp"
+#include "../skill.hpp"
 #include "../status.hpp"
 #include "../storage.hpp"
+#include "../../common/showmsg.hpp"
+#include "../../common/timer.hpp"
+#include "../../common/utils.hpp"
 
 namespace rathena::scripting {
 
@@ -384,20 +393,208 @@ void MailHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx,
     args::bind_method<MailHost>(iso, ctx, obj, this, "open", &mail_open_cb);
 }
 
+namespace {
+void pet_catchPet_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<PetHost>(info);
+    if (!self) return;
+    int item_id = args::int_arg(info, 0);
+    int flag    = args::int_arg(info, 1, PET_CATCH_NORMAL);
+    if (flag < PET_CATCH_NORMAL || flag >= PET_CATCH_MAX)
+        flag = PET_CATCH_NORMAL;
+    pet_catch_process_start(self->sd(),
+        static_cast<t_itemid>(item_id),
+        static_cast<e_pet_catch_flag>(flag));
+}
+
+void pet_makePet_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<PetHost>(info);
+    if (!self) return;
+    uint16 mob_id = static_cast<uint16>(args::int_arg(info, 0));
+    auto pet = pet_db.find(mob_id);
+    if (!pet) {
+        ShowError("PetHost::makePet: no pet entry for mob_id %hu\n", mob_id);
+        return;
+    }
+    auto mdb = mob_db.find(pet->class_);
+    intif_create_pet(self->sd().status.account_id,
+                     self->sd().status.char_id,
+                     pet->class_, mdb->lv, pet->EggID, 0,
+                     pet->intimate, 100, 0, 1, mdb->jname.c_str());
+}
+
+void pet_birthPet_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<PetHost>(info);
+    if (!self) return;
+    if (self->sd().status.pet_id) return;
+    clif_sendegg(&self->sd());
+}
+
+void pet_openIncubator_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<PetHost>(info);
+    if (!self) return;
+    clif_sendegg(&self->sd());
+}
+
+void pet_info_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<PetHost>(info);
+    int type = args::int_arg(info, 0);
+    if (!self || !self->sd().pd) {
+        if (type == PETINFO_NAME) args::ret_str(info, "null");
+        else                       args::ret_int(info, 0);
+        return;
+    }
+    auto* pd = self->sd().pd;
+    switch (type) {
+        case PETINFO_ID:       args::ret_int(info, pd->pet.pet_id); return;
+        case PETINFO_CLASS:    args::ret_int(info, pd->pet.class_); return;
+        case PETINFO_NAME:     args::ret_str(info, pd->pet.name);   return;
+        case PETINFO_INTIMATE: args::ret_int(info, pd->pet.intimate); return;
+        case PETINFO_HUNGRY:   args::ret_int(info, pd->pet.hungry);  return;
+        case PETINFO_RENAMED:  args::ret_int(info, pd->pet.rename_flag); return;
+        case PETINFO_LEVEL:    args::ret_int(info, pd->pet.level);   return;
+        case PETINFO_BLOCKID:  args::ret_int(info, pd->bl.id);       return;
+        case PETINFO_EGGID:    args::ret_int(info, pd->pet.egg_id);  return;
+        case PETINFO_FOODID:   args::ret_int(info, pd->get_pet_db()->FoodID); return;
+        default: args::ret_int(info, 0);
+    }
+}
+
+void pet_skillBonus_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<PetHost>(info);
+    if (!self || !self->sd().pd) return;
+    auto* pd = self->sd().pd;
+    if (pd->bonus) {
+        if (pd->bonus->timer != INVALID_TIMER)
+            delete_timer(pd->bonus->timer, pet_skill_bonus_timer);
+    } else {
+        pd->bonus = (struct pet_bonus*)aMalloc(sizeof(struct pet_bonus));
+    }
+    pd->bonus->type     = args::int_arg(info, 0);
+    pd->bonus->val      = args::int_arg(info, 1);
+    pd->bonus->duration = args::int_arg(info, 2);
+    pd->bonus->delay    = args::int_arg(info, 3);
+    if (pd->state.skillbonus == 1) pd->state.skillbonus = 0;
+    if (battle_config.pet_equip_required && pd->pet.equip == 0)
+        pd->bonus->timer = INVALID_TIMER;
+    else
+        pd->bonus->timer = add_timer(gettick() + pd->bonus->delay * 1000,
+                                     pet_skill_bonus_timer,
+                                     self->sd().bl.id, 0);
+}
+
+void pet_skillSupport_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<PetHost>(info);
+    if (!self || !self->sd().pd) return;
+    int32 id = skill_get_index(args::int_arg(info, 0));
+    if (!id) return;
+    auto* pd = self->sd().pd;
+    if (pd->s_skill) {
+        if (pd->s_skill->timer != INVALID_TIMER) {
+            if (pd->s_skill->id)
+                delete_timer(pd->s_skill->timer, pet_skill_support_timer);
+            else
+                delete_timer(pd->s_skill->timer, pet_heal_timer);
+        }
+    } else {
+        pd->s_skill = (struct pet_skill_support*)aMalloc(sizeof(struct pet_skill_support));
+    }
+    pd->s_skill->id    = id;
+    pd->s_skill->lv    = args::int_arg(info, 1);
+    pd->s_skill->delay = args::int_arg(info, 2);
+    pd->s_skill->hp    = args::int_arg(info, 3);
+    pd->s_skill->sp    = args::int_arg(info, 4);
+    if (battle_config.pet_equip_required && pd->pet.equip == 0)
+        pd->s_skill->timer = INVALID_TIMER;
+    else
+        pd->s_skill->timer = add_timer(gettick() + pd->s_skill->delay * 1000,
+                                       pet_skill_support_timer,
+                                       self->sd().bl.id, 0);
+}
+
+void pet_skillAttack_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<PetHost>(info);
+    if (!self || !self->sd().pd) return;
+    int32 id = skill_get_index(args::int_arg(info, 0));
+    if (!id) return;
+    auto* pd = self->sd().pd;
+    if (pd->a_skill == nullptr)
+        pd->a_skill = (struct pet_skill_attack*)aMalloc(sizeof(struct pet_skill_attack));
+    pd->a_skill->id        = id;
+    pd->a_skill->damage    = 0;
+    pd->a_skill->lv        = static_cast<uint16>(
+        std::min(args::int_arg(info, 1),
+                 static_cast<int>(skill_get_max(pd->a_skill->id))));
+    pd->a_skill->div_      = 0;
+    pd->a_skill->rate      = args::int_arg(info, 2);
+    pd->a_skill->bonusrate = args::int_arg(info, 3);
+}
+
+void pet_skillAttack2_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<PetHost>(info);
+    if (!self || !self->sd().pd) return;
+    int32 id = skill_get_index(args::int_arg(info, 0));
+    if (!id) return;
+    auto* pd = self->sd().pd;
+    if (pd->a_skill == nullptr)
+        pd->a_skill = (struct pet_skill_attack*)aMalloc(sizeof(struct pet_skill_attack));
+    pd->a_skill->id        = id;
+    pd->a_skill->damage    = args::int_arg(info, 1);
+    pd->a_skill->lv        = static_cast<uint16>(skill_get_max(pd->a_skill->id));
+    pd->a_skill->div_      = args::int_arg(info, 2);
+    pd->a_skill->rate      = args::int_arg(info, 3);
+    pd->a_skill->bonusrate = args::int_arg(info, 4);
+}
+
+void pet_recovery_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<PetHost>(info);
+    if (!self || !self->sd().pd) return;
+    int sc = args::int_arg(info, 0);
+    if (sc <= SC_NONE || sc >= SC_MAX) return;
+    auto* pd = self->sd().pd;
+    if (pd->recovery) {
+        if (pd->recovery->timer != INVALID_TIMER)
+            delete_timer(pd->recovery->timer, pet_recovery_timer);
+    } else {
+        pd->recovery = (struct pet_recovery*)aMalloc(sizeof(struct pet_recovery));
+    }
+    pd->recovery->type  = static_cast<sc_type>(sc);
+    pd->recovery->delay = args::int_arg(info, 1);
+    pd->recovery->timer = INVALID_TIMER;
+}
+
+void pet_loot_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<PetHost>(info);
+    if (!self || !self->sd().pd) return;
+    int max = args::int_arg(info, 0);
+    if (max < 1) max = 1;
+    else if (max > MAX_PETLOOT_SIZE) max = MAX_PETLOOT_SIZE;
+    auto* pd = self->sd().pd;
+    if (pd->loot != nullptr) {
+        pet_lootitem_drop(*pd, pd->master);
+        aFree(pd->loot->item);
+    } else {
+        pd->loot = (struct pet_loot*)aMalloc(sizeof(struct pet_loot));
+    }
+    pd->loot->item   = (struct item*)aCalloc(max, sizeof(struct item));
+    pd->loot->max    = max;
+    pd->loot->count  = 0;
+    pd->loot->weight = 0;
+}
+} // namespace
+
 void PetHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx,
                                 v8::Local<v8::Object> obj) {
-    (void)sd_;
-    bind_void(iso, ctx, obj, "catchPet");
-    bind_void(iso, ctx, obj, "makePet");
-    bind_void(iso, ctx, obj, "birthPet");
-    bind_void(iso, ctx, obj, "openIncubator");
-    bind_null(iso, ctx, obj, "info");
-    bind_void(iso, ctx, obj, "skillBonus");
-    bind_void(iso, ctx, obj, "skillSupport");
-    bind_void(iso, ctx, obj, "skillAttack");
-    bind_void(iso, ctx, obj, "skillAttack2");
-    bind_void(iso, ctx, obj, "recovery");
-    bind_void(iso, ctx, obj, "loot");
+    args::bind_method<PetHost>(iso, ctx, obj, this, "catchPet",      &pet_catchPet_cb);
+    args::bind_method<PetHost>(iso, ctx, obj, this, "makePet",       &pet_makePet_cb);
+    args::bind_method<PetHost>(iso, ctx, obj, this, "birthPet",      &pet_birthPet_cb);
+    args::bind_method<PetHost>(iso, ctx, obj, this, "openIncubator", &pet_openIncubator_cb);
+    args::bind_method<PetHost>(iso, ctx, obj, this, "info",          &pet_info_cb);
+    args::bind_method<PetHost>(iso, ctx, obj, this, "skillBonus",    &pet_skillBonus_cb);
+    args::bind_method<PetHost>(iso, ctx, obj, this, "skillSupport",  &pet_skillSupport_cb);
+    args::bind_method<PetHost>(iso, ctx, obj, this, "skillAttack",   &pet_skillAttack_cb);
+    args::bind_method<PetHost>(iso, ctx, obj, this, "skillAttack2",  &pet_skillAttack2_cb);
+    args::bind_method<PetHost>(iso, ctx, obj, this, "recovery",      &pet_recovery_cb);
+    args::bind_method<PetHost>(iso, ctx, obj, this, "loot",          &pet_loot_cb);
 }
 
 namespace {
@@ -437,18 +634,134 @@ void HomHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx,
     bind_void(iso, ctx, obj, "addIntimacy");
 }
 
+namespace {
+int* merc_calls_slot(map_session_data& sd, int guild) {
+    switch (guild) {
+        case ARCH_MERC_GUILD:  return &sd.status.arch_calls;
+        case SPEAR_MERC_GUILD: return &sd.status.spear_calls;
+        case SWORD_MERC_GUILD: return &sd.status.sword_calls;
+        default: return nullptr;
+    }
+}
+int* merc_faith_slot(map_session_data& sd, int guild) {
+    switch (guild) {
+        case ARCH_MERC_GUILD:  return &sd.status.arch_faith;
+        case SPEAR_MERC_GUILD: return &sd.status.spear_faith;
+        case SWORD_MERC_GUILD: return &sd.status.sword_faith;
+        default: return nullptr;
+    }
+}
+
+void merc_create_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<MercHost>(info);
+    if (!self) return;
+    auto& sd = self->sd();
+    if (sd.md || sd.status.mer_id != 0) return;
+    int class_ = args::int_arg(info, 0);
+    if (!mercenary_db.exists(class_)) return;
+    uint32 contract_time = static_cast<uint32>(args::int_arg(info, 1));
+    mercenary_create(&sd, static_cast<uint16>(class_), contract_time);
+}
+
+void merc_delete_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<MercHost>(info);
+    if (!self || !self->sd().md) return;
+    int type = args::int_arg(info, 0, 0);
+    if (type < 0 || type > 3) type = 0;
+    mercenary_delete(self->sd().md, type);
+}
+
+void merc_heal_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<MercHost>(info);
+    if (!self || !self->sd().md) return;
+    int hp = args::int_arg(info, 0);
+    int sp = args::int_arg(info, 1, 0);
+    status_heal(&self->sd().md->bl, hp, sp, 0);
+}
+
+void merc_scStart_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<MercHost>(info);
+    if (!self || !self->sd().md) return;
+    sc_type type = static_cast<sc_type>(args::int_arg(info, 0));
+    int tick = args::int_arg(info, 1);
+    int val1 = args::int_arg(info, 2);
+    status_change_start(nullptr, &self->sd().md->bl, type, 10000,
+                        val1, 0, 0, 0, tick, SCSTART_NOTICKDEF);
+}
+
+void merc_getCalls_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<MercHost>(info);
+    if (!self) { args::ret_int(info, 0); return; }
+    int* slot = merc_calls_slot(self->sd(), args::int_arg(info, 0));
+    args::ret_int(info, slot ? *slot : 0);
+}
+
+void merc_setCalls_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<MercHost>(info);
+    if (!self) return;
+    int* slot = merc_calls_slot(self->sd(), args::int_arg(info, 0));
+    if (!slot) return;
+    *slot += args::int_arg(info, 1);
+    *slot = cap_value(*slot, 0, INT_MAX);
+}
+
+void merc_getFaith_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<MercHost>(info);
+    if (!self) { args::ret_int(info, 0); return; }
+    int* slot = merc_faith_slot(self->sd(), args::int_arg(info, 0));
+    args::ret_int(info, slot ? *slot : 0);
+}
+
+void merc_setFaith_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<MercHost>(info);
+    if (!self) return;
+    int guild = args::int_arg(info, 0);
+    int* slot = merc_faith_slot(self->sd(), guild);
+    if (!slot) return;
+    *slot += args::int_arg(info, 1);
+    *slot = cap_value(*slot, 0, INT_MAX);
+    if (self->sd().md && mercenary_get_guild(self->sd().md) == guild)
+        clif_mercenary_updatestatus(&self->sd(), SP_MERCFAITH);
+}
+
+void merc_info_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<MercHost>(info);
+    int type = args::int_arg(info, 0);
+    if (!self) { args::ret_null(info); return; }
+    auto* md = self->sd().md;
+    if (md == nullptr) {
+        if (type == 2) args::ret_str(info, "");
+        else            args::ret_int(info, 0);
+        return;
+    }
+    switch (type) {
+        case 0: args::ret_int(info, md->mercenary.mercenary_id); return;
+        case 1: args::ret_int(info, md->mercenary.class_);       return;
+        case 2: args::ret_str(info, md->db->name.c_str());        return;
+        case 3: args::ret_int(info, mercenary_get_faith(md));     return;
+        case 4: args::ret_int(info, mercenary_get_calls(md));     return;
+        case 5: args::ret_int(info, md->mercenary.kill_count);    return;
+        case 6: args::ret_int(info, static_cast<int>(mercenary_get_lifetime(md))); return;
+        case 7: args::ret_int(info, md->db->lv);                  return;
+        case 8: args::ret_int(info, md->bl.id);                   return;
+        default: args::ret_null(info);
+    }
+}
+} // namespace
+
 void MercHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx,
                                  v8::Local<v8::Object> obj) {
-    (void)sd_;
-    bind_void(iso, ctx, obj, "create");
-    bind_void(iso, ctx, obj, "delete");
-    bind_void(iso, ctx, obj, "heal");
-    bind_void(iso, ctx, obj, "scStart");
-    bind_int0(iso, ctx, obj, "getCalls");
-    bind_void(iso, ctx, obj, "setCalls");
-    bind_int0(iso, ctx, obj, "getFaith");
-    bind_void(iso, ctx, obj, "setFaith");
-    bind_null(iso, ctx, obj, "info");
+    args::bind_method<MercHost>(iso, ctx, obj, this, "create",   &merc_create_cb);
+    args::bind_method<MercHost>(iso, ctx, obj, this, "delete",   &merc_delete_cb);
+    args::bind_method<MercHost>(iso, ctx, obj, this, "heal",     &merc_heal_cb);
+    args::bind_method<MercHost>(iso, ctx, obj, this, "scStart",  &merc_scStart_cb);
+    args::bind_method<MercHost>(iso, ctx, obj, this, "getCalls", &merc_getCalls_cb);
+    args::bind_method<MercHost>(iso, ctx, obj, this, "setCalls", &merc_setCalls_cb);
+    args::bind_method<MercHost>(iso, ctx, obj, this, "getFaith", &merc_getFaith_cb);
+    args::bind_method<MercHost>(iso, ctx, obj, this, "setFaith", &merc_setFaith_cb);
+    args::bind_method<MercHost>(iso, ctx, obj, this, "info",     &merc_info_cb);
+    // Elemental info is part of a separate elemental.cpp subsystem,
+    // not the mercenary one — keep as placeholder.
     bind_null(iso, ctx, obj, "elementalInfo");
 }
 
