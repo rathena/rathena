@@ -144,7 +144,7 @@ export interface NpcContext {
     inputString(defaultValue?: string): string;
 
     /**
-     * Suspend execution for the given duration. NOT YET WIRED — stub.
+     * Suspend execution for the given duration.
      *
      * @param milliseconds Sleep duration.
      *
@@ -169,30 +169,30 @@ export interface NpcContext {
 
     /**
      * Schedule a one-shot timer that fires an event label after the
-     * given delay. NOT YET WIRED — stub.
+     * given delay.
      *
      * Mirrors rAthena's `addtimer`.
      */
     addTimer(milliseconds: number, eventTarget: string): void;
 
-    /** Cancel a previously-scheduled timer. NOT YET WIRED — stub. */
+    /** Cancel a previously-scheduled timer. */
     delTimer(eventTarget: string): void;
 
-    /** Schedule a per-player timer. NOT YET WIRED — stub. */
+    /** Schedule a per-player timer. */
     addPlayerTimer(charId: number, milliseconds: number, eventTarget: string): void;
 
     /**
-     * Call another NPC's user-function. NOT YET WIRED — for the TS
+     * Call another NPC's user-function. For the TS
      * engine, prefer plain JS imports over cross-NPC calls.
      */
     callfunc(functionName: string, ...args: unknown[]): unknown;
 
-    /** End the script early. NOT YET WIRED — stub. */
+    /** End the script early. */
     end(): void;
 
     /**
      * Clear all dialog text but keep the dialog open. Useful between
-     * "pages" without a "Next" prompt. NOT YET WIRED — stub.
+     * "pages" without a "Next" prompt.
      *
      * Mirrors rAthena's `cleararray`-style dialog reset.
      */

@@ -297,7 +297,7 @@ export interface PlayerContext {
     getEnchantGrade(slot?: number): number;
     /** True if anything is equipped in the slot. */
     isEquipped(slot: number): boolean;
-    /** True if the slot's item is refinable. NOT YET WIRED — stub. */
+    /** True if the slot's item is refinable. */
     isEquipEnableRef(slot: number): boolean;
     /** Inventory index of the slot's item. */
     getItemPos(slot: number): number;
@@ -390,13 +390,13 @@ export interface PlayerContext {
     scStart(type: number, durationMs: number, opts?: { val1?: number; val2?: number; val3?: number; val4?: number }): void;
     /** End a status effect (or all if `type` omitted). */
     scEnd(type?: number): void;
-    /** Query a SC's runtime info. NOT YET WIRED — stub. */
+    /** Query a SC's runtime info. */
     getStatus(effectType: number, infoType?: number): number;
     /** True if the player is dead. */
     isDead(): boolean;
     /** Force a stat recalc. */
     recalculateStat(): void;
-    /** Status points required to raise a stat to `value`. NOT YET WIRED — stub. */
+    /** Status points required to raise a stat to `value`. */
     needStatusPoint(statType: number, value: number): number;
 
     // ========== Reset ======================================================
@@ -491,7 +491,7 @@ export interface PlayerContext {
     getMotherId(): number;
     getFatherId(): number;
     getChildId(): number;
-    /** True if the partner is currently online. NOT YET WIRED — stub. */
+    /** True if the partner is currently online. */
     isPartnerOn(): boolean;
 
     // ========== Permissions ================================================
@@ -523,7 +523,7 @@ export interface PlayerContext {
     ignoreTimeout(flag: boolean): void;
     autoLoot(rate?: number): number;
     hasAutoLoot(): boolean;
-    /** True if the player's job can enter the map. NOT YET WIRED — stub. */
+    /** True if the player's job can enter the map. */
     jobCanEnterMap(map: string, jobId?: number): boolean;
     checkVending(): boolean;
     checkChatting(): boolean;
@@ -532,7 +532,7 @@ export interface PlayerContext {
     navigateTo(map: string, x?: number, y?: number, flag?: number, hideWindow?: boolean, monsterId?: number): void;
     clanJoin(clanId: number): void;
     clanLeave(): void;
-    /** Read camera info (range / rotation / latitude). NOT YET WIRED — stub. */
+    /** Read camera info (range / rotation / latitude). */
     cameraInfo(range: number, rotation: number, latitude: number): unknown;
 }
 

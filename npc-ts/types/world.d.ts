@@ -118,7 +118,7 @@ export interface WorldOps {
     /**
      * Spawn a castle guardian.
      *
-     * Mirrors rAthena's `guardian`. NOT YET WIRED — stub.
+     * Mirrors rAthena's `guardian`.
      */
     spawnGuardian(map: string, x: number, y: number, displayName: string, mobId: number, onDeathEvent?: string, guardianIndex?: number): number;
     guardianInfo(map: string, guardianIndex: number, type: number): unknown;
@@ -169,11 +169,11 @@ export interface WorldOps {
     getUnitData(gid: number): unknown;
     /** Read/write a unit-data parameter (HP, max HP, walk speed, …). */
     setUnitData(gid: number, parameter: number, value: unknown): void;
-    /** All units of a type, globally. NOT YET WIRED — stub. */
+    /** All units of a type, globally. */
     getUnits(type: number): number[];
-    /** All units of a type on a specific map. NOT YET WIRED — stub. */
+    /** All units of a type on a specific map. */
     getMapUnits(type: number, map: string): number[];
-    /** All units of a type inside a map rectangle. NOT YET WIRED — stub. */
+    /** All units of a type inside a map rectangle. */
     getAreaUnits(type: number, map: string, x1: number, y1: number, x2: number, y2: number): number[];
 
     // ========== Player / area queries ======================================
@@ -192,7 +192,7 @@ export interface WorldOps {
     isLoggedIn(accountId: number, charId?: number): boolean;
     /** Character name for a runtime block-list id. */
     ridToName(rid: number): string;
-    /** Items on the floor in a rectangle. NOT YET WIRED — stub. */
+    /** Items on the floor in a rectangle. */
     getAreaDropItem(map: string, x1: number, y1: number, x2: number, y2: number, itemId?: number): unknown[];
 
     // ========== Map / location =============================================
@@ -213,7 +213,7 @@ export interface WorldOps {
     setCell(map: string, x1: number, y1: number, x2: number, y2: number, type: number, flag: boolean): void;
     /** Check a single cell's flag. */
     checkCell(map: string, x: number, y: number, type: number): number;
-    /** Find a walkable cell near `(x, y)`. NOT YET WIRED — stub. */
+    /** Find a walkable cell near `(x, y)`. */
     getFreeCell(map: string, x?: number, y?: number, rangeX?: number, rangeY?: number, flag?: number): { x: number; y: number } | null;
     /** Create a named wall barrier. */
     setWall(map: string, x: number, y: number, size: number, dir: number, shootable: boolean, name: string): void;
@@ -233,8 +233,15 @@ export interface WorldOps {
     warpGuild(toMap: string, x: number, y: number, guildId: number): void;
     /** Percentage heal everyone in a map rectangle. */
     areaPercentHeal(map: string, x1: number, y1: number, x2: number, y2: number, hp: number, sp: number): void;
-    /** Attach a specific account-id as `rid` for subsequent ops. NOT YET WIRED — stub. */
+    /**
+     * Attach a specific account-id as `rid` for subsequent ops. UNSUPPORTED
+     * — the V8 engine runs each callback with sd_ scoped to that invocation,
+     * so there's no "swap and keep running" semantics like the legacy
+     * engine. Use `ctx.player.<op>(target_account_id)` or invoke the handler
+     * again with the new rid instead.
+     */
     attachRid(accountId: number, force?: boolean): void;
+    /** UNSUPPORTED — see {@link attachRid}. */
     addRid(type: number, flag?: number, parameters?: unknown): void;
     playerAttached(): number;
     getAttachedRid(): number;
@@ -304,6 +311,6 @@ export interface WorldOps {
     setItemScript(itemId: number, script: string, type?: number): void;
     gmLevel(charId?: number): number;
     groupId(charId?: number): number;
-    /** Item-link tooltip text (rich-chat format). NOT YET WIRED — stub. */
+    /** Item-link tooltip text (rich-chat format). */
     itemLink(itemId: number, opts?: ItemOpts): string;
 }
