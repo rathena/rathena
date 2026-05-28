@@ -27862,7 +27862,7 @@ BUILDIN_FUNC(unitspecialeffect) {
 	if (!script_mapid2sd(5, sd)) {
 		return SCRIPT_CMD_SUCCESS;
 	}
-	if (sd && sd->bl.type == BL_PC) {
+	if (sd) {
 		clif_specialeffect_single(bl, type, sd->fd);
 	}
 	return SCRIPT_CMD_SUCCESS;
@@ -27893,7 +27893,7 @@ BUILDIN_FUNC(aura) {
 		script_pushint(st, 0);
 		return SCRIPT_CMD_FAILURE;
 	}
-	aura_make_effective(&sd->bl, aura_id);
+	aura_make_effective((struct block_list *)sd, aura_id);
 	script_pushint(st, 1);
 	return SCRIPT_CMD_SUCCESS;
 }
