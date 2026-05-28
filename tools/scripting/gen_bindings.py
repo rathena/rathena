@@ -525,11 +525,15 @@ def render_surface_hpp(reachable: list[TsInterface],
     for iface in reachable:
         out.append(f"inline void install_{iface.name}(")
         out.append("        v8::Isolate* iso, v8::Local<v8::ObjectTemplate> tmpl) {")
-        # `Interface.*` wildcard — host class fully takes over.
+        # `Interface.*` wildcard — host class fully takes over the
+        # METHODS on this interface. Properties (sub-object refs) still
+        # need their nested ObjectTemplate installed so the host has
+        # somewhere to attach.
         iface_wildcard = f"{iface.name}.*"
         for m in iface.members:
             qualified = f"{iface.name}.{m.name}"
-            if qualified in hand_impl or iface_wildcard in hand_impl:
+            wildcard_skip = (iface_wildcard in hand_impl and m.kind == "method")
+            if qualified in hand_impl or wildcard_skip:
                 out.append(f'    // skip {qualified} — hand-implemented')
                 continue
             if m.kind == "method":

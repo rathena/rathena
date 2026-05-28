@@ -4,14 +4,18 @@
 
 #include <sstream>
 
+#include "arg_helpers.hpp"
 #include "dialog_session.hpp"
+#include "host_misc.hpp"
 #include "host_player.hpp"
+#include "host_world.hpp"
 #include "js_object_reader.hpp"
 #include "player_binding.hpp"
 #include "../clif.hpp"
 #include "../map.hpp"
 #include "../npc.hpp"
 #include "../pc.hpp"
+#include "../../common/random.hpp"
 #include "../../common/showmsg.hpp"
 // Auto-generated header that defines surface_stubs::install_all().
 // Walks the api.d.ts interface tree and installs stub object
@@ -183,25 +187,157 @@ v8::Local<v8::Object> DialogContext::to_js(v8::Isolate* iso, v8::Local<v8::Conte
     auto obj = tmpl->NewInstance(ctx).ToLocalChecked();
     obj->SetInternalField(0, v8::External::New(iso, this, v8::kExternalPointerTypeTagDefault));
 
-    // ctx.player was auto-instantiated by V8 from the ObjectTemplate
-    // tree above (carries the surface_stubs methods). Override the
-    // method stubs with PlayerHost's real implementations, then
-    // decorate with the live snapshot fields.
-    auto player_key = v8::String::NewFromUtf8(iso, "player").ToLocalChecked();
-    auto player_val = obj->Get(ctx, player_key).ToLocalChecked();
-    if (player_val->IsObject()) {
-        auto player_obj = player_val.As<v8::Object>();
-        // Lifetime: PlayerHost lives in the DialogSession (owns this
-        // DialogContext), so the External pointer stays valid for the
-        // duration of the dialog.
-        if (!player_host_) {
-            player_host_ = std::make_unique<PlayerHost>(sd_);
-        }
-        player_host_->install_on_object(iso, ctx, player_obj);
-        populate_player_object(iso, ctx, player_obj, sd_);
+    // ====================================================================
+    // Override the auto-generated stubs on every sub-object with a real
+    // host class. Lifetime of the hosts is tied to DialogContext (which
+    // DialogSession owns on the heap) — the External pointers stay
+    // valid for the duration of the dialog.
+    // ====================================================================
+
+    auto fetch = [&](const char* name) -> v8::Local<v8::Object> {
+        auto key = v8::String::NewFromUtf8(iso, name).ToLocalChecked();
+        auto v = obj->Get(ctx, key).ToLocalChecked();
+        return v->IsObject() ? v.As<v8::Object>() : v8::Local<v8::Object>{};
+    };
+
+    // ctx.npc
+    if (auto npc_obj = fetch("npc"); !npc_obj.IsEmpty()) {
+        if (!npc_host_) npc_host_ = std::make_unique<NpcInfoHost>(nd_);
+        npc_host_->install_on_object(iso, ctx, npc_obj);
     }
 
+    // ctx.player + the player sub-objects (quest, achievement, …)
+    if (auto player_obj = fetch("player"); !player_obj.IsEmpty()) {
+        if (!player_host_) player_host_ = std::make_unique<PlayerHost>(sd_);
+        player_host_->install_on_object(iso, ctx, player_obj);
+        populate_player_object(iso, ctx, player_obj, sd_);
+
+        auto fetch_in = [&](v8::Local<v8::Object> parent, const char* name) {
+            auto key = v8::String::NewFromUtf8(iso, name).ToLocalChecked();
+            auto v = parent->Get(ctx, key).ToLocalChecked();
+            return v->IsObject() ? v.As<v8::Object>() : v8::Local<v8::Object>{};
+        };
+        if (auto o = fetch_in(player_obj, "quest"); !o.IsEmpty()) {
+            if (!quest_host_) quest_host_ = std::make_unique<QuestHost>(sd_);
+            quest_host_->install_on_object(iso, ctx, o);
+        }
+        if (auto o = fetch_in(player_obj, "achievement"); !o.IsEmpty()) {
+            if (!achievement_host_) achievement_host_ = std::make_unique<AchievementHost>(sd_);
+            achievement_host_->install_on_object(iso, ctx, o);
+        }
+        if (auto o = fetch_in(player_obj, "storage"); !o.IsEmpty()) {
+            if (!storage_host_) storage_host_ = std::make_unique<StorageHost>(sd_);
+            storage_host_->install_on_object(iso, ctx, o);
+        }
+        if (auto o = fetch_in(player_obj, "cart"); !o.IsEmpty()) {
+            if (!cart_host_) cart_host_ = std::make_unique<CartHost>(sd_);
+            cart_host_->install_on_object(iso, ctx, o);
+        }
+        if (auto o = fetch_in(player_obj, "mail"); !o.IsEmpty()) {
+            if (!mail_host_) mail_host_ = std::make_unique<MailHost>(sd_);
+            mail_host_->install_on_object(iso, ctx, o);
+        }
+        if (auto o = fetch_in(player_obj, "pet"); !o.IsEmpty()) {
+            if (!pet_host_) pet_host_ = std::make_unique<PetHost>(sd_);
+            pet_host_->install_on_object(iso, ctx, o);
+        }
+        if (auto o = fetch_in(player_obj, "hom"); !o.IsEmpty()) {
+            if (!hom_host_) hom_host_ = std::make_unique<HomHost>(sd_);
+            hom_host_->install_on_object(iso, ctx, o);
+        }
+        if (auto o = fetch_in(player_obj, "merc"); !o.IsEmpty()) {
+            if (!merc_host_) merc_host_ = std::make_unique<MercHost>(sd_);
+            merc_host_->install_on_object(iso, ctx, o);
+        }
+    }
+
+    // ctx.world / ctx.party / ctx.guild / ctx.instance / ctx.bg / ctx.channel
+    if (auto o = fetch("world"); !o.IsEmpty()) {
+        if (!world_host_) world_host_ = std::make_unique<WorldHost>(&sd_);
+        world_host_->install_on_object(iso, ctx, o);
+    }
+    if (auto o = fetch("party"); !o.IsEmpty()) {
+        if (!party_host_) party_host_ = std::make_unique<PartyHost>(&sd_);
+        party_host_->install_on_object(iso, ctx, o);
+    }
+    if (auto o = fetch("guild"); !o.IsEmpty()) {
+        if (!guild_host_) guild_host_ = std::make_unique<GuildHost>(&sd_);
+        guild_host_->install_on_object(iso, ctx, o);
+    }
+    if (auto o = fetch("instance"); !o.IsEmpty()) {
+        if (!instance_host_) instance_host_ = std::make_unique<InstanceHost>(&sd_);
+        instance_host_->install_on_object(iso, ctx, o);
+    }
+    if (auto o = fetch("bg"); !o.IsEmpty()) {
+        if (!battleground_host_) battleground_host_ = std::make_unique<BattlegroundHost>(&sd_);
+        battleground_host_->install_on_object(iso, ctx, o);
+    }
+    if (auto o = fetch("channel"); !o.IsEmpty()) {
+        if (!channel_host_) channel_host_ = std::make_unique<ChannelHost>(&sd_);
+        channel_host_->install_on_object(iso, ctx, o);
+    }
+
+    // Top-level NpcContext flow utils. rand / randRange have real
+    // bodies; the rest are type-correct placeholders waiting on
+    // input-dialog / timer / event plumbing.
+    bind_flow_utils(iso, ctx, obj);
+
     return obj;
+}
+
+// ---- top-level NpcContext flow methods ------------------------------------
+//
+// These live on `ctx` directly (not on a sub-object) so they live
+// here rather than in a separate host class.
+
+namespace {
+void rand_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    using namespace args;
+    int max = int_arg(info, 0, 1);
+    if (max <= 0) max = 1;
+    ret_int(info, rnd_value<int>(0, max - 1));
+}
+void randRange_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    using namespace args;
+    int lo = int_arg(info, 0);
+    int hi = int_arg(info, 1, lo);
+    if (hi < lo) std::swap(lo, hi);
+    ret_int(info, rnd_value<int>(lo, hi));
+}
+void flow_void_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    (void)info;  // input / inputString / sleep / doevent / timers / end / clear
+}
+void flow_zero_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    args::ret_int(info, 0);
+}
+void flow_str_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    args::ret_str(info, "");
+}
+void flow_undefined_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    info.GetReturnValue().SetUndefined();
+}
+} // namespace
+
+void DialogContext::bind_flow_utils(v8::Isolate* iso, v8::Local<v8::Context> ctx,
+                                    v8::Local<v8::Object> obj) {
+    auto bind = [&](const char* name, v8::FunctionCallback cb) {
+        auto data = v8::External::New(iso, this, v8::kExternalPointerTypeTagDefault);
+        auto fn = v8::FunctionTemplate::New(iso, cb, data)
+            ->GetFunction(ctx).ToLocalChecked();
+        (void)obj->Set(ctx, v8::String::NewFromUtf8(iso, name).ToLocalChecked(), fn);
+    };
+    bind("rand",            &rand_cb);
+    bind("randRange",       &randRange_cb);
+    bind("input",           &flow_zero_cb);
+    bind("inputString",     &flow_str_cb);
+    bind("sleep",           &flow_void_cb);
+    bind("doevent",         &flow_void_cb);
+    bind("addTimer",        &flow_void_cb);
+    bind("delTimer",        &flow_void_cb);
+    bind("addPlayerTimer",  &flow_void_cb);
+    bind("callfunc",        &flow_undefined_cb);
+    bind("end",             &flow_void_cb);
+    bind("clear",           &flow_void_cb);
 }
 
 } // namespace rathena::scripting

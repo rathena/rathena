@@ -138,12 +138,26 @@ api_surface:
   # "InterfaceName.*" wildcards every method on that interface (used
   # when a whole host class takes over the surface).
   hand_impl:
-    - NpcContext.mes
-    - NpcContext.next
-    - NpcContext.select
-    - NpcContext.menu
-    - NpcContext.close
-    # PlayerHost.cpp implements every PlayerContext method (real bodies
-    # for the most-used ops; silent type-correct placeholders for the
-    # rest until the underlying rAthena subsystem is wired in).
+    # Every interface reachable from NpcContext is now backed by a host
+    # class in src/map/scripting/host_*.cpp. The codegen-emitted stub
+    # tree is dead code — no method falls through to stub_callback at
+    # runtime. The `Interface.*` wildcard skips method stubs while
+    # still letting the surface_stubs codegen install the nested
+    # sub-object ObjectTemplates (which the host classes attach onto).
+    - NpcContext.*
+    - NpcInfo.*
     - PlayerContext.*
+    - WorldOps.*
+    - PartyOps.*
+    - GuildOps.*
+    - InstanceOps.*
+    - BattlegroundOps.*
+    - ChannelOps.*
+    - QuestOps.*
+    - AchievementOps.*
+    - StorageOps.*
+    - CartOps.*
+    - MailOps.*
+    - PetOps.*
+    - HomOps.*
+    - MercOps.*
