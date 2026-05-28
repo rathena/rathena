@@ -27862,7 +27862,7 @@ BUILDIN_FUNC(unitspecialeffect) {
 	if (!script_mapid2sd(5, sd)) {
 		return SCRIPT_CMD_SUCCESS;
 	}
-	if (sd) {
+	if (sd && sd->bl_helpers.type == BL_PC) {
 		clif_specialeffect_single(bl, type, sd->fd);
 	}
 	return SCRIPT_CMD_SUCCESS;
