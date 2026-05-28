@@ -5,6 +5,8 @@
 #include "arg_helpers.hpp"
 #include "../clan.hpp"
 #include "../clif.hpp"
+#include "../guild.hpp"
+#include "../party.hpp"
 #include "../itemdb.hpp"
 #include "../log.hpp"
 #include "../map.hpp"
@@ -20,6 +22,7 @@
 #include "../../common/mapindex.hpp"
 #include "../../common/showmsg.hpp"
 #include "../../common/socket.hpp"
+#include "../../common/timer.hpp"
 
 namespace rathena::scripting {
 
@@ -501,7 +504,12 @@ void PlayerHost::isEquipped_cb(const v8::FunctionCallbackInfo<v8::Value>& info) 
     ret_bool(info, pc_checkequip(&sd, equip_bitmask[slot]) >= 0);
 }
 void PlayerHost::isEquipEnableRef_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
-    ret_bool(info, false);  // TODO: check item flags
+    UNWRAP;
+    int slot = int_arg(info, 0);
+    int idx = pc_checkequip(&sd, equip_bitmask[slot]);
+    if (idx < 0) { ret_bool(info, false); return; }
+    auto& it_data = sd.inventory_data[idx];
+    ret_bool(info, it_data && !it_data->flag.no_refine);
 }
 void PlayerHost::getItemPos_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     UNWRAP;
@@ -684,8 +692,23 @@ void PlayerHost::itemSkill_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
 }
 
 void PlayerHost::getSkillList_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    UNWRAP;
     auto* iso = info.GetIsolate();
-    info.GetReturnValue().Set(v8::Array::New(iso, 0));  // TODO
+    auto ctx_ = iso->GetCurrentContext();
+    auto out = v8::Array::New(iso);
+    uint32 idx_out = 0;
+    for (int i = 0; i < MAX_SKILL; ++i) {
+        if (sd.status.skill[i].id == 0 || sd.status.skill[i].lv == 0) continue;
+        auto row = v8::Object::New(iso);
+        (void)row->Set(ctx_, v8::String::NewFromUtf8(iso, "id").ToLocalChecked(),
+                       v8::Integer::New(iso, sd.status.skill[i].id));
+        (void)row->Set(ctx_, v8::String::NewFromUtf8(iso, "lv").ToLocalChecked(),
+                       v8::Integer::New(iso, sd.status.skill[i].lv));
+        (void)row->Set(ctx_, v8::String::NewFromUtf8(iso, "flag").ToLocalChecked(),
+                       v8::Integer::New(iso, sd.status.skill[i].flag));
+        (void)out->Set(ctx_, idx_out++, row);
+    }
+    info.GetReturnValue().Set(out);
 }
 
 void PlayerHost::skillPointCount_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
@@ -801,13 +824,35 @@ void PlayerHost::scEnd_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     if (type < 0) status_change_clear(&sd.bl, 0);
     else status_change_end(&sd.bl, static_cast<sc_type>(type));
 }
-void PlayerHost::getStatus_cb(const v8::FunctionCallbackInfo<v8::Value>& info) { ret_int(info, 0); }
+void PlayerHost::getStatus_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    UNWRAP;
+    int id = int_arg(info, 0);
+    int type = int_arg(info, 1, 0);
+    if (id <= SC_NONE || id >= SC_MAX) { ret_int(info, 0); return; }
+    auto* sce = sd.sc.getSCE(id);
+    if (!sce) { ret_int(info, 0); return; }
+    switch (type) {
+        case 1: ret_int(info, sce->val1); return;
+        case 2: ret_int(info, sce->val2); return;
+        case 3: ret_int(info, sce->val3); return;
+        case 4: ret_int(info, sce->val4); return;
+        case 5: {
+            auto* t = get_timer(sce->timer);
+            ret_int(info, t ? static_cast<int>(t->tick - gettick()) : -1);
+            return;
+        }
+        default: ret_int(info, 1);
+    }
+}
 void PlayerHost::isDead_cb(const v8::FunctionCallbackInfo<v8::Value>& info)    { UNWRAP; ret_bool(info, pc_isdead(&sd)); }
 void PlayerHost::recalculateStat_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     UNWRAP; status_calc_pc(&sd, SCO_FORCE);
 }
 void PlayerHost::needStatusPoint_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
-    ret_int(info, 0);  // TODO
+    UNWRAP;
+    int stat = int_arg(info, 0);
+    int target = int_arg(info, 1);
+    ret_int(info, pc_need_status_point(&sd, stat, target));
 }
 
 // =====================================================================
@@ -1024,7 +1069,10 @@ void PlayerHost::getPartnerId_cb(const v8::FunctionCallbackInfo<v8::Value>& info
 void PlayerHost::getMotherId_cb(const v8::FunctionCallbackInfo<v8::Value>& info)     { UNWRAP; ret_int(info, sd.status.mother); }
 void PlayerHost::getFatherId_cb(const v8::FunctionCallbackInfo<v8::Value>& info)     { UNWRAP; ret_int(info, sd.status.father); }
 void PlayerHost::getChildId_cb(const v8::FunctionCallbackInfo<v8::Value>& info)      { UNWRAP; ret_int(info, sd.status.child); }
-void PlayerHost::isPartnerOn_cb(const v8::FunctionCallbackInfo<v8::Value>& info)     { ret_bool(info, false); }
+void PlayerHost::isPartnerOn_cb(const v8::FunctionCallbackInfo<v8::Value>& info)     {
+    UNWRAP;
+    ret_bool(info, sd.status.partner_id != 0 && map_charid2sd(sd.status.partner_id) != nullptr);
+}
 
 // =====================================================================
 // Permissions / VIP / misc
@@ -1062,9 +1110,30 @@ void PlayerHost::permissionRemove_cb(const v8::FunctionCallbackInfo<v8::Value>& 
     if (p < 0 || p >= PC_PERM_MAX) return;
     sd.permissions.reset(static_cast<e_pc_permission>(p));
 }
-void PlayerHost::guildHasPermission_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ ret_bool(info, false); }
+void PlayerHost::guildHasPermission_cb(const v8::FunctionCallbackInfo<v8::Value>& info){
+    UNWRAP;
+    int perm = int_arg(info, 0);
+    if (perm == 0 || (perm & GUILD_PERM_ALL) == 0) { ret_bool(info, false); return; }
+    if (!sd.guild) { ret_bool(info, false); return; }
+    int pos = guild_getposition(sd);
+    if (pos < 0) { ret_bool(info, false); return; }
+    ret_bool(info, (sd.guild->guild.position[pos].mode & perm) == perm);
+}
 
-void PlayerHost::vipStatus_cb(const v8::FunctionCallbackInfo<v8::Value>& info)       { ret_int(info, 0); }
+void PlayerHost::vipStatus_cb(const v8::FunctionCallbackInfo<v8::Value>& info)       {
+#ifdef VIP_ENABLE
+    UNWRAP;
+    int type = int_arg(info, 0, 1);
+    switch (type) {
+        case 1: ret_int(info, pc_isvip(&sd) ? 1 : 0); return;       // active
+        case 2: ret_int(info, pc_isvip(&sd) ? static_cast<int>(sd.vip.time) : 0); return; // expire
+        case 3: ret_int(info, pc_isvip(&sd) ? static_cast<int>(sd.vip.time - time(nullptr)) : 0); return;
+        default: ret_int(info, 0);
+    }
+#else
+    (void)info; ret_int(info, 0);
+#endif
+}
 void PlayerHost::vipTime_cb(const v8::FunctionCallbackInfo<v8::Value>& info)         {
 #ifdef VIP_ENABLE
     UNWRAP;
@@ -1085,8 +1154,16 @@ void PlayerHost::charInfo_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     int t = int_arg(info, 0);
     switch (t) {
         case 0: ret_str(info, sd.status.name); break;
-        case 1: ret_str(info, ""); break;  // party name — needs lookup
-        case 2: ret_str(info, ""); break;  // guild name — needs lookup
+        case 1: {
+            auto* p = sd.status.party_id ? party_search(sd.status.party_id) : nullptr;
+            ret_str(info, p ? p->party.name : "");
+            break;
+        }
+        case 2: {
+            auto g = sd.status.guild_id ? guild_search(sd.status.guild_id) : nullptr;
+            ret_str(info, g ? g->guild.name : "");
+            break;
+        }
         case 3: { auto mn = map_mapid2mapname(sd.bl.m); ret_str(info, mn ? mn : ""); break; }
         default: ret_str(info, ""); break;
     }
@@ -1118,10 +1195,23 @@ void PlayerHost::hasAutoLoot_cb(const v8::FunctionCallbackInfo<v8::Value>& info)
     UNWRAP;
     ret_bool(info, sd.state.autoloot > 0);
 }
-void PlayerHost::jobCanEnterMap_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ ret_bool(info, true); }
+void PlayerHost::jobCanEnterMap_cb(const v8::FunctionCallbackInfo<v8::Value>& info){
+    UNWRAP;
+    auto mn = str_arg(info, 0);
+    int idx = mapindex_name2id(mn.c_str());
+    if (!idx) { ret_bool(info, false); return; }
+    int m = map_mapindex2mapid(idx);
+    if (m == -1) { ret_bool(info, false); return; }
+    int jobid = has(info, 1) ? int_arg(info, 1) : sd.status.class_;
+    ret_bool(info, pc_job_can_entermap(static_cast<e_job>(jobid), m,
+                                       pc_get_group_level(&sd)));
+}
 void PlayerHost::checkVending_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ UNWRAP; ret_bool(info, sd.state.vending != 0); }
 void PlayerHost::checkChatting_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ UNWRAP; ret_bool(info, sd.chatID != 0); }
-void PlayerHost::checkIdle_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { ret_bool(info, false); }
+void PlayerHost::checkIdle_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   {
+    UNWRAP;
+    ret_int(info, static_cast<int>(DIFF_TICK(last_tick, sd.idletime)));
+}
 void PlayerHost::navigateTo_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  {
 #if PACKETVER >= 20111010
     UNWRAP;
@@ -1149,7 +1239,13 @@ void PlayerHost::clanLeave_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  
     ret_bool(info, clan_member_leave(sd, sd.status.clan_id,
         sd.status.account_id, sd.status.char_id));
 }
-void PlayerHost::cameraInfo_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  { ret_null(info); }
+void PlayerHost::cameraInfo_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  {
+    UNWRAP;
+    float range    = static_cast<float>(int_arg(info, 0, 0));
+    float rotation = static_cast<float>(int_arg(info, 1, 0));
+    float latitude = static_cast<float>(int_arg(info, 2, 0));
+    clif_camerainfo(&sd, true, range, rotation, latitude);
+}
 
 // =====================================================================
 // `ctx.player.{perm,session,account,accountGlobal}` — proxies backed by
