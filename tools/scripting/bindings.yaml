@@ -68,6 +68,7 @@ structures:
       - font
       - uniqueitem_counter
       - title_id
+      - inventory_slots
       - show_equip
       - allow_party
       - bank_vault
@@ -111,3 +112,32 @@ manual:
     - js: dir
       cpp: sd.ud.dir
       ts_type: number
+
+# Parse the hand-written npc-ts/types/api.d.ts as the SINGLE SOURCE
+# OF TRUTH for the host API surface. Every interface reachable from
+# `NpcContext` becomes a JS object (ctx.npc, ctx.player, ctx.world,
+# ctx.party, …) with stub methods auto-installed on the V8 template.
+# Graduate a stub to a real impl by:
+#   1. Adding "Interface.method" to `hand_impl` below
+#   2. Re-running the codegen (or just `make`)
+#   3. Writing the real method in dialog_context.cpp + binding it
+#      manually in DialogContext::to_js's bind() calls
+#
+# This deliberately does NOT scan src/map/script.cpp's BUILDIN_DEF
+# table — the TS engine is the eventual replacement, not a façade over
+# the legacy engine. The .d.ts is the contract.
+api_surface:
+  # Directory containing the themed .d.ts files. The codegen walks
+  # every .d.ts here (not recursively) and merges the interfaces it
+  # finds before traversing from `root_interface`.
+  source: npc-ts/types
+  root_interface: NpcContext
+
+  # "InterfaceName.methodName" — these have hand-written impls; the
+  # codegen MUST NOT shadow them with stubs.
+  hand_impl:
+    - NpcContext.mes
+    - NpcContext.next
+    - NpcContext.select
+    - NpcContext.menu
+    - NpcContext.close

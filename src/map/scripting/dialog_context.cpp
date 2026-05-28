@@ -12,6 +12,12 @@
 #include "../npc.hpp"
 #include "../pc.hpp"
 #include "../../common/showmsg.hpp"
+// Auto-generated header that defines surface_stubs::install_all().
+// Walks the api.d.ts interface tree and installs stub object
+// templates for every method we haven't hand-implemented. Lives at
+// build/generated/scripting/ — added to the include path by
+// src/map/CMakeLists.txt.
+#include "surface_stubs.generated.hpp"
 
 namespace rathena::scripting {
 
@@ -156,6 +162,12 @@ v8::Local<v8::Object> DialogContext::to_js(v8::Isolate* iso, v8::Local<v8::Conte
     auto tmpl = v8::ObjectTemplate::New(iso);
     tmpl->SetInternalFieldCount(1);
 
+    // Install the auto-generated stub tree FIRST so hand-impl
+    // bind() calls below can override anything that slipped through
+    // (they shouldn't, since the codegen skips entries listed in
+    // bindings.yaml: api_surface.hand_impl).
+    surface_stubs::install_all(iso, tmpl);
+
     auto bind = [&](const char* name, v8::FunctionCallback cb) {
         tmpl->Set(iso, name, v8::FunctionTemplate::New(iso, cb));
     };
@@ -168,14 +180,15 @@ v8::Local<v8::Object> DialogContext::to_js(v8::Isolate* iso, v8::Local<v8::Conte
     auto obj = tmpl->NewInstance(ctx).ToLocalChecked();
     obj->SetInternalField(0, v8::External::New(iso, this, v8::kExternalPointerTypeTagDefault));
 
-    // ctx.player — snapshot of the clicking player's identity / stats /
-    // vitals / location. The libclang codegen produces the implementation
-    // (build/generated/scripting/player_binding.generated.cpp) which is
-    // compiled in by src/map/CMakeLists.txt.
+    // ctx.player was auto-instantiated by V8 from the ObjectTemplate
+    // tree above (carries all the surface_stubs methods). Decorate it
+    // with the live snapshot fields. Names that collide between the
+    // stub and the snapshot are won by the snapshot (later set wins).
     auto player_key = v8::String::NewFromUtf8(iso, "player").ToLocalChecked();
-    auto player_obj = v8::Object::New(iso);
-    populate_player_object(iso, ctx, player_obj, sd_);
-    (void)obj->Set(ctx, player_key, player_obj);
+    auto player_val = obj->Get(ctx, player_key).ToLocalChecked();
+    if (player_val->IsObject()) {
+        populate_player_object(iso, ctx, player_val.As<v8::Object>(), sd_);
+    }
 
     return obj;
 }
