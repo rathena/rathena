@@ -10,8 +10,12 @@
 #include "../instance.hpp"
 #include "../map.hpp"
 #include "../npc.hpp"
+#include "../homunculus.hpp"
+#include "../mail.hpp"
+#include "../mercenary.hpp"
 #include "../party.hpp"
 #include "../pc.hpp"
+#include "../pet.hpp"
 #include "../quest.hpp"
 #include "../status.hpp"
 #include "../storage.hpp"
@@ -150,19 +154,50 @@ void npc_enable_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
 
 } // namespace
 
+namespace {
+void npc_setDisplay_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<NpcInfoHost>(info);
+    if (!self) return;
+    auto name = args::str_arg(info, 0);
+    npc_setdisplayname(&self->nd(), name.c_str());
+    if (args::has(info, 1)) npc_setclass(&self->nd(), args::int_arg(info, 1));
+}
+void npc_speed_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<NpcInfoHost>(info);
+    if (!self) return;
+    self->nd().speed = args::int_arg(info, 0, DEFAULT_NPC_WALK_SPEED);
+}
+void npc_walkTo_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<NpcInfoHost>(info);
+    if (!self) return;
+    unit_walktoxy(&self->nd().bl, args::int_arg(info, 0), args::int_arg(info, 1), 0);
+}
+void npc_stop_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<NpcInfoHost>(info);
+    if (!self) return;
+    unit_stop_walking(&self->nd().bl, args::bool_arg(info, 0) ? 1 : 0);
+}
+void npc_moveTo_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<NpcInfoHost>(info);
+    if (!self) return;
+    int x = args::int_arg(info, 0), y = args::int_arg(info, 1);
+    int dir = args::int_arg(info, 2, self->nd().ud.dir);
+    unit_warp(&self->nd().bl, self->nd().bl.m, x, y, CLR_TELEPORT);
+    self->nd().ud.dir = static_cast<uint8>(dir);
+}
+} // namespace
+
 void NpcInfoHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx,
                                     v8::Local<v8::Object> obj) {
-    args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "hide",    &npc_hide_cb);
-    args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "show",    &npc_show_cb);
-    args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "disable", &npc_disable_cb);
-    args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "enable",  &npc_enable_cb);
-
-    // Display / movement
-    bind_void(iso, ctx, obj, "setDisplay");
-    bind_void(iso, ctx, obj, "speed");
-    bind_void(iso, ctx, obj, "walkTo");
-    bind_void(iso, ctx, obj, "stop");
-    bind_void(iso, ctx, obj, "moveTo");
+    args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "hide",       &npc_hide_cb);
+    args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "show",       &npc_show_cb);
+    args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "disable",    &npc_disable_cb);
+    args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "enable",     &npc_enable_cb);
+    args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "setDisplay", &npc_setDisplay_cb);
+    args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "speed",      &npc_speed_cb);
+    args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "walkTo",     &npc_walkTo_cb);
+    args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "stop",       &npc_stop_cb);
+    args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "moveTo",     &npc_moveTo_cb);
     bind_void(iso, ctx, obj, "duplicateDynamic");
 
     // Shop
@@ -336,10 +371,17 @@ void CartHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx,
     bind_void (iso, ctx, obj, "delItem");
 }
 
+namespace {
+void mail_open_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<MailHost>(info);
+    if (!self) return;
+    clif_Mail_window(self->sd().fd, 0);
+}
+} // namespace
+
 void MailHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx,
                                  v8::Local<v8::Object> obj) {
-    (void)sd_;
-    bind_void(iso, ctx, obj, "open");
+    args::bind_method<MailHost>(iso, ctx, obj, this, "open", &mail_open_cb);
 }
 
 void PetHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx,
@@ -358,17 +400,41 @@ void PetHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx,
     bind_void(iso, ctx, obj, "loot");
 }
 
+namespace {
+void hom_exists_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<HomHost>(info);
+    args::ret_bool(info, self && self->sd().status.hom_id != 0);
+}
+void hom_isCalled_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<HomHost>(info);
+    args::ret_bool(info, self && self->sd().hd != nullptr && hom_is_active(self->sd().hd));
+}
+void hom_evolve_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<HomHost>(info);
+    if (self && self->sd().hd) hom_evolution(self->sd().hd);
+}
+void hom_mutate_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<HomHost>(info);
+    if (!self || !self->sd().hd) return;
+    int id = args::int_arg(info, 0, 0);
+    if (id > 0) hom_mutate(self->sd().hd, id);
+}
+void hom_shuffle_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<HomHost>(info);
+    if (self && self->sd().hd) hom_shuffle(self->sd().hd);
+}
+} // namespace
+
 void HomHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx,
                                 v8::Local<v8::Object> obj) {
-    (void)sd_;
-    bind_false(iso, ctx, obj, "exists");
-    bind_false(iso, ctx, obj, "isCalled");
-    bind_null (iso, ctx, obj, "info");
-    bind_void (iso, ctx, obj, "evolve");
-    bind_void (iso, ctx, obj, "morph");
-    bind_void (iso, ctx, obj, "mutate");
-    bind_void (iso, ctx, obj, "shuffle");
-    bind_void (iso, ctx, obj, "addIntimacy");
+    args::bind_method<HomHost>(iso, ctx, obj, this, "exists",   &hom_exists_cb);
+    args::bind_method<HomHost>(iso, ctx, obj, this, "isCalled", &hom_isCalled_cb);
+    args::bind_method<HomHost>(iso, ctx, obj, this, "evolve",   &hom_evolve_cb);
+    args::bind_method<HomHost>(iso, ctx, obj, this, "mutate",   &hom_mutate_cb);
+    args::bind_method<HomHost>(iso, ctx, obj, this, "shuffle",  &hom_shuffle_cb);
+    bind_null(iso, ctx, obj, "info");
+    bind_void(iso, ctx, obj, "morph");
+    bind_void(iso, ctx, obj, "addIntimacy");
 }
 
 void MercHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx,
@@ -572,15 +638,46 @@ void GuildHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx,
     bind_void(iso, ctx, obj, "requestInfo");
 }
 
+namespace {
+void instance_create_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<InstanceHost>(info);
+    auto name = args::str_arg(info, 0);
+    int mode = args::int_arg(info, 1, 0);
+    int owner = args::int_arg(info, 2, self && self->sd() ? self->sd()->status.party_id : 0);
+    int rc = instance_create(owner, name.c_str(), static_cast<e_instance_mode>(mode));
+    args::ret_int(info, rc);
+}
+void instance_destroy_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    int id = args::int_arg(info, 0);
+    if (id > 0) instance_destroy(id);
+}
+void instance_enter_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<InstanceHost>(info);
+    if (!self || !self->sd()) { args::ret_int(info, -1); return; }
+    auto name = args::str_arg(info, 0);
+    int x = args::int_arg(info, 1, -1), y = args::int_arg(info, 2, -1);
+    int iid = args::int_arg(info, 4, 0);
+    args::ret_int(info,
+        instance_enter(self->sd(), iid, name.c_str(),
+                       static_cast<int16>(x), static_cast<int16>(y)));
+}
+void instance_id_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<InstanceHost>(info);
+    if (!self || !self->sd()) { args::ret_int(info, 0); return; }
+    args::ret_int(info, self->sd()->instance_id);
+}
+} // namespace
+
 void InstanceHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx,
                                      v8::Local<v8::Object> obj) {
-    (void)sd_;
-    bind_int0(iso, ctx, obj, "create");
-    bind_void(iso, ctx, obj, "destroy");
-    bind_int0(iso, ctx, obj, "enter");
+    args::bind_method<InstanceHost>(iso, ctx, obj, this, "create",  &instance_create_cb);
+    args::bind_method<InstanceHost>(iso, ctx, obj, this, "destroy", &instance_destroy_cb);
+    args::bind_method<InstanceHost>(iso, ctx, obj, this, "enter",   &instance_enter_cb);
+    args::bind_method<InstanceHost>(iso, ctx, obj, this, "id",      &instance_id_cb);
+    // npcName / mapName / warpAll / announce / checks / info / vars
+    // need helper exposure from instance.cpp not in the header.
     bind_str (iso, ctx, obj, "npcName");
     bind_str (iso, ctx, obj, "mapName");
-    bind_int0(iso, ctx, obj, "id");
     bind_void(iso, ctx, obj, "warpAll");
     bind_void(iso, ctx, obj, "announce");
     bind_false(iso, ctx, obj, "checkParty");
