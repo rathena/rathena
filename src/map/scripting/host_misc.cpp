@@ -15,6 +15,7 @@
 #include "../mail.hpp"
 #include "../battle.hpp"
 #include "../battleground.hpp"
+#include "../clan.hpp"
 #include "../intif.hpp"
 #include "../mercenary.hpp"
 #include "../mob.hpp"
@@ -242,6 +243,79 @@ void npc_getWaitingRoomUsers_cb(const v8::FunctionCallbackInfo<v8::Value>& info)
     auto* cd = npc_cd(args::unwrap<NpcInfoHost>(info));
     args::ret_int(info, cd ? cd->users : 0);
 }
+void npc_npcTimer_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<NpcInfoHost>(info);
+    if (!self) { args::ret_int(info, 0); return; }
+    auto& nd = self->nd();
+    int type = args::int_arg(info, 0);
+    switch (type) {
+        case 0: args::ret_int(info, static_cast<int>(npc_gettimerevent_tick(&nd))); return;
+        case 1: {
+            if (nd.u.scr.rid) {
+                auto* sd = map_id2sd(nd.u.scr.rid);
+                args::ret_int(info, sd && sd->npc_timer_id != INVALID_TIMER ? 1 : 0);
+            } else {
+                args::ret_int(info, nd.u.scr.timerid != INVALID_TIMER ? 1 : 0);
+            }
+            return;
+        }
+        case 2: args::ret_int(info, nd.u.scr.timeramount); return;
+        default: args::ret_int(info, 0);
+    }
+}
+void npc_getNpcId_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<NpcInfoHost>(info);
+    args::ret_int(info, self ? self->nd().bl.id : 0);
+}
+void npc_npcInfo_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<NpcInfoHost>(info);
+    if (!self) { args::ret_str(info, ""); return; }
+    auto& nd = self->nd();
+    int num = args::int_arg(info, 0);
+    switch (num) {
+        case 0: args::ret_str(info, nd.name); return;
+        case 1: { // visible part (before #)
+            const char* hash = strchr(nd.name, '#');
+            if (!hash) { args::ret_str(info, nd.name); return; }
+            std::string s(nd.name, hash - nd.name);
+            args::ret_str(info, s.c_str());
+            return;
+        }
+        case 2: { // # fragment
+            const char* hash = strchr(nd.name, '#');
+            args::ret_str(info, hash ? hash + 1 : "");
+            return;
+        }
+        case 3: args::ret_str(info, nd.exname); return;
+        case 4: args::ret_str(info, nd.bl.m >= 0 ? map_getmapdata(nd.bl.m)->name : ""); return;
+        default: args::ret_str(info, "");
+    }
+}
+
+void npc_warpWaitingPc_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* cd = npc_cd(args::unwrap<NpcInfoHost>(info));
+    if (!cd) return;
+    auto mn = args::str_arg(info, 0);
+    int x = args::int_arg(info, 1);
+    int y = args::int_arg(info, 2);
+    int n = cd->trigger & 0x7f;
+    if (info.Length() >= 4) n = args::int_arg(info, 3);
+    for (int i = 0; i < n && cd->users > 0; ++i) {
+        auto* sd = cd->usersd[0];
+        if (mn == "SavePoint" && map_getmapflag(sd->bl.m, MF_NOTELEPORT)) break;
+        if (cd->zeny) {
+            if (static_cast<uint32>(sd->status.zeny) < cd->zeny) break;
+            pc_payzeny(sd, cd->zeny, LOG_TYPE_NPC);
+        }
+        if (mn == "Random") pc_randomwarp(sd, CLR_TELEPORT, true);
+        else if (mn == "SavePoint")
+            pc_setpos(sd, mapindex_name2id(sd->status.save_point.map),
+                      sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT);
+        else
+            pc_setpos(sd, mapindex_name2id(mn.c_str()), x, y, CLR_OUTSIGHT);
+    }
+}
+
 void npc_getWaitingRoomState_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     auto* cd = npc_cd(args::unwrap<NpcInfoHost>(info));
     if (!cd) { args::ret_int(info, -1); return; }
@@ -287,13 +361,11 @@ void NpcInfoHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx
     args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "kickWaitingRoomUser", &npc_kickWaitingRoomUser_cb);
     args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "kickAllWaitingRoom",  &npc_kickAllWaitingRoom_cb);
     args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "getWaitingRoomUsers", &npc_getWaitingRoomUsers_cb);
-    // warpWaitingPc body lives mostly in script.cpp w/ NPC->oid lookup —
-    // leave as a placeholder until we move that into chat.cpp.
-    bind_void(iso, ctx, obj, "warpWaitingPc");
+    args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "warpWaitingPc",       &npc_warpWaitingPc_cb);
 
-    bind_int0(iso, ctx, obj, "npcTimer");
-    bind_int0(iso, ctx, obj, "getNpcId");
-    bind_str (iso, ctx, obj, "npcInfo");
+    args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "npcTimer", &npc_npcTimer_cb);
+    args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "getNpcId", &npc_getNpcId_cb);
+    args::bind_method<NpcInfoHost>(iso, ctx, obj, this, "npcInfo",  &npc_npcInfo_cb);
 }
 
 // =====================================================================
@@ -1397,6 +1469,28 @@ void instance_liveInfo_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     }
 }
 
+void instance_checkClan_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    int clan_id = args::int_arg(info, 0);
+    int amount  = args::int_arg(info, 1, 1);
+    int min     = args::int_arg(info, 2, 1);
+    int max     = args::int_arg(info, 3, MAX_LEVEL);
+    if (min < 1 || min > MAX_LEVEL || max < 1 || max > MAX_LEVEL) {
+        args::ret_bool(info, false); return;
+    }
+    auto* cd = clan_search(clan_id);
+    if (!cd) { args::ret_bool(info, false); return; }
+    int c = 0;
+    for (int i = 0; i < MAX_CLAN; ++i) {
+        auto* pl = cd->members[i];
+        if (!pl || !map_id2bl(pl->bl.id) || pl->state.autotrade) continue;
+        if (pl->status.base_level < min || pl->status.base_level > max) {
+            args::ret_bool(info, false); return;
+        }
+        ++c;
+    }
+    args::ret_bool(info, c >= amount);
+}
+
 void instance_list_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     auto map_name = args::str_arg(info, 0);
     int mode = args::int_arg(info, 1, IM_MAX);
@@ -1433,10 +1527,10 @@ void InstanceHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ct
     args::bind_method<InstanceHost>(iso, ctx, obj, this, "info",       &instance_info_cb);
     args::bind_method<InstanceHost>(iso, ctx, obj, this, "liveInfo",   &instance_liveInfo_cb);
     args::bind_method<InstanceHost>(iso, ctx, obj, this, "list",       &instance_list_cb);
-    // checkClan needs clan.hpp clan_search exposure path that's
-    // platform-quirky; getVar/setVar would need scope_t reg helpers
-    // exposed — placeholder for now.
-    bind_false(iso, ctx, obj, "checkClan");
+    args::bind_method<InstanceHost>(iso, ctx, obj, this, "checkClan", &instance_checkClan_cb);
+    // getVar/setVar map onto the instance's reg_db; rAthena's reg_db
+    // accessors are tied to script_state — would need an extracted
+    // helper. Placeholder for now.
     bind_null (iso, ctx, obj, "getVar");
     bind_void (iso, ctx, obj, "setVar");
 }
@@ -1726,6 +1820,48 @@ void channel_setPassword_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     auto* c = channel_name2channel(const_cast<char*>(name.c_str()), self->sd(), 0);
     if (c) safestrncpy(c->pass, pass.c_str(), sizeof(c->pass));
 }
+void channel_setOption_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<ChannelHost>(info);
+    if (!self) return;
+    auto name = args::str_arg(info, 0);
+    int opt = args::int_arg(info, 1);
+    bool on = args::bool_arg(info, 2);
+    auto* c = channel_name2channel(const_cast<char*>(name.c_str()), self->sd(), 0);
+    if (!c) return;
+    if (on) c->opt |= static_cast<unsigned char>(opt);
+    else    c->opt &= ~static_cast<unsigned char>(opt);
+}
+void channel_getOption_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<ChannelHost>(info);
+    if (!self) { args::ret_int(info, 0); return; }
+    auto name = args::str_arg(info, 0);
+    auto* c = channel_name2channel(const_cast<char*>(name.c_str()), self->sd(), 0);
+    args::ret_int(info, c ? c->opt : 0);
+}
+void channel_setGroups_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<ChannelHost>(info);
+    if (!self) return;
+    auto name = args::str_arg(info, 0);
+    auto* c = channel_name2channel(const_cast<char*>(name.c_str()), self->sd(), 0);
+    if (!c) return;
+    auto iso_ = args::iso(info); auto cx = args::ctx(info);
+    if (info.Length() < 2 || !info[1]->IsArray()) {
+        if (c->groups) { aFree(c->groups); c->groups = nullptr; }
+        c->group_count = 0;
+        return;
+    }
+    auto arr = v8::Local<v8::Array>::Cast(info[1]);
+    uint32 len = arr->Length();
+    if (c->groups) { aFree(c->groups); c->groups = nullptr; }
+    c->group_count = static_cast<uint16>(len);
+    if (len == 0) return;
+    c->groups = (uint16*)aMalloc(sizeof(uint16) * len);
+    for (uint32 i = 0; i < len; ++i) {
+        v8::Local<v8::Value> v;
+        if (arr->Get(cx, i).ToLocal(&v))
+            c->groups[i] = static_cast<uint16>(v->Int32Value(cx).FromMaybe(0));
+    }
+}
 } // namespace
 
 void ChannelHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx,
@@ -1738,11 +1874,9 @@ void ChannelHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx
     args::bind_method<ChannelHost>(iso, ctx, obj, this, "kick",        &channel_kick_cb);
     args::bind_method<ChannelHost>(iso, ctx, obj, this, "setColor",    &channel_setColor_cb);
     args::bind_method<ChannelHost>(iso, ctx, obj, this, "setPassword", &channel_setPassword_cb);
-    // setOption / getOption / setGroups: option bitfield + group vector
-    // mutators are not surfaced as a single helper — placeholder.
-    bind_void(iso, ctx, obj, "setOption");
-    bind_int0(iso, ctx, obj, "getOption");
-    bind_void(iso, ctx, obj, "setGroups");
+    args::bind_method<ChannelHost>(iso, ctx, obj, this, "setOption", &channel_setOption_cb);
+    args::bind_method<ChannelHost>(iso, ctx, obj, this, "getOption", &channel_getOption_cb);
+    args::bind_method<ChannelHost>(iso, ctx, obj, this, "setGroups", &channel_setGroups_cb);
 }
 
 } // namespace rathena::scripting

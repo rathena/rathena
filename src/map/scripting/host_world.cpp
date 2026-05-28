@@ -15,6 +15,7 @@
 #include "../party.hpp"
 #include "../pc.hpp"
 #include "../pet.hpp"
+#include "../script.hpp"
 #include "../status.hpp"
 #include "../unit.hpp"
 #include "../../common/mapindex.hpp"
@@ -917,9 +918,23 @@ void WorldHost::setItemInfo_cb(const v8::FunctionCallbackInfo<v8::Value>& info) 
     }
     ret_int(info, value);
 }
-// setItemScript requires parse_script() which depends on a script state
-// context — we cross that bridge once TS scripts can emit AST snippets.
-void WorldHost::setItemScript_cb(const v8::FunctionCallbackInfo<v8::Value>& info) { (void)info; }
+void WorldHost::setItemScript_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    t_itemid item_id = static_cast<t_itemid>(uint_arg(info, 0));
+    auto src = str_arg(info, 1);
+    int slot = int_arg(info, 2, 0);
+    auto i_data = item_db.find(item_id);
+    if (!i_data) { ret_int(info, 0); return; }
+    if (!src.empty() && src[0] != '{') { ret_int(info, 0); return; }
+    struct script_code** dst;
+    switch (slot) {
+        case 2: dst = &i_data->unequip_script; break;
+        case 1: dst = &i_data->equip_script;   break;
+        default: dst = &i_data->script;        break;
+    }
+    if (*dst) script_free_code(*dst);
+    *dst = src.empty() ? nullptr : parse_script(src.c_str(), "ts_setitemscript", 0, 0);
+    ret_int(info, 1);
+}
 void WorldHost::gmLevel_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     UNWRAP_OPT;
     ret_int(info, self->sd() ? self->sd()->group_id : 0);

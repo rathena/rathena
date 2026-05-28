@@ -15,6 +15,7 @@
 #include "../status.hpp"
 #include "../storage.hpp"
 #include "../unit.hpp"
+#include "../chrif.hpp"
 #include "../../common/utils.hpp"
 #include "../../common/mapindex.hpp"
 #include "../../common/showmsg.hpp"
@@ -1034,15 +1035,33 @@ void PlayerHost::permissionCheck_cb(const v8::FunctionCallbackInfo<v8::Value>& i
     int p = int_arg(info, 0);
     ret_bool(info, pc_has_permission(&sd, static_cast<e_pc_permission>(p)));
 }
-// Permission add/remove operate on the pc_group, which is read-only at
-// runtime — exposing them as scripted ops would mean rewriting the group
-// table. Keep as no-op rather than silently failing.
-void PlayerHost::permissionAdd_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { (void)info; }
-void PlayerHost::permissionRemove_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ (void)info; }
+// Per-player permission overrides — mutate sd->permissions bitset
+// (mirrors buildin permission_add/permission_remove).
+void PlayerHost::permissionAdd_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   {
+    UNWRAP;
+    int p = int_arg(info, 0);
+    if (p < PC_PERM_TRADE || p >= PC_PERM_MAX) return;
+    sd.permissions.set(static_cast<e_pc_permission>(p));
+}
+void PlayerHost::permissionRemove_cb(const v8::FunctionCallbackInfo<v8::Value>& info){
+    UNWRAP;
+    int p = int_arg(info, 0);
+    if (p < PC_PERM_TRADE || p >= PC_PERM_MAX) return;
+    sd.permissions.reset(static_cast<e_pc_permission>(p));
+}
 void PlayerHost::guildHasPermission_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ ret_bool(info, false); }
 
 void PlayerHost::vipStatus_cb(const v8::FunctionCallbackInfo<v8::Value>& info)       { ret_int(info, 0); }
-void PlayerHost::vipTime_cb(const v8::FunctionCallbackInfo<v8::Value>& info)         { (void)info; }
+void PlayerHost::vipTime_cb(const v8::FunctionCallbackInfo<v8::Value>& info)         {
+#ifdef VIP_ENABLE
+    UNWRAP;
+    int viptime = int_arg(info, 0) * 60;
+    chrif_req_login_operation(sd.status.account_id, sd.status.name,
+                              CHRIF_OP_LOGIN_VIP, viptime, 7, 0);
+#else
+    (void)info;
+#endif
+}
 void PlayerHost::macroDetector_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   {
     UNWRAP;
     pc_macro_reporter_process(sd);
