@@ -499,12 +499,42 @@ void StorageHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx
     bind_arr (iso, ctx, obj, "guildLog");
 }
 
+namespace {
+void cart_isEnabled_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<CartHost>(info);
+    args::ret_bool(info, self && pc_iscarton((&self->sd())));
+}
+void cart_countItem_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<CartHost>(info);
+    if (!self) { args::ret_int(info, 0); return; }
+    t_itemid id = static_cast<t_itemid>(args::uint_arg(info, 0));
+    int total = 0;
+    for (int i = 0; i < MAX_CART; ++i) {
+        auto& it = self->sd().cart.u.items_cart[i];
+        if (it.nameid == id) total += it.amount;
+    }
+    args::ret_int(info, total);
+}
+void cart_delItem_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<CartHost>(info);
+    if (!self) return;
+    t_itemid id = static_cast<t_itemid>(args::uint_arg(info, 0));
+    int amount  = args::int_arg(info, 1);
+    for (int i = 0; i < MAX_CART && amount > 0; ++i) {
+        auto& it = self->sd().cart.u.items_cart[i];
+        if (it.nameid != id) continue;
+        int take = std::min(amount, (int)it.amount);
+        pc_cart_delitem(&self->sd(), i, take, 0, LOG_TYPE_SCRIPT);
+        amount -= take;
+    }
+}
+} // namespace
+
 void CartHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx,
                                  v8::Local<v8::Object> obj) {
-    (void)sd_;
-    bind_false(iso, ctx, obj, "isEnabled");
-    bind_int0 (iso, ctx, obj, "countItem");
-    bind_void (iso, ctx, obj, "delItem");
+    args::bind_method<CartHost>(iso, ctx, obj, this, "isEnabled", &cart_isEnabled_cb);
+    args::bind_method<CartHost>(iso, ctx, obj, this, "countItem", &cart_countItem_cb);
+    args::bind_method<CartHost>(iso, ctx, obj, this, "delItem",   &cart_delItem_cb);
 }
 
 namespace {
@@ -1031,22 +1061,38 @@ void party_changeLeader_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     auto* p = party_search(args::int_arg(info, 0));
     if (p) party_changeleader(self->sd(), t_sd, p);
 }
+void party_addMember_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    int party_id = args::int_arg(info, 0);
+    int char_id  = args::int_arg(info, 1);
+    auto* sd = map_charid2sd(char_id);
+    if (!sd || sd->status.party_id != 0) { args::ret_int(info, -1); return; }
+    auto* p = party_search(party_id);
+    if (!p || p->party.count >= MAX_PARTY) { args::ret_int(info, -2); return; }
+    sd->party_invite = party_id;
+    args::ret_int(info, party_add_member(party_id, *sd));
+}
+void party_changeOption_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    int party_id = args::int_arg(info, 0);
+    int option   = args::int_arg(info, 1);
+    int flag     = args::int_arg(info, 2);
+    auto* p = party_search(party_id);
+    if (!p) { args::ret_int(info, -1); return; }
+    args::ret_int(info, party_setoption(p, option, flag));
+}
 } // namespace
 
 void PartyHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx,
                                   v8::Local<v8::Object> obj) {
-    args::bind_method<PartyHost>(iso, ctx, obj, this, "getName",     &party_getName_cb);
-    args::bind_method<PartyHost>(iso, ctx, obj, this, "getMembers",  &party_getMembers_cb);
-    args::bind_method<PartyHost>(iso, ctx, obj, this, "getLeader",   &party_getLeader_cb);
-    args::bind_method<PartyHost>(iso, ctx, obj, this, "isLeader",    &party_isLeader_cb);
-    args::bind_method<PartyHost>(iso, ctx, obj, this, "create",      &party_create_cb);
-    args::bind_method<PartyHost>(iso, ctx, obj, this, "destroy",     &party_destroy_cb);
-    args::bind_method<PartyHost>(iso, ctx, obj, this, "delMember",   &party_delMember_cb);
-    args::bind_method<PartyHost>(iso, ctx, obj, this, "changeLeader",&party_changeLeader_cb);
-    // Not yet wired — need party_invite resolution that requires the
-    // target sd, plus party_changeoption details:
-    bind_void(iso, ctx, obj, "addMember");
-    bind_void(iso, ctx, obj, "changeOption");
+    args::bind_method<PartyHost>(iso, ctx, obj, this, "getName",      &party_getName_cb);
+    args::bind_method<PartyHost>(iso, ctx, obj, this, "getMembers",   &party_getMembers_cb);
+    args::bind_method<PartyHost>(iso, ctx, obj, this, "getLeader",    &party_getLeader_cb);
+    args::bind_method<PartyHost>(iso, ctx, obj, this, "isLeader",     &party_isLeader_cb);
+    args::bind_method<PartyHost>(iso, ctx, obj, this, "create",       &party_create_cb);
+    args::bind_method<PartyHost>(iso, ctx, obj, this, "destroy",      &party_destroy_cb);
+    args::bind_method<PartyHost>(iso, ctx, obj, this, "delMember",    &party_delMember_cb);
+    args::bind_method<PartyHost>(iso, ctx, obj, this, "changeLeader", &party_changeLeader_cb);
+    args::bind_method<PartyHost>(iso, ctx, obj, this, "addMember",    &party_addMember_cb);
+    args::bind_method<PartyHost>(iso, ctx, obj, this, "changeOption", &party_changeOption_cb);
 }
 
 namespace {
@@ -1110,22 +1156,51 @@ void guild_getSkillLv_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     if (!g) { args::ret_int(info, 0); return; }
     args::ret_int(info, guild_checkskill(g->guild, sid));
 }
+void guild_getAlliance_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    int gid = args::int_arg(info, 0);
+    int idx = args::int_arg(info, 1, 0);
+    auto g = guild_search(gid);
+    if (!g || idx < 0 || idx >= MAX_GUILDALLIANCE) { args::ret_int(info, 0); return; }
+    args::ret_int(info, g->guild.alliance[idx].guild_id);
+}
+void guild_getMapUsers_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    int gid = args::int_arg(info, 0);
+    auto map_name = args::str_arg(info, 1);
+    int m = map_mapname2mapid(map_name.c_str());
+    auto g = guild_search(gid);
+    if (!g || m < 0) { args::ret_int(info, 0); return; }
+    int c = 0;
+    for (int i = 0; i < MAX_GUILD; ++i) {
+        auto* pl = g->guild.member[i].sd;
+        if (pl && pl->bl.m == m && !pl->state.autotrade) ++c;
+    }
+    args::ret_int(info, c);
+}
+void guild_changeMaster_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    int gid = args::int_arg(info, 0);
+    auto name = args::str_arg(info, 1);
+    auto* sd = map_nick2sd(name.c_str(), false);
+    if (!sd) { args::ret_int(info, 0); return; }
+    args::ret_int(info, guild_gm_change(gid, sd->status.char_id) ? 1 : 0);
+}
+void guild_requestInfo_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    int gid = args::int_arg(info, 0);
+    if (gid > 0) guild_request_info(gid);
+}
 } // namespace
 
 void GuildHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx,
                                   v8::Local<v8::Object> obj) {
-    args::bind_method<GuildHost>(iso, ctx, obj, this, "getName",     &guild_getName_cb);
-    args::bind_method<GuildHost>(iso, ctx, obj, this, "getMaster",   &guild_getMaster_cb);
-    args::bind_method<GuildHost>(iso, ctx, obj, this, "getMasterId", &guild_getMasterId_cb);
-    args::bind_method<GuildHost>(iso, ctx, obj, this, "info",        &guild_info_cb);
-    args::bind_method<GuildHost>(iso, ctx, obj, this, "getMembers",  &guild_getMembers_cb);
-    args::bind_method<GuildHost>(iso, ctx, obj, this, "getSkillLv",  &guild_getSkillLv_cb);
-    // The rest depend on alliance / map-users / breakdown logic that
-    // needs more rAthena helper exposure — keep as placeholders.
-    bind_int0(iso, ctx, obj, "getAlliance");
-    bind_int0(iso, ctx, obj, "getMapUsers");
-    bind_void(iso, ctx, obj, "changeMaster");
-    bind_void(iso, ctx, obj, "requestInfo");
+    args::bind_method<GuildHost>(iso, ctx, obj, this, "getName",      &guild_getName_cb);
+    args::bind_method<GuildHost>(iso, ctx, obj, this, "getMaster",    &guild_getMaster_cb);
+    args::bind_method<GuildHost>(iso, ctx, obj, this, "getMasterId",  &guild_getMasterId_cb);
+    args::bind_method<GuildHost>(iso, ctx, obj, this, "info",         &guild_info_cb);
+    args::bind_method<GuildHost>(iso, ctx, obj, this, "getMembers",   &guild_getMembers_cb);
+    args::bind_method<GuildHost>(iso, ctx, obj, this, "getSkillLv",   &guild_getSkillLv_cb);
+    args::bind_method<GuildHost>(iso, ctx, obj, this, "getAlliance",  &guild_getAlliance_cb);
+    args::bind_method<GuildHost>(iso, ctx, obj, this, "getMapUsers",  &guild_getMapUsers_cb);
+    args::bind_method<GuildHost>(iso, ctx, obj, this, "changeMaster", &guild_changeMaster_cb);
+    args::bind_method<GuildHost>(iso, ctx, obj, this, "requestInfo",  &guild_requestInfo_cb);
 }
 
 namespace {
@@ -1596,21 +1671,78 @@ void channel_chat_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
 }
 } // namespace
 
+namespace {
+void channel_ban_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<ChannelHost>(info);
+    if (!self || !self->sd()) return;
+    auto name = args::str_arg(info, 0);
+    int char_id = args::int_arg(info, 1, 0);
+    auto* target = char_id ? map_charid2sd(char_id) : nullptr;
+    if (!target) return;
+    char nbuf[CHAN_NAME_LENGTH] = {};
+    char pbuf[NAME_LENGTH] = {};
+    safestrncpy(nbuf, name.c_str(), sizeof(nbuf));
+    safestrncpy(pbuf, target->status.name, sizeof(pbuf));
+    channel_pcban(self->sd(), nbuf, pbuf, 1);
+}
+void channel_unban_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<ChannelHost>(info);
+    if (!self || !self->sd()) return;
+    auto name = args::str_arg(info, 0);
+    int char_id = args::int_arg(info, 1, 0);
+    auto* target = char_id ? map_charid2sd(char_id) : nullptr;
+    if (!target) return;
+    char nbuf[CHAN_NAME_LENGTH] = {};
+    char pbuf[NAME_LENGTH] = {};
+    safestrncpy(nbuf, name.c_str(), sizeof(nbuf));
+    safestrncpy(pbuf, target->status.name, sizeof(pbuf));
+    channel_pcban(self->sd(), nbuf, pbuf, 3);
+}
+void channel_kick_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<ChannelHost>(info);
+    if (!self || !self->sd()) return;
+    auto name = args::str_arg(info, 0);
+    int char_id = args::int_arg(info, 1, 0);
+    auto* target = char_id ? map_charid2sd(char_id) : nullptr;
+    if (!target) return;
+    char nbuf[CHAN_NAME_LENGTH] = {};
+    char pbuf[NAME_LENGTH] = {};
+    safestrncpy(nbuf, name.c_str(), sizeof(nbuf));
+    safestrncpy(pbuf, target->status.name, sizeof(pbuf));
+    channel_pckick(self->sd(), nbuf, pbuf);
+}
+void channel_setColor_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<ChannelHost>(info);
+    if (!self) return;
+    auto name = args::str_arg(info, 0);
+    auto* c = channel_name2channel(const_cast<char*>(name.c_str()), self->sd(), 0);
+    if (c) c->color = static_cast<uint32>(args::int_arg(info, 1));
+}
+void channel_setPassword_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto* self = args::unwrap<ChannelHost>(info);
+    if (!self) return;
+    auto name = args::str_arg(info, 0);
+    auto pass = args::str_arg(info, 1);
+    auto* c = channel_name2channel(const_cast<char*>(name.c_str()), self->sd(), 0);
+    if (c) safestrncpy(c->pass, pass.c_str(), sizeof(c->pass));
+}
+} // namespace
+
 void ChannelHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx,
                                     v8::Local<v8::Object> obj) {
-    args::bind_method<ChannelHost>(iso, ctx, obj, this, "create", &channel_create_cb);
-    args::bind_method<ChannelHost>(iso, ctx, obj, this, "join",   &channel_join_cb);
-    args::bind_method<ChannelHost>(iso, ctx, obj, this, "chat",   &channel_chat_cb);
-    // Setters / kick / ban / unban / setGroups need channel field
-    // mutators that aren't surfaced — placeholder for now.
+    args::bind_method<ChannelHost>(iso, ctx, obj, this, "create",      &channel_create_cb);
+    args::bind_method<ChannelHost>(iso, ctx, obj, this, "join",        &channel_join_cb);
+    args::bind_method<ChannelHost>(iso, ctx, obj, this, "chat",        &channel_chat_cb);
+    args::bind_method<ChannelHost>(iso, ctx, obj, this, "ban",         &channel_ban_cb);
+    args::bind_method<ChannelHost>(iso, ctx, obj, this, "unban",       &channel_unban_cb);
+    args::bind_method<ChannelHost>(iso, ctx, obj, this, "kick",        &channel_kick_cb);
+    args::bind_method<ChannelHost>(iso, ctx, obj, this, "setColor",    &channel_setColor_cb);
+    args::bind_method<ChannelHost>(iso, ctx, obj, this, "setPassword", &channel_setPassword_cb);
+    // setOption / getOption / setGroups: option bitfield + group vector
+    // mutators are not surfaced as a single helper — placeholder.
     bind_void(iso, ctx, obj, "setOption");
     bind_int0(iso, ctx, obj, "getOption");
-    bind_void(iso, ctx, obj, "setColor");
-    bind_void(iso, ctx, obj, "setPassword");
     bind_void(iso, ctx, obj, "setGroups");
-    bind_void(iso, ctx, obj, "ban");
-    bind_void(iso, ctx, obj, "unban");
-    bind_void(iso, ctx, obj, "kick");
 }
 
 } // namespace rathena::scripting
