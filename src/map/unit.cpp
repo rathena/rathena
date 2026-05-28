@@ -3472,8 +3472,15 @@ int32 unit_skillcastcancel(block_list *bl, char type)
  * Initialized data on a unit
  * @param bl: Object to initialize data on
  */
+ 
+
 void unit_dataset(block_list *bl)
 {
+	
+	struct s_unit_common_data* ucd = status_get_ucd(bl);
+	if (ucd) {
+		memset(ucd, 0, sizeof(struct s_unit_common_data));
+	}
 	struct unit_data *ud;
 
 	nullpo_retv(ud = unit_bl2ud(bl));

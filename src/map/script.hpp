@@ -444,6 +444,7 @@ enum e_questinfo_markcolor : uint8 {
 #endif
 
 enum unitdata_mobtypes {
+	UMOB_AURA,
 	UMOB_SIZE = 0,
 	UMOB_LEVEL,
 	UMOB_HP,
@@ -504,6 +505,7 @@ enum unitdata_mobtypes {
 };
 
 enum unitdata_homuntypes {
+	UHOM_AURA,
 	UHOM_SIZE = 0,
 	UHOM_LEVEL,
 	UHOM_HP,
@@ -548,6 +550,7 @@ enum unitdata_homuntypes {
 };
 
 enum unitdata_pettypes {
+	UPET_AURA,
 	UPET_SIZE = 0,
 	UPET_LEVEL,
 	UPET_HP,
@@ -589,6 +592,7 @@ enum unitdata_pettypes {
 };
 
 enum unitdata_merctypes {
+	UMER_AURA,
 	UMER_SIZE = 0,
 	UMER_HP,
 	UMER_MAXHP,
@@ -630,6 +634,7 @@ enum unitdata_merctypes {
 };
 
 enum unitdata_elemtypes {
+	UELE_AURA,
 	UELE_SIZE = 0,
 	UELE_HP,
 	UELE_MAXHP,
@@ -673,6 +678,7 @@ enum unitdata_elemtypes {
 };
 
 enum unitdata_npctypes {
+	UNPC_AURA,
 	UNPC_LEVEL = 0,
 	UNPC_HP,
 	UNPC_MAXHP,

@@ -157,6 +157,7 @@ enum e_npcv_status : uint8 {
 };
 
 struct npc_data : public block_list {
+	struct s_unit_common_data ucd;
 	struct unit_data ud; //Because they need to be able to move....
 	struct view_data vd;
 	status_change sc; //They can't have status changes, but.. they want the visual opt values.

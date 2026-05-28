@@ -9544,6 +9544,42 @@ void status_set_viewdata(block_list *bl, int32 class_)
  * @param bl: Object whose sc data to get [PC|MOB|HOM|MER|ELEM|NPC]
  * @return status change data structure bl->sc
  */
+struct s_unit_common_data* status_get_ucd(struct block_list* bl)
+{
+	if (bl)
+		switch (bl->type) {
+		case BL_PC:  return &((TBL_PC*)bl)->ucd;
+		case BL_MOB: return &((TBL_MOB*)bl)->ucd;
+		case BL_NPC: return &((TBL_NPC*)bl)->ucd;
+		case BL_HOM: return &((TBL_HOM*)bl)->ucd;
+		case BL_MER: return &((TBL_MER*)bl)->ucd;
+		case BL_PET: return &((TBL_PET*)bl)->ucd;
+		case BL_ELEM: return &((TBL_ELEM*)bl)->ucd;
+		}
+	return NULL;
+}
+bool status_ishiding(struct block_list* bl, struct block_list* observer_bl) {
+	if (!bl) return false;
+	status_change* sc = status_get_sc(bl);
+	if (!sc) return false;
+	int option = sc->option;
+#ifdef Pandas_Fix_Cloak_Status_Baffling
+	if (observer_bl && observer_bl->type == BL_PC && bl->type == BL_NPC && !sc->cloak_reverting) {
+		map_session_data* sd = BL_CAST(BL_PC, observer_bl);
+		if (std::find(sd->cloaked_npc.begin(), sd->cloaked_npc.end(), bl->id) != sd->cloaked_npc.end()) {
+			option ^= OPTION_CLOAK;
+		}
+	}
+#endif // Pandas_Fix_Cloak_Status_Baffling
+	return (option & (OPTION_HIDE | OPTION_CLOAK | OPTION_CHASEWALK)) != 0;
+}
+bool status_isinvisible(struct block_list* bl) {
+	if (!bl) return false;
+	status_change* sc = status_get_sc(bl);
+	if (!sc) return false;
+	return (sc->option & OPTION_INVISIBLE) != 0;
+}
+
 status_change* status_get_sc(block_list* bl){
 	if( bl )
 	switch (bl->type) {

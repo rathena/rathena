@@ -25,6 +25,7 @@
 
 #include "achievement.hpp"
 #include "atcommand.hpp"
+#include "aura.hpp"
 #include "battle.hpp"
 #include "battleground.hpp"
 #include "cashshop.hpp"
@@ -5007,6 +5008,7 @@ static int32 cleanup_db_sub(DBKey key, DBData *data, va_list va)
  * map destructor
  *------------------------------------------*/
 void MapServer::finalize(){
+	do_final_aura();
 	ShowStatus("Terminating...\n");
 	channel_config.closing = true;
 
@@ -5326,6 +5328,7 @@ void MapServer::handle_shutdown(){
 }
 
 bool MapServer::initialize( int32 argc, char *argv[] ){
+	do_init_aura();
 #ifdef GCOLLECT
 	GC_enable_incremental();
 #endif

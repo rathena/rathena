@@ -1,0 +1,402 @@
+###########################################################################
+# Aura Database - ???????
+###########################################################################
+#
+# - AuraID                  ????
+#   EffectList:             ????, ????????
+#     - EffectID            ????, ????
+#       ReplayInterval      ????, ??????????? (??: ??)
+#
+###########################################################################
+#
+# - AuraID
+# ????, ???????????? 1000 ??.
+# ??????, ??????????????, ??????? 2000 ??.
+#
+# ??????????????, ???????????????,
+# ?????????????????, ???????:
+#
+# - 1. db/import/aura_db.yml (???)
+# - 2. db/aura_db.yml (???)
+#
+# ????????????????, ??????????????
+#
+###########################################################################
+#
+#   EffectList:
+#   ????, ??, ?? AuraID ????
+#   ????????????????????, ????
+#
+###########################################################################
+# 
+#     - EffectID
+#     ????, ??????, ?? EffectList ?????
+#     ????, ?????????, ?????????.
+#     ??????????? doc/effect_list.txt ??????
+#
+###########################################################################
+# 
+#     ReplayInterval
+#     ????, ??????, ?? EffectID ????
+#     ??????????? (??: ??), ???????????? 0
+#
+###########################################################################
+#
+# ??????????
+#
+# ?????????????????????, ????????.
+# ??????????????, ???????? @effect ?????.
+#
+# ?????:
+# 1. ?? @effect ? doc/effect_list.txt ???????
+# 2. ?????????, ???????
+# 3. ????????????????, ????????????????
+# 4. ????????? ReplayInterval, ???????????????
+# 
+###########################################################################
+#
+# ???????????
+# 
+# ?????????????????????, ???????????????.
+# ??? ReplayInterval ?????????????????.
+# 
+# ?????:
+# 1. ?? @effect ? doc/effect_list.txt ???????
+# 2. ?????????, ???????, ????????????
+# 3. ??????????, ????? ReplayInterval (?????? 1064 ??)
+# 4. ??????????, ???????????????????????
+#
+###########################################################################
+#
+# ??:
+# ?????????, ???? db/import/aura_db.yml ???,
+# ???????????, ????????????
+#
+###########################################################################
+
+Header:
+  Type: AURA_DB
+  Version: 1
+
+Body:
+  - AuraID: 1000
+    EffectList:
+      - EffectID: 586
+  - AuraID: 1001
+    EffectList:
+      - EffectID: 586
+      - EffectID: 362
+  - AuraID: 1002
+    EffectList:
+      - EffectID: 586
+      - EffectID: 362
+      - EffectID: 240
+  - AuraID: 1003
+    EffectList:
+      - EffectID: 418
+  - AuraID: 1004
+    EffectList:
+      - EffectID: 486
+  - AuraID: 1005
+    EffectList:
+      - EffectID: 485
+  - AuraID: 1006
+    EffectList:
+      - EffectID: 239
+  - AuraID: 1007
+    EffectList:
+      - EffectID: 240
+  - AuraID: 1008
+    EffectList:
+      - EffectID: 241
+  - AuraID: 1009
+    EffectList:
+      - EffectID: 620
+  - AuraID: 1010
+    EffectList:
+      - EffectID: 202
+  - AuraID: 1011
+    EffectList:
+      - EffectID: 362
+  - AuraID: 1012
+    EffectList:
+      - EffectID: 678
+  - AuraID: 1013
+    EffectList:
+      - EffectID: 679
+  - AuraID: 1014
+    EffectList:
+      - EffectID: 680
+  - AuraID: 1015
+    EffectList:
+      - EffectID: 239
+      - EffectID: 418
+  - AuraID: 1016
+    EffectList:
+      - EffectID: 239
+      - EffectID: 486
+  - AuraID: 1017
+    EffectList:
+      - EffectID: 239
+      - EffectID: 485
+  - AuraID: 1018
+    EffectList:
+      - EffectID: 240
+      - EffectID: 418
+  - AuraID: 1019
+    EffectList:
+      - EffectID: 240
+      - EffectID: 486
+  - AuraID: 1020
+    EffectList:
+      - EffectID: 240
+      - EffectID: 485
+  - AuraID: 1021
+    EffectList:
+      - EffectID: 241
+      - EffectID: 418
+  - AuraID: 1022
+    EffectList:
+      - EffectID: 241
+      - EffectID: 486
+  - AuraID: 1023
+    EffectList:
+      - EffectID: 241
+      - EffectID: 485
+  - AuraID: 1024
+    EffectList:
+      - EffectID: 620
+      - EffectID: 418
+  - AuraID: 1025
+    EffectList:
+      - EffectID: 620
+      - EffectID: 486
+  - AuraID: 1026
+    EffectList:
+      - EffectID: 620
+      - EffectID: 485
+  - AuraID: 1027
+    EffectList:
+      - EffectID: 239
+      - EffectID: 418
+      - EffectID: 202
+  - AuraID: 1028
+    EffectList:
+      - EffectID: 239
+      - EffectID: 486
+      - EffectID: 202
+  - AuraID: 1029
+    EffectList:
+      - EffectID: 239
+      - EffectID: 485
+      - EffectID: 202
+  - AuraID: 1030
+    EffectList:
+      - EffectID: 240
+      - EffectID: 418
+      - EffectID: 202
+  - AuraID: 1031
+    EffectList:
+      - EffectID: 240
+      - EffectID: 486
+      - EffectID: 202
+  - AuraID: 1032
+    EffectList:
+      - EffectID: 240
+      - EffectID: 485
+      - EffectID: 202
+  - AuraID: 1033
+    EffectList:
+      - EffectID: 241
+      - EffectID: 418
+      - EffectID: 202
+  - AuraID: 1034
+    EffectList:
+      - EffectID: 241
+      - EffectID: 486
+      - EffectID: 202
+  - AuraID: 1035
+    EffectList:
+      - EffectID: 241
+      - EffectID: 485
+      - EffectID: 202
+  - AuraID: 1036
+    EffectList:
+      - EffectID: 620
+      - EffectID: 418
+      - EffectID: 202
+  - AuraID: 1037
+    EffectList:
+      - EffectID: 620
+      - EffectID: 486
+      - EffectID: 202
+  - AuraID: 1038
+    EffectList:
+      - EffectID: 620
+      - EffectID: 485
+      - EffectID: 202
+  - AuraID: 1039
+    EffectList:
+      - EffectID: 239
+      - EffectID: 418
+      - EffectID: 362
+  - AuraID: 1040
+    EffectList:
+      - EffectID: 239
+      - EffectID: 486
+      - EffectID: 362
+  - AuraID: 1041
+    EffectList:
+      - EffectID: 239
+      - EffectID: 485
+      - EffectID: 362
+  - AuraID: 1042
+    EffectList:
+      - EffectID: 240
+      - EffectID: 418
+      - EffectID: 362
+  - AuraID: 1043
+    EffectList:
+      - EffectID: 240
+      - EffectID: 486
+      - EffectID: 362
+  - AuraID: 1044
+    EffectList:
+      - EffectID: 240
+      - EffectID: 485
+      - EffectID: 362
+  - AuraID: 1045
+    EffectList:
+      - EffectID: 241
+      - EffectID: 418
+      - EffectID: 362
+  - AuraID: 1046
+    EffectList:
+      - EffectID: 241
+      - EffectID: 486
+      - EffectID: 362
+  - AuraID: 1047
+    EffectList:
+      - EffectID: 241
+      - EffectID: 485
+      - EffectID: 362
+  - AuraID: 1048
+    EffectList:
+      - EffectID: 620
+      - EffectID: 418
+      - EffectID: 362
+  - AuraID: 1049
+    EffectList:
+      - EffectID: 620
+      - EffectID: 486
+      - EffectID: 362
+  - AuraID: 1050
+    EffectList:
+      - EffectID: 620
+      - EffectID: 485
+      - EffectID: 362
+  - AuraID: 1051
+    EffectList:
+      - EffectID: 239
+      - EffectID: 418
+      - EffectID: 678
+  - AuraID: 1052
+    EffectList:
+      - EffectID: 239
+      - EffectID: 486
+      - EffectID: 678
+  - AuraID: 1053
+    EffectList:
+      - EffectID: 239
+      - EffectID: 485
+      - EffectID: 678
+  - AuraID: 1054
+    EffectList:
+      - EffectID: 240
+      - EffectID: 418
+      - EffectID: 678
+  - AuraID: 1055
+    EffectList:
+      - EffectID: 240
+      - EffectID: 486
+      - EffectID: 678
+  - AuraID: 1056
+    EffectList:
+      - EffectID: 240
+      - EffectID: 485
+      - EffectID: 678
+  - AuraID: 1057
+    EffectList:
+      - EffectID: 241
+      - EffectID: 418
+      - EffectID: 678
+  - AuraID: 1058
+    EffectList:
+      - EffectID: 241
+      - EffectID: 486
+      - EffectID: 678
+  - AuraID: 1059
+    EffectList:
+      - EffectID: 241
+      - EffectID: 485
+      - EffectID: 678
+  - AuraID: 1060
+    EffectList:
+      - EffectID: 620
+      - EffectID: 418
+      - EffectID: 678
+  - AuraID: 1061
+    EffectList:
+      - EffectID: 620
+      - EffectID: 486
+      - EffectID: 678
+  - AuraID: 1062
+    EffectList:
+      - EffectID: 620
+      - EffectID: 485
+      - EffectID: 678
+  - AuraID: 1063
+    EffectList:
+      - EffectID: 680
+      - EffectID: 679
+      - EffectID: 678
+  - AuraID: 1064
+    EffectList:
+      - EffectID: 12
+        ReplayInterval: 1000
+      - EffectID: 33
+        ReplayInterval: 3000
+  - AuraID: 1079
+    EffectList:
+      - EffectID: 1254
+      - EffectID: 1255
+  - AuraID: 1070
+    EffectList:
+      - EffectID: 650
+  - AuraID: 1071
+    EffectList:
+      - EffectID: 1254
+      - EffectID: 1255
+  - AuraID: 1072
+    EffectList:
+      - EffectID: 822
+  - AuraID: 1073
+    EffectList:
+      - EffectID: 829
+  - AuraID: 1074
+    EffectList:
+      - EffectID: 1025
+  - AuraID: 1083
+    EffectList:
+      - EffectID: 1201
+  - AuraID: 1068
+    EffectList:
+      - EffectID: 1982
+  - AuraID: 1078
+    EffectList:
+      - EffectID: 2036
+        ReplayInterval: 1000
+
+Footer:
+  Imports:
+  - Path: db/import/aura_db.yml

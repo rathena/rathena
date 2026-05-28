@@ -33,6 +33,7 @@
 
 #include "achievement.hpp"
 #include "atcommand.hpp"
+#include "aura.hpp"
 #include "battle.hpp"
 #include "battleground.hpp"
 #include "cashshop.hpp"
@@ -64,6 +65,8 @@
 #include "storage.hpp"
 
 using namespace rathena;
+
+s_next_dropitem_special next_dropitem_special;
 
 const int64 SCRIPT_INT_MIN = INT64_MIN;
 const int64 SCRIPT_INT_MAX = INT64_MAX;
@@ -8158,6 +8161,15 @@ BUILDIN_FUNC(grouprandomitem) {
 * makeitem "<item name>",<amount>,"<map name>",<X>,<Y>{,<canShowEffect>};
 */
 BUILDIN_FUNC(makeitem) {
+	if (next_dropitem_special.bound != -1) {
+		item_tmp.bound = cap_value(next_dropitem_special.bound, BOUND_NONE, BOUND_MAX - 1);
+		next_dropitem_special.bound = -1;
+	}
+	if (next_dropitem_special.rent_duration != 0) {
+		item_tmp.expire_time = (unsigned int)(time(NULL) + next_dropitem_special.rent_duration);
+		next_dropitem_special.rent_duration = 0;
+	}
+
 	t_itemid nameid;
 	uint16 amount, flag = 0, x, y;
 	const char *mapname;
@@ -8230,6 +8242,15 @@ BUILDIN_FUNC(makeitem) {
  * makeitem4 "<item name>",<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<canShowEffect>};
  */
 BUILDIN_FUNC(makeitem2) {
+		if (next_dropitem_special.bound != -1) {
+			item_tmp.bound = cap_value(next_dropitem_special.bound, BOUND_NONE, BOUND_MAX - 1);
+			next_dropitem_special.bound = -1;
+		}
+		if (next_dropitem_special.rent_duration != 0) {
+			item_tmp.expire_time = (unsigned int)(time(NULL) + next_dropitem_special.rent_duration);
+			next_dropitem_special.rent_duration = 0;
+		}
+
 	t_itemid nameid;
 	const char *funcname = script_getfuncname(st);
 
@@ -19437,6 +19458,7 @@ BUILDIN_FUNC(setunitdata)
 		}
 
 		switch (type) {
+			case UMOB_AURA: aura_make_effective(bl, value); break;
 			case UMOB_SIZE: md->status.size = md->base_status->size = (unsigned char)value; break;
 			case UMOB_LEVEL: md->level = (uint16)value; clif_name_area(md); break;
 			case UMOB_HP: md->base_status->hp = (uint32)value; status_set_hp(bl, (uint32)value, 0); clif_name_area(md); break;
@@ -19535,6 +19557,7 @@ BUILDIN_FUNC(setunitdata)
 		homun_data* hd = reinterpret_cast<homun_data*>( bl );
 
 		switch (type) {
+			case UHOM_AURA: aura_make_effective(bl, value); break;
 			case UHOM_SIZE: hd->battle_status.size = hd->base_status.size = (unsigned char)value; break;
 			case UHOM_LEVEL: hd->homunculus.level = (uint16)value; break;
 			case UHOM_HP: hd->base_status.hp = (uint32)value; status_set_hp(bl, (uint32)value, 0); break;
@@ -19603,6 +19626,7 @@ BUILDIN_FUNC(setunitdata)
 		pet_data* pd = reinterpret_cast<pet_data*>( bl );
 
 		switch (type) {
+			case UPET_AURA: aura_make_effective(bl, value); break;
 			case UPET_SIZE: pd->status.size = (unsigned char)value; break;
 			case UPET_LEVEL: pd->pet.level = (uint16)value; break;
 			case UPET_HP: pd->status.hp = pd->status.max_hp = (uint32)value; status_set_hp(bl, (uint32)value, 0); break;
@@ -19654,6 +19678,7 @@ BUILDIN_FUNC(setunitdata)
 		s_mercenary_data* mc = reinterpret_cast<s_mercenary_data*>( bl );
 
 		switch (type) {
+			case UMER_AURA: aura_make_effective(bl, value); break;
 			case UMER_SIZE: mc->battle_status.size = mc->base_status.size = (unsigned char)value; break;
 			case UMER_HP: mc->base_status.hp = (uint32)value; status_set_hp(bl, (uint32)value, 0); break;
 			case UMER_MAXHP: mc->base_status.hp = mc->base_status.max_hp = (uint32)value; status_set_maxhp(bl, (uint32)value, 0); break;
@@ -19722,6 +19747,7 @@ BUILDIN_FUNC(setunitdata)
 		s_elemental_data* ed = reinterpret_cast<s_elemental_data*>( bl );
 
 		switch (type) {
+			case UELE_AURA: aura_make_effective(bl, value); break;
 			case UELE_SIZE: ed->battle_status.size = ed->base_status.size = (unsigned char)value; break;
 			case UELE_HP: ed->base_status.hp = (uint32)value; status_set_hp(bl, (uint32)value, 0); break;
 			case UELE_MAXHP: ed->base_status.hp = ed->base_status.max_hp = (uint32)value; status_set_maxhp(bl, (uint32)value, 0); break;
@@ -19796,6 +19822,7 @@ BUILDIN_FUNC(setunitdata)
 		}
 
 		switch (type) {
+			case UNPC_AURA: aura_make_effective(bl, value); break;
 			case UNPC_LEVEL: nd->level = (uint32)value; break;
 			case UNPC_HP: nd->status.hp = (uint32)value; status_set_hp(bl, (uint32)value, 0); break;
 			case UNPC_MAXHP: nd->status.hp = nd->status.max_hp = (uint32)value; status_set_maxhp(bl, (uint32)value, 0); break;
@@ -27789,6 +27816,88 @@ BUILDIN_FUNC(permission_add)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(unitaura) {
+	uint32 aura_id = script_getnum(st, 3);
+	struct s_unit_common_data* ucd = nullptr;
+	struct block_list* bl = nullptr;
+	if (!script_rid2bl(2, bl)) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;
+	}
+	ucd = status_get_ucd(bl);
+	if (!ucd) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;
+	}
+	aura_id = max(aura_id, 0);
+	if (aura_id && !aura_search(aura_id)) {
+		ShowError("buildin_unitaura: The specified aura id '%d' is invalid.\n", aura_id);
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+	aura_make_effective(bl, aura_id);
+	script_pushint(st, 1);
+	return SCRIPT_CMD_SUCCESS;
+}
+BUILDIN_FUNC(unitspecialeffect) {
+	struct block_list* bl = nullptr;
+	int type = script_getnum(st, 3);
+	enum send_target target = AREA;
+	bl = map_id2bl(script_getnum(st, 2));
+	if (!bl) {
+		return SCRIPT_CMD_SUCCESS;
+	}
+	if (script_hasdata(st, 4)) {
+		target = (send_target)script_getnum(st, 4);
+	}
+	if (type <= EF_NONE || type >= EF_MAX) {
+		ShowError("buildin_unitspecialeffect: unsupported effect id %d\n", type);
+		return SCRIPT_CMD_FAILURE;
+	}
+	if (target != SELF) {
+		clif_specialeffect(bl, type, target);
+		return SCRIPT_CMD_SUCCESS;
+	}
+	map_session_data* sd = nullptr;
+	if (!script_mapid2sd(5, sd)) {
+		return SCRIPT_CMD_SUCCESS;
+	}
+	if (sd && sd->bl.type == BL_PC) {
+		clif_specialeffect_single(bl, type, sd->fd);
+	}
+	return SCRIPT_CMD_SUCCESS;
+}
+BUILDIN_FUNC(next_dropitem_special) {
+	next_dropitem_special.bound = cap_value(script_getnum(st, 2), BOUND_NONE, BOUND_MAX - 1);
+	next_dropitem_special.rent_duration = cap_value(script_getnum(st, 3), 0, INT32_MAX);
+	next_dropitem_special.drop_effect = cap_value(script_getnum(st, 4), -1, DROPEFFECT_MAX - 1);
+	return SCRIPT_CMD_SUCCESS;
+}
+/* ===========================================================
+ * 指令: aura
+ * 描述: 激活指定的光环组合
+ * 用法: aura <光环编号>{,<角色编号>};
+ * 返回: 成功返回 1 失败返回 0
+ * 作者: Sola丶小克
+ * -----------------------------------------------------------*/
+BUILDIN_FUNC(aura) {
+	uint32 aura_id = script_getnum(st, 2);
+	map_session_data* sd = nullptr;
+	if (!script_charid2sd(3, sd)) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;
+	}
+	aura_id = max(aura_id, 0);
+	if (aura_id && !aura_search(aura_id)) {
+		ShowError("buildin_aura: The specified aura id '%d' is invalid.\n", aura_id);
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+	aura_make_effective(&sd->bl, aura_id);
+	script_pushint(st, 1);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 BUILDIN_FUNC(mesitemicon){
 	std::shared_ptr<item_data> data;
 
@@ -27922,6 +28031,10 @@ BUILDIN_FUNC(preg_match) {
 /// for an explanation on args, see add_buildin_func
 struct script_function buildin_func[] = {
 	// NPC interaction
+	BUILDIN_DEF(aura, "i?"),
+	BUILDIN_DEF(unitaura, "ii"),
+	BUILDIN_DEF(unitspecialeffect, "ii??"),
+	BUILDIN_DEF(next_dropitem_special, "iii"),
 	BUILDIN_DEF(mes,"s*"),
 	BUILDIN_DEF(next,""),
 	BUILDIN_DEF(clear,""),

@@ -35,6 +35,7 @@ enum sc_type : int16;
 
 class MapGuild;
 
+#define AURA_VARIABLE "PANDAS_AURASET"
 #define MAX_PC_BONUS 50 /// Max bonus, usually used by item bonus
 #define MAX_PC_FEELHATE 3 /// Max feel hate info
 #define MAX_SPIRITBALL 15 /// Max spirit balls
@@ -379,6 +380,7 @@ struct s_qi_display {
 };
 
 class map_session_data : public block_list {
+	struct s_unit_common_data ucd;
 public:
 	struct unit_data ud;
 	struct view_data vd;

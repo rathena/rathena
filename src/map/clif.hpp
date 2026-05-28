@@ -12,6 +12,7 @@
 #include <common/mmo.hpp>
 #include <common/timer.hpp> // t_tick
 
+#include "aura.hpp"
 #include "packets.hpp"
 #include "script.hpp"
 #include "skill.hpp"
@@ -870,6 +871,13 @@ enum e_ack_whisper : uint8 {
 	ACKWHISPER_IGNORED = 2,
 	ACKWHISPER_ALL_IGNORED = 3
 };
+
+struct s_next_dropitem_special {
+	uint32 rent_duration = 0;
+	int8 bound = -1;
+	int8 drop_effect = -1;
+};
+extern s_next_dropitem_special next_dropitem_special;
 
 enum e_ack_additem_to_cart : uint8 {
 	ADDITEM_TO_CART_FAIL_WEIGHT = 0,

@@ -23,6 +23,7 @@
 #include <common/utils.hpp>
 
 #include "achievement.hpp"
+#include "aura.hpp"
 #include "battle.hpp"
 #include "buyingstore.hpp"
 #include "channel.hpp"
@@ -11367,6 +11368,28 @@ ACMD_FUNC( enchantgradeui ){
 #endif
 }
 
+ACMD_FUNC(aura) {
+	uint32 aura_id = 0;
+	if (!message || !*message || sscanf(message, "%11d", &aura_id) < 1) {
+		clif_displaymessage(fd, "How to use: @Aura <aura number, if it is set to 0, cancel the aura>");
+		clif_displaymessage(fd, "The aura number is defined in the aura combination database of DB/Aura_db.yml. For more information, please check the comments on the top of the database.");
+		return -1;
+	}
+	aura_id = max(aura_id, 0);
+	if (aura_id && !aura_search(aura_id)) {
+		clif_displaymessage(fd, "Sorry, the specified aura number is invalid, please re-enter after checking.");
+		return -1;
+	}
+	aura_make_effective(&sd->bl, aura_id);
+	if (aura_id != 0) {
+		clif_displaymessage(fd, "Activated the specified aura effect.");
+	}
+	else {
+		clif_displaymessage(fd, "Turned off the aura effect");
+	}
+	return 0;
+}
+
 ACMD_FUNC( roulette ){
 	nullpo_retr( -1, sd );
 
@@ -11544,6 +11567,7 @@ ACMD_FUNC(macrochecker){
 #define ACMD_DEFR(x, r) { #x, atcommand_ ## x, nullptr, nullptr, r }
 #define ACMD_DEF2R(x2, x, r) { x2, atcommand_ ## x, nullptr, nullptr, r }
 void atcommand_basecommands(void) {
+		ACMD_DEF(aura),
 	/**
 	 * Command reference list, place the base of your commands here
 	 * TODO: List all commands that causing crash

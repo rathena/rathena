@@ -1,0 +1,241 @@
+e_tower,69,117,5	script	Susan Grey#HRO_ConstellationTower	4_F_HUWOMAN,{
+	disable_command;
+	disable_items;
+	.@npc$ = "[^0000FFEnchanter^000000]";
+	mes .@npc$,"What do you want to do?";
+		switch(select("Enchant Items:Reset enchants:Nothing")){
+		case 1:
+			for(.@i=0;.@i<10;.@i++){
+				if (!getequipisequiped(.@i))
+					continue;
+				.@eqId = getequipid(.@i);
+				if (inarray(.NebulaIds,.@eqId) == -1 &&
+   					inarray(.StellarIds,.@eqId) == -1)
+					continue;
+				.@eqSlots[getarraysize(.@eqSlots)] = .@i;
+				.@cItems[getarraysize(.@cItems)] = .@eqId;
+				.@menu$ += getitemname(.@eqId) + ":";
+				.@count++;
+			}
+			if(.@count == 0){
+				next; mes .@npc$,"You don't have any equipment.";
+				close;			
+			}
+			.@s = select(.@menu$) - 1;
+			.@slot = .@eqSlots[.@s];
+			.@equip_id = .@cItems[.@s];
+			.@equip_name$ = getitemname(.@equip_id);
+			setarray .@card[0],getequipcardid(.@slot,3),getequipcardid(.@slot,2),getequipcardid(.@slot,1),getequipcardid(.@slot,0);
+			copyarray .@equip_card[0], .@card[0], 4;	// for final check
+			.@equip_refine = getequiprefinerycnt(.@slot);
+			.@grade = getenchantgrade(.@equipType);
+			for(set .@i,0; .@i<(MAX_ITEM_RDM_OPT); set .@i,.@i+1) {
+				setarray .@arrid[.@i],getequiprandomoption(.@equipType,.@i,ROA_ID);
+				setarray .@value[.@i],getequiprandomoption(.@equipType,.@i,ROA_VALUE);
+				setarray .@param[.@i],getequiprandomoption(.@equipType,.@i,ROA_PARAM);
+			}
+
+			if(.@card[2] != 0){ next; mes .@npc$,"You have a card equipped, you better not tempt luck, come back when you don't have any."; close; }
+
+			.@cardSlot = 0;
+			if (.@card[0] == 0) { .@cardSlot = 3; }
+			else if (.@card[1] == 0) {.@cardSlot = 2; }
+			else if (.@card[2] == 0) {.@cardSlot = 1; }
+
+			switch(.@cardSlot) {
+				case 3:
+					if (inarray(.StellarIds,.@equip_id) != -1) { // Stellar
+						.@CostID = 1000373;
+						.@CostI = 5;
+						.@CostZ = 300000;
+						.@RefineMin = 0;
+						setarray .@Enchants,		4808,4809,4812,4813,4816,4834,4835,4843,
+													310692,310693,310694,310695,310696,310697,310698,310699,
+													310700,310701,310702,310703,310704,310705,310706,310707,
+													310708,310709,310710,310711,310712,310713,310714,310715,
+													310716,310717,310718,310719,310720,310721,310722,310723,
+													310724,310725,310726;
+					}
+					else if (inarray(.NebulaIds,.@equip_id) != -1) { // Nebula
+						.@CostID = 1000372;
+						.@CostI = 5;
+						.@CostZ = 50000;
+						.@RefineMin = 9;
+						setarray .@Enchants,		4702,4703,4704,4712,4713,4714,7421,4722,4723,4732,4733,4734,4742,4743,4744;
+					}
+					break;
+				case 2:
+					if (inarray(.StellarIds,.@equip_id) != -1) { // Stellar
+						.@CostID = 1000373;
+						.@CostI = 10;
+						.@CostZ = 500000;
+						.@RefineMin = 0;
+						setarray .@Enchants,		4808,4809,4812,4813,4816,4834,4835,4843,
+													310692,310693,310694,310695,310696,310697,310698,310699,
+													310700,310701,310702,310703,310704,310705,310706,310707,
+													310708,310709,310710,310711,310712,310713,310714,310715,
+													310716,310717,310718,310719,310720,310721,310722,310723,
+													310724,310725,310726;
+					}
+					else if (inarray(.NebulaIds,.@equip_id) != -1) { // Nebula
+						.@CostID = 1000398;
+						.@CostI = 5;
+						.@CostZ = 100000;
+						.@RefineMin = 0;
+						setarray .@Enchants,		310727,310728,310729,310730,310731,310732,310733,310734,
+													310735,310736,310737,310738,310739,310740,310741,310742,
+													310743,310744;
+					}
+					break;
+				case 1:
+					if (inarray(.StellarIds,.@equip_id) != -1) { // Stellar
+						//https://hazyforest.com/enchants:stellar_seal_accessories
+						// Perfect Enchants - Slot 1
+						// Random Upgrade Enchants - Slot 1
+						switch(select("Enchant Items:Reset enchants:Nothing")){
+						case 1:
+						case 2:
+						case 3: close;
+						}
+						close; // Hasta que vea como hacerlo ....
+					}
+					else if (inarray(.NebulaIds,.@equip_id) != -1) { // Nebula
+						.@CostID = 1000442;
+						.@CostI = 5;
+						.@CostZ = 1000000;
+						.@RefineMin = 0;
+						setarray .@Enchants,		310674,310675,310676,310677,310678,310679,310680,310681,
+													310682,310683,310684,310685,310686,310687,310688,310689,
+													310690,310691;
+					}
+					break;
+				case 0:
+				default:
+					end;
+			}
+			.@CardPosition = 3-.@cardSlot;
+			next;
+			mes .@npc$;
+			mes "Do you want to enchant ^0000FF"+.@equip_name$+"^000000?";
+			mes "^ff0000For this you need:^000000";
+			if(.@CostI > 0) mes .@CostI+" "+ getitemname(.@CostID);
+			if(.@CostZ > 0) mes F_InsertComma(.@CostZ)+" zenys";
+			if(.@RefineMin > 0) mes "Refine: +"+.@RefineMin;
+			next;
+			.@s2 = select( "Leave", "Enchant") - 2;
+			if (.@s2 == -1) {
+				mes .@npc$;
+				mes "Ok, come back when you're ready.";
+				close;
+			}
+			if(.@equip_refine < .@RefineMin) { mes "You need it refined to +"+.@RefineMin+"."; close; }
+			if(Zeny < .@CostZ){ mes "You don't have enough zeny"; close; }
+			if(countitem(.@CostID) < .@CostI){ mes "You don't have enough "+getitemname(.@CostID)+" on you"; close; }
+			.@card[.@CardPosition] = .@Enchants[rand(0,getarraysize(.@Enchants)-1)];
+			close2;
+			specialeffect2 EF_REPAIRWEAPON;
+			set Zeny,Zeny-.@CostZ;
+			delitem .@CostID,.@CostI;
+			delequip .@slot;
+			getitem4 .@equip_id,1,1,.@equip_refine,0,.@card[3],.@card[2],.@card[1],.@card[0],.@grade,.@arrid,.@value,.@param;
+			end;
+	  	case 2:
+			for(.@i=0;.@i<10;.@i++){
+				if (!getequipisequiped(.@i))
+					continue;
+				.@eqId = getequipid(.@i);
+				if (inarray(.NebulaIds,.@eqId) == -1 &&
+   					inarray(.StellarIds,.@eqId) == -1)
+					continue;
+				.@eqSlots[getarraysize(.@eqSlots)] = .@i;
+				.@cItems[getarraysize(.@cItems)] = .@eqId;
+				.@menu$ += getitemname(.@eqId) + ":";
+				.@count++;
+			}
+			if(.@count == 0){
+				mes .@npc$,"You don't have any equipment.";
+				close;			
+			}
+			.@s = select(.@menu$) - 1;
+			.@slot = .@eqSlots[.@s];
+			.@equip_id = .@cItems[.@s];
+			.@equip_name$ = getitemname(.@equip_id);
+			setarray .@card[0],
+				getequipcardid(.@slot,3),
+				getequipcardid(.@slot,2),
+				getequipcardid(.@slot,1),
+				getequipcardid(.@slot,0);
+			copyarray .@equip_card[0], .@card[0], 4;	// for final check
+			.@equip_refine = getequiprefinerycnt(.@slot);
+			.@grade = getenchantgrade(.@equipType);
+			for(set .@i,0; .@i<(MAX_ITEM_RDM_OPT); set .@i,.@i+1) {
+				setarray .@arrid[.@i],getequiprandomoption(.@equipType,.@i,ROA_ID);
+				setarray .@value[.@i],getequiprandomoption(.@equipType,.@i,ROA_VALUE);
+				setarray .@param[.@i],getequiprandomoption(.@equipType,.@i,ROA_PARAM);
+			}
+
+			if (.@card[1] == 0) {
+				mes .@npc$;
+				mes .@equip_name$ + " It doesn't have any enchantment...";
+				close;
+			}
+
+			if (inarray(.StellarIds,.@equip_id) != -1) { // Stellar
+				.@RefineMin = 0;
+				.@CostID = 1000372;
+				.@CostI = 30;
+				.@CostZ = 500000;
+				.@Change = 80;
+			}
+			else if (inarray(.NebulaIds,.@equip_id) != -1) { // Nebula
+				.@RefineMin = 9;
+				.@CostID = 1000372;
+				.@CostI = 10;
+				.@CostZ = 1000000;
+				.@Change = 80;
+			}
+
+			next;
+			mes "Do you want to reset enchant ^0000FF"+.@equip_name$+"^000000?";
+			mes "^ff0000For this you need:^000000";
+			if(.@CostI > 0) mes .@CostI+" "+ getitemname(.@CostID);
+			if(.@CostZ > 0) mes F_InsertComma(.@CostZ)+" zenys";
+			if(.@RefineMin > 0) mes "Refine: +"+.@RefineMin;
+			if(.@Change < 100) mes "Change: "+.@Change+"% ^FF0000(DOES NOT BREAK THE ITEM)^000000";
+			switch(select("Reset:No")){
+				case 1:
+					if(.@equip_refine < .@RefineMin) { mes "You need it refined to +"+.@RefineMin+"."; close; }
+					if(Zeny < .@CostZ){ mes "You don't have enough zeny"; close; }
+					if(countitem(.@CostID) < .@CostI){ mes "You don't have enough "+getitemname(.@CostID)+" on you"; close; }
+					// anti-hack
+					if(callfunc("F_IsEquipIDHack", .@slot, .@equip_id) || callfunc("F_IsEquipCardHack", .@slot, .@equip_card[3], .@equip_card[2], .@equip_card[1], .@equip_card[0]) || callfunc("F_IsEquipRefineHack", .@slot, .@equip_refine)) close;
+					close2;
+					.@c = rand(100);
+					specialeffect2 EF_REPAIRWEAPON;
+					if(.@Change >= .@c){
+						set Zeny,Zeny-.@CostZ;
+					delitem .@CostID,.@CostI;
+						mes .@npc$;
+						mes "The process was a success!";
+						delequip .@slot;
+						getitem4 .@equip_id,1,1,.@equip_refine,0,.@card[3],0,0,0,.@grade,.@arrid,.@value,.@param;
+						close;
+					}
+					set Zeny,Zeny-.@CostZ;
+					delitem .@CostID,.@CostI;
+					mes .@npc$;
+					mes "Sorry, the reset item failed...";
+					close;
+				case 2:
+					close;
+				}
+				end;
+		case 3:
+			close;
+	}	
+OnInit:
+	setunittitle getnpcid(0), "Constellation Enchant";
+	setarray .NebulaIds,			450169,450170,450171,450172,450173,450174;
+	setarray .StellarIds,			490132,490133,490134,490135,490136,490137;
+	end;
+}

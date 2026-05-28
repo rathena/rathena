@@ -4013,6 +4013,7 @@
 	export_constant(SCSTART_NOICON);
 
 	/* unit control - mob */
+	export_constant(UMOB_AURA);
 	export_constant(UMOB_SIZE);
 	export_constant(UMOB_LEVEL);
 	export_constant(UMOB_HP);
@@ -4072,6 +4073,7 @@
 	export_constant(UMOB_DAMAGETAKEN);
 
 	/* unit control - homunculus */
+	export_constant(UHOM_AURA);
 	export_constant(UHOM_SIZE);
 	export_constant(UHOM_LEVEL);
 	export_constant(UHOM_HP);
@@ -4115,6 +4117,7 @@
 	export_constant(UHOM_GROUP_ID);
 
 	/* unit control - pet */
+	export_constant(UPET_AURA);
 	export_constant(UPET_SIZE);
 	export_constant(UPET_LEVEL);
 	export_constant(UPET_HP);
@@ -4155,6 +4158,7 @@
 	export_constant(UPET_GROUP_ID);
 
 	/* unit control - mercenary */
+	export_constant(UMER_AURA);
 	export_constant(UMER_SIZE);
 	export_constant(UMER_HP);
 	export_constant(UMER_MAXHP);
@@ -4195,6 +4199,7 @@
 	export_constant(UMER_GROUP_ID);
 
 	/* unit control - elemental */
+	export_constant(UELE_AURA);
 	export_constant(UELE_SIZE);
 	export_constant(UELE_HP);
 	export_constant(UELE_MAXHP);
@@ -4237,6 +4242,7 @@
 	export_constant(UELE_GROUP_ID);
 
 	/* unit control - NPC */
+	export_constant(UNPC_AURA);
 	export_constant(UNPC_LEVEL);
 	export_constant(UNPC_HP);
 	export_constant(UNPC_MAXHP);

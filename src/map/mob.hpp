@@ -259,6 +259,7 @@ struct s_mob_drop {
 };
 
 struct s_mob_db {
+	
 	uint32 id;
 	std::string sprite;
 	std::string name;
@@ -335,6 +336,7 @@ struct s_dmglog{
 };
 
 struct mob_data : public block_list {
+	struct s_unit_common_data ucd;
 	struct unit_data  ud;
 	struct view_data *vd;
 	bool vd_changed;

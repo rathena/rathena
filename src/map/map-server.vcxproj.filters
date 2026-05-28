@@ -122,6 +122,9 @@
     <ClInclude Include="achievement.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="aura.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="atcommand.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -263,6 +266,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="achievement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="aura.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="atcommand.cpp">

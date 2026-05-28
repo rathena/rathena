@@ -3,6 +3,9 @@
 
 #ifndef MMO_HPP
 #define MMO_HPP
+#include "vector"
+#include "memory"
+#include "map"
 
 #include <ctime>
 
@@ -236,6 +239,19 @@ enum item_types {
 	IT_SHADOWGEAR,  //12
 	IT_CASH = 18,
 	IT_MAX
+};
+
+struct s_aura_effect {
+    uint16 effect_id = 0;
+    uint32 replay_interval = 0;
+    int32 replay_tid = INVALID_TIMER;
+};
+
+struct s_unit_common_data {
+    struct s_ucd_aura {
+        uint32 id = 0;
+        std::vector<std::shared_ptr<s_aura_effect>> effects;
+    } aura;
 };
 
 /// Monster mode definitions to clear up code reading. [Skotlex]

@@ -67,9 +67,7 @@ Footer:
   - Path: npc/re/merchants/barters/Pet_Groomer.yml
   - Path: npc/re/merchants/barters/points_barter.yml
   - Path: npc/re/merchants/barters/thanatos-tower.yml
-<<<<<<< Updated upstream
   - Path: npc/re/merchants/barters/eden_market.yml
-=======
   - Path: npc/re/merchants/barters/biosphere.yml
->>>>>>> Stashed changes
+  - Path: npc/re/merchants/barters/constellation_tower.yml
 

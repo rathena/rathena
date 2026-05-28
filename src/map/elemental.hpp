@@ -74,6 +74,7 @@ struct s_elemental_db {
 };
 
 struct s_elemental_data : public block_list {
+	struct s_unit_common_data ucd;
 	unit_data ud;
 	view_data *vd;
 	status_data base_status, battle_status;
