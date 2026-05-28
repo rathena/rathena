@@ -749,8 +749,11 @@ void WorldHost::areaPercentHeal_cb(const v8::FunctionCallbackInfo<v8::Value>& in
     if (m < 0) return;
     map_foreachinallarea(areapercentheal_sub, m, x0, y0, x1, y1, BL_PC, hp, sp);
 }
-// attachRid / addRid: the V8 host doesn't have a script-state to switch
-// the attached rid into. Placeholder.
+// attachRid / addRid: in the legacy engine these swap the player a script
+// is executing as, then continue inline. The V8 engine works per-callback
+// with sd_ scoped to that invocation, so there's no analogous "swap and
+// keep running" semantics. Use `ctx.player.<op>(target_account_id)` or
+// invoke the handler again with the new rid instead.
 void WorldHost::attachRid_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  { (void)info; }
 void WorldHost::addRid_cb(const v8::FunctionCallbackInfo<v8::Value>& info)     { (void)info; }
 void WorldHost::playerAttached_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {

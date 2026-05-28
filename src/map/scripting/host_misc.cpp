@@ -1668,6 +1668,44 @@ void instance_liveInfo_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     }
 }
 
+void instance_getVar_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto name = args::str_arg(info, 0);
+    int id    = args::int_arg(info, 1, 0);
+    auto idata = util::umap_find(instances, id);
+    if (!idata || name.empty()) { args::ret_int(info, 0); return; }
+    int64 uid = reference_uid(add_str(name.c_str()), 0);
+    if (is_string_variable(name.c_str())) {
+        const char* v = static_cast<const char*>(i64db_get(idata->regs.vars, uid));
+        args::ret_str(info, v ? v : "");
+    } else {
+        int64 v = static_cast<int64>(reinterpret_cast<intptr_t>(i64db_get(idata->regs.vars, uid)));
+        args::ret_int(info, static_cast<int32_t>(v));
+    }
+}
+
+void instance_setVar_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    auto name = args::str_arg(info, 0);
+    int id    = args::int_arg(info, 2, 0);
+    auto idata = util::umap_find(instances, id);
+    if (!idata || name.empty()) return;
+    int64 uid = reference_uid(add_str(name.c_str()), 0);
+    if (is_string_variable(name.c_str())) {
+        auto val = args::str_arg(info, 1);
+        // String reg: free old, dup new (matches script_setregstr internals).
+        char* old = static_cast<char*>(i64db_get(idata->regs.vars, uid));
+        if (old) aFree(old);
+        if (val.empty()) {
+            i64db_remove(idata->regs.vars, uid);
+        } else {
+            i64db_put(idata->regs.vars, uid, aStrdup(val.c_str()));
+        }
+    } else {
+        int64 value = args::int_arg(info, 1);
+        if (value != 0) i64db_i64put(idata->regs.vars, uid, value);
+        else            i64db_remove(idata->regs.vars, uid);
+    }
+}
+
 void instance_checkClan_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     int clan_id = args::int_arg(info, 0);
     int amount  = args::int_arg(info, 1, 1);
@@ -1727,11 +1765,8 @@ void InstanceHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ct
     args::bind_method<InstanceHost>(iso, ctx, obj, this, "liveInfo",   &instance_liveInfo_cb);
     args::bind_method<InstanceHost>(iso, ctx, obj, this, "list",       &instance_list_cb);
     args::bind_method<InstanceHost>(iso, ctx, obj, this, "checkClan", &instance_checkClan_cb);
-    // getVar/setVar map onto the instance's reg_db; rAthena's reg_db
-    // accessors are tied to script_state — would need an extracted
-    // helper. Placeholder for now.
-    bind_null (iso, ctx, obj, "getVar");
-    bind_void (iso, ctx, obj, "setVar");
+    args::bind_method<InstanceHost>(iso, ctx, obj, this, "getVar",    &instance_getVar_cb);
+    args::bind_method<InstanceHost>(iso, ctx, obj, this, "setVar",    &instance_setVar_cb);
 }
 
 namespace {
