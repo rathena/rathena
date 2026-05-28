@@ -12,6 +12,8 @@
 #include "../mob.hpp"
 #include "../npc.hpp"
 #include "../pc.hpp"
+#include "../status.hpp"
+#include "../unit.hpp"
 #include "../../common/mapindex.hpp"
 #include "../../common/timer.hpp"
 
@@ -191,16 +193,69 @@ void WorldHost::mobInfo_cb(const v8::FunctionCallbackInfo<v8::Value>& info)     
 // Unit-level ops — all placeholders for now (need unit_walktoxy / etc.)
 // =====================================================================
 
-void WorldHost::unitWalk_cb(const v8::FunctionCallbackInfo<v8::Value>& info)         { (void)info; }
-void WorldHost::unitWalkToTarget_cb(const v8::FunctionCallbackInfo<v8::Value>& info) { (void)info; }
-void WorldHost::unitAttack_cb(const v8::FunctionCallbackInfo<v8::Value>& info)       { (void)info; }
-void WorldHost::unitKill_cb(const v8::FunctionCallbackInfo<v8::Value>& info)         { (void)info; }
-void WorldHost::unitWarp_cb(const v8::FunctionCallbackInfo<v8::Value>& info)         { (void)info; }
-void WorldHost::unitTalk_cb(const v8::FunctionCallbackInfo<v8::Value>& info)         { (void)info; }
-void WorldHost::unitSkillUseId_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { (void)info; }
-void WorldHost::unitSkillUsePos_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  { (void)info; }
-void WorldHost::unitStopAttack_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { (void)info; }
-void WorldHost::unitStopWalk_cb(const v8::FunctionCallbackInfo<v8::Value>& info)     { (void)info; }
+void WorldHost::unitWalk_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    int gid = int_arg(info, 0);
+    int x = int_arg(info, 1), y = int_arg(info, 2);
+    auto* bl = map_id2bl(gid);
+    if (bl) unit_walktoxy(bl, x, y, 0);
+}
+void WorldHost::unitWalkToTarget_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    int gid = int_arg(info, 0);
+    int tid = int_arg(info, 1);
+    auto* src = map_id2bl(gid);
+    auto* tgt = map_id2bl(tid);
+    if (src && tgt) unit_walktobl(src, tgt, 1, 0);
+}
+void WorldHost::unitAttack_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    int gid = int_arg(info, 0);
+    int tid = int_arg(info, 1);
+    int cont = int_arg(info, 2, 1);
+    auto* src = map_id2bl(gid);
+    if (src) unit_attack(src, tid, cont);
+}
+void WorldHost::unitKill_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    int gid = int_arg(info, 0);
+    auto* bl = map_id2bl(gid);
+    if (bl) status_kill(bl);
+}
+void WorldHost::unitWarp_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    int gid = int_arg(info, 0);
+    auto mname = str_arg(info, 1);
+    int x = int_arg(info, 2), y = int_arg(info, 3);
+    auto* bl = map_id2bl(gid);
+    if (bl) unit_warp(bl, map_mapname2mapid(mname.c_str()), x, y, CLR_TELEPORT);
+}
+void WorldHost::unitTalk_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    int gid = int_arg(info, 0);
+    auto text = str_arg(info, 1);
+    auto* bl = map_id2bl(gid);
+    if (bl) clif_disp_overhead(bl, text.c_str());
+}
+void WorldHost::unitSkillUseId_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    int gid = int_arg(info, 0);
+    int sid = int_arg(info, 1);
+    int sl  = int_arg(info, 2, 1);
+    auto* src = map_id2bl(gid);
+    if (src) unit_skilluse_id(src, gid, sid, sl);
+}
+void WorldHost::unitSkillUsePos_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    int gid = int_arg(info, 0);
+    int sid = int_arg(info, 1);
+    int sl  = int_arg(info, 2, 1);
+    int x   = int_arg(info, 3), y = int_arg(info, 4);
+    auto* src = map_id2bl(gid);
+    if (src) unit_skilluse_pos(src, x, y, sid, sl);
+}
+void WorldHost::unitStopAttack_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    int gid = int_arg(info, 0);
+    auto* bl = map_id2bl(gid);
+    if (bl) unit_stop_attack(bl);
+}
+void WorldHost::unitStopWalk_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    int gid = int_arg(info, 0);
+    auto* bl = map_id2bl(gid);
+    if (bl) unit_stop_walking(bl, 1);
+}
 void WorldHost::unitExists_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     int gid = int_arg(info, 0);
     ret_bool(info, map_id2bl(gid) != nullptr);
@@ -349,18 +404,60 @@ void WorldHost::night_cb(const v8::FunctionCallbackInfo<v8::Value>& info) { (voi
 void WorldHost::isDay_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { ret_bool(info, !night_flag); }
 void WorldHost::isNight_cb(const v8::FunctionCallbackInfo<v8::Value>& info) { ret_bool(info, night_flag); }
 
-void WorldHost::pvpOn_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { (void)info; }
-void WorldHost::pvpOff_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  { (void)info; }
-void WorldHost::gvgOn_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { (void)info; }
-void WorldHost::gvgOff_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  { (void)info; }
-void WorldHost::gvgOn3_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  { (void)info; }
-void WorldHost::gvgOff3_cb(const v8::FunctionCallbackInfo<v8::Value>& info) { (void)info; }
-void WorldHost::agitStart_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ (void)info; }
-void WorldHost::agitEnd_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  { (void)info; }
-void WorldHost::agitCheck_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ ret_bool(info, false); }
+static inline void toggle_mapflag(const v8::FunctionCallbackInfo<v8::Value>& info,
+                                   e_mapflag flag, bool on) {
+    auto mname = args::str_arg(info, 0);
+    int16 m = map_mapname2mapid(mname.c_str());
+    if (m < 0) return;
+    if (map_getmapflag(m, flag) != (on ? 1 : 0)) map_setmapflag(m, flag, on);
+}
+void WorldHost::pvpOn_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { toggle_mapflag(info, MF_PVP, true); }
+void WorldHost::pvpOff_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  { toggle_mapflag(info, MF_PVP, false); }
+void WorldHost::gvgOn_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { toggle_mapflag(info, MF_GVG, true); }
+void WorldHost::gvgOff_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  { toggle_mapflag(info, MF_GVG, false); }
+void WorldHost::gvgOn3_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  { toggle_mapflag(info, MF_GVG_TE, true); }
+void WorldHost::gvgOff3_cb(const v8::FunctionCallbackInfo<v8::Value>& info) { toggle_mapflag(info, MF_GVG_TE, false); }
+void WorldHost::agitStart_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    int era = int_arg(info, 0, 1);
+    if (era >= 3) guild_agit3_start(); else if (era == 2) guild_agit2_start(); else guild_agit_start();
+}
+void WorldHost::agitEnd_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    int era = int_arg(info, 0, 1);
+    if (era >= 3) guild_agit3_end(); else if (era == 2) guild_agit2_end(); else guild_agit_end();
+}
+void WorldHost::agitCheck_cb(const v8::FunctionCallbackInfo<v8::Value>& info){
+    int era = int_arg(info, 0, 1);
+    bool on = (era >= 3) ? agit3_flag : (era == 2 ? agit2_flag : agit_flag);
+    ret_bool(info, on);
+}
 void WorldHost::flagEmblem_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ (void)info; }
-void WorldHost::castleName_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ ret_str(info, ""); }
-void WorldHost::castleData_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ ret_int(info, 0); }
+void WorldHost::castleName_cb(const v8::FunctionCallbackInfo<v8::Value>& info){
+    auto mname = str_arg(info, 0);
+    auto castle = castle_db.mapname2gc(mname.c_str());
+    ret_str(info, castle ? castle->castle_name : "");
+}
+void WorldHost::castleData_cb(const v8::FunctionCallbackInfo<v8::Value>& info){
+    auto mname = str_arg(info, 0);
+    int type = int_arg(info, 1);
+    auto castle = castle_db.mapname2gc(mname.c_str());
+    if (!castle) { ret_int(info, 0); return; }
+    int v = 0;
+    switch (type) {
+        case 1: v = castle->guild_id; break;
+        case 2: v = castle->economy; break;
+        case 3: v = castle->defense; break;
+        case 4: v = castle->triggerE; break;
+        case 5: v = castle->triggerD; break;
+        case 6: v = castle->nextTime; break;
+        case 7: v = castle->payTime; break;
+        case 8: v = castle->createTime; break;
+        case 9: v = castle->visibleC; break;
+        default:
+            if (type >= 10 && type <= 17) v = castle->guardian[type - 10].visible;
+            break;
+    }
+    ret_int(info, v);
+}
 
 // =====================================================================
 // Battle / at-commands
