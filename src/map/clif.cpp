@@ -864,7 +864,13 @@ void clif_charselectok(int32 id, uint8 ok)
 /// 0ADD <id>.L <name id>.W <type>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W <show drop effect>.B <drop effect mode>.W (ZC_ITEM_FALL_ENTRY5)
 void clif_dropflooritem( const flooritem_data* fitem, bool canShowEffect ){
 	nullpo_retv(fitem);
-	
+
+	if (next_dropitem_special.drop_effect != -1) {
+		p.showdropeffect = 1;
+		p.dropeffectmode = next_dropitem_special.drop_effect - 1;
+		next_dropitem_special.drop_effect = -1;
+	}
+
 	if( fitem->item.nameid == 0 ){
 		return;
 	}
@@ -26023,41 +26029,19 @@ void packetdb_readdb(){
 /*==========================================
  *
  *------------------------------------------*/
-void do_init_clif(void) {
-//************************************
-// Method:      clif_send_auras_single
-// Description: 将 bl 的光环效果信息发送给 tsd 的客户端
-// Access:      public 
-// Parameter:   struct block_list * bl
-// Parameter:   map_session_data * dsd
-// Returns:     void
-// Author:      Sola丶小克(CairoLee)  2020/09/26 16:38
-//************************************
-}
 void clif_send_auras_single(struct block_list* bl, map_session_data* tsd) {
 	if (!bl || !tsd || bl->m == -1) {return;}
 	struct s_unit_common_data* ucd = status_get_ucd(bl);
 	if (!ucd) {return;}
-	if (aura_need_hiding(bl, (struct block_list *)tsd)) return;
+	if (aura_need_hiding(bl, (struct block_list *)tsd)) {return;}
 #ifdef Pandas_MapFlag_NoAura
-	if (map_getmapflag(bl->m, MF_NOAURA)) return;
+	if (map_getmapflag(bl->m, MF_NOAURA)) {return;}
 #endif // Pandas_MapFlag_NoAura
 	for (auto it : ucd->aura.effects) {
-		if (it->replay_tid != INVALID_TIMER) continue;
+		if (it->replay_tid != INVALID_TIMER){continue;}
 		clif_specialeffect_single(bl, it->effect_id, tsd->fd);
 	}
 }
-//************************************
-// Method:      clif_send_auras
-// Description: 将 sd 的光环信息发送给指定范围的其他客户端
-// Access:      public 
-// Parameter:   struct block_list * bl
-// Parameter:   enum send_target target
-// Parameter:   bool ignore_when_hidden 若角色处于隐藏状态则不发送光环信息
-// Parameter:   enum e_aura_special flag 指定仅发送某些特殊效果
-// Returns:     void
-// Author:      Sola丶小克(CairoLee)  2020/10/11 11:49
-//************************************
 
 void clif_send_auras(struct block_list* bl, enum send_target target, bool ignore_when_hidden, enum e_aura_special flag) {
 	if (!bl || bl->m == -1) {return;}
@@ -26075,6 +26059,18 @@ void clif_send_auras(struct block_list* bl, enum send_target target, bool ignore
 		clif_specialeffect(bl, it->effect_id, target);
 	}
 }
+
+void do_init_clif(void) {
+//************************************
+// Method:      clif_send_auras_single
+// Description: 将 bl 的光环效果信息发送给 tsd 的客户端
+// Access:      public 
+// Parameter:   struct block_list * bl
+// Parameter:   map_session_data * dsd
+// Returns:     void
+// Author:      Sola丶小克(CairoLee)  2020/09/26 16:38
+//************************************
+
 
 	const int32 colors[COLOR_MAX] = {
 		0x00FF00, // COLOR_DEFAULT
