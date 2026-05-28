@@ -26035,9 +26035,9 @@ void do_init_clif(void) {
 //************************************
 }
 void clif_send_auras_single(struct block_list* bl, map_session_data* tsd) {
-	if (!bl || !tsd || bl->m == -1) return;
+	if (!bl || !tsd || bl->m == -1) {return;}
 	struct s_unit_common_data* ucd = status_get_ucd(bl);
-	if (!ucd) return;
+	if (!ucd) {return;}
 	if (aura_need_hiding(bl, (struct block_list *)tsd)) return;
 #ifdef Pandas_MapFlag_NoAura
 	if (map_getmapflag(bl->m, MF_NOAURA)) return;
@@ -26058,13 +26058,15 @@ void clif_send_auras_single(struct block_list* bl, map_session_data* tsd) {
 // Returns:     void
 // Author:      Sola丶小克(CairoLee)  2020/10/11 11:49
 //************************************
+
 void clif_send_auras(struct block_list* bl, enum send_target target, bool ignore_when_hidden, enum e_aura_special flag) {
-	if (!bl || bl->m == -1) return;
+	if (!bl || bl->m == -1) {return;}
 #ifdef Pandas_MapFlag_NoAura
-	if (map_getmapflag(bl->m, MF_NOAURA)) return;
+	if (map_getmapflag(bl->m, MF_NOAURA)) {return;}
 #endif // Pandas_MapFlag_NoAura
-	if (aura_need_hiding(bl) && ignore_when_hidden)
+	if (aura_need_hiding(bl) && ignore_when_hidden){
 		return;
+	}
 	struct s_unit_common_data* ucd = status_get_ucd(bl);
 	if (!ucd) return;
 	for (auto it : ucd->aura.effects) {
