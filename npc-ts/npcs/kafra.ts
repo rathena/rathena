@@ -1,8 +1,19 @@
-// Exercises ctx.player — pulls character name / level / stats out of
-// the host snapshot and dialogs them back. Spawned at Prontera
-// (155, 180); click to drive the flow.
+// Demonstrates the module-based scripting flow:
+//   • imports types from `@api`
+//   • imports shared helpers from `@lib/*`
+//   • `ctx.X(...)` calls are sync-looking (the auto-await transform
+//     adds the awaits at build time)
+//   • lib helpers are async — calls need explicit `await` (that's the
+//     honest module-boundary; the transform doesn't follow imports)
 
-registerNpc({
+import type { NpcRegistration } from "@api";
+import { confirm, paginatedMes } from "@lib/dialog";
+import { bumpPermCounter, requireLevel } from "@lib/player";
+import { formatZeny } from "@lib/format";
+// Ported global helpers — direct equivalents of rAthena's F_X functions.
+import { F_Hi, F_GetNumSuffix, F_InsertPlural, F_SexMes } from "@lib/global";
+
+export const tsGuide: NpcRegistration = {
     name: "ts_guide#prontera",
     map: "prontera",
     x: 155,
@@ -13,12 +24,24 @@ registerNpc({
         if (!ctx.player) return;
         const p = ctx.player;
 
-        ctx.mes("[TS Guide]");
-        ctx.mes(`Hi, ${p.name}!`);
-        ctx.mes(`You are level ${p.baseLevel} / job ${p.jobLevel}.`);
-        ctx.mes(`Class id: ${p.classId}, sex: ${p.sex === 1 ? "M" : "F"}.`);
-        ctx.mes(`You're standing at ${p.mapName} (${p.x}, ${p.y}).`);
+        // Sync helper from @lib/player.
+        const visits = bumpPermCounter(ctx, "tsGuideVisits");
 
+        // Async helpers: explicit await — lib calls cross the module
+        // boundary where the auto-await magic stops.
+        await paginatedMes(ctx, [
+            // F_Hi → random greeting (from @lib/global).
+            // F_SexMes → sex-conditioned greeting.
+            // F_InsertPlural → "1 visit" / "5 visits", auto-pluralized.
+            // F_GetNumSuffix → "1st" / "22nd" / "113th".
+            [`[TS Guide]`, `${F_Hi()} ${F_SexMes(ctx, "Ma'am", "Sir")} ${p.name}!`,
+             `This is your ${F_GetNumSuffix(visits)} visit (${F_InsertPlural(visits, "visit")} total).`],
+            [`Level ${p.baseLevel} / job ${p.jobLevel}.`, `You're carrying ${formatZeny(p.zeny)}.`],
+        ]);
+
+        if (!(await requireLevel(ctx, 1))) return;
+
+        // ctx.X(...) is sync-looking — the build step adds the awaits.
         const choice = ctx.select([
             "Show my stats",
             "Show my vitals",
@@ -37,13 +60,17 @@ registerNpc({
             ctx.mes(`SP: ${p.sp} / ${p.maxSp}`);
             ctx.mes(`Weight: ${p.weight} / ${p.maxWeight}`);
         } else if (choice === 2) {
-            ctx.mes(`Zeny: ${p.zeny} z`);
+            ctx.mes(`Zeny: ${formatZeny(p.zeny)}`);
             ctx.mes(`Party id: ${p.partyId || "(none)"}`);
             ctx.mes(`Guild id: ${p.guildId || "(none)"}`);
+
+            if (await confirm(ctx, "Want me to announce this to the world?")) {
+                ctx.world.announce(`${p.name} has ${formatZeny(p.zeny)}!`);
+            }
         } else {
             ctx.mes("Take care!");
         }
 
         ctx.close();
     },
-});
+};

@@ -18,6 +18,14 @@
     "declaration": false,
     "sourceMap": true,
     "baseUrl": ".",
+    "paths": {
+      // Clean alias for type imports. Authors write:
+      //   import type { NpcRegistration } from "@api";
+      "@api":   ["./types/api"],
+      // Shared helper modules. Authors write:
+      //   import { confirm, paginatedMes } from "@lib/dialog";
+      "@lib/*": ["./lib/*"]
+    },
     "types": ["./types/api"]
   },
   "include": ["./**/*.ts", "./types/**/*.d.ts"],

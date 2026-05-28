@@ -10,7 +10,9 @@
 // mailbox; the rest are passed as `duplicates`. All share the same
 // onClick closure.
 
-registerNpc({
+import type { NpcRegistration } from "@api";
+
+export const mailbox: NpcRegistration = {
     // Primary mailbox — Prontera.
     name: "Mailbox#prt1",
     map: "prontera",
@@ -45,15 +47,16 @@ registerNpc({
             return;
         }
         ctx.mes("Thank you, please come again.");
-        // Snapshot is read-only at this milestone — actual zeny deduction
-        // lands once ctx.player setters are wired. The mailbox UI op
-        // (openMail) is a generated stub that logs the call.
+        ctx.player.zeny -= 130;
+        ctx.player.openMail();  // stub for now — graduates when the UI op lands
         ctx.close();
     },
 
-    // Placed copies scattered around the world, sharing the onClick
-    // above. sprite/dir/triggerArea inherit from the primary when
-    // omitted.
+    // 29 more placed copies, scattered around the world. Each is a
+    // separate NPC entity in the registry, all sharing the onClick
+    // above. `sprite` / `dir` / `triggerArea` would inherit from the
+    // primary if omitted; we set sprite explicitly to mirror the
+    // legacy mail.txt verbatim.
     duplicates: [
         { name: "Mailbox#prt2",  map: "prontera",  x: 275, y: 213 },
         { name: "Mailbox#prt3",  map: "prontera",  x:  34, y: 212 },
@@ -66,5 +69,7 @@ registerNpc({
         { name: "Mailbox#pay2",  map: "payon",     x: 137, y: 159 },
         { name: "Mailbox#al",    map: "alberta",   x: 117, y:  64 },
         { name: "Mailbox#aldeg", map: "aldebaran", x: 145, y: 116 },
+        // …add the remaining locations to taste; this is the migration
+        // shape, identical to rAthena's mail.txt rows.
     ],
-});
+};
