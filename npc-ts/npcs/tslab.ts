@@ -56,7 +56,7 @@ export const tsLab: NpcRegistration = {
 };
 
 async function testMobs(ctx: any) {
-    const map = ctx.player.map;
+    const map = ctx.player.mapName;
     const px  = ctx.player.x;
     const py  = ctx.player.y;
 
@@ -86,10 +86,8 @@ async function testMobs(ctx: any) {
 
 async function testReputation(ctx: any) {
     const p = ctx.player;
-    // Pick a reputation type that the server's DB defines. Type 1001 is
-    // the OST "Mayor of Rune-Midgarts" entry in the default re/db; if
-    // your server hasn't loaded it, the wire returns 0.
-    const repType = 1001;
+    // Type 1 = RepPointsOrc — first entry in db/re/reputation.yml.
+    const repType = 1;
 
     ctx.mes("[TS Lab]");
     ctx.mes(`Reading reputation type ${repType}…`);
@@ -139,7 +137,7 @@ async function testInstanceAndCells(ctx: any) {
 
     ctx.mes("[TS Lab]");
     ctx.mes("Cell op demo: blocking vending on the tile in front of me…");
-    const map = ctx.player.map;
+    const map = ctx.player.mapName;
     const x = 158, y = 178;  // one square south of my position
 
     ctx.world.setCell(map, x, y, x, y, CELL_NOVENDING, true);
@@ -168,7 +166,9 @@ async function testBgAndPortal(ctx: any) {
     ctx.mes("Creating a battleground waiting room…");
 
     // Title shows above the NPC; trigger=2 fires when 2 are in.
-    ctx.npc.createWaitingRoom("TS Lab BG", 4, "", 2, 0, 1, 999);
+    // maxLvl 175 — server's MAX_LEVEL cap. Going above triggers the
+    // chat_createnpcchat lvl/zeny guard and the room never opens.
+    ctx.npc.createWaitingRoom("TS Lab BG", 4, "", 2, 0, 1, 175);
     const usersBefore = ctx.npc.getWaitingRoomUsers();
     ctx.mes(`Waiting room created. Current users: ${usersBefore}.`);
 

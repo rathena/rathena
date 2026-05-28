@@ -1152,6 +1152,55 @@ void PlayerHost::clanLeave_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  
 void PlayerHost::cameraInfo_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  { ret_null(info); }
 
 // =====================================================================
+// `ctx.player.perm` — proxy backed by character-permanent regs.
+// Reading returns int (or 0) — keep simple; the d.ts says number|string,
+// but lib/player.bumpPermCounter coerces to Number anyway and integer
+// regs are what rAthena persists across logout.
+// =====================================================================
+
+namespace {
+v8::Intercepted perm_getter(v8::Local<v8::Name> property,
+                            const v8::PropertyCallbackInfo<v8::Value>& info) {
+    auto* iso = info.GetIsolate();
+    auto ext = v8::Local<v8::External>::Cast(info.Data());
+    auto* host = static_cast<PlayerHost*>(ext->Value(v8::kExternalPointerTypeTagDefault));
+    if (!host) return v8::Intercepted::kNo;
+    v8::String::Utf8Value name(iso, property);
+    if (*name == nullptr) return v8::Intercepted::kNo;
+    // Skip reserved JS internals (then/Symbol.* lookups arrive as Names).
+    if ((*name)[0] == 0) return v8::Intercepted::kNo;
+    int64 v = pc_readreg2(&host->sd(), *name);
+    info.GetReturnValue().Set(v8::Integer::New(iso, static_cast<int32_t>(v)));
+    return v8::Intercepted::kYes;
+}
+
+v8::Intercepted perm_setter(v8::Local<v8::Name> property,
+                            v8::Local<v8::Value> value,
+                            const v8::PropertyCallbackInfo<v8::Boolean>& info) {
+    auto* iso = info.GetIsolate();
+    auto ext = v8::Local<v8::External>::Cast(info.Data());
+    auto* host = static_cast<PlayerHost*>(ext->Value(v8::kExternalPointerTypeTagDefault));
+    if (!host) return v8::Intercepted::kNo;
+    v8::String::Utf8Value name(iso, property);
+    if (*name == nullptr || (*name)[0] == 0) return v8::Intercepted::kNo;
+    int64 v = value->IntegerValue(iso->GetCurrentContext()).FromMaybe(0);
+    pc_setreg2(&host->sd(), *name, v);
+    info.GetReturnValue().Set(true);
+    return v8::Intercepted::kYes;
+}
+} // namespace
+
+void PlayerHost::install_perm_proxy(v8::Isolate* iso, v8::Local<v8::Context> ctx,
+                                    v8::Local<v8::Object> obj) {
+    auto tmpl = v8::ObjectTemplate::New(iso);
+    auto data = v8::External::New(iso, this, v8::kExternalPointerTypeTagDefault);
+    tmpl->SetHandler(v8::NamedPropertyHandlerConfiguration(
+        perm_getter, perm_setter, nullptr, nullptr, nullptr, data));
+    auto inst = tmpl->NewInstance(ctx).ToLocalChecked();
+    (void)obj->Set(ctx, v8::String::NewFromUtf8(iso, "perm").ToLocalChecked(), inst);
+}
+
+// =====================================================================
 // install_on_object — bind every callback onto the live ctx.player obj
 // =====================================================================
 
@@ -1209,6 +1258,8 @@ void PlayerHost::install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx,
     BIND(jobCanEnterMap); BIND(checkVending); BIND(checkChatting); BIND(checkIdle);
     BIND(navigateTo); BIND(clanJoin); BIND(clanLeave); BIND(cameraInfo);
 #undef BIND
+
+    install_perm_proxy(iso, ctx, obj);
 }
 
 } // namespace rathena::scripting

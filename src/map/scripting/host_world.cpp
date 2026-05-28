@@ -241,16 +241,18 @@ void WorldHost::killMonster_cb(const v8::FunctionCallbackInfo<v8::Value>& info) 
     auto event = str_arg(info, 1);
     int allflag = (event == "All") ? 1 : 0;
     int m = map_mapname2mapid(mapn.c_str());
-    if (m < 0) return;
+    if (m < 0) { ret_int(info, 0); return; }
     map_freeblock_lock();
-    map_foreachinmap(killmob_sub_strip, m, BL_MOB, event.c_str(), allflag);
+    int killed = map_foreachinmap(killmob_sub_strip, m, BL_MOB, event.c_str(), allflag);
     map_freeblock_unlock();
+    ret_int(info, killed);
 }
 void WorldHost::killMonsterAll_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     auto mapn = str_arg(info, 0);
     int m = map_mapname2mapid(mapn.c_str());
-    if (m < 0) return;
-    map_foreachinmap(killmob_all_sub, m, BL_MOB);
+    if (m < 0) { ret_int(info, 0); return; }
+    int killed = map_foreachinmap(killmob_all_sub, m, BL_MOB);
+    ret_int(info, killed);
 }
 void WorldHost::mobCount_cb(const v8::FunctionCallbackInfo<v8::Value>& info)        {
     auto mapn = str_arg(info, 0);

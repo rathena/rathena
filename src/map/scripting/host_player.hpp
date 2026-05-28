@@ -26,6 +26,12 @@ public:
     void install_on_object(v8::Isolate* iso, v8::Local<v8::Context> ctx,
                            v8::Local<v8::Object> obj);
 
+    // Install `ctx.player.perm` — a JS proxy that reads/writes character-
+    // permanent regs (`pc_setreg2` / `pc_readreg2`). Called from
+    // install_on_object after the regular method bindings.
+    void install_perm_proxy(v8::Isolate* iso, v8::Local<v8::Context> ctx,
+                            v8::Local<v8::Object> obj);
+
     map_session_data& sd() { return sd_; }
 
 private:
