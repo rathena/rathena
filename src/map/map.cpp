@@ -52,6 +52,9 @@
 #include "quest.hpp"
 #include "storage.hpp"
 #include "trade.hpp"
+#ifdef HAVE_TS_SCRIPTING
+#include "scripting/script_host.hpp"
+#endif
 
 using namespace rathena;
 using namespace rathena::server_map;
@@ -4926,6 +4929,9 @@ void MapServer::finalize(){
 	do_final_quest();
 	do_final_achievement();
 	do_final_script();
+#ifdef HAVE_TS_SCRIPTING
+	script_host_shutdown();
+#endif
 	do_final_instance();
 	do_final_itemdb();
 	do_final_storage();
@@ -5302,6 +5308,10 @@ bool MapServer::initialize( int32 argc, char *argv[] ){
 	do_init_clif();
 #endif
 	do_init_script();
+#ifdef HAVE_TS_SCRIPTING
+	script_host_init();
+	script_host_load_entry("npc-ts/dist/main.js");
+#endif
 	do_init_itemdb();
 	do_init_channel();
 	do_init_cashshop();
@@ -5320,6 +5330,12 @@ bool MapServer::initialize( int32 argc, char *argv[] ){
 	do_init_achievement();
 	do_init_battleground();
 	do_init_npc();
+#ifdef HAVE_TS_SCRIPTING
+	// Spawn TS-registered NPCs into the world after npcname_db /
+	// ev_db are initialized by do_init_npc(). Has to come after the
+	// legacy NPC loader so name collisions are visible.
+	script_host_spawn_npcs();
+#endif
 	do_init_unit();
 	do_init_duel();
 	do_init_vending();

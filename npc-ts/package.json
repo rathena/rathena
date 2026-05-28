@@ -1,0 +1,15 @@
+{
+  "name": "rathena-npc-ts",
+  "version": "0.1.0",
+  "private": true,
+  "description": "TypeScript-authored NPC scripts for the rAthena map server. Loaded at boot by the V8 host in src/map/scripting/.",
+  "scripts": {
+    "build": "node build/build.mjs",
+    "watch": "node build/build.mjs --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "esbuild": "^0.20.0",
+    "typescript": "^5.4.0"
+  }
+}

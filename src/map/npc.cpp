@@ -34,6 +34,9 @@
 #include "pc.hpp"
 #include "pet.hpp"
 #include "script.hpp" // script_config
+#ifdef HAVE_TS_SCRIPTING
+#include "scripting/script_host.hpp"
+#endif
 
 using namespace rathena;
 
@@ -120,7 +123,7 @@ struct script_event_s{
 std::map<enum npce_event, std::vector<struct script_event_s>> script_event;
 
 // Static functions
-static struct npc_data* npc_create_npc( int16 m, int16 x, int16 y );
+struct npc_data* npc_create_npc( int16 m, int16 x, int16 y );
 static void npc_parsename( struct npc_data* nd, const char* name, const char* start, const char* buffer, const char* filepath );
 
 const std::string StylistDatabase::getDefaultLocation(){
@@ -2234,6 +2237,14 @@ int32 npc_click(map_session_data* sd, struct npc_data* nd)
 #endif
 			break;
 		case NPCTYPE_SCRIPT:
+#ifdef HAVE_TS_SCRIPTING
+			// Give the TS engine first refusal. If a TS handler is
+			// registered under this NPC's name, fire it and skip the
+			// legacy run_script() — the two engines must not both
+			// drive a dialog for the same NPC.
+			if( script_host_dispatch_npc_click(sd, nd) )
+				break;
+#endif
 			run_script(nd->u.scr.script,0,sd->bl.id,nd->bl.id);
 			break;
 		case NPCTYPE_TOMB:
@@ -2260,6 +2271,15 @@ bool npc_scriptcont(map_session_data* sd, int32 id, bool closing){
 	struct npc_data* nd = BL_CAST( BL_NPC, target );
 
 	nullpo_retr(true, sd);
+
+#ifdef HAVE_TS_SCRIPTING
+	// A TS dialog has no legacy script_state (sd->st is null) — route
+	// the resume into the V8 host before the legacy state machine
+	// rejects us. dispatch_npc_resume returns false if the player isn't
+	// in a TS dialog, falling through to the existing flow.
+	if( script_host_dispatch_npc_resume(sd, id, closing) )
+		return true;
+#endif
 
 #ifdef SECURE_NPCTIMEOUT
 	if( !closing && sd->npc_idle_timer == INVALID_TIMER && !sd->state.ignoretimeout )
@@ -3757,6 +3777,47 @@ int32 npc_parseview(const char* w4, const char* start, const char* buffer, const
  * @param y: Y location
  * @return npc_data
  */
+#ifdef HAVE_TS_SCRIPTING
+// Spawn a script-type NPC built from TS-registered metadata. The
+// caller fills in name/exname/class_/dir before calling; this helper
+// runs the standard NPCTYPE_SCRIPT install steps (map_addnpc, view
+// data, cell trigger setup, clif_spawn, npcname_db entry). Returns
+// true on success.
+//
+// Mirrors the install fragment of npc_parse_script() in this file.
+bool npc_install_script_npc(struct npc_data* nd, int16 m, int16 dir) {
+	if (!nd || m < 0) return false;
+	if (npc_name2id(nd->exname) != nullptr) {
+		ShowWarning("npc_install_script_npc: duplicate exname '%s' — TS NPC not spawned.\n",
+		            nd->exname);
+		return false;
+	}
+	nd->speed = DEFAULT_NPC_WALK_SPEED;
+	nd->u.scr.script = nullptr;
+	nd->u.scr.label_list = nullptr;
+	nd->u.scr.label_list_num = 0;
+	nd->u.scr.timerid = INVALID_TIMER;
+	nd->bl.type = BL_NPC;
+	nd->subtype = NPCTYPE_SCRIPT;
+
+	map_addnpc(m, nd);
+	status_change_init(&nd->bl);
+	unit_dataset(&nd->bl);
+	nd->ud.dir = (uint8)dir;
+	npc_setcells(nd);
+	if (map_addblock(&nd->bl))
+		return false;
+	if (nd->class_ != JT_FAKENPC) {
+		status_set_viewdata(&nd->bl, nd->class_);
+		if (map_getmapdata(nd->bl.m)->users)
+			clif_spawn(&nd->bl);
+	}
+	strdb_put(npcname_db, nd->exname, nd);
+	npc_script++;
+	return true;
+}
+#endif // HAVE_TS_SCRIPTING
+
 struct npc_data *npc_create_npc(int16 m, int16 x, int16 y){
 	struct npc_data *nd = nullptr;
 
