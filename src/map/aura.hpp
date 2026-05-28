@@ -6,6 +6,7 @@
 #include <common/database.hpp>
 #include <common/timer.hpp>
 #include <common/mmo.hpp>
+#include "clif.hpp"
 
 struct s_aura {
 	uint32 aura_id = 0;
@@ -41,3 +42,5 @@ void aura_effects_clear(struct block_list* bl);
 void aura_effects_refill(struct block_list* bl);
 void aura_refresh_client(struct block_list* bl);
 void aura_make_effective(struct block_list* bl, uint32 aura_id, bool pc_saved = true);
+void clif_send_auras_single(struct block_list* bl, struct map_session_data* tsd);
+void clif_send_auras(struct block_list* bl, enum send_target target, bool ignore_when_hidden, enum e_aura_special flag);
