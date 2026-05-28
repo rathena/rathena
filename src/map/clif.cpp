@@ -866,8 +866,8 @@ void clif_dropflooritem( const flooritem_data* fitem, bool canShowEffect ){
 	nullpo_retv(fitem);
 	
 	if (next_dropitem_special.drop_effect != -1) {
-		fitem->showdropeffect = true;
-		fitem->item.dropeffectmode = next_dropitem_special.drop_effect - 1;
+		fitem->item.show_drop_effect = true;
+		fitem->item.drop_effect_mode = next_dropitem_special.drop_effect - 1;
 		next_dropitem_special.drop_effect = -1;
 	}
 
