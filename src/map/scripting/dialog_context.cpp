@@ -6,6 +6,7 @@
 
 #include "dialog_session.hpp"
 #include "js_object_reader.hpp"
+#include "player_binding.hpp"
 #include "../clif.hpp"
 #include "../map.hpp"
 #include "../npc.hpp"
@@ -166,6 +167,15 @@ v8::Local<v8::Object> DialogContext::to_js(v8::Isolate* iso, v8::Local<v8::Conte
 
     auto obj = tmpl->NewInstance(ctx).ToLocalChecked();
     obj->SetInternalField(0, v8::External::New(iso, this, v8::kExternalPointerTypeTagDefault));
+
+    // ctx.player — snapshot of the clicking player's identity / stats /
+    // vitals / location. The libclang codegen produces the implementation
+    // (build/generated/scripting/player_binding.generated.cpp) which is
+    // compiled in by src/map/CMakeLists.txt.
+    auto player_key = v8::String::NewFromUtf8(iso, "player").ToLocalChecked();
+    auto player_obj = v8::Object::New(iso);
+    populate_player_object(iso, ctx, player_obj, sd_);
+    (void)obj->Set(ctx, player_key, player_obj);
 
     return obj;
 }

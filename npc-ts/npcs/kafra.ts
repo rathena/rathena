@@ -1,9 +1,6 @@
-// Minimal NPC demonstrating the dialog primitives end-to-end. Spawned
-// at Prontera (155, 180); click to drive a mes → select → close flow.
-//
-// This file is intentionally thin for the engine+registrars milestone.
-// Later milestones expand it to use ctx.player snapshot data and
-// shared helpers from @lib/*.
+// Exercises ctx.player — pulls character name / level / stats out of
+// the host snapshot and dialogs them back. Spawned at Prontera
+// (155, 180); click to drive the flow.
 
 registerNpc({
     name: "ts_guide#prontera",
@@ -13,27 +10,37 @@ registerNpc({
     dir: 4,
     sprite: 757,
     async onClick(ctx) {
+        if (!ctx.player) return;
+        const p = ctx.player;
+
         ctx.mes("[TS Guide]");
-        ctx.mes("Hi! I'm running entirely from TypeScript.");
-        ctx.mes("Pick an option:");
+        ctx.mes(`Hi, ${p.name}!`);
+        ctx.mes(`You are level ${p.baseLevel} / job ${p.jobLevel}.`);
+        ctx.mes(`Class id: ${p.classId}, sex: ${p.sex === 1 ? "M" : "F"}.`);
+        ctx.mes(`You're standing at ${p.mapName} (${p.x}, ${p.y}).`);
 
         const choice = ctx.select([
-            "What does this prove?",
-            "Tell me a joke",
+            "Show my stats",
+            "Show my vitals",
+            "Show my wallet",
             "Nothing, bye",
         ]);
 
+        ctx.mes("[TS Guide]");
         if (choice === 0) {
-            ctx.mes("[TS Guide]");
-            ctx.mes("Click → V8 → JS function → packets back to you.");
-            ctx.mes("No legacy .txt script involved.");
+            ctx.mes(`STR ${p.str}   AGI ${p.agi}   VIT ${p.vit}`);
+            ctx.mes(`INT ${p.int}   DEX ${p.dex}   LUK ${p.luk}`);
+            ctx.mes(`Status points: ${p.statusPoint}`);
+            ctx.mes(`Skill points: ${p.skillPoint}`);
         } else if (choice === 1) {
-            ctx.mes("[TS Guide]");
-            ctx.mes("Why did the Poring cross the road?");
-            ctx.mes("...");
-            ctx.mes("To gel to the other side. (sorry)");
+            ctx.mes(`HP: ${p.hp} / ${p.maxHp}`);
+            ctx.mes(`SP: ${p.sp} / ${p.maxSp}`);
+            ctx.mes(`Weight: ${p.weight} / ${p.maxWeight}`);
+        } else if (choice === 2) {
+            ctx.mes(`Zeny: ${p.zeny} z`);
+            ctx.mes(`Party id: ${p.partyId || "(none)"}`);
+            ctx.mes(`Guild id: ${p.guildId || "(none)"}`);
         } else {
-            ctx.mes("[TS Guide]");
             ctx.mes("Take care!");
         }
 
