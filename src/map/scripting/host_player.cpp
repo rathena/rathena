@@ -82,11 +82,24 @@ void PlayerHost::giveExp_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
 }
 
 void PlayerHost::baseExpRatio_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
-    ret_int(info, 0);  // TODO: compute from job_db
+    UNWRAP;
+    int percent = int_arg(info, 0);
+    auto job = job_db.find(sd.status.class_);
+    if (!job) { ret_int(info, 0); return; }
+    int level = int_arg(info, 1, sd.status.base_level);
+    if (level < 1 || level > MAX_LEVEL) { ret_int(info, 0); return; }
+    t_exp need = job->base_exp[level - 1];
+    ret_int(info, static_cast<int32_t>(need * percent / 100));
 }
-
 void PlayerHost::jobExpRatio_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
-    ret_int(info, 0);  // TODO: compute from job_db
+    UNWRAP;
+    int percent = int_arg(info, 0);
+    auto job = job_db.find(sd.status.class_);
+    if (!job) { ret_int(info, 0); return; }
+    int level = int_arg(info, 1, sd.status.job_level);
+    if (level < 1 || level > MAX_LEVEL) { ret_int(info, 0); return; }
+    t_exp need = job->job_exp[level - 1];
+    ret_int(info, static_cast<int32_t>(need * percent / 100));
 }
 
 // =====================================================================
@@ -113,7 +126,7 @@ void PlayerHost::changeSex_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
 }
 
 void PlayerHost::jobName_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
-    ret_str(info, "");  // TODO: lookup in job_db
+    ret_str(info, job_name(int_arg(info, 0)));
 }
 
 // =====================================================================
@@ -562,12 +575,32 @@ void PlayerHost::setFont_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     UNWRAP;
     sd.status.font = static_cast<uint8>(int_arg(info, 0));
 }
-void PlayerHost::setCart_cb(const v8::FunctionCallbackInfo<v8::Value>& info)     { (void)info; }
-void PlayerHost::setFalcon_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { (void)info; }
-void PlayerHost::setRiding_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { (void)info; }
-void PlayerHost::setDragon_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { (void)info; }
-void PlayerHost::setMadogear_cb(const v8::FunctionCallbackInfo<v8::Value>& info) { (void)info; }
-void PlayerHost::setMounting_cb(const v8::FunctionCallbackInfo<v8::Value>& info) { (void)info; }
+void PlayerHost::setCart_cb(const v8::FunctionCallbackInfo<v8::Value>& info)     { UNWRAP; pc_setcart(&sd, int_arg(info, 0, 1)); }
+void PlayerHost::setFalcon_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { UNWRAP; pc_setfalcon(&sd, bool_arg(info, 0, true) ? 1 : 0); }
+void PlayerHost::setRiding_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { UNWRAP; pc_setriding(&sd, bool_arg(info, 0, true) ? 1 : 0); }
+void PlayerHost::setDragon_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   {
+    UNWRAP;
+    int color = int_arg(info, 0, 0);
+    int opt = OPTION_DRAGON1;
+    if (color == 2) opt = OPTION_DRAGON2;
+    else if (color == 3) opt = OPTION_DRAGON3;
+    else if (color == 4) opt = OPTION_DRAGON4;
+    else if (color == 5) opt = OPTION_DRAGON5;
+    pc_setoption(&sd, sd.sc.option | opt);
+}
+void PlayerHost::setMadogear_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    UNWRAP;
+    bool flag = bool_arg(info, 0, true);
+    int type = int_arg(info, 1, MADO_ROBOT);
+    pc_setmadogear(&sd, flag, static_cast<e_mado_type>(type));
+}
+void PlayerHost::setMounting_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    UNWRAP;
+    if (sd.sc.getSCE(SC_ALL_RIDING))
+        status_change_end(&sd.bl, SC_ALL_RIDING);
+    else
+        sc_start(&sd.bl, &sd.bl, SC_ALL_RIDING, 10000, 1, INFINITE_TICK);
+}
 
 void PlayerHost::checkCart_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { UNWRAP; ret_bool(info, pc_iscarton(&sd)); }
 void PlayerHost::checkFalcon_cb(const v8::FunctionCallbackInfo<v8::Value>& info) { UNWRAP; ret_bool(info, pc_isfalcon(&sd)); }
@@ -672,10 +705,32 @@ void PlayerHost::soundEffect_cb(const v8::FunctionCallbackInfo<v8::Value>& info)
     auto file = str_arg(info, 0);
     clif_soundeffect(sd.bl, file.c_str(), int_arg(info, 1, 0), SELF);
 }
-void PlayerHost::playBgm_cb(const v8::FunctionCallbackInfo<v8::Value>& info)    { (void)info; }
-void PlayerHost::viewpoint_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  { (void)info; }
-void PlayerHost::showDigit_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  { (void)info; }
-void PlayerHost::hatEffect_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  { (void)info; }
+void PlayerHost::playBgm_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    UNWRAP;
+    auto file = str_arg(info, 0);
+    clif_playBGM(sd, file.c_str());
+}
+void PlayerHost::viewpoint_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    UNWRAP;
+    int act = int_arg(info, 0);
+    int x = int_arg(info, 1), y = int_arg(info, 2);
+    int point = int_arg(info, 3);
+    int color = int_arg(info, 4);
+    clif_viewpoint(sd, sd.bl.id, act, static_cast<uint16>(x), static_cast<uint16>(y), point, static_cast<uint32>(color));
+}
+void PlayerHost::showDigit_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    UNWRAP;
+    int v = int_arg(info, 0);
+    int t = int_arg(info, 1, 1);
+    clif_showdigit(&sd, static_cast<unsigned char>(t), v);
+}
+void PlayerHost::hatEffect_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    UNWRAP;
+    int effect = int_arg(info, 0);
+    bool state = bool_arg(info, 1);
+    if (state) sd.hatEffects.push_back(static_cast<uint32>(effect));
+    clif_hat_effect_single(sd, effect, state);
+}
 
 // =====================================================================
 // UI windows
@@ -685,29 +740,49 @@ void PlayerHost::openStorage_cb(const v8::FunctionCallbackInfo<v8::Value>& info)
     UNWRAP;
     storage_storageopen(&sd);
 }
-void PlayerHost::openBank_cb(const v8::FunctionCallbackInfo<v8::Value>& info)    { (void)info; }
-void PlayerHost::openMail_cb(const v8::FunctionCallbackInfo<v8::Value>& info)    { UNWRAP; clif_Mail_window(sd.fd, 0); }
-void PlayerHost::openAuction_cb(const v8::FunctionCallbackInfo<v8::Value>& info) { (void)info; }
-void PlayerHost::openRefineUi_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ (void)info; }
-void PlayerHost::openStylist_cb(const v8::FunctionCallbackInfo<v8::Value>& info) { (void)info; }
-void PlayerHost::openDressRoom_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ (void)info; }
-void PlayerHost::openRoulette_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ (void)info; }
-void PlayerHost::openQuestUi_cb(const v8::FunctionCallbackInfo<v8::Value>& info) { (void)info; }
-void PlayerHost::openEnchantGrade_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ (void)info; }
+void PlayerHost::openBank_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   {
+    UNWRAP;
+    clif_ui_open(sd, OUT_UI_BANK, 0);
+}
+void PlayerHost::openMail_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { UNWRAP; clif_Mail_window(sd.fd, 0); }
+void PlayerHost::openAuction_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ UNWRAP; clif_Auction_openwindow(&sd); }
+void PlayerHost::openRefineUi_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ UNWRAP; clif_refineui_open(&sd); }
+void PlayerHost::openStylist_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ UNWRAP; clif_ui_open(sd, OUT_UI_STYLIST, 0); }
+void PlayerHost::openDressRoom_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ UNWRAP; clif_dressing_room(sd); }
+void PlayerHost::openRoulette_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ UNWRAP; clif_roulette_open(&sd); }
+void PlayerHost::openQuestUi_cb(const v8::FunctionCallbackInfo<v8::Value>& info)    { (void)info; }
+void PlayerHost::openEnchantGrade_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ UNWRAP; clif_ui_open(sd, OUT_UI_ENCHANTGRADE, 0); }
 void PlayerHost::openLaphineSynthesis_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ (void)info; }
-void PlayerHost::openLaphineUpgrade_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ (void)info; }
-void PlayerHost::openItemEnchant_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ (void)info; }
-void PlayerHost::openItemReform_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ (void)info; }
-void PlayerHost::specialPopup_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ (void)info; }
+void PlayerHost::openLaphineUpgrade_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { (void)info; }
+void PlayerHost::openItemEnchant_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    UNWRAP;
+    clif_ui_open(sd, OUT_UI_ENCHANT, int_arg(info, 0));
+}
+void PlayerHost::openItemReform_cb(const v8::FunctionCallbackInfo<v8::Value>& info){
+    UNWRAP;
+    clif_item_reform_open(sd, static_cast<t_itemid>(uint_arg(info, 0)));
+}
+void PlayerHost::specialPopup_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ UNWRAP; clif_specialpopup(sd, int_arg(info, 0)); }
 void PlayerHost::openTips_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { (void)info; }
-void PlayerHost::readBook_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { (void)info; }
+void PlayerHost::readBook_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   {
+    UNWRAP;
+    clif_readbook(sd.fd, int_arg(info, 0), int_arg(info, 1, 0));
+}
 
 // =====================================================================
 // Spirit balls / reputation / fame / marriage — minimal placeholders
 // =====================================================================
 
-void PlayerHost::addSpiritBall_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { (void)info; }
-void PlayerHost::delSpiritBall_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { (void)info; }
+void PlayerHost::addSpiritBall_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    UNWRAP;
+    int count = int_arg(info, 0, 1);
+    int dur   = int_arg(info, 1, 30000);
+    pc_addspiritball(&sd, dur, count);
+}
+void PlayerHost::delSpiritBall_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    UNWRAP;
+    pc_delspiritball(&sd, int_arg(info, 0, sd.spiritball), 0);
+}
 void PlayerHost::countSpiritBall_cb(const v8::FunctionCallbackInfo<v8::Value>& info) { UNWRAP; ret_int(info, sd.spiritball); }
 
 void PlayerHost::getReputation_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { ret_int(info, 0); }
@@ -750,13 +825,24 @@ void PlayerHost::charInfo_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
         default: ret_str(info, ""); break;
     }
 }
-void PlayerHost::readParam_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { ret_int(info, 0); }
+void PlayerHost::readParam_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    UNWRAP;
+    int param = int_arg(info, 0);
+    ret_int(info, static_cast<int32_t>(pc_readparam(&sd, param)));
+}
 void PlayerHost::charId4Type_cb(const v8::FunctionCallbackInfo<v8::Value>& info) { UNWRAP; ret_int(info, sd.status.char_id); }
 void PlayerHost::charIp_cb(const v8::FunctionCallbackInfo<v8::Value>& info)      { ret_str(info, ""); }
 void PlayerHost::kick_cb(const v8::FunctionCallbackInfo<v8::Value>& info)        { UNWRAP; clif_GM_kick(nullptr, &sd); }
 void PlayerHost::ignoreTimeout_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ UNWRAP; sd.state.ignoretimeout = bool_arg(info, 0) ? 1 : 0; }
-void PlayerHost::autoLoot_cb(const v8::FunctionCallbackInfo<v8::Value>& info)    { ret_int(info, 0); }
-void PlayerHost::hasAutoLoot_cb(const v8::FunctionCallbackInfo<v8::Value>& info) { ret_bool(info, false); }
+void PlayerHost::autoLoot_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    UNWRAP;
+    if (has(info, 0)) sd.state.autoloot = int_arg(info, 0);
+    ret_int(info, sd.state.autoloot);
+}
+void PlayerHost::hasAutoLoot_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    UNWRAP;
+    ret_bool(info, sd.state.autoloot > 0);
+}
 void PlayerHost::jobCanEnterMap_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ ret_bool(info, true); }
 void PlayerHost::checkVending_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ UNWRAP; ret_bool(info, sd.state.vending != 0); }
 void PlayerHost::checkChatting_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ UNWRAP; ret_bool(info, sd.chatID != 0); }
