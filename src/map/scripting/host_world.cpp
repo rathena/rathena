@@ -15,6 +15,7 @@
 #include "../status.hpp"
 #include "../unit.hpp"
 #include "../../common/mapindex.hpp"
+#include "../../common/showmsg.hpp"
 #include "../../common/timer.hpp"
 
 namespace rathena::scripting {
@@ -116,13 +117,16 @@ void WorldHost::globalMessage_cb(const v8::FunctionCallbackInfo<v8::Value>& info
     clif_GlobalMessage(sd->bl, msg.c_str(), AREA_CHAT_WOC);
 }
 void WorldHost::debugMessage_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
-    (void)info;
+    auto msg = str_arg(info, 0);
+    ShowDebug("[ts-scripting] %s\n", msg.c_str());
 }
 void WorldHost::errorMessage_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
-    (void)info;
+    auto msg = str_arg(info, 0);
+    ShowError("[ts-scripting] %s\n", msg.c_str());
 }
 void WorldHost::logMessage_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
-    (void)info;
+    auto msg = str_arg(info, 0);
+    ShowInfo("[ts-scripting] %s\n", msg.c_str());
 }
 
 // =====================================================================
@@ -356,7 +360,19 @@ void WorldHost::getFreeCell_cb(const v8::FunctionCallbackInfo<v8::Value>& info){
 void WorldHost::setWall_cb(const v8::FunctionCallbackInfo<v8::Value>& info)    { (void)info; }
 void WorldHost::delWall_cb(const v8::FunctionCallbackInfo<v8::Value>& info)    { (void)info; }
 void WorldHost::checkWall_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  { ret_bool(info, false); }
-void WorldHost::makeItem_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { (void)info; }
+void WorldHost::makeItem_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    t_itemid id = static_cast<t_itemid>(uint_arg(info, 0));
+    int amount  = int_arg(info, 1, 1);
+    auto mname  = str_arg(info, 2);
+    int x = int_arg(info, 3), y = int_arg(info, 4);
+    int16 m = map_mapname2mapid(mname.c_str());
+    if (m < 0 || amount <= 0) return;
+    struct item it = {};
+    it.nameid = id;
+    it.amount = static_cast<int16>(amount);
+    it.identify = 1;
+    map_addflooritem(&it, amount, m, x, y, 0, 0, 0, 0, 0);
+}
 void WorldHost::cleanArea_cb(const v8::FunctionCallbackInfo<v8::Value>& info)  { (void)info; }
 void WorldHost::cleanMap_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   { (void)info; }
 void WorldHost::warpPortal_cb(const v8::FunctionCallbackInfo<v8::Value>& info) { (void)info; }

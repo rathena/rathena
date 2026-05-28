@@ -15,6 +15,7 @@
 #include "../storage.hpp"
 #include "../../common/mapindex.hpp"
 #include "../../common/showmsg.hpp"
+#include "../../common/socket.hpp"
 
 namespace rathena::scripting {
 
@@ -408,16 +409,39 @@ void PlayerHost::getEquipRefine_cb(const v8::FunctionCallbackInfo<v8::Value>& in
 }
 
 void PlayerHost::getEquipWeaponLv_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
-    ret_int(info, 0);  // TODO
+    UNWRAP;
+    int slot = int_arg(info, 0, EQI_COMPOUND_ON);
+    int idx = (slot == EQI_COMPOUND_ON) ? current_equip_item_index : pc_checkequip(&sd, equip_bitmask[slot]);
+    if (idx >= 0 && sd.inventory_data[idx] && sd.inventory_data[idx]->type == IT_WEAPON) {
+        ret_int(info, sd.inventory_data[idx]->weapon_level);
+    } else ret_int(info, 0);
 }
 void PlayerHost::getEquipArmorLv_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
-    ret_int(info, 0);  // TODO
+    UNWRAP;
+    int slot = int_arg(info, 0, EQI_COMPOUND_ON);
+    int idx = (slot == EQI_COMPOUND_ON) ? current_equip_item_index : pc_checkequip(&sd, equip_bitmask[slot]);
+    if (idx >= 0 && sd.inventory_data[idx] && sd.inventory_data[idx]->type == IT_ARMOR) {
+        ret_int(info, sd.inventory_data[idx]->armor_level);
+    } else ret_int(info, 0);
 }
 void PlayerHost::getEquipCardCount_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
-    ret_int(info, 0);  // TODO
+    UNWRAP;
+    int slot = int_arg(info, 0);
+    int idx = pc_checkequip(&sd, equip_bitmask[slot]);
+    if (idx < 0) { ret_int(info, 0); return; }
+    int c = 0;
+    for (int i = 0; i < MAX_SLOTS; ++i) {
+        if (sd.inventory.u.items_inventory[idx].card[i] != 0) ++c;
+    }
+    ret_int(info, c);
 }
 void PlayerHost::getEquipCardId_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
-    ret_int(info, 0);  // TODO
+    UNWRAP;
+    int slot = int_arg(info, 0);
+    int cardSlot = int_arg(info, 1);
+    int idx = pc_checkequip(&sd, equip_bitmask[slot]);
+    if (idx < 0 || cardSlot < 0 || cardSlot >= MAX_SLOTS) { ret_int(info, 0); return; }
+    ret_int(info, static_cast<int32_t>(sd.inventory.u.items_inventory[idx].card[cardSlot]));
 }
 void PlayerHost::getEnchantGrade_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     UNWRAP;
@@ -498,10 +522,47 @@ void PlayerHost::downRefine_cb(const v8::FunctionCallbackInfo<v8::Value>& info) 
     }
 }
 
-void PlayerHost::repair_cb(const v8::FunctionCallbackInfo<v8::Value>& info)    { (void)info; }
-void PlayerHost::repairAll_cb(const v8::FunctionCallbackInfo<v8::Value>& info) { (void)info; }
+void PlayerHost::repair_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    UNWRAP;
+    int brokenIdx = int_arg(info, 0);
+    int seen = 0;
+    for (int i = 0; i < MAX_INVENTORY; ++i) {
+        if (sd.inventory.u.items_inventory[i].nameid != 0 &&
+            sd.inventory.u.items_inventory[i].attribute) {
+            if (seen == brokenIdx) {
+                sd.inventory.u.items_inventory[i].attribute = 0;
+                clif_equiplist(&sd);
+                return;
+            }
+            ++seen;
+        }
+    }
+}
+void PlayerHost::repairAll_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    UNWRAP;
+    for (int i = 0; i < MAX_INVENTORY; ++i) {
+        if (sd.inventory.u.items_inventory[i].attribute)
+            sd.inventory.u.items_inventory[i].attribute = 0;
+    }
+    clif_equiplist(&sd);
+}
 void PlayerHost::removeCards_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ (void)info; }
-void PlayerHost::getBrokenId_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ ret_int(info, 0); }
+void PlayerHost::getBrokenId_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    UNWRAP;
+    int wanted = int_arg(info, 0);
+    int seen = 0;
+    for (int i = 0; i < MAX_INVENTORY; ++i) {
+        if (sd.inventory.u.items_inventory[i].nameid != 0 &&
+            sd.inventory.u.items_inventory[i].attribute) {
+            if (seen == wanted) {
+                ret_int(info, static_cast<int32_t>(sd.inventory.u.items_inventory[i].nameid));
+                return;
+            }
+            ++seen;
+        }
+    }
+    ret_int(info, 0);
+}
 
 // =====================================================================
 // Skills
@@ -792,9 +853,16 @@ void PlayerHost::getFame_cb(const v8::FunctionCallbackInfo<v8::Value>& info)    
 void PlayerHost::addFame_cb(const v8::FunctionCallbackInfo<v8::Value>& info)         { UNWRAP; sd.status.fame += int_arg(info, 0); }
 void PlayerHost::getFameRank_cb(const v8::FunctionCallbackInfo<v8::Value>& info)     { ret_int(info, 0); }
 
-void PlayerHost::marry_cb(const v8::FunctionCallbackInfo<v8::Value>& info)           { (void)info; }
-void PlayerHost::divorce_cb(const v8::FunctionCallbackInfo<v8::Value>& info)         { (void)info; }
-void PlayerHost::adopt_cb(const v8::FunctionCallbackInfo<v8::Value>& info)           { (void)info; }
+void PlayerHost::marry_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    UNWRAP;
+    auto name = str_arg(info, 0);
+    auto* dst = map_nick2sd(name.c_str(), false);
+    if (dst) pc_marriage(&sd, dst);
+}
+void PlayerHost::divorce_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    UNWRAP; pc_divorce(&sd);
+}
+void PlayerHost::adopt_cb(const v8::FunctionCallbackInfo<v8::Value>& info) { (void)info; /* requires both parent sds; skip */ }
 void PlayerHost::getPartnerId_cb(const v8::FunctionCallbackInfo<v8::Value>& info)    { UNWRAP; ret_int(info, sd.status.partner_id); }
 void PlayerHost::getMotherId_cb(const v8::FunctionCallbackInfo<v8::Value>& info)     { UNWRAP; ret_int(info, sd.status.mother); }
 void PlayerHost::getFatherId_cb(const v8::FunctionCallbackInfo<v8::Value>& info)     { UNWRAP; ret_int(info, sd.status.father); }
@@ -831,7 +899,16 @@ void PlayerHost::readParam_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     ret_int(info, static_cast<int32_t>(pc_readparam(&sd, param)));
 }
 void PlayerHost::charId4Type_cb(const v8::FunctionCallbackInfo<v8::Value>& info) { UNWRAP; ret_int(info, sd.status.char_id); }
-void PlayerHost::charIp_cb(const v8::FunctionCallbackInfo<v8::Value>& info)      { ret_str(info, ""); }
+void PlayerHost::charIp_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
+    UNWRAP;
+    if (sd.fd < 0 || !session[sd.fd]) { ret_str(info, ""); return; }
+    uint32 ip = session[sd.fd]->client_addr;
+    char buf[32];
+    snprintf(buf, sizeof(buf), "%u.%u.%u.%u",
+             (ip >> 24) & 0xff, (ip >> 16) & 0xff,
+             (ip >> 8) & 0xff, ip & 0xff);
+    ret_str(info, buf);
+}
 void PlayerHost::kick_cb(const v8::FunctionCallbackInfo<v8::Value>& info)        { UNWRAP; clif_GM_kick(nullptr, &sd); }
 void PlayerHost::ignoreTimeout_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ UNWRAP; sd.state.ignoretimeout = bool_arg(info, 0) ? 1 : 0; }
 void PlayerHost::autoLoot_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
