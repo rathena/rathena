@@ -1030,23 +1030,36 @@ void PlayerHost::isPartnerOn_cb(const v8::FunctionCallbackInfo<v8::Value>& info)
 // Permissions / VIP / misc
 // =====================================================================
 
+namespace {
+int resolve_perm(const v8::FunctionCallbackInfo<v8::Value>& info, int idx) {
+    if (info.Length() > idx && info[idx]->IsString()) {
+        auto name = args::str_arg(info, idx);
+        for (auto& entry : pc_g_permission_name)
+            if (name == entry.name) return entry.permission;
+        return -1;
+    }
+    return args::int_arg(info, idx, -1);
+}
+} // namespace
+
 void PlayerHost::permissionCheck_cb(const v8::FunctionCallbackInfo<v8::Value>& info) {
     UNWRAP;
-    int p = int_arg(info, 0);
+    int p = resolve_perm(info, 0);
+    if (p < 0 || p >= PC_PERM_MAX) { ret_bool(info, false); return; }
     ret_bool(info, pc_has_permission(&sd, static_cast<e_pc_permission>(p)));
 }
 // Per-player permission overrides — mutate sd->permissions bitset
 // (mirrors buildin permission_add/permission_remove).
 void PlayerHost::permissionAdd_cb(const v8::FunctionCallbackInfo<v8::Value>& info)   {
     UNWRAP;
-    int p = int_arg(info, 0);
-    if (p < PC_PERM_TRADE || p >= PC_PERM_MAX) return;
+    int p = resolve_perm(info, 0);
+    if (p < 0 || p >= PC_PERM_MAX) return;
     sd.permissions.set(static_cast<e_pc_permission>(p));
 }
 void PlayerHost::permissionRemove_cb(const v8::FunctionCallbackInfo<v8::Value>& info){
     UNWRAP;
-    int p = int_arg(info, 0);
-    if (p < PC_PERM_TRADE || p >= PC_PERM_MAX) return;
+    int p = resolve_perm(info, 0);
+    if (p < 0 || p >= PC_PERM_MAX) return;
     sd.permissions.reset(static_cast<e_pc_permission>(p));
 }
 void PlayerHost::guildHasPermission_cb(const v8::FunctionCallbackInfo<v8::Value>& info){ ret_bool(info, false); }

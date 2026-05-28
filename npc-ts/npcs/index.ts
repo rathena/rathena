@@ -5,5 +5,6 @@
 
 import { tsGuide } from "./kafra";
 import { mailbox } from "./mailbox";
+import { tsLab } from "./tslab";
 
-registerNpc(tsGuide, mailbox);
+registerNpc(tsGuide, mailbox, tsLab);
