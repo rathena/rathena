@@ -26050,7 +26050,7 @@ void clif_send_auras(struct block_list* bl, int target, bool ignore_when_hidden,
 	for (auto it : ucd->aura.effects) {
 		if (it->replay_tid != INVALID_TIMER) continue;
 		if (flag != AURA_SPECIAL_NOTHING && (aura_special(it->effect_id) & flag) != flag) continue;
-		clif_specialeffect(bl, it->effect_id, target);
+		clif_specialeffect(bl, it->effect_id, (enum send_target)target);
 	}
 }
 
