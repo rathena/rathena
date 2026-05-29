@@ -43,4 +43,4 @@ void aura_effects_refill(struct block_list* bl);
 void aura_refresh_client(struct block_list* bl);
 void aura_make_effective(struct block_list* bl, uint32 aura_id, bool pc_saved = true);
 void clif_send_auras_single(struct block_list* bl, struct map_session_data* tsd);
-void clif_send_auras(struct block_list* bl, enum send_target target, bool ignore_when_hidden, enum e_aura_special flag);
+void clif_send_auras(struct block_list* bl, int target, bool ignore_when_hidden, int flag);

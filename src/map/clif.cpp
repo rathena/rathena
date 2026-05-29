@@ -26037,7 +26037,7 @@ void clif_send_auras_single(struct block_list* bl, map_session_data* tsd) {
 	}
 }
 
-void clif_send_auras(struct block_list* bl, enum send_target target, bool ignore_when_hidden, enum e_aura_special flag) {
+void clif_send_auras(struct block_list* bl, int target, bool ignore_when_hidden, int flag) {
 	if (!bl || bl->m == -1) {return;}
 #ifdef Pandas_MapFlag_NoAura
 	if (map_getmapflag(bl->m, MF_NOAURA)) {return;}
