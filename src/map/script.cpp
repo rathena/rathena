@@ -8162,11 +8162,11 @@ BUILDIN_FUNC(grouprandomitem) {
 */
 BUILDIN_FUNC(makeitem) {
 	if (next_dropitem_special.bound != -1) {
-		item_data.bound = cap_value(next_dropitem_special.bound, BOUND_NONE, BOUND_MAX - 1);
+		it.bound = cap_value(next_dropitem_special.bound, BOUND_NONE, BOUND_MAX - 1);
 		next_dropitem_special.bound = -1;
 	}
 	if (next_dropitem_special.rent_duration != 0) {
-		item_data.expire_time = (unsigned int)(time(NULL) + next_dropitem_special.rent_duration);
+		it.expire_time = (unsigned int)(time(NULL) + next_dropitem_special.rent_duration);
 		next_dropitem_special.rent_duration = 0;
 	}
 
@@ -8243,11 +8243,11 @@ BUILDIN_FUNC(makeitem) {
  */
 BUILDIN_FUNC(makeitem2) {
 		if (next_dropitem_special.bound != -1) {
-			item_data.bound = cap_value(next_dropitem_special.bound, BOUND_NONE, BOUND_MAX - 1);
+			it.bound = cap_value(next_dropitem_special.bound, BOUND_NONE, BOUND_MAX - 1);
 			next_dropitem_special.bound = -1;
 		}
 		if (next_dropitem_special.rent_duration != 0) {
-			item_data.expire_time = (unsigned int)(time(NULL) + next_dropitem_special.rent_duration);
+			it.expire_time = (unsigned int)(time(NULL) + next_dropitem_special.rent_duration);
 			next_dropitem_special.rent_duration = 0;
 		}
 
