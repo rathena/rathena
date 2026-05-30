@@ -58,6 +58,8 @@ struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST_sub{
 	uint32 itemId;
 	uint32 amount;
 	uint16 tab;
+	uint32 accountLimitRemaining;
+	uint32 alternativeCurrency;
 } __attribute__((packed));
 
 struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST{
@@ -67,8 +69,11 @@ struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST{
 	uint32 kafraPoints;
 	struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST_sub items[];
 } __attribute__((packed));
-DEFINE_PACKET_HEADER(CZ_SE_PC_BUY_CASHITEM_LIST, 0x848)
-
+#if PACKETVER >= 20240101
+DEFINE_PACKET_HEADER(CZ_SE_PC_BUY_CASHITEM_LIST, 0x0b2a); // Update to modern hex token if your client hexed it, or keep 0x848 if using custom mapping tables 0x848 0xb62
+#else
+DEFINE_PACKET_HEADER(CZ_SE_PC_BUY_CASHITEM_LIST, 0x0b2a);
+#endif
 struct PACKET_CZ_REQ_CASH_BARGAIN_SALE_ITEM_INFO{
 	int16 packetType;
 	int16 packetLength;

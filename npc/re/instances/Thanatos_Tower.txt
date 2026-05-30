@@ -357,14 +357,14 @@ tha_t01,139,83,5	script	Mini Robe#mot	4_F_02,{
 			mes "[ Mini ]";
 			mes "You can exchange your ^0000CDFragment of Sins^000000 to a ^0000CDSin Accessories^000000. Please take a look.";
 			close2;
-			callshop "mot_shop_2",2;
+			callshop "mot_shop_1",2;
 			break;
 			
 		case 3:
 			mes "[ Mini ]";
 			mes "You can exchange your ^0000CDFragment of Goodwill^000000 to a ^0000CDGoodwill Accessories^000000. Please take a look.";
 			close2;
-			callshop "mot_shop_3",2;
+			callshop "mot_shop_2",2;
 			break;
 			
 		case 4:
@@ -425,7 +425,13 @@ mes "[Tamilla]";
 		mes "The item currently equipped in that slot cannot be enchanted.";
 		close;
 	}
-
+	
+	//Set variables for potential item enchant reset
+	.@refine = getequiprefinerycnt(.@equip_slot);
+	set .@card1, getequipcardid(.@equip_slot,0);
+	set .@card2, getequipcardid(.@equip_slot,1);
+	set .@card3, getequipcardid(.@equip_slot,2);
+	set .@card4, getequipcardid(.@equip_slot,3);
 	// Setup Currency
 	if (.@target_item == 490062 || .@target_item == 490063) {
 		.@currency = 1000201; // Fragment of Goodwill
@@ -457,8 +463,8 @@ mes "[Tamilla]";
 		set Zeny, Zeny - 100000;
 		
 		// 0 clears the slot on the Item ID directly
-		enchantitem .@target_item, 0, 2; 
-		enchantitem .@target_item, 0, 3; 
+		delitem2 .@target_item,1,1,.@refine,0,.@card0,.@card1,.@card2,.@card3;
+		getitem2 .@target_item,1,1,.@refine,0,.@card0,0,0,0;
 		
 		mes "[Tamilla]";
 		mes "The item's slate has been wiped clean.";
@@ -515,8 +521,10 @@ mes "[Tamilla]";
 	}
 
 	// Apply enchants safely using official direct Item ID syntax
-	enchantitem .@target_item, .@final_enchant3, 2; // Slot 3
-	enchantitem .@target_item, .@final_enchant4, 3; // Slot 4
+	delequip .@equip_slot;
+	getitem2 .@target_item,1,1,.@refine,0,.@card[0],.@card[1],.@final_enchant3,.@final_enchant4;
+	//enchantitem .@target_item, .@final_enchant3, 2; // Slot 3
+	//enchantitem .@target_item, .@final_enchant4, 3; // Slot 4
 
 	specialeffect EF_COCONUT;
 	mes "[Tamilla]";
@@ -579,8 +587,8 @@ OnInit:
 			.dragon[getarraysize(.dragon)] = .@dragon[.@i];
 		}
 	}
-	for(.@i = 490044; .@i < 490056; .@i++) .sin_id[getarraysize(..sin_id)] = .@i;
-	for(.@i = 490056; .@i < 490068; .@i++) .light_id[getarraysize(..light_id)] = .@i;
+	for(.@i = 490044; .@i < 490056; .@i++){ .sin_id[getarraysize(.sin_id)] = .@i; }
+	for(.@i = 490056; .@i < 490068; .@i++){ .light_id[getarraysize(.light_id)] = .@i; }
 	questinfo QTYPE_DAILYQUEST,QMARK_YELLOW,"isbegin_quest(17415) == 2 && isbegin_quest(17416) == 0 && (checkquest(17422,PLAYTIME) == -1 || checkquest(17422,PLAYTIME) == 2)";
 	questinfo QTYPE_DAILYQUEST,QMARK_YELLOW,"isbegin_quest(17415) == 2 && isbegin_quest(17417) == 0 && (checkquest(17423,PLAYTIME) == -1 || checkquest(17423,PLAYTIME) == 2)";
 	questinfo QTYPE_DAILYQUEST,QMARK_YELLOW,"isbegin_quest(17415) == 2 && isbegin_quest(17418) == 0 && (checkquest(17424,PLAYTIME) == -1 || checkquest(17424,PLAYTIME) == 2)";

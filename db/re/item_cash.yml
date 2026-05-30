@@ -33,7 +33,7 @@ Header:
   Version: 1
 
 Body:
- - Tab: Hot
+ - Tab: New
    Items:
      - Item: Copper_Coin_Moneybag
        Price: 5
