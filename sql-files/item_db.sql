@@ -16,7 +16,6 @@ CREATE TABLE `item_db` (
   `defense` smallint(5) unsigned DEFAULT NULL,
   `range` tinyint(2) unsigned DEFAULT NULL,
   `slots` tinyint(2) unsigned DEFAULT NULL,
-  `job_all` tinyint(1) unsigned DEFAULT NULL,
   `job_acolyte` tinyint(1) unsigned DEFAULT NULL,
   `job_alchemist` tinyint(1) unsigned DEFAULT NULL,
   `job_archer` tinyint(1) unsigned DEFAULT NULL,

@@ -112946,12 +112946,105 @@ Body:
 #    AegisName: JP_E_MONSTER_199
 #  - Id: 20993
 #    AegisName: JP_E_MONSTER_200
-#  - Id: 20994
-#    AegisName: MD_BETELGEUSE
+  - Id: 20994
+    AegisName: MD_BETELGEUSE
+    Name: Betelgeuse
+    Level: 250
+    Hp: 2000000000
+    BaseExp: 2160000
+    JobExp: 900000
+#   MvpExp:
+    Attack: 12158
+    Attack2: 8827
+    Defense: 346
+    MagicDefense: 102
+    Str: 211
+    Agi: 211
+    Vit: 132
+    Int: 152
+    Dex: 279
+    Luk: 108
+    AttackRange: 3
+    SkillRange: 16
+    ChaseRange: 16
+    Size: Large
+    Race: Dragon
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 100
+    AttackDelay: 76
+    AttackMotion: 432
+    ClientAttackMotion: 336
+    DamageMotion: 504
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
 #  - Id: 20995
 #    AegisName: MD_G_DEADSOUL
-#  - Id: 20996
-#    AegisName: MD_NAGHT_SIEGER
+  - Id: 20996
+    AegisName: MD_NAGHT_SIEGER
+    Name: Naght Sieger
+    Level: 250
+    Hp: 2000000000
+    BaseExp: 2160000
+    JobExp: 900000
+#   MvpExp:
+    Attack: 10000
+    Attack2: 8000
+    Defense: 410
+    MagicDefense: 80
+    Str: 250
+    Agi: 188
+    Vit: 90
+    Int: 220
+    Dex: 323
+    Luk: 66
+    AttackRange: 3
+    SkillRange: 16
+    ChaseRange: 16
+    Size: Large
+    Race: Demon
+    Element: Ghost
+    ElementLevel: 3
+    WalkSpeed: 100
+    AttackDelay: 76
+    AttackMotion: 432
+    ClientAttackMotion: 336
+    DamageMotion: 504
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+  - Id: 20997
+    AegisName: MD_G_ENTWEIHEN_M
+    Name: Thorn of Magic
+    Level: 89
+    Hp: 5000000
+    Attack: 9232
+    Attack2: 8208
+    Defense: 71
+    MagicDefense: 66
+    Agi: 102
+    Vit: 190
+    Int: 288
+    Dex: 245
+    Luk: 10
+    AttackRange: 12
+    SkillRange: 14
+    ChaseRange: 16
+    Size: Medium
+    Race: Demon
+    Element: Neutral
+    ElementLevel: 2
+    AttackDelay: 1024
+    AttackMotion: 288
+    ClientAttackMotion: 420
+    DamageMotion: 576
+    Ai: 27
+    Class: Boss
+    Modes:
+      FixedItemDrop: true
 #  - Id: 20997
 #    AegisName: MD_G_ENTWEIHEN_M
 #  - Id: 20998

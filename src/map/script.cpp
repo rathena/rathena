@@ -8161,20 +8161,12 @@ BUILDIN_FUNC(grouprandomitem) {
 * makeitem "<item name>",<amount>,"<map name>",<X>,<Y>{,<canShowEffect>};
 */
 BUILDIN_FUNC(makeitem) {
-	if (next_dropitem_special.bound != -1) {
-		it.bound = cap_value(next_dropitem_special.bound, BOUND_NONE, BOUND_MAX - 1);
-		next_dropitem_special.bound = -1;
-	}
-	if (next_dropitem_special.rent_duration != 0) {
-		it.expire_time = (unsigned int)(time(NULL) + next_dropitem_special.rent_duration);
-		next_dropitem_special.rent_duration = 0;
-	}
 
 	t_itemid nameid;
 	uint16 amount, flag = 0, x, y;
 	const char *mapname;
 	int32 m;
-	struct item item_tmp;
+
 	bool canShowEffect = false;
 
 	if( script_isstring(st, 2) ){
@@ -8220,8 +8212,20 @@ BUILDIN_FUNC(makeitem) {
 	} else
 		m = map_mapname2mapid(mapname);
 
-	memset(&item_tmp,0,sizeof(item_tmp));
+	struct item item_tmp;
+	memset(&item_tmp, 0, sizeof(struct item));
 	item_tmp.nameid = nameid;
+	item_tmp.amount = amount;
+	item_tmp.identify = 1;
+	if (next_dropitem_special.bound != -1) {
+		item_tmp.bound = cap_value(next_dropitem_special.bound, BOUND_NONE, BOUND_MAX - 1);
+		next_dropitem_special.bound = -1;
+	}
+	if (next_dropitem_special.rent_duration != 0) {
+		item_tmp.expire_time = (unsigned int)(time(NULL) + next_dropitem_special.rent_duration);
+		next_dropitem_special.rent_duration = 0;
+	}
+
 	if (!flag)
 		item_tmp.identify = 1;
 	else
@@ -8242,14 +8246,6 @@ BUILDIN_FUNC(makeitem) {
  * makeitem4 "<item name>",<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<canShowEffect>};
  */
 BUILDIN_FUNC(makeitem2) {
-		if (next_dropitem_special.bound != -1) {
-			it.bound = cap_value(next_dropitem_special.bound, BOUND_NONE, BOUND_MAX - 1);
-			next_dropitem_special.bound = -1;
-		}
-		if (next_dropitem_special.rent_duration != 0) {
-			it.expire_time = (unsigned int)(time(NULL) + next_dropitem_special.rent_duration);
-			next_dropitem_special.rent_duration = 0;
-		}
 
 	t_itemid nameid;
 	const char *funcname = script_getfuncname(st);
@@ -8351,7 +8347,17 @@ BUILDIN_FUNC(makeitem2) {
 					canShowEffect = script_getnum(st, 14) != 0;
 			}
 		}
-
+		item_tmp.nameid = nameid;
+		item_tmp.amount = amount;
+		item_tmp.identify = 1;
+		if (next_dropitem_special.bound != -1) {
+			item_tmp.bound = cap_value(next_dropitem_special.bound, BOUND_NONE, BOUND_MAX - 1);
+			next_dropitem_special.bound = -1;
+		}
+		if (next_dropitem_special.rent_duration != 0) {
+			item_tmp.expire_time = (unsigned int)(time(NULL) + next_dropitem_special.rent_duration);
+			next_dropitem_special.rent_duration = 0;
+		}
 		map_addflooritem(&item_tmp, amount, m, x, y, 0, 0, 0, 4, 0, canShowEffect);
 	}
 	else
@@ -27862,7 +27868,7 @@ BUILDIN_FUNC(unitspecialeffect) {
 	if (!script_mapid2sd(5, sd)) {
 		return SCRIPT_CMD_SUCCESS;
 	}
-	if (sd && sd->bl_helpers.type == BL_PC) {
+	if (sd && ((struct block_list*)sd)->type == BL_PC) {
 		clif_specialeffect_single(bl, type, sd->fd);
 	}
 	return SCRIPT_CMD_SUCCESS;

@@ -1,7 +1,5 @@
-
 --
 -- Table structure for table `guild_emblems`
---
 
 CREATE TABLE IF NOT EXISTS `guild_emblems` (
   `world_name` varchar(32) NOT NULL,

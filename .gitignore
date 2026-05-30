@@ -152,3 +152,7 @@ Thumbs.db
 
 # generated files
 generated
+conf/char_athena.conf
+conf/inter_athena.conf
+conf/login_athena.conf
+conf/map_athena.conf
