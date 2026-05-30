@@ -2548,7 +2548,7 @@ static int64 battle_calc_base_damage(block_list *src, struct status_data *status
 			if (!(flag&BDMG_CRIT) || (flag&BDMG_ARROW)) { //Normal attacks
 				atkmin = status->dex;
 
-				if (sd->equip_index[type] >= 0 && sd->inventory_data[sd->equip_index[type]] && sd->inventory_data[sd->equip_index[type]]->type == IT_WEAPON)
+				if (sd->equip_index[type] >= 0 && sd->inventory_data[sd->equip_index[type]] != nullptr && sd->inventory_data[sd->equip_index[type]]->type == IT_WEAPON)
 					atkmin = atkmin*(80 + sd->inventory_data[sd->equip_index[type]]->weapon_level*20)/100;
 
 				if (atkmin > atkmax)
