@@ -9548,7 +9548,7 @@ struct s_unit_common_data* status_get_ucd(struct block_list* bl)
 {
 	if (bl)
 		switch (bl->type) {
-		case BL_PC: return &((map_session_data*)bl)->sc.ucd;
+		case BL_PC: return &((map_session_data*)bl)->ucd;
 		case BL_MOB: return &((TBL_MOB*)bl)->ucd;
 		case BL_NPC: return &((TBL_NPC*)bl)->ucd;
 		case BL_HOM: return &((TBL_HOM*)bl)->ucd;
