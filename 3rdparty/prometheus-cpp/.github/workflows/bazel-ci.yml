@@ -1,0 +1,54 @@
+name: Bazel CI
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Bazel on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+        include:
+          - os: macOS-latest
+            bazel_args: "--cxxopt=-std=c++17"
+          - os: ubuntu-latest
+            bazel_args: "--cxxopt=-std=c++17"
+          - os: windows-latest
+            bazel_args: "--cxxopt=/std:c++17"
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Generate German locale on Ubuntu
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get remove -y --purge man-db # avoid time-consuming trigger
+          sudo apt-get update
+          sudo apt-get install -y locales
+          sudo locale-gen de_DE.UTF-8 # used by SerializerTest
+
+      - name: Install telegraf on macOS
+        if: runner.os == 'macOS'
+        run: brew install telegraf
+
+      - name: Build with SSL
+        if: runner.os != 'macOS'
+        run: bazel build ${{ matrix.bazel_args }} --config=ssl //...
+
+      - name: Test with SSL
+        if: runner.os != 'macOS'
+        run: bazel test ${{ matrix.bazel_args }} --config=ssl --test_output=all //...
+
+      - name: Build
+        run: bazel build ${{ matrix.bazel_args }} //...
+
+      - name: Test
+        run: bazel test ${{ matrix.bazel_args }} --test_output=all //...
+
+      - name: Scraping Test
+        if: runner.os == 'macOS'
+        run: bazel test ${{ matrix.bazel_args }} --test_output=all //pull/tests/integration:scrape-test
