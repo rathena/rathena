@@ -3738,6 +3738,10 @@ int32 map_addmap(char* mapname)
 static void map_delmapid(int32 id)
 {
 	ShowNotice("Removing map [ %s ] from maplist" CL_CLL "\n",map[id].name);
+	// Free map resources before removing from list
+    if(map[id].cell) aFree(map[id].cell);
+	if(map[id].block) aFree(map[id].block);
+    if(map[id].block_mob) aFree(map[id].block_mob);
 	for (int32 i = id; i < map_num - 1; i++)
 		map[i] = map[i + 1];
 	map_num--;
