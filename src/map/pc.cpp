@@ -6546,12 +6546,6 @@ bool pc_changegendercard(map_session_data* sd, int32 n)
 	pc_checkitem(sd);
 	status_calc_pc(sd, SCO_FORCE);
 	pc_equiplookall(sd);
-
-	if( sd->status.guild_id ){
-		int16 gender = sd->status.sex;
-		intif_guild_change_memberinfo(sd->status.guild_id, sd->status.account_id, sd->status.char_id, GMI_GENDER, &gender, sizeof(gender));
-	}
-
 	clif_useitemack(sd, n, item.amount - 1, true);
 	pc_delitem(sd, n, 1, 1, 0, LOG_TYPE_CONSUME);
 	chrif_save(sd, CSAVE_NORMAL|CSAVE_INVENTORY);
