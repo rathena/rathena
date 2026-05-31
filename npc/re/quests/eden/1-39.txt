@@ -3,7 +3,7 @@
 // Individual 24-Hour Cooldown per Quest (IDs 80012 ~ 80023)
 //============================================================
 
-moc_para01,40,15,3	script	Mission Board 1~39	4_BOARD3,{
+moc_para01,35,38,3	script	Mission [1~39]	4_BOARD3,{
 
     if (!callfunc("F_HasEdenGroupMark")) {
         mes "- You need to have an -";

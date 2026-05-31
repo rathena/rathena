@@ -3,7 +3,7 @@
 // Complete Version with Individual 24H Cooldown Quest Tracking
 //============================================================
 
-moc_para01,46,15,0	script	Mission Board 100~110	1121,{
+moc_para01,41,38,3	script	Mission [100~110]	4_BOARD3,{
 
     if (!callfunc("F_HasEdenGroupMark")) {
         mes "- You need to have an -";

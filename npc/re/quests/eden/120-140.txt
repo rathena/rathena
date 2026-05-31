@@ -3,7 +3,7 @@
 // Fixed Syntax: Corrected Stray Backslashes & String Variable
 //============================================================
 
-moc_para01,48,15,0	script	Mission Board 120~140	1121,{
+moc_para01,43,38,3	script	Mission [120~140]	4_BOARD3,{
 
     if (!callfunc("F_HasEdenGroupMark")) {
         mes "- You need to have an -";

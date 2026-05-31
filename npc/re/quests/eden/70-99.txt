@@ -3,7 +3,7 @@
 // Complete Version with Individual 24H Cooldown Quest Tracking
 //============================================================
 
-moc_para01,44,15,0	script	Mission Board 70~99	1121,{
+moc_para01,39,38,3	script	Mission [70~99]	4_BOARD3,{
 
     if (!callfunc("F_HasEdenGroupMark")) {
         mes "- You need to have an -";
@@ -236,8 +236,8 @@ L_RewardQuest:
         case 80140: .@b_exp = 86000; .@j_exp = 82000; break; // Stapo
     }
 
-    .@b_exp = (.@b_exp * getbattleflag("base_exp_rate")) / 100;
-    .@j_exp = (.@j_exp * getbattleflag("job_exp_rate")) / 100;
+    .@b_exp = (.@b_exp * getbattleflag("base_exp_rate")) / 220;
+    .@j_exp = (.@j_exp * getbattleflag("job_exp_rate")) / 220;
 
     completequest .@q_id;
     getexp .@b_exp, .@j_exp;
