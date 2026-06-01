@@ -3873,6 +3873,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	sd->itemsphealrate.clear();
 	sd->itemgroupsphealrate.clear();
 
+	sd->hp_loss.clear();
 	sd->sp_loss.clear();
 	sd->hp_regen.clear();
 	sd->sp_regen.clear();
