@@ -2739,6 +2739,14 @@ void do_init_guild(void) {
 }
 
 void do_final_guild(void) {
+	for (auto &it : castle_db) {
+		if (it.second && it.second->temp_guardians) {
+			aFree(it.second->temp_guardians);
+			it.second->temp_guardians = nullptr;
+			it.second->temp_guardians_max = 0;
+		}
+	}
+
 	for (auto &it : guild_db) {
 		if (!it.second)
 			continue;
