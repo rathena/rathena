@@ -37404,25 +37404,25 @@ Body:
       SpCost: 100
       ApCost:
         - Level: 1
-          Amount: 152
+          Amount: 156
         - Level: 2
-          Amount: 149
+          Amount: 152
         - Level: 3
-          Amount: 146
+          Amount: 148
         - Level: 4
-          Amount: 143
+          Amount: 144
         - Level: 5
           Amount: 140
         - Level: 6
-          Amount: 137
+          Amount: 136
         - Level: 7
-          Amount: 134
+          Amount: 132
         - Level: 8
-          Amount: 131
-        - Level: 9
           Amount: 128
+        - Level: 9
+          Amount: 124
         - Level: 10
-          Amount: 125
+          Amount: 120
     Status: Shadow_Exceed
   - Id: 5286
     Name: SHC_DANCING_KNIFE
@@ -37729,7 +37729,7 @@ Body:
     FixedCastTime: 500
     Requires:
       SpCost: 150
-      ApCost: 150
+      ApCost: 120
     Status: Darkcrow
   - Id: 5295
     Name: MT_AXE_STOMP
