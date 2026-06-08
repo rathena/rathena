@@ -15,7 +15,6 @@ void SkillColuceoHeal::castendNoDamageId(block_list *src, block_list *target, ui
 	status_data* tstatus = status_get_status_data(*target);
 	status_change *tsc = status_get_sc(target);
 	map_session_data* sd = BL_CAST( BL_PC, src );
-	map_session_data* dstsd = BL_CAST( BL_PC, target );
 
 	if( !sd || sd->status.party_id == 0 || flag&1 ) {
 		if( sd && tstatus && !battle_check_undead(tstatus->race, tstatus->def_ele) && !tsc->getSCE(SC_BERSERK) ) {
@@ -25,7 +24,7 @@ void SkillColuceoHeal::castendNoDamageId(block_list *src, block_list *target, ui
 
 			if( partycount > 1 )
 				i += (i / 100) * (partycount * 10) / 4;
-			if( (dstsd && pc_ismadogear(dstsd)) || status_isimmune(target))
+			if (status_isimmune(target))
 				i = 0; // Should heal by 0 or won't do anything?? in iRO it breaks the healing to members.. [malufett]
 
 			clif_skill_nodamage(src, *target, getSkillId(), i);

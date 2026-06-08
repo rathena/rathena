@@ -15147,13 +15147,6 @@ TIMER_FUNC(status_change_timer){
 		}
 		break;
 
-	case SC_A_MACHINE:
-		if (--(sce->val4) >= 0) {
-			skill_castend_nodamage_id(bl, bl, MT_A_MACHINE, sce->val1, tick, 1);
-			sc_timer_next(1000 + tick);
-			return 0;
-		}
-		break;
 	case SC_SERVANTWEAPON:
 		if (sce->val4 >= 0) {
 			if( sd && sd->servantball < MAX_SERVANTBALL ){
