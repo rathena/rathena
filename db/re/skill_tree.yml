@@ -8758,3 +8758,349 @@ Body:
             Level: 1
           - Name: SS_SHINKIROU
             Level: 1
+  - Job: Druid
+    Inherit:
+      Novice: true
+    Tree:
+      - Name: DR_WEREWOLF
+        MaxLevel: 1
+      - Name: DR_WERERAPTOR
+        MaxLevel: 1
+      - Name: DR_BEASTY_NOSE
+        MaxLevel: 10
+      - Name: DR_TRUTH_OF_ICE
+        MaxLevel: 1
+        Requires:
+          - Name: DR_NATURE_LOGIC
+            Level: 1
+      - Name: DR_TRUTH_OF_WIND
+        MaxLevel: 1
+        Requires:
+          - Name: DR_NATURE_LOGIC
+            Level: 1
+      - Name: DR_TRUTH_OF_EARTH
+        MaxLevel: 1
+        Requires:
+          - Name: DR_NATURE_LOGIC
+            Level: 1
+      - Name: DR_BLOOD_HOWLING
+        MaxLevel: 5
+        Requires:
+          - Name: DR_WEREWOLF
+            Level: 1
+      - Name: DR_PREENING
+        MaxLevel: 5
+        Requires:
+          - Name: DR_WERERAPTOR
+            Level: 1
+      - Name: DR_SHARPE_EYES
+        MaxLevel: 10
+      - Name: DR_ICE_TOTEM
+        MaxLevel: 10
+      - Name: DR_CUTTING_WIND
+        MaxLevel: 10
+      - Name: DR_EARTH_FLOWER
+        MaxLevel: 10
+      - Name: DR_ENRAGE_WOLF
+        MaxLevel: 5
+        Requires:
+          - Name: DR_BLOOD_HOWLING
+            Level: 3
+      - Name: DR_ENRAGE_RAPTOR
+        MaxLevel: 5
+        Requires:
+          - Name: DR_PREENING
+            Level: 3
+      - Name: DR_ICE_CLOUD
+        MaxLevel: 10
+        Requires:
+          - Name: DR_ICE_TOTEM
+            Level: 5
+      - Name: DR_WIND_BOMB
+        MaxLevel: 10
+        Requires:
+          - Name: DR_CUTTING_WIND
+            Level: 5
+      - Name: DR_AROUND_FLOWER
+        MaxLevel: 10
+        Requires:
+          - Name: DR_EARTH_FLOWER
+            Level: 5
+      - Name: DR_NOMERCY_CLAW
+        MaxLevel: 10
+        Requires:
+          - Name: DR_WEREWOLF
+            Level: 1
+      - Name: DR_SHOOTING_FEATHER
+        MaxLevel: 10
+        Requires:
+          - Name: DR_WERERAPTOR
+            Level: 1
+      - Name: DR_NATURE_SHIELD
+        MaxLevel: 10
+      - Name: DR_NATURE_LOGIC
+        MaxLevel: 10
+      - Name: DR_CRUEL_BITE
+        MaxLevel: 10
+        Requires:
+          - Name: DR_NOMERCY_CLAW
+            Level: 3
+      - Name: DR_LOW_FLIGHT
+        MaxLevel: 10
+        Requires:
+          - Name: DR_SHOOTING_FEATHER
+            Level: 3
+      - Name: DR_HUNGER
+        MaxLevel: 10
+        Requires:
+          - Name: DR_CRUEL_BITE
+            Level: 3
+      - Name: DR_FLICKING_TONADO
+        MaxLevel: 10
+        Requires:
+          - Name: DR_LOW_FLIGHT
+            Level: 3
+  - Job: Karnos
+    Inherit:
+      Novice: true
+      Druid: true
+    Tree:
+      - Name: KR_DOUBLE_SLASH
+        MaxLevel: 10
+      - Name: KR_NASTY_SLASH
+        MaxLevel: 5
+        Requires:
+          - Name: KR_DOUBLE_SLASH
+            Level: 3
+      - Name: KR_CLAW_WAVE
+        MaxLevel: 10
+        Requires:
+          - Name: KR_NASTY_SLASH
+            Level: 3
+      - Name: KR_CHOP_CHOP
+        MaxLevel: 10
+        Requires:
+          - Name: KR_DOUBLE_SLASH
+            Level: 5
+      - Name: KR_IRON_HOWLING
+        MaxLevel: 5
+        Requires:
+          - Name: DR_BLOOD_HOWLING
+            Level: 3
+      - Name: KR_SHARPEN_GUST
+        MaxLevel: 10
+      - Name: KR_SHARPEN_HAIL
+        MaxLevel: 10
+        Requires:
+          - Name: KR_SHARPEN_GUST
+            Level: 5
+      - Name: KR_FEATHER_SPRINKLE
+        MaxLevel: 5
+        Requires:
+          - Name: DR_SHOOTING_FEATHER
+            Level: 5
+      - Name: KR_TYPHOON_WING
+        MaxLevel: 10
+      - Name: KR_WIND_VEIL
+        MaxLevel: 5
+        Requires:
+          - Name: KR_TYPHOON_WING
+            Level: 3
+      - Name: KR_WOLF_INSTINCT
+        MaxLevel: 10
+        Requires:
+          - Name: KR_CLAW_WAVE
+            Level: 3
+      - Name: KR_RAPTORIAL_INSTINCT
+        MaxLevel: 10
+        Requires:
+          - Name: KR_FEATHER_SPRINKLE
+            Level: 3
+      - Name: KR_ICE_PILLAR
+        MaxLevel: 10
+        Requires:
+          - Name: DR_ICE_TOTEM
+            Level: 5
+      - Name: KR_ICE_SPLASH
+        MaxLevel: 10
+        Requires:
+          - Name: DR_ICE_CLOUD
+            Level: 5
+      - Name: KR_NATURE_VIGOUR
+        MaxLevel: 5
+      - Name: KR_THUNDERING_FOCUS
+        MaxLevel: 10
+      - Name: KR_THUNDERING_ORB
+        MaxLevel: 10
+        Requires:
+          - Name: DR_WIND_BOMB
+            Level: 5
+      - Name: KR_THUNDERING_CALL
+        MaxLevel: 10
+        Requires:
+          - Name: KR_THUNDERING_FOCUS
+            Level: 5
+      - Name: KR_NATURE_PROTECTION
+        MaxLevel: 5
+        Requires:
+          - Name: DR_NATURE_SHIELD
+            Level: 5
+      - Name: KR_EARTH_BUD
+        MaxLevel: 5
+        Requires:
+          - Name: DR_AROUND_FLOWER
+            Level: 5
+      - Name: KR_EARTH_DRILL
+        MaxLevel: 10
+        Requires:
+          - Name: KR_EARTH_BUD
+            Level: 1
+      - Name: KR_EARTH_STAMP
+        MaxLevel: 10
+        Requires:
+          - Name: KR_EARTH_DRILL
+            Level: 5
+  - Job: Alitea
+    Inherit:
+      Novice: true
+      Druid: true
+      Karnos: true
+    Tree:
+      - Name: AT_PULSE_OF_MADNESS
+        MaxLevel: 5
+        Requires:
+          - Name: AT_SIXTH_SENSE
+            Level: 1
+      - Name: AT_PRIMAL_CLAW
+        MaxLevel: 5
+        Requires:
+          - Name: AT_SIXTH_SENSE
+            Level: 3
+      - Name: AT_FERAL_CLAW
+        MaxLevel: 5
+        Requires:
+          - Name: AT_PRIMAL_CLAW
+            Level: 3
+      - Name: AT_ALPHA_CLAW
+        MaxLevel: 5
+        Requires:
+          - Name: AT_FERAL_CLAW
+            Level: 3
+      - Name: AT_FRENZY_FANG
+        MaxLevel: 5
+        Requires:
+          - Name: AT_ALPHA_CLAW
+            Level: 3
+      - Name: AT_SAVAGE_LUNGE
+        MaxLevel: 10
+        Requires:
+          - Name: AT_ALPHA_PHASE
+            Level: 3
+      - Name: AT_FLIP_FLAP
+        MaxLevel: 5
+        Requires:
+          - Name: AT_SIXTH_SENSE
+            Level: 1
+      - Name: AT_PINION_SHOT
+        MaxLevel: 10
+        Requires:
+          - Name: AT_SIXTH_SENSE
+            Level: 3
+      - Name: AT_QUILL_SPEAR
+        MaxLevel: 10
+        Requires:
+          - Name: AT_PINION_SHOT
+            Level: 3
+      - Name: AT_APEX_PHASE
+        MaxLevel: 5
+        Requires:
+          - Name: AT_FLIP_FLAP
+            Level: 3
+      - Name: AT_TEMPEST_FLAP
+        MaxLevel: 10
+        Requires:
+          - Name: AT_QUILL_SPEAR
+            Level: 3
+      - Name: AT_AERO_SYNC
+        MaxLevel: 5
+        Requires:
+          - Name: AT_FLIP_FLAP
+            Level: 3
+      - Name: AT_SIXTH_SENSE
+        MaxLevel: 5
+      - Name: AT_ALPHA_PHASE
+        MaxLevel: 5
+        Requires:
+          - Name: AT_PULSE_OF_MADNESS
+            Level: 3
+      - Name: AT_GLACIER_MONOLITH
+        MaxLevel: 10
+        Requires:
+          - Name: KR_ICE_PILLAR
+            Level: 5
+      - Name: AT_GLACIER_SHARD
+        MaxLevel: 10
+        Requires:
+          - Name: AT_GLACIER_MONOLITH
+            Level: 3
+      - Name: AT_GLACIER_STOMP
+        MaxLevel: 5
+        Requires:
+          - Name: AT_GLACIER_SHARD
+            Level: 5
+      - Name: AT_CHILLING_BLAST
+        MaxLevel: 5
+        Requires:
+          - Name: AT_GLACIER_MONOLITH
+            Level: 5
+      - Name: AT_NATURE_AID
+        MaxLevel: 5
+      - Name: AT_ROARING_CHARGE
+        MaxLevel: 5
+        Requires:
+          - Name: KR_THUNDERING_FOCUS
+            Level: 5
+      - Name: AT_ROARING_PIERCER
+        MaxLevel: 10
+        Requires:
+          - Name: AT_ROARING_CHARGE
+            Level: 3
+      - Name: AT_FURIOS_STORM
+        MaxLevel: 5
+        Requires:
+          - Name: AT_ROARING_CHARGE
+            Level: 5
+      - Name: AT_NATURE_HARMONY
+        MaxLevel: 5
+        Requires:
+          - Name: DR_TRUTH_OF_ICE
+            Level: 1
+      - Name: AT_TERRA_HARVEST
+        MaxLevel: 10
+        Requires:
+          - Name: KR_EARTH_BUD
+            Level: 5
+      - Name: AT_TERRA_WAVE
+        MaxLevel: 10
+        Requires:
+          - Name: AT_TERRA_HARVEST
+            Level: 5
+      - Name: AT_SOLID_STOMP
+        MaxLevel: 5
+        Requires:
+          - Name: AT_TERRA_HARVEST
+            Level: 5
+      - Name: AT_GRAVITY_HOLE
+        MaxLevel: 5
+        Requires:
+          - Name: AT_NATURE_HARMONY
+            Level: 5
+  - Job: Baby_Druid
+    Inherit:
+      Baby: true
+      Druid: true
+  - Job: Baby_Karnos
+    Inherit:
+      Baby: true
+      Druid: true
+      Karnos: true

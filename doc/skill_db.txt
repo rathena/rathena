@@ -106,6 +106,7 @@ ShowScale					- Shows AoE area while casting
 IgnoreGtb					- Not blocked by Golden Thief Bug card.
 Toggleable					- Skill can be toggled on and off. When toggled off the skill doesn't consume HP/SP.
 IgnoreNonCritAtkBonus		- Skill ignores the bonus of bNonCritAtkRate
+DiamondSplash				- Skill uses diamond-shaped splash area.
 
 ---------------------------------------
 

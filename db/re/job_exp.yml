@@ -147,6 +147,8 @@ Body:
       Baby_Soul_Linker: true
       Baby_Gunslinger: true
       Baby_Star_Gladiator2: true
+      Druid: true
+      Baby_Druid: true
     MaxBaseLevel: 99
     BaseExp:
       - Level: 1
@@ -636,6 +638,7 @@ Body:
       Baby_Soul_Reaper: true
       Star_Emperor2: true
       Baby_Star_Emperor2: true
+      Karnos: true
     MaxBaseLevel: 200
     BaseExp:
       - Level: 1
@@ -1064,6 +1067,8 @@ Body:
       Hyper_Novice: true
       Spirit_Handler: true
       Sky_Emperor2: true
+      Baby_Karnos: true
+      Alitea: true
     MaxBaseLevel: 275
     BaseExp:
       - Level: 1
@@ -2812,6 +2817,7 @@ Body:
       Hyper_Novice: true
       Spirit_Handler: true
       Sky_Emperor2: true
+      Alitea: true
     MaxJobLevel: 60
     JobExp:
       - Level: 1
@@ -2939,6 +2945,8 @@ Body:
       Ninja: true
       Baby_Ninja: true
       Baby_Gunslinger: true
+      Druid: true
+      Baby_Druid: true
     MaxJobLevel: 70
     JobExp:
       - Level: 1
@@ -3549,6 +3557,8 @@ Body:
       Baby_Soul_Reaper: true
       Star_Emperor2: true
       Baby_Star_Emperor2: true
+      Karnos: true
+      Baby_Karnos: true
     MaxJobLevel: 70
     JobExp:
       - Level: 1
