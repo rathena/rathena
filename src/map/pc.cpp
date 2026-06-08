@@ -6441,6 +6441,118 @@ bool pc_isUseitem(map_session_data *sd,int32 n)
 	return true;
 }
 
+static constexpr t_tick CHANGE_GENDER_CARD_HAT_EFFECT_CAST_LOOP_DURATION = 3000;
+static constexpr t_tick CHANGE_GENDER_CARD_HAT_EFFECT_FINAL_DURATION = 1000;
+static constexpr t_tick CHANGE_GENDER_CARD_HAT_EFFECT_FINAL_DELAY = CHANGE_GENDER_CARD_HAT_EFFECT_CAST_LOOP_DURATION;
+static constexpr t_tick CHANGE_GENDER_CARD_EFFECT_DURATION = CHANGE_GENDER_CARD_HAT_EFFECT_FINAL_DELAY + CHANGE_GENDER_CARD_HAT_EFFECT_FINAL_DURATION;
+static constexpr intptr_t CHANGE_GENDER_CARD_HAT_EFFECT_ENABLE = 0x10000;
+
+static intptr_t pc_changegendercard_hat_effect_data(uint16 effect_id, bool enable)
+{
+	return effect_id | (enable ? CHANGE_GENDER_CARD_HAT_EFFECT_ENABLE : 0);
+}
+
+static TIMER_FUNC(pc_changegendercard_hat_effect_timer)
+{
+	map_session_data* sd = map_id2sd(id);
+
+	if( sd != nullptr ){
+		uint16 effect_id = static_cast<uint16>(data & 0xFFFF);
+		bool enable = (data & CHANGE_GENDER_CARD_HAT_EFFECT_ENABLE) != 0;
+
+		clif_hat_effect_single(*sd, effect_id, enable);
+	}
+
+	return 0;
+}
+
+static void pc_changegendercard_add_hat_effect_timer(map_session_data& sd, t_tick tick, uint16 effect_id, bool enable)
+{
+	add_timer(tick, pc_changegendercard_hat_effect_timer, sd.id, pc_changegendercard_hat_effect_data(effect_id, enable));
+}
+
+static void pc_changegendercard_hat_effect_sequence(map_session_data& sd)
+{
+	t_tick now = gettick();
+
+	clif_hat_effect_single(sd, HAT_EF_GENDER_CHANGE_CAST, true);
+	clif_hat_effect_single(sd, HAT_EF_GENDER_CHANGE_LOOP, true);
+	pc_changegendercard_add_hat_effect_timer(sd, now + CHANGE_GENDER_CARD_HAT_EFFECT_CAST_LOOP_DURATION, HAT_EF_GENDER_CHANGE_CAST, false);
+	pc_changegendercard_add_hat_effect_timer(sd, now + CHANGE_GENDER_CARD_HAT_EFFECT_CAST_LOOP_DURATION, HAT_EF_GENDER_CHANGE_LOOP, false);
+	pc_changegendercard_add_hat_effect_timer(sd, now + CHANGE_GENDER_CARD_HAT_EFFECT_FINAL_DELAY, HAT_EF_GENDER_CHANGE, true);
+	pc_changegendercard_add_hat_effect_timer(sd, now + CHANGE_GENDER_CARD_HAT_EFFECT_FINAL_DELAY + CHANGE_GENDER_CARD_HAT_EFFECT_FINAL_DURATION, HAT_EF_GENDER_CHANGE, false);
+}
+
+/**
+ * Handles Change_Gender_Card (103061).
+ * The 2025-06-04 client shows the confirmation before sending CZ_USE_ITEM2,
+ * so reaching this function means the player confirmed the dialog.
+ */
+bool pc_changegendercard(map_session_data* sd, int32 n)
+{
+	nullpo_retr(false, sd);
+
+	if( n < 0 || n >= MAX_INVENTORY )
+		return false;
+
+	struct item& item = sd->inventory.u.items_inventory[n];
+	struct item_data* id = sd->inventory_data[n];
+
+	if( item.nameid == 0 || item.amount <= 0 || id == nullptr || id->nameid != ITEMID_CHANGE_GENDER_CARD )
+		return false;
+
+	if( pc_isdead(sd) || pc_cant_act(sd) || pc_issit(sd) ){
+		clif_msg(*sd, MSI_BUSY);
+		return false;
+	}
+
+	if( sd->status.party_id || sd->status.guild_id ){
+		clif_msg(*sd, MSI_GENDER_CHANGE_FAILED_CAUSE_GROUP);
+		return false;
+	}
+
+	if( pc_ismarried(sd) ){
+		clif_msg(*sd, MSI_GENDER_CHANGE_FAILED_CAUSE_MARRIED);
+		return false;
+	}
+
+	if( pc_isriding(sd) || pc_isridingdragon(sd) || pc_ismadogear(sd) ){
+		clif_msg(*sd, MSI_GENDER_CHANGE_FAILED_CAUSE_RIDING);
+		return false;
+	}
+
+	if( sd->disguise || sd->sc.getSCE(SC_MONSTER_TRANSFORM) || sd->sc.getSCE(SC_ACTIVE_MONSTER_TRANSFORM) ){
+		clif_msg(*sd, MSI_GENDER_CHANGE_FAILED_CAUSE_MONSTER_TRANSFORM);
+		return false;
+	}
+
+	if( item.expire_time != 0 )
+		return false;
+
+	if( (sd->class_&MAPID_SECONDMASK) == MAPID_BARDDANCER || (sd->class_&MAPID_SECONDMASK) == MAPID_KAGEROUOBORO ){
+		clif_msg(*sd, MSI_GENDER_CHANGE_FAILED_CAUSE_JOB);
+		return false;
+	}
+
+	sd->status.sex = static_cast<uint8>(sd->status.sex == SEX_MALE ? SEX_FEMALE : SEX_MALE);
+
+	status_set_viewdata(sd, sd->status.class_);
+	unit_stop_walking(sd, USW_FIXPOS|USW_FORCE_STOP, CHANGE_GENDER_CARD_EFFECT_DURATION);
+	clif_sprite_change(sd, sd->id, LOOK_GENDER, sd->status.sex, 0, AREA);
+	clif_changelook(sd, LOOK_BASE, sd->vd.look[LOOK_BASE]);
+	clif_changelook(sd, LOOK_BODY2, sd->vd.look[LOOK_BODY2]);
+	pc_changegendercard_hat_effect_sequence(*sd);
+
+	pc_checkitem(sd);
+	status_calc_pc(sd, SCO_FORCE);
+	pc_equiplookall(sd);
+	clif_useitemack(sd, n, item.amount - 1, true);
+	pc_delitem(sd, n, 1, 1, 0, LOG_TYPE_CONSUME);
+	chrif_save(sd, CSAVE_NORMAL|CSAVE_INVENTORY);
+
+	return true;
+}
+
 /*==========================================
  * Last checks to use an item.
  * Return:
@@ -6485,6 +6597,9 @@ int32 pc_useitem(map_session_data *sd,int32 n)
 
 	// Store information for later use before it is lost (via pc_delitem) [Paradox924X]
 	nameid = id->nameid;
+
+	if( nameid == ITEMID_CHANGE_GENDER_CARD )
+		return pc_changegendercard(sd, n) ? 1 : 0;
 
 	if (nameid != ITEMID_NAUTHIZ && sd->sc.opt1 > 0 && sd->sc.opt1 != OPT1_STONEWAIT && sd->sc.opt1 != OPT1_BURNING)
 		return 0;
@@ -16140,6 +16255,7 @@ void do_init_pc(void) {
 	add_timer_func_list(pc_autotrade_timer, "pc_autotrade_timer");
 	add_timer_func_list(pc_on_expire_active, "pc_on_expire_active");
 	add_timer_func_list(pc_macro_detector_timeout, "pc_macro_detector_timeout");
+	add_timer_func_list(pc_changegendercard_hat_effect_timer, "pc_changegendercard_hat_effect_timer");
 
 	add_timer(gettick() + autosave_interval, pc_autosave, 0, 0);
 
