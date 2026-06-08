@@ -1,131 +1,77 @@
 @SET_MAKE@
 
-HAVE_MYSQL=@HAVE_MYSQL@
-OMAP=@OMAP@
-ifeq ($(HAVE_MYSQL),yes)
-	ALL_DEPENDS=server tools
-	SERVER_DEPENDS=common login char map web import
-	COMMON_DEPENDS=libconfig rapidyaml yaml-cpp
-	LOGIN_DEPENDS=libconfig common
-	CHAR_DEPENDS=libconfig common rapidyaml
-	MAP_DEPENDS=libconfig common rapidyaml
-	WEB_DEPENDS=libconfig common yaml-cpp httplib
+CMAKE ?= cmake
+BUILD_DIR ?= build
+CMAKE_GENERATOR ?= Unix Makefiles
+CMAKE_CONFIGURE_ARGS ?=
+CMAKE_BUILD_ARGS ?=
+
+PARALLEL_JOBS := $(shell printf '%s\n' "$(MAKEFLAGS)" | sed -n 's/.*-j\([0-9][0-9]*\).*/\1/p')
+ifeq ($(strip $(PARALLEL_JOBS)),)
+BUILD_PARALLEL_FLAG :=
 else
-	ALL_DEPENDS=needs_mysql
-	SERVER_DEPENDS=needs_mysql
-	COMMON_DEPENDS=needs_mysql
-	LOGIN_DEPENDS=needs_mysql
-	CHAR_DEPENDS=needs_mysql
-	MAP_DEPENDS=needs_mysql
-	WEB_DEPENDS=needs_mysql
+BUILD_PARALLEL_FLAG := --parallel $(PARALLEL_JOBS)
 endif
 
+.PHONY: all server sql common login char map web tools import clean distclean help install uninstall bin-clean
 
-#####################################################################
-.PHONY: all server sql \
-	common \
-	login \
-	char \
-	map \
-	web \
-	tools \
-	import \
-	clean help \
-	install uninstall bin-clean \
+all: ensure-configured
+	@$(CMAKE) --build "$(BUILD_DIR)" $(BUILD_PARALLEL_FLAG) $(CMAKE_BUILD_ARGS)
 
-all: $(ALL_DEPENDS)
-
-sql: $(SERVER_DEPENDS)
+sql:
 	@echo "-!- 'make sql' is now deprecated. Please run 'make server' to continue. -!-"
 
-server: $(SERVER_DEPENDS)
+server: ensure-configured
+	@$(CMAKE) --build "$(BUILD_DIR)" $(BUILD_PARALLEL_FLAG) --target login-server char-server map-server web-server generate-import-files $(CMAKE_BUILD_ARGS)
 
-common: $(COMMON_DEPENDS)
-	@$(MAKE) -C src/common server
+common: ensure-configured
+	@$(CMAKE) --build "$(BUILD_DIR)" $(BUILD_PARALLEL_FLAG) --target common $(CMAKE_BUILD_ARGS)
 
-login: $(LOGIN_DEPENDS)
-	@$(MAKE) -C src/login server
+login: ensure-configured
+	@$(CMAKE) --build "$(BUILD_DIR)" $(BUILD_PARALLEL_FLAG) --target login-server $(CMAKE_BUILD_ARGS)
 
-char: $(CHAR_DEPENDS)
-	@$(MAKE) -C src/char
+char: ensure-configured
+	@$(CMAKE) --build "$(BUILD_DIR)" $(BUILD_PARALLEL_FLAG) --target char-server $(CMAKE_BUILD_ARGS)
 
-map: $(MAP_DEPENDS)
-	@$(MAKE) -C src/map server
+map: ensure-configured
+	@$(CMAKE) --build "$(BUILD_DIR)" $(BUILD_PARALLEL_FLAG) --target map-server $(CMAKE_BUILD_ARGS)
 
-web: $(WEB_DEPENDS)
-	@$(MAKE) -C src/web server
+web: ensure-configured
+	@$(CMAKE) --build "$(BUILD_DIR)" $(BUILD_PARALLEL_FLAG) --target web-server $(CMAKE_BUILD_ARGS)
 
-libconfig:
-	@$(MAKE) -C 3rdparty/libconfig
+tools: ensure-configured
+	@$(CMAKE) --build "$(BUILD_DIR)" $(BUILD_PARALLEL_FLAG) --target mapcache csv2yaml yaml2sql yamlupgrade $(CMAKE_BUILD_ARGS)
 
-tools:
-	@$(MAKE) -C src/tool
-	@$(MAKE) -C src/map tools
-
-rapidyaml:
-	@$(MAKE) -C 3rdparty/rapidyaml
-
-yaml-cpp:
-	@$(MAKE) -C 3rdparty/yaml-cpp
-
-httplib:
-	@$(MAKE) -C 3rdparty/httplib
-
-import:
-# 1) create conf/import folder
-# 2) add missing files
-# 3) remove remaining .svn folder
-	@echo "building conf/import, conf/msg_conf/import and db/import folder..."
-	@if test ! -d conf/import ; then mkdir conf/import ; fi
-	@for f in $$(ls conf/import-tmpl) ; do if test ! -e conf/import/$$f ; then cp conf/import-tmpl/$$f conf/import ; fi ; done
-	@rm -rf conf/import/.svn
-	@if test ! -d conf/msg_conf/import ; then mkdir conf/msg_conf/import ; fi
-	@for f in $$(ls conf/msg_conf/import-tmpl) ; do if test ! -e conf/msg_conf/import/$$f ; then cp conf/msg_conf/import-tmpl/$$f conf/msg_conf/import ; fi ; done
-	@rm -rf conf/msg_conf/import/.svn
-	@if test ! -d db/import ; then mkdir db/import ; fi
-	@for f in $$(ls db/import-tmpl) ; do if test ! -e db/import/$$f ; then cp db/import-tmpl/$$f db/import ; fi ; done
-	@rm -rf db/import/.svn
+import: ensure-configured
+	@$(CMAKE) --build "$(BUILD_DIR)" $(BUILD_PARALLEL_FLAG) --target generate-import-files $(CMAKE_BUILD_ARGS)
 
 clean:
-	@$(MAKE) -C src/common $@
-	@$(MAKE) -C 3rdparty/libconfig $@
-	@$(MAKE) -C 3rdparty/rapidyaml $@
-	@$(MAKE) -C 3rdparty/yaml-cpp $@
-	@$(MAKE) -C 3rdparty/httplib $@
-	@$(MAKE) -C src/login $@
-	@$(MAKE) -C src/char $@
-	@$(MAKE) -C src/map $@
-	@$(MAKE) -C src/web $@
-	@$(MAKE) -C src/tool $@
+	@if test -f "$(BUILD_DIR)/CMakeCache.txt" ; then \
+		$(CMAKE) --build "$(BUILD_DIR)" --target clean ; \
+	fi
+
+distclean: clean
+	@rm -rf "$(BUILD_DIR)"
 
 help:
-	@echo "most common targets are 'all' 'server' 'conf' 'clean' 'help'"
+	@echo "most common targets are 'all' 'server' 'import' 'clean' 'help'"
 	@echo "possible targets are:"
-	@echo "'common'      - builds object files used for the three servers"
-	@echo "'libconfig'   - builds object files of libconfig"
-	@echo "'rapidyaml'   - builds object files of rapidyaml"
-	@echo "'yaml-cpp'    - builds object files of yaml-cpp"
-	@echo "'httplib'     - builds object files of httplib"
+	@echo "'all'         - configures (if needed) and builds everything via CMake"
+	@echo "'server'      - builds login-server, char-server, map-server, web-server"
+	@echo "'common'      - builds common static library target"
 	@echo "'login'       - builds login server"
 	@echo "'char'        - builds char server"
 	@echo "'map'         - builds map server"
 	@echo "'web'         - builds web server"
-	@echo "'tools'       - builds all the tools in src/tools"
-	@echo "'import'      - builds conf/import, conf/msg_conf/import and db/import folders from their template folders (x-tmpl)"
-	@echo "'all'         - builds all the above targets"
-	@echo "'server'      - builds servers (targets 'common' 'login' 'char' 'map' and 'import')"
-	@echo "'clean'       - cleans builds and objects"
-	@echo "'install'     - run installer which sets up rathena in /opt/"
-	@echo "'bin-clean'   - deletes installed binaries"
-	@echo "'uninstall'   - run uninstaller which erases all installation changes"
+	@echo "'tools'       - builds mapcache, csv2yaml, yaml2sql, yamlupgrade"
+	@echo "'import'      - generates conf/import, conf/msg_conf/import and db/import"
+	@echo "'clean'       - runs CMake clean in build directory"
+	@echo "'distclean'   - removes build directory"
+	@echo "'install'     - runs CMake install"
 	@echo "'help'        - outputs this message"
 
-needs_mysql:
-	@echo "MySQL not found or disabled by the configure script"
-	@exit 1
-
-install:
-	@sh ./install.sh
+install: ensure-configured
+	@$(CMAKE) --install "$(BUILD_DIR)"
 
 bin-clean:
 	@sh ./uninstall.sh bin
@@ -133,4 +79,8 @@ bin-clean:
 uninstall:
 	@sh ./uninstall.sh all
 
-#####################################################################
+ensure-configured:
+	@if test ! -f "$(BUILD_DIR)/CMakeCache.txt" ; then \
+		echo "Configuring CMake build in $(BUILD_DIR)"; \
+		$(CMAKE) -S . -B "$(BUILD_DIR)" -G "$(CMAKE_GENERATOR)" $(CMAKE_CONFIGURE_ARGS) ; \
+	fi

@@ -17,8 +17,13 @@
 #endif
 
 #include <yaml-cpp/yaml.h>
+#if __has_include(<ryml/ryml_std.hpp>)
+#include <ryml/ryml_std.hpp>
+#include <ryml/ryml.hpp>
+#else
 #include <ryml_std.hpp>
 #include <ryml.hpp>
+#endif
 
 #include <common/cbasetypes.hpp>
 #include <common/core.hpp>

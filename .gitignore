@@ -10,6 +10,7 @@ autom4te.cache/
 .local.vimrc
 .ycm_extra_conf.py*
 Thumbs.db
+.vcpkg
 
 # /
 /*_fifo
@@ -152,3 +153,5 @@ Thumbs.db
 
 # generated files
 generated
+
+/build-*

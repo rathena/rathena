@@ -1,7 +1,0 @@
-tbump
-wheel
-cmake-build-extension
-build
-twine
-setuptools_scm
-setuptools-git
