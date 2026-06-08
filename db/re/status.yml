@@ -326,6 +326,7 @@ Body:
     Flags:
       RequireWeapon: true
       RemoveOnHermode: true
+      DisplayPc: true
     Fail:
       Decreaseagi: true
   - Status: Concentrate
@@ -617,6 +618,7 @@ Body:
     Flags:
       MadoCancel: true
       RemoveOnHermode: true
+      DisplayPc: true
     Fail:
       Maxoverthrust: true
   - Status: Maximizepower
@@ -665,6 +667,7 @@ Body:
       EnergyCoat: true
     Flags:
       RemoveOnHermode: true
+      DisplayPc: true
   - Status: Brokenarmor
     Icon: EFST_BROKENARMOR
     DurationLookup: NPC_ARMORBRAKE
@@ -981,6 +984,7 @@ Body:
       FailedMado: true
       RequireWeapon: true
       RemoveOnHermode: true
+      DisplayPc: true
     Fail:
       Quagmire: true
   - Status: Autocounter
@@ -1037,6 +1041,7 @@ Body:
       NoClearance: true
       NoSave: true
       RemoveOnHermode: true
+      DisplayPc: true
   - Status: Combo
     Flags:
       NoClearbuff: true
@@ -1068,6 +1073,7 @@ Body:
       NoClearance: true
       RemoveOnChangeMap: true
       RemoveOnHermode: true
+      DisplayPc: true
   - Status: Fireweapon
     Icon: EFST_PROPERTYFIRE
     DurationLookup: SA_FLAMELAUNCHER
@@ -1205,6 +1211,7 @@ Body:
       RequireWeapon: true
       RemoveOnUnequipWeapon: true
       RemoveOnHermode: true
+      DisplayPc: true
   - Status: Parrying
     Icon: EFST_PARRYING
     DurationLookup: LK_PARRYING
@@ -1224,6 +1231,7 @@ Body:
     Flags:
       NoSave: true
       RemoveOnHermode: true
+      DisplayPc: true
   - Status: Tensionrelax
     Icon: EFST_TENSIONRELAX
     DurationLookup: LK_TENSIONRELAX
@@ -1248,6 +1256,7 @@ Body:
       Berserk: true
     Flags:
       NoSave: true
+      DisplayPc: true
     Fail:
       Saturdaynightfever: true
       _Bloodylust: true
@@ -1276,6 +1285,7 @@ Body:
       Kaite: true
     Flags:
       RemoveOnHermode: true
+      DisplayPc: true
   - Status: Basilica
     Icon: EFST_BASILICA_BUFF
     DurationLookup: HP_BASILICA
@@ -1400,6 +1410,7 @@ Body:
       Marionette: true
     Flags:
       RemoveOnChangeMap: true
+      DisplayPc: true
     Fail:
       Marionette: true
   - Status: Marionette2
@@ -1416,6 +1427,7 @@ Body:
       Marionette: true
     Flags:
       RemoveOnChangeMap: true
+      DisplayPc: true
     Fail:
       Marionette2: true
   - Status: Changeundead
@@ -1430,6 +1442,7 @@ Body:
       NoClearance: true
       NoSave: true
       RemoveOnHermode: true
+      DisplayPc: true
     EndOnStart:
       Blessing: true
       Increaseagi: true
@@ -1525,6 +1538,7 @@ Body:
     Flags:
       Debuff: true
       SendOption: true
+      DisplayPc: true
     Options:
       Orcish: true
   - Status: Readystorm
@@ -1661,6 +1675,7 @@ Body:
       NoClearance: true
       RequireWeapon: true
       RemoveOnHermode: true
+      DisplayPc: true
     Fail:
       Decreaseagi: true
     EndOnStart:
@@ -1708,6 +1723,7 @@ Body:
       NoSave: true
       RemoveOnUnequipWeapon: true
       RemoveOnHermode: true
+      DisplayPc: true
     EndOnStart:
       Overthrust: true
   - Status: Hermode
@@ -2089,6 +2105,7 @@ Body:
       NoSave: true
       NoBanishingBuster: true
       RemoveOnHermode: true
+      DisplayPc: true
     Fail:
       Soulgolem: true
       Soulshadow: true
@@ -2237,6 +2254,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      DisplayPc: true
   - Status: Incmatkrate
     CalcFlags:
       All: true
@@ -2388,6 +2406,7 @@ Body:
       NoClearance: true
       RemoveOnChangeMap: true
       RemoveOnMapWarp: true
+      DisplayPc: true
   - Status: Sun_Comfort
     Icon: EFST_SUN_COMFORT
     DurationLookup: SG_SUN_COMFORT
@@ -2440,6 +2459,7 @@ Body:
       NoSave: true
       NoClearance: true
       RemoveOnHermode: true
+      DisplayPc: true
     EndOnStart:
       Assumptio: true
   - Status: Swoo
@@ -2451,6 +2471,7 @@ Body:
       OverThrust: true
     Flags:
       NonPlayer: true
+      DisplayPc: true
   - Status: Ska
     DurationLookup: SL_SKA
     CalcFlags:
@@ -2460,6 +2481,7 @@ Body:
       SteelBody: true
     Flags:
       NonPlayer: true
+      DisplayPc: true
   - Status: Earthscroll
     Icon: EFST_EARTHSCROLL
     DurationLookup: TK_SPTIME
@@ -2546,6 +2568,7 @@ Body:
       NoSave: true
       NoClearance: true
       RemoveOnHermode: true
+      DisplayPc: true
   - Status: Kaensin
     Flags:
       NoWarning: true
@@ -2911,6 +2934,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      DisplayPc: true
     Fail:
       Decreaseagi: true
   - Status: Rebirth
