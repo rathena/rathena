@@ -24,5 +24,5 @@ void SkillImpactCrater::castendNoDamageId(block_list *src, block_list *target, u
 	sc_start(src, target, type, 100, skill_lv, skill_get_time(getSkillId(), skill_lv));
 
 	clif_skill_nodamage(src,*target,getSkillId(),skill_lv);
-	skill_castend_damage_id(src, target, getSkillId(), skill_lv, tick, flag);
+	SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
 }
