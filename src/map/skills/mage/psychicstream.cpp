@@ -18,8 +18,9 @@ SkillPsychicStream::SkillPsychicStream() : SkillImplRecursiveDamageSplash(EM_PSY
 void SkillPsychicStream::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
 	const status_data* sstatus = status_get_status_data(*src);
 
-	skillratio += -100 + 1000 + 3500 * skill_lv;
-	skillratio += 5 * sstatus->spl;
+	skillratio += -100 + 1750 + 3850 * skill_lv;
+	skillratio += 12 * sstatus->spl;
+
 	RE_LVL_DMOD(100);
 }
 
