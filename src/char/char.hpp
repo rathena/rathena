@@ -63,49 +63,107 @@ enum e_char_del_response {
 struct Schema_Config {
 	int32 db_use_sqldbs;
 	char db_path[1024];
+	char acc_reg_num_table[DB_NAME_LEN];
+	char acc_reg_str_table[DB_NAME_LEN];
+	char achievement_table[DB_NAME_LEN];
+	char auction_db[DB_NAME_LEN];
+	char barter_db[DB_NAME_LEN];
+	char bonus_script_db[DB_NAME_LEN];
+	char buyingstores_db[DB_NAME_LEN];
+	char buyingstores_items_db[DB_NAME_LEN];
+	char cart_inventory_db[DB_NAME_LEN];
 	char char_db[DB_NAME_LEN];
-	char scdata_db[DB_NAME_LEN];
-	char skillcooldown_db[DB_NAME_LEN];
-	char cart_db[DB_NAME_LEN];
-	char inventory_db[DB_NAME_LEN];
-	char charlog_db[DB_NAME_LEN];
-	char storage_db[DB_NAME_LEN];
-	char interlog_db[DB_NAME_LEN];
-	char skill_db[DB_NAME_LEN];
-	char memo_db[DB_NAME_LEN];
+	char char_configs_db[DB_NAME_LEN];
+	char char_reg_num_table[DB_NAME_LEN];
+	char char_reg_str_table[DB_NAME_LEN];
+	char clan_table[DB_NAME_LEN];
+	char clan_alliance_table[DB_NAME_LEN];
+	char db_roulette_db[DB_NAME_LEN];
+	char elemental_db[DB_NAME_LEN];
+	char friends_db[DB_NAME_LEN];
+	char global_acc_reg_num_table[DB_NAME_LEN];
+	char global_acc_reg_str_table[DB_NAME_LEN];
 	char guild_db[DB_NAME_LEN];
 	char guild_alliance_db[DB_NAME_LEN];
 	char guild_castle_db[DB_NAME_LEN];
+	char guild_emblems_db[DB_NAME_LEN];
 	char guild_expulsion_db[DB_NAME_LEN];
 	char guild_member_db[DB_NAME_LEN];
 	char guild_position_db[DB_NAME_LEN];
 	char guild_skill_db[DB_NAME_LEN];
 	char guild_storage_db[DB_NAME_LEN];
-	char party_db[DB_NAME_LEN];
-	char pet_db[DB_NAME_LEN];
-	char mail_db[DB_NAME_LEN]; // MAIL SYSTEM
-	char mail_attachment_db[DB_NAME_LEN];
-	char auction_db[DB_NAME_LEN]; // Auctions System
-	char friend_db[DB_NAME_LEN];
-	char hotkey_db[DB_NAME_LEN];
-	char quest_db[DB_NAME_LEN];
 	char homunculus_db[DB_NAME_LEN];
-	char skill_homunculus_db[DB_NAME_LEN];
-	char skillcooldown_homunculus_db[DB_NAME_LEN];
+	char hotkey_db[DB_NAME_LEN];
+	char inventory_db[DB_NAME_LEN];
+	char ipbanlist_db[DB_NAME_LEN];
+#ifndef RENEWAL
+	char item_db_db[DB_NAME_LEN];
+	char item_db2_db[DB_NAME_LEN];
+#else
+	char item_db_re_db[DB_NAME_LEN];
+	char item_db2_re_db[DB_NAME_LEN];
+#endif
+	char login_db[DB_NAME_LEN];
+	char mail_db[DB_NAME_LEN];
+	char mail_attachments_db[DB_NAME_LEN];
+	char mapreg_db[DB_NAME_LEN];
+	char market_db[DB_NAME_LEN];
+	char memo_db[DB_NAME_LEN];
 	char mercenary_db[DB_NAME_LEN];
 	char mercenary_owner_db[DB_NAME_LEN];
+	char merchant_configs_db[DB_NAME_LEN];
+#ifndef RENEWAL
+	char mob_db_db[DB_NAME_LEN];
+	char mob_db2_db[DB_NAME_LEN];
+	char mob_skill_db_db[DB_NAME_LEN];
+	char mob_skill_db2_db[DB_NAME_LEN];
+#else
+	char mob_db_re_db[DB_NAME_LEN];
+	char mob_db2_re_db[DB_NAME_LEN];
+	char mob_skill_db_re_db[DB_NAME_LEN];
+	char mob_skill_db2_re_db[DB_NAME_LEN];
+#endif
+	char party_db[DB_NAME_LEN];
+	char party_bookings_db[DB_NAME_LEN];
+	char pet_db[DB_NAME_LEN];
+	char quest_db[DB_NAME_LEN];
+	char sales_db[DB_NAME_LEN];
+	char sc_data_db[DB_NAME_LEN];
+	char skill_db[DB_NAME_LEN];
+	char skillcooldown_db[DB_NAME_LEN];
+	char skillcooldown_homunculus_db[DB_NAME_LEN];
 	char skillcooldown_mercenary_db[DB_NAME_LEN];
-	char elemental_db[DB_NAME_LEN];
-	char bonus_script_db[DB_NAME_LEN];
-	char acc_reg_num_table[DB_NAME_LEN];
-	char acc_reg_str_table[DB_NAME_LEN];
-	char char_reg_str_table[DB_NAME_LEN];
-	char char_reg_num_table[DB_NAME_LEN];
-	char clan_table[DB_NAME_LEN];
-	char clan_alliance_table[DB_NAME_LEN];
-	char achievement_table[DB_NAME_LEN];
+	char skill_homunculus_db[DB_NAME_LEN];
+	char storage_db[DB_NAME_LEN];
+	char user_configs_db[DB_NAME_LEN];
+	char vendings_db[DB_NAME_LEN];
+	char vending_items_db[DB_NAME_LEN];
+#ifdef VIP_ENABLE
+	char vip_storage_db[DB_NAME_LEN];
+#endif
 };
 extern struct Schema_Config schema_config;
+
+struct Log_Schema_Config {
+	int32 db_use_sqldbs;
+	char db_path[1024];
+	char atcommandlog_db[DB_NAME_LEN];
+	char branchlog_db[DB_NAME_LEN];
+	char cashlog_db[DB_NAME_LEN];
+	char charlog_db[DB_NAME_LEN];
+	char chatlog_db[DB_NAME_LEN];
+	char feedinglog_db[DB_NAME_LEN];
+	char guildstoragelog_db[DB_NAME_LEN];
+	char interlog_db[DB_NAME_LEN];
+	char loginlog_db[DB_NAME_LEN];
+	char mvplog_db[DB_NAME_LEN];
+	char npclog_db[DB_NAME_LEN];
+	char picklog_db[DB_NAME_LEN];
+	char zenylog_db[DB_NAME_LEN];
+};
+extern struct Log_Schema_Config log_schema_config;
+
+#define CFG_STR(key, field) else if (strcmpi(w1, key == 0) field = w2;
 
 #if PACKETVER_SUPPORTS_PINCODE
 /// Pincode system
