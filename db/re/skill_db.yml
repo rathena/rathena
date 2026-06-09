@@ -38402,15 +38402,15 @@ Body:
         Time: 150000
     Duration2:
       - Level: 1
-        Time: 3000
-      - Level: 2
         Time: 2500
-      - Level: 3
+      - Level: 2
         Time: 2000
-      - Level: 4
+      - Level: 3
         Time: 1500
-      - Level: 5
+      - Level: 4
         Time: 1000
+      - Level: 5
+        Time: 500
     Cooldown: 30000
     Requires:
       SpCost:

@@ -26,8 +26,9 @@ void SkillAbyssSquare::calculateSkillRatio(const Damage* wd, const block_list* s
 	const map_session_data* sd = BL_CAST(BL_PC, src);
 	const status_data* sstatus = status_get_status_data(*src);
 
-	skillratio += -100 + 750 * skill_lv;
-	skillratio += 40 * pc_checkskill(sd, ABC_MAGIC_SWORD_M) * skill_lv;
+	skillratio += -100 + 900 * skill_lv;
+	skillratio += 50 * pc_checkskill(sd, ABC_MAGIC_SWORD_M) * skill_lv;
 	skillratio += 5 * sstatus->spl;
+
 	RE_LVL_DMOD(100);
 }

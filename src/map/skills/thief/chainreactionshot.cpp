@@ -33,9 +33,12 @@ void SkillChainReactionShotAttack::calculateSkillRatio(const Damage* wd, const b
 	const status_change* sc = status_get_sc(src);
 	const status_data* sstatus = status_get_status_data(*src);
 
-	skillratio += -100 + 800 + 2550 * skill_lv;
+	if (skill_lv == 4)
+		skillratio += -100 + 11500;
+	else
+		skillratio += -100 + 950 + 2650 * skill_lv;
 	skillratio += 15 * sstatus->con;
 	if (sc != nullptr && sc->hasSCE(SC_CHASING))
-		skillratio += 700 * skill_lv;
+		skillratio += 1100 * skill_lv;
 	RE_LVL_DMOD(100);
 }
