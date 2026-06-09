@@ -119,4 +119,10 @@
 #     Target                  Skill unit target type. (Default: All)
 #     Flag:                   Skill unit flags. (Default: None)
 #   Status                    Status Change that is associated to the skill. (Optional)
+#   AutoSpell:                SA_AUTOSPELL (Hindsight) integration. (Optional)
+#     UnlockedAtLevel         Minimum SA_AUTOSPELL level required to offer this spell to players
+#                             and for NPC/mob auto-cast eligibility.
+#     MobMaxCastLevel         Upper bound on NPC/mob AI cast level.
+#                             Actual cast level = max(1, min(SA_AUTOSPELL_lv / 2, MobMaxCastLevel)).
+#                             No effect on player characters. (Default: 0, no cap)
 ###########################################################################
