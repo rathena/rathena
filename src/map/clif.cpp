@@ -22862,6 +22862,10 @@ bool clif_parse_stylist_buy_sub( map_session_data* sd, _look look, int16 index )
 		return false;
 	}
 
+	if( !entry->required_jobs.empty() && !util::vector_exists( entry->required_jobs, sd->status.class_ ) ){
+		return false;
+	}
+
 	std::shared_ptr<s_stylist_costs> costs;
 
 	if( ( sd->class_ & MAPID_FIRSTMASK ) == MAPID_SUMMONER ){
@@ -22870,47 +22874,45 @@ bool clif_parse_stylist_buy_sub( map_session_data* sd, _look look, int16 index )
 		costs = entry->human;
 	}
 
-	if( costs == nullptr ){
-		return false;
-	}
+	if( costs != nullptr ){
+		if( sd->status.zeny < costs->price ){
+			return false;
+		}
 
-	if( sd->status.zeny < costs->price ){
-		return false;
-	}
+		int16 inventoryIndex = -1;
 
-	int16 inventoryIndex = -1;
+		if( costs->requiredItem != 0 ){
+			inventoryIndex = pc_search_inventory( sd, costs->requiredItem );
 
-	if( costs->requiredItem != 0 ){
-		inventoryIndex = pc_search_inventory( sd, costs->requiredItem );
+			if( inventoryIndex < 0 ){
+				// No other option
+				if( costs->requiredItemBox == 0 ){
+					return false;
+				}
 
-		if( inventoryIndex < 0 ){
-			// No other option
-			if( costs->requiredItemBox == 0 ){
-				return false;
+				// Check if the box that contains the item is in the inventory
+				inventoryIndex = pc_search_inventory( sd, costs->requiredItemBox );
+
+				// The box containing the item also does not exist
+				if( inventoryIndex < 0 ){
+					return false;
+				}
 			}
+		}else if( costs->requiredItemBox != 0 ){
+			inventoryIndex = pc_search_inventory( sd, costs->requiredItem );
 
-			// Check if the box that contains the item is in the inventory
-			inventoryIndex = pc_search_inventory( sd, costs->requiredItemBox );
-
-			// The box containing the item also does not exist
 			if( inventoryIndex < 0 ){
 				return false;
 			}
 		}
-	}else if( costs->requiredItemBox != 0 ){
-		inventoryIndex = pc_search_inventory( sd, costs->requiredItem );
 
-		if( inventoryIndex < 0 ){
+		if( inventoryIndex >= 0 && pc_delitem( sd, inventoryIndex, 1, 0, 0, LOG_TYPE_OTHER ) != 0 ){
 			return false;
 		}
-	}
 
-	if( inventoryIndex >= 0 && pc_delitem( sd, inventoryIndex, 1, 0, 0, LOG_TYPE_OTHER ) != 0 ){
-		return false;
-	}
-
-	if( costs->price > 0 && pc_payzeny( sd, costs->price, LOG_TYPE_OTHER ) != 0 ){
-		return false;
+		if( costs->price > 0 && pc_payzeny( sd, costs->price, LOG_TYPE_OTHER ) != 0 ){
+			return false;
+		}
 	}
 
 	switch( look ){
@@ -22947,7 +22949,54 @@ bool clif_parse_stylist_buy_sub( map_session_data* sd, _look look, int16 index )
 }
 
 void clif_parse_stylist_buy( int32 fd, map_session_data* sd ){
-#if PACKETVER >= 20151104
+	if( sd == nullptr ){
+		return;
+	}
+
+#if PACKETVER >= 20231220
+	const PACKET_CZ_REQ_STYLE_CHANGE3* p = reinterpret_cast<PACKET_CZ_REQ_STYLE_CHANGE3*>(RFIFOP(fd, 0));
+
+	for (int32 i = 0; i < p->count; i++) {
+		if (p->data[i].value == 0)
+			continue;
+
+		switch (p->data[i].action) {
+		case 0:
+			if(!clif_parse_stylist_buy_sub(sd, LOOK_HAIR_COLOR, p->data[i].value))
+				clif_stylist_response(sd, true);
+			break;
+		case 1:
+			if(!clif_parse_stylist_buy_sub(sd, LOOK_HAIR, p->data[i].value))
+				clif_stylist_response(sd, true);
+			break;
+		case 2:
+			if(!clif_parse_stylist_buy_sub(sd, LOOK_CLOTHES_COLOR, p->data[i].value))
+				clif_stylist_response(sd, true);
+			break;
+		case 3:
+			if(!clif_parse_stylist_buy_sub(sd, LOOK_HEAD_TOP, p->data[i].value))
+				clif_stylist_response(sd, true);
+			break;
+		case 4:
+			if(!clif_parse_stylist_buy_sub(sd, LOOK_HEAD_MID, p->data[i].value))
+				clif_stylist_response(sd, true);
+			break;
+		case 5:
+			if(!clif_parse_stylist_buy_sub(sd, LOOK_HEAD_BOTTOM, p->data[i].value))
+				clif_stylist_response(sd, true);
+			break;
+		case 9:
+			if(!clif_parse_stylist_buy_sub(sd, LOOK_BODY2, p->data[i].value))
+				clif_stylist_response(sd, true);
+			break;
+		default:
+			ShowError("clif_parse_stylist_buy: Unknown action type %d\n", p->data[i].action);
+			break;
+		}
+	}
+
+	clif_stylist_response(sd, false);
+#elif PACKETVER >= 20151104
 #if PACKETVER >= 20180516
 	const PACKET_CZ_REQ_STYLE_CHANGE2* p = reinterpret_cast<PACKET_CZ_REQ_STYLE_CHANGE2*>( RFIFOP( fd, 0 ) );
 #else
