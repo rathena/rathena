@@ -15,9 +15,11 @@ void SkillAstralStrike::calculateSkillRatio(const Damage *wd, const block_list *
 	const status_data* sstatus = status_get_status_data(*src);
 	const status_data* tstatus = status_get_status_data(*target);
 
-	skillratio += -100 + 300 + 1800 * skill_lv + 10 * sstatus->spl;
+	skillratio += -100 + 700 + 2600 * skill_lv;
+	skillratio += 10 * sstatus->spl;
+
 	if (tstatus->race == RC_UNDEAD || tstatus->race == RC_DRAGON)
-		skillratio += 100 + 300 * skill_lv;
+		skillratio += 150 * skill_lv;
 	RE_LVL_DMOD(100);
 }
 

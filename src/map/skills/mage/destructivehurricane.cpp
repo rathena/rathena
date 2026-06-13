@@ -22,7 +22,9 @@ void SkillDestructiveHurricane::modifyDamageData(Damage& dmg, const block_list& 
 void SkillDestructiveHurricane::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
 	const status_data* sstatus = status_get_status_data(*src);
 
-	skillratio += -100 + 600 + 2850 * skill_lv + 5 * sstatus->spl;
+	skillratio += -100 + 600 + 3250 * skill_lv;
+	skillratio += 10 * sstatus->spl;
+
 	// (climax buff applied with pc_skillatk_bonus)
 	RE_LVL_DMOD(100);
 }
