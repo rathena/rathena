@@ -3,6 +3,7 @@
 
 #include "firebolt.hpp"
 
+#include "map/clif.hpp"
 #include "map/status.hpp"
 
 SkillFireBolt::SkillFireBolt() : SkillImpl(MG_FIREBOLT) {

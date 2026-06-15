@@ -3,6 +3,8 @@
 
 #include "chainaction.hpp"
 
+#include "map/clif.hpp"
+
 SkillChainAction::SkillChainAction() : WeaponSkillImpl(GS_CHAINACTION) {
 }
 

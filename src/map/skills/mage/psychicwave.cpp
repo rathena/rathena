@@ -5,6 +5,7 @@
 
 #include <config/core.hpp>
 
+#include "map/pc.hpp"
 #include "map/status.hpp"
 
 SkillPsychicWave::SkillPsychicWave() : SkillImpl(SO_PSYCHIC_WAVE) {

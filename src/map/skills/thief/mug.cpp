@@ -7,6 +7,7 @@
 
 #include "map/battle.hpp"
 #include "map/clif.hpp"
+#include "map/log.hpp"
 #include "map/mob.hpp"
 #include "map/pc.hpp"
 
