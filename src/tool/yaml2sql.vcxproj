@@ -173,6 +173,9 @@
   <ItemGroup>
     <ClCompile Include="yaml2sql.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="yaml2sql.hpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

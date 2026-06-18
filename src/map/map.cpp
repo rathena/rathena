@@ -98,7 +98,7 @@ std::string log_db_ip = "127.0.0.1";
 uint16 log_db_port = 3306;
 std::string log_db_id = "ragnarok";
 std::string log_db_pw = "";
-std::string log_db_db = "log";
+std::string log_db_database = "log";
 Sql* logmysql_handle;
 
 // inter config
@@ -4365,7 +4365,7 @@ int32 inter_config_read(const char *cfgName)
 			log_db_port = (uint16)strtoul( w2, nullptr, 10 );
 		else
 		if(strcmpi(w1,"log_db_db")==0)
-			log_db_db = w2;
+			log_db_database = w2;
 		else
 		if(strcmpi(w1,"start_status_points")==0)
 			inter_config.start_status_points=atoi(w2);
@@ -4445,15 +4445,15 @@ int32 log_sql_init(void)
 	// log db connection
 	logmysql_handle = Sql_Malloc();
 
-	ShowInfo("" CL_WHITE "[SQL]" CL_RESET ": Connecting to the Log Database " CL_WHITE "%s" CL_RESET " At " CL_WHITE "%s" CL_RESET "...\n",log_db_db.c_str(), log_db_ip.c_str());
-	if ( SQL_ERROR == Sql_Connect(logmysql_handle, log_db_id.c_str(), log_db_pw.c_str(), log_db_ip.c_str(), log_db_port, log_db_db.c_str()) ){
+	ShowInfo("" CL_WHITE "[SQL]" CL_RESET ": Connecting to the Log Database " CL_WHITE "%s" CL_RESET " At " CL_WHITE "%s" CL_RESET "...\n",log_db_database.c_str(), log_db_ip.c_str());
+	if ( SQL_ERROR == Sql_Connect(logmysql_handle, log_db_id.c_str(), log_db_pw.c_str(), log_db_ip.c_str(), log_db_port, log_db_database.c_str()) ){
 		ShowError("Couldn't connect with uname='%s',host='%s',port='%hu',database='%s'\n",
-			log_db_id.c_str(), log_db_ip.c_str(), log_db_port, log_db_db.c_str());
+			log_db_id.c_str(), log_db_ip.c_str(), log_db_port, log_db_database.c_str());
 		Sql_ShowDebug(logmysql_handle);
 		Sql_Free(logmysql_handle);
 		exit(EXIT_FAILURE);
 	}
-	ShowStatus("" CL_WHITE "[SQL]" CL_RESET ": Successfully '" CL_GREEN "connected" CL_RESET "' to Database '" CL_WHITE "%s" CL_RESET "'.\n", log_db_db.c_str());
+	ShowStatus("" CL_WHITE "[SQL]" CL_RESET ": Successfully '" CL_GREEN "connected" CL_RESET "' to Database '" CL_WHITE "%s" CL_RESET "'.\n", log_db_database.c_str());
 
 	if( !default_codepage.empty() )
 		if ( SQL_ERROR == Sql_SetEncoding(logmysql_handle, default_codepage.c_str()) )

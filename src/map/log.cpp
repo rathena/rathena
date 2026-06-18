@@ -180,7 +180,7 @@ void log_branch( map_session_data* sd )
 	if( log_config.sql_logs ) {
 		SqlStmt stmt{ *logmysql_handle };
 
-		if( SQL_SUCCESS != stmt.Prepare(LOG_QUERY " INTO `%s` (`branch_date`, `account_id`, `char_id`, `char_name`, `map`) VALUES (NOW(), '%d', '%d', ?, '%s')", log_config.log_branch, sd->status.account_id, sd->status.char_id, mapindex_id2name(sd->mapindex) )
+		if( SQL_SUCCESS != stmt.Prepare(LOG_QUERY " INTO `%s`.`%s` (`branch_date`, `account_id`, `char_id`, `char_name`, `map`) VALUES (NOW(), '%d', '%d', ?, '%s')", log_db_database.c_str(), guild_storage_log_table, log_config.log_branch, sd->status.account_id, sd->status.char_id, mapindex_id2name(sd->mapindex) )
 		||  SQL_SUCCESS != stmt.BindParam(0, SQLDT_STRING, sd->status.name, strnlen(sd->status.name, NAME_LENGTH))
 		||  SQL_SUCCESS != stmt.Execute() )
 		{
@@ -222,7 +222,7 @@ void log_pick( int32 id, int16 m, e_log_pick_type type, int32 amount, const item
 		StringBuf buf;
 		StringBuf_Init(&buf);
 
-		StringBuf_Printf(&buf, "%s INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `map`, `unique_id`, `bound`, `enchantgrade`", LOG_QUERY, log_config.log_pick);
+		StringBuf_Printf(&buf, "%s INTO `%s`.`%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `map`, `unique_id`, `bound`, `enchantgrade`", LOG_QUERY, guild_storage_log_table, log_config.log_pick);
 		for (i = 0; i < MAX_SLOTS; ++i)
 			StringBuf_Printf(&buf, ", `card%d`", i);
 		for (i = 0; i < MAX_ITEM_RDM_OPT; ++i) {
@@ -281,8 +281,8 @@ void log_zeny( const map_session_data &target_sd, e_log_pick_type type, uint32 s
 
 	if( log_config.sql_logs )
 	{
-		if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `src_id`, `type`, `amount`, `map`) VALUES (NOW(), '%d', '%d', '%c', '%d', '%s')",
-			log_config.log_zeny, target_sd.status.char_id, src_id, log_picktype2char(type), amount, mapindex_id2name(target_sd.mapindex)))
+		if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s`.`%s` (`time`, `char_id`, `src_id`, `type`, `amount`, `map`) VALUES (NOW(), '%d', '%d', '%c', '%d', '%s')",
+			guild_storage_log_table, log_config.log_zeny, target_sd.status.char_id, src_id, log_picktype2char(type), amount, mapindex_id2name(target_sd.mapindex)))
 		{
 			Sql_ShowDebug(logmysql_handle);
 			return;
@@ -314,8 +314,8 @@ void log_mvpdrop( const map_session_data* sd, int32 monster_id, t_itemid nameid,
 
 	if( log_config.sql_logs )
 	{
-		if( SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`mvp_date`, `kill_char_id`, `monster_id`, `prize`, `mvpexp`, `map`) VALUES (NOW(), '%d', '%d', '%u', '%" PRIu64 "', '%s') ",
-			log_config.log_mvpdrop, sd->status.char_id, monster_id, nameid, exp, mapindex_id2name(sd->mapindex)) )
+		if( SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s`.`%s` (`mvp_date`, `kill_char_id`, `monster_id`, `prize`, `mvpexp`, `map`) VALUES (NOW(), '%d', '%d', '%u', '%" PRIu64 "', '%s') ",
+			guild_storage_log_table, log_config.log_mvpdrop, sd->status.char_id, monster_id, nameid, exp, mapindex_id2name(sd->mapindex)) )
 		{
 			Sql_ShowDebug(logmysql_handle);
 			return;
@@ -350,7 +350,7 @@ void log_atcommand( map_session_data* sd, const char* message )
 	{
 		SqlStmt stmt{ *logmysql_handle };
 
-		if( SQL_SUCCESS != stmt.Prepare(LOG_QUERY " INTO `%s` (`atcommand_date`, `account_id`, `char_id`, `char_name`, `map`, `command`) VALUES (NOW(), '%d', '%d', ?, '%s', ?)", log_config.log_gm, sd->status.account_id, sd->status.char_id, sd->mapindex == 0 ? "" : mapindex_id2name(sd->mapindex))
+		if( SQL_SUCCESS != stmt.Prepare(LOG_QUERY " INTO `%s`.`%s` (`atcommand_date`, `account_id`, `char_id`, `char_name`, `map`, `command`) VALUES (NOW(), '%d', '%d', ?, '%s', ?)", guild_storage_log_table, log_config.log_gm, sd->status.account_id, sd->status.char_id, sd->mapindex == 0 ? "" : mapindex_id2name(sd->mapindex))
 		||  SQL_SUCCESS != stmt.BindParam(0, SQLDT_STRING, sd->status.name, strnlen(sd->status.name, NAME_LENGTH))
 		||  SQL_SUCCESS != stmt.BindParam(1, SQLDT_STRING, (char*)message, safestrnlen(message, 255))
 		||  SQL_SUCCESS != stmt.Execute() )
@@ -385,7 +385,7 @@ void log_npc( npc_data* nd, const char* message ){
 	{
 		SqlStmt stmt{ *logmysql_handle };
 
-		if( SQL_SUCCESS != stmt.Prepare(LOG_QUERY " INTO `%s` (`npc_date`, `char_name`, `map`, `mes`) VALUES (NOW(), ?, '%s', ?)", log_config.log_npc, map_mapid2mapname(nd->m) )
+		if( SQL_SUCCESS != stmt.Prepare(LOG_QUERY " INTO `%s`.`%s` (`npc_date`, `char_name`, `map`, `mes`) VALUES (NOW(), ?, '%s', ?)", guild_storage_log_table, log_config.log_npc, map_mapid2mapname(nd->m) )
 		||  SQL_SUCCESS != stmt.BindParam(0, SQLDT_STRING, nd->name, strnlen(nd->name, NAME_LENGTH))
 		||  SQL_SUCCESS != stmt.BindParam(1, SQLDT_STRING, (char*)message, safestrnlen(message, 255))
 		||  SQL_SUCCESS != stmt.Execute() )
@@ -421,7 +421,7 @@ void log_npc( map_session_data* sd, const char* message )
 	{
 		SqlStmt stmt{ *logmysql_handle };
 
-		if( SQL_SUCCESS != stmt.Prepare(LOG_QUERY " INTO `%s` (`npc_date`, `account_id`, `char_id`, `char_name`, `map`, `mes`) VALUES (NOW(), '%d', '%d', ?, '%s', ?)", log_config.log_npc, sd->status.account_id, sd->status.char_id, mapindex_id2name(sd->mapindex) )
+		if( SQL_SUCCESS != stmt.Prepare(LOG_QUERY " INTO `%s`.`%s` (`npc_date`, `account_id`, `char_id`, `char_name`, `map`, `mes`) VALUES (NOW(), '%d', '%d', ?, '%s', ?)", guild_storage_log_table, log_config.log_npc, sd->status.account_id, sd->status.char_id, mapindex_id2name(sd->mapindex) )
 		||  SQL_SUCCESS != stmt.BindParam(0, SQLDT_STRING, sd->status.name, strnlen(sd->status.name, NAME_LENGTH))
 		||  SQL_SUCCESS != stmt.BindParam(1, SQLDT_STRING, (char*)message, safestrnlen(message, 255))
 		||  SQL_SUCCESS != stmt.Execute() )
@@ -466,7 +466,7 @@ void log_chat( e_log_chat_type type, int32 type_id, int32 src_charid, int32 src_
 	if( log_config.sql_logs ) {
 		SqlStmt stmt{ *logmysql_handle };
 
-		if( SQL_SUCCESS != stmt.Prepare(LOG_QUERY " INTO `%s` (`time`, `type`, `type_id`, `src_charid`, `src_accountid`, `src_map`, `src_map_x`, `src_map_y`, `dst_charname`, `message`) VALUES (NOW(), '%c', '%d', '%d', '%d', '%s', '%d', '%d', ?, ?)", log_config.log_chat, log_chattype2char(type), type_id, src_charid, src_accid, mapname, x, y)
+		if( SQL_SUCCESS != stmt.Prepare(LOG_QUERY " INTO `%s`.`%s` (`time`, `type`, `type_id`, `src_charid`, `src_accountid`, `src_map`, `src_map_x`, `src_map_y`, `dst_charname`, `message`) VALUES (NOW(), '%c', '%d', '%d', '%d', '%s', '%d', '%d', ?, ?)", guild_storage_log_table, log_config.log_chat, log_chattype2char(type), type_id, src_charid, src_accid, mapname, x, y)
 		||  SQL_SUCCESS != stmt.BindParam(0, SQLDT_STRING, (char*)dst_charname, safestrnlen(dst_charname, NAME_LENGTH))
 		||  SQL_SUCCESS != stmt.BindParam(1, SQLDT_STRING, (char*)message, safestrnlen(message, CHAT_SIZE_MAX))
 		||  SQL_SUCCESS != stmt.Execute() )
@@ -498,8 +498,8 @@ void log_cash( const map_session_data* sd, e_log_pick_type type, e_log_cash_type
 		return;
 
 	if( log_config.sql_logs ){
-		if( SQL_ERROR == Sql_Query( logmysql_handle, LOG_QUERY " INTO `%s` ( `time`, `char_id`, `type`, `cash_type`, `amount`, `map` ) VALUES ( NOW(), '%d', '%c', '%c', '%d', '%s' )",
-			log_config.log_cash, sd->status.char_id, log_picktype2char( type ), log_cashtype2char( cash_type ), amount, mapindex_id2name( sd->mapindex ) ) )
+		if( SQL_ERROR == Sql_Query( logmysql_handle, LOG_QUERY " INTO `%s`.`%s` ( `time`, `char_id`, `type`, `cash_type`, `amount`, `map` ) VALUES ( NOW(), '%d', '%c', '%c', '%d', '%s' )",
+			guild_storage_log_table, log_config.log_cash, sd->status.char_id, log_picktype2char( type ), log_cashtype2char( cash_type ), amount, mapindex_id2name( sd->mapindex ) ) )
 		{
 			Sql_ShowDebug( logmysql_handle );
 			return;
@@ -551,8 +551,8 @@ void log_feeding( const map_session_data* sd, e_log_feeding_type type, t_itemid 
 	}
 
 	if (log_config.sql_logs) {
-		if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `target_id`, `target_class`, `type`, `intimacy`, `item_id`, `map`, `x`, `y`) VALUES ( NOW(), '%" PRIu32 "', '%" PRIu32 "', '%hu', '%c', '%" PRIu32 "', '%u', '%s', '%hu', '%hu' )",
-			log_config.log_feeding, sd->status.char_id, target_id, target_class, log_feedingtype2char(type), intimacy, nameid, mapindex_id2name(sd->mapindex), sd->x, sd->y))
+		if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s`.`%s` (`time`, `char_id`, `target_id`, `target_class`, `type`, `intimacy`, `item_id`, `map`, `x`, `y`) VALUES ( NOW(), '%" PRIu32 "', '%" PRIu32 "', '%hu', '%c', '%" PRIu32 "', '%u', '%s', '%hu', '%hu' )",
+			guild_storage_log_table, log_config.log_feeding, sd->status.char_id, target_id, target_class, log_feedingtype2char(type), intimacy, nameid, mapindex_id2name(sd->mapindex), sd->x, sd->y))
 		{
 			Sql_ShowDebug(logmysql_handle);
 			return;

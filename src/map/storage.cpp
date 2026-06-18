@@ -618,7 +618,7 @@ void storage_guild_log( map_session_data* sd, struct item* item, int16 amount ){
 	StringBuf buf;
 	StringBuf_Init(&buf);
 
-	StringBuf_Printf(&buf, "INSERT INTO `%s` (`time`, `guild_id`, `char_id`, `name`, `nameid`, `amount`, `identify`, `refine`, `attribute`, `unique_id`, `bound`, `enchantgrade`", guild_storage_log_table);
+	StringBuf_Printf(&buf, "INSERT INTO `%s`.`%s` (`time`, `guild_id`, `char_id`, `name`, `nameid`, `amount`, `identify`, `refine`, `attribute`, `unique_id`, `bound`, `enchantgrade`", log_db_database.c_str(), guild_storage_log_table);
 	for (i = 0; i < MAX_SLOTS; ++i)
 		StringBuf_Printf(&buf, ", `card%d`", i);
 	for (i = 0; i < MAX_ITEM_RDM_OPT; ++i) {
@@ -654,7 +654,7 @@ enum e_guild_storage_log storage_guild_log_read_sub( map_session_data* sd, std::
 		StringBuf_Printf(&buf, ", `option_val%d`", j);
 		StringBuf_Printf(&buf, ", `option_parm%d`", j);
 	}
-	StringBuf_Printf(&buf, " FROM `%s` WHERE `guild_id`='%u'", guild_storage_log_table, sd->status.guild_id );
+	StringBuf_Printf(&buf, " FROM `%s`.`%s` WHERE `guild_id`='%u'", log_db_database.c_str(), guild_storage_log_table, sd->status.guild_id);
 	StringBuf_Printf(&buf, " ORDER BY `time` DESC LIMIT %u", max);
 
 	SqlStmt stmt{ *mmysql_handle };

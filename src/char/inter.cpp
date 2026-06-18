@@ -5,9 +5,6 @@
 
 #include <cstdlib>
 #include <cstring>
-#include <cstring>
-#include <memory>
-#include <unordered_map>
 #include <vector>
 
 #include <sys/stat.h> // for stat/lstat/fstat - [Dekamaster/Ultimate GM Tool]
@@ -23,7 +20,6 @@
 #include "char.hpp"
 #include "char_logif.hpp"
 #include "char_mapif.hpp"
-#include "inter.hpp"
 #include "int_achievement.hpp"
 #include "int_auction.hpp"
 #include "int_clan.hpp"
@@ -52,6 +48,7 @@ std::string char_server_id = "ragnarok";
 std::string char_server_pw = ""; // Allow user to send empty password (bugreport:7787)
 std::string char_server_db = "ragnarok";
 std::string default_codepage = ""; //Feature by irmin.
+std::string log_db_database = "log";
 uint32 party_share_level = 10;
 
 /// Received packet Lengths from map-server
@@ -860,6 +857,8 @@ int32 inter_config_read(const char* cfgName)
 			charserv_config.log_inter = atoi(w2);
 		else if(!strcmpi(w1,"inter_server_conf"))
 			cfgFile = w2;
+		else if (!strcmpi(w1,"log_db_db"))
+			log_db_database = w2;
 		else if(!strcmpi(w1,"import"))
 			inter_config_read(w2);
 	}
@@ -882,7 +881,7 @@ int32 inter_log(const char* fmt, ...)
 	va_end(ap);
 
 	Sql_EscapeStringLen(sql_handle, esc_str, str, strnlen(str, sizeof(str)));
-	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`time`, `log`) VALUES (NOW(),  '%s')", schema_config.interlog_db, esc_str) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s`.`%s` (`time`, `log`) VALUES (NOW(),  '%s')", log_db_database.c_str(), log_schema_config.interlog_db, esc_str))
 		Sql_ShowDebug(sql_handle);
 
 	return 0;

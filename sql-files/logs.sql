@@ -2,7 +2,7 @@
 -- Table structure for table `atcommandlog`
 --
 
-CREATE TABLE IF NOT EXISTS `atcommandlog` (
+CREATE TABLE IF NOT EXISTS `log`.`atcommandlog` (
   `atcommand_id` mediumint(9) unsigned NOT NULL auto_increment,
   `atcommand_date` datetime NOT NULL,
   `account_id` int(11) unsigned NOT NULL default '0',
@@ -13,13 +13,13 @@ CREATE TABLE IF NOT EXISTS `atcommandlog` (
   PRIMARY KEY  (`atcommand_id`),
   INDEX (`account_id`),
   INDEX (`char_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1;
+) ENGINE=InnoDB AUTO_INCREMENT=1;
 
 --
 -- Table structure for table `branchlog`
 --
 
-CREATE TABLE IF NOT EXISTS `branchlog` (
+CREATE TABLE IF NOT EXISTS `log`.`branchlog` (
   `branch_id` mediumint(9) unsigned NOT NULL auto_increment,
   `branch_date` datetime NOT NULL,
   `account_id` int(11) NOT NULL default '0',
@@ -29,13 +29,13 @@ CREATE TABLE IF NOT EXISTS `branchlog` (
   PRIMARY KEY  (`branch_id`),
   INDEX (`account_id`),
   INDEX (`char_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1;
+) ENGINE=InnoDB AUTO_INCREMENT=1;
 
 --
 -- Table structure for table `cashlog`
 --
 
-CREATE TABLE IF NOT EXISTS `cashlog` (
+CREATE TABLE IF NOT EXISTS `log`.`cashlog` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `time` datetime NOT NULL,
   `char_id` int(11) NOT NULL DEFAULT '0',
@@ -45,7 +45,30 @@ CREATE TABLE IF NOT EXISTS `cashlog` (
   `map` varchar(11) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   INDEX `type` (`type`)
-) ENGINE=MyISAM AUTO_INCREMENT=1;
+) ENGINE=InnoDB AUTO_INCREMENT=1;
+
+--
+-- Table structure for table `charlog`
+--
+
+CREATE TABLE IF NOT EXISTS `log`.`charlog` (
+  `id` bigint(20) unsigned NOT NULL auto_increment,
+  `time` datetime NOT NULL,
+  `char_msg` varchar(255) NOT NULL default 'char select',
+  `account_id` int(11) unsigned NOT NULL default '0',
+  `char_num` tinyint(4) NOT NULL default '0',
+  `name` varchar(23) NOT NULL default '',
+  `str` int(11) unsigned NOT NULL default '0',
+  `agi` int(11) unsigned NOT NULL default '0',
+  `vit` int(11) unsigned NOT NULL default '0',
+  `int` int(11) unsigned NOT NULL default '0',
+  `dex` int(11) unsigned NOT NULL default '0',
+  `luk` int(11) unsigned NOT NULL default '0',
+  `hair` tinyint(4) NOT NULL default '0',
+  `hair_color` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
+  KEY `account_id` (`account_id`)
+) ENGINE=InnoDB;
 
 --
 -- Table structure for table `chatlog`
@@ -58,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `cashlog` (
 # (M)ain chat
 # (C)lan
 
-CREATE TABLE IF NOT EXISTS `chatlog` (
+CREATE TABLE IF NOT EXISTS `log`.`chatlog` (
   `id` bigint(20) NOT NULL auto_increment,
   `time` datetime NOT NULL,
   `type` enum('O','W','P','G','M','C') NOT NULL default 'O',
@@ -73,13 +96,13 @@ CREATE TABLE IF NOT EXISTS `chatlog` (
   PRIMARY KEY  (`id`),
   INDEX (`src_accountid`),
   INDEX (`src_charid`)
-) ENGINE=MyISAM AUTO_INCREMENT=1;
+) ENGINE=InnoDB AUTO_INCREMENT=1;
 
 --
 -- Table structure for table `feedinglog`
 --
 
-CREATE TABLE IF NOT EXISTS `feedinglog` (
+CREATE TABLE IF NOT EXISTS `log`.`feedinglog` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `time` DATETIME NOT NULL,
   `char_id` INT(11) NOT NULL,
@@ -92,26 +115,80 @@ CREATE TABLE IF NOT EXISTS `feedinglog` (
   `x` SMALLINT(5) UNSIGNED NOT NULL,
   `y` SMALLINT(5) UNSIGNED NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE = MyISAM AUTO_INCREMENT = 1;
+) ENGINE = InnoDB AUTO_INCREMENT = 1;
+
+--
+-- Table structure for table `guildstoragelog`
+--
+
+CREATE TABLE IF NOT EXISTS `log`.`guildstoragelog` (
+  `id` int(11) NOT NULL auto_increment,
+  `guild_id` int(11) unsigned NOT NULL default '0',
+  `time` datetime NOT NULL,
+  `char_id` int(11) NOT NULL default '0',
+  `name` varchar(24) NOT NULL default '',
+  `nameid` int(10) unsigned NOT NULL default '0',
+  `amount` int(11) NOT NULL default '1',
+  `identify` smallint(6) NOT NULL default '0',
+  `refine` tinyint(3) unsigned NOT NULL default '0',
+  `attribute` tinyint(4) unsigned NOT NULL default '0',
+  `card0` int(10) unsigned NOT NULL default '0',
+  `card1` int(10) unsigned NOT NULL default '0',
+  `card2` int(10) unsigned NOT NULL default '0',
+  `card3` int(10) unsigned NOT NULL default '0',
+  `option_id0` smallint(5) NOT NULL default '0',
+  `option_val0` smallint(5) NOT NULL default '0',
+  `option_parm0` tinyint(3) NOT NULL default '0',
+  `option_id1` smallint(5) NOT NULL default '0',
+  `option_val1` smallint(5) NOT NULL default '0',
+  `option_parm1` tinyint(3) NOT NULL default '0',
+  `option_id2` smallint(5) NOT NULL default '0',
+  `option_val2` smallint(5) NOT NULL default '0',
+  `option_parm2` tinyint(3) NOT NULL default '0',
+  `option_id3` smallint(5) NOT NULL default '0',
+  `option_val3` smallint(5) NOT NULL default '0',
+  `option_parm3` tinyint(3) NOT NULL default '0',
+  `option_id4` smallint(5) NOT NULL default '0',
+  `option_val4` smallint(5) NOT NULL default '0',
+  `option_parm4` tinyint(3) NOT NULL default '0',
+  `expire_time` int(11) unsigned NOT NULL default '0',
+  `unique_id` bigint(20) unsigned NOT NULL default '0',
+  `bound` tinyint(1) unsigned NOT NULL default '0',
+  `enchantgrade` tinyint unsigned NOT NULL default '0',
+  PRIMARY KEY  (`id`),
+  INDEX (`guild_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1;
+
+--
+-- Table structure for table `interlog`
+--
+
+CREATE TABLE IF NOT EXISTS `log`.`interlog` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `time` datetime NOT NULL,
+  `log` varchar(255) NOT NULL default '',
+  PRIMARY KEY (`id`),
+  INDEX `time` (`time`)
+) ENGINE=InnoDB;
 
 --
 -- Table structure for table `loginlog`
 --
 
-CREATE TABLE IF NOT EXISTS `loginlog` (
+CREATE TABLE IF NOT EXISTS `log`.`loginlog` (
   `time` datetime NOT NULL,
   `ip` varchar(15) NOT NULL default '',
   `user` varchar(23) NOT NULL default '',
   `rcode` tinyint(4) NOT NULL default '0',
   `log` varchar(255) NOT NULL default '',
   INDEX (`ip`)
-) ENGINE=MyISAM ;
+) ENGINE=InnoDB ;
 
 --
 -- Table structure for table `mvplog`
 --
 
-CREATE TABLE IF NOT EXISTS `mvplog` (
+CREATE TABLE IF NOT EXISTS `log`.`mvplog` (
   `mvp_id` mediumint(9) unsigned NOT NULL auto_increment,
   `mvp_date` datetime NOT NULL,
   `kill_char_id` int(11) NOT NULL default '0',
@@ -120,13 +197,13 @@ CREATE TABLE IF NOT EXISTS `mvplog` (
   `mvpexp` bigint(20) unsigned NOT NULL default '0',
   `map` varchar(11) NOT NULL default '',
   PRIMARY KEY  (`mvp_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1;
+) ENGINE=InnoDB AUTO_INCREMENT=1;
 
 --
 -- Table structure for table `npclog`
 --
 
-CREATE TABLE IF NOT EXISTS `npclog` (
+CREATE TABLE IF NOT EXISTS `log`.`npclog` (
   `npc_id` mediumint(9) unsigned NOT NULL auto_increment,
   `npc_date` datetime NOT NULL,
   `account_id` int(11) unsigned NOT NULL default '0',
@@ -137,7 +214,7 @@ CREATE TABLE IF NOT EXISTS `npclog` (
   PRIMARY KEY  (`npc_id`),
   INDEX (`account_id`),
   INDEX (`char_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1;
+) ENGINE=InnoDB AUTO_INCREMENT=1;
 
 --
 -- Table structure for table `picklog`
@@ -173,7 +250,7 @@ CREATE TABLE IF NOT EXISTS `npclog` (
 # Reform UI (1)
 # Enchant UI (2)
 
-CREATE TABLE IF NOT EXISTS `picklog` (
+CREATE TABLE IF NOT EXISTS `log`.`picklog` (
   `id` int(11) NOT NULL auto_increment,
   `time` datetime NOT NULL,
   `char_id` int(11) NOT NULL default '0',
@@ -206,7 +283,7 @@ CREATE TABLE IF NOT EXISTS `picklog` (
   `enchantgrade` tinyint unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`),
   INDEX (`type`)
-) ENGINE=MyISAM AUTO_INCREMENT=1;
+) ENGINE=InnoDB AUTO_INCREMENT=1;
 
 --
 -- Table structure for table `zenylog`
@@ -230,7 +307,7 @@ CREATE TABLE IF NOT EXISTS `picklog` (
 # Enchantgrade UI (0)
 # Enchant UI (2)
 
-CREATE TABLE IF NOT EXISTS `zenylog` (
+CREATE TABLE IF NOT EXISTS `log`.`zenylog` (
   `id` int(11) NOT NULL auto_increment,
   `time` datetime NOT NULL,
   `char_id` int(11) NOT NULL default '0',
@@ -240,4 +317,4 @@ CREATE TABLE IF NOT EXISTS `zenylog` (
   `map` varchar(11) NOT NULL default '',
   PRIMARY KEY  (`id`),
   INDEX (`type`)
-) ENGINE=MyISAM AUTO_INCREMENT=1;
+) ENGINE=InnoDB AUTO_INCREMENT=1;
