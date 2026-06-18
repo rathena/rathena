@@ -1,0 +1,109 @@
+// Booster Coin Exchange - Centro
+// Mega Booster Promotion exchange NPC (prontera convenience center)
+
+prontera,166,300,4	script	Centro	4_M_MERCAT1,{
+	if (countitem(100337) || countitem(101473)) {
+		mes "[Centro]";
+		mes "Welcome!";
+		mes "I have prepared various exchange services for Booster users.";
+		mes "Please take your time and look around.";
+		next;
+		mes "[Centro]";
+		mes "What would you like to exchange?";
+		next;
+		switch (select("Booster Weapons:Shadow Gear:Illusion Costume:Automatic Costume:Cancel")) {
+		case 1:
+			mes "[Centro]";
+			mes "Would you like to exchange for ^0000cdBooster Weapons^000000?";
+			mes "You need a ^0000cdBooster Weapon Ticket^000000 for each weapon.";
+			next;
+			mes "[Centro]";
+			mes "Which job branch weapons are you looking for?";
+			next;
+			switch (select("Swordsman:Merchant:Thief:Mage:Acolyte:Archer:Taekwon/Soul Linker:Summoner/Ninja:Super Novice/Gunslinger:Cancel")) {
+			case 1:
+				close2;
+				callshop "mega04";
+				end;
+			case 2:
+				close2;
+				callshop "mega05";
+				end;
+			case 3:
+				close2;
+				callshop "mega06";
+				end;
+			case 4:
+				close2;
+				callshop "mega07";
+				end;
+			case 5:
+				close2;
+				callshop "mega08";
+				end;
+			case 6:
+				close2;
+				callshop "mega09";
+				end;
+			case 7:
+				close2;
+				callshop "mega10";
+				end;
+			case 8:
+				close2;
+				callshop "mega11";
+				end;
+			case 9:
+				close2;
+				callshop "mega12";
+				end;
+			case 10:
+				mes "[Centro]";
+				mes "Come back anytime.";
+				close;
+			}
+		case 2:
+			mes "[Centro]";
+			mes "Would you like to exchange for ^0000cdShadow Gear^000000?";
+			mes "Booster Coins are required.";
+			close2;
+			callshop "mega13";
+			end;
+		case 3:
+			mes "[Centro]";
+			mes "Illusion costume exchange is available after clearing Episode 17.1.";
+			mes "Check your episode progress with the Booster Bell if needed.";
+			close2;
+			callshop "mega14";
+			end;
+		case 4:
+			if (countitem(101473)) {
+				mes "[Centro]";
+				mes "Automatic costume exchange requires Premium Booster Bell access.";
+				mes "You need an ^0000cdAutomatic Exchange Ticket^000000 for each item.";
+				close2;
+				callshop "mega15";
+				end;
+			}
+			mes "[Centro]";
+			mes "Automatic costume exchange is only available to";
+			mes "^0000cdPremium Booster Bell^000000 users.";
+			mes "Upgrade your Booster Bell to access this shop.";
+			close;
+		case 5:
+			mes "[Centro]";
+			mes "Come back anytime.";
+			close;
+		}
+	}
+	mes "[Centro]";
+	mes "Hello.";
+	mes "These exchange services are only available to Booster Bell users.";
+	mes "If you are not a Booster user, please find a Booster Bell nearby.";
+	close;
+
+OnInit:
+	setunitdata getnpcid(0), UNPC_GROUP_ID, 0;
+	setunittitle getnpcid(0), "<Mega Booster>";
+	end;
+}

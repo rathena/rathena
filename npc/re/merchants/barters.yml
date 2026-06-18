@@ -70,4 +70,5 @@ Footer:
   - Path: npc/re/merchants/barters/eden_market.yml
   - Path: npc/re/merchants/barters/biosphere.yml
   - Path: npc/re/merchants/barters/constellation_tower.yml
+  - Path: npc/re/merchants/barters/mega.yml
 
