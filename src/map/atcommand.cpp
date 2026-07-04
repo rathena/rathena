@@ -50,6 +50,7 @@
 #include "pc_groups.hpp"
 #include "pet.hpp"
 #include "quest.hpp"
+#include "rune.hpp"
 #include "script.hpp"
 #include "storage.hpp"
 #include "trade.hpp"
@@ -11060,6 +11061,13 @@ ACMD_FUNC(limitedsale){
 	return 0;
 }
 
+ACMD_FUNC(accountlimitedsale) {
+	nullpo_retr(-1, sd);
+
+	clif_open_account_limited_sale_tool(sd);
+	return 0;
+}
+
 /**
  * Displays camera information from the client.
  * Usage: @camerainfo or client command /viewpointvalue or /setcamera on supported clients
@@ -11464,6 +11472,17 @@ ACMD_FUNC(macrochecker){
 	return 0;
 }
 
+
+ACMD_FUNC(reloadrunedb)
+{
+	nullpo_retr(-1, sd);
+
+	rune_db_reload();
+	clif_displaymessage(fd, "Rune system has been reloaded");
+
+	return 0;
+}
+
 #include <custom/atcommand.inc>
 
 /**
@@ -11780,6 +11799,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(agitstart3),
 		ACMD_DEF(agitend3),
 		ACMD_DEFR(limitedsale, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
+		ACMD_DEFR(accountlimitedsale, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 		ACMD_DEFR(changedress, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 		ACMD_DEFR(camerainfo, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 		ACMD_DEFR(resurrect, ATCMD_NOCONSOLE),
@@ -11794,6 +11814,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEFR(roulette, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 		ACMD_DEF(setcard),
 		ACMD_DEF(macrochecker),
+		ACMD_DEF(reloadrunedb),
 	};
 	AtCommandInfo* atcommand;
 	int32 i;

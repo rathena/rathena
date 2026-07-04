@@ -1,0 +1,153 @@
+//===== rAthena Script ======================================= 
+//= rune system
+//============================================================ 
+prontera,161,192,3	script	Rune Stone#prt	4_RUNESTONE,{
+	mes "[Rune Stone]";
+	mes "Welcome.";
+	mes "I am Rune Stone, your AI assistant to help you use the power of runes.";
+	mes "How can I assist you?";
+	next;
+	switch( select( "Use Rune Tablet.", "I want to reform.", "Exchange various Rune Stones.", "What is this?" )) {
+		case 1:
+			mes "[Rune Stone]";
+			mes "I will help you use the Rune Tablet.";
+			close2;
+			runeui();
+			end;
+		case 2:
+			mes "[Rune Stone]";
+			mes "I will prepare the reform for you.";
+			close2;
+			item_reform("R_Ep17_Box");
+			end;
+		case 3:
+			mes "[Rune Stone]";
+			mes "I can help you exchange";
+			mes "various Rune Stones.";
+			close2;
+			callshop "Runestone";
+			break;
+		case 4:
+			pcblockmove getcharid(3),1;
+			mes "[Rune Stone]";
+			mes "Curious about me? But I can only assist with matters related to runes as an AI.";
+			mes "So, I will call Beta who manages me.";
+			next;
+			setdialogalign(4);
+			setdialogalign(2);
+			mes "Connecting...";
+			mes " ";
+			mes "¡à¡à¡à";
+			sleep2 500;
+			clear;
+			mes "Connecting...";
+			mes " ";
+			mes "¡á¡à¡à";
+			sleep2 500;
+			clear;
+			mes "Connecting...";
+			mes " ";
+			mes "¡á¡á¡à";
+			sleep2 500;
+			clear;
+			mes "Connecting...";
+			mes " ";
+			mes "¡á¡á¡á";
+			sleep2 500;
+			clear;
+			mes "Connection complete!";
+			mes " ";
+			mes "¡á¡á¡á";
+			close2;
+			sleep2 500;
+			mes "[?????]";
+			mes "Ah, can you hear me? It¡¯s connected!";
+			mes "Rune Stone? A customer needs help?";
+			next;
+			cutin "ep172_beta.bmp", 2;
+			mes "[Manager Beta]";
+			mes "Hello, Adventurer!";
+			mes "Nice to meet you!";
+			mes "You are curious about Rune Stone, right?";
+			next;
+			mes "[Manager Beta]";
+			mes "To explain Rune Stone, I must first tell you about the Great Sage Varmunt.";
+			mes "You might have heard of the Great Sage Varmunt of Midgard.";
+			next;
+			mes "[Manager Beta]";
+			mes "You might have even visited his mansion. This is where I am explaining from.";
+			next;
+			mes "[Manager Beta]";
+			mes "For more information about Varmunt's mansion, refer to <TIPBOX>[Guide]<INFO>7068</INFO></TIPBOX>!";
+			next;
+			mes "[Manager Beta]";
+			mes "You might wonder, how is Varmunt related to the Rune Stone?";
+			mes "The Great Sage Varmunt conducted diverse research worthy of his reputation.";
+			next;
+			mes "[Manager Beta]";
+			mes "His research greatly contributed to the advancement of this world. His brilliant research remains in the mansion.";
+			mes "There is still a lot to discover in the mansion and labs.";
+			next;
+			mes "[Manager Beta]";
+			mes "The Rune Stone here is a system developed based on newly unearthed research.";
+			next;
+			mes "[Manager Beta]";
+			mes "Did you know that all matter in this world has some degree of rune power?";
+			mes "However, it couldn¡¯t be utilized in its raw form.";
+			next;
+			mes "[Manager Beta]";
+			mes "Varmunt focused on extracting rune power from all life and matter and converting it into a usable force.";
+			next;
+			mes "[Manager Beta]";
+			mes "So what exactly does the Rune Stone do?";
+			next;
+			mes "[Manager Beta]";
+			mes "According to our research, it categorizes the rune power of different regions to activate new powers.";
+			next;
+			mes "[Manager Beta]";
+			mes "The Rune Stone helps activate various rune sets according to the situation and assists in processing required items.";
+			next;
+			mes "[Manager Beta]";
+			mes "The process of gaining rune power is simple.";
+			mes "First, you need the required items for each rune set.";
+			next;
+			mes "[Manager Beta]";
+			mes "Sometimes you need to convert or process items. Rune fragments or intact runes are also needed.";
+			next;
+			mes "[Manager Beta]";
+			mes "With the items ready, you can activate rune power through the Rune Tablet.";
+			mes "The more sets you activate, the more power you can use.";
+			mes "For detailed information, refer to <TIPBOX>[User Manual]<INFO>133</INFO></TIPBOX>!";
+			next;
+			mes "[Manager Beta]";
+			mes "Where can you find Rune Stones?";
+			mes "Besides Prontera, they are placed in key locations in Midgard.";
+			next;
+			mes "[Manager Beta]";
+			mes "It wasn¡¯t easy to install them everywhere for your convenience, but we hope you use them a lot.";
+			next;
+			mes "[Manager Beta]";
+			mes "We wanted to personally assist you, but it wasn¡¯t feasible.";
+			next;
+			mes "[Manager Beta]";
+			mes "Gaining cooperation from different countries, proving the safety of the devices... It was a lot of work.";
+			next;
+			mes "[Manager Beta]";
+			mes "As a result, we set up AI Rune Stones to assist you remotely.";
+			next;
+			mes "[Manager Beta]";
+			mes "I hope you use them frequently. Varmunt's devices are meant to be used a lot.";
+			mes "More usage data helps us assist you better.";
+			next;
+			mes "[Manager Beta]";
+			mes "Thank you for using the Rune Stones. I will now disconnect.";
+			mes "Connection terminated!";
+			pcblockmove getcharid(3),0;
+			close3;
+	}
+}
+
+yuno,142,177,0	duplicate(Rune Stone#prt)	Rune Stone#yuno	4_RUNESTONE
+rachel,131,144,0	duplicate(Rune Stone#prt)	Rune Stone#rcl	4_RUNESTONE
+icecastle,71,230,0	duplicate(Rune Stone#prt)	Rune Stone#ice	4_RUNESTONE
+ba_maison,137,111,0	duplicate(Rune Stone#prt)	Rune Stone#ba	4_RUNESTONE

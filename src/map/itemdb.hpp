@@ -115,6 +115,7 @@ enum item_itemid : t_itemid
 	ITEMID_INVENTORY_EX					= 25793,
 	ITEMID_WL_MB_SG						= 100065,
 	ITEMID_HOMUNCULUS_SUPPLEMENT		= 100371,
+	ITEMID_CHANGE_GENDER_CARD			= 103061,
 };
 
 ///Rune Knight
@@ -3466,6 +3467,7 @@ struct item_data
 	uint32 value_sell;
 	item_types type;
 	uint8 subtype;
+	std::map<std::string, uint16> decompoRune;
 	int32 maxchance; //For logs, for external game info, for scripts: Max drop chance of this item (e.g. 0.01% , etc.. if it = 0, then monsters don't drop it, -1 denotes items sold in shops only) [Lupus]
 	uint8 sex;
 	uint32 equip;
@@ -3721,6 +3723,13 @@ struct s_item_enchant_upgrade{
 	std::unordered_map<t_itemid, uint16> materials;
 };
 
+struct s_item_enchant_random_upgrade{
+	t_itemid enchant_item_id;
+	uint32 zeny;
+	std::unordered_map<t_itemid, uint16> materials;
+	std::unordered_map<t_itemid, std::shared_ptr<s_item_enchant_normal_sub>> enchants;
+};
+
 struct s_item_enchant_slot{
 	uint16 slot;
 	struct{
@@ -3736,6 +3745,9 @@ struct s_item_enchant_slot{
 	struct{
 		std::unordered_map<t_itemid, std::shared_ptr<s_item_enchant_upgrade>> enchants;
 	} upgrade;
+	struct {
+		std::unordered_map<t_itemid, std::shared_ptr<s_item_enchant_random_upgrade>> enchants;
+	} random_upgrade;
 };
 
 struct s_item_enchant{

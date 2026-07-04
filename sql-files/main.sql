@@ -1155,3 +1155,43 @@ CREATE TABLE IF NOT EXISTS `vendings` (
   `autotrade` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
+
+--
+-- Table structure for table `cashshop_account_limited_sale`
+--
+CREATE TABLE IF NOT EXISTS `cashshop_account_limited_sale` (
+  `item_id` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  `quantity` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  `start_time` BIGINT(20) UNSIGNED NOT NULL DEFAULT '0',
+  `end_time` BIGINT(20) UNSIGNED NOT NULL DEFAULT '0',
+  `rent_period` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  `price` INT UNSIGNED NOT NULL DEFAULT '0',
+  `sale_idx` INT NOT NULL DEFAULT '0',
+  PRIMARY KEY (`item_id`)
+) ENGINE=MyISAM
+
+--
+-- Table structure for table `runes`
+--
+
+CREATE TABLE `runes` (
+  `char_id` int UNSIGNED NOT NULL,
+  `rune_id` int UNSIGNED NOT NULL,
+  `set_id` int UNSIGNED NOT NULL,
+  `selected` tinyint NOT NULL DEFAULT '0',
+  `upgrade` smallint UNSIGNED NOT NULL DEFAULT '0',
+  `failcount` tinyint UNSIGNED NOT NULL DEFAULT '0',
+  `reward` tinyint(1) UNSIGNED DEFAULT '0',
+  UNIQUE KEY `char_id` (`char_id`,`rune_id`,`set_id`)
+) ENGINE=MyISAM;
+
+--
+-- Table structure for table `runes_book`
+--
+
+CREATE TABLE `runes_book` (
+  `char_id` int UNSIGNED NOT NULL,
+  `rune_id` int UNSIGNED NOT NULL,
+  `book_id` int UNSIGNED NOT NULL,
+  UNIQUE KEY `char_id` (`char_id`,`rune_id`,`book_id`)
+) ENGINE=MyISAM;

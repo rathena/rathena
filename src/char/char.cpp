@@ -299,7 +299,8 @@ int32 char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 		(p->show_equip != cp->show_equip) || (p->hotkey_rowshift2 != cp->hotkey_rowshift2) ||
 		(p->max_ap != cp->max_ap) || (p->ap != cp->ap) || (p->trait_point != cp->trait_point) ||
 		(p->pow != cp->pow) || (p->sta != cp->sta) || (p->wis != cp->wis) ||
-		(p->spl != cp->spl) || (p->con != cp->con) || (p->crt != cp->crt)
+		(p->spl != cp->spl) || (p->con != cp->con) || (p->crt != cp->crt) ||
+		(p->sex != cp->sex)
 	)
 	{	//Save status
 		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `base_level`='%d', `job_level`='%d',"
@@ -313,7 +314,8 @@ int32 char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 			"`delete_date`='%lu',`robe`='%d',`moves`='%d',`font`='%u',`uniqueitem_counter`='%u',"
 			"`hotkey_rowshift`='%d', `clan_id`='%d', `title_id`='%lu', `show_equip`='%d', `hotkey_rowshift2`='%d',"
 			"`max_ap`='%u',`ap`='%u',`trait_point`='%d',"
-			"`pow`='%d',`sta`='%d',`wis`='%d',`spl`='%d',`con`='%d',`crt`='%d'"
+			"`pow`='%d',`sta`='%d',`wis`='%d',`spl`='%d',`con`='%d',`crt`='%d',"
+			"`sex`='%c'"
 			" WHERE `account_id`='%d' AND `char_id` = '%d'",
 			schema_config.char_db, p->base_level, p->job_level,
 			p->base_exp, p->job_exp, p->zeny,
@@ -328,6 +330,7 @@ int32 char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 			p->hotkey_rowshift, p->clan_id, p->title_id, p->show_equip, p->hotkey_rowshift2,
 			p->max_ap, p->ap, p->trait_point,
 			p->pow, p->sta, p->wis, p->spl, p->con, p->crt,
+			(p->sex == SEX_FEMALE) ? 'F' : 'M',
 			p->account_id, p->char_id) )
 		{
 			Sql_ShowDebug(sql_handle);

@@ -378,6 +378,20 @@ struct s_qi_display {
 	e_questinfo_markcolor color;
 };
 
+struct s_runebook_data {
+	uint16 tagId;
+	uint32 bookId;
+};
+
+struct s_runeset_data {
+	uint16 tagId;
+	uint32 setId;
+	uint8 selected;
+	uint16 upgrade;
+	uint16 failcount;
+	uint8 reward;
+};
+
 class map_session_data : public block_list {
 public:
 	struct unit_data ud;
@@ -459,6 +473,7 @@ public:
 		bool roulette_open;
 		t_itemid item_reform;
 		uint64 item_enchant_index;
+		bool runeui_open;
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
@@ -652,6 +667,7 @@ public:
 		int32 crit_atk_rate;
 		int32 non_crit_atk_rate;
 		int32 crit_def_rate;
+		int32 non_crit_atk_def;
 		int32 classchange; // [Valaris]
 		int32 speed_rate, speed_add_rate, aspd_add;
 		int32 itemhealrate2; // [Epoque] Increase heal rate of all healing items.
@@ -832,6 +848,17 @@ public:
 	// Battlegrounds queue system [MasterOfMuppets]
 	int32 bg_id, bg_queue_id;
 	int32 tid_queue_active; ///< Timer ID associated with players joining an active BG
+
+	std::vector<s_runeset_data> runeSets;
+	std::vector<s_runebook_data> runeBooks;
+
+	struct s_runeactivated_data {
+		uint16 tagID;
+		uint32 runesetid;
+		uint16 upgrade;
+		uint8 bookNumber;
+		bool loaded;
+	} runeactivated_data;
 
 #ifdef SECURE_NPCTIMEOUT
 	/**
@@ -1230,6 +1257,7 @@ enum e_mado_type : uint16 {
 	( (class_) >= JOB_DRAGON_KNIGHT			&& (class_) <= JOB_TROUVERE       ) || \
 	( (class_) >= JOB_WINDHAWK2				&& (class_) <= JOB_IMPERIAL_GUARD2 ) || \
 	( (class_) >= JOB_SKY_EMPEROR			&& (class_) <= JOB_SPIRIT_HANDLER ) || \
+	( (class_) >= JOB_DRUID					&& (class_) <= JOB_ALITEA ) || \
 	  (class_) == JOB_SKY_EMPEROR2 \
 )
 #define pcdb_checkid(class_) pcdb_checkid_sub((uint32)class_)
@@ -1465,6 +1493,7 @@ bool pc_dropitem(map_session_data *sd,int32 n,int32 amount);
 bool pc_isequipped(map_session_data *sd, t_itemid nameid);
 enum adopt_responses pc_try_adopt( const map_session_data* p1_sd, const map_session_data* p2_sd, const map_session_data* b_sd);
 bool pc_adoption(map_session_data *p1_sd, map_session_data *p2_sd, map_session_data *b_sd);
+bool pc_changegendercard(map_session_data* sd, int32 n);
 
 uint16 pc_getpercentweight(const map_session_data& sd, uint32 weight = 0);
 void pc_updateweightstatus(map_session_data& sd);

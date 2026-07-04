@@ -4722,7 +4722,11 @@
 // Clients after 2018-03-07bRagexeRE do not have shuffled packets anymore
 #elif PACKETVER > 20180307
 	parseable_packet(0x0202,26,clif_parse_FriendsListAdd,2);
+#if PACKETVER >= 20251001
+	parseable_packet(0x022D,4,clif_parse_HomMenu,2);
+#else
 	parseable_packet(0x022D,5,clif_parse_HomMenu,2,4);
+#endif
 	parseable_packet(0x023B,36,clif_parse_StoragePassword,0);
 	//parseable_packet(0x0281,4,nullptr,0); // CZ_GANGSI_RANK
 	parseable_packet(0x02C4,26,clif_parse_PartyInvite2,2);

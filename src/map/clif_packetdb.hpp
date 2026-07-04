@@ -519,7 +519,11 @@
 
 // 2005-04-25aSakexe
 #if PACKETVER >= 20050425
+#if PACKETVER >= 20251001
+	parseable_packet(0x022d,4,clif_parse_HomMenu,2);
+#else
 	parseable_packet(0x022d,5,clif_parse_HomMenu,2,4);
+#endif
 	parseable_packet( HEADER_CZ_REQUEST_MOVENPC, sizeof( PACKET_CZ_REQUEST_MOVENPC ), clif_parse_HomMoveTo, 0 );
 	parseable_packet(0x0233,11,clif_parse_HomAttack,2,6,10);
 	parseable_packet(0x0234,6,clif_parse_HomMoveToMaster,2);
@@ -2022,6 +2026,11 @@
 	parseable_packet( HEADER_CZ_RESET_SKILL, sizeof( struct PACKET_CZ_RESET_SKILL ), clif_parse_reset_skill, 0 );
 #endif
 
+#if PACKETVER_MAIN_NUM >= 20230920
+	parseable_packet(HEADER_CZ_REQUEST_RANDOM_UPGRADE_ENCHANT, sizeof(struct PACKET_CZ_REQUEST_RANDOM_UPGRADE_ENCHANT), clif_parse_enchantwindow_upgrade_random, 0);
+	parseable_packet(HEADER_CZ_REQUEST_PERFECT_UPGRADE_ENCHANT, sizeof(struct PACKET_CZ_REQUEST_PERFECT_UPGRADE_ENCHANT), clif_parse_enchantwindow_upgrade, 0);
+#endif
+
 #if PACKETVER_MAIN_NUM >= 20230607
 	parseable_packet( HEADER_CZ_ALLY_CHAT, -1, clif_parse_dull, 0 );
 #endif
@@ -2034,6 +2043,26 @@
 	parseable_packet( HEADER_CZ_QUEST_STATUS_REQ, -1, clif_parse_dull, 0 );
 #endif
 
+#if PACKETVER_RE_NUM >= 20230802 || PACKETVER_MAIN_NUM >= 20230802
+	parseable_packet( HEADER_CZ_ASK_TAG_LOAD_RUNE, sizeof( struct PACKET_CZ_ASK_TAG_LOAD_RUNE ), clif_parse_asktag_rune, 0 );
+	packet( HEADER_ZC_BOOK_INFO_RUNE, -1 );
+	packet( HEADER_ZC_SET_INFO_RUNE, -1);
+	parseable_packet( HEADER_CZ_BOOK_ACTIVATE_RUNE, sizeof( struct PACKET_CZ_BOOK_ACTIVATE_RUNE ), clif_parse_bookactivate_rune, 0 );
+	packet( HEADER_ZC_BOOK_RESULT_RUNE, sizeof( PACKET_ZC_BOOK_RESULT_RUNE ));
+	parseable_packet( HEADER_CZ_SET_ACTIVATE_RUNE, sizeof( struct PACKET_CZ_SET_ACTIVATE_RUNE ), clif_parse_setactivate_rune, 0 );
+	packet( HEADER_ZC_SET_RESULT_RUNE, sizeof( PACKET_ZC_SET_RESULT_RUNE ) );
+	parseable_packet( HEADER_CZ_SET_UPGRADE_RUNE, sizeof( struct PACKET_CZ_SET_UPGRADE_RUNE ), clif_parse_setupgrade_rune, 0 );
+	packet( HEADER_ZC_SET_RESULT_RUNE2, sizeof( PACKET_ZC_SET_RESULT_RUNE2 ) );
+	packet( HEADER_ZC_REFRESH_ENABLE_RUNE2, sizeof( PACKET_ZC_REFRESH_ENABLE_RUNE2 ) );
+	parseable_packet( HEADER_CZ_ENABLE_RUNE, sizeof( struct PACKET_CZ_ENABLE_RUNE ), clif_parse_enable_rune, 0 );
+	packet( HEADER_ZC_REFRESH_ENABLE_RUNE, sizeof( PACKET_ZC_REFRESH_ENABLE_RUNE ) );
+	parseable_packet( HEADER_CZ_RUNE_DECOMPO, sizeof( PACKET_CZ_RUNE_DECOMPO ), clif_parse_decompo_rune, 0 );
+	packet( HEADER_ZC_RESULT_RUNE_DECOMPO, sizeof( PACKET_ZC_RESULT_RUNE_DECOMPO ) );
+	packet( HEADER_ZC_OPEN_RUNE_UI, sizeof( PACKET_ZC_OPEN_RUNE_UI ) );
+	parseable_packet( HEADER_CZ_RESULT_OPEN_RUNE_UI, sizeof( struct PACKET_CZ_RESULT_OPEN_RUNE_UI ), clif_parse_result_rune_ui_open, 0 );
+	packet( HEADER_ZC_ONLOG_ENABLE_RUNE, sizeof( PACKET_ZC_ONLOG_ENABLE_RUNE ) );
+#endif
+
 #if PACKETVER_MAIN_NUM >= 20230830
 	parseable_packet( HEADER_CZ_REQ_REPORT_USER, sizeof( struct PACKET_CZ_REQ_REPORT_USER ), clif_parse_dull, 0 );
 #endif
@@ -2042,8 +2071,24 @@
 	parseable_packet( HEADER_CZ_GM_CHECKER, sizeof( struct PACKET_CZ_GM_CHECKER ), clif_parse_macro_checker, 0 );
 #endif
 
+#if PACKETVER_RE_NUM >= 20241001 || PACKETVER_MAIN_NUM >= 20241001
+	packet(HEADER_ZC_REWARD_INFO_RUNE, -1);
+	parseable_packet(HEADER_CZ_RUNE_ASK_REWARD, sizeof(struct PACKET_CZ_RUNE_ASK_REWARD), clif_parse_askreward_rune, 0);
+	packet(HEADER_ZC_RUNE_RESULT_REWARD, sizeof(struct PACKET_ZC_RUNE_RESULT_REWARD));
+#endif
+
 #if PACKETVER_MAIN_NUM >= 20250122
 	parseable_packet( HEADER_CZ_MOVE_ITEM_TO_PERSONAL, sizeof( PACKET_CZ_MOVE_ITEM_TO_PERSONAL ), clif_parse_MoveFromKafraFav, 0 );
+#endif
+
+#if PACKETVER_SUPPORTS_ACCOUNT_LIMITED_SALE
+	// packet(0x0b48, clif->pAddAccountLimitedSaleItem); // Unimplemented
+	parseable_packet(HEADER_CZ_DEL_ACCOUNT_LIMTIED_SALE_ITEM, sizeof(struct PACKET_CZ_DEL_ACCOUNT_LIMTIED_SALE_ITEM), clif_parse_delete_account_limited_sale_item, 0);
+	parseable_packet(HEADER_CZ_GET_ACCOUNT_LIMTIED_SALE_LIST, sizeof(struct PACKET_CZ_GET_ACCOUNT_LIMTIED_SALE_LIST), clif_parse_get_account_limited_sale_list, 0);
+	parseable_packet(HEADER_CZ_OPEN_ACCOUNT_LIMTIED_SALE_TOOL, sizeof(struct PACKET_CZ_OPEN_ACCOUNT_LIMTIED_SALE_TOOL), clif_parse_open_account_limited_sale_tool, 0);
+	parseable_packet(HEADER_CZ_CLOSE_ACCOUNT_LIMTIED_SALE_TOOL, sizeof(struct PACKET_CZ_CLOSE_ACCOUNT_LIMTIED_SALE_TOOL), clif_parse_close_account_limited_sale_tool, 0);
+	parseable_packet(HEADER_CZ_SEARCH_ACCOUNT_LIMTIED_SALE_ITEM, sizeof(struct PACKET_CZ_SEARCH_ACCOUNT_LIMTIED_SALE_ITEM), clif_parse_search_account_limited_sale_item, 0);
+	parseable_packet(HEADER_CZ_ADD_ACCOUNT_LIMTIED_SALE_ITEM2, sizeof(struct PACKET_CZ_ADD_ACCOUNT_LIMTIED_SALE_ITEM2), clif_parse_add_account_limited_sale_item2, 0);
 #endif
 
 #endif /* CLIF_PACKETDB_HPP */

@@ -59318,3 +59318,193 @@ Body:
     Script: |
       bonus2 bExpAddRace,RC_All,5;
       bonus bFixedCast,-200;
+  - Combos:
+      - Combo:
+          - Glacier_Helm_1   # 400105
+          - Glacier_N_Knife    # 510190
+    Script: |
+      bonus bAtkRate,5;
+      bonus bBaseAtk,50;
+      .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
+      bonus bShortAtkRate,5*(.@r_weapon/3);
+      bonus bAspdRate,4*(.@r_weapon/3);
+  - Combos:
+      - Combo:
+          - Glacier_Helm_2   # 400106
+          - Glacier_N_Knife    # 510190
+    Script: |
+      bonus bMatkRate,5;
+      bonus bMatk,50;
+      .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bMagicAtkEle,Ele_All,5*(.@r_weapon/3);
+      bonus bAspdRate,4*(.@r_weapon/3);
+  - Combos:
+      - Combo:
+          - Glacier_Helm_3   # 400107
+          - Glacier_N_Knife    # 510190
+    Script: |
+      bonus bAtkRate,5;
+      bonus bBaseAtk,50;
+      .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
+      bonus bLongAtkRate,5*(.@r_weapon/3);
+      bonus bAspdRate,4*(.@r_weapon/3);
+  - Combos:
+      - Combo:
+          - Time_DM_R_Crown_AT   # 400999
+          - Dimen_AT_Axe    # 620059
+    Script: |
+      bonus2 bSkillAtk,"AT_SAVAGE_LUNGE",60;
+      if (getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A && getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A) {
+         bonus2 bSkillAtk,"AT_SAVAGE_LUNGE",getequiprefinerycnt(EQI_HEAD_TOP)+getequiprefinerycnt(EQI_HAND_R);
+      }
+      bonus2 bSkillCooldown,"AT_FRENZY_FANG",-200;
+  - Combos:
+      - Combo:
+          - Time_DM_R_Crown_AT   # 400999
+          - Dimen_AT_Knife    # 510193
+    Script: |
+      bonus2 bSkillAtk,"AT_SAVAGE_LUNGE",60;
+      if (getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A && getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A) {
+         bonus2 bSkillAtk,"AT_SAVAGE_LUNGE",getequiprefinerycnt(EQI_HEAD_TOP)+getequiprefinerycnt(EQI_HAND_R);
+      }
+      bonus2 bSkillCooldown,"AT_FRENZY_FANG",-200;
+  - Combos:
+      - Combo:
+          - Sky_Rune_Crown_SHC   # 401171
+          - Sky_Slasher_Katar    # 610093
+    Script: |
+      bonus2 bSkillAtk,"SHC_SAVAGE_IMPACT",20;
+      bonus bCritAtkRate,20;
+      if ((getequiprefinerycnt(EQI_HEAD_TOP)+getequiprefinerycnt(EQI_HAND_R))>=24 && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A && getskilllv(SHC_SAVAGE_IMPACT)>=10) {
+         bonus2 bSkillCooldown,"SHC_SAVAGE_IMPACT",-200;
+         bonus bShortAtkRate,10;
+      }
+  - Combos:
+      - Combo:
+          - B_FlameF_Ring    # 490930
+          - B_FlameF_Brooch    # 490931
+    Script: |
+      bonus bVariableCastrate,-5;
+      bonus bCooldownRate,-5;
+      bonus2 bAddRace,RC_All,10;
+  - Combos:
+      - Combo:
+          - B_FlameF_Armor    # 450531
+          - B_FlameF_Ring    # 490930
+          - B_FlameF_Brooch    # 490931
+    Script: |
+      bonus bAtkRate,5;
+      bonus bShortAtkRate,10;
+      bonus bLongAtkRate,10;
+      bonus2 bAddRace,RC_All,5;
+  - Combos:
+      - Combo:
+          - B_FlameF_Armor    # 450531
+          - B_FlameF_Boots    # 470420
+          - B_FlameF_Manteau    # 480751
+          - B_FlameF_Ring    # 490930
+          - B_FlameF_Brooch    # 490931
+    Script: |
+      bonus bAtkRate,5;
+      bonus bVariableCastrate,-5;
+      bonus bCooldownRate,-5;
+      if (getenchantgrade(EQI_ARMOR)>=ENCHANTGRADE_A && getenchantgrade(EQI_GARMENT)>=ENCHANTGRADE_A && getenchantgrade(EQI_SHOES)>=ENCHANTGRADE_A) {
+         bonus2 bAddSize,Size_Small,5;
+         bonus2 bAddSize,Size_Medium,5;
+         bonus2 bAddSize,Size_Large,5;
+      }
+  - Combos:
+      - Combo:
+          - Axe_Furious    # 520052
+          - FuriousBoots    # 470265
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R) + getequiprefinerycnt(EQI_SHOES);
+      bonus2 bSkillAtk,"AT_PRIMAL_CLAW",.@r;
+      bonus2 bSkillAtk,"AT_FERAL_CLAW",.@r;
+  - Combos:
+      - Combo:
+          - Axe_Furious    # 520052
+          - FuriousCirclet_AT    # 401176
+    Script: |
+      bonus2 bAddRace,RC_All,10;
+  - Combos:
+      - Combo:
+          - D_Glacier_Armor    # 450270
+          - D_Glacier_Boots    # 470197
+          - D_Glacier_Manteau    # 480283
+    Script: |
+      bonus bShortAtkRate,5;
+      bonus bLongAtkRate,5;
+      bonus bVariableCastrate,-5;
+      bonus bDelayrate,-5;
+      .@r = getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT);
+      bonus bBaseAtk,.@r*2;
+  - Combos:
+      - Combo:
+          - D_Glacier_Armor    # 450270
+          - D_Glacier_Boots    # 470197
+          - D_Glacier_Manteau    # 480283
+          - D_Glacier_N_Axe    # 620057
+    Script: |
+      .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
+      bonus bBaseAtk,10*(.@r_weapon/3);
+      if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_C) {
+         bonus bPAtk,6;
+         bonus bPow,5;
+         bonus bCon,5;
+         if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_B) {
+            bonus bPAtk,5;
+            bonus bPow,5;
+            bonus bCon,5;
+            if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A) {
+               bonus bPAtk,4;
+               bonus bPow,5;
+               bonus bCon,5;
+            }
+         }
+      }
+  - Combos:
+      - Combo:
+          - D_Glacier_Robe    # 450271
+          - D_Glacier_Shoes    # 470198
+          - D_Glacier_Muffler    # 480284
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,5;
+      bonus bVariableCastrate,-5;
+      bonus bDelayrate,-5;
+      .@r = getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT);
+      bonus bMatk,.@r*2;
+  - Combos:
+      - Combo:
+          - D_Glacier_Robe    # 450271
+          - D_Glacier_Shoes    # 470198
+          - D_Glacier_Muffler    # 480284
+          - D_Glacier_N_Axe    # 620057
+    Script: |
+      .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
+      bonus bMatk,10*(.@r_weapon/3);
+      if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_C) {
+         bonus bSMatk,6;
+         bonus bSpl,5;
+         bonus bCon,5;
+         if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_B) {
+            bonus bSMatk,5;
+            bonus bSpl,5;
+            bonus bCon,5;
+            if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A) {
+               bonus bSMatk,4;
+               bonus bSpl,5;
+               bonus bCon,5;
+            }
+         }
+      }
+  - Combos:
+      - Combo:
+          - S_Master_Shield    # 24793
+          - S_AT_Armor    # 1270183
+    Script: |
+      bonus bPow,2;
+      bonus bCon,2;
+      bonus bCrt,2;
+      bonus bWis,2;
+      bonus bSpl,2;

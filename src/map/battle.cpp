@@ -2694,6 +2694,8 @@ static int32 battle_range_type(const block_list* src, const block_list* target, 
 		case SS_KUNAIKAITEN:
 		case SS_KUNAIKUSSETSU:
 		case SS_HITOUAKUMU:
+		case DR_FLICKING_TONADO:
+		case KR_FEATHER_SPRINKLE:
 			return BF_LONG;
 		case NJ_KIRIKAGE: // Cast range mimics NJ_SHADOWJUMP but damage is considered melee
 		case GC_CROSSIMPACT: // Cast range is 7 cells and player jumps to target but skill is considered melee
@@ -2709,6 +2711,10 @@ static int32 battle_range_type(const block_list* src, const block_list* target, 
 		case NPC_MAXPAIN_ATK:
 		case SS_SHIMIRU: // 11 cell cast range.
 		case SKE_STAR_LIGHT_KICK: // 7 cell cast range.
+		case DR_CRUEL_BITE:
+		case KR_CLAW_WAVE:
+		case AT_PRIMAL_CLAW:
+		case AT_SAVAGE_LUNGE:
 			return BF_SHORT;
 		case CD_EFFLIGO:	// Skill range is 2 but damage is melee with books and ranged with mace.
 		case CD_PETITIO: {
@@ -3145,6 +3151,30 @@ static bool is_attack_critical(struct Damage* wd, block_list *src, const block_l
 					return false;
 				}
 
+				break;
+			case AT_PRIMAL_CLAW:
+			case AT_FERAL_CLAW:
+			case AT_ALPHA_CLAW:
+			case AT_SAVAGE_LUNGE:
+			case AT_FRENZY_FANG:
+				if( sc == nullptr ){
+					return false;
+				}
+				if( !sc->hasSCE( SC_ALPHA_PHASE ) && !sc->hasSCE( SC_INSANE3 ) ){
+					return false;
+				}
+				break;
+
+			case AT_PINION_SHOT:
+			case AT_QUILL_SPEAR:
+			case AT_QUILL_SPEAR_S:
+			case AT_TEMPEST_FLAP:
+				if( sc == nullptr ){
+					return false;
+				}
+				if( !sc->hasSCE( SC_APEX_PHASE ) ){
+					return false;
+				}
 				break;
 		}
 		if(tsd && tsd->bonus.critical_def)
@@ -4225,6 +4255,9 @@ static void battle_calc_skill_base_damage(struct Damage* wd, block_list *src,blo
 #ifndef RENEWAL
 			if (tsd != nullptr && tsd->bonus.crit_def_rate != 0 && !skill_id && (bflag & BDMG_CRIT)) {
 				ATK_ADDRATE(wd->damage, wd->damage2, -tsd->bonus.crit_def_rate);
+			}
+			if (tsd != nullptr && tsd->bonus.non_crit_atk_def != 0 && !(bflag & BDMG_CRIT)) {
+				ATK_ADDRATE(wd->damage, wd->damage2, -tsd->bonus.non_crit_atk_def);
 			}
 			//Acid Terror ignores DEF but will substract VIT from base attack value instead
 			if (skill_id == AM_ACIDTERROR)
@@ -5653,6 +5686,9 @@ static struct Damage battle_calc_weapon_attack(block_list *src, block_list *targ
 
 		if (tsd && tsd->bonus.crit_def_rate != 0)
 			ATK_ADDRATE(wd.damage, wd.damage2, -tsd->bonus.crit_def_rate);
+	} else {
+		if (tsd && tsd->bonus.non_crit_atk_def != 0)
+			ATK_ADDRATE(wd.damage, wd.damage2, -tsd->bonus.non_crit_atk_def);
 	}
 #endif
 

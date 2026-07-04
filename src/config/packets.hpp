@@ -86,7 +86,10 @@
 #define PACKETVER_CHAR_DELETEDATE (PACKETVER > 20130000 && PACKETVER <= 20141022) || PACKETVER >= 20150513
 
 /// Check if the specified packetvresion supports the cashshop sale system
-#define PACKETVER_SUPPORTS_SALES PACKETVER >= 20131223
+#define PACKETVER_SUPPORTS_SALES PACKETVER >= 20131223 && PACKETVER < 20240101
+
+/// Check if the specified packetversion supports the cashshop limited sale system
+#define PACKETVER_SUPPORTS_ACCOUNT_LIMITED_SALE PACKETVER >= 20240101
 
 /// Use web service?
 #define WEB_SERVER_ENABLE PACKETVER > 20200300

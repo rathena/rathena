@@ -56,6 +56,7 @@
 #include "pc_groups.hpp"
 #include "pet.hpp" // pet_unlocktarget()
 #include "quest.hpp"
+#include "rune.hpp"
 #include "skill.hpp" // skill_isCopyable()
 #include "script.hpp" // struct script_reg, struct script_regstr
 #include "searchstore.hpp"  // struct s_search_store_info
@@ -1768,6 +1769,80 @@ bool pc_adoption(map_session_data *p1_sd, map_session_data *p2_sd, map_session_d
 	return false; // Job Change Fail
 }
 
+
+/**
+ * Apply a gender change card (item 103061) to the player.
+ * Validates restrictions, toggles sex, sends effects, and saves.
+ */
+bool pc_changegendercard(map_session_data* sd, int32 n)
+{
+	nullpo_retr(false, sd);
+
+	if( n < 0 || n >= MAX_INVENTORY )
+		return false;
+
+	struct item& item = sd->inventory.u.items_inventory[n];
+	struct item_data* id = sd->inventory_data[n];
+
+	if( item.nameid == 0 || item.amount <= 0 || id == nullptr || id->nameid != ITEMID_CHANGE_GENDER_CARD )
+		return false;
+
+	if( pc_isdead(sd) || pc_cant_act(sd) || pc_issit(sd) ){
+		clif_msg(*sd, MSI_BUSY);
+		return false;
+	}
+
+	if( sd->status.party_id || sd->status.guild_id ){
+		clif_msg(*sd, MSI_GENDER_CHANGE_FAILED_CAUSE_GROUP);
+		return false;
+	}
+
+	if( pc_ismarried(sd) ){
+		clif_msg(*sd, MSI_GENDER_CHANGE_FAILED_CAUSE_MARRIED);
+		return false;
+	}
+
+	if( pc_isriding(sd) || pc_isridingdragon(sd) || pc_ismadogear(sd) ){
+		clif_msg(*sd, MSI_GENDER_CHANGE_FAILED_CAUSE_RIDING);
+		return false;
+	}
+
+	if( sd->disguise || sd->sc.getSCE(SC_MONSTER_TRANSFORM) || sd->sc.getSCE(SC_ACTIVE_MONSTER_TRANSFORM) ){
+		clif_msg(*sd, MSI_GENDER_CHANGE_FAILED_CAUSE_MONSTER_TRANSFORM);
+		return false;
+	}
+
+	if( item.expire_time != 0 )
+		return false;
+
+	if( (sd->class_&MAPID_SECONDMASK) == MAPID_BARDDANCER || (sd->class_&MAPID_SECONDMASK) == MAPID_KAGEROUOBORO ){
+		clif_msg(*sd, MSI_GENDER_CHANGE_FAILED_CAUSE_JOB);
+		return false;
+	}
+
+	sd->status.sex = static_cast<uint8>(sd->status.sex == SEX_MALE ? SEX_FEMALE : SEX_MALE);
+
+	status_set_viewdata(sd, sd->status.class_);
+	unit_stop_walking(sd, USW_FIXPOS|USW_FORCE_STOP);
+
+	clif_sprite_change(sd, sd->id, LOOK_GENDER, sd->status.sex, 0, AREA);
+	clif_changelook(sd, LOOK_BASE, sd->vd.look[LOOK_BASE]);
+	clif_changelook(sd, LOOK_BODY2, sd->vd.look[LOOK_BODY2]);
+
+	clif_gender_change_effect(*sd);
+
+	pc_checkitem(sd);
+	status_calc_pc(sd, SCO_FORCE);
+	pc_equiplookall(sd);
+
+	clif_useitemack(sd, n, item.amount - 1, true);
+	pc_delitem(sd, n, 1, 1, 0, LOG_TYPE_CONSUME);
+
+	chrif_save(sd, CSAVE_NORMAL|CSAVE_INVENTORY);
+
+	return true;
+}
+
 static bool pc_job_can_use_item( const map_session_data* sd, const item_data* item ){
 	nullpo_retr( false, sd );
 	nullpo_retr( false, item );
@@ -2300,6 +2375,8 @@ bool pc_authok(map_session_data *sd, uint32 login_id2, time_t expiration_time, i
 		clif_updatestatus(*sd, SP_JOBEXP);
 	}
 
+	rune_load(sd);
+
 	// Request all registries (auth is considered completed whence they arrive)
 	intif_request_registry(sd,7);
 	return true;
@@ -2513,6 +2590,7 @@ void pc_reg_received(map_session_data *sd)
 	}
 
 	channel_autojoin(sd);
+	clif_onlogenable_rune(sd);
 }
 
 static int32 pc_calc_skillpoint(map_session_data* sd)
@@ -4324,6 +4402,10 @@ void pc_bonus(map_session_data *sd,int32 type,int32 val)
 		case SP_CRIT_DEF_RATE:
 			if (sd->state.lr_flag != LR_FLAG_ARROW)
 				sd->bonus.crit_def_rate += val;
+			break;
+		case SP_NON_CRIT_ATK_DEF:
+			if (sd->state.lr_flag != LR_FLAG_ARROW)
+				sd->bonus.non_crit_atk_def += val;
 			break;
 		case SP_NO_REGEN:
 			if (sd->state.lr_flag != LR_FLAG_ARROW)
@@ -6525,6 +6607,10 @@ int32 pc_useitem(map_session_data *sd,int32 n)
 	sd->itemindex = n;
 	amount = item.amount;
 	script = id->script;
+
+	if (nameid == ITEMID_CHANGE_GENDER_CARD)
+		return pc_changegendercard(sd, n) ? 1 : 0;
+
 	//Check if the item is to be consumed immediately [Skotlex]
 	if (id->flag.delay_consume > 0)
 		clif_useitemack(sd, n, amount, true);
@@ -7539,6 +7625,7 @@ uint64 pc_jobid2mapid(uint16 b_class)
 		case JOB_HANBOK:                return MAPID_HANBOK;
 		case JOB_OKTOBERFEST:           return MAPID_OKTOBERFEST;
 		case JOB_SUMMER2:               return MAPID_SUMMER2;
+		case JOB_DRUID:                 return MAPID_DRUID;
 	//2-1 Jobs
 		case JOB_SUPER_NOVICE:          return MAPID_SUPER_NOVICE;
 		case JOB_KNIGHT:                return MAPID_KNIGHT;
@@ -7553,6 +7640,7 @@ uint64 pc_jobid2mapid(uint16 b_class)
 		case JOB_OBORO:                 return MAPID_KAGEROUOBORO;
 		case JOB_SPIRIT_HANDLER:        return MAPID_SPIRIT_HANDLER;
 		case JOB_DEATH_KNIGHT:          return MAPID_DEATH_KNIGHT;
+		case JOB_KARNOS:                return MAPID_KARNOS;
 	//2-2 Jobs
 		case JOB_CRUSADER:              return MAPID_CRUSADER;
 		case JOB_SAGE:                  return MAPID_SAGE;
@@ -7598,6 +7686,7 @@ uint64 pc_jobid2mapid(uint16 b_class)
 		case JOB_BABY_GUNSLINGER:       return MAPID_BABY_GUNSLINGER;
 		case JOB_BABY_NINJA:            return MAPID_BABY_NINJA;
 		case JOB_BABY_SUMMONER:         return MAPID_BABY_SUMMONER;
+		case JOB_BABY_DRUID:            return MAPID_BABY_DRUID;
 	//Baby 2-1 Jobs
 		case JOB_SUPER_BABY:            return MAPID_SUPER_BABY;
 		case JOB_BABY_KNIGHT:           return MAPID_BABY_KNIGHT;
@@ -7610,6 +7699,7 @@ uint64 pc_jobid2mapid(uint16 b_class)
 		case JOB_BABY_REBELLION:        return MAPID_BABY_REBELLION;
 		case JOB_BABY_KAGEROU:
 		case JOB_BABY_OBORO:            return MAPID_BABY_KAGEROUOBORO;
+		case JOB_BABY_KARNOS:           return MAPID_BABY_KARNOS;
 	//Baby 2-2 Jobs
 		case JOB_BABY_CRUSADER:         return MAPID_BABY_CRUSADER;
 		case JOB_BABY_SAGE:             return MAPID_BABY_SAGE;
@@ -7631,6 +7721,7 @@ uint64 pc_jobid2mapid(uint16 b_class)
 		case JOB_NIGHT_WATCH:           return MAPID_NIGHT_WATCH;
 		case JOB_SHINKIRO:
 		case JOB_SHIRANUI:              return MAPID_SHINKIROSHIRANUI;
+		case JOB_ALITEA:                return MAPID_ALITEA;
 	//3-2 Jobs
 		case JOB_ROYAL_GUARD:           return MAPID_ROYAL_GUARD;
 		case JOB_SORCERER:              return MAPID_SORCERER;
@@ -7720,6 +7811,7 @@ int32 pc_mapid2jobid(uint64 class_, int32 sex)
 		case MAPID_HANBOK:                return JOB_HANBOK;
 		case MAPID_OKTOBERFEST:           return JOB_OKTOBERFEST;
 		case MAPID_SUMMER2:               return JOB_SUMMER2;
+		case MAPID_DRUID:                 return JOB_DRUID;
 	//2-1 Jobs
 		case MAPID_SUPER_NOVICE:          return JOB_SUPER_NOVICE;
 		case MAPID_KNIGHT:                return JOB_KNIGHT;
@@ -7733,6 +7825,7 @@ int32 pc_mapid2jobid(uint64 class_, int32 sex)
 		case MAPID_KAGEROUOBORO:          return sex?JOB_KAGEROU:JOB_OBORO;
 		case MAPID_SPIRIT_HANDLER:        return JOB_SPIRIT_HANDLER;
 		case MAPID_DEATH_KNIGHT:          return JOB_DEATH_KNIGHT;
+		case MAPID_KARNOS:                return JOB_KARNOS;
 	//2-2 Jobs
 		case MAPID_CRUSADER:              return JOB_CRUSADER;
 		case MAPID_SAGE:                  return JOB_SAGE;
@@ -7776,6 +7869,7 @@ int32 pc_mapid2jobid(uint64 class_, int32 sex)
 		case MAPID_BABY_GUNSLINGER:       return JOB_BABY_GUNSLINGER;
 		case MAPID_BABY_NINJA:            return JOB_BABY_NINJA;
 		case MAPID_BABY_SUMMONER:         return JOB_BABY_SUMMONER;
+		case MAPID_BABY_DRUID:            return JOB_BABY_DRUID;
 	//Baby 2-1 Jobs
 		case MAPID_SUPER_BABY:            return JOB_SUPER_BABY;
 		case MAPID_BABY_KNIGHT:           return JOB_BABY_KNIGHT;
@@ -7787,6 +7881,7 @@ int32 pc_mapid2jobid(uint64 class_, int32 sex)
 		case MAPID_BABY_STAR_GLADIATOR:   return JOB_BABY_STAR_GLADIATOR;
 		case MAPID_BABY_REBELLION:        return JOB_BABY_REBELLION;
 		case MAPID_BABY_KAGEROUOBORO:     return sex?JOB_BABY_KAGEROU:JOB_BABY_OBORO;
+		case MAPID_BABY_KARNOS:           return JOB_BABY_KARNOS;
 	//Baby 2-2 Jobs
 		case MAPID_BABY_CRUSADER:         return JOB_BABY_CRUSADER;
 		case MAPID_BABY_SAGE:             return JOB_BABY_SAGE;
@@ -7806,6 +7901,7 @@ int32 pc_mapid2jobid(uint64 class_, int32 sex)
 		case MAPID_STAR_EMPEROR:          return JOB_STAR_EMPEROR;
 		case MAPID_NIGHT_WATCH:           return JOB_NIGHT_WATCH;
 		case MAPID_SHINKIROSHIRANUI:      return sex?JOB_SHINKIRO:JOB_SHIRANUI;
+		case MAPID_ALITEA:                return JOB_ALITEA;
 	//3-2 Jobs
 		case MAPID_ROYAL_GUARD:           return JOB_ROYAL_GUARD;
 		case MAPID_SORCERER:              return JOB_SORCERER;
@@ -8160,6 +8256,13 @@ const char* job_name(int32 class_)
 
 	case JOB_SKY_EMPEROR2:
 		return msg_txt( nullptr, 813 );
+
+	case JOB_DRUID:
+	case JOB_BABY_DRUID:
+	case JOB_KARNOS:
+	case JOB_BABY_KARNOS:
+	case JOB_ALITEA:
+		return msg_txt( nullptr, 833 - JOB_DRUID + class_ );
 
 	default:
 		return msg_txt(nullptr,655);
@@ -10396,6 +10499,7 @@ int64 pc_readparam( const map_session_data* sd, int64 type )
 			val = sd->castrate; break;
 #endif
 		case SP_CRIT_DEF_RATE: val = sd->bonus.crit_def_rate; break;
+		case SP_NON_CRIT_ATK_DEF: val = sd->bonus.non_crit_atk_def; break;
 		case SP_ADD_ITEM_SPHEAL_RATE: val = sd->bonus.itemsphealrate2; break;
 		default:
 			ShowError("pc_readparam: Attempt to read unknown parameter '%lld'.\n", type);
@@ -10478,6 +10582,7 @@ bool pc_setparam(map_session_data *sd,int64 type,int64 val_tmp)
 			pc_gainexp(sd, nullptr, 0, val_tmp - sd->status.job_exp, 2);
 		return true;
 	case SP_SEX:
+		clif_gender_change_effect(*sd);
 		sd->status.sex = val ? SEX_MALE : SEX_FEMALE;
 		break;
 	case SP_WEIGHT:
@@ -14356,7 +14461,9 @@ void JobDatabase::loadingFinished() {
 			}
 
 			// Extended classes
-			if( ( class_ & MAPID_SECONDMASK ) == MAPID_KAGEROUOBORO || ( class_ & MAPID_SECONDMASK ) == MAPID_REBELLION ){
+			if( ( class_ & MAPID_SECONDMASK ) == MAPID_KAGEROUOBORO ||
+				( class_ & MAPID_SECONDMASK ) == MAPID_REBELLION ||
+				( class_ & MAPID_SECONDMASK ) == MAPID_KARNOS ){
 				max = battle_config.max_extended_parameter;
 				break;
 			}
@@ -15252,7 +15359,9 @@ int16 pc_maxaspd( const map_session_data* sd ) {
 	nullpo_ret(sd);
 
 	return (( sd->class_&JOBL_THIRD) ? battle_config.max_third_aspd : (
-			((sd->class_&MAPID_SECONDMASK) == MAPID_KAGEROUOBORO || (sd->class_&MAPID_SECONDMASK) == MAPID_REBELLION) ? battle_config.max_extended_aspd : (
+			((sd->class_&MAPID_SECONDMASK) == MAPID_KAGEROUOBORO ||
+			(sd->class_&MAPID_SECONDMASK) == MAPID_REBELLION ||
+			(sd->class_&MAPID_SECONDMASK) == MAPID_KARNOS) ? battle_config.max_extended_aspd : (
 			(sd->class_&MAPID_FIRSTMASK) == MAPID_SUMMONER) ? battle_config.max_summoner_aspd : 
 			battle_config.max_aspd ));
 }

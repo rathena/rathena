@@ -9,13 +9,16 @@
 #include <common/cbasetypes.hpp> // uint16, uint32
 #include <common/malloc.hpp> // CREATE, RECREATE, aFree
 #include <common/showmsg.hpp> // ShowWarning, ShowStatus
+#include <common/nullpo.hpp>
 
 #include "clif.hpp"
 #include "log.hpp"
 #include "pc.hpp" // s_map_session_data
 #include "pet.hpp" // pet_create_egg
 
-#if PACKETVER_SUPPORTS_SALES
+#if PACKETVER_SUPPORTS_ACCOUNT_LIMITED_SALE
+std::vector<std::shared_ptr<cashshop_limited_sale>> cashshop_limited_sales;
+#elif PACKETVER_SUPPORTS_SALES
 struct sale_item_db sale_items;
 #endif
 
@@ -107,6 +110,19 @@ uint64 CashShopDatabase::parseBodyNode( const ryml::NodeRef& node ){
 
 		cash_item->price = price;
 
+		int32 sale_idx = 0;
+
+		if (tab == CASHSHOP_TAB_SALE) {
+			if( this->asInt32( it, "SaleIdx", sale_idx ) ){
+				if( sale_idx < 0 ){
+					this->invalidWarning( it["SaleIdx"], "Sale index has to be greater than or equal to zero." );
+					return 0;
+				}
+			}
+
+			cash_item->sale_idx = sale_idx;
+		}
+
 		if( !cash_item_exists ){
 			entry->items.push_back( cash_item );
 		}
@@ -137,7 +153,158 @@ std::shared_ptr<s_cash_item> CashShopDatabase::findItemInTab( e_cash_shop_tab ta
 
 CashShopDatabase cash_shop_db;
 
-#if PACKETVER_SUPPORTS_SALES
+#if PACKETVER_SUPPORTS_ACCOUNT_LIMITED_SALE
+std::shared_ptr<cashshop_limited_sale> cashshop_find_limited_sale(int32 item_id)
+{
+	for (const auto& sale : cashshop_limited_sales) {
+		if (sale->item_id == item_id)
+			return sale;
+	}
+	return nullptr;
+}
+
+enum cashshop_limited_sale_result cashshop_add_limited_sale_item(int32 item_id, int32 quantity, int64 start_time, int64 end_time, uint32 rent_period)
+{
+	const item_data *data = itemdb_search(item_id);
+	if (data == nullptr)
+		return CASHSHOP_LIMITED_SALE_FAIL;
+
+	if (cashshop_find_limited_sale(item_id) != nullptr)
+		return CASHSHOP_LIMITED_SALE_DUPLICATED;
+
+	if (quantity <= 0)
+		return CASHSHOP_LIMITED_SALE_FAIL;
+
+	if (end_time <= start_time)
+		return CASHSHOP_LIMITED_SALE_FAIL;
+
+	if (rent_period > MAX_LIMITED_SALE_RENT_PERIOD)
+		return CASHSHOP_LIMITED_SALE_FAIL;
+
+	// Look up price and sale_idx from YML cash shop DB
+	uint32 price = 0;
+	int32 sale_idx = 0;
+	const std::shared_ptr<s_cash_item> csitem = cash_shop_db.findItemInTab(CASHSHOP_TAB_SALE, item_id);
+	if (csitem != nullptr) {
+		price = csitem->price;
+		sale_idx = csitem->sale_idx;
+	}
+
+	auto e = std::make_shared<cashshop_limited_sale>();
+	e->item_id = item_id;
+	e->price = price;
+	e->quantity = quantity;
+	e->start_time = start_time;
+	e->end_time = end_time;
+	e->rent_period = rent_period;
+	e->sale_idx = sale_idx;
+	cashshop_limited_sales.push_back(e);
+	return CASHSHOP_LIMITED_SALE_SUCCESS;
+}
+
+enum cashshop_limited_sale_result cashshop_delete_limited_sale_item(int32 item_id)
+{
+	for (auto it = cashshop_limited_sales.begin(); it != cashshop_limited_sales.end(); ++it) {
+		if ((*it)->item_id == item_id) {
+			cashshop_limited_sales.erase(it);
+			return CASHSHOP_LIMITED_SALE_SUCCESS;
+		}
+	}
+	return CASHSHOP_LIMITED_SALE_FAIL;
+}
+
+
+int64 cashshop_get_pc_item_sale_quantity(map_session_data *sd, int32 item_id)
+{
+	nullpo_ret(sd);
+
+	const std::shared_ptr<cashshop_limited_sale> sale = cashshop_find_limited_sale(item_id);
+	if (sale == nullptr)
+		return 0;
+
+	char varname[64];
+	snprintf(varname, sizeof(varname), CASHSHOP_LIMITED_VAR_PREFIX"%d_%d", sale->sale_idx, item_id);
+	return pc_readglobalreg(sd, add_str(varname));
+}
+
+int32 cashshop_set_pc_item_sale_quantity(map_session_data *sd, int32 item_id, int32 quantity)
+{
+	nullpo_ret(sd);
+
+	const std::shared_ptr<cashshop_limited_sale> sale = cashshop_find_limited_sale(item_id);
+	if (sale == nullptr)
+		return 0;
+
+	char varname[64];
+	snprintf(varname, sizeof(varname), CASHSHOP_LIMITED_VAR_PREFIX"%d_%d", sale->sale_idx, item_id);
+	return pc_setglobalreg(sd, add_str(varname), quantity);
+}
+
+uint32 cashshop_convert_rent_time(uint32 rent_time)
+{
+	if (rent_time == 0)
+		return 0;
+
+	const struct tm *timeinfo = localtime((time_t *)&rent_time);
+	if (timeinfo == NULL)
+		return 0;
+
+	uint32 rentPeriod =
+		(timeinfo->tm_mday < 15 ? (timeinfo->tm_mday * 86400) : 0) // The rent days limit is 14, so we ignore any value above that.
+		+ (timeinfo->tm_hour * 3600)
+		+ (timeinfo->tm_min * 60);
+	return rentPeriod;
+}
+
+void cashshop_load_account_limited_sales(void) {
+	if (Sql_Query(mmysql_handle, "SELECT `item_id`, `quantity`, `start_time`, `end_time`, `rent_period` FROM `cashshop_account_limited_sale`") != SQL_SUCCESS) {
+		Sql_ShowDebug(mmysql_handle);
+		return;
+	}
+
+	cashshop_limited_sales.clear();
+	while (Sql_NextRow(mmysql_handle) == SQL_SUCCESS) {
+		char* data;
+		auto sale = std::make_shared<cashshop_limited_sale>();
+
+		Sql_GetData(mmysql_handle, 0, &data, nullptr); sale->item_id = atoi(data);
+		Sql_GetData(mmysql_handle, 1, &data, nullptr); sale->quantity = atoi(data);
+		Sql_GetData(mmysql_handle, 2, &data, nullptr); sale->start_time = atoll(data);
+		Sql_GetData(mmysql_handle, 3, &data, nullptr); sale->end_time = atoll(data);
+		Sql_GetData(mmysql_handle, 4, &data, nullptr); sale->rent_period = (uint32)atoi(data);
+
+		// Price and sale_idx come from YML
+		const std::shared_ptr<s_cash_item> csitem = cash_shop_db.findItemInTab(CASHSHOP_TAB_SALE, sale->item_id);
+		sale->price = (csitem != nullptr) ? csitem->price : 0;
+		sale->sale_idx = (csitem != nullptr) ? csitem->sale_idx : 0;
+
+		cashshop_limited_sales.push_back(sale);
+	}
+
+	Sql_FreeResult(mmysql_handle);
+	ShowStatus("Loaded %zu account limited sale items from SQL.\n", cashshop_limited_sales.size());
+}
+
+
+void cashshop_save_account_limited_sales() {
+	if (Sql_Query(mmysql_handle, "DELETE FROM `cashshop_account_limited_sale`") != SQL_SUCCESS) {
+		Sql_ShowDebug(mmysql_handle);
+		return;
+	}
+
+	for (const auto& sale : cashshop_limited_sales) {
+		if (Sql_Query(mmysql_handle,
+			"INSERT INTO `cashshop_account_limited_sale` "
+			"(`item_id`, `quantity`, `start_time`, `end_time`, `rent_period`) "
+			"VALUES (%d, %d, %lld, %lld, %u)",
+			sale->item_id, sale->quantity, (long long)sale->start_time, (long long)sale->end_time, sale->rent_period) != SQL_SUCCESS)
+		{
+			Sql_ShowDebug(mmysql_handle);
+		}
+	}
+}
+
+#elif PACKETVER_SUPPORTS_SALES
 static bool sale_parse_dbrow( char* fields[], int32 columns, int32 current ){
 	t_itemid nameid = strtoul(fields[0], nullptr, 10);
 	int32 start = atoi(fields[1]), end = atoi(fields[2]), amount = atoi(fields[3]);
@@ -485,7 +652,24 @@ bool cashshop_buylist( map_session_data* sd, uint32 kafrapoints, int32 n, const 
 		}
 
 		if( tab == CASHSHOP_TAB_SALE ){
-#if PACKETVER_SUPPORTS_SALES
+#if PACKETVER_SUPPORTS_ACCOUNT_LIMITED_SALE
+			const std::shared_ptr<cashshop_limited_sale> sale = cashshop_find_limited_sale(nameid);
+
+			if (sale == nullptr) {
+				clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_UNKNOWN );
+				return false;
+			}
+
+			if (sale->start_time > time(NULL) || sale->end_time < time(NULL)) {
+				clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_UNKNOWN );
+				return false;
+			}
+
+			if (cashshop_get_pc_item_sale_quantity(sd, sale->item_id) + quantity > sale->quantity) {
+				clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_EACHITEM_OVERCOUNT );
+				return false;
+			}
+#elif PACKETVER_SUPPORTS_SALES
 			struct sale_item_data* sale = sale_find_item( nameid, true );
 
 			if( sale == nullptr ){
@@ -540,7 +724,7 @@ bool cashshop_buylist( map_session_data* sd, uint32 kafrapoints, int32 n, const 
 	for( i = 0; i < n; ++i ){
 		t_itemid nameid = item_list[i].itemId;
 		uint32 quantity = item_list[i].amount;
-#if PACKETVER_SUPPORTS_SALES
+#if PACKETVER_SUPPORTS_SALES || PACKETVER_SUPPORTS_ACCOUNT_LIMITED_SALE
 		uint16 tab = item_list[i].tab;
 #endif
 		struct item_data *id = itemdb_search(nameid);
@@ -552,8 +736,26 @@ bool cashshop_buylist( map_session_data* sd, uint32 kafrapoints, int32 n, const 
 
 		if (id->flag.guid || !itemdb_isstackable2(id))
 			get_amt = 1;
+#if PACKETVER_SUPPORTS_ACCOUNT_LIMITED_SALE
+	const std::shared_ptr<cashshop_limited_sale> sale = cashshop_find_limited_sale(nameid);
 
-#if PACKETVER_SUPPORTS_SALES
+	if (tab == CASHSHOP_TAB_SALE) {
+		if (sale == nullptr) {
+			clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_UNKNOWN );
+			return false;
+		}
+
+		if (sale->start_time > time(NULL) || sale->end_time < time(NULL)) {
+			clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_UNKNOWN );
+			return false;
+		}
+
+		if (cashshop_get_pc_item_sale_quantity(sd, sale->item_id) + quantity > sale->quantity) {
+			clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_EACHITEM_OVERCOUNT );
+			return false;
+		}
+	}
+#elif PACKETVER_SUPPORTS_SALES
 		struct sale_item_data* sale = nullptr;
 
 		if( tab == CASHSHOP_TAB_SALE ){
@@ -581,7 +783,11 @@ bool cashshop_buylist( map_session_data* sd, uint32 kafrapoints, int32 n, const 
 
 				item_tmp.nameid = nameid;
 				item_tmp.identify = 1;
-
+ 
+#if PACKETVER_SUPPORTS_ACCOUNT_LIMITED_SALE
+				if (sale && sale->rent_period != 0)
+					item_tmp.expire_time = (uint32)(time(NULL) + sale->rent_period);
+#endif
 				switch( pc_additem( sd, &item_tmp, get_amt, LOG_TYPE_CASH ) ){
 					case ADDITEM_OVERWEIGHT:
 						clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_INVENTORY_WEIGHT );
@@ -600,7 +806,12 @@ bool cashshop_buylist( map_session_data* sd, uint32 kafrapoints, int32 n, const 
 
 			clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_SUCCESS );
 
-#if PACKETVER_SUPPORTS_SALES
+#if PACKETVER_SUPPORTS_ACCOUNT_LIMITED_SALE
+			if (tab == CASHSHOP_TAB_SALE) {
+				cashshop_set_pc_item_sale_quantity(sd, nameid, cashshop_get_pc_item_sale_quantity(sd, nameid) + get_amt);
+				clif_get_account_limited_sale_list(sd);
+			}
+#elif PACKETVER_SUPPORTS_SALES
 			if( tab == CASHSHOP_TAB_SALE ){
 				uint32 new_amount = sale->amount - get_amt;
 
@@ -638,7 +849,10 @@ void cashshop_reloaddb( void ){
 void do_final_cashshop( void ){
 	cash_shop_db.clear();
 
-#if PACKETVER_SUPPORTS_SALES
+#if PACKETVER_SUPPORTS_ACCOUNT_LIMITED_SALE
+	cashshop_limited_sales.clear();
+	// TODO: maybe fire up an npc event to load the limited sales
+#elif PACKETVER_SUPPORTS_SALES
 	if( sale_items.count > 0 ){
 		for( int32 i = 0; i < sale_items.count; i++ ){
 			struct sale_item_data* it = sale_items.item[i];

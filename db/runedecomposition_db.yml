@@ -1,0 +1,103 @@
+# This file is a part of Shakto.
+#   Copyright(C) 2023 Shakto Script
+#   https://ronovelty.com/
+#
+###########################################################################
+# Rune Decomposition Database
+###########################################################################
+# - Id                         Client side LUB index. (itemDecomType_tbl in itemDecom.lub)
+#   Materials:                 Rune provided when an item is decomposed
+#     - Material               Name of the item
+#       Amountmin              Min amount provided
+#       Amountmax              Max amount provided
+#       Chance                 Chance of having the item
+###########################################################################
+
+Header:
+  Type: RUNE_DECOMPO_DB
+  Version: 1
+
+Body:
+  - Id: 1
+    Materials:
+      - Material: Imperfect_Rune
+        Amountmin: 1
+        Amountmax: 3
+        Chance: 100000
+  - Id: 2
+    Materials:
+      - Material: Imperfect_Rune
+        Amountmin: 33
+        Amountmax: 99
+        Chance: 100000
+      - Material: Perfect_Rune
+        Amountmin: 1
+        Amountmax: 1
+        Chance: 25000
+  - Id: 3
+    Materials:
+      - Material: Imperfect_Rune
+        Amountmin: 8
+        Amountmax: 12
+        Chance: 100000
+      - Material: Perfect_Rune
+        Amountmin: 1
+        Amountmax: 1
+        Chance: 1000
+  - Id: 4
+    Materials:
+      - Material: Imperfect_Rune
+        Amountmin: 250
+        Amountmax: 375
+        Chance: 100000
+      - Material: Perfect_Rune
+        Amountmin: 3
+        Amountmax: 5
+        Chance: 100000
+  - Id: 5
+    Materials:
+      - Material: Imperfect_Rune
+        Amountmin: 1
+        Amountmax: 2
+  - Id: 6
+    Materials:
+      - Material: Imperfect_Rune
+        Amountmin: 33
+        Amountmax: 66
+        Chance: 100000
+      - Material: Perfect_Rune
+        Amountmin: 1
+        Amountmax: 1
+        Chance: 5000
+  - Id: 11
+    Materials:
+      - Material: Perfect_Rune
+        Amountmin: 1
+        Amountmax: 1
+        Chance: 100000
+  - Id: 12
+    Materials:
+      - Material: Perfect_Rune
+        Amountmin: 30
+        Amountmax: 30
+        Chance: 100000
+  - Id: 13
+    Materials:
+      - Material: Imperfect_Rune
+        Amountmin: 6
+        Amountmax: 10
+        Chance: 100000
+      - Material: Perfect_Rune
+        Amountmin: 1
+        Amountmax: 1
+        Chance: 25000
+  - Id: 14
+    Materials:
+      - Material: Imperfect_Rune
+        Amountmin: 200
+        Amountmax: 330
+        Chance: 100000
+      - Material: Perfect_Rune
+        Amountmin: 7
+        Amountmax: 30
+        Chance: 100000

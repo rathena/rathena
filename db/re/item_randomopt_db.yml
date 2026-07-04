@@ -1029,3 +1029,11 @@ Body:
     Option: VAR_CRITICAL_RATE
     Script: |
       bonus bCRate,getrandomoptinfo(ROA_VALUE);
+  - Id: 255
+    Option: DAMAGE_HIT_TARGET
+    Script: |
+      bonus bNonCritAtkRate,getrandomoptinfo(ROA_VALUE);
+  - Id: 256
+    Option: DAMAGE_HIT_USER
+    Script: |
+      bonus bNonCritAtkDef,getrandomoptinfo(ROA_VALUE);

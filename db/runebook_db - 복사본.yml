@@ -1,0 +1,1932 @@
+# This file is a part of Shakto.
+#   Copyright(C) 2023 Shakto Script
+#   https://ronovelty.com/
+#
+###########################################################################
+# Rune Book Database
+###########################################################################
+# - Id                         Client side LUB index. (RUNEIDTBL in runesystemid.lub)
+#   Name:                      Name of rune book.
+#   Materials:                 Materials needed to activate a rune book
+#     - Material               Name of the item
+#       Amount                 Quantity
+###########################################################################
+
+Header:
+  Type: RUNEBOOK_DB
+  Version: 1
+
+Body:
+  - Id: 1263000
+    Name: Rp_Ep17_Melee
+    Materials:
+      - Material: R_Boost_Lance_OS
+        Amount: 1
+      - Material: R_Blasti_OS
+        Amount: 1
+      - Material: R_Beam_Claymore_OS
+        Amount: 1
+      - Material: R_Cannon_Rapier_OS
+        Amount: 1
+      - Material: EP17_1_EVT02
+        Amount: 75
+      - Material: EP17_1_EVT01
+        Amount: 40
+  - Id: 1263001
+    Name: Rp_Ep17_Range
+    Materials:
+      - Material: R_AC_B44_OS
+        Amount: 1
+      - Material: R_Virtual_Bow_OS
+        Amount: 1
+      - Material: R_HR_S55_OS
+        Amount: 1
+      - Material: R_MH_P89_OS
+        Amount: 1
+      - Material: EP17_1_EVT02
+        Amount: 75
+      - Material: EP17_1_EVT01
+        Amount: 40
+  - Id: 1263002
+    Name: Rp_Ep17_Magic
+    Materials:
+      - Material: R_Saphir_Hall_OS
+        Amount: 1
+      - Material: R_ElectricFox_OS
+        Amount: 1
+      - Material: R_Rutilus_Stick_OS
+        Amount: 1
+      - Material: R_Circuit_Board_OS
+        Amount: 1
+      - Material: EP17_1_EVT02
+        Amount: 75
+      - Material: EP17_1_EVT01
+        Amount: 40
+  - Id: 1263003
+    Name: Rp_Ep17_Razor
+    Materials:
+      - Material: R_Kuroiro_OS
+        Amount: 1
+      - Material: R_Meuchler_OS
+        Amount: 1
+      - Material: R_Burning_Knuckle_OS
+        Amount: 1
+      - Material: R_Ultio_Spes_OS
+        Amount: 1
+      - Material: EP17_1_EVT02
+        Amount: 75
+      - Material: EP17_1_EVT01
+        Amount: 40
+  - Id: 1263004
+    Name: Rp_Ep17_Autoa
+    Materials:
+      - Material: R_Auto_BC_R
+        Amount: 1
+      - Material: R_Auto_B_R
+        Amount: 1
+      - Material: R_Auto_Armor_A
+        Amount: 1
+      - Material: R_Auto_Engine_A
+        Amount: 1
+      - Material: R_Auto_Leg_A
+        Amount: 1
+      - Material: BarMealTicket
+        Amount: 250
+  - Id: 1263005
+    Name: Rp_Ep17_Autob
+    Materials:
+      - Material: R_Auto_BC_L
+        Amount: 1
+      - Material: R_Auto_B_L
+        Amount: 1
+      - Material: R_Auto_Armor_B
+        Amount: 1
+      - Material: R_Auto_Engine_B
+        Amount: 1
+      - Material: R_Auto_Leg_B
+        Amount: 1
+      - Material: BarMealTicket
+        Amount: 250
+  - Id: 1263006
+    Name: Rp_Ep17_Bellare
+    Materials:
+      - Material: Bellare_Card
+        Amount: 5
+      - Material: High_Bellare_Card
+        Amount: 5
+      - Material: Heart_Hunter_Seal
+        Amount: 30
+      - Material: Explosive_Powder
+        Amount: 150
+      - Material: EP17_1_EVT39
+        Amount: 25
+      - Material: EP17_1_EVT02
+        Amount: 50
+  - Id: 1263007
+    Name: Rp_Ep17_Sanare
+    Materials:
+      - Material: Sanare_Card
+        Amount: 5
+      - Material: High_Sanare_Card
+        Amount: 5
+      - Material: Heart_Hunter_Seal
+        Amount: 50
+      - Material: Explosive_Powder
+        Amount: 100
+      - Material: EP17_1_EVT39
+        Amount: 30
+      - Material: EP17_1_EVT02
+        Amount: 60
+  - Id: 1263008
+    Name: Rp_Ep17_Plaga
+    Materials:
+      - Material: Plaga_Card
+        Amount: 5
+      - Material: Mutant_Plaga_Card
+        Amount: 5
+      - Material: Solid_Shell
+        Amount: 250
+      - Material: Dragon's_Skin
+        Amount: 200
+      - Material: Fluorescent_Liquid
+        Amount: 300
+      - Material: EP17_1_EVT39
+        Amount: 30
+      - Material: EP17_1_EVT02
+        Amount: 60
+  - Id: 1263009
+    Name: Rp_Ep17_Bestia
+    Materials:
+      - Material: R48_85_Bestia_Card
+        Amount: 1
+      - Material: EP17_1_EVT02
+        Amount: 100
+      - Material: EP17_1_EVT39
+        Amount: 50
+      - Material: Piece_Of_Bone_Armor
+        Amount: 350
+  - Id: 1263010
+    Name: Rp_Ep17_Venenum
+    Materials:
+      - Material: Venenum_Card
+        Amount: 5
+      - Material: Mt_Venenum_Card
+        Amount: 5
+      - Material: Sticky_Mucus
+        Amount: 250
+      - Material: Sticky_Poison
+        Amount: 175
+      - Material: Fluorescent_Liquid
+        Amount: 125
+      - Material: EP17_1_EVT39
+        Amount: 25
+      - Material: EP17_1_EVT02
+        Amount: 50
+  - Id: 1263011
+    Name: Rp_Ep17_Dolor
+    Materials:
+      - Material: Dolor_Card
+        Amount: 5
+      - Material: Mt_Dolor_Card
+        Amount: 5
+      - Material: Caput_Card
+        Amount: 3
+      - Material: Tough_Scalelike_Stem
+        Amount: 225
+      - Material: Sticky_Poison
+        Amount: 175
+      - Material: Bloody_Rune
+        Amount: 150
+      - Material: EP17_1_EVT39
+        Amount: 25
+      - Material: EP17_1_EVT02
+        Amount: 50
+  - Id: 1263012
+    Name: Rp_Ep17_Iron
+    Materials:
+      - Material: E_EA1L_Card
+        Amount: 5
+      - Material: E_EA2S_Card
+        Amount: 3
+      - Material: EL_A17T_Card
+        Amount: 1
+      - Material: Screw
+        Amount: 300
+      - Material: Distorted_Iron_Plate
+        Amount: 250
+      - Material: Burnt_Parts
+        Amount: 125
+      - Material: EP17_1_EVT39
+        Amount: 50
+      - Material: EP17_1_EVT02
+        Amount: 100
+  - Id: 1263013
+    Name: Rp_Ep17_Redpepper
+    Materials:
+      - Material: Redpepper_Card
+        Amount: 1
+      - Material: Assistant_Card
+        Amount: 5
+      - Material: Assistant_H_Card
+        Amount: 3
+      - Material: R_Ep172_1h_Book2
+        Amount: 1
+      - Material: R_Ep172_1h_Book
+        Amount: 1
+      - Material: Sturdy_Iron_Piece
+        Amount: 350
+      - Material: BarMealTicket
+        Amount: 1250
+  - Id: 1263014
+    Name: Rp_Ep17_Addict
+    Materials:
+      - Material: Plaga3_Card
+        Amount: 5
+      - Material: Sanare3_Card
+        Amount: 5
+      - Material: R_Ep172_1h_Shotgun
+        Amount: 1
+      - Material: R_Ep172_1h_Hammer
+        Amount: 1
+      - Material: BarMealTicket
+        Amount: 850
+  - Id: 1263015
+    Name: Rp_Ep17_Caution
+    Materials:
+      - Material: Plasma_R_Card
+        Amount: 5
+      - Material: Plasma_R2_Card
+        Amount: 5
+      - Material: R_Ep172_1h_Inst
+        Amount: 1
+      - Material: R_Ep172_1h_Whip
+        Amount: 1
+      - Material: Yellow_Gemstone
+        Amount: 175
+      - Material: Red_Gemstone
+        Amount: 175
+      - Material: BarMealTicket
+        Amount: 850
+  - Id: 1263016
+    Name: Rp_Ep17_Withdraw
+    Materials:
+      - Material: Dolor3_Card
+        Amount: 5
+      - Material: Plasma_Y_Card
+        Amount: 5
+      - Material: R_Ep172_1h_Foxtail
+        Amount: 1
+      - Material: R_Ep172_Bh_Staff
+        Amount: 1
+      - Material: Yellow_Gemstone
+        Amount: 175
+      - Material: BarMealTicket
+        Amount: 850
+  - Id: 1263017
+    Name: Rp_Ep17_Bath
+    Materials:
+      - Material: Beta_Baths_A_Card
+        Amount: 5
+      - Material: Beta_Cleaner_Card
+        Amount: 5
+      - Material: Bath_Mermaid_Card
+        Amount: 3
+      - Material: R_Ep172_1h_Axe
+        Amount: 1
+      - Material: R_Ep172_Bh_Huuma
+        Amount: 1
+      - Material: R_Ep172_1h_Sword2
+        Amount: 1
+      - Material: Delicious_Fish
+        Amount: 250
+      - Material: BarMealTicket
+        Amount: 950
+  - Id: 1263018
+    Name: Rp_Ep17_Papila
+    Materials:
+      - Material: Papila_Ruba_H_Card
+        Amount: 3
+      - Material: Papila_Cae_H_Card
+        Amount: 3
+      - Material: Papila_H_Card
+        Amount: 3
+      - Material: R_Ep172_Bh_Huuma
+        Amount: 1
+      - Material: R_Ep172_Bh_Spear
+        Amount: 1
+      - Material: R_Ep172_1h_Spear
+        Amount: 1
+      - Material: Withered_Flower
+        Amount: 550
+      - Material: BarMealTicket
+        Amount: 950
+  - Id: 1263019
+    Name: Rp_Ep17_Book
+    Materials:
+      - Material: Bookworm_Card
+        Amount: 5
+      - Material: Roaming_Splbook_Card
+        Amount: 5
+      - Material: R_Ep172_1h_Book
+        Amount: 1
+      - Material: R_Ep172_1h_Book2
+        Amount: 1
+      - Material: Long_Limb
+        Amount: 150
+      - Material: Old_Magic_Book
+        Amount: 75
+      - Material: BarMealTicket
+        Amount: 900
+  - Id: 1263020
+    Name: Rp_Ep17_Garden
+    Materials:
+      - Material: B_Scissore_Ng_H_Card
+        Amount: 3
+      - Material: Beta_Scissore_Ng_Card
+        Amount: 5
+      - Material: R_Ep172_Bh_Katar
+        Amount: 1
+      - Material: R_Ep172_Bh_knuck
+        Amount: 1
+      - Material: BarMealTicket
+        Amount: 850
+  - Id: 1263021
+    Name: Rp_Ep17_Sewage
+    Materials:
+      - Material: Bellare3_Card
+        Amount: 3
+      - Material: Venenum3_Card
+        Amount: 5
+      - Material: EP17_2_Cramp_Card
+        Amount: 5
+      - Material: Waterfall_Card
+        Amount: 5
+      - Material: R_Ep172_1h_Rifle
+        Amount: 1
+      - Material: R_Ep172_1h_Wand
+        Amount: 1
+      - Material: R_Ep172_1h_Dagger
+        Amount: 1
+      - Material: BarMealTicket
+        Amount: 1050
+  - Id: 1263022
+    Name: Rp_Ep17_Allergy
+    Materials:
+      - Material: Alnoldi_Ex_Card
+        Amount: 3
+      - Material: Alnoldi_Ex_H_Card
+        Amount: 1
+      - Material: Dry_Rafflesia_Card
+        Amount: 3
+      - Material: Dry_Rafflesia_H_Card
+        Amount: 1
+      - Material: Elder_Branch
+        Amount: 200
+      - Material: R_Ep172_1h_Foxtail
+        Amount: 1
+      - Material: BarMealTicket
+        Amount: 950
+  - Id: 1263023
+    Name: Rp_Ep17_Fish
+    Materials:
+      - Material: EP17_2_Phen_Card
+        Amount: 3
+      - Material: EP17_2_Sword_Fish_Card
+        Amount: 3
+      - Material: EP17_2_Piranha_Card
+        Amount: 3
+      - Material: EP17_2_Marc_Card
+        Amount: 3
+      - Material: R_Ep172_Bh_Bow2
+        Amount: 1
+      - Material: R_Ep172_1h_Grenade
+        Amount: 1
+      - Material: R_Ep172_Bh_Bow
+        Amount: 1
+      - Material: BarMealTicket
+        Amount: 1050
+  - Id: 1263024
+    Name: Rp_Ep17_Pitaya
+    Materials:
+      - Material: Pitaya_R_Card
+        Amount: 3
+      - Material: Pitaya_Y_Card
+        Amount: 3
+      - Material: Pitaya_B_Card
+        Amount: 3
+      - Material: Pitaya_V_Card
+        Amount: 3
+      - Material: Pitaya_G_Card
+        Amount: 3
+      - Material: R_Ep172_1h_Dagger2
+        Amount: 1
+      - Material: R_Ep172_1h_Gatling
+        Amount: 1
+      - Material: BarMealTicket
+        Amount: 1050
+  - Id: 1263025
+    Name: Rp_Ep17_Tree
+    Materials:
+      - Material: Silva_Papilia_Card
+        Amount: 1
+      - Material: Gran_Papilia_Card
+        Amount: 1
+      - Material: Verporte_H_Card
+        Amount: 3
+      - Material: Verporta_Card
+        Amount: 3
+      - Material: Solid_Twig
+        Amount: 125
+      - Material: Illusion_Flower
+        Amount: 100
+      - Material: BarMealTicket
+        Amount: 950
+  - Id: 1263026
+    Name: Rp_Ep17_Aries
+    Materials:
+      - Material: Aries_Card
+        Amount: 3
+      - Material: Aries_H_Card
+        Amount: 3
+      - Material: R_Ep172_Bh_Bow3
+        Amount: 1
+      - Material: Fancy_Fairy_Wing
+        Amount: 100
+      - Material: Illusion_Flower
+        Amount: 95
+      - Material: BarMealTicket
+        Amount: 850
+  - Id: 1263027
+    Name: Rp_Ep17_Machine
+    Materials:
+      - Material: Beta_Guards_Ng_Card
+        Amount: 3
+      - Material: O_Cleaner_Ng_Card
+        Amount: 3
+      - Material: Burnt_Parts
+        Amount: 450
+      - Material: Mystery_Piece
+        Amount: 350
+      - Material: BarMealTicket
+        Amount: 950
+  - Id: 1263028
+    Name: Rp_Ep17_Sweety
+    Materials:
+      - Material: Sweety_Card
+        Amount: 1
+      - Material: R_Ep172_1h_Sword
+        Amount: 1
+      - Material: R_Ep172_Bh_Sword
+        Amount: 1
+      - Material: BarMealTicket
+        Amount: 2000
+  - Id: 1263029
+    Name: Rp_Ep17_Cat
+    Materials:
+      - Material: Pitaya_Boss_Card
+        Amount: 1
+      - Material: R_Ep172_1h_Rifle
+        Amount: 1
+      - Material: R_Ep172_1h_Shotgun
+        Amount: 1
+      - Material: R_Ep172_1h_Gatling
+        Amount: 1
+      - Material: R_Ep172_1h_Grenade
+        Amount: 1
+      - Material: BarMealTicket
+        Amount: 2000
+  - Id: 1263030
+    Name: Rp_Ep17_Tiger
+    Materials:
+      - Material: Miguel_Card
+        Amount: 1
+      - Material: EP17_1_EVT01
+        Amount: 50
+      - Material: EP17_1_EVT39
+        Amount: 150
+      - Material: EP17_1_EVT02
+        Amount: 150
+      - Material: Milk
+        Amount: 50
+      - Material: Sweet_Potato
+        Amount: 50
+  - Id: 1263031
+    Name: Rp_21th_Poring
+    Materials:
+      - Material: Jellopy
+        Amount: 100
+      - Material: Sticky_Mucus
+        Amount: 35
+      - Material: Apple
+        Amount: 5
+      - Material: Unripe_Apple
+        Amount: 3
+      - Material: Poring_Card
+        Amount: 3
+  - Id: 1263032
+    Name: Rp_21th_Lunatic
+    Materials:
+      - Material: Clover
+        Amount: 100
+      - Material: Feather
+        Amount: 35
+      - Material: Carrot
+        Amount: 5
+      - Material: Rainbow_Carrot
+        Amount: 3
+      - Material: Lunatic_Card
+        Amount: 3
+  - Id: 1263033
+    Name: Rp_21th_Fabre
+    Materials:
+      - Material: Fluff
+        Amount: 100
+      - Material: Feather
+        Amount: 35
+      - Material: Clover
+        Amount: 5
+      - Material: Green_Herb
+        Amount: 3
+      - Material: Fabre_Card
+        Amount: 3
+  - Id: 1263034
+    Name: Rp_21th_Food
+    Materials:
+      - Material: South_Pork_Ricebowl
+        Amount: 5
+      - Material: Poring_Kombucha
+        Amount: 5
+      - Material: Monster_Bread
+        Amount: 5
+      - Material: Monster_Bread_
+        Amount: 5
+  - Id: 1263035
+    Name: Rp_Ep18_Armor_A
+    Materials:
+      - Material: Ep18_Amethyst_Fragment
+        Amount: 550
+      - Material: R_Gray_W_Robe
+        Amount: 1
+      - Material: R_Gray_W_Muffler
+        Amount: 1
+      - Material: R_Gray_W_Shoes
+        Amount: 1
+      - Material: R_Gray_W_Earing
+        Amount: 1
+      - Material: R_Gray_W_Necklace
+        Amount: 1
+  - Id: 1263036
+    Name: Rp_Ep18_Armor_B
+    Materials:
+      - Material: Ep18_Amethyst_Fragment
+        Amount: 550
+      - Material: R_Gray_W_Suits
+        Amount: 1
+      - Material: R_Gray_W_Manteau
+        Amount: 1
+      - Material: R_Gray_W_Boots
+        Amount: 1
+      - Material: R_Gray_W_Ring
+        Amount: 1
+      - Material: R_Gray_W_Pendant
+        Amount: 1
+  - Id: 1263037
+    Name: Rp_Ep18_Sword
+    Materials:
+      - Material: Ep18_Amethyst_Fragment
+        Amount: 750
+      - Material: R_Adulter_F_T_Sword
+        Amount: 1
+      - Material: R_Adulter_F_G_Sword
+        Amount: 1
+      - Material: R_Adulter_F_Lapier
+        Amount: 1
+      - Material: R_Adulter_F_Dagger
+        Amount: 1
+  - Id: 1263038
+    Name: Rp_Ep18_Spear
+    Materials:
+      - Material: Ep18_Amethyst_Fragment
+        Amount: 450
+      - Material: R_Adulter_F_Lance
+        Amount: 1
+      - Material: R_Adulter_F_G_Spear
+        Amount: 1
+      - Material: R_Adulter_F_Axe
+        Amount: 1
+      - Material: R_Adulter_F_Mace
+        Amount: 1
+      - Material: R_Adulter_F_Hall
+        Amount: 1
+  - Id: 1263039
+    Name: Rp_Ep18_Range
+    Materials:
+      - Material: Ep18_Amethyst_Fragment
+        Amount: 750
+      - Material: R_Adulter_F_C_Bow
+        Amount: 1
+      - Material: R_Adulter_F_Ballista
+        Amount: 1
+      - Material: R_Adulter_F_A_Bow
+        Amount: 1
+      - Material: R_Adulter_F_Rifle
+        Amount: 1
+  - Id: 1263040
+    Name: Rp_Ep18_Book
+    Materials:
+      - Material: Ep18_Amethyst_Fragment
+        Amount: 450
+      - Material: R_Adulter_F_M_Book
+        Amount: 1
+      - Material: R_Adulter_F_Bible
+        Amount: 1
+      - Material: R_Adulter_F_Star_B
+        Amount: 1
+      - Material: R_Adulter_F_Moon_B
+        Amount: 1
+      - Material: R_Adulter_F_P_Book
+        Amount: 1
+  - Id: 1263041
+    Name: Rp_Ep18_Magic
+    Materials:
+      - Material: Ep18_Amethyst_Fragment
+        Amount: 450
+      - Material: R_Adulter_F_S_Stick
+        Amount: 1
+      - Material: R_Adulter_F_Rod
+        Amount: 1
+      - Material: R_Adulter_F_D_Wand
+        Amount: 1
+      - Material: R_Adulter_F_T_Staff
+        Amount: 1
+      - Material: R_Adulter_F_Wand
+        Amount: 1
+  - Id: 1263042
+    Name: Rp_Ep18_Fuuma
+    Materials:
+      - Material: Ep18_Amethyst_Fragment
+        Amount: 750
+      - Material: R_Adulter_F_Humma
+        Amount: 1
+      - Material: R_Adulter_F_F_Wand
+        Amount: 1
+      - Material: R_Adulter_F_F_model
+        Amount: 1
+      - Material: R_Adulter_F_C_Humma
+        Amount: 1
+  - Id: 1263043
+    Name: Rp_Ep18_Gun
+    Materials:
+      - Material: Ep18_Amethyst_Fragment
+        Amount: 750
+      - Material: R_Adulter_F_Revolver
+        Amount: 1
+      - Material: R_Adulter_F_Shotgun
+        Amount: 1
+      - Material: R_Adulter_F_Gatling
+        Amount: 1
+      - Material: R_Adulter_F_Launcher
+        Amount: 1
+  - Id: 1263044
+    Name: Rp_Ep18_Katar
+    Materials:
+      - Material: Ep18_Amethyst_Fragment
+        Amount: 750
+      - Material: R_Adulter_F_Claw
+        Amount: 1
+      - Material: R_Adulter_F_Cakram
+        Amount: 1
+      - Material: R_Adulter_F_Katar
+        Amount: 1
+      - Material: R_Adulter_F_Knuckle
+        Amount: 1
+  - Id: 1263045
+    Name: Rp_Ep18_Instrum
+    Materials:
+      - Material: Ep18_Amethyst_Fragment
+        Amount: 750
+      - Material: R_Adulter_F_Ribbon
+        Amount: 1
+      - Material: R_Adulter_F_Violin
+        Amount: 1
+      - Material: R_Adulter_F_Harp
+        Amount: 1
+      - Material: R_Adulter_F_C_Rope
+        Amount: 1
+  - Id: 1263046
+    Name: Rp_Ep18_Rakehand
+    Materials:
+      - Material: Ep18_Amethyst_Fragment
+        Amount: 450
+      - Material: EP18_Rakehand_Card
+        Amount: 3
+      - Material: EP18_Spark_Card
+        Amount: 3
+      - Material: Live_Coal
+        Amount: 150
+      - Material: Burning_Heart
+        Amount: 30
+  - Id: 1263047
+    Name: Rp_Ep18_Ashhopper
+    Materials:
+      - Material: Ep18_Amethyst_Fragment
+        Amount: 350
+      - Material: EP18_Ashhopper_Card
+        Amount: 3
+      - Material: EP18_Ashring_Card
+        Amount: 5
+      - Material: EP18_Tumble_Ring_Card
+        Amount: 5
+      - Material: Grasshopper_Doll
+        Amount: 30
+      - Material: Sticky_Mucus
+        Amount: 150
+  - Id: 1263048
+    Name: Rp_Ep18_Phantom
+    Materials:
+      - Material: Ep18_Amethyst_Fragment
+        Amount: 450
+      - Material: EP18_Firewind_Kite_Card
+        Amount: 3
+      - Material: EP18_Phantom_Wolf_Card
+        Amount: 3
+      - Material: Transparent_Cloth
+        Amount: 150
+      - Material: BurningFeather
+        Amount: 50
+  - Id: 1263049
+    Name: Rp_Ep18_Greywolf
+    Materials:
+      - Material: Ep18_Amethyst_Fragment
+        Amount: 550
+      - Material: EP18_Grey_Wolf_Card
+        Amount: 1
+      - Material: Claw_Of_Wolves
+        Amount: 75
+  - Id: 1263050
+    Name: Rp_Ep18_Toad
+    Materials:
+      - Material: Ep18_Amethyst_Fragment
+        Amount: 450
+      - Material: EP18_Lava_Toad_Card
+        Amount: 3
+      - Material: EP18_Ash_Toad_Card
+        Amount: 3
+      - Material: Spawn
+        Amount: 150
+      - Material: Burning_Heart
+        Amount: 45
+      - Material: Sticky_Webfoot
+        Amount: 55
+  - Id: 1263051
+    Name: Rp_Ep18_Hot
+    Materials:
+      - Material: Ep18_Amethyst_Fragment
+        Amount: 450
+      - Material: EP18_Hot_Molar_Card
+        Amount: 3
+      - Material: EP18_Volcaring_Card
+        Amount: 3
+      - Material: Live_Coal
+        Amount: 150
+      - Material: Burning_Heart
+        Amount: 45
+  - Id: 1263052
+    Name: Rp_Ep18_Burning
+    Materials:
+      - Material: Ep18_Amethyst_Fragment
+        Amount: 750
+      - Material: EP18_Burning_Fang_Card
+        Amount: 1
+      - Material: Live_Coal
+        Amount: 250
+      - Material: Burning_Heart
+        Amount: 45
+      - Material: Claw_Of_Wolves
+        Amount: 150
+  - Id: 1263053
+    Name: Rp_Ep18_Demi
+    Materials:
+      - Material: Ep18_Amethyst_Fragment
+        Amount: 750
+      - Material: EP18_Demi_Freyja_Card
+        Amount: 1
+      - Material: EP18_Schulang_Card
+        Amount: 1
+      - Material: Purificatory_Holy_O
+        Amount: 100
+      - Material: Purificatory_Holy_W
+        Amount: 100
+  - Id: 1263054
+    Name: Rp_Ep19_Armor_A
+    Materials:
+      - Material: Ep19_Snow_Flower
+        Amount: 650
+      - Material: R_Snowflower_Armor
+        Amount: 1
+      - Material: R_Snowflower_Manteau
+        Amount: 1
+      - Material: R_Snowflower_Boots
+        Amount: 1
+      - Material: R_Snowflower_Pendant
+        Amount: 1
+      - Material: R_Snowflower_Necklace
+        Amount: 1
+  - Id: 1263055
+    Name: Rp_Ep19_Armor_B
+    Materials:
+      - Material: Ep19_Snow_Flower
+        Amount: 650
+      - Material: R_Snowflower_Robe
+        Amount: 1
+      - Material: R_Snowflower_Muffler
+        Amount: 1
+      - Material: R_Snowflower_Shoes
+        Amount: 1
+      - Material: R_Snowflower_Ring
+        Amount: 1
+      - Material: R_Snowflower_Earring
+        Amount: 1
+  - Id: 1263056
+    Name: Rp_Ep19_Sword
+    Materials:
+      - Material: Ep19_Snow_Flower
+        Amount: 650
+      - Material: R_Glacier_T_Sword
+        Amount: 1
+      - Material: R_Glacier_Lance
+        Amount: 1
+      - Material: R_Glacier_Sword
+        Amount: 1
+      - Material: R_Glacier_B_Sword
+        Amount: 1
+      - Material: R_Glacier_Spear
+        Amount: 1
+  - Id: 1263057
+    Name: Rp_Ep19_Heavy
+    Materials:
+      - Material: Ep19_Snow_Flower
+        Amount: 700
+      - Material: R_Glacier_T_Axe
+        Amount: 1
+      - Material: R_Glacier_Axe
+        Amount: 1
+      - Material: R_Glacier_Mace
+        Amount: 1
+      - Material: R_Glacier_M_Mace
+        Amount: 1
+  - Id: 1263058
+    Name: Rp_Ep19_Edge
+    Materials:
+      - Material: Ep19_Snow_Flower
+        Amount: 750
+      - Material: R_Glacier_R_Knife
+        Amount: 1
+      - Material: R_Glacier_B_Knife
+        Amount: 1
+      - Material: R_Glacier_Knuckle
+        Amount: 1
+      - Material: R_Glacier_Katar
+        Amount: 1
+  - Id: 1263059
+    Name: Rp_Ep19_Range
+    Materials:
+      - Material: Ep19_Snow_Flower
+        Amount: 750
+      - Material: R_Glacier_Bow
+        Amount: 1
+      - Material: R_Glacier_Violin
+        Amount: 1
+      - Material: R_Glacier_Whip
+        Amount: 1
+      - Material: R_Glacier_Humma
+        Amount: 1
+  - Id: 1263060
+    Name: Rp_Ep19_Magic
+    Materials:
+      - Material: Ep19_Snow_Flower
+        Amount: 750
+      - Material: R_Glacier_Book
+        Amount: 1
+      - Material: R_Glacier_Wand
+        Amount: 1
+      - Material: R_Glacier_Staff
+        Amount: 1
+      - Material: R_Glacier_Foxtail
+        Amount: 1
+  - Id: 1263061
+    Name: Rp_Ep19_Gun
+    Materials:
+      - Material: Ep19_Snow_Flower
+        Amount: 700
+      - Material: R_Glacier_Revolver
+        Amount: 1
+      - Material: R_Glacier_Rifle
+        Amount: 1
+      - Material: R_Glacier_Shotgun
+        Amount: 1
+      - Material: R_Glacier_Gatling
+        Amount: 1
+      - Material: R_Glacier_Launcher
+        Amount: 1
+  - Id: 1263062
+    Name: Rp_Ep19_Limacina
+    Materials:
+      - Material: Ep19_Snow_Flower
+        Amount: 1050
+      - Material: Ultra_Limacina_Card
+        Amount: 1
+      - Material: Limacina_Card
+        Amount: 3
+      - Material: Snow_F_Stone1
+        Amount: 150
+      - Material: EP19_Unknown_Cell
+        Amount: 250
+      - Material: EP19_Luminant
+        Amount: 15
+  - Id: 1263063
+    Name: Rp_Ep19_Juncea
+    Materials:
+      - Material: Ep19_Snow_Flower
+        Amount: 950
+      - Material: Simulation_Juncea_Card
+        Amount: 1
+      - Material: Aquila_Card
+        Amount: 1
+      - Material: Snow_F_Stone1
+        Amount: 150
+      - Material: EP19_Unknown_Cell
+        Amount: 150
+      - Material: EP19_Luminant
+        Amount: 50
+  - Id: 1263064
+    Name: Rp_Ep19_Snow
+    Materials:
+      - Material: Ep19_Snow_Flower
+        Amount: 450
+      - Material: Unfrost_Flower_card
+        Amount: 3
+      - Material: Shining_Seaweed_Card
+        Amount: 3
+      - Material: Ice_Straw_Card
+        Amount: 3
+      - Material: EP19_Bell_Flower
+        Amount: 100
+      - Material: EP19_Shiny_Seaweed
+        Amount: 100
+      - Material: EP19_Thin_Shell
+        Amount: 100
+  - Id: 1263065
+    Name: Rp_Ep19_Frozen
+    Materials:
+      - Material: Ep19_Snow_Flower
+        Amount: 550
+      - Material: Limacina_Card
+        Amount: 3
+      - Material: Calmaring_Card
+        Amount: 3
+      - Material: Ice_Gangu_Card
+        Amount: 3
+      - Material: EP19_Transparency_Shell
+        Amount: 100
+      - Material: EP19_Calapy
+        Amount: 150
+      - Material: EP19_Frozen_Shell
+        Amount: 150
+  - Id: 1263066
+    Name: Rp_Ep19_Dollo
+    Materials:
+      - Material: Ep19_Snow_Flower
+        Amount: 450
+      - Material: Cave_Un_Flower_Card
+        Amount: 3
+      - Material: Eyes_Dollocaris_Card
+        Amount: 3
+      - Material: One_E_Dollocaris_Card
+        Amount: 3
+      - Material: EP19_Unknown_Cell
+        Amount: 150
+      - Material: EP19_Thin_Nipper
+        Amount: 150
+  - Id: 1263067
+    Name: Rp_Ep19_Hallu
+    Materials:
+      - Material: Ep19_Snow_Flower
+        Amount: 450
+      - Material: Cave_Calmaring_Card
+        Amount: 3
+      - Material: Hallucigenia_Card
+        Amount: 3
+      - Material: B_Hallucigenia_Card
+        Amount: 3
+      - Material: EP19_CaCalapy
+        Amount: 150
+      - Material: EP19_Prickle_Shell
+        Amount: 150
+  - Id: 1263068
+    Name: Rp_Ep19_Lesser
+    Materials:
+      - Material: Ep19_Snow_Flower
+        Amount: 750
+      - Material: Primitive_Rgan_Card
+        Amount: 3
+      - Material: Junior_Rgan_Card
+        Amount: 3
+      - Material: Lowest_Rgan_Card
+        Amount: 3
+      - Material: EP19_Unknown_Cell
+        Amount: 150
+      - Material: Ep19_Rgan_Core_F
+        Amount: 50
+      - Material: EP19_Shell_Of_Rgan
+        Amount: 150
+  - Id: 1263069
+    Name: Rp_Ep19_Middle
+    Materials:
+      - Material: Ep19_Snow_Flower
+        Amount: 750
+      - Material: Heart_Hunter_AT_Card
+        Amount: 3
+      - Material: Middle_G_Rgan_Card
+        Amount: 3
+      - Material: Vroken_Sword
+        Amount: 30
+      - Material: EP19_Unknown_Cell
+        Amount: 100
+      - Material: Ep19_Rgan_Core_F
+        Amount: 70
+      - Material: EP19_Shell_Of_Rgan
+        Amount: 100
+  - Id: 1263070
+    Name: Rp_Ep19_Upper
+    Materials:
+      - Material: Ep19_Snow_Flower
+        Amount: 750
+      - Material: R_Superior_Rgan_Card
+        Amount: 1
+      - Material: E_Inter_Rgan_Card
+        Amount: 3
+      - Material: Discarded_P_R_Card
+        Amount: 3
+      - Material: Discarded_L_R_Card
+        Amount: 3
+      - Material: EP19_Unknown_Cell
+        Amount: 200
+      - Material: Ep19_Rgan_Core_F
+        Amount: 100
+      - Material: EP19_Shell_Of_Rgan
+        Amount: 250
+  - Id: 1263072
+    Name: Rp_22nd_Savage
+    Materials:
+      - Material: Animal's_Skin
+        Amount: 100
+      - Material: Meat
+        Amount: 100
+      - Material: Sweet_Milk
+        Amount: 10
+      - Material: Phracon
+        Amount: 5
+      - Material: Savage_Babe_Card
+        Amount: 3
+  - Id: 1263073
+    Name: Rp_22nd_Coco
+    Materials:
+      - Material: Acorn
+        Amount: 150
+      - Material: Fluff
+        Amount: 50
+      - Material: Animal's_Skin
+        Amount: 50
+      - Material: Sweet_Potato
+        Amount: 20
+      - Material: Coco_Card
+        Amount: 3
+  - Id: 1263074
+    Name: Rp_Ifrit_Rocker
+    Materials:
+      - Material: Grasshopper's_Leg
+        Amount: 30
+      - Material: Azure_Jewel
+        Amount: 10
+      - Material: Wing_Of_Fly
+        Amount: 20
+      - Material: Rocker_Card
+        Amount: 1
+  - Id: 1263075
+    Name: Rp_Ifrit_Vocal
+    Materials:
+      - Material: Grasshopper's_Leg
+        Amount: 30
+      - Material: Azure_Jewel
+        Amount: 10
+      - Material: Wing_Of_Fly
+        Amount: 20
+      - Material: Vocal_Card
+        Amount: 1
+  - Id: 1263076
+    Name: Rp_Ifrit_Road
+    Materials:
+      - Material: Sticky_Webfoot
+        Amount: 30
+      - Material: Spawn
+        Amount: 10
+      - Material: Green_Herb
+        Amount: 5
+      - Material: Roda_Frog_Card
+        Amount: 1
+  - Id: 1263077
+    Name: Rp_Ifrit_Amber
+    Materials:
+      - Material: Snail's_Shell
+        Amount: 30
+      - Material: Shell
+        Amount: 20
+      - Material: Garlet
+        Amount: 30
+      - Material: Ambernite_Card
+        Amount: 1
+  - Id: 1263078
+    Name: Rp_Ifrit_Hornet
+    Materials:
+      - Material: Bee_Sting
+        Amount: 30
+      - Material: Wing_Of_Fly
+        Amount: 20
+      - Material: Honey
+        Amount: 5
+      - Material: Hornet_Card
+        Amount: 1
+  - Id: 1263079
+    Name: Rp_Ifrit_Stiner
+    Materials:
+      - Material: Colorful_Shell
+        Amount: 30
+      - Material: Garlet
+        Amount: 30
+      - Material: Wing_Of_Fly
+        Amount: 20
+      - Material: Stainer_Card
+        Amount: 1
+  - Id: 1263080
+    Name: Rp_Ep20_Armor_A
+    Materials:
+      - Material: Ep20_Cat_Whiskers
+        Amount: 100
+      - Material: R_Glacier_Armor
+        Amount: 1
+      - Material: R_Glacier_Manteau
+        Amount: 1
+      - Material: R_Glacier_Ring
+        Amount: 1
+      - Material: R_Glacier_Boots
+        Amount: 1
+  - Id: 1263081
+    Name: Rp_Ep20_Armor_B
+    Materials:
+      - Material: Ep20_Cat_Whiskers
+        Amount: 100
+      - Material: R_Glacier_Robe
+        Amount: 1
+      - Material: R_Glacier_Muffler
+        Amount: 1
+      - Material: R_Glacier_Earring
+        Amount: 1
+      - Material: R_Glacier_Shoes
+        Amount: 1
+  - Id: 1263082
+    Name: Rp_Ep20_Guard
+    Materials:
+      - Material: Ep20_Cat_Whiskers
+        Amount: 100
+      - Material: R_Glacier_Pendant
+        Amount: 1
+      - Material: R_Glacier_Necklace
+        Amount: 1
+      - Material: R_Glacier_Guard
+        Amount: 1
+  - Id: 1263083
+    Name: Rp_Ep20_Daily
+    Materials:
+      - Material: Ep20_Cat_Whiskers
+        Amount: 150
+      - Material: Ep20_Ice_Bearskin
+        Amount: 150
+      - Material: Ep20_Copo_Egg_Shell
+        Amount: 50
+      - Material: Ep20_Copo_Head_F
+        Amount: 20
+      - Material: Icebear_Card
+        Amount: 3
+      - Material: Copo_Card
+        Amount: 3
+  - Id: 1263084
+    Name: Rp_Ep20_Nest
+    Materials:
+      - Material: Ep20_Cat_Whiskers
+        Amount: 150
+      - Material: Ep20_Huge_Feather_G
+        Amount: 50
+      - Material: Ep20_Huge_Feather_W
+        Amount: 50
+      - Material: Ep20_Copo_Egg_Shell
+        Amount: 50
+      - Material: Icewind_Egg_Card
+        Amount: 3
+      - Material: Grey_Icewind_Card
+        Amount: 3
+  - Id: 1263085
+    Name: Rp_Ep20_Snail
+    Materials:
+      - Material: Ep20_Cat_Whiskers
+        Amount: 250
+      - Material: Ep20_Twinkling_Snow
+        Amount: 2
+      - Material: Ep20_Fluor_Cell_Salty
+        Amount: 250
+      - Material: EP20_D_P_Ore
+        Amount: 1
+      - Material: Angel_Iceslug_Card
+        Amount: 1
+      - Material: Snow_Angel_Card
+        Amount: 1
+  - Id: 1263086
+    Name: Rp_Ep20_Noob
+    Materials:
+      - Material: Ep20_Cat_Whiskers
+        Amount: 100
+      - Material: Ep20_Iwin_Private_C
+        Amount: 100
+      - Material: Ep20_Iwin_Priva_Co_C
+        Amount: 100
+      - Material: Ep20_Iwin_Corporal_C
+        Amount: 100
+      - Material: Ep20_Iwin_Sergeant_C
+        Amount: 100
+      - Material: Ep20_Broken_Trident
+        Amount: 100
+      - Material: Fake_Iwin_S_Card
+        Amount: 5
+  - Id: 1263087
+    Name: Rp_Ep20_Hide
+    Materials:
+      - Material: Ep20_Cat_Whiskers
+        Amount: 250
+      - Material: Ep20_Fluor_Cell_Sweet
+        Amount: 450
+      - Material: Ep20_Angels_Tail
+        Amount: 2
+      - Material: EP20_D_P_Ore
+        Amount: 1
+      - Material: F_Angel_Iceslug_Card
+        Amount: 1
+      - Material: Rabbit_Iceslug_card
+        Amount: 3
+  - Id: 1263088
+    Name: Rp_Ep20_Mess
+    Materials:
+      - Material: Ep20_Cat_Whiskers
+        Amount: 150
+      - Material: Ep20_Fluor_Cell_Sour
+        Amount: 100
+      - Material: Ep20_Fluor_Cell_Salty
+        Amount: 100
+      - Material: Ep20_Fluor_Cell_Sweet
+        Amount: 100
+      - Material: Melibe_Iceslug_Card
+        Amount: 3
+      - Material: E_Rgan_Cleaner_Card
+        Amount: 3
+  - Id: 1263089
+    Name: Rp_Ep20_Heal
+    Materials:
+      - Material: Ep20_Cat_Whiskers
+        Amount: 150
+      - Material: Ep20_Rgan_Core_F
+        Amount: 15
+      - Material: Ep20_Coral_Bangle
+        Amount: 20
+      - Material: Ep20_Shell_Hairpin
+        Amount: 20
+      - Material: Ep20_Seaweed_Belt
+        Amount: 20
+      - Material: S_Rgan_Warlock_Card
+        Amount: 3
+      - Material: S_Rgan_Healer_Card
+        Amount: 3
+  - Id: 1263090
+    Name: Rp_Ep20_Ranger
+    Materials:
+      - Material: Ep20_Cat_Whiskers
+        Amount: 150
+      - Material: Ep20_Rgan_Core_F
+        Amount: 15
+      - Material: Ep20_Cataphract_Piece
+        Amount: 10
+      - Material: Ep20_Mystic_Spl_Colt
+        Amount: 15
+      - Material: E_Rgan_Warlock_Card
+        Amount: 2
+      - Material: E_Rgan_Guardian_Card
+        Amount: 2
+      - Material: E_Rgan_Healer_Card
+        Amount: 2
+      - Material: Jormun_Guardian_Card
+        Amount: 2
+  - Id: 1263091
+    Name: Rp_Ep20_Sweeper
+    Materials:
+      - Material: Ep20_Cat_Whiskers
+        Amount: 300
+      - Material: Ep20_Unknown_Canine
+        Amount: 2
+      - Material: Ep20_Fluor_Cell_Sour
+        Amount: 350
+      - Material: Ep20_Fluor_Cell_Salty
+        Amount: 350
+      - Material: Ep20_Fluor_Cell_Sweet
+        Amount: 350
+      - Material: Ep20_Rgan_Core_F
+        Amount: 350
+      - Material: EP20_D_P_Ore
+        Amount: 1
+      - Material: Rgan_Chief_Clean_Card
+        Amount: 1
+  - Id: 1263092
+    Name: Rp_Ep20_Ult
+    Materials:
+      - Material: Ep20_Cat_Whiskers
+        Amount: 300
+      - Material: Ep20_Fluor_Cell_Sweet
+        Amount: 300
+      - Material: Ep20_Fluor_Cell_Sour
+        Amount: 300
+      - Material: Ep20_Fluor_Cell_Salty
+        Amount: 300
+      - Material: Ep20_Mystic_Spl_Colt
+        Amount: 30
+      - Material: EP20_D_P_Ore
+        Amount: 1
+      - Material: EP20_D_Scale
+        Amount: 1
+      - Material: Demigod_Lasgand_Card
+        Amount: 1
+  - Id: 1263093
+    Name: Rp_Ch01_Armor_A
+    Materials:
+      - Material: Ch1_Root_Coin
+        Amount: 100
+      - Material: R_Entwined_Armor
+        Amount: 1
+      - Material: R_Entwined_Manteau
+        Amount: 1
+      - Material: R_Entwined_Boots
+        Amount: 1
+      - Material: Ch1_Warp_Leaf
+        Amount: 1
+  - Id: 1263094
+    Name: Rp_Ch01_Armor_B
+    Materials:
+      - Material: Ch1_Root_Coin
+        Amount: 100
+      - Material: R_Entwined_Robe
+        Amount: 1
+      - Material: R_Entwined_Muffler
+        Amount: 1
+      - Material: R_Entwined_Shoes
+        Amount: 1
+      - Material: Ch1_Warp_Leaf
+        Amount: 1
+  - Id: 1263095
+    Name: Rp_Ch01_Foot_BG
+    Materials:
+      - Material: Frontier_Magic_Dust
+        Amount: 100
+      - Material: R_Dimension_B_Greave
+        Amount: 1
+      - Material: Ch1_Mana_Ring
+        Amount: 50
+      - Material: Ch1_Warp_Leaf
+        Amount: 1
+  - Id: 1263096
+    Name: Rp_Ch01_Foot_HB
+    Materials:
+      - Material: Frontier_Magic_Dust
+        Amount: 100
+      - Material: R_Dimension_H_Boots
+        Amount: 1
+      - Material: Ch1_Mana_Ring
+        Amount: 50
+      - Material: Ch1_Warp_Leaf
+        Amount: 1
+  - Id: 1263097
+    Name: Rp_Ch01_Foot_SS
+    Materials:
+      - Material: Frontier_Magic_Dust
+        Amount: 100
+      - Material: R_Dimension_S_Shoes
+        Amount: 1
+      - Material: Ch1_Mana_Ring
+        Amount: 50
+      - Material: Ch1_Warp_Leaf
+        Amount: 1
+  - Id: 1263098
+    Name: Rp_Ch01_Foot_MS
+    Materials:
+      - Material: Frontier_Magic_Dust
+        Amount: 100
+      - Material: R_Dimension_M_Shoes
+        Amount: 1
+      - Material: Ch1_Mana_Ring
+        Amount: 50
+      - Material: Ch1_Warp_Leaf
+        Amount: 1
+  - Id: 1263099
+    Name: Rp_Ch01_Foot_EB
+    Materials:
+      - Material: Frontier_Magic_Dust
+        Amount: 100
+      - Material: R_Dimension_E_Boots
+        Amount: 1
+      - Material: Ch1_Mana_Ring
+        Amount: 50
+      - Material: Ch1_Warp_Leaf
+        Amount: 1
+  - Id: 1263100
+    Name: Rp_Ch01_Dimension_A
+    Materials:
+      - Material: Frontier_Magic_Dust
+        Amount: 1000
+      - Material: Frontier_M_Stone
+        Amount: 300
+      - Material: Frontier_Stone_BL
+        Amount: 100
+      - Material: Frontier_Stone_YL
+        Amount: 100
+      - Material: Frontier_Stone_GR
+        Amount: 100
+      - Material: Frontier_Stone_BK
+        Amount: 100
+  - Id: 1263101
+    Name: Rp_Ch01_Dimension_B
+    Materials:
+      - Material: Dimension_Energy_BL
+        Amount: 600
+      - Material: Dimension_Energy_YL
+        Amount: 600
+      - Material: Dimension_Energy_GR
+        Amount: 600
+      - Material: Dimension_Energy_BK
+        Amount: 600
+  - Id: 1263102
+    Name: Rp_Ch01_Dimension_C
+    Materials:
+      - Material: Dimension_Essence_BL
+        Amount: 50
+      - Material: Dimension_Essence_YL
+        Amount: 50
+      - Material: Dimension_Essence_GR
+        Amount: 50
+      - Material: Dimension_Essence_BK
+        Amount: 50
+  - Id: 1263103
+    Name: Rp_Ch01_Chaos_A
+    Materials:
+      - Material: Chaotic_Rune_Ore
+        Amount: 1000
+      - Material: Disparate_Rune_Ore
+        Amount: 1000
+  - Id: 1263104
+    Name: Rp_Ch01_Chaos_B
+    Materials:
+      - Material: Chaotic_Rune
+        Amount: 300
+      - Material: Disparate_Rune
+        Amount: 300
+  - Id: 1263105
+    Name: Rp_Ch01_Chaos_C
+    Materials:
+      - Material: Chaotic_Essence
+        Amount: 150
+      - Material: Disparate_Essence
+        Amount: 150
+  - Id: 1263106
+    Name: Rp_Ep21_GaebolgA
+    Materials:
+      - Material: Ep21_Wigner_Ticket
+        Amount: 250
+      - Material: R_Gaebolg_Armor
+        Amount: 1
+      - Material: R_Gaebolg_Manteau
+        Amount: 1
+      - Material: R_Gaebolg_Boots
+        Amount: 1
+      - Material: R_Gaebolg_Ring
+        Amount: 1
+      - Material: R_Gaebolg_Glove
+        Amount: 1
+  - Id: 1263107
+    Name: Rp_Ep21_GaebolgB
+    Materials:
+      - Material: Ep21_Wigner_Ticket
+        Amount: 250
+      - Material: R_Gaebolg_Robe
+        Amount: 1
+      - Material: R_Gaebolg_Muffler
+        Amount: 1
+      - Material: R_Gaebolg_Shoes
+        Amount: 1
+      - Material: R_Gaebolg_Earring
+        Amount: 1
+      - Material: R_Gaebolg_Necklace
+        Amount: 1
+  - Id: 1263108
+    Name: Rp_Ep21_Shellfish
+    Materials:
+      - Material: Ep21_Wigner_Ticket
+        Amount: 350
+      - Material: Scalleg_Card
+        Amount: 3
+      - Material: Velelling_Card
+        Amount: 3
+      - Material: Letterster_Card
+        Amount: 3
+      - Material: aegis_1001641
+        Amount: 100
+      - Material: aegis_1001643
+        Amount: 100
+      - Material: aegis_1001640
+        Amount: 100
+      - Material: aegis_1001645
+        Amount: 100
+  - Id: 1263109
+    Name: Rp_Ep21_Beast
+    Materials:
+      - Material: Ep21_Wigner_Ticket
+        Amount: 350
+      - Material: Sea_Wind_Card
+        Amount: 3
+      - Material: Rock_Striker_Card
+        Amount: 3
+      - Material: aegis_1001642
+        Amount: 150
+      - Material: aegis_1001647
+        Amount: 150
+  - Id: 1263110
+    Name: Rp_Ep21_Soft
+    Materials:
+      - Material: Ep21_Wigner_Ticket
+        Amount: 350
+      - Material: Skipskipper_Card
+        Amount: 3
+      - Material: Cliolima_Card
+        Amount: 3
+      - Material: aegis_1001644
+        Amount: 150
+      - Material: aegis_1001646
+        Amount: 150
+  - Id: 1263111
+    Name: Rp_Ep21_Yorker
+    Materials:
+      - Material: Ep21_Wigner_Ticket
+        Amount: 350
+      - Material: Yorker_Worker_Card
+        Amount: 3
+      - Material: Yorker_R_Worker_Card
+        Amount: 3
+      - Material: aegis_1001632
+        Amount: 100
+      - Material: aegis_1001630
+        Amount: 100
+      - Material: aegis_1001631
+        Amount: 100
+  - Id: 1263112
+    Name: Rp_Ep21_Yoster
+    Materials:
+      - Material: Ep21_Wigner_Ticket
+        Amount: 450
+      - Material: Yoster_Cleaner_Card
+        Amount: 2
+      - Material: Yoster_Fixer_Card
+        Amount: 2
+      - Material: Yoster_Collect_Card
+        Amount: 2
+      - Material: Yoster_Nego_Card
+        Amount: 2
+      - Material: Yoster_Cooker_Card
+        Amount: 2
+      - Material: aegis_1001634
+        Amount: 150
+      - Material: aegis_1001633
+        Amount: 150
+  - Id: 1263113
+    Name: Rp_Ep21_Yormi
+    Materials:
+      - Material: Ep21_Wigner_Ticket
+        Amount: 400
+      - Material: Yormi_Card
+        Amount: 2
+      - Material: Yormi_M_Card
+        Amount: 2
+      - Material: aegis_1001628
+        Amount: 100
+      - Material: aegis_1001629
+        Amount: 100
+      - Material: aegis_1001634
+        Amount: 100
+      - Material: aegis_1001633
+        Amount: 100
+  - Id: 1263114
+    Name: Rp_Ep21_Yordos
+    Materials:
+      - Material: Ep21_Wigner_Ticket
+        Amount: 450
+      - Material: Yordos_Execute_Card
+        Amount: 2
+      - Material: Yordos_Judge_Card
+        Amount: 2
+      - Material: Yordos_Inve_Card
+        Amount: 2
+      - Material: aegis_1001629
+        Amount: 100
+      - Material: aegis_1001637
+        Amount: 100
+      - Material: aegis_1001635
+        Amount: 100
+  - Id: 1263115
+    Name: Rp_Ep21_Yoscopus
+    Materials:
+      - Material: Ep21_Wigner_Ticket
+        Amount: 400
+      - Material: Yoscopus_G_Cards
+        Amount: 2
+      - Material: Yoscopus_S_Card
+        Amount: 2
+      - Material: aegis_1001636
+        Amount: 200
+  - Id: 1263116
+    Name: Rp_Ep21_Bishop
+    Materials:
+      - Material: Ep21_Wigner_Ticket
+        Amount: 400
+      - Material: Yortus_Bishop_Card
+        Amount: 2
+      - Material: Yortus_Conjur_Card
+        Amount: 2
+      - Material: aegis_1001639
+        Amount: 100
+      - Material: aegis_1001638
+        Amount: 100
+  - Id: 1263117
+    Name: Rp_Ep21_Horn
+    Materials:
+      - Material: Ep21_Wigner_Ticket
+        Amount: 650
+      - Material: Ice_Horn_Card
+        Amount: 1
+      - Material: Ice_Seahorse_Card
+        Amount: 3
+      - Material: aegis_1001648
+        Amount: 300
+      - Material: aegis_1001649
+        Amount: 5
+  - Id: 1263118
+    Name: Rp_Ep21_Arbiter
+    Materials:
+      - Material: Ep21_Wigner_Ticket
+        Amount: 650
+      - Material: Yortus_Arbiter_Card
+        Amount: 1
+      - Material: Yortus_Bailiff_Card
+        Amount: 1
+      - Material: aegis_1001639
+        Amount: 200
+      - Material: aegis_1001638
+        Amount: 200
+  - Id: 1263119
+    Name: Rp_Ep21_Cap
+    Materials:
+      - Material: Ep21_Wigner_Ticket
+        Amount: 850
+      - Material: Cap_Of_G_Ship_Card
+        Amount: 1
+      - Material: Ep21_Armor_E_Stone3
+        Amount: 250
+      - Material: Ep21_Robe_E_Stone3
+        Amount: 250
+      - Material: Ep21_Shoes_E_Stone3
+        Amount: 250
+      - Material: Ep21_Acc_E_Stone3
+        Amount: 250
+  - Id: 1263120
+    Name: Rp_Ep21_Tan
+    Materials:
+      - Material: Ep21_Wigner_Ticket
+        Amount: 850
+      - Material: Encroached_Tan_Card
+        Amount: 1
+      - Material: Ep21_Armor_E_Stone3
+        Amount: 250
+      - Material: Ep21_Robe_E_Stone3
+        Amount: 250
+      - Material: Ep21_Shoes_E_Stone3
+        Amount: 250
+      - Material: Ep21_Acc_E_Stone3
+        Amount: 250
+  - Id: 1263126
+    Name: Rp_Ch01_Rolling
+    Materials:
+      - Material: aegis_300635
+        Amount: 3
+      - Material: aegis_300636
+        Amount: 3
+      - Material: aegis_300637
+        Amount: 3
+      - Material: aegis_1001989
+        Amount: 100
+      - Material: aegis_1001990
+        Amount: 100
+      - Material: aegis_1002048
+        Amount: 100
+  - Id: 1263127
+    Name: Rp_Ch01_Volcano
+    Materials:
+      - Material: aegis_300640
+        Amount: 3
+      - Material: aegis_300638
+        Amount: 3
+      - Material: aegis_300639
+        Amount: 3
+      - Material: aegis_1002048
+        Amount: 100
+      - Material: aegis_1001987
+        Amount: 100
+      - Material: aegis_1001990
+        Amount: 100
+  - Id: 1263128
+    Name: Rp_Ch01_Yggleaf
+    Materials:
+      - Material: aegis_300633
+        Amount: 3
+      - Material: aegis_300634
+        Amount: 3
+      - Material: aegis_1002021
+        Amount: 500
+  - Id: 1263129
+    Name: Rp_Ch01_Noise
+    Materials:
+      - Material: aegis_300647
+        Amount: 3
+      - Material: aegis_300648
+        Amount: 3
+      - Material: aegis_1001992
+        Amount: 150
+      - Material: aegis_1001975
+        Amount: 30
+  - Id: 1263130
+    Name: Rp_Ch01_Flowers
+    Materials:
+      - Material: aegis_300649
+        Amount: 3
+      - Material: aegis_300650
+        Amount: 3
+      - Material: aegis_300651
+        Amount: 3
+      - Material: aegis_1001994
+        Amount: 50
+      - Material: aegis_1001995
+        Amount: 50
+      - Material: aegis_1002017
+        Amount: 50
+      - Material: aegis_1001975
+        Amount: 50
+  - Id: 1263131
+    Name: Rp_Ch01_Chunk
+    Materials:
+      - Material: aegis_300644
+        Amount: 3
+      - Material: aegis_300645
+        Amount: 3
+      - Material: aegis_300646
+        Amount: 3
+      - Material: Iron
+        Amount: 50
+      - Material: Steel
+        Amount: 50
+      - Material: Mystery_Piece
+        Amount: 50
+      - Material: Screw
+        Amount: 50
+      - Material: Coal
+        Amount: 50
+  - Id: 1263132
+    Name: Rp_Ch01_Toxic
+    Materials:
+      - Material: aegis_300659
+        Amount: 3
+      - Material: aegis_300660
+        Amount: 3
+      - Material: aegis_300661
+        Amount: 3
+      - Material: aegis_300662
+        Amount: 3
+      - Material: Disparate_Rune_Ore
+        Amount: 50
+      - Material: Frontier_M_Stone
+        Amount: 50
+  - Id: 1263133
+    Name: Rp_Ch01_Knight
+    Materials:
+      - Material: aegis_300663
+        Amount: 3
+      - Material: aegis_300664
+        Amount: 3
+      - Material: aegis_300665
+        Amount: 2
+      - Material: Yggdrasilberry
+        Amount: 15
+      - Material: Illusion_Stone_GR
+        Amount: 30
+      - Material: Illusion_Stone_BK
+        Amount: 30
+      - Material: Blade_Lost_In_Darkness
+        Amount: 2
+  - Id: 1263134
+    Name: Rp_Ch01_Cutter
+    Materials:
+      - Material: aegis_300652
+        Amount: 3
+      - Material: aegis_300653
+        Amount: 3
+      - Material: aegis_300654
+        Amount: 3
+      - Material: aegis_1002019
+        Amount: 50
+      - Material: aegis_1002018
+        Amount: 50
+      - Material: aegis_1001993
+        Amount: 50
+      - Material: aegis_1001992
+        Amount: 150
+  - Id: 1263135
+    Name: Rp_Ch01_Peep
+    Materials:
+      - Material: aegis_300641
+        Amount: 3
+      - Material: aegis_300642
+        Amount: 3
+      - Material: aegis_300643
+        Amount: 3
+      - Material: aegis_1002020
+        Amount: 50
+      - Material: Sticky_Poison
+        Amount: 100
+      - Material: Sticky_Webfoot
+        Amount: 100
+      - Material: Spawn
+        Amount: 100
+      - Material: Snail's_Shell
+        Amount: 100
+  - Id: 1263136
+    Name: Rp_Ch01_Uncanny
+    Materials:
+      - Material: aegis_300655
+        Amount: 3
+      - Material: aegis_300656
+        Amount: 3
+      - Material: aegis_300657
+        Amount: 3
+      - Material: aegis_300658
+        Amount: 2
+      - Material: aegis_1001986
+        Amount: 100
+      - Material: aegis_1001988
+        Amount: 50
+      - Material: Chaotic_Rune_Ore
+        Amount: 30
+      - Material: Polluted_Spell
+        Amount: 10
+  - Id: 1263137
+    Name: Rp_Ch01_Bulgasari
+    Materials:
+      - Material: aegis_300666
+        Amount: 1
+      - Material: aegis_1001985
+        Amount: 100
+      - Material: aegis_1001977
+        Amount: 100
+      - Material: Yggdrasilberry
+        Amount: 15
+      - Material: Frontier_M_Stone
+        Amount: 50
+  - Id: 1263138
+    Name: Rp_Ch01_Glutto
+    Materials:
+      - Material: aegis_300667
+        Amount: 1
+      - Material: aegis_1001991
+        Amount: 100
+      - Material: Yggdrasilberry
+        Amount: 15
+      - Material: Frontier_M_Stone
+        Amount: 50

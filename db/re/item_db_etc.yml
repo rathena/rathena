@@ -57831,6 +57831,23 @@ Body:
          bonus bReduceDamageReturn,5;
       else
          bonus bReduceDamageReturn,3;
+  - Id: 314271
+    AegisName: Automatic_Orb99
+    Name: Automatic Orb (Chop Chop Slash)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"KR_DOUBLE_SLASH",15;
+      bonus2 bSkillAtk,"KR_CHOP_CHOP",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"KR_DOUBLE_SLASH",3;
+         bonus2 bSkillAtk,"KR_CHOP_CHOP",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"KR_DOUBLE_SLASH",7;
+         bonus2 bSkillAtk,"KR_CHOP_CHOP",7;
+      }
   - Id: 310180
     AegisName: Warlock_Robe2
     Name: Warlock Stone II (Garment)
@@ -61558,6 +61575,23 @@ Body:
                bonus2 bSkillAtk,"SU_SV_STEMSPEAR",15;
                bonus2 bSkillAtk,"SU_CN_METEOR",15;
             }
+         }
+      }
+  - Id: 314274
+    AegisName: Wolf_Orb_Skill_52
+    Name: Wolf Orb (Chop Chop Slash)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"KR_CHOP_CHOP",15;
+      bonus2 bSkillAtk,"KR_DOUBLE_SLASH",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"KR_CHOP_CHOP",15;
+         bonus2 bSkillAtk,"KR_DOUBLE_SLASH",15;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"KR_CHOP_CHOP",15;
+            bonus2 bSkillAtk,"KR_DOUBLE_SLASH",15;
          }
       }
   - Id: 310566
@@ -68830,6 +68864,29 @@ Body:
             bonus2 bSkillAtk,"HN_SPIRAL_PIERCE_MAX",15;
           }
         }
+      }
+  - Id: 314296
+    AegisName: Ice_F_Orb_Skill_55
+    Name: Ice Flower Spell (Chop Chop Slash)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"KR_DOUBLE_SLASH",15;
+      bonus2 bSkillAtk,"KR_CHOP_CHOP",15;
+      if (.@r>=7) {
+         bonus2 bSkillAtk,"KR_DOUBLE_SLASH",15;
+         bonus2 bSkillAtk,"KR_CHOP_CHOP",15;
+      }
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"KR_DOUBLE_SLASH",15;
+         bonus2 bSkillAtk,"KR_CHOP_CHOP",15;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"KR_DOUBLE_SLASH",15;
+         bonus2 bSkillAtk,"KR_CHOP_CHOP",15;
+         bonus2 bSkillAtk,"AT_ALPHA_CLAW",15;
+         bonus2 bSkillAtk,"AT_FRENZY_FANG",15;
       }
   - Id: 311191
     AegisName: Ice_F_Orb_Skill_54
@@ -90602,6 +90659,53 @@ Body:
          bonus2 bExpAddRace,RC_All,5;
          bonus2 bDropAddRace,RC_All,5;
       }
+  - Id: 314927
+    AegisName: Ch02_1_War
+    Name: Flame Flower Spell (Warrior)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,50;
+      if (.@r>=7) {
+         bonus bShortAtkRate,5;
+         if (.@r>=9) {
+            bonus bShortAtkRate,7;
+         }
+      }
+  - Id: 314928
+    AegisName: Ch02_1_Ran
+    Name: Flame Flower Spell (Ranger)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,50;
+      if (.@r>=7) {
+         bonus bLongAtkRate,5;
+         if (.@r>=9) {
+            bonus bLongAtkRate,7;
+         }
+      }
+  - Id: 314929
+    AegisName: Ch02_1_Sage
+    Name: Flame Flower Spell (Sage)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,50;
+      if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Earth,12;
+         bonus2 bMagicAtkEle,Ele_Water,12;
+         bonus2 bMagicAtkEle,Ele_Wind,12;
+         if (.@r>=9) {
+            bonus2 bMagicAtkEle,Ele_Neutral,12;
+            bonus2 bMagicAtkEle,Ele_Fire,12;
+            bonus2 bMagicAtkEle,Ele_Poison,12;
+            bonus2 bMagicAtkEle,Ele_Dark,12;
+         }
+      }
   - Id: 315055
     AegisName: aegis_315055
     Name: Flower Garden
@@ -101128,6 +101232,21 @@ Body:
     Name: Howell Megas Walter Card Fragment    # !todo check english name
     Type: Etc
     Weight: 10
+  - Id: 1002350
+    AegisName: Ice_F_Stone_Skill_55
+    Name: Ice Field Stone (Skill 55)    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1002351
+    AegisName: Ice_F_Stone_Skill_56
+    Name: Ice Field Stone (Skill 56)    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1002352
+    AegisName: Ice_F_Stone_Skill_57
+    Name: Ice Field Stone (Skill 57)    # !todo check english name
+    Type: Etc
+    Weight: 10
   - Id: 1002356
     AegisName: 25_A_Ev_Photo
     Name: Landscape Photo    # !todo check english name
@@ -102181,3 +102300,1813 @@ Body:
       Ammo: true
     Flags:
       BuyingStore: true
+  - Id: 314272
+    AegisName: Automatic_Orb100
+    Name: Automatic Orb (Gust Hail)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"KR_SHARPEN_GUST",15;
+      bonus2 bSkillAtk,"KR_SHARPEN_HAIL",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"KR_SHARPEN_GUST",3;
+         bonus2 bSkillAtk,"KR_SHARPEN_HAIL",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"KR_SHARPEN_GUST",7;
+         bonus2 bSkillAtk,"KR_SHARPEN_HAIL",7;
+      }
+  - Id: 314273
+    AegisName: Automatic_Orb101
+    Name: Automatic Orb (Nature)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"KR_ICE_SPLASH",15;
+      bonus2 bSkillAtk,"KR_THUNDERING_ORB",15;
+      bonus2 bSkillAtk,"KR_THUNDERING_ORB_S",15;
+      bonus2 bSkillAtk,"KR_EARTH_STAMP",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"KR_ICE_SPLASH",3;
+         bonus2 bSkillAtk,"KR_THUNDERING_ORB",3;
+         bonus2 bSkillAtk,"KR_THUNDERING_ORB_S",3;
+         bonus2 bSkillAtk,"KR_EARTH_STAMP",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"KR_ICE_SPLASH",7;
+         bonus2 bSkillAtk,"KR_THUNDERING_ORB",7;
+         bonus2 bSkillAtk,"KR_THUNDERING_ORB_S",7;
+         bonus2 bSkillAtk,"KR_EARTH_STAMP",7;
+      }
+  - Id: 314275
+    AegisName: Wolf_Orb_Skill_53
+    Name: Wolf Orb (Gust Hail)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"KR_SHARPEN_GUST",15;
+      bonus2 bSkillAtk,"KR_SHARPEN_HAIL",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"KR_SHARPEN_GUST",15;
+         bonus2 bSkillAtk,"KR_SHARPEN_HAIL",15;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"KR_SHARPEN_GUST",15;
+         bonus2 bSkillAtk,"KR_SHARPEN_HAIL",15;
+      }
+  - Id: 314276
+    AegisName: Wolf_Orb_Skill_54
+    Name: Wolf Orb (Nature)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"KR_ICE_SPLASH",15;
+      bonus2 bSkillAtk,"KR_THUNDERING_ORB",15;
+      bonus2 bSkillAtk,"KR_THUNDERING_ORB_S",15;
+      bonus2 bSkillAtk,"KR_EARTH_STAMP",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"KR_ICE_SPLASH",15;
+         bonus2 bSkillAtk,"KR_THUNDERING_ORB",15;
+         bonus2 bSkillAtk,"KR_THUNDERING_ORB_S",15;
+         bonus2 bSkillAtk,"KR_EARTH_STAMP",15;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"KR_ICE_SPLASH",15;
+         bonus2 bSkillAtk,"KR_THUNDERING_ORB",15;
+         bonus2 bSkillAtk,"KR_THUNDERING_ORB_S",15;
+         bonus2 bSkillAtk,"KR_EARTH_STAMP",15;
+      }
+  - Id: 314277
+    AegisName: Glacier_F_Orb_192
+    Name: Glacier Flower Spell (Chop Chop)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"KR_CHOP_CHOP",20;
+      bonus2 bSkillAtk,"KR_CHOP_CHOP",10*(.@r/3);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"KR_CHOP_CHOP",20;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"KR_CHOP_CHOP",20;
+      }
+  - Id: 314278
+    AegisName: Glacier_F_Orb_193
+    Name: Glacier Flower Spell (Double Slash)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"KR_DOUBLE_SLASH",20;
+      bonus2 bSkillAtk,"KR_DOUBLE_SLASH",10*(.@r/3);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"KR_DOUBLE_SLASH",20;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"KR_DOUBLE_SLASH",20;
+      }
+  - Id: 314279
+    AegisName: Glacier_F_Orb_194
+    Name: Glacier Flower Spell (Sharpen Gust)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"KR_SHARPEN_GUST",20;
+      bonus2 bSkillAtk,"KR_SHARPEN_GUST",10*(.@r/3);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"KR_SHARPEN_GUST",20;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"KR_SHARPEN_GUST",20;
+      }
+  - Id: 314280
+    AegisName: Glacier_F_Orb_195
+    Name: Glacier Flower Spell (Sharpen Hail)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"KR_SHARPEN_HAIL",20;
+      bonus2 bSkillAtk,"KR_SHARPEN_HAIL",10*(.@r/3);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"KR_SHARPEN_HAIL",20;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"KR_SHARPEN_HAIL",20;
+      }
+  - Id: 314281
+    AegisName: Glacier_F_Orb_196
+    Name: Glacier Flower Spell (Feather Sprinkle)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"KR_FEATHER_SPRINKLE",20;
+      bonus2 bSkillAtk,"KR_FEATHER_SPRINKLE",10*(.@r/3);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"KR_FEATHER_SPRINKLE",20;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"KR_FEATHER_SPRINKLE",20;
+      }
+  - Id: 314282
+    AegisName: Glacier_F_Orb_197
+    Name: Glacier Flower Spell (Ice Splash)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"KR_ICE_SPLASH",20;
+      bonus2 bSkillAtk,"KR_ICE_SPLASH",10*(.@r/3);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"KR_ICE_SPLASH",20;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"KR_ICE_SPLASH",20;
+      }
+  - Id: 314283
+    AegisName: Glacier_F_Orb_198
+    Name: Glacier Flower Spell (Thundering Orb)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"KR_THUNDERING_ORB",20;
+      bonus2 bSkillAtk,"KR_THUNDERING_ORB_S",20;
+      bonus2 bSkillAtk,"KR_THUNDERING_ORB",10*(.@r/3);
+      bonus2 bSkillAtk,"KR_THUNDERING_ORB_S",10*(.@r/3);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"KR_THUNDERING_ORB",20;
+         bonus2 bSkillAtk,"KR_THUNDERING_ORB_S",20;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"KR_THUNDERING_ORB",20;
+         bonus2 bSkillAtk,"KR_THUNDERING_ORB_S",20;
+      }
+  - Id: 314284
+    AegisName: Glacier_F_Orb_199
+    Name: Glacier Flower Spell (Thundering Focus)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"KR_THUNDERING_FOCUS",20;
+      bonus2 bSkillAtk,"KR_THUNDERING_FOCUS_S",20;
+      bonus2 bSkillAtk,"KR_THUNDERING_FOCUS",10*(.@r/3);
+      bonus2 bSkillAtk,"KR_THUNDERING_FOCUS_S",10*(.@r/3);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"KR_THUNDERING_FOCUS",20;
+         bonus2 bSkillAtk,"KR_THUNDERING_FOCUS_S",20;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"KR_THUNDERING_FOCUS",20;
+         bonus2 bSkillAtk,"KR_THUNDERING_FOCUS_S",20;
+      }
+  - Id: 314285
+    AegisName: Glacier_F_Orb_200
+    Name: Glacier Flower Spell (Earth Drill)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"KR_EARTH_DRILL",20;
+      bonus2 bSkillAtk,"KR_EARTH_DRILL",10*(.@r/3);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"KR_EARTH_DRILL",20;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"KR_EARTH_DRILL",20;
+      }
+  - Id: 314286
+    AegisName: Glacier_F_Orb_201
+    Name: Glacier Flower Spell (Earth Stamp)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"KR_EARTH_STAMP",20;
+      bonus2 bSkillAtk,"KR_EARTH_STAMP",10*(.@r/3);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"KR_EARTH_STAMP",20;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"KR_EARTH_STAMP",20;
+      }
+  - Id: 314287
+    AegisName: Glacier_F_Orb_202
+    Name: Glacier Flower Spell (Glacial Nova)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"AT_GLACIER_NOVA",10;
+      bonus2 bSkillAtk,"AT_GLACIER_NOVA",5*(.@r/4);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"AT_GLACIER_NOVA",10;
+      }
+  - Id: 314288
+    AegisName: Glacier_F_Orb_203
+    Name: Glacier Flower Spell (Glacial Shard)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"AT_GLACIER_SHARD",10;
+      bonus2 bSkillAtk,"AT_GLACIER_SHARD",5*(.@r/4);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"AT_GLACIER_SHARD",10;
+      }
+  - Id: 314289
+    AegisName: Glacier_F_Orb_204
+    Name: Glacier Flower Spell (Roaring Piercer)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"AT_ROARING_PIERCER",10;
+      bonus2 bSkillAtk,"AT_ROARING_PIERCER_S",10;
+      bonus2 bSkillAtk,"AT_ROARING_PIERCER",5*(.@r/4);
+      bonus2 bSkillAtk,"AT_ROARING_PIERCER_S",5*(.@r/4);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"AT_ROARING_PIERCER",10;
+         bonus2 bSkillAtk,"AT_ROARING_PIERCER_S",10;
+      }
+  - Id: 314290
+    AegisName: Glacier_F_Orb_205
+    Name: Glacier Flower Spell (Terra Wave)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"AT_TERRA_WAVE",10;
+      bonus2 bSkillAtk,"AT_TERRA_WAVE",5*(.@r/4);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"AT_TERRA_WAVE",10;
+      }
+  - Id: 314291
+    AegisName: Glacier_F_Orb_206
+    Name: Glacier Flower Spell (Terra Harvest)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"AT_TERRA_HARVEST",10;
+      bonus2 bSkillAtk,"AT_TERRA_HARVEST",5*(.@r/4);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"AT_TERRA_HARVEST",10;
+      }
+  - Id: 314292
+    AegisName: Glacier_F_Orb_207
+    Name: Glacier Flower Spell (Quill Spear)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"AT_QUILL_SPEAR",10;
+      bonus2 bSkillAtk,"AT_QUILL_SPEAR_S",10;
+      bonus2 bSkillAtk,"AT_QUILL_SPEAR",5*(.@r/4);
+      bonus2 bSkillAtk,"AT_QUILL_SPEAR_S",5*(.@r/4);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"AT_QUILL_SPEAR",10;
+         bonus2 bSkillAtk,"AT_QUILL_SPEAR_S",10;
+      }
+  - Id: 314293
+    AegisName: Glacier_F_Orb_208
+    Name: Glacier Flower Spell (Pinion Shot)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"AT_PINION_SHOT",10;
+      bonus2 bSkillAtk,"AT_PINION_SHOT",5*(.@r/4);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"AT_PINION_SHOT",10;
+      }
+  - Id: 314294
+    AegisName: Glacier_F_Orb_209
+    Name: Glacier Flower Spell (Frenzy Fang)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"AT_FRENZY_FANG",10;
+      bonus2 bSkillAtk,"AT_FRENZY_FANG",5*(.@r/4);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"AT_FRENZY_FANG",10;
+      }
+  - Id: 314295
+    AegisName: Glacier_F_Orb_210
+    Name: Glacier Flower Spell (Claw)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"AT_PRIMAL_CLAW",10;
+      bonus2 bSkillAtk,"AT_FERAL_CLAW",10;
+      bonus2 bSkillAtk,"AT_ALPHA_CLAW",10;
+      bonus2 bSkillAtk,"AT_PRIMAL_CLAW",5*(.@r/4);
+      bonus2 bSkillAtk,"AT_FERAL_CLAW",5*(.@r/4);
+      bonus2 bSkillAtk,"AT_ALPHA_CLAW",5*(.@r/4);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"AT_PRIMAL_CLAW",10;
+         bonus2 bSkillAtk,"AT_FERAL_CLAW",10;
+         bonus2 bSkillAtk,"AT_ALPHA_CLAW",10;
+      }
+  - Id: 314297
+    AegisName: Ice_F_Orb_Skill_56
+    Name: Ice Flower Spell (Gust Hail)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"KR_SHARPEN_HAIL",15;
+      bonus2 bSkillAtk,"KR_SHARPEN_GUST",15;
+      if (.@r>=7) {
+         bonus2 bSkillAtk,"KR_SHARPEN_HAIL",15;
+         bonus2 bSkillAtk,"KR_SHARPEN_GUST",15;
+      }
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"KR_SHARPEN_HAIL",15;
+         bonus2 bSkillAtk,"KR_SHARPEN_GUST",15;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"KR_SHARPEN_HAIL",15;
+         bonus2 bSkillAtk,"KR_SHARPEN_GUST",15;
+         bonus2 bSkillAtk,"AT_PINION_SHOT",15;
+         bonus2 bSkillAtk,"AT_QUILL_SPEAR",15;
+      }
+  - Id: 314298
+    AegisName: Ice_F_Orb_Skill_57
+    Name: Ice Flower Spell (Nature)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"KR_ICE_SPLASH",15;
+      bonus2 bSkillAtk,"KR_THUNDERING_ORB",15;
+      bonus2 bSkillAtk,"KR_EARTH_STAMP",15;
+      if (.@r>=7) {
+         bonus2 bSkillAtk,"KR_ICE_SPLASH",15;
+         bonus2 bSkillAtk,"KR_THUNDERING_ORB",15;
+         bonus2 bSkillAtk,"KR_EARTH_STAMP",15;
+      }
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"KR_ICE_SPLASH",15;
+         bonus2 bSkillAtk,"KR_THUNDERING_ORB",15;
+         bonus2 bSkillAtk,"KR_EARTH_STAMP",15;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"KR_ICE_SPLASH",15;
+         bonus2 bSkillAtk,"KR_THUNDERING_ORB",15;
+         bonus2 bSkillAtk,"KR_EARTH_STAMP",15;
+         bonus2 bSkillAtk,"AT_GLACIER_SHARD",15;
+         bonus2 bSkillAtk,"AT_ROARING_PIERCER",15;
+         bonus2 bSkillAtk,"AT_TERRA_HARVEST",15;
+      }
+
+  - Id: 314804
+    AegisName: AT_Soul_AC
+    Name: Alitea Soul (Alpha Claw)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"AT_ALPHA_CLAW",2;
+      bonus2 bSkillAtk,"AT_ALPHA_CLAW",.@r/2;
+  - Id: 314805
+    AegisName: AT_Soul_FF
+    Name: Alitea Soul (Frenzy Fang)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"AT_FRENZY_FANG",2;
+      bonus2 bSkillAtk,"AT_FRENZY_FANG",.@r/2;
+  - Id: 314806
+    AegisName: AT_Soul_PS
+    Name: Alitea Soul (Pinion Shot)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"AT_PINION_SHOT",2;
+      bonus2 bSkillAtk,"AT_PINION_SHOT",.@r/2;
+  - Id: 314807
+    AegisName: AT_Soul_QS
+    Name: Alitea Soul (Quill Spear)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"AT_QUILL_SPEAR",2;
+      bonus2 bSkillAtk,"AT_QUILL_SPEAR",.@r/2;
+  - Id: 314808
+    AegisName: AT_Soul_GS
+    Name: Alitea Soul (Glacial Shard)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"AT_GLACIER_SHARD",2;
+      bonus2 bSkillAtk,"AT_GLACIER_SHARD",.@r/2;
+  - Id: 314809
+    AegisName: AT_Soul_RP
+    Name: Alitea Soul (Roaring Piercer)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"AT_ROARING_PIERCER",2;
+      bonus2 bSkillAtk,"AT_ROARING_PIERCER",.@r/2;
+  - Id: 314810
+    AegisName: AT_Soul_TH
+    Name: Alitea Soul (Terra Harvest)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"AT_TERRA_HARVEST",2;
+      bonus2 bSkillAtk,"AT_TERRA_HARVEST",.@r/2;
+  - Id: 314270
+    AegisName: Gear_AT1
+    Name: Quill Spear Tuning Device
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"AT_QUILL_SPEAR",5;
+      if (getenchantgrade()>=ENCHANTGRADE_D)
+         bonus2 bSkillAtk,"AT_QUILL_SPEAR",3;
+      if (getenchantgrade()>=ENCHANTGRADE_C) {
+         bonus2 bAddSize,Size_Small,10;
+         bonus2 bAddSize,Size_Medium,10;
+         bonus2 bAddSize,Size_Large,10;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_B)
+         bonus2 bSkillAtk,"AT_QUILL_SPEAR",4;
+      if (getenchantgrade()>=ENCHANTGRADE_A)
+         bonus2 bSkillAtk,"AT_QUILL_SPEAR",6;
+  - Id: 314269
+    AegisName: Gear_AT2
+    Name: Pinion Shot Tuning Device
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"AT_PINION_SHOT",5;
+      if (getenchantgrade()>=ENCHANTGRADE_D)
+         bonus2 bSkillAtk,"AT_PINION_SHOT",3;
+      if (getenchantgrade()>=ENCHANTGRADE_C) {
+         bonus2 bAddSize,Size_Small,10;
+         bonus2 bAddSize,Size_Medium,10;
+         bonus2 bAddSize,Size_Large,10;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_B)
+         bonus2 bSkillAtk,"AT_PINION_SHOT",4;
+      if (getenchantgrade()>=ENCHANTGRADE_A)
+         bonus2 bSkillAtk,"AT_PINION_SHOT",6;
+
+  - Id: 315069
+    AegisName: Fierce_Rune_1
+    Name: Fierce Rune 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,5;
+      bonus bNonCritAtkRate,5;
+  - Id: 315072
+    AegisName: Great_Rune_1
+    Name: Great Commander Rune 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,5;
+      bonus bNonCritAtkRate,5;
+  - Id: 315075
+    AegisName: Acute_Rune_1
+    Name: Acute Rune 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,5;
+      bonus bShortAtkRate,5;
+  - Id: 315078
+    AegisName: Sharp_Rune_1
+    Name: Sharp Rune 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,5;
+      bonus bLongAtkRate,5;
+  - Id: 315081
+    AegisName: Magic_Rune_1
+    Name: Magic Essence Rune 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,5;
+      bonus2 bMagicAtkEle,Ele_Neutral,5;
+      bonus2 bMagicAtkEle,Ele_Water,5;
+      bonus2 bMagicAtkEle,Ele_Wind,5;
+      bonus2 bMagicAtkEle,Ele_Earth,5;
+      bonus2 bMagicAtkEle,Ele_Fire,5;
+      bonus2 bMagicAtkEle,Ele_Poison,5;
+      bonus2 bMagicAtkEle,Ele_Dark,5;
+  - Id: 315084
+    AegisName: Spell_Rune_1
+    Name: Spell Rune 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,5;
+      bonus2 bMagicAtkEle,Ele_Fire,5;
+      bonus2 bMagicAtkEle,Ele_Neutral,5;
+      bonus2 bMagicAtkEle,Ele_Holy,5;
+      bonus2 bMagicAtkEle,Ele_Wind,5;
+      bonus2 bMagicAtkEle,Ele_Dark,5;
+      bonus2 bMagicAtkEle,Ele_Ghost,5;
+      bonus2 bMagicAtkEle,Ele_Undead,5;
+  - Id: 315087
+    AegisName: Health_Rune_1
+    Name: Adamantine Rune 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxHPrate,5;
+      bonus bDelayrate,-1;
+  - Id: 315090
+    AegisName: Soul_Rune_1
+    Name: Affection Rune 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxSPrate,5;
+      bonus bVariableCastrate,-3;
+  - Id: 314980
+    AegisName: Ch02_1_A
+    Name: Flame Flower Spell (Attack)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bAtkRate,3;
+      bonus bMatkRate,3;
+      if (.@r>=7) {
+         bonus bBaseAtk,20;
+         bonus bMatk,20;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,15;
+         bonus bMatk,15;
+      }
+  - Id: 314966
+    AegisName: Ch02_1_Archer
+    Name: Flame Flower Spell (Expert Archer)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,25;
+      bonus bLongAtkRate,10;
+  - Id: 314931
+    AegisName: Ch02_1_Assassin
+    Name: Flame Flower Spell (Assassin)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,35;
+      bonus bCritical,5;
+      if (.@r>=7)
+         bonus bCritAtkRate,5;
+      if (.@r>=9)
+         bonus bCritAtkRate,5;
+  - Id: 314979
+    AegisName: Ch02_1_D
+    Name: Flame Flower Spell (Defense)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bDef,100;
+      bonus bMdef,20;
+      if (.@r>=7) {
+         bonus bDef,50;
+         bonus bMdef,10;
+      }
+      if (.@r>=9) {
+         bonus bDef,30;
+         bonus bMdef,5;
+      }
+  - Id: 314942
+    AegisName: Ch02_1_Def
+    Name: Flame Flower Spell (Physical Defense)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bDef,100;
+      bonus bRes,15;
+      if (.@r>=7) {
+         bonus bDef,50;
+         bonus bRes,10;
+      }
+      if (.@r>=9) {
+         bonus bDef,50;
+         bonus bRes,10;
+      }
+  - Id: 314969
+    AegisName: Ch02_1_Fatal
+    Name: Flame Flower Spell (Fatal)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritical,10;
+      bonus bCritAtkRate,10;
+  - Id: 314965
+    AegisName: Ch02_1_Fight_S
+    Name: Flame Flower Spell (Fighting Spirit)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,25;
+      bonus bShortAtkRate,10;
+  - Id: 314932
+    AegisName: Ch02_1_Fighter
+    Name: Flame Flower Spell (Fighter)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,50;
+      if (.@r>=7)
+         bonus bNonCritAtkRate,5;
+      if (.@r>=9)
+         bonus bNonCritAtkRate,5;
+  - Id: 314970
+    AegisName: Ch02_1_Hit_A
+    Name: Flame Flower Spell (Hit Attack)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,25;
+      bonus bNonCritAtkRate,10;
+  - Id: 314944
+    AegisName: Ch02_1_Hpsp
+    Name: Flame Flower Spell (HP and SP)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,3;
+      bonus bMaxSPrate,3;
+      if (.@r>=7) {
+         bonus bMaxHPrate,2;
+         bonus bMaxSPrate,2;
+      }
+      if (.@r>=9) {
+         bonus bMaxHPrate,1;
+         bonus bMaxSPrate,1;
+      }
+  - Id: 314930
+    AegisName: Ch02_1_Mag
+    Name: Flame Flower Spell (Magician)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,50;
+      if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Fire,12;
+         bonus2 bMagicAtkEle,Ele_Neutral,12;
+         bonus2 bMagicAtkEle,Ele_Holy,12;
+      }
+      if (.@r>=9) {
+         bonus2 bMagicAtkEle,Ele_Wind,12;
+         bonus2 bMagicAtkEle,Ele_Dark,12;
+         bonus2 bMagicAtkEle,Ele_Ghost,12;
+         bonus2 bMagicAtkEle,Ele_Undead,12;
+      }
+  - Id: 314968
+    AegisName: Ch02_1_Magic
+    Name: Flame Flower Spell (Magic)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,25;
+      bonus2 bMagicAtkEle,Ele_Fire,10;
+      bonus2 bMagicAtkEle,Ele_Neutral,10;
+      bonus2 bMagicAtkEle,Ele_Holy,10;
+      bonus2 bMagicAtkEle,Ele_Wind,10;
+      bonus2 bMagicAtkEle,Ele_Dark,10;
+      bonus2 bMagicAtkEle,Ele_Ghost,10;
+      bonus2 bMagicAtkEle,Ele_Undead,10;
+  - Id: 314943
+    AegisName: Ch02_1_Mdef
+    Name: Flame Flower Spell (Magical Defense)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,20;
+      bonus bMres,10;
+      if (.@r>=7) {
+         bonus bMdef,10;
+         bonus bMres,7;
+      }
+      if (.@r>=9) {
+         bonus bMdef,10;
+         bonus bMres,8;
+      }
+  - Id: 314953
+    AegisName: Ch02_1_Size_Atk
+    Name: Flame Flower Spell (Size Attack)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      .@v = 5;
+      if (.@r>=7)
+         .@v += 5;
+      if (.@r>=9)
+         .@v += 5;
+      bonus2 bAddSize,Size_Small,.@v;
+      bonus2 bAddSize,Size_Medium,.@v;
+      bonus2 bAddSize,Size_Large,.@v;
+  - Id: 314954
+    AegisName: Ch02_1_Size_Matk
+    Name: Flame Flower Spell (Size Spell)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      .@v = 5;
+      if (.@r>=7)
+         .@v += 5;
+      if (.@r>=9)
+         .@v += 5;
+      bonus2 bMagicAddSize,Size_Small,.@v;
+      bonus2 bMagicAddSize,Size_Medium,.@v;
+      bonus2 bMagicAddSize,Size_Large,.@v;
+  - Id: 314967
+    AegisName: Ch02_1_Sprit_P
+    Name: Flame Flower Spell (Spirit Power)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,25;
+      bonus2 bMagicAtkEle,Ele_Neutral,10;
+      bonus2 bMagicAtkEle,Ele_Water,10;
+      bonus2 bMagicAtkEle,Ele_Wind,10;
+      bonus2 bMagicAtkEle,Ele_Earth,10;
+      bonus2 bMagicAtkEle,Ele_Fire,10;
+      bonus2 bMagicAtkEle,Ele_Poison,10;
+      bonus2 bMagicAtkEle,Ele_Dark,10;
+  - Id: 314974
+    AegisName: Ch02_2_Acute
+    Name: Flame Flower Spell (Acute)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritical,15;
+      bonus bCritAtkRate,12;
+  - Id: 314937
+    AegisName: Ch02_2_Assassin2
+    Name: Flame Flower Spell (Executioner)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,35;
+      bonus bCritical,7;
+      bonus bPAtk,2;
+      if (.@r>=7)
+         bonus bCritAtkRate,5;
+      if (.@r>=9) {
+         bonus bShortAtkRate,10;
+         bonus bLongAtkRate,10;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_D)
+         bonus bCritAtkRate,5;
+      if (getenchantgrade()>=ENCHANTGRADE_C)
+         bonus bCritAtkRate,5;
+      if (getenchantgrade()>=ENCHANTGRADE_B)
+         bonus bCritAtkRate,5;
+      if (getenchantgrade()>=ENCHANTGRADE_A)
+         bonus bCritAtkRate,5;
+  - Id: 314946
+    AegisName: Ch02_2_Caster
+    Name: Flame Flower Spell (Caster)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bVariableCastrate,-10;
+      if (.@r>=7)
+         bonus bVariableCastrate,-7;
+      if (.@r>=9)
+         bonus bVariableCastrate,-8;
+  - Id: 314938
+    AegisName: Ch02_2_Fighter2
+    Name: Flame Flower Spell (Special Force)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bAtkRate,5;
+      bonus bBaseAtk,50;
+      bonus bPAtk,2;
+      if (.@r>=7)
+         bonus bNonCritAtkRate,5;
+      if (.@r>=9) {
+         bonus bShortAtkRate,10;
+         bonus bLongAtkRate,10;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_D)
+         bonus bNonCritAtkRate,5;
+      if (getenchantgrade()>=ENCHANTGRADE_C)
+         bonus bNonCritAtkRate,5;
+      if (getenchantgrade()>=ENCHANTGRADE_B)
+         bonus bNonCritAtkRate,5;
+      if (getenchantgrade()>=ENCHANTGRADE_A)
+         bonus bNonCritAtkRate,5;
+  - Id: 314975
+    AegisName: Ch02_2_Great_A
+    Name: Flame Flower Spell (Great Artisan)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,35;
+      bonus bNonCritAtkRate,12;
+  - Id: 314972
+    AegisName: Ch02_2_M_Archer
+    Name: Flame Flower Spell (Master Archer)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,35;
+      bonus bLongAtkRate,12;
+  - Id: 314978
+    AegisName: Ch02_2_M_Eessence
+    Name: Flame Flower Spell (Magic Essence)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,35;
+      bonus2 bMagicAtkEle,Ele_Fire,12;
+      bonus2 bMagicAtkEle,Ele_Neutral,12;
+      bonus2 bMagicAtkEle,Ele_Holy,12;
+      bonus2 bMagicAtkEle,Ele_Wind,12;
+      bonus2 bMagicAtkEle,Ele_Dark,12;
+      bonus2 bMagicAtkEle,Ele_Ghost,12;
+      bonus2 bMagicAtkEle,Ele_Undead,12;
+  - Id: 314956
+    AegisName: Ch02_2_M_F
+    Name: Flame Flower Spell (Magical Force)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,15;
+      bonus bMatkRate,1;
+      bonus bSMatk,1;
+      if (.@r>=7) {
+         bonus bMatk,15;
+         bonus bMatkRate,1;
+      }
+      if (.@r>=9) {
+         bonus bMatk,20;
+         bonus bMatkRate,3;
+      }
+  - Id: 314936
+    AegisName: Ch02_2_Mag2
+    Name: Flame Flower Spell (Grand Mage)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,5;
+      bonus bMatk,50;
+      bonus bSMatk,2;
+      if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Fire,10;
+         bonus2 bMagicAtkEle,Ele_Neutral,10;
+         bonus2 bMagicAtkEle,Ele_Holy,10;
+      }
+      if (.@r>=9) {
+         bonus2 bMagicAtkEle,Ele_Wind,10;
+         bonus2 bMagicAtkEle,Ele_Dark,10;
+         bonus2 bMagicAtkEle,Ele_Ghost,10;
+         bonus2 bMagicAtkEle,Ele_Undead,10;
+      }
+      .@g = 0;
+      if (getenchantgrade()>=ENCHANTGRADE_D)
+         .@g += 5;
+      if (getenchantgrade()>=ENCHANTGRADE_C)
+         .@g += 5;
+      if (getenchantgrade()>=ENCHANTGRADE_B)
+         .@g += 5;
+      if (getenchantgrade()>=ENCHANTGRADE_A)
+         .@g += 5;
+      if (.@g) {
+         bonus2 bMagicAtkEle,Ele_Fire,.@g;
+         bonus2 bMagicAtkEle,Ele_Neutral,.@g;
+         bonus2 bMagicAtkEle,Ele_Holy,.@g;
+         bonus2 bMagicAtkEle,Ele_Wind,.@g;
+         bonus2 bMagicAtkEle,Ele_Dark,.@g;
+         bonus2 bMagicAtkEle,Ele_Ghost,.@g;
+         bonus2 bMagicAtkEle,Ele_Undead,.@g;
+      }
+  - Id: 314957
+    AegisName: Ch02_2_Mhp
+    Name: Flame Flower Spell (MaxHP)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,3;
+      if (.@r>=7)
+         bonus bMaxHPrate,2;
+      if (.@r>=9)
+         bonus bMaxHPrate,1;
+  - Id: 314982
+    AegisName: Ch02_2_Mres
+    Name: Flame Flower Spell (Magical Resistance)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMres,15;
+      if (.@r>=7)
+         bonus bMres,10;
+      if (.@r>=9)
+         bonus bMres,10;
+  - Id: 314958
+    AegisName: Ch02_2_Msp
+    Name: Flame Flower Spell (MaxSP)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMaxSPrate,3;
+      if (.@r>=7)
+         bonus bMaxSPrate,2;
+      if (.@r>=9)
+         bonus bMaxSPrate,1;
+  - Id: 314955
+    AegisName: Ch02_2_P_F
+    Name: Flame Flower Spell (Physical Force)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,15;
+      bonus bAtkRate,1;
+      bonus bPAtk,1;
+      if (.@r>=7) {
+         bonus bBaseAtk,15;
+         bonus bAtkRate,1;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,20;
+         bonus bAtkRate,3;
+      }
+  - Id: 314934
+    AegisName: Ch02_2_Ran2
+    Name: Flame Flower Spell (Marksman)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bAtkRate,5;
+      bonus bBaseAtk,50;
+      bonus bPAtk,2;
+      if (.@r>=7)
+         bonus bLongAtkRate,5;
+      if (.@r>=9)
+         bonus bLongAtkRate,5;
+      if (getenchantgrade()>=ENCHANTGRADE_D)
+         bonus bLongAtkRate,5;
+      if (getenchantgrade()>=ENCHANTGRADE_C)
+         bonus bLongAtkRate,5;
+      if (getenchantgrade()>=ENCHANTGRADE_B)
+         bonus bLongAtkRate,5;
+      if (getenchantgrade()>=ENCHANTGRADE_A)
+         bonus bLongAtkRate,5;
+  - Id: 314981
+    AegisName: Ch02_2_Res
+    Name: Flame Flower Spell (Physical Resistance)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bRes,25;
+      if (.@r>=7)
+         bonus bRes,15;
+      if (.@r>=9)
+         bonus bRes,15;
+  - Id: 314935
+    AegisName: Ch02_2_Sage2
+    Name: Flame Flower Spell (Grand Sage)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,5;
+      bonus bMatk,50;
+      bonus bSMatk,2;
+      if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Water,10;
+         bonus2 bMagicAtkEle,Ele_Wind,10;
+         bonus2 bMagicAtkEle,Ele_Earth,10;
+      }
+      if (.@r>=9) {
+         bonus2 bMagicAtkEle,Ele_Fire,10;
+         bonus2 bMagicAtkEle,Ele_Poison,10;
+         bonus2 bMagicAtkEle,Ele_Dark,10;
+         bonus2 bMagicAtkEle,Ele_Neutral,10;
+      }
+      .@g = 0;
+      if (getenchantgrade()>=ENCHANTGRADE_D)
+         .@g += 5;
+      if (getenchantgrade()>=ENCHANTGRADE_C)
+         .@g += 5;
+      if (getenchantgrade()>=ENCHANTGRADE_B)
+         .@g += 5;
+      if (getenchantgrade()>=ENCHANTGRADE_A)
+         .@g += 5;
+      if (.@g) {
+         bonus2 bMagicAtkEle,Ele_Neutral,.@g;
+         bonus2 bMagicAtkEle,Ele_Water,.@g;
+         bonus2 bMagicAtkEle,Ele_Wind,.@g;
+         bonus2 bMagicAtkEle,Ele_Earth,.@g;
+         bonus2 bMagicAtkEle,Ele_Fire,.@g;
+         bonus2 bMagicAtkEle,Ele_Poison,.@g;
+         bonus2 bMagicAtkEle,Ele_Dark,.@g;
+      }
+  - Id: 314945
+    AegisName: Ch02_2_Speed
+    Name: Flame Flower Spell (Speed)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bAspdRate,10;
+      if (.@r>=7)
+         bonus bAspdRate,7;
+      if (.@r>=9)
+         bonus bAspdRate,8;
+  - Id: 314973
+    AegisName: Ch02_2_Spell_P
+    Name: Flame Flower Spell (Spell Power)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,35;
+      bonus2 bMagicAtkEle,Ele_Water,12;
+      bonus2 bMagicAtkEle,Ele_Wind,12;
+      bonus2 bMagicAtkEle,Ele_Earth,12;
+      bonus2 bMagicAtkEle,Ele_Fire,12;
+      bonus2 bMagicAtkEle,Ele_Poison,12;
+      bonus2 bMagicAtkEle,Ele_Dark,12;
+      bonus2 bMagicAtkEle,Ele_Neutral,12;
+  - Id: 314971
+    AegisName: Ch02_2_Tenacity
+    Name: Flame Flower Spell (Tenacity)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,35;
+      bonus bShortAtkRate,12;
+  - Id: 314933
+    AegisName: Ch02_2_War2
+    Name: Flame Flower Spell (Berserker)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bAtkRate,5;
+      bonus bBaseAtk,50;
+      bonus bPAtk,2;
+      if (.@r>=7)
+         bonus bShortAtkRate,5;
+      if (.@r>=9)
+         bonus bShortAtkRate,5;
+      if (getenchantgrade()>=ENCHANTGRADE_D)
+         bonus bShortAtkRate,5;
+      if (getenchantgrade()>=ENCHANTGRADE_C)
+         bonus bShortAtkRate,5;
+      if (getenchantgrade()>=ENCHANTGRADE_B)
+         bonus bShortAtkRate,5;
+      if (getenchantgrade()>=ENCHANTGRADE_A)
+         bonus bShortAtkRate,5;
+  - Id: 314951
+    AegisName: Ch02_3_Critical
+    Name: Flame Flower Spell (Critical)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bCrate,5;
+      bonus bCritAtkRate,5;
+      if (.@r>=7)
+         bonus bCritAtkRate,3;
+      if (.@r>=9)
+         bonus bCritAtkRate,3;
+      if (getenchantgrade()>=ENCHANTGRADE_D) {
+         bonus bCritical,2;
+         bonus bCritAtkRate,4;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_C) {
+         bonus bCritical,3;
+         bonus bCritAtkRate,5;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_B) {
+         bonus bCritical,3;
+         bonus bCritAtkRate,5;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus bCritical,2;
+         bonus bCritAtkRate,5;
+      }
+  - Id: 314960
+    AegisName: Ch02_3_Fire_Shot
+    Name: Flame Flower Spell (Firing Shot)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAtkRate,2;
+      bonus bPAtk,3;
+      bonus bLongAtkRate,5;
+      if (getenchantgrade()>=ENCHANTGRADE_D)
+         bonus bLongAtkRate,5;
+      if (getenchantgrade()>=ENCHANTGRADE_C) {
+         bonus bPAtk,2;
+         bonus bLongAtkRate,5;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_B) {
+         bonus bPAtk,3;
+         bonus bLongAtkRate,5;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus bPAtk,5;
+         bonus bLongAtkRate,5;
+      }
+  - Id: 314940
+    AegisName: Ch02_3_Force
+    Name: Flame Flower Spell (Power Force)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bAtkRate,3;
+      bonus bPAtk,3;
+      if (.@r>=7)
+         bonus bAtkRate,3;
+      if (.@r>=9)
+         bonus bAtkRate,4;
+      if (getenchantgrade()>=ENCHANTGRADE_D)
+         bonus bAtkRate,2;
+      if (getenchantgrade()>=ENCHANTGRADE_C)
+         bonus bAtkRate,3;
+      if (getenchantgrade()>=ENCHANTGRADE_B)
+         bonus bAtkRate,3;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus bAtkRate,2;
+         bonus bBaseAtk,30;
+      }
+  - Id: 314983
+    AegisName: Ch02_3_Guard
+    Name: Flame Flower Spell (Guardian)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bDef,100;
+      bonus bRes,50;
+      if (.@r>=7) {
+         bonus2 bSubEle,Ele_All,5;
+      }
+      if (.@r>=9) {
+         bonus2 bSubSize,Size_Small,5;
+         bonus2 bSubSize,Size_Medium,5;
+         bonus2 bSubSize,Size_Large,5;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_D)
+         bonus bVariableCastrate,-5;
+      if (getenchantgrade()>=ENCHANTGRADE_C)
+         bonus bVariableCastrate,-5;
+      if (getenchantgrade()>=ENCHANTGRADE_B) {
+         bonus bMaxHPrate,5;
+         bonus bMaxSPrate,3;
+      }
+  - Id: 314952
+    AegisName: Ch02_3_Hit_Attack
+    Name: Flame Flower Spell (Hit Attack) II
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bNonCritAtkRate,3;
+      bonus bShortAtkRate,3;
+      bonus bLongAtkRate,3;
+      if (.@r>=7)
+         bonus bNonCritAtkRate,5;
+      if (.@r>=9)
+         bonus bNonCritAtkRate,3;
+      if (getenchantgrade()>=ENCHANTGRADE_D) {
+         bonus bNonCritAtkRate,4;
+         bonus bPerfectHitAddRate,3;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_C) {
+         bonus bNonCritAtkRate,5;
+         bonus bPerfectHitAddRate,5;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_B) {
+         bonus bNonCritAtkRate,5;
+         bonus bPerfectHitAddRate,2;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus bNonCritAtkRate,5;
+         bonus bPerfectHitAddRate,5;
+      }
+  - Id: 314984
+    AegisName: Ch02_3_Intel
+    Name: Flame Flower Spell (Intelligence)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bPAtk,1;
+      bonus bSMatk,1;
+      if (.@r>=7) {
+         bonus2 bAddEle,Ele_All,3;
+         bonus2 bMagicAddEle,Ele_All,3;
+      }
+      if (.@r>=9) {
+         bonus2 bAddSize,Size_All,3;
+         bonus2 bMagicAddSize,Size_All,3;
+      }
+      if (.@r>=11) {
+         bonus2 bAddRace,RC_All,3;
+         bonus2 bMagicAddRace,RC_All,3;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_D) {
+         bonus2 bAddClass,Class_All,2;
+         bonus2 bMagicAddClass,Class_All,2;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_C) {
+         bonus2 bAddClass,Class_All,1;
+         bonus2 bMagicAddClass,Class_All,1;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_B) {
+         bonus bPAtk,2;
+         bonus bSMatk,2;
+      }
+  - Id: 314963
+    AegisName: Ch02_3_Lukcy_Strike
+    Name: Flame Flower Spell (Lucky Strike)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritical,5;
+      bonus bPAtk,3;
+      if (getenchantgrade()>=ENCHANTGRADE_D)
+         bonus bCritAtkRate,5;
+      if (getenchantgrade()>=ENCHANTGRADE_C) {
+         bonus bCrate,2;
+         bonus bCritAtkRate,5;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_B) {
+         bonus bCrate,3;
+         bonus bCritAtkRate,5;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus bCrate,5;
+         bonus bCritAtkRate,5;
+      }
+  - Id: 314941
+    AegisName: Ch02_3_M_Force
+    Name: Flame Flower Spell (Magic Force)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,3;
+      bonus bSMatk,3;
+      if (.@r>=7)
+         bonus bMatkRate,3;
+      if (.@r>=9)
+         bonus bMatkRate,4;
+      if (getenchantgrade()>=ENCHANTGRADE_D)
+         bonus bMatkRate,2;
+      if (getenchantgrade()>=ENCHANTGRADE_C)
+         bonus bMatkRate,3;
+      if (getenchantgrade()>=ENCHANTGRADE_B)
+         bonus bMatkRate,3;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus bMatkRate,2;
+         bonus bMatk,30;
+      }
+  - Id: 314977
+    AegisName: Ch02_3_Mag_P
+    Name: Flame Flower Spell (Magical Power)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,5;
+      bonus2 bMagicAddEle,Ele_All,7;
+  - Id: 314962
+    AegisName: Ch02_3_Mag_Storm
+    Name: Flame Flower Spell (Magic Storm)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,2;
+      bonus bSMatk,3;
+      .@g = 0;
+      if (getenchantgrade()>=ENCHANTGRADE_D)
+         .@g += 5;
+      if (getenchantgrade()>=ENCHANTGRADE_C) {
+         bonus bSMatk,2;
+         .@g += 5;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_B) {
+         bonus bSMatk,3;
+         .@g += 5;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus bSMatk,5;
+         .@g += 5;
+      }
+      if (.@g) {
+         bonus2 bMagicAtkEle,Ele_Fire,.@g;
+         bonus2 bMagicAtkEle,Ele_Neutral,.@g;
+         bonus2 bMagicAtkEle,Ele_Holy,.@g;
+         bonus2 bMagicAtkEle,Ele_Wind,.@g;
+         bonus2 bMagicAtkEle,Ele_Dark,.@g;
+         bonus2 bMagicAtkEle,Ele_Ghost,.@g;
+         bonus2 bMagicAtkEle,Ele_Undead,.@g;
+      }
+  - Id: 314950
+    AegisName: Ch02_3_Magic_P
+    Name: Flame Flower Spell (Magic) II
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bSMatk,5;
+      bonus bMaxSPrate,2;
+      .@v = 5;
+      if (.@r>=7)
+         .@v += 6;
+      if (.@r>=9)
+         .@v += 6;
+      if (getenchantgrade()>=ENCHANTGRADE_D) {
+         .@v += 4;
+         bonus bMaxSPrate,2;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_C) {
+         .@v += 5;
+         bonus bMaxSPrate,2;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_B) {
+         .@v += 5;
+         bonus bMaxSPrate,2;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         .@v += 5;
+         bonus bMaxSPrate,2;
+      }
+      bonus2 bMagicAtkEle,Ele_Fire,.@v;
+      bonus2 bMagicAtkEle,Ele_Neutral,.@v;
+      bonus2 bMagicAtkEle,Ele_Holy,.@v;
+      bonus2 bMagicAtkEle,Ele_Wind,.@v;
+      bonus2 bMagicAtkEle,Ele_Dark,.@v;
+      bonus2 bMagicAtkEle,Ele_Ghost,.@v;
+      bonus2 bMagicAtkEle,Ele_Undead,.@v;
+  - Id: 314947
+    AegisName: Ch02_3_Melee
+    Name: Flame Flower Spell (Melee)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bPAtk,5;
+      bonus bShortAtkRate,5;
+      if (.@r>=7)
+         bonus bShortAtkRate,3;
+      if (.@r>=9)
+         bonus bShortAtkRate,3;
+      if (getenchantgrade()>=ENCHANTGRADE_D) {
+         bonus bShortAtkRate,4;
+         bonus bPerfectHitAddRate,5;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_C) {
+         bonus bShortAtkRate,5;
+         bonus bPerfectHitAddRate,5;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_B) {
+         bonus bShortAtkRate,5;
+         bonus bPerfectHitAddRate,3;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus bShortAtkRate,5;
+         bonus bPerfectHitAddRate,2;
+      }
+  - Id: 314959
+    AegisName: Ch02_3_Over_Power
+    Name: Flame Flower Spell (Over Power)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAtkRate,2;
+      bonus bPAtk,3;
+      if (getenchantgrade()>=ENCHANTGRADE_D)
+         bonus bShortAtkRate,5;
+      if (getenchantgrade()>=ENCHANTGRADE_C) {
+         bonus bPAtk,2;
+         bonus bShortAtkRate,5;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_B) {
+         bonus bPAtk,3;
+         bonus bShortAtkRate,5;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus bPAtk,5;
+         bonus bShortAtkRate,5;
+      }
+  - Id: 314976
+    AegisName: Ch02_3_Phy_P
+    Name: Flame Flower Spell (Physical Power)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,5;
+      bonus2 bAddEle,Ele_All,7;
+  - Id: 314948
+    AegisName: Ch02_3_Range
+    Name: Flame Flower Spell (Range)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bPAtk,5;
+      bonus bLongAtkRate,5;
+      if (.@r>=7)
+         bonus bLongAtkRate,3;
+      if (.@r>=9)
+         bonus bLongAtkRate,3;
+      if (getenchantgrade()>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,4;
+         bonus bPerfectHitAddRate,5;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_C) {
+         bonus bLongAtkRate,5;
+         bonus bPerfectHitAddRate,5;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_B) {
+         bonus bLongAtkRate,5;
+         bonus bPerfectHitAddRate,3;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus bLongAtkRate,5;
+         bonus bPerfectHitAddRate,2;
+      }
+  - Id: 314939
+    AegisName: Ch02_3_S_Delay
+    Name: Flame Flower Spell (Global Cooldown)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bDelayrate,-2;
+      if (.@r>=7)
+         bonus bDelayrate,-2;
+      if (.@r>=9)
+         bonus bDelayrate,-2;
+      if (getenchantgrade()>=ENCHANTGRADE_D)
+         bonus bDelayrate,-2;
+      if (getenchantgrade()>=ENCHANTGRADE_C)
+         bonus bDelayrate,-2;
+      if (getenchantgrade()>=ENCHANTGRADE_B)
+         bonus bDelayrate,-1;
+      if (getenchantgrade()>=ENCHANTGRADE_A)
+         bonus bDelayrate,-1;
+  - Id: 314964
+    AegisName: Ch02_3_Special_Agent
+    Name: Flame Flower Spell (Special Agent)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bHit,25;
+      bonus bPAtk,3;
+      if (getenchantgrade()>=ENCHANTGRADE_D)
+         bonus bNonCritAtkRate,5;
+      if (getenchantgrade()>=ENCHANTGRADE_C) {
+         bonus bShortAtkRate,3;
+         bonus bLongAtkRate,3;
+         bonus bNonCritAtkRate,5;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_B) {
+         bonus bShortAtkRate,3;
+         bonus bLongAtkRate,3;
+         bonus bNonCritAtkRate,5;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus bShortAtkRate,4;
+         bonus bLongAtkRate,4;
+         bonus bNonCritAtkRate,5;
+      }
+  - Id: 314949
+    AegisName: Ch02_3_Spell
+    Name: Flame Flower Spell (Spell)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bSMatk,5;
+      bonus bMaxSPrate,2;
+      .@v = 5;
+      if (.@r>=7)
+         .@v += 6;
+      if (.@r>=9)
+         .@v += 6;
+      if (getenchantgrade()>=ENCHANTGRADE_D) {
+         .@v += 4;
+         bonus bMaxSPrate,2;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_C) {
+         .@v += 5;
+         bonus bMaxSPrate,2;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_B) {
+         .@v += 5;
+         bonus bMaxSPrate,2;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         .@v += 5;
+         bonus bMaxSPrate,2;
+      }
+      bonus2 bMagicAtkEle,Ele_Water,.@v;
+      bonus2 bMagicAtkEle,Ele_Wind,.@v;
+      bonus2 bMagicAtkEle,Ele_Earth,.@v;
+      bonus2 bMagicAtkEle,Ele_Fire,.@v;
+      bonus2 bMagicAtkEle,Ele_Poison,.@v;
+      bonus2 bMagicAtkEle,Ele_Dark,.@v;
+      bonus2 bMagicAtkEle,Ele_Neutral,.@v;
+  - Id: 314961
+    AegisName: Ch02_3_Spl_Buster
+    Name: Flame Flower Spell (Spell Buster)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,2;
+      bonus bSMatk,3;
+      .@g = 0;
+      if (getenchantgrade()>=ENCHANTGRADE_D)
+         .@g += 5;
+      if (getenchantgrade()>=ENCHANTGRADE_C) {
+         bonus bSMatk,2;
+         .@g += 5;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_B) {
+         bonus bSMatk,3;
+         .@g += 5;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus bSMatk,5;
+         .@g += 5;
+      }
+      if (.@g) {
+         bonus2 bMagicAtkEle,Ele_Water,.@g;
+         bonus2 bMagicAtkEle,Ele_Wind,.@g;
+         bonus2 bMagicAtkEle,Ele_Earth,.@g;
+         bonus2 bMagicAtkEle,Ele_Fire,.@g;
+         bonus2 bMagicAtkEle,Ele_Poison,.@g;
+         bonus2 bMagicAtkEle,Ele_Dark,.@g;
+         bonus2 bMagicAtkEle,Ele_Neutral,.@g;
+      }
+  - Id: 1002920
+    AegisName: ABI_Venom_Rune
+    Name: Rift Venom Rune
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1002921
+    AegisName: ABI_Ice_Essence
+    Name: Rift Frost Essence
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1002923
+    AegisName: ABI_Ice_Rune
+    Name: Rift Frost Rune
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1002896
+    AegisName: ABI_Venom_Essence
+    Name: Rift Venom Essence
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 315070
+    AegisName: Fierce_Rune_2
+    Name: Fierce Rune 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,10;
+      bonus bNonCritAtkRate,10;
+  - Id: 315071
+    AegisName: Fierce_Rune_3
+    Name: Fierce Rune 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,15;
+      bonus bNonCritAtkRate,15;
+  - Id: 315073
+    AegisName: Great_Rune_2
+    Name: Great Commander Rune 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,10;
+      bonus bNonCritAtkRate,10;
+  - Id: 315074
+    AegisName: Great_Rune_3
+    Name: Great Commander Rune 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,15;
+      bonus bNonCritAtkRate,15;
+  - Id: 315076
+    AegisName: Acute_Rune_2
+    Name: Acute Rune 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,10;
+      bonus bShortAtkRate,10;
+  - Id: 315077
+    AegisName: Acute_Rune_3
+    Name: Acute Rune 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,15;
+      bonus bShortAtkRate,15;
+  - Id: 315079
+    AegisName: Sharp_Rune_2
+    Name: Sharp Rune 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,10;
+      bonus bLongAtkRate,10;
+  - Id: 315080
+    AegisName: Sharp_Rune_3
+    Name: Sharp Rune 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,15;
+      bonus bLongAtkRate,15;
+  - Id: 315082
+    AegisName: Magic_Rune_2
+    Name: Magic Essence Rune 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,10;
+      bonus2 bMagicAtkEle,Ele_Neutral,10;
+      bonus2 bMagicAtkEle,Ele_Water,10;
+      bonus2 bMagicAtkEle,Ele_Wind,10;
+      bonus2 bMagicAtkEle,Ele_Earth,10;
+      bonus2 bMagicAtkEle,Ele_Fire,10;
+      bonus2 bMagicAtkEle,Ele_Poison,10;
+      bonus2 bMagicAtkEle,Ele_Dark,10;
+  - Id: 315083
+    AegisName: Magic_Rune_3
+    Name: Magic Essence Rune 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,15;
+      bonus2 bMagicAtkEle,Ele_Neutral,15;
+      bonus2 bMagicAtkEle,Ele_Water,15;
+      bonus2 bMagicAtkEle,Ele_Wind,15;
+      bonus2 bMagicAtkEle,Ele_Earth,15;
+      bonus2 bMagicAtkEle,Ele_Fire,15;
+      bonus2 bMagicAtkEle,Ele_Poison,15;
+      bonus2 bMagicAtkEle,Ele_Dark,15;
+  - Id: 315085
+    AegisName: Spell_Rune_2
+    Name: Spell Rune 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,10;
+      bonus2 bMagicAtkEle,Ele_Fire,10;
+      bonus2 bMagicAtkEle,Ele_Neutral,10;
+      bonus2 bMagicAtkEle,Ele_Holy,10;
+      bonus2 bMagicAtkEle,Ele_Wind,10;
+      bonus2 bMagicAtkEle,Ele_Dark,10;
+      bonus2 bMagicAtkEle,Ele_Ghost,10;
+      bonus2 bMagicAtkEle,Ele_Undead,10;
+  - Id: 315086
+    AegisName: Spell_Rune_3
+    Name: Spell Rune 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,15;
+      bonus2 bMagicAtkEle,Ele_Fire,15;
+      bonus2 bMagicAtkEle,Ele_Neutral,15;
+      bonus2 bMagicAtkEle,Ele_Holy,15;
+      bonus2 bMagicAtkEle,Ele_Wind,15;
+      bonus2 bMagicAtkEle,Ele_Dark,15;
+      bonus2 bMagicAtkEle,Ele_Ghost,15;
+      bonus2 bMagicAtkEle,Ele_Undead,15;
+  - Id: 315088
+    AegisName: Health_Rune_2
+    Name: Adamantine Rune 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxHPrate,10;
+      bonus bDelayrate,-2;
+  - Id: 315089
+    AegisName: Health_Rune_3
+    Name: Adamantine Rune 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxHPrate,15;
+      bonus bDelayrate,-3;
+  - Id: 315091
+    AegisName: Soul_Rune_2
+    Name: Affection Rune 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxSPrate,10;
+      bonus bVariableCastrate,-6;
+  - Id: 315092
+    AegisName: Soul_Rune_3
+    Name: Affection Rune 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxSPrate,15;
+      bonus bVariableCastrate,-9;

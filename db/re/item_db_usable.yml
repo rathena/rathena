@@ -83695,6 +83695,118 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 106408
+    AegisName: Rt_Ch01_Bulgasari_A
+    Name: Fire Activation Reward
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    Script: |
+      getgroupitem(IG_RT_CH01_BULGASARI_A);
+  - Id: 106409
+    AegisName: Rt_Ch01_Bulgasari_C
+    Name: Fire Completion Reward
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    Script: |
+      getgroupitem(IG_RT_CH01_BULGASARI_C);
+  - Id: 106410
+    AegisName: Rt_Ch01_Glutto_A
+    Name: Predator Activation Reward
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    Script: |
+      getgroupitem(IG_RT_CH01_GLUTTO_A);
+  - Id: 106411
+    AegisName: Rt_Ch01_Glutto_C
+    Name: Predator Completion Reward
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    Script: |
+      getgroupitem(IG_RT_CH01_GLUTTO_C);
+  - Id: 106412
+    AegisName: Rt_Ch01_Uncanny_A
+    Name: Uncanny Fruit Activation Reward
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    Script: |
+      getgroupitem(IG_RT_CH01_UNCANNY_A);
+  - Id: 106413
+    AegisName: Rt_Ch01_Uncanny_C
+    Name: Uncanny Fruit Completion Reward
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    Script: |
+      getgroupitem(IG_RT_CH01_UNCANNY_C);
+  - Id: 106414
+    AegisName: Rt_Ch01_Uncanny_2
+    Name: Uncanny Fruit 2 Sets Reward
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    Script: |
+      getgroupitem(IG_RT_CH01_UNCANNY_2);
   - Id: 106415
     AegisName: Rt_Ch01_Chunk_A
     Name: Junkyard Activation Reward

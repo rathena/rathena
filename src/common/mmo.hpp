@@ -89,7 +89,7 @@ typedef uint32 t_itemid;
 #endif
 #define MAX_FAME 1000000000 ///Max fame points
 #define MAX_CART 100 ///Maximum item in cart
-#define MAX_SKILL 1641 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
+#define MAX_SKILL 1800 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
 #define DEFAULT_WALK_SPEED 150 ///Default walk speed (other than NPC)
 #define DEFAULT_NPC_WALK_SPEED 200 ///Default NPC walk speed
 #define MIN_WALK_SPEED 20 ///Min walk speed
@@ -120,6 +120,9 @@ typedef uint32 t_itemid;
 #ifndef WEB_AUTH_TOKEN_LENGTH
 	#define WEB_AUTH_TOKEN_LENGTH 16+1
 #endif
+#define MAX_RUNESLOT 5
+#define MAX_REWARDSLOT 7
+#define MAX_RUNEDECOMPO 8
 
 enum e_enchantgrade : uint16{
 	ENCHANTGRADE_NONE = 0,
@@ -1108,6 +1111,12 @@ enum e_job {
 	JOB_WANDERER_2ND,
 
 	JOB_SECOND_JOB_END = 4350,
+	JOB_DRUID,
+	JOB_BABY_DRUID,
+	JOB_KARNOS,
+	JOB_BABY_KARNOS,
+	JOB_ALITEA,
+	JOB_2004_JOB_LAST,
 
 	JOB_MAX,
 };

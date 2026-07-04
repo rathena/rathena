@@ -13,6 +13,7 @@
 #include <common/timer.hpp> // t_tick
 
 #include "packets.hpp"
+#include "rune.hpp"
 #include "script.hpp"
 #include "skill.hpp"
 #include "trade.hpp"
@@ -54,6 +55,7 @@ enum e_macro_report_status : uint8;
 enum e_hom_state2 : uint8;
 enum _sp;
 enum e_searchstore_failure : uint16;
+enum e_runedecompo_result: uint8;
 
 #define DMGVAL_IGNORE -30000
 
@@ -678,6 +680,14 @@ enum e_clif_messages : uint16 {
 
 	// Enchantment failed!
 	MSI_ENCHANT_FAILED = 3858,
+
+	// Gender change card failure messages
+	MSI_GENDER_CHANGE_FAILED_CAUSE_JOB				= 4130,
+	MSI_GENDER_CHANGE_FAILED_CAUSE_GROUP			= 4131,
+	MSI_GENDER_CHANGE_FAILED_CAUSE_MARRIED			= 4132,
+	MSI_GENDER_CHANGE_FAILED_CAUSE_MONSTER_TRANSFORM= 4133,
+	MSI_GENDER_CHANGE_MESSAGE_COMPLETE				= 4137,
+	MSI_GENDER_CHANGE_FAILED_CAUSE_RIDING			= 4208,
 };
 
 enum e_personalinfo : uint8_t {
@@ -722,7 +732,8 @@ enum e_config_type : uint32 {
 	CONFIG_PET_AUTOFEED,
 	CONFIG_HOMUNCULUS_AUTOFEED,
 	// CONFIG_UNKNOWN,
-	CONFIG_DISABLE_SHOWCOSTUMES = 5
+	CONFIG_DISABLE_SHOWCOSTUMES = 5,
+	CONFIG_SHOW_HOMUNCULUS_INFO = 6,
 };
 
 enum e_memorial_dungeon_command : uint16 {
@@ -987,6 +998,7 @@ void clif_skill_damage( const block_list& src, const block_list& dst, t_tick tic
 //int32 clif_skill_damage2(block_list *src,block_list *dst,t_tick tick,int32 sdelay,int32 ddelay,int32 damage,int32 div,uint16 skill_id,uint16 skill_lv,enum e_damage_type type);
 bool clif_skill_nodamage( const block_list* src, const block_list& dst, uint16 skill_id, int32 heal, bool success = true );
 void clif_skill_poseffect( block_list& bl, uint16 skill_id, uint16 skill_lv, uint16 x, uint16 y, t_tick tick );
+void clif_skill_poseffect_nocaster( const block_list& center, uint16 skill_id, uint16 skill_lv, uint16 x, uint16 y, t_tick tick );
 void clif_skill_estimation( const map_session_data& sd, mob_data& md );
 void clif_skill_warppoint( map_session_data& sd, uint16 skill_id, uint16 skill_lv, std::vector<std::string>& maps );
 void clif_skill_memomessage( const map_session_data& sd, e_ack_remember_warppoint_result result );
@@ -1044,6 +1056,7 @@ void clif_item_damaged( const map_session_data& sd, uint16 position );
 void clif_item_refine_list( map_session_data& sd );
 void clif_hat_effects( const block_list& bl, enum send_target target, const block_list& tbl );
 void clif_hat_effect_single( const block_list& bl, uint16 effectId, bool enable );
+void clif_gender_change_effect( const block_list& bl );
 
 void clif_item_skill(const map_session_data* sd,uint16 skill_id,uint16 skill_lv);
 
@@ -1497,6 +1510,12 @@ enum e_macro_checker_result : int16{
 	MACROCHECKER_SUCCESS
 };
 
+enum cashshop_limited_sale_result {
+	CASHSHOP_LIMITED_SALE_SUCCESS = 0,
+	CASHSHOP_LIMITED_SALE_FAIL = 1,
+	CASHSHOP_LIMITED_SALE_DUPLICATED = 2,
+};
+
 void clif_macro_checker( const map_session_data& sd, e_macro_checker_result result );
 
 void clif_dynamicnpc_result( const map_session_data& sd, e_dynamicnpc_result result );
@@ -1509,5 +1528,38 @@ void clif_set_npc_window_pos_percent( const map_session_data& sd, int32 x, int32
 void clif_noask_sub( const map_session_data& sd, const map_session_data& tsd, int32 type );
 
 void clif_specialpopup(const map_session_data& sd, int32 id);
+
+void clif_parse_delete_account_limited_sale_item(int32 fd, map_session_data *sd);
+void clif_parse_get_account_limited_sale_list(int32 fd, map_session_data *sd);
+void clif_parse_open_account_limited_sale_tool(int32 fd, map_session_data *sd);
+void clif_parse_close_account_limited_sale_tool(int32 fd, map_session_data *sd);
+void clif_parse_search_account_limited_sale_item(int32 fd, map_session_data *sd);
+void clif_parse_add_account_limited_sale_item2(int32 fd, map_session_data *sd);
+void clif_add_account_limited_sale_response(map_session_data *sd, enum cashshop_limited_sale_result result);
+void clif_delete_account_limited_sale_response(map_session_data *sd, enum cashshop_limited_sale_result result);
+void clif_get_account_limited_sale_list(map_session_data *sd);
+void clif_open_account_limited_sale_tool(map_session_data *sd);
+void clif_close_account_limited_sale_tool(map_session_data *sd);
+void clif_search_account_limited_sale_item(map_session_data *sd, enum cashshop_limited_sale_result result, struct item_data *itd);
+
+// Rune UI
+void clif_rune_ui_open( map_session_data* sd );
+void clif_parse_asktag_rune( int32 fd, map_session_data* sd );
+void clif_bookinfo_rune( map_session_data* sd, uint16 tagID );
+void clif_setinfo_rune( map_session_data* sd, uint16 tagID );
+void clif_parse_result_rune_ui_open( int32 fd, map_session_data* sd );
+void clif_parse_bookactivate_rune( int32 fd, map_session_data* sd );
+void clif_parse_setactivate_rune( int32 fd, map_session_data* sd );
+void clif_setactivate_rune (map_session_data* sd, uint16 tagID, uint32 runesetid );
+void clif_parse_setupgrade_rune( int32 fd, map_session_data* sd );
+void clif_setupgrade_rune (map_session_data* sd, uint16 tagID, uint32 runesetid );
+void clif_enablerefresh_rune (map_session_data* sd, uint16 tagID, uint32 runesetid );
+void clif_enablerefresh_rune2 (map_session_data* sd, uint16 tagID, uint32 runesetid );
+void clif_onlogenable_rune (map_session_data* sd);
+void clif_parse_decompo_rune( int32 fd, map_session_data* sd );
+void clif_runedecompowindow_result (map_session_data* sd, enum e_runedecompo_result result, std::unordered_map<t_itemid, uint32> material_item_list);
+void clif_parse_askreward_rune(int32 fd, map_session_data* sd);
+void clif_resultreward_rune(map_session_data* sd, e_runereward_result result, uint8 reward, uint16 tagID, uint32 runesetid);
+void clif_onlogreward_rune(map_session_data* sd, uint16 tagID);
 
 #endif /* CLIF_HPP */

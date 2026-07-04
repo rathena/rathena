@@ -30,6 +30,7 @@
 #include "pc.hpp"
 #include "pc_groups.hpp"
 #include "pet.hpp"
+#include "rune.hpp"
 #include "script.hpp" // script_config
 #include "storage.hpp"
 
@@ -339,6 +340,8 @@ int32 chrif_save(map_session_data *sd, int32 flag) {
 		intif_quest_save(sd);
 	if (sd->achievement_data.save)
 		intif_achievement_save(sd);
+
+	rune_save(sd);
 
 	return 0;
 }

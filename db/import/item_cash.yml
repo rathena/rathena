@@ -1,0 +1,351 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2022 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Item Cash Database
+###########################################################################
+#
+# Item Cash Settings
+#
+###########################################################################
+# - Tab                     Cash shop tab. Available tabs are New, Hot, Limited, Rental, Permanent, Scrolls, Consumables, Other, Sale.
+#   Items:                  List of possible items.
+#     - Item                Item name.
+#       Price               Item cost in cash points (#CASHPOINTS).
+###########################################################################
+
+Header:
+  Type: ITEM_CASH_DB
+  Version: 1
+
+Body:
+  - Tab: New
+    Items:
+      - Item: LI_HD_Oridecon_Box3 # (한정)고농축 오리데오콘 30개 상자(홀그렌)
+        Price: 25000
+      - Item: LI_HD_Elunium_Box3 # (한정)고농축 에르늄 30개 상자(홀그렌)
+        Price: 25000
+      - Item: LI_HD_Oridecon_Box2 # (한정)고농축 오리데오콘 30개 상자(대장장이)
+        Price: 25000
+      - Item: LI_HD_Elunium_Box2 # (한정)고농축 에르늄 30개 상자(대장장이)
+        Price: 25000
+      - Item: LI_HD_BradiumBox2 # (한정)고밀도브라디움 30개 상자(대장장이)
+        Price: 22000
+      - Item: LI_HD_CarniumBox2 # (한정)고밀도카르늄 30개 상자(대장장이)
+        Price: 22000
+      - Item: EXP_Drop_Up_Box # 카프라 버프 상자(7일)
+        Price: 5000
+      - Item: Premium_Box # 프리미엄 정액 서비스 상자
+        Price: 3500
+      - Item: Vigorgra_Package_Set # 힘내그라 패키지 10세트
+        Price: 25000
+      - Item: Vigorgra_Package # 힘내그라 패키지
+        Price: 2500
+      - Item: A_3_Life_Potion_10pack # 삼명수 패키지 10세트
+        Price: 25000
+      - Item: A_3_Life_Potion_pack # 삼명수 패키지
+        Price: 2500
+      - Item: A_Almighty100_Box # 올마이티 패키지 10세트
+        Price: 25000
+      - Item: A_Almighty_Box # 올마이티 패키지
+        Price: 2500
+      - Item: A_Refine_Ore_Box_Set # 제련용 광석 패키지 10세트
+        Price: 25000
+      - Item: A_Refine_Ore_Box # 제련용 광석 패키지
+        Price: 2500
+      - Item: A_HD_Refine_Ore_Box # 고농축 제련용 광석 패키지
+        Price: 25000
+      - Item: A_HD_High_Refine_Box # 고밀도 제련용 광석 패키지
+        Price: 25000
+      - Item: A_HD_Elunium_Box # 고농축 에르늄 패키지
+        Price: 25000
+      - Item: A_HD_Oridecon_Box # 고농축 오리데오콘 패키지
+        Price: 25000
+      - Item: A_HD_Carnium_Box # 고밀도 카르늄 패키지
+        Price: 25000
+      - Item: A_HD_Bradium_Box # 고밀도 브라디움 패키지
+        Price: 25000
+      - Item: A_LimitPowerBooster_100 # 한정판 파워 부스터 패키지 10 세트
+        Price: 25000
+      - Item: A_LimitPowerBooster # 한정판 파워 부스터 패키지
+        Price: 2500
+      - Item: A_Infinity_10_Box # 인피니티 패키지 10세트
+        Price: 25000
+      - Item: A_Infinity_Box # 인피니티 패키지
+        Price: 2500
+      - Item: A_DEF_Scroll_Box_Set # 방어 스크롤 패키지 10세트
+        Price: 25000
+      - Item: A_DEF_Scroll_Box # 방어 스크롤 패키지
+        Price: 2500
+      - Item: A_Unlimited_10_Box # 언리미티드 패키지 10세트
+        Price: 25000
+      - Item: A_Unlimited_Box # 언리미티드 패키지
+        Price: 2500
+      - Item: Zero_Kafra_Bell_Box # 카프라 창고 벨 상자
+        Price: 3000
+      - Item: Zero_Merchant_Bell_Box # 도구상인 호출 벨 상자
+        Price: 3000
+#     - Item: 인벤토리 확장 쿠폰 1개 상자
+#       Price: 2500
+#     - Item: 인벤토리 확장 쿠폰 10개 상자
+#       Price: 25000
+
+  - Tab: Hot
+    Items:
+#     - Item: 프리미엄 버프 상자  
+#       Price: 3500
+      - Item: Service30P_M_01_Box # 에드워드 존다 오너라 EX 상자
+        Price: 10000
+      - Item: Service30P_F_01_Box # 엘리제 존다 오너라 EX 상자
+        Price: 10000
+      - Item: Service30_M_01_Box # 에드워드 존다 오너라 상자
+        Price: 3500
+      - Item: Service30_F_01_Box # 엘리제 존다 오너라 상자
+        Price: 3500
+      - Item: Nyangvine_Box4 # 냥다래 4개 상자
+        Price: 1000
+      - Item: Nyangvine_Box10 # 냥다래 10개 상자
+        Price: 2500
+      - Item: Nyangvine_Box40 # 냥다래 40개 상자
+        Price: 10000
+      - Item: Zero_Kafra_Bell_Box # 카프라 창고 벨 상자
+        Price: 3000
+      - Item: Zero_Merchant_Bell_Box # 도구상인 호출 벨 상자
+        Price: 3000
+
+  - Tab: Limited
+    Items:
+      - Item: LI_HD_Oridecon_Box3 # (한정)고농축 오리데오콘 30개 상자(홀그렌)
+        Price: 25000
+      - Item: LI_HD_Elunium_Box3 # (한정)고농축 에르늄 30개 상자(홀그렌)
+        Price: 25000
+      - Item: LI_HD_Oridecon_Box2 # (한정)고농축 오리데오콘 30개 상자(대장장이)
+        Price: 25000
+      - Item: LI_HD_Elunium_Box2 # (한정)고농축 에르늄 30개 상자(대장장이)
+        Price: 25000
+      - Item: LI_HD_BradiumBox2 # (한정)고밀도브라디움 30개 상자(대장장이)
+        Price: 22000
+      - Item: LI_HD_CarniumBox2 # (한정)고밀도카르늄 30개 상자(대장장이)
+        Price: 22000
+
+  - Tab: Rental
+    Items:
+      - Item: Dun_Voucher_Box1 # 던전 이용권 1시간 상자
+        Price: 900
+      - Item: Dun_Voucher_Box2 # 던전 이용권 3시간 상자
+        Price: 2500
+      - Item: C_Clover_Box_Mouth # 입에 문 네잎클로버 상자
+        Price: 400
+      - Item: C_Clover_Box_Mouth2 # 입에 문 네잎크로버 상자II
+        Price: 700
+      - Item: C_Clover_Box_Mouth4 # 입에 문 네잎크로버 상사III
+        Price: 1200
+      - Item: C_BGum_Box_In_Mouth # 입에 문 풍선껌 상자
+        Price: 400
+      - Item: C_BGum_Box_In_Mouth2 # 입에 문 퐁선껌 상쟈II
+        Price: 700
+      - Item: C_BGum_Box_In_Mouth4 # 입에 문 퐁선껌 상자III
+        Price: 1200
+      - Item: C_Spiked_Scarf_Box # 대못박힌 스카프 상자
+        Price: 400
+      - Item: C_Spiked_Scarf_Box2 # 대못박힌 스카프 상자II
+        Price: 700
+      - Item: C_Spiked_Scarf_Box3 # 대못박힌 스카프 상자III
+        Price: 1200
+      - Item: C_Rainbow_Scarf_Box # 무지개 스카프 상자
+        Price: 400
+      - Item: C_Rainbow_Scarf_Box2 # 무지개 스카프 상자II
+        Price: 700
+      - Item: C_Rainbow_Scarf_Box3 # 무지개 스카프 상자III
+        Price: 1200
+      - Item: C_Ribbon_Of_Life_Box # 생명의 리본 상자
+        Price: 400
+      - Item: C_Ribbon_Of_Life_Box2 # 생명의 리본 상자II
+        Price: 700
+      - Item: C_Ribbon_Of_Life_Box3 # 생명의 리본 상자III
+        Price: 1200
+
+  - Tab: Scrolls
+    Items:
+      - Item: EXP_Drop_Up_Box # 카프라 버프 상자(7일)
+        Price: 5000
+#     - Item: 인벤토리 확장 쿠폰 1개 상자 
+#       Price: 2500
+#     - Item: 인벤토리 확장 쿠폰 10개 상자
+#       Price: 25000
+#     - Item: 프리미엄 버프 상자 
+#       Price: 3500
+      - Item: Service30P_M_01_Box # 에드워드 존다 오너라 EX 상자
+        Price: 10000
+      - Item: Service30P_F_01_Box # 엘리제 존다 오너라 EX 상자
+        Price: 10000
+      - Item: Service30_M_01_Box # 에드워드 존다 오너라 상자
+        Price: 3500
+      - Item: Service30_F_01_Box # 엘리제 존다 오너라 상자
+        Price: 3500
+      - Item: Insurance_Package # 보험증서 10개 상자
+        Price: 1200
+      - Item: Insurance_Package50 # 보험증서 50개 상자
+        Price: 5400
+      - Item: Siegfried_Box5 # 지크프리드의 증표 5개 상자
+        Price: 1000
+      - Item: Siegfried_Box20 # 지크프리드의 증표 20개 상자
+        Price: 6000
+      - Item: Blessing10_Box50 # 블레싱 스크롤 50개 상자
+        Price: 1100
+      - Item: Inc_Agi_10_Box50 # 민첩성 스크롤 50개 상자
+        Price: 1100
+      - Item: Aspersio_5_Box50 # 아스페르시오 스크롤 50개 상자
+        Price: 1100
+      - Item: Regeneration_Box10 # 회복력 향상 포션 10개 상자
+        Price: 600
+      - Item: Abrasive_Box10 # 연마제 10개 상자
+        Price: 1900
+      - Item: Shadow_Armor_S_Box30 # 쉐도우 아머 스크롤 30개 상자
+        Price: 2400
+      - Item: Holy_Armor_S_Box30 # 홀리 아머 스크롤 30개 상자
+        Price: 2400
+      - Item: MP_Scroll_Box50 # 마법력 증폭 스크롤 50개 상자
+        Price: 1300
+      - Item: Mental_Potion50_Box # 멘탈 포션 50개 상자
+        Price: 2500
+      - Item: Battle_Manual_Box1 # 전투교범 상자
+        Price: 800
+      - Item: Battle_Manual_Box # 전투교범 상자 10개 상자
+        Price: 6600
+#     - Item: JOB 전투교범 상자
+#       Price: 500  
+      - Item: Job_Manual50_Box # JOB 전투교범 상자 #50% 증가 10개 
+        Price: 4000
+      - Item: EC_Job_Manual25_Box10 # JOB 전투교범 10개 상자 # 25% 증가
+        Price: 4000
+      - Item: Battle_Manual_X3_Box # 300% 전투교범 상자 # 300% 증가 20개
+        Price: 20000 
+      - Item: Bubble_Gum_Box1 # 풍선껌 박스
+        Price: 500
+      - Item: Bubble_Gum_Box # 풍선껌 10개박스
+        Price: 4200
+      - Item: Max_Weight_Up_Box # 헬스장 회원권 상자
+        Price: 2300
+      - Item: Max_Weight_Up_10Box # 헬스장 회원권 10개 상자
+        Price: 23000
+#      - Item: Inventory_Ex_Box # 인벤토리 확장 쿠폰 1개 상자
+#        Price: 2500
+#      - Item: Inventory_Ex_10Box # 인벤토리 확장 쿠폰 10개 상자
+#        Price: 25000
+
+  - Tab: Consumables
+    Items:
+#     - Item: 신묘한 생명수 50개 상자
+#       Price: 2500
+      - Item: Mysterious_Water_Box50_ # 신묘한 생명수 상자(소녀)
+        Price: 2500
+      - Item: Mysterious_Water_Box50 # 신묘한 생명수 상자(언데드)
+        Price: 2500
+      - Item: Small_Life_Potion_Box50 # 소형 생명수 50개 상자
+        Price: 1400
+      - Item: Med_Life_Potion_Box50 # 중형 생명수 50개 상자
+        Price: 2400
+      - Item: F_Rapid_Life_Water_Box2 # 신속한 생명수 10개 상자
+        Price: 2500
+
+  - Tab: Other
+    Items:
+      - Item: Status_Reset_Coupon_Box # 스테이터스 초기화권 상자
+        Price: 29800
+      - Item: Change_Name_Card_Box # 이름 변경 카드 상자 9900
+        Price: 9900
+      - Item: LI_Boarding_Halter_Box # 탑승용 고삐 상자
+        Price: 20000
+      - Item: Nyangvine_Box4  #냥다래 4개 상자
+        Price: 1000
+      - Item: Nyangvine_Box10 # 냥다래 10개 상자
+        Price: 2500
+      - Item: Nyangvine_Box40 # 냥다래 40개 상자
+        Price: 10000
+      - Item: C_Wing_Of_Fly_3Day_B__ #무한 파리의 날개 3일상자
+        Price: 1600
+      - Item: Giant_Fly_Wing_Box100 # 거대한 파리의 날개 100개 상자
+        Price: 1600
+      - Item: Convex_Mirror_Box30 # 볼록거울 30개 상자
+        Price: 6000
+      - Item: Megaphone_Box # 확성기 10개 상자
+        Price: 2000
+      - Item: Neuralizer_Box # 섬광막대 상자
+        Price: 14700
+      - Item: Repair_Scroll_Box10 # 무기 수리 주문서 10개 상자
+        Price: 1000
+      - Item: New_Style_Box # 미용상품권 상자
+        Price: 4200
+      - Item: Alice_Scroll_Box10 # 엘리스 소환서 상자 10
+        Price: 4300
+      - Item: Mimic_Scroll_Box10 # 미믹 소환서 상자 10개
+        Price: 4300
+      - Item: Disguise_Croll_Box10 # 디스가이즈 소환서 상자
+        Price: 32000
+      - Item: Cloth_Dye_Coupon_Box # 옷염색 쿠폰 상자
+        Price: 3600
+      - Item: Cloth_Dye_Coupon2_Box # 옷염색 쿠폰 상자 II
+        Price: 3600
+      - Item: Siege_Scroll_Box30 # 공성맵 텔레포스 30개 상자
+        Price: 2600
+#     - Item: 공성맵 텔레포스II 30개 상자
+#       Price: 2600
+      - Item: Enriched_Elunium_Box5 # 농축 에르늄 5개 상자
+        Price: 1500
+      - Item: Enriched_Elunium_Box # 농축 에르늄 10개 상자
+        Price: 2700
+      - Item: Enriched_Oridecon_Box5 # 농축 오리데오콘 5개 상자
+        Price: 1500
+      - Item: Enriched_Oridecon_Box # 농축 오리데오콘 10개 상자
+        Price: 2700
+      - Item: HD_Bradium_Box5 # 고밀도 브라디움 5개 상자
+        Price: 5300
+      - Item: HD_Bradium_Box10 # 고밀도 브라디움 10개 상자
+        Price: 9500
+      - Item: HD_Carnium_Box5 # 고밀도 카르늄 5개 상자
+        Price: 5300
+      - Item: HD_Carnium_Box10 # 고밀도 카르늄 10개 상자
+        Price: 9500
+      - Item: HD_Ori_Box5 # 고농축 오리데오콘 5개 상자
+        Price: 5300
+      - Item: HD_Ori_Box10 # 고농축 오리데오콘 10개 상자
+        Price: 9500
+      - Item: HD_Elu_Box5 # 고농축 에르늄 5개 상자
+        Price: 5300
+      - Item: HD_Elu_Box10 # 고농축 에르늄 10개 상자
+        Price: 9500
+  - Tab: Sale
+    Items:
+      - Item: Monthly_Package_1
+        Price: 10000
+        SaleIdx: 1
+      - Item: Monthly_Package_2
+        Price: 10000
+        SaleIdx: 1
+      - Item: Monthly_Package_3
+        Price: 10000
+        SaleIdx: 1
+      - Item: Monthly_Buff_Package
+        Price: 10000
+        SaleIdx: 1
+      - Item: Monthly_Battle_Package
+        Price: 10000
+        SaleIdx: 1
+      - Item: Cash_Booster_Box
+        Price: 10000
+        SaleIdx: 1

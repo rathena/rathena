@@ -196,6 +196,21 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			item->subtype = 0;
 	}
 
+	if (this->nodeExists(node, "Decomposition")) {
+		const auto& decompositionNode = node["Decomposition"];
+		
+		for (const auto& decit : decompositionNode) {
+			std::string typeName;
+			c4::from_chars(decit.key(), &typeName);
+
+			uint16 typeNum;
+			if (!this->asUInt16(decompositionNode, typeName, typeNum))
+				return 0;
+			
+			item->decompoRune[typeName] = typeNum;
+		}
+	}
+
 	bool has_buy = false, has_sell = false;
 
 	if (this->nodeExists(node, "Buy")) {
@@ -2695,6 +2710,111 @@ uint64 ItemEnchantDatabase::parseBodyNode( const ryml::NodeRef& node ){
 
 					if( !enchant_upgrade_exists ){
 						enchant_slot->upgrade.enchants[enchant_upgrade->enchant_item_id] = enchant_upgrade;
+					}
+				}
+			}
+
+			if( this->nodeExists( slotNode, "RandomUpgrades" ) ){
+				for( const ryml::NodeRef& upgradeNode : slotNode["RandomUpgrades"] ){
+					std::string upgrade_name;
+
+					if( !this->asString( upgradeNode, "Enchant", upgrade_name ) ){
+						return 0;
+					}
+
+					std::shared_ptr<item_data> upgrade_item = item_db.search_aegisname( upgrade_name.c_str() );
+
+					if( upgrade_item == nullptr ){
+						this->invalidWarning( upgradeNode["Enchant"], "Unknown item \"%s\".\n", upgrade_name.c_str() );
+						return 0;
+					}
+
+					std::shared_ptr<s_item_enchant_random_upgrade> random_upgrade = util::umap_find( enchant_slot->random_upgrade.enchants, upgrade_item->nameid );
+					bool random_upgrade_exists = random_upgrade != nullptr;
+
+					if( !random_upgrade_exists ){
+						if( !this->nodesExist( upgradeNode, { "Items" } ) ){
+							return 0;
+						}
+
+						random_upgrade = std::make_shared<s_item_enchant_random_upgrade>();
+						random_upgrade->enchant_item_id = upgrade_item->nameid;
+					}
+
+
+					if( this->nodeExists( upgradeNode, "Items" ) ){
+						for( const ryml::NodeRef& itemNode : upgradeNode["Items"] ){
+							std::string upgrade_name;
+
+							if( !this->asString( itemNode, "Item", upgrade_name ) ){
+								return 0;
+							}
+
+							std::shared_ptr<item_data> upgrade_item = item_db.search_aegisname( upgrade_name.c_str() );
+
+							if( upgrade_item == nullptr ){
+								this->invalidWarning( itemNode["Item"], "Unknown item \"%s\".\n", upgrade_name.c_str() );
+								return 0;
+							}
+
+							std::shared_ptr<s_item_enchant_normal_sub> enchant = util::umap_find( random_upgrade->enchants, upgrade_item->nameid );
+							bool enchant_exists = enchant != nullptr;
+
+							if( !enchant_exists ){
+								if( !this->nodesExist( itemNode, { "Chance" } ) ){
+									return 0;
+								}
+
+								enchant = std::make_shared<s_item_enchant_normal_sub>();
+								enchant->item_id = upgrade_item->nameid;
+							}
+
+							if( this->nodeExists( itemNode, "Chance" ) ){
+								uint32 chance;
+
+								if( !this->asUInt32Rate( itemNode, "Chance", chance, 100000 ) ){
+									return 0;
+								}
+
+								enchant->chance = chance;
+							}
+
+							if (!enchant_exists) {
+								random_upgrade->enchants[enchant->item_id] = enchant;
+							}
+						}
+					}
+
+					if (random_upgrade->enchants.empty()) {
+						this->invalidWarning(upgradeNode["Items"], "Random upgrade \"%s\" has no items.\n", upgrade_name.c_str());
+						return 0;
+					}
+
+					if( this->nodeExists( upgradeNode, "Price" ) ){
+						uint32 zeny;
+
+						if( !this->asUInt32( upgradeNode, "Price", zeny ) ){
+							return 0;
+						}
+
+						if( zeny > MAX_ZENY ){
+							this->invalidWarning( upgradeNode["Price"], "Price %u exceeds MAX_ZENY. Capping...\n", zeny );
+							zeny = MAX_ZENY;
+						}
+
+						random_upgrade->zeny = zeny;
+					}else{
+						if( !random_upgrade_exists ){
+							random_upgrade->zeny = 0;
+						}
+					}
+
+					if( !this->parseMaterials( upgradeNode, random_upgrade->materials ) ){
+						return 0;
+					}
+
+					if( !random_upgrade_exists ){
+						enchant_slot->random_upgrade.enchants[random_upgrade->enchant_item_id] = random_upgrade;
 					}
 				}
 			}

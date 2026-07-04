@@ -18,6 +18,9 @@
 
 class map_session_data;
 
+#define CASHSHOP_LIMITED_VAR_PREFIX "#CS_LIMITED_"
+#define MAX_LIMITED_SALE_RENT_PERIOD ((14 * 24 * 60 * 60) + (23 * 60 * 60) + (59 * 60)) // 14 days, 23 hours, 59 minutes
+
 void do_init_cashshop( void );
 void do_final_cashshop( void );
 void cashshop_reloaddb( void );
@@ -58,6 +61,17 @@ enum CASHSHOP_BUY_RESULT
 struct s_cash_item{
 	t_itemid nameid;
 	uint32 price;
+	int32 sale_idx;
+};
+
+struct cashshop_limited_sale {
+	int32 item_id;
+	uint32 price;
+	int32 quantity;
+	int64 start_time;
+	int64 end_time;
+	int32 rent_period;
+	int32 sale_idx;
 };
 
 struct s_cash_item_tab{
@@ -103,7 +117,18 @@ struct sale_item_db{
 	uint32 count;
 };
 
-#if PACKETVER_SUPPORTS_SALES
+#if PACKETVER_SUPPORTS_ACCOUNT_LIMITED_SALE
+extern std::vector<std::shared_ptr<cashshop_limited_sale>> cashshop_limited_sales;
+
+std::shared_ptr<cashshop_limited_sale> cashshop_find_limited_sale(int32 item_id);
+enum cashshop_limited_sale_result cashshop_add_limited_sale_item(int32 item_id, int32 quantity, int64 start_time, int64 end_time, uint32 rent_period);
+enum cashshop_limited_sale_result cashshop_delete_limited_sale_item(int32 item_id);
+int64 cashshop_get_pc_item_sale_quantity(map_session_data *sd, int32 item_id);
+int32 cashshop_set_pc_item_sale_quantity(map_session_data *sd, int32 item_id, int32 quantity);
+uint32 cashshop_convert_rent_time(uint32 rent_time);
+void cashshop_load_account_limited_sales(void);
+void cashshop_save_account_limited_sales(void);
+#elif PACKETVER_SUPPORTS_SALES
 extern struct sale_item_db sale_items;
 
 struct sale_item_data* sale_find_item(t_itemid nameid, bool onsale);

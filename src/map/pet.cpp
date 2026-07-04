@@ -647,7 +647,7 @@ void pet_set_intimate(pet_data *pd, int32 value)
 	int32 index = pet_egg_search( sd, pd->pet.pet_id );
 
 	if( pd->pet.intimate <= PET_INTIMATE_NONE ){
-		pc_delitem( sd, index, 1, 0, 0, LOG_TYPE_OTHER );
+		pet_return_egg( sd, pd );
 	}else{
 		// Remove everything except the rename flag
 		sd->inventory.u.items_inventory[index].card[3] &= 1;

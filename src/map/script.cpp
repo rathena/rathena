@@ -22883,6 +22883,8 @@ BUILDIN_FUNC(setmounting) {
 	} else if (sd->sc.getSCE(SC_CLOAKING) || sd->sc.getSCE(SC_CHASEWALK) || sd->sc.getSCE(SC_CLOAKINGEXCEED) || sd->sc.getSCE(SC_CAMOUFLAGE) || sd->sc.getSCE(SC_STEALTHFIELD) || sd->sc.getSCE(SC__FEINTBOMB)) {
 		// SC_HIDING, SC__INVISIBILITY, SC__SHADOWFORM, SC_SUHIDE already disable item usage
 		script_pushint(st, 0); // Silent failure
+	} else if (sd->sc.hasSCE(SC_WEREWOLF) || sd->sc.hasSCE(SC_WERERAPTOR)) {
+		script_pushint(st, 0);
 	} else {
 		if( sd->sc.getSCE(SC_ALL_RIDING) )
 			status_change_end(sd, SC_ALL_RIDING); //release mount
@@ -27875,6 +27877,74 @@ BUILDIN_FUNC(mesemotion){
 #endif
 }
 
+BUILDIN_FUNC(add_accountlimitedsale){
+#if PACKETVER_SUPPORTS_ACCOUNT_LIMITED_SALE
+	int32 item_id = script_getnum(st, 2);
+	int32 quantity = script_getnum(st, 3);
+	uint32 sale_start = script_getnum(st, 4);
+	uint32 sale_end = script_getnum(st, 5);
+	uint32 rent_period = script_getnum(st, 6);
+
+	if (cashshop_add_limited_sale_item(item_id, quantity, sale_start, sale_end, rent_period) != CASHSHOP_LIMITED_SALE_SUCCESS) {
+		ShowError("buildin_add_accountlimitedsale: Failed to add item %d to account limited sale.\n", item_id);
+		return SCRIPT_CMD_FAILURE;
+	}
+	cashshop_save_account_limited_sales();
+	return SCRIPT_CMD_SUCCESS;
+#else
+	ShowError( "buildin_add_accountlimitedsale: This command is not supported in your build.\n" );
+	return SCRIPT_CMD_FAILURE;
+#endif
+}
+
+BUILDIN_FUNC(delete_accountlimitedsale)
+{
+#if PACKETVER_SUPPORTS_ACCOUNT_LIMITED_SALE
+	int item_id = script_getnum(st, 2);
+
+	if (cashshop_delete_limited_sale_item(item_id) != CASHSHOP_LIMITED_SALE_SUCCESS) {
+		ShowError("%s: Failed to remove item %d from account limited sale.\n", __func__, item_id);
+		return SCRIPT_CMD_FAILURE;
+	}
+	cashshop_save_account_limited_sales();
+	return SCRIPT_CMD_SUCCESS;
+#else
+	ShowError( "buildin_delete_accountlimitedsale: This command is not supported in your build.\n" );
+	return SCRIPT_CMD_FAILURE;
+#endif
+}
+
+BUILDIN_FUNC( runeui ){
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+	map_session_data* sd;
+
+	if( !script_charid2sd( 2, sd ) ){
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	clif_rune_ui_open( sd );
+
+	return SCRIPT_CMD_SUCCESS;
+#else
+	ShowError( "buildin_runeui: This command requires PACKETVER 2020-07-24 or newer.\n" );
+	return SCRIPT_CMD_FAILURE;
+#endif
+}
+
+BUILDIN_FUNC( getupgrade_rune ){
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+	map_session_data* sd;
+	if( !script_rid2sd(sd) )
+		return SCRIPT_CMD_FAILURE;
+
+	script_pushint(st,sd->runeactivated_data.upgrade);
+	return SCRIPT_CMD_SUCCESS;
+#else
+	ShowError( "buildin_getupgrade_rune: This command requires PACKETVER 2020-07-24 or newer.\n" );
+	return SCRIPT_CMD_FAILURE;
+#endif
+}
+
 #include <custom/script.inc>
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -28651,8 +28721,13 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(permission_add, "permission_remove", "i?"),
 
 	BUILDIN_DEF( mesitemicon, "v??" ),
+	BUILDIN_DEF(runeui, ""),
+	BUILDIN_DEF(getupgrade_rune, ""),
 	BUILDIN_DEF(meshyperlink, "ss"),
 	BUILDIN_DEF(mesemotion,"i"),
+
+	BUILDIN_DEF(add_accountlimitedsale, "iiiii"),
+	BUILDIN_DEF(delete_accountlimitedsale, "i"),
 
 #include <custom/script_def.inc>
 
