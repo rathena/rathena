@@ -32,8 +32,12 @@ Inventario de NPCs OzRo. Config: `npc/scripts_custom.conf`
 
 | NPC (doc viejo) | Estado | Notas |
 |-----------------|--------|-------|
-| Card Trader | `pendiente` | Intercambiar cartas por objetos especiales. ¿Fusionar con card_collector? |
-| Cash Point Merchant | `parcial` | `points2zeny.txt` cubre parte; revisar ratio 1:1 |
+| Card Trader | `pendiente` | Intercambiar cartas por objetos especiales. Refactor ene. 2026; script no activo en repo |
+| Ox Hunter (Ushi) | `pendiente` | Minotauro viajero; Ox Coins por historias de MVPs cazados. Anunciado en web ene. 2026 |
+| Ox Merchant (Kuma) | `pendiente` | Mercader minotauro; intercambia Ox Coins por items exclusivos. Pareja de Ushi |
+| MVP Tracker | `pendiente` | Rankings de MVPs, anuncios globales y asistencias. Mencionado en changelog ene. 2026 |
+| Crimson Weapons Enchanter | `pendiente` | Encantamientos aleatorios en armas Crimson. Distinto de quest Marcus |
+| Cash Point Merchant | `parcial` | `points2zeny.txt` (Sophie) cubre parte; revisar ratio 1:1 |
 | Old Blacksmith | `pendiente` | Special Gold (bounties) → piedras/bendiciones BS |
 | Crimson Weapons (quest) | `reformular` | Ver [05-quests-custom.md](./05-quests-custom.md) — **rAthena ya permite obtenerlas** |
 | Marcus (encantador Crimson) | `pendiente` | Encantar elemento en Crimson Weapons |
