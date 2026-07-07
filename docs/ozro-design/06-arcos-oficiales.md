@@ -109,7 +109,9 @@ Cuando un arco esté activo, Kaz el Cronista debe poder decir:
 
 ## Comentarios
 
-<!-- Primer arco que queremos jugar -->
+se podria revisar el historial de episodios del juego e implementar npcs que cuenten las viejas historias, de como era rune midgard antes de que se aliara con Arunafeltz o antes de que se abriera la grieta interdimensional y asi....
+entonces se crea toda una ruta donde un npc lleva a otro y cada uno cuenta un trozo de la historia.
+a medida que se traducen/documentan las quests del juego se van poniendo en la seccion de enciclopedia del sitio y se va mapeando cuales npcs estan "linkeados" osea son accesibles desde un starting point documentado en la pagina y cuales no, asi sabemos que porcentaje de "quests activas" tenemos mapeadas y podemos llegar a identificar npcs huerfanos.
 
 ## Notas de sesión
 

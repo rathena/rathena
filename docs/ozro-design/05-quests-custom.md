@@ -37,7 +37,7 @@ Quest custom con lore propio. En **Hercules las Crimson estaban rotas**; en **rA
 
 ### Comentarios
 
-<!-- ¿Vale la pena reescribir el script o guiar por quest oficial? -->
+las quest deben ser lorefriendly, quizas podamos "tomar prestada" la inspiracion de quest de otros servidores con mas recorrido, como Xatiya o Atlantis, e ir migrando quests y eventos acorde a las descripciones que ellos han puesto en el foro.
 
 ---
 

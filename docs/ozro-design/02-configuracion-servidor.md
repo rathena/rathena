@@ -123,20 +123,6 @@ Los rates `_boss` aplican a monstruos clase boss. Los rates `_mvp` **no están e
 | First attack loot bonus | `30` | +30% prioridad loot |
 | MVP to loot priority | `no` | MVP por daño+tank oficial |
 
-### Doc antiguo vs. actual (drops)
-
-| Doc antiguo | Actual |
-|-------------|--------|
-| Etc 10x | **5x** |
-| Consumibles 20x | **10x** heal/use |
-| Equip 30x | **15x** |
-| Cards 200x (~2%) | **100x** en normal/boss; MVP cards **1x** |
-| MVP items 5x | **5x** reward directo; drops en suelo MVP a 1x |
-| Boss/MVP cards 100x | **100x** en boss; **1x** en MVP (no override) |
-| Drop -50% si +15 niveles | **No verificado** en config (penalización renewal puede ser interna) |
-
----
-
 ## Monstruos y combate
 
 | Parámetro | Valor | Notas |
@@ -256,7 +242,7 @@ Los rates `_boss` aplican a monstruos clase boss. Los rates `_mvp` **no están e
 
 ## Comentarios
 
-<!-- Ajustes locales, ideas de rates -->
+Creo que lo de que los boss no se curan si se ajusto mediante la skill heal y fullheal haciendo que en mobs cure solo 1 de hp o algo asi.
 
 ---
 

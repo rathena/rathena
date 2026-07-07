@@ -144,7 +144,10 @@ Si 3+ son sí → subir prioridad.
 
 ## Comentarios
 
-<!-- Ideas nuevas, repriorizar -->
+algunas ideas extra que no he organizado:
+añadir gachas y sistemas basados en tiempo, tomando inspiracion de otros juegos como los idle games o juegos de gestion en celular, yo hago cosas pero debo entrar a revisar para obtener beneficios y cosas asi, tipo npc granjero, etc...
+
+quizas tener retos que se hagan fuera del juego pero que tengan impacto en el juego, que se hagan en la pagina web o retos y asi.
 
 ## Notas de sesión
 
