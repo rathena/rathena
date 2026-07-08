@@ -88,6 +88,33 @@ Header:
   Type: ITEM_DB
   Version: 3
 
+Body:
+  - Id: 35001
+    AegisName: Ozro_Platinum_Coin
+    Name: Moneda de Platino OzRo
+    Type: Etc
+    Weight: 10
+  - Id: 35002
+    AegisName: Ozro_Gold_Coin
+    Name: Moneda de Oro OzRo
+    Type: Etc
+    Weight: 10
+  - Id: 35003
+    AegisName: Ozro_Silver_Coin
+    Name: Moneda de Plata OzRo
+    Type: Etc
+    Weight: 10
+  - Id: 35004
+    AegisName: Ozro_Bronze_Coin
+    Name: Moneda de Bronce OzRo
+    Type: Etc
+    Weight: 10
+  - Id: 35005
+    AegisName: MVP_Soul
+    Name: Alma de MVP
+    Type: Etc
+    Weight: 10
+
 #Body:
 # THQ Quest Items
 #=============================================================
