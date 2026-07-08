@@ -545,6 +545,11 @@ Body:
       Shadowweapon: true
       Ghostweapon: true
       Enchantarms: true
+      Fireweapon_TK: true
+      Waterweapon_TK: true
+      Windweapon_TK: true
+      Earthweapon_TK: true
+      Holyweapon_TK: true
   - Status: Benedictio
     Icon: EFST_BENEDICTIO
     DurationLookup: PR_BENEDICTIO
@@ -1083,6 +1088,10 @@ Body:
       Earthweapon: true
       Shadowweapon: true
       Ghostweapon: true
+      Holyweapon_TK: true
+      Waterweapon_TK: true
+      Windweapon_TK: true
+      Earthweapon_TK: true
   - Status: Waterweapon
     Icon: EFST_PROPERTYWATER
     DurationLookup: SA_FROSTWEAPON
@@ -1098,6 +1107,10 @@ Body:
       Earthweapon: true
       Shadowweapon: true
       Ghostweapon: true
+      Holyweapon_TK: true
+      Fireweapon_TK: true
+      Windweapon_TK: true
+      Earthweapon_TK: true
   - Status: Windweapon
     Icon: EFST_PROPERTYWIND
     DurationLookup: SA_LIGHTNINGLOADER
@@ -1113,6 +1126,10 @@ Body:
       Earthweapon: true
       Shadowweapon: true
       Ghostweapon: true
+      Holyweapon_TK: true
+      Fireweapon_TK: true
+      Waterweapon_TK: true
+      Earthweapon_TK: true
   - Status: Earthweapon
     Icon: EFST_PROPERTYGROUND
     DurationLookup: SA_SEISMICWEAPON
@@ -1128,6 +1145,10 @@ Body:
       Windweapon: true
       Shadowweapon: true
       Ghostweapon: true
+      Holyweapon_TK: true
+      Fireweapon_TK: true
+      Waterweapon_TK: true
+      Windweapon_TK: true
   - Status: Volcano
     Icon: EFST_GROUNDMAGIC
     DurationLookup: SA_VOLCANO
@@ -1600,6 +1621,11 @@ Body:
       Windweapon: true
       Earthweapon: true
       Ghostweapon: true
+      Fireweapon_TK: true
+      Waterweapon_TK: true
+      Windweapon_TK: true
+      Earthweapon_TK: true
+      Holyweapon_TK: true
   - Status: Adrenaline2
     Icon: EFST_ADRENALINE2
     DurationLookup: BS_ADRENALINE2
@@ -1630,6 +1656,11 @@ Body:
       Windweapon: true
       Earthweapon: true
       Shadowweapon: true
+      Fireweapon_TK: true
+      Waterweapon_TK: true
+      Windweapon_TK: true
+      Earthweapon_TK: true
+      Holyweapon_TK: true
   - Status: Kaizel
     Icon: EFST_KAIZEL
     DurationLookup: SL_KAIZEL
@@ -9958,3 +9989,105 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+# Custom Entries for Mild Wind skill to show correct icons when using client patch "Use icons from stateiconimginfo.lub" [llchrisll]
+  - Status: Fireweapon_TK
+    Icon: EFST_PROPERTYFIRE_TK
+    DurationLookup: TK_SEVENWIND
+    CalcFlags:
+      All: true
+    Flags:
+      RemoveOnUnequipWeapon: true
+    EndOnStart:
+      Encpoison: true
+      Aspersio: true
+      Fireweapon: true
+      Waterweapon: true
+      Windweapon: true
+      Earthweapon: true
+      Shadowweapon: true
+      Ghostweapon: true
+      Holyweapon_TK: true
+      Waterweapon_TK: true
+      Windweapon_TK: true
+      Earthweapon_TK: true
+  - Status: Waterweapon_TK
+    Icon: EFST_PROPERTYWATER_TK
+    DurationLookup: TK_SEVENWIND
+    CalcFlags:
+      All: true
+    Flags:
+      RemoveOnUnequipWeapon: true
+    EndOnStart:
+      Encpoison: true
+      Aspersio: true
+      Fireweapon: true
+      Waterweapon: true
+      Windweapon: true
+      Earthweapon: true
+      Shadowweapon: true
+      Ghostweapon: true
+      Holyweapon_TK: true
+      Fireweapon_TK: true
+      Windweapon_TK: true
+      Earthweapon_TK: true
+  - Status: Windweapon_TK
+    Icon: EFST_PROPERTYWIND_TK
+    DurationLookup: TK_SEVENWIND
+    CalcFlags:
+      All: true
+    Flags:
+      RemoveOnUnequipWeapon: true
+    EndOnStart:
+      Encpoison: true
+      Aspersio: true
+      Fireweapon: true
+      Waterweapon: true
+      Earthweapon: true
+      Shadowweapon: true
+      Ghostweapon: true
+      Holyweapon_TK: true
+      Fireweapon_TK: true
+      Waterweapon_TK: true
+      Earthweapon_TK: true
+  - Status: Earthweapon_TK
+    Icon: EFST_PROPERTYGROUND_TK
+    DurationLookup: TK_SEVENWIND
+    CalcFlags:
+      All: true
+    Flags:
+      RemoveOnUnequipWeapon: true
+    EndOnStart:
+      Encpoison: true
+      Aspersio: true
+      Fireweapon: true
+      Waterweapon: true
+      Earthweapon: true
+      Windweapon: true
+      Shadowweapon: true
+      Ghostweapon: true
+      Holyweapon_TK: true
+      Fireweapon_TK: true
+      Waterweapon_TK: true
+      Windweapon_TK: true
+  - Status: Holyweapon_TK
+    Icon: EFST_PROPERTYHOLY_TK
+    DurationLookup: TK_SEVENWIND
+    CalcFlags:
+      Atk_Ele: true
+    Flags:
+      RemoveOnUnequipWeapon: true
+      RemoveOnHermode: true
+    EndOnStart:
+      Encpoison: true
+      Aspersio: true
+      Fireweapon: true
+      Waterweapon: true
+      Windweapon: true
+      Earthweapon: true
+      Shadowweapon: true
+      Ghostweapon: true
+      Enchantarms: true
+      Fireweapon_TK: true
+      Waterweapon_TK: true
+      Windweapon_TK: true
+      Earthweapon_TK: true
