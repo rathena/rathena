@@ -135,9 +135,9 @@ Sin jugadores vendiendo, el mercado = NPCs:
 
 **Dirección:** Reset barato/fácil; dificultad en challenges y progresión de equip. El doc viejo tenía reset **una vez por personaje** — hoy es repetible con birthstone.
 
-**Comentarios:**
+### Pergaminos de habilidad (item custom) `pendiente`
 
-item custom: pergaminos de habilidad, para evitar la doblecuenta, se fabrican, asi como el potero fabrica pociones, se recolectan items y se hacen los pergaminos sin penalizaciones tan fuertes, solo dificultad por obtener los items.
+Para reducir la doble cuenta: consumibles **fabricables** (como el Alquimista fabrica pociones) que dan acceso puntual a skills de otro job. Se craftean recolectando items; **sin penalizaciones fuertes** — la dificultad está en conseguir los materiales. Relacionado con los sets custom del [backlog](./08-ideas-backlog.md) y con [05-quests-custom.md](./05-quests-custom.md).
 
 ## 8. Qué dejar de hacer
 
@@ -146,6 +146,6 @@ item custom: pergaminos de habilidad, para evitar la doblecuenta, se fabrican, a
 - [ ] Rush a max level como única meta
 - [ ] Esperar balance perfecto antes de jugar
 
-## Notas de sesión
+## Comentarios
 
-<!-- Feedback sobre sistemas al probar -->
+<!-- Borrador libre para ideas de sistemas; luego organizar arriba -->

@@ -61,4 +61,4 @@ Servidor familiar OzRo — Renewal, Episode 14.3, acceso por VPN privada (solo i
 
 ## Comentarios
 
-<!-- Espacio libre para notas personales -->
+<!-- Borrador libre para ideas de visión/contexto; luego organizar arriba -->

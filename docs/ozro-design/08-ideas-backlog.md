@@ -50,6 +50,9 @@ Lluvia de ideas del documento antiguo, **reformuladas** y etiquetadas. No es lis
 | Quest cadena → desbloquea cacería tesoro | `pendiente` | Pistas mundo → explorador |
 | Eventos automáticos + calendario | `pendiente` | `floating_rates.txt` como base |
 | NPC errante semanal (misiones/acertijos) | `pendiente` | "¿Dónde está ahora?" |
+| Evento diario EXP/drop por dungeon + warp | `pendiente` | Un dungeon completo al día con rates aumentados y warp temporal |
+| Endless Tower abierta cada día | `pendiente` | Reset diario del acceso |
+| Retos fuera del juego con impacto in-game | `pendiente` | Se resuelven en la web y otorgan recompensa in-game |
 
 ---
 
@@ -69,6 +72,10 @@ Lluvia de ideas del documento antiguo, **reformuladas** y etiquetadas. No es lis
 | Dark Ritual: reset a Novice 1 → SoulStone valiosa | `reformular` | ¿Conflicto con reset fácil? |
 | NPC buffs por temporadas (esferas monk, adrenaline) | `pendiente` | Eventos estacionales |
 | Old Blacksmith: Special Gold → piedras BS | `pendiente` | Depende de bounty rewards |
+| MVP Soul (item custom) → invocar MVP | `pendiente` | Almas de matar MVPs / mvp hunting + items del secuaz permiten invocar un MVP concreto |
+| MVP room con cleaner | `pendiente` | Sala de MVPs con NPC de limpieza |
+| Reemplazo de WoE: capturar castillos | `reformular` | Captura da acceso a dungeon + tesoros; difícil, invocar mobs heavy en los vacíos |
+| Karma en misiones custom | `pendiente` | Karma +/- por personaje; misiones que exigen karma o dan recompensa según karma |
 
 ---
 
@@ -121,6 +128,17 @@ Lluvia de ideas del documento antiguo, **reformuladas** y etiquetadas. No es lis
 
 ---
 
+## Sistemas basados en tiempo / idle
+
+Inspiración en idle games y juegos de gestión de celular: **hago cosas, pero debo entrar a revisar** para obtener beneficios.
+
+| Idea | Estado | Notas |
+|------|--------|-------|
+| Gachas + sistemas basados en tiempo | `pendiente` | Recompensas que se acumulan y se reclaman al entrar |
+| NPC granjero (produce con el tiempo) | `pendiente` | Ejemplo de sistema idle: dejar producir y recolectar luego |
+
+---
+
 ## Descartadas o en pausa
 
 | Idea | Motivo |
@@ -143,21 +161,4 @@ Si 3+ son sí → subir prioridad.
 
 ## Comentarios
 
-algunas ideas extra que no he organizado:
-añadir gachas y sistemas basados en tiempo, tomando inspiracion de otros juegos como los idle games o juegos de gestion en celular, yo hago cosas pero debo entrar a revisar para obtener beneficios y cosas asi, tipo npc granjero, etc...
-
-quizas tener retos que se hagan fuera del juego pero que tengan impacto en el juego, que se hagan en la pagina web o retos y asi.
-
-custom item: MVP soul, luego de matar ciertos mvps o completando misiones de mvp hunting, obtengo almas de mvp, las almas y cierta cantidad de items del mob secuaz me permiten invocar a un mvp determinado.
-
-mvp room con cleaner.
-
-algo para reemplazar la woe, un incentivo para capturar los castillos (acceso al dungeon y a los tesosros) pero que sean dificiles invocar mobs heavys en los vacios.
-
-endless tower abierta cada dia.
-
-karma en misiones custom, de karma positivo y karma negativo, asociado al personaje. y ciertas misiones requeiren karma o dan recompenzas dependiendo del karma.
-
-## Notas de sesión
-
-<!-- Qué idea probamos next -->
+<!-- Borrador libre para ideas nuevas; luego organizar en las tablas de arriba -->

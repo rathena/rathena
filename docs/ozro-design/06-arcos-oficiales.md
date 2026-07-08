@@ -97,6 +97,21 @@ Cuando un arco esté activo, Kaz el Cronista debe poder decir:
 - Qué nivel recomendado
 - Si ya completaste capítulos (`#LORE_ARC_*`)
 
+## Ruta de historias / crónicas de episodios `pendiente`
+
+Revisar el **historial de episodios** del juego e implementar NPCs que cuenten las viejas historias (cómo era Rune-Midgard antes de aliarse con Arunafeltz, antes de la grieta interdimensional, etc.).
+
+- Se arma una **ruta encadenada**: un NPC lleva al siguiente y cada uno cuenta un trozo de la historia.
+- Complementa al cronista, no reemplaza los arcos jugables (relacionado con *Story Teller* del [backlog](./08-ideas-backlog.md)).
+
+## Mapeo de quests en la web `pendiente`
+
+A medida que se **traducen/documentan** las quests del juego, se publican en la sección **Enciclopedia** del sitio (ver [07-web-api.md](./07-web-api.md)) y se mapea:
+
+- Qué NPCs están **"linkeados"** (accesibles desde un *starting point* ya documentado en la web) y cuáles no.
+- El **% de quests activas mapeadas**.
+- Identificar **NPCs huérfanos** (sin ruta documentada de acceso).
+
 ## Checklist al preparar un arco
 
 - [ ] Leer guía externa completa
@@ -105,14 +120,8 @@ Cuando un arco esté activo, Kaz el Cronista debe poder decir:
 - [ ] Ajustar recompensas / barter si algo es imposible
 - [ ] Escribir diálogos de pista (mínimos)
 - [ ] Definir variable de progreso por cuenta
-- [ ] Jugar en vacaciones y anotar en README → Notas de sesión
+- [ ] Jugar en vacaciones y anotar ajustes/feedback en *Comentarios*
 
 ## Comentarios
 
-se podria revisar el historial de episodios del juego e implementar npcs que cuenten las viejas historias, de como era rune midgard antes de que se aliara con Arunafeltz o antes de que se abriera la grieta interdimensional y asi....
-entonces se crea toda una ruta donde un npc lleva a otro y cada uno cuenta un trozo de la historia.
-a medida que se traducen/documentan las quests del juego se van poniendo en la seccion de enciclopedia del sitio y se va mapeando cuales npcs estan "linkeados" osea son accesibles desde un starting point documentado en la pagina y cuales no, asi sabemos que porcentaje de "quests activas" tenemos mapeadas y podemos llegar a identificar npcs huerfanos.
-
-## Notas de sesión
-
-<!-- Qué arco jugamos, qué tal, qué ajustar -->
+<!-- Borrador libre para ideas de arcos/lore; luego organizar arriba -->

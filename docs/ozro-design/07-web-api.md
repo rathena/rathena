@@ -1,5 +1,14 @@
 # Web y API
 
+## Estructura del sitio
+
+Al crear contenido nuevo in-game hay que reflejarlo en la web:
+
+| Sección | Contenido |
+|---------|-----------|
+| **Info** | Solo el *listado* de NPCs custom y quests custom |
+| **Enciclopedia** | Guías y detalles específicos (si aplica) |
+
 ## Stack actual `implementado`
 
 | Componente | Ubicación |
@@ -54,6 +63,10 @@ Rankings miden **farm y tiempo** (zeny, MVP, EXP) → refuerzan desigualdad y no
 - Challenges y arcos lore como badges
 - Rankings secundarios (zeny/MVP) como curiosidad, no meta principal
 
+### Libro de cartas (álbum) `pendiente`
+
+Ya tenemos el registro de cartas de cada PJ (`#CARD_*`). Mostrarlo en la web como un **libro de cromos**: vista amigable donde el jugador ve qué cartas tiene y **cuáles le faltan**.
+
 ## Ideas del doc viejo (web) `reformular`
 
 | Idea | Estado | Notas |
@@ -80,8 +93,4 @@ Mismo patrón para `#PRESTIGE`, `#CHALLENGE_*`, `#LORE_ARC_*` cuando existan.
 
 ## Comentarios
 
-crear un libro de cartas, ya que tenemos el registro de las cartas que tiene cada pj, asi pueden ver en la pagina de forma mas amigable, como libro de cromos cuales le faltan.
-
-## Notas de sesión
-
-se deben ajustar los porcentajes de drop y los mobs que sueltan los items por ejemplo crimson weapons.
+<!-- Borrador libre para ideas de web/API; luego organizar arriba -->

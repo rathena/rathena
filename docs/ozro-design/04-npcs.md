@@ -39,7 +39,7 @@ Inventario de NPCs OzRo. Config: `npc/scripts_custom.conf`
 | Crimson Weapons Enchanter | `pendiente` | Encantamientos aleatorios en armas Crimson. Distinto de quest Marcus |
 | Cash Point Merchant | `parcial` | `points2zeny.txt` (Sophie) cubre parte; revisar ratio 1:1 |
 | Old Blacksmith | `pendiente` | Special Gold (bounties) → piedras/bendiciones BS |
-| Crimson Weapons (quest) | `reformular` | Ver [05-quests-custom.md](./05-quests-custom.md) — **rAthena ya permite obtenerlas** |
+| Crimson Weapons (quest) | `reformular` | Traerla de vuelta pero que **imbuya elemento** en vez de crear las armas (rAthena ya permite obtenerlas). Ver [05-quests-custom.md](./05-quests-custom.md) |
 | Marcus (encantador Crimson) | `pendiente` | Encantar elemento en Crimson Weapons |
 | Traveler Tool Dealer | `pendiente` | Lore al dealer ambulante de tools |
 | Bloody Branch Manufacturer | `pendiente` | NPC custom |
@@ -86,19 +86,24 @@ Doc viejo: "muy roto" — cambiar a entregar cualquier fruta al azar. Revisar si
 
 Doc viejo: una vez por personaje. Hoy: infinito con birthstone. Alinear con filosofía reset fácil.
 
+### Kafra Staff / Cool Event Corp (votación de dungeon) `pendiente`
+
+- Que **no** requiera 20 votos: ganar por **mayoría simple**.
+- Elecciones de **lunes a miércoles**; dungeon activo de **jueves a domingo**.
+
+## NPCs / mercados custom planificados
+
+### Mercado OzRo Coin (item custom) `pendiente`
+
+- Moneda custom con **varios tiers**, cada uno con distintas recompensas.
+- **Requisito** para ciertas quests o items especiales.
+- Se **compra/vende por zeny** con **precio dinámico** según cuánto se hayan movido (ligar con Stock Market NPC).
+- Generaliza el concepto de **Ox Coins** (Ushi/Kuma) — unificar en un solo sistema de moneda.
+
+### Mercader de birthstones `pendiente`
+
+- Vende birthstones (insumo del reset); su stock/oferta **cambia cada día**.
+
 ## Comentarios
 
-el crimson weapon quest lo traemo de vuelta pero que en lugar de crear las armas lo que haga sea imbuirles elemento.
-
-mercado con item custom ozro-coin tener varios tiers, distintas recompensas, que sean requisito para ciertas quests o items especiales.
-que las monedas se puedan vender/comprar con zeny, pero el precio cambia dependiendo de que tanto se hayan movido.
-
-mercader de birthstones, cambia cada dia.
-
-modificar las kafra staff y cool event corp votation para que no requieran 50 votos, si no que con mayoria simple ya se dé las elecciones se harán entre lunes y miercoles y estan activas de jueves a domingo.
-
-eventos de incremento de exp y drop por mapa por dia, los dungeons. todo el dungeon. y un warp a ese dungeon durante el evento.
-
-## Notas de sesión
-
-<!-- ¿Qué NPCs usamos? ¿Cuáles ignoramos? -->
+<!-- Borrador libre para ideas de NPCs; luego organizar arriba -->

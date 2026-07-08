@@ -1,5 +1,9 @@
 # Quests custom
 
+## Principio de diseño
+
+Las quests deben ser **lore-friendly**. Se puede "tomar prestada" la inspiración de quests de servidores con más recorrido (**Xatiya**, **Atlantis**, etc.) e ir migrando quests/eventos según las descripciones publicadas en sus foros.
+
 ## Crimson Weapons `reformular`
 
 ### Contexto
@@ -9,6 +13,8 @@ Quest custom con lore propio. En **Hercules las Crimson estaban rotas**; en **rA
 - [ ] Reactivar quest custom con lore OzRo
 - [ ] Usar cadena oficial y solo añadir NPC Marcus/encantador
 - [ ] Híbrido: quest intro con lore → integración con contenido oficial
+
+**Dirección elegida:** reactivar el flujo pero que la quest (vía **Marcus**) **imbuya elemento** a las Crimson en vez de crearlas, ya que rAthena permite obtenerlas por vías oficiales.
 
 ### Lore (del doc original)
 
@@ -35,12 +41,6 @@ Quest custom con lore propio. En **Hercules las Crimson estaban rotas**; en **rA
 - [ ] Duplicar precio Crimson (si aplica a quest custom)
 - [ ] Marcus: opción de encantar elemento en Crimson Weapons
 
-### Comentarios
-
-las quest deben ser lorefriendly, quizas podamos "tomar prestada" la inspiracion de quest de otros servidores con mas recorrido, como Xatiya o Atlantis, e ir migrando quests y eventos acorde a las descripciones que ellos han puesto en el foro.
-
-una quest de ritual oscuro, subiendo un personaje a nivel 70, lo sacrifica y lo devuelve a novice 1/1 esa alma queda atada a la cuenta y otro pj la puede consumir a cambio de experiencia, tiene un cooldown de 1 semana y un requisito de job (exige que sea de un job especifico)
-
 ---
 
 ## Otras quests custom planificadas
@@ -63,7 +63,14 @@ Quest con lore para crear Blessed Ores en lugar de Safe tickets.
 
 ### Objetos custom con skills de otros jobs `reformular`
 
-Consumibles fabricados por el job con quest y requisito de nivel, para no usar cuentas dobles.
+Consumibles fabricados por el job con quest y requisito de nivel, para no usar cuentas dobles. Ver **pergaminos de habilidad** en [03-sistemas-core.md](./03-sistemas-core.md).
+
+### Ritual oscuro (Alma / SoulStone) `reformular`
+
+- Subir un PJ a **nivel 70**, sacrificarlo → vuelve a **Novice 1/1**.
+- El alma queda **atada a la cuenta**; otro PJ puede **consumirla a cambio de EXP**.
+- **Cooldown:** 1 semana. **Requisito:** exige un job específico.
+- Tensión: ¿choca con la filosofía de reset fácil? Ver [03-sistemas-core.md](./03-sistemas-core.md).
 
 ---
 
@@ -80,6 +87,6 @@ Ya activas — base para materiales de craft/challenges:
 
 ---
 
-## Notas de sesión
+## Comentarios
 
-<!-- Probar Crimson oficial en rAthena; anotar dificultad y recompensas -->
+<!-- Borrador libre para ideas de quests; luego organizar arriba -->

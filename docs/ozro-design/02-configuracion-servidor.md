@@ -134,7 +134,7 @@ Los rates `_boss` aplican a monstruos clase boss. Los rates `_mvp` **no están e
 | MVP tomb | `yes` | Default `monster.conf` |
 | Críticos de mobs | **No** | `enable_critical: 17` = PC + Mercenary; bit Mob no activo |
 | mob_critical_rate | `100` | Sin efecto si mob no tiene críticos habilitados |
-| Boss no se curan | **No verificado** | No encontrado en `conf/` |
+| Boss no se curan | **Vía skill** | Ajustado por skill: Heal/Fullheal sobre mobs cura solo 1 HP (solo si la vía `monster.conf` no funciona) |
 | Flee penalty en mobs | `yes` | `agi_penalty_target: 3` (PC + Mob) |
 | Def penalty por swarm | `no` | `vit_penalty_type: 0` |
 | Falcon + Warg juntos | `yes` | `warg_can_falcon: yes` |
@@ -216,7 +216,7 @@ Los rates `_boss` aplican a monstruos clase boss. Los rates `_mvp` **no están e
 | No requiere quest para primer job | `pendiente` — `jobmaster.txt` desactivado en `scripts_custom.conf` |
 | Reborn platinum skills | `pendiente` — `platinum_skills.txt` desactivado; jobmaster tiene flag `.Platinum` |
 | Mobs hacen críticos | **No activo** en config actual |
-| Boss no se curan | **No encontrado** en config |
+| Boss no se curan | Ajustado vía skill Heal/Fullheal (cura 1 HP en mobs), si la vía `monster.conf` no funciona, revisar primero.|
 | Drop -50% con +15 niveles | **No encontrado** en config |
 | ASPD 193 / 195 | **193** solo third; normal **190** |
 | Bounty → Cash Points + Special Gold | `probar` — revisar scripts bounty |
@@ -236,16 +236,11 @@ Los rates `_boss` aplican a monstruos clase boss. Los rates `_mvp` **no están e
 - Deshabilitar banco/correo del menú → solo vía NPC
 - Evaluar party_even_share_bonus para 3 jugadores en party real
 - Evaluar rates _mvp (hoy a 1x) si MVP farming es muy lento
+- Ajustar % de drop y qué mobs sueltan ciertos items (ej. Crimson Weapons)
 ```
 
 ---
 
 ## Comentarios
 
-Creo que lo de que los boss no se curan si se ajusto mediante la skill heal y fullheal haciendo que en mobs cure solo 1 de hp o algo asi.
-
----
-
-## Notas de sesión
-
-<!-- ¿Los rates se sienten bien? ¿Demasiado rush? ¿Falta zeny? ¿MVP drops muy bajos? -->
+<!-- Borrador libre para ideas de config; luego mover a las tablas de arriba -->
