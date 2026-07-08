@@ -39,6 +39,8 @@ Quest custom con lore propio. En **Hercules las Crimson estaban rotas**; en **rA
 
 las quest deben ser lorefriendly, quizas podamos "tomar prestada" la inspiracion de quest de otros servidores con mas recorrido, como Xatiya o Atlantis, e ir migrando quests y eventos acorde a las descripciones que ellos han puesto en el foro.
 
+una quest de ritual oscuro, subiendo un personaje a nivel 70, lo sacrifica y lo devuelve a novice 1/1 esa alma queda atada a la cuenta y otro pj la puede consumir a cambio de experiencia, tiene un cooldown de 1 semana y un requisito de job (exige que sea de un job especifico)
+
 ---
 
 ## Otras quests custom planificadas
@@ -59,9 +61,9 @@ Serie de pistas por el mundo → explorador → llaves + ubicación del tesoro. 
 
 Quest con lore para crear Blessed Ores en lugar de Safe tickets.
 
-### Sets custom con skills de otros jobs `reformular`
+### Objetos custom con skills de otros jobs `reformular`
 
-Fabricados con Almas del Job. Ultra late — riesgo de power creep. Evaluar solo como recompensa cosmética/challenge extremo.
+Consumibles fabricados por el job con quest y requisito de nivel, para no usar cuentas dobles.
 
 ---
 

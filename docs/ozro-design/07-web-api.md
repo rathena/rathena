@@ -47,27 +47,6 @@ Rankings miden **farm y tiempo** (zeny, MVP, EXP) → refuerzan desigualdad y no
 | Arcos lore | `#LORE_ARC_*` | Media |
 | Variedad de clases | Query `char` por account | Media |
 
-### Endpoint propuesto
-
-```
-GET /account/:accountId/profile
-GET /account/by-user/:userid/profile   // opcional, más amigable
-```
-
-Respuesta ejemplo:
-
-```json
-{
-  "userid": "ozkar",
-  "card_collection_percent": 42.5,
-  "card_by_category": { "A": 80, "B": 35, ... },
-  "prestige": 120,
-  "challenges_completed": ["acolyte_70", "hunter_payon"],
-  "lore_arcs_completed": ["payon_intro"],
-  "characters_summary": { "total": 8, "max_level": 175, "distinct_classes": 5 }
-}
-```
-
 ### UI propuesta
 
 - Página **Perfil** por jugador (cuenta principal)
@@ -81,7 +60,6 @@ Respuesta ejemplo:
 |------|--------|-------|
 | Daily Roulette en web → premio in-game | `pendiente` | Requiere endpoint seguro + NPC entrega |
 | Daily Guess the Monster | `pendiente` | Pistas + recompensa escalada |
-| Donaciones → cash points | `pendiente` | FluxCP / integración pago |
 | Calendario de eventos | `pendiente` | Con eventos automáticos in-game |
 
 ## Sincronización juego ↔ web
@@ -102,8 +80,8 @@ Mismo patrón para `#PRESTIGE`, `#CHALLENGE_*`, `#LORE_ARC_*` cuando existan.
 
 ## Comentarios
 
-<!-- Prioridad de endpoints, diseño de perfil -->
+crear un libro de cartas, ya que tenemos el registro de las cartas que tiene cada pj, asi pueden ver en la pagina de forma mas amigable, como libro de cromos cuales le faltan.
 
 ## Notas de sesión
 
-<!-- ¿Usamos la web al jugar? ¿Qué motiva? -->
+se deben ajustar los porcentajes de drop y los mobs que sueltan los items por ejemplo crimson weapons.

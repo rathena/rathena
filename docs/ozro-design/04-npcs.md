@@ -88,7 +88,16 @@ Doc viejo: una vez por personaje. Hoy: infinito con birthstone. Alinear con filo
 
 ## Comentarios
 
-<!-- NPCs a priorizar, feedback in-game -->
+el crimson weapon quest lo traemo de vuelta pero que en lugar de crear las armas lo que haga sea imbuirles elemento.
+
+mercado con item custom ozro-coin tener varios tiers, distintas recompensas, que sean requisito para ciertas quests o items especiales.
+que las monedas se puedan vender/comprar con zeny, pero el precio cambia dependiendo de que tanto se hayan movido.
+
+mercader de birthstones, cambia cada dia.
+
+modificar las kafra staff y cool event corp votation para que no requieran 50 votos, si no que con mayoria simple ya se dé las elecciones se harán entre lunes y miercoles y estan activas de jueves a domingo.
+
+eventos de incremento de exp y drop por mapa por dia, los dungeons. todo el dungeon. y un warp a ese dungeon durante el evento.
 
 ## Notas de sesión
 

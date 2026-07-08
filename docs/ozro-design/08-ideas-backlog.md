@@ -14,7 +14,6 @@ Lluvia de ideas del documento antiguo, **reformuladas** y etiquetadas. No es lis
 | Meta colección cartas + web | `implementado` / `pendiente` | Collector hecho; falta % en web |
 | Cronista como guía de lore | `reformular` | Expandir `chronicler.txt` |
 | Daily Hunting Quest con racha | `en-repo` | `hunting_missions.txt` desactivado |
-| Casas / refugios instanciados | `pendiente` | Sin client; dolls como decoración |
 | Recompensas por cuenta (prestigio) | `pendiente` | Reducir incentivo multi-cuenta |
 | Crimson Weapons + Marcus | `reformular` | rAthena OK; ver [05-quests-custom.md](./05-quests-custom.md) |
 | Quests equipo pro con lore | `reformular` | = challenges + cadenas craft, no regalos |
@@ -148,6 +147,16 @@ algunas ideas extra que no he organizado:
 añadir gachas y sistemas basados en tiempo, tomando inspiracion de otros juegos como los idle games o juegos de gestion en celular, yo hago cosas pero debo entrar a revisar para obtener beneficios y cosas asi, tipo npc granjero, etc...
 
 quizas tener retos que se hagan fuera del juego pero que tengan impacto en el juego, que se hagan en la pagina web o retos y asi.
+
+custom item: MVP soul, luego de matar ciertos mvps o completando misiones de mvp hunting, obtengo almas de mvp, las almas y cierta cantidad de items del mob secuaz me permiten invocar a un mvp determinado.
+
+mvp room con cleaner.
+
+algo para reemplazar la woe, un incentivo para capturar los castillos (acceso al dungeon y a los tesosros) pero que sean dificiles invocar mobs heavys en los vacios.
+
+endless tower abierta cada dia.
+
+karma en misiones custom, de karma positivo y karma negativo, asociado al personaje. y ciertas misiones requeiren karma o dan recompenzas dependiendo del karma.
 
 ## Notas de sesión
 

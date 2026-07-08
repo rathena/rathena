@@ -10,7 +10,7 @@ Servidor familiar OzRo — Renewal, Episode 14.3, acceso por VPN privada (solo i
 - **Conexión:** Intentamos jugar los 3 juntos, pero a veces no coinciden niveles → cada uno termina con ~10 personajes.
 - **Multi-cuenta:** Cada uno tiene ~3 cuentas; a veces doble o triple cuenta en paralelo para suplir ausencias en party. Esto **entorpece** la experiencia.
 - **Tiempo desigual:** Quien tiene más tiempo farmea mucho más → ventaja para los que no pueden dedicarle tanto.
-- **Post-rush:** Tras subir a nivel máximo, nos quedamos estancados sin saber qué hacer.
+- **Post-rush:** Tras subir a nivel alto, nos quedamos estancados sin saber qué hacer, los ultimos niveles son imposibles de subir.
 - **Lore:** No hemos completado ni una misión del lore principal — no sabemos por dónde empezar.
 - **Builds:** Miramos items/builds en internet y nos los damos como recompensa → rompe la progresión escalonada.
 - **Competencia MVP:** Cacería de MVPs como competencia, pero penaliza healers y roles no-DPS.
@@ -29,7 +29,7 @@ Servidor familiar OzRo — Renewal, Episode 14.3, acceso por VPN privada (solo i
 1. **Jugar entre vacaciones** — sesiones cortas (15–30 min) con progreso real.
 2. **Meta por cuenta** — una cuenta principal; recompensas y colección que no se multipliquen con alts.
 3. **Progreso escalonado** — rutas de equipo y desafíos deterministas, no RNG 0.001% ni regalos de wiki.
-4. **Cosas para mostrar** — colección, casa/vitrina, prestigio visible (en juego y web), no solo poder.
+4. **Cosas para mostrar** — colección, casa/vitrina, prestigio visible (en juego y web), no solo poder. (inicialmente en la web)
 5. **Roles variados** — incentivar distintos jobs/builds sin castigar soportes.
 6. **Lore curado** — arcos oficiales seleccionados, con guía in-game según los vayamos haciendo.
 7. **Server-side primero** — sin tocar el client por ahora (GRF es dolor de cabeza). Items custom experimentales más adelante.

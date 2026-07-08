@@ -137,7 +137,7 @@ Sin jugadores vendiendo, el mercado = NPCs:
 
 **Comentarios:**
 
-<!-- ¿Mantener birthstone como "lore" o simplificar a solo zeny? -->
+item custom: pergaminos de habilidad, para evitar la doblecuenta, se fabrican, asi como el potero fabrica pociones, se recolectan items y se hacen los pergaminos sin penalizaciones tan fuertes, solo dificultad por obtener los items.
 
 ## 8. Qué dejar de hacer
 
