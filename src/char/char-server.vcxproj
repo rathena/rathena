@@ -204,7 +204,6 @@
     <ClInclude Include="int_pet.hpp" />
     <ClInclude Include="int_quest.hpp" />
     <ClInclude Include="int_storage.hpp" />
-    <ClInclude Include="packets.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="char.cpp" />

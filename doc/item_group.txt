@@ -254,3 +254,67 @@ Bound: Binds the obtained item.
 Named: Inscribes the item with the obtainer's name.
 
 ---------------------------------------
+
+Stacked: Whether stackable items are given stacked or not.
+
+---------------------------------------
+
+RandomOptionGroup: Applies random options of this group to all equipable items.
+
+---------------------------------------
+
+RefineMinimum: Applies at least this refine level to all equipable items.
+       When RefineMaximum also has a value, the refine level of the equipment will be between RefineMinimum and RefineMaximum.
+       When RefineMaximum hasn't a value, the refine level of the equipment will be between RefineMinimum and MAX_REFINE.
+
+---------------------------------------
+
+RefineMaximum: Applies at most this refine level to all equipable items.
+       When RefineMinimum also has a value, the refine level of the equipment will be between RefineMinimum and RefineMaximum.
+       When RefineMinimum hasn't a value, the refine level of the equipment will be between 1 and RefineMaximum.
+
+Example 1:
+       (Supposing MAX_REFINE = 20)
+       RefineMinimum: 17
+
+       Possible refine level of the equipment : 17, 18, 19, 20
+
+Example 2:
+       RefineMaximum: 5
+
+       Possible refine level of the equipment : 1, 2, 3, 4, 5
+
+Example 3:
+       RefineMinimum: 7
+       RefineMaximum: 10
+
+       Possible refine level of the equipment : 7, 8, 9, 10
+
+---------------------------------------
+
+GradeMinimum: Applies at least this level of grade to all equipable items.
+       When GradeMaximum also has a value, the level of grade of the equipment will be between GradeMinimum and GradeMaximum.
+       When GradeMaximum hasn't a value, the level of grade of the equipment will be between GradeMinimum and the highest possible grade (A).
+
+       Accepted value, written in ascending order of level : None, D, C, B, A
+
+---------------------------------------
+
+GradeMaximum: Applies at most this level of grade to all equipable items.
+       When GradeMinimum also has a value, the level of grade of the equipment will be between GradeMinimum and GradeMaximum.
+       When GradeMinimum hasn't a value, the level of grade of the equipment will be between None and GradeMaximum.
+
+       Accepted value, written in ascending order of level : None, D, C, B, A
+
+Example 1:
+       GradeMaximum: C
+
+       Possible grade level of the equipment : None, D or C
+
+Example 2:
+       GradeMinimum: D
+       GradeMaximum: C
+
+       Possible grade level of the equipment : D or C
+
+---------------------------------------

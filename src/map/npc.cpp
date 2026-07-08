@@ -1001,7 +1001,7 @@ int32 npc_enable_sub(block_list *bl, va_list ap)
 	return 0;
 }
 
-bool npc_is_cloaked(npc_data* nd, map_session_data* sd) {
+bool npc_is_cloaked( const npc_data* nd, const map_session_data* sd ) {
 	bool npc_cloaked = (nd->sc.option & OPTION_CLOAK) ? true : false;
 
 	if (std::find(sd->cloaked_npc.begin(), sd->cloaked_npc.end(), nd->id) != sd->cloaked_npc.end())
@@ -1009,7 +1009,7 @@ bool npc_is_cloaked(npc_data* nd, map_session_data* sd) {
 	return npc_cloaked;
 }
 
-bool npc_is_hidden_dynamicnpc( npc_data& nd, map_session_data& tsd ){
+bool npc_is_hidden_dynamicnpc( const npc_data& nd, const map_session_data& tsd ){
 	// If the NPC is dynamic and the target character is not the owner of the dynamic NPC
 	return nd.dynamicnpc.owner_char_id != 0 && nd.dynamicnpc.owner_char_id != tsd.status.char_id;
 }
@@ -1642,7 +1642,7 @@ void npc_timerevent_quit(map_session_data* sd)
 	npc_data* nd;
 	struct timer_event_data *ted;
 
-	// Check timer existance
+	// Check timer existence
 	if( sd->npc_timer_id == INVALID_TIMER )
 		return;
 	if( !(td = get_timer(sd->npc_timer_id)) )
@@ -2611,7 +2611,7 @@ int32 npc_cashshop_buylist( map_session_data *sd, int32 points, std::vector<s_np
  * @param cost: Reference to cost variable
  * @param display: Display cost type to player?
  */
-void npc_shop_currency_type(map_session_data *sd, npc_data *nd, int32 cost[2], bool display)
+void npc_shop_currency_type( const map_session_data* sd, const npc_data* nd, int32 cost[2], bool display)
 {
 	nullpo_retv(sd);
 
@@ -3600,7 +3600,7 @@ int32 npc_unload(npc_data* nd, bool single) {
  * Adds a npc source file (or removes all)
  * @param name : file to add
  * @param loadscript : flag to parse the script immediately after adding the src file
- * @return 0=error, 1=sucess
+ * @return 0=error, 1=success
  */
 int32 npc_addsrcfile(const char* name, bool loadscript)
 {
@@ -3826,8 +3826,8 @@ npc_data *npc_create_npc(int16 m, int16 x, int16 y){
  * @param from_mapid : mapid to warp from
  * @param from_x : x coordinate of warp
  * @param from_y : y coordinate of warp
- * @param xs : x lenght of warp (for trigger activation)
- * @param ys : y lenght of warp (for trigger activation)
+ * @param xs : x length of warp (for trigger activation)
+ * @param ys : y length of warp (for trigger activation)
  * @param to_mapindex : mapid to warp to
  * @param to_x : x coordinate to warp to
  * @param to_y : y coordinate to warp to
@@ -4248,7 +4248,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 * @param discount Discount flag of NPC shop
 * @return bool 'true' is discountable, 'false' otherwise
 */
-bool npc_shop_discount( npc_data* nd ){
+bool npc_shop_discount( const npc_data* nd ){
 	switch( nd->subtype ){
 		case NPCTYPE_ITEMSHOP:
 			return nd->u.shop.discount || ( battle_config.discount_item_point_shop&1 );

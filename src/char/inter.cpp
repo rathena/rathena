@@ -387,21 +387,21 @@ const char * geoip_countryname[253] = {"Unknown","Asia/Pacific Region","Europe",
 		"Ghana","Gibraltar","Greenland","Gambia","Guinea","Guadeloupe","Equatorial Guinea","Greece","South Georgia and the South Sandwich Islands","Guatemala",
 		"Guam","Guinea-Bissau","Guyana","Hong Kong","Heard Island and McDonald Islands","Honduras","Croatia","Haiti","Hungary","Indonesia",
 		"Ireland","Israel","India","British Indian Ocean Territory","Iraq","Iran, Islamic Republic of","Iceland","Italy","Jamaica","Jordan",
-		"Japan","Kenya","Kyrgyzstan","Cambodia","Kiribati","Comoros","Saint32 Kitts and Nevis","Korea, Democratic People's Republic of","Korea, Republic of","Kuwait",
-		"Cayman Islands","Kazakhstan","Lao People's Democratic Republic","Lebanon","Saint32 Lucia","Liechtenstein","Sri Lanka","Liberia","Lesotho","Lithuania",
+		"Japan","Kenya","Kyrgyzstan","Cambodia","Kiribati","Comoros","Saint Kitts and Nevis","Korea, Democratic People's Republic of","Korea, Republic of","Kuwait",
+		"Cayman Islands","Kazakhstan","Lao People's Democratic Republic","Lebanon","Saint Lucia","Liechtenstein","Sri Lanka","Liberia","Lesotho","Lithuania",
 		"Luxembourg","Latvia","Libyan Arab Jamahiriya","Morocco","Monaco","Moldova, Republic of","Madagascar","Marshall Islands","Macedonia","Mali",
 		"Myanmar","Mongolia","Macau","Northern Mariana Islands","Martinique","Mauritania","Montserrat","Malta","Mauritius","Maldives",
 		"Malawi","Mexico","Malaysia","Mozambique","Namibia","New Caledonia","Niger","Norfolk Island","Nigeria","Nicaragua",
 		"Netherlands","Norway","Nepal","Nauru","Niue","New Zealand","Oman","Panama","Peru","French Polynesia",
-		"Papua New Guinea","Philippines","Pakistan","Poland","Saint32 Pierre and Miquelon","Pitcairn Islands","Puerto Rico","Palestinian Territory","Portugal","Palau",
+		"Papua New Guinea","Philippines","Pakistan","Poland","Saint Pierre and Miquelon","Pitcairn Islands","Puerto Rico","Palestinian Territory","Portugal","Palau",
 		"Paraguay","Qatar","Reunion","Romania","Russian Federation","Rwanda","Saudi Arabia","Solomon Islands","Seychelles","Sudan",
-		"Sweden","Singapore","Saint32 Helena","Slovenia","Svalbard and Jan Mayen","Slovakia","Sierra Leone","San Marino","Senegal","Somalia","Suriname",
+		"Sweden","Singapore","Saint Helena","Slovenia","Svalbard and Jan Mayen","Slovakia","Sierra Leone","San Marino","Senegal","Somalia","Suriname",
 		"Sao Tome and Principe","El Salvador","Syrian Arab Republic","Swaziland","Turks and Caicos Islands","Chad","French Southern Territories","Togo","Thailand",
 		"Tajikistan","Tokelau","Turkmenistan","Tunisia","Tonga","Timor-Leste","Turkey","Trinidad and Tobago","Tuvalu","Taiwan",
-		"Tanzania, United Republic of","Ukraine","Uganda","United States Minor Outlying Islands","United States","Uruguay","Uzbekistan","Holy See (Vatican City State)","Saint32 Vincent and the Grenadines","Venezuela",
+		"Tanzania, United Republic of","Ukraine","Uganda","United States Minor Outlying Islands","United States","Uruguay","Uzbekistan","Holy See (Vatican City State)","Saint Vincent and the Grenadines","Venezuela",
 		"Virgin Islands, British","Virgin Islands, U.S.","Vietnam","Vanuatu","Wallis and Futuna","Samoa","Yemen","Mayotte","Serbia","South Africa",
 		"Zambia","Montenegro","Zimbabwe","Anonymous Proxy","Satellite Provider","Other","Aland Islands","Guernsey","Isle of Man","Jersey",
-		"Saint32 Barthelemy","Saint32 Martin"};
+		"Saint Barthelemy","Saint Martin"};
 unsigned char *geoip_cache;
 void geoip_readdb(void){
 	struct stat bufa;
@@ -504,7 +504,7 @@ void mapif_parse_accinfo(int32 fd) {
 				inter_to_fd(fd, u_fd, u_aid, (char *)msg_txt(212) ,query); // No matches were found for your criteria, '%s'
 			} else {
 				Sql_ShowDebug(sql_handle);
-				inter_to_fd(fd, u_fd, u_aid, (char *)msg_txt(213)); // An error occured, bother your admin about it.
+				inter_to_fd(fd, u_fd, u_aid, (char *)msg_txt(213)); // An error occurred, bother your admin about it.
 			}
 			Sql_FreeResult(sql_handle);
 			return;
@@ -537,7 +537,7 @@ void mapif_parse_accinfo(int32 fd) {
 
 	/* it will only get here if we have a single match then ask login-server to fetch the `login` record */
 	if (!account_id || chlogif_req_accinfo(fd, u_fd, u_aid, account_id) != 1) {
-		inter_to_fd(fd, u_fd, u_aid, (char *)msg_txt(213)); // An error occured, bother your admin about it.
+		inter_to_fd(fd, u_fd, u_aid, (char *)msg_txt(213)); // An error occurred, bother your admin about it.
 	}
 	return;
 }
@@ -568,7 +568,7 @@ void mapif_accinfo_ack( bool success, int32 map_fd, int32 u_fd, int32 u_aid, int
 		if( Sql_NumRows(sql_handle) == 0 )
 			inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(226)); // This account doesn't have characters.
 		else {
-			inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(213)); // An error occured, bother your admin about it.
+			inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(213)); // An error occurred, bother your admin about it.
 			Sql_ShowDebug(sql_handle);
 		}
 	} else {

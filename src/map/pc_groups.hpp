@@ -103,9 +103,9 @@ struct s_player_group{
 	uint32 index;
 
 public:
-	bool can_use_command( const std::string& command, AtCommandType type );
-	bool has_permission( e_pc_permission permission );
-	bool should_log_commands();
+	bool can_use_command( const std::string& command, AtCommandType type ) const;
+	bool has_permission( e_pc_permission permission ) const;
+	bool should_log_commands() const;
 };
 
 class PlayerGroupDatabase : public TypesafeYamlDatabase<uint32, s_player_group>{

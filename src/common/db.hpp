@@ -338,7 +338,7 @@ struct DBIterator
 
 	/**
 	 * Returns true if the fetched entry exists.
-	 * The databases entries might have nullptr data, so use this to to test if
+	 * The databases entries might have nullptr data, so use this to test if
 	 * the iterator is done.
 	 * @param self Iterator
 	 * @return true is the entry exists
@@ -934,7 +934,7 @@ void* db_data2ptr(DBData *data);
  * @return Integer(64-bit signed) value of the data.
  * @public
  */
-int64 db_data2i64(DBData *data);
+int64 db_data2i64( const DBData* data );
 
 /**
  * Initialize the database system.

@@ -10251,6 +10251,195 @@ Body:
         RandomOptionGroup: Group_0
         ClearSlots: true
         RemoveEnchantgrade: true
+      - BaseItem: Entwined_Armor
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Entwined_Armor
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Entwined_Robe
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Entwined_Robe
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Entwined_Manteau
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Entwined_Manteau
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Entwined_Muffler
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Entwined_Muffler
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Entwined_Boots
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Entwined_Boots
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Entwined_Shoes
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Entwined_Shoes
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Dimension_B_Greave
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Dimension_B_Greave
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Dimension_H_Boots
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Dimension_H_Boots
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Dimension_S_Shoes
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Dimension_S_Shoes
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Dimension_M_Shoes
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Dimension_M_Shoes
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Dimension_E_Boots
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Dimension_E_Boots
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Gaebolg_Armor
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Gaebolg_Armor
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Gaebolg_Robe
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Gaebolg_Robe
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Gaebolg_Manteau
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Gaebolg_Manteau
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Gaebolg_Muffler
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Gaebolg_Muffler
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Gaebolg_Boots
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Gaebolg_Boots
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Gaebolg_Shoes
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Gaebolg_Shoes
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Gaebolg_Ring
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Gaebolg_Ring
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Gaebolg_Glove
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Gaebolg_Glove
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Gaebolg_Earring
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Gaebolg_Earring
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Gaebolg_Necklace
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Gaebolg_Necklace
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
   - Item: Season_H_Upgrade
     BaseItems:
       - BaseItem: Season_Hood_Spring
@@ -12650,6 +12839,342 @@ Body:
           - Material: S_Enchant_Essence
             Amount: 2
         ResultItem: S_SOA_MS_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_SHC_CR_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_SHC_CR_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_SHC_CR_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_SHC_CR_Pendant
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_SHC_ST_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_SHC_ST_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_SHC_ST_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_SHC_ST_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_IQ_TP_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_IQ_TP_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_IQ_TP_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_IQ_TP_Pendant
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_IQ_FB_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_IQ_FB_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_IQ_FB_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_IQ_FB_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_HN_MC_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_HN_MC_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_HN_MC_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_HN_MC_Pendant
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_HN_DB_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_HN_DB_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_HN_DB_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_HN_DB_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_AG_CI_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_AG_CI_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_AG_CI_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_AG_CI_Pendant
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_AG_VST_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_AG_VST_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_AG_VST_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_AG_VST_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_ABC_DB_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_ABC_DB_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_ABC_DB_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_ABC_DB_Pendant
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_ABC_FR_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_ABC_FR_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_ABC_FR_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_ABC_FR_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_SKE_MS_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_SKE_MS_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_SKE_MS_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_SKE_MS_Pendant
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_SKE_DB_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_SKE_DB_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_SKE_DB_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_SKE_DB_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_CD_FP_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_CD_FP_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_CD_FP_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_CD_FP_Pendant
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_CD_EP_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_CD_EP_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_CD_EP_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_CD_EP_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_EM_DS_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_EM_DS_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_EM_DS_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_EM_DS_Pendant
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_EM_TP_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_EM_TP_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_EM_TP_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_EM_TP_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_SS_KK_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_SS_KK_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_SS_KK_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_SS_KK_Pendant
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_SS_KF_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_SS_KF_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_SS_KF_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_SS_KF_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_WH_AT_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_WH_AT_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_WH_AT_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_WH_AT_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_TR_MS_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_TR_MS_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_TR_MS_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_TR_MS_Pendant
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_TR_RB_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_TR_RB_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_TR_RB_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_TR_RB_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_NW_MS_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_NW_MS_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_NW_MS_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_NW_MS_Pendant
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_NW_NF_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_NW_NF_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_NW_NF_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_NW_NF_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_WH_WH_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_WH_WH_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_WH_WH_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_WH_WH_Pendant
         #RandomOptionGroup: NSU # TODO: translate to our group names
   - Item: Time_Gap_Refine_Hammer
     BaseItems:
@@ -15683,3 +16208,743 @@ Body:
           - Material: Hero_Weapon_Hammer_6
         ResultItem: Blessed_Knife_LT
         ChangeRefine: 7
+  - Item: Fron_Fix_DK_T_Sword
+    BaseItems:
+      - BaseItem: Encroached_T_Sword
+        MinimumRefine: 10
+        Materials:
+          - Material: Ch1_Mana_Ring
+            Amount: 200
+          - Material: Frontier_Stone_BL
+            Amount: 15
+          - Material: Frontier_Stone_YL
+            Amount: 10
+          - Material: Frontier_Stone_GR
+            Amount: 5
+          - Material: Physical_TuningScroll
+            Amount: 5
+        ResultItem: Frontier_DK_T_Sword
+  - Item: Fron_Fix_IG_Spear
+    BaseItems:
+      - BaseItem: Encroached_Spear
+        MinimumRefine: 10
+        Materials:
+          - Material: Ch1_Mana_Ring
+            Amount: 200
+          - Material: Frontier_Stone_BL
+            Amount: 15
+          - Material: Frontier_Stone_YL
+            Amount: 10
+          - Material: Frontier_Stone_GR
+            Amount: 5
+          - Material: Physical_TuningScroll
+            Amount: 5
+        ResultItem: Frontier_IG_Spear
+  - Item: Fron_Fix_MT_T_Axe
+    BaseItems:
+      - BaseItem: Encroached_T_Axe
+        MinimumRefine: 10
+        Materials:
+          - Material: Ch1_Mana_Ring
+            Amount: 200
+          - Material: Frontier_Stone_BL
+            Amount: 15
+          - Material: Frontier_Stone_YL
+            Amount: 10
+          - Material: Frontier_Stone_GR
+            Amount: 5
+          - Material: Physical_TuningScroll
+            Amount: 5
+        ResultItem: Frontier_MT_T_Axe
+  - Item: Fron_Fix_BO_Hall
+    BaseItems:
+      - BaseItem: Encroached_Mace
+        MinimumRefine: 10
+        Materials:
+          - Material: Ch1_Mana_Ring
+            Amount: 200
+          - Material: Frontier_Stone_BL
+            Amount: 15
+          - Material: Frontier_Stone_YL
+            Amount: 10
+          - Material: Frontier_Stone_GR
+            Amount: 5
+          - Material: Physical_TuningScroll
+            Amount: 5
+        ResultItem: Frontier_BO_Hall
+  - Item: Fron_Fix_SHC_Katar
+    BaseItems:
+      - BaseItem: Encroached_Katar
+        MinimumRefine: 10
+        Materials:
+          - Material: Ch1_Mana_Ring
+            Amount: 200
+          - Material: Frontier_Stone_BL
+            Amount: 15
+          - Material: Frontier_Stone_YL
+            Amount: 10
+          - Material: Frontier_Stone_GR
+            Amount: 5
+          - Material: Physical_TuningScroll
+            Amount: 5
+        ResultItem: Frontier_SHC_Katar
+  - Item: Fron_Fix_ABC_Dagger
+    BaseItems:
+      - BaseItem: Encroached_Dagger
+        MinimumRefine: 10
+        Materials:
+          - Material: Ch1_Mana_Ring
+            Amount: 200
+          - Material: Frontier_Stone_BL
+            Amount: 15
+          - Material: Frontier_Stone_YL
+            Amount: 10
+          - Material: Frontier_Stone_GR
+            Amount: 5
+          - Material: Magical_TuningScroll
+            Amount: 5
+        ResultItem: Frontier_ABC_Dagger
+  - Item: Fron_Fix_AG_Staff
+    BaseItems:
+      - BaseItem: Encroached_T_Staff
+        MinimumRefine: 10
+        Materials:
+          - Material: Ch1_Mana_Ring
+            Amount: 200
+          - Material: Frontier_Stone_BL
+            Amount: 15
+          - Material: Frontier_Stone_YL
+            Amount: 10
+          - Material: Frontier_Stone_GR
+            Amount: 5
+          - Material: Magical_TuningScroll
+            Amount: 5
+        ResultItem: Frontier_AG_Staff
+  - Item: Fron_Fix_EM_Book
+    BaseItems:
+      - BaseItem: Encroached_Book
+        MinimumRefine: 10
+        Materials:
+          - Material: Ch1_Mana_Ring
+            Amount: 200
+          - Material: Frontier_Stone_BL
+            Amount: 15
+          - Material: Frontier_Stone_YL
+            Amount: 10
+          - Material: Frontier_Stone_GR
+            Amount: 5
+          - Material: Magical_TuningScroll
+            Amount: 5
+        ResultItem: Frontier_EM_Book
+  - Item: Fron_Fix_CD_Rod
+    BaseItems:
+      - BaseItem: Encroached_Staff
+        MinimumRefine: 10
+        Materials:
+          - Material: Ch1_Mana_Ring
+            Amount: 200
+          - Material: Frontier_Stone_BL
+            Amount: 15
+          - Material: Frontier_Stone_YL
+            Amount: 10
+          - Material: Frontier_Stone_GR
+            Amount: 5
+          - Material: Magical_TuningScroll
+            Amount: 5
+        ResultItem: Frontier_CD_Rod
+  - Item: Fron_Fix_IQ_Claw
+    BaseItems:
+      - BaseItem: Encroached_Knuckle
+        MinimumRefine: 10
+        Materials:
+          - Material: Ch1_Mana_Ring
+            Amount: 200
+          - Material: Frontier_Stone_BL
+            Amount: 15
+          - Material: Frontier_Stone_YL
+            Amount: 10
+          - Material: Frontier_Stone_GR
+            Amount: 5
+          - Material: Physical_TuningScroll
+            Amount: 5
+        ResultItem: Frontier_IQ_Claw
+  - Item: Fron_Fix_WH_Bow
+    BaseItems:
+      - BaseItem: Encroached_Bow
+        MinimumRefine: 10
+        Materials:
+          - Material: Ch1_Mana_Ring
+            Amount: 200
+          - Material: Frontier_Stone_BL
+            Amount: 15
+          - Material: Frontier_Stone_YL
+            Amount: 10
+          - Material: Frontier_Stone_GR
+            Amount: 5
+          - Material: Physical_TuningScroll
+            Amount: 5
+        ResultItem: Frontier_WH_Bow
+  - Item: Fron_Fix_TR_Vilolin
+    BaseItems:
+      - BaseItem: Encroached_Instrument
+        MinimumRefine: 10
+        Materials:
+          - Material: Ch1_Mana_Ring
+            Amount: 200
+          - Material: Frontier_Stone_BL
+            Amount: 15
+          - Material: Frontier_Stone_YL
+            Amount: 10
+          - Material: Frontier_Stone_GR
+            Amount: 5
+          - Material: Physical_TuningScroll
+            Amount: 5
+        ResultItem: Frontier_TR_Vilolin
+  - Item: Fron_Fix_TR_Rope
+    BaseItems:
+      - BaseItem: Encroached_Whip
+        MinimumRefine: 10
+        Materials:
+          - Material: Ch1_Mana_Ring
+            Amount: 200
+          - Material: Frontier_Stone_BL
+            Amount: 15
+          - Material: Frontier_Stone_YL
+            Amount: 10
+          - Material: Frontier_Stone_GR
+            Amount: 5
+          - Material: Physical_TuningScroll
+            Amount: 5
+        ResultItem: Frontier_TR_Rope
+  - Item: Fron_Fix_SS_Humma
+    BaseItems:
+      - BaseItem: Encroached_Humma
+        MinimumRefine: 10
+        Materials:
+          - Material: Ch1_Mana_Ring
+            Amount: 200
+          - Material: Frontier_Stone_BL
+            Amount: 15
+          - Material: Frontier_Stone_YL
+            Amount: 10
+          - Material: Frontier_Stone_GR
+            Amount: 5
+          - Material: Physical_TuningScroll
+            Amount: 5
+        ResultItem: Frontier_SS_Humma
+  - Item: Fron_Fix_NW_Rifle
+    BaseItems:
+      - BaseItem: Encroached_Rifle
+        MinimumRefine: 10
+        Materials:
+          - Material: Ch1_Mana_Ring
+            Amount: 200
+          - Material: Frontier_Stone_BL
+            Amount: 15
+          - Material: Frontier_Stone_YL
+            Amount: 10
+          - Material: Frontier_Stone_GR
+            Amount: 5
+          - Material: Physical_TuningScroll
+            Amount: 5
+        ResultItem: Frontier_NW_Rifle
+  - Item: Fron_Fix_SKE_Book
+    BaseItems:
+      - BaseItem: Encroached_Book
+        MinimumRefine: 10
+        Materials:
+          - Material: Ch1_Mana_Ring
+            Amount: 200
+          - Material: Frontier_Stone_BL
+            Amount: 15
+          - Material: Frontier_Stone_YL
+            Amount: 10
+          - Material: Frontier_Stone_GR
+            Amount: 5
+          - Material: Physical_TuningScroll
+            Amount: 5
+        ResultItem: Frontier_SKE_Book
+  - Item: Fron_Fix_SOA_Staff
+    BaseItems:
+      - BaseItem: Encroached_T_Staff
+        MinimumRefine: 10
+        Materials:
+          - Material: Ch1_Mana_Ring
+            Amount: 200
+          - Material: Frontier_Stone_BL
+            Amount: 15
+          - Material: Frontier_Stone_YL
+            Amount: 10
+          - Material: Frontier_Stone_GR
+            Amount: 5
+          - Material: Magical_TuningScroll
+            Amount: 5
+        ResultItem: Frontier_SOA_Staff
+  - Item: Fron_Fix_HN_Rod
+    BaseItems:
+      - BaseItem: Encroached_Staff
+        MinimumRefine: 10
+        Materials:
+          - Material: Ch1_Mana_Ring
+            Amount: 200
+          - Material: Frontier_Stone_BL
+            Amount: 15
+          - Material: Frontier_Stone_YL
+            Amount: 10
+          - Material: Frontier_Stone_GR
+            Amount: 5
+          - Material: Magical_TuningScroll
+            Amount: 5
+        ResultItem: Frontier_HN_Rod
+  - Item: Fron_Fix_SH_Foxtail
+    BaseItems:
+      - BaseItem: Encroached_Foxtail
+        MinimumRefine: 10
+        Materials:
+          - Material: Ch1_Mana_Ring
+            Amount: 200
+          - Material: Frontier_Stone_BL
+            Amount: 15
+          - Material: Frontier_Stone_YL
+            Amount: 10
+          - Material: Frontier_Stone_GR
+            Amount: 5
+          - Material: Magical_TuningScroll
+            Amount: 5
+        ResultItem: Frontier_SH_Foxtail
+  - Item: A_DM_Fix_DK_T_Spear
+    BaseItems:
+      - BaseItem: Encroached_T_Spear
+        MinimumRefine: 10
+        Materials:
+          - Material: Ch1_Mana_Ring
+            Amount: 200
+          - Material: Time_D_Ma_Rune
+            Amount: 10
+          - Material: Frontier_Stone_BL
+            Amount: 15
+          - Material: Frontier_Stone_YL
+            Amount: 10
+          - Material: Frontier_Stone_GR
+            Amount: 5
+          - Material: Physical_TuningScroll
+            Amount: 10
+        ResultItem: Face_W_Q_Horn
+  - Item: A_DM_Fix_IG_Spear
+    BaseItems:
+      - BaseItem: Encroached_Spear
+        MinimumRefine: 10
+        Materials:
+          - Material: Ch1_Mana_Ring
+            Amount: 200
+          - Material: Time_D_Ma_Rune
+            Amount: 10
+          - Material: Frontier_Stone_BL
+            Amount: 15
+          - Material: Frontier_Stone_YL
+            Amount: 10
+          - Material: Frontier_Stone_GR
+            Amount: 5
+          - Material: Physical_TuningScroll
+            Amount: 10
+        ResultItem: Espetar
+  - Item: A_DM_Fix_ABC_Bow
+    BaseItems:
+      - BaseItem: Encroached_Bow
+        MinimumRefine: 10
+        Materials:
+          - Material: Ch1_Mana_Ring
+            Amount: 200
+          - Material: Time_D_Ma_Rune
+            Amount: 10
+          - Material: Frontier_Stone_BL
+            Amount: 15
+          - Material: Frontier_Stone_YL
+            Amount: 10
+          - Material: Frontier_Stone_GR
+            Amount: 5
+          - Material: Physical_TuningScroll
+            Amount: 10
+        ResultItem: Beargun_Crossbow
+  - Item: A_DM_Fix_BO_Sword
+    BaseItems:
+      - BaseItem: Encroached_Sword
+        MinimumRefine: 10
+        Materials:
+          - Material: Ch1_Mana_Ring
+            Amount: 200
+          - Material: Time_D_Ma_Rune
+            Amount: 10
+          - Material: Frontier_Stone_BL
+            Amount: 15
+          - Material: Frontier_Stone_YL
+            Amount: 10
+          - Material: Frontier_Stone_GR
+            Amount: 5
+          - Material: Physical_TuningScroll
+            Amount: 10
+        ResultItem: Falx
+  - Item: A_DM_Fix_AG_T_Staff
+    BaseItems:
+      - BaseItem: Encroached_T_Staff
+        MinimumRefine: 10
+        Materials:
+          - Material: Ch1_Mana_Ring
+            Amount: 200
+          - Material: Time_D_Ma_Rune
+            Amount: 10
+          - Material: Frontier_Stone_BL
+            Amount: 15
+          - Material: Frontier_Stone_YL
+            Amount: 10
+          - Material: Frontier_Stone_GR
+            Amount: 5
+          - Material: Magical_TuningScroll
+            Amount: 10
+        ResultItem: Wepawet
+  - Item: A_DM_Fix_EM_Book
+    BaseItems:
+      - BaseItem: Encroached_Book
+        MinimumRefine: 10
+        Materials:
+          - Material: Ch1_Mana_Ring
+            Amount: 200
+          - Material: Time_D_Ma_Rune
+            Amount: 10
+          - Material: Frontier_Stone_BL
+            Amount: 15
+          - Material: Frontier_Stone_YL
+            Amount: 10
+          - Material: Frontier_Stone_GR
+            Amount: 5
+          - Material: Magical_TuningScroll
+            Amount: 10
+        ResultItem: Elemental_Spirits
+  - Item: A_DM_Fix_NW_Launcher
+    BaseItems:
+      - BaseItem: Encroached_Rifle
+        MinimumRefine: 10
+        Materials:
+          - Material: Ch1_Mana_Ring
+            Amount: 200
+          - Material: Time_D_Ma_Rune
+            Amount: 10
+          - Material: Frontier_Stone_BL
+            Amount: 15
+          - Material: Frontier_Stone_YL
+            Amount: 10
+          - Material: Frontier_Stone_GR
+            Amount: 5
+          - Material: Physical_TuningScroll
+            Amount: 10
+        ResultItem: Agent_Launcher
+  - Item: A_DM_Fix_SKE_Book
+    BaseItems:
+      - BaseItem: Encroached_Book
+        MinimumRefine: 10
+        Materials:
+          - Material: Ch1_Mana_Ring
+            Amount: 200
+          - Material: Time_D_Ma_Rune
+            Amount: 10
+          - Material: Frontier_Stone_BL
+            Amount: 15
+          - Material: Frontier_Stone_YL
+            Amount: 10
+          - Material: Frontier_Stone_GR
+            Amount: 5
+          - Material: Physical_TuningScroll
+            Amount: 10
+        ResultItem: Book_Of_Crimson_M
+  - Item: A_DM_Fix_MT_Mace
+    BaseItems:
+      - BaseItem: Encroached_Mace
+        MinimumRefine: 10
+        Materials:
+          - Material: Ch1_Mana_Ring
+            Amount: 200
+          - Material: Time_D_Ma_Rune
+            Amount: 10
+          - Material: Frontier_Stone_BL
+            Amount: 15
+          - Material: Frontier_Stone_YL
+            Amount: 10
+          - Material: Frontier_Stone_GR
+            Amount: 5
+          - Material: Physical_TuningScroll
+            Amount: 10
+        ResultItem: Submarine_Anchor
+  - Item: A_DM_Fix_SHC_Katar
+    BaseItems:
+      - BaseItem: Encroached_Katar
+        MinimumRefine: 10
+        Materials:
+          - Material: Ch1_Mana_Ring
+            Amount: 200
+          - Material: Time_D_Ma_Rune
+            Amount: 10
+          - Material: Frontier_Stone_BL
+            Amount: 15
+          - Material: Frontier_Stone_YL
+            Amount: 10
+          - Material: Frontier_Stone_GR
+            Amount: 5
+          - Material: Physical_TuningScroll
+            Amount: 10
+        ResultItem: Vida_Nocturno
+  - Item: A_DM_Fix_CD_Book
+    BaseItems:
+      - BaseItem: Encroached_Book
+        MinimumRefine: 10
+        Materials:
+          - Material: Ch1_Mana_Ring
+            Amount: 200
+          - Material: Time_D_Ma_Rune
+            Amount: 10
+          - Material: Frontier_Stone_BL
+            Amount: 15
+          - Material: Frontier_Stone_YL
+            Amount: 10
+          - Material: Frontier_Stone_GR
+            Amount: 5
+          - Material: Physical_TuningScroll
+            Amount: 10
+        ResultItem: Judgment_Day
+  - Item: A_DM_Fix_TR_Violin
+    BaseItems:
+      - BaseItem: Encroached_Instrument
+        MinimumRefine: 10
+        Materials:
+          - Material: Ch1_Mana_Ring
+            Amount: 200
+          - Material: Time_D_Ma_Rune
+            Amount: 10
+          - Material: Frontier_Stone_BL
+            Amount: 15
+          - Material: Frontier_Stone_YL
+            Amount: 10
+          - Material: Frontier_Stone_GR
+            Amount: 5
+          - Material: Magical_TuningScroll
+            Amount: 10
+        ResultItem: Geige
+  - Item: A_DM_Fix_TR_Whip
+    BaseItems:
+      - BaseItem: Encroached_Whip
+        MinimumRefine: 10
+        Materials:
+          - Material: Ch1_Mana_Ring
+            Amount: 200
+          - Material: Time_D_Ma_Rune
+            Amount: 10
+          - Material: Frontier_Stone_BL
+            Amount: 15
+          - Material: Frontier_Stone_YL
+            Amount: 10
+          - Material: Frontier_Stone_GR
+            Amount: 5
+          - Material: Magical_TuningScroll
+            Amount: 10
+        ResultItem: Needle_Whip
+  - Item: A_DM_Fix_HN_Mace
+    BaseItems:
+      - BaseItem: Encroached_Mace
+        MinimumRefine: 10
+        Materials:
+          - Material: Ch1_Mana_Ring
+            Amount: 200
+          - Material: Time_D_Ma_Rune
+            Amount: 10
+          - Material: Frontier_Stone_BL
+            Amount: 15
+          - Material: Frontier_Stone_YL
+            Amount: 10
+          - Material: Frontier_Stone_GR
+            Amount: 5
+          - Material: Physical_TuningScroll
+            Amount: 10
+        ResultItem: Jack_O_Rush
+  - Item: Sky_Weapon_Hammer
+    BaseItems:
+      - BaseItem: Sky_Imperial_Spear
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Shadowdecon
+            Amount: 50
+        ResultItem: Sky_Imperial_Spear
+        ChangeRefine: 1
+      - BaseItem: Sky_Chasing_Dagger
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Shadowdecon
+            Amount: 50
+        ResultItem: Sky_Chasing_Dagger
+        ChangeRefine: 1
+      - BaseItem: Sky_Chulho_Foxtail
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Shadowdecon
+            Amount: 50
+        ResultItem: Sky_Chulho_Foxtail
+        ChangeRefine: 1
+      - BaseItem: Sky_Rush_Axe
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Shadowdecon
+            Amount: 50
+        ResultItem: Sky_Rush_Axe
+        ChangeRefine: 1
+      - BaseItem: Sky_Crescive_Bow
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Shadowdecon
+            Amount: 50
+        ResultItem: Sky_Crescive_Bow
+        ChangeRefine: 1
+      - BaseItem: Sky_Napalm_Sword
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Shadowdecon
+            Amount: 50
+        ResultItem: Sky_Napalm_Sword
+        ChangeRefine: 1
+      - BaseItem: Sky_Moon_Book
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Shadowdecon
+            Amount: 50
+        ResultItem: Sky_Moon_Book
+        ChangeRefine: 1
+      - BaseItem: Sky_Arbi_Rod
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Shadowdecon
+            Amount: 50
+        ResultItem: Sky_Arbi_Rod
+        ChangeRefine: 1
+      - BaseItem: Sky_Destroy_Knuckle
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Shadowdecon
+            Amount: 50
+        ResultItem: Sky_Destroy_Knuckle
+        ChangeRefine: 1
+  - Item: Sky_Crown_Hammer
+    BaseItems:
+      - BaseItem: Sky_Rune_Crown_IG
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Zelunium
+            Amount: 50
+        ResultItem: Sky_Rune_Crown_IG
+        ChangeRefine: 1
+      - BaseItem: Sky_Rune_Crown_ABC
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Zelunium
+            Amount: 50
+        ResultItem: Sky_Rune_Crown_ABC
+        ChangeRefine: 1
+      - BaseItem: Sky_Rune_Crown_SH
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Zelunium
+            Amount: 50
+        ResultItem: Sky_Rune_Crown_SH
+        ChangeRefine: 1
+      - BaseItem: Sky_Rune_Crown_MS
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Zelunium
+            Amount: 50
+        ResultItem: Sky_Rune_Crown_MS
+        ChangeRefine: 1
+      - BaseItem: Sky_Rune_Crown_WH
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Zelunium
+            Amount: 50
+        ResultItem: Sky_Rune_Crown_WH
+        ChangeRefine: 1
+      - BaseItem: Sky_Rune_Crown_HN
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Zelunium
+            Amount: 50
+        ResultItem: Sky_Rune_Crown_HN
+        ChangeRefine: 1
+      - BaseItem: Sky_Rune_Crown_CD
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Zelunium
+            Amount: 50
+        ResultItem: Sky_Rune_Crown_CD
+        ChangeRefine: 1
+      - BaseItem: Sky_Rune_Crown_IQ
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Zelunium
+            Amount: 50
+        ResultItem: Sky_Rune_Crown_IQ
+        ChangeRefine: 1
+      - BaseItem: Sky_Rune_Crown_SKE
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Zelunium
+            Amount: 50
+        ResultItem: Sky_Rune_Crown_SKE
+        ChangeRefine: 1

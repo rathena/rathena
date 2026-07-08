@@ -374,7 +374,7 @@ struct view_data * mob_get_viewdata(int32 mob_id)
 	return &db->vd;
 }
 
-e_mob_bosstype s_mob_db::get_bosstype(){
+e_mob_bosstype s_mob_db::get_bosstype() const{
 	if( status_has_mode( &this->status, MD_MVP ) ){
 		return BOSSTYPE_MVP;
 	}else if( this->status.class_ == CLASS_BOSS ){
@@ -384,7 +384,7 @@ e_mob_bosstype s_mob_db::get_bosstype(){
 	}
 }
 
-e_mob_bosstype mob_data::get_bosstype(){
+e_mob_bosstype mob_data::get_bosstype() const{
 	if( status_has_mode( &this->status, MD_MVP ) ){
 		return BOSSTYPE_MVP;
 	}else if( this->status.class_ == CLASS_BOSS ){
@@ -1241,7 +1241,7 @@ static int32 mob_can_changetarget(mob_data* md, block_list* target, int32 mode)
 		case MSS_BERSERK:
 			if (!(mode&MD_CHANGETARGETMELEE))
 				return 0;
-			// If the special normal attacked event occured, always change target in berserk state
+			// If the special normal attacked event occurred, always change target in berserk state
 			if (md->norm_attacked_id == target->id)
 				return 1;
 			// If the special setting to switch target even on skills is set, we need to verify the range here
@@ -1339,7 +1339,7 @@ static int32 mob_ai_sub_hard_activesearch(block_list *bl,va_list ap)
 
 	if (battle_config.hom_setting&HOMSET_FIRST_TARGET &&
 		(*target) != nullptr && (*target)->type == BL_HOM && bl->type != BL_HOM)
-		return 0; //For some reason Homun targets are never overriden.
+		return 0; //For some reason Homun targets are never overridden.
 
 	dist = distance_bl(md, bl);
 	if(
@@ -3722,7 +3722,7 @@ int32 mob_guardian_guildchange(mob_data *md)
 /*==========================================
  * Pick a random class for the mob
  *------------------------------------------*/
-int32 mob_random_class(int32 *value, size_t count)
+int32 mob_random_class( const int32 *value, size_t count )
 {
 	nullpo_ret(value);
 
@@ -4203,7 +4203,7 @@ mob_data *mob_getfriendstatus(mob_data *md,int64 cond1,int64 cond2)
 }
 
 // Display message from mob_chat_db.yml
-bool mob_chat_display_message(mob_data &md, uint16 msg_id) {
+bool mob_chat_display_message( const mob_data& md, uint16 msg_id ) {
 	std::shared_ptr<s_mob_chat> mc = mob_chat_db.find(msg_id);
 
 	if (mc != nullptr) {
@@ -4821,7 +4821,7 @@ static uint32 mob_drop_adjust(int32 baserate, int32 rate_adjust, uint16 rate_min
 }
 
 /**
- * Check if global item drop rate is overriden for given item
+ * Check if global item drop rate is overridden for given item
  * in db/mob_item_ratio.yml
  * @param nameid ID of the item
  * @param mob_id ID of the monster
@@ -5925,6 +5925,7 @@ uint64 MobAvailDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		}
 
 		mob->vd.look[LOOK_BASE] = static_cast<int32>( constant );
+		mob->vd.look[LOOK_BODY2] = static_cast<int32>( constant );
 	} else {
 		this->invalidWarning(node["Sprite"], "Sprite is missing.\n");
 		return 0;

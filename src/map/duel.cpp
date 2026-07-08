@@ -18,7 +18,7 @@
 //std::recursive_mutex> duel_list_mutex; //preparation for multithread
 std::unordered_map<size_t,struct duel> duel_list;
 
-std::unordered_map<size_t,struct duel> duel_get_list() { return duel_list; } //this could be exposed but not really necessarly, (hiden impl)
+std::unordered_map<size_t,struct duel> duel_get_list() { return duel_list; } //this could be exposed but not really necessarily, (hiden impl)
 bool duel_exist( size_t did ) { return duel_list.find( did ) != duel_list.end(); }
 duel& duel_get_duelid(size_t did) { return duel_list.at(did); }
 
@@ -61,7 +61,7 @@ void duel_savetime(map_session_data* sd)
 /*
  * Check if the time elapsed between last duel is enough to launch another.
  */
-bool duel_checktime(map_session_data* sd)
+bool duel_checktime( const map_session_data* sd )
 {
 	int64 diff;
 	time_t timer;
@@ -108,7 +108,7 @@ static int32 duel_showinfo_sub(map_session_data* sd, va_list va)
  * Display duel infos,
  * Number of duely...
  */
-void duel_showinfo(const size_t did, map_session_data* sd)
+void duel_showinfo( const size_t did, const map_session_data* sd )
 {
 	//std::lock_guard<std::recursive_mutex> _(duel_list_mutex); //or shared_ptr	
 	if ( !duel_exist( did ) )

@@ -1775,6 +1775,8 @@ Body:
     DurationLookup: BD_ENCORE
     States:
       NoMoveCond: true
+      NoAttack: true
+      NoCast: true
     CalcFlags:
       Speed: true
       Regen: true
@@ -2532,7 +2534,6 @@ Body:
       NoSave: true
       NoClearance: true
       NoBanishingBuster: true
-      NoDispell: true
       RemoveOnHermode: true
   - Status: Bunsinjyutsu
     Icon: EFST_NJ_BUNSINJYUTSU
@@ -7156,19 +7157,19 @@ Body:
   - Status: Lightofmoon
     Icon: EFST_LIGHTOFMOON
     DurationLookup: SJ_LIGHTOFMOON
-    EndOnStart:
+    EndOnStart: # TODO: list of status for EndOnStart is incorrect
       Lunarstance: true
       Universestance: true
   - Status: Lightofsun
     Icon: EFST_LIGHTOFSUN
     DurationLookup: SJ_LIGHTOFSUN
-    EndOnStart:
+    EndOnStart: # TODO: list of status for EndOnStart is incorrect
       Lightofsun: true
       Universestance: true
   - Status: Lightofstar
     Icon: EFST_LIGHTOFSTAR
     DurationLookup: SJ_LIGHTOFSTAR
-    EndOnStart:
+    EndOnStart: # TODO: list of status for EndOnStart is incorrect
       Starstance: true
       Universestance: true
   - Status: Lunarstance

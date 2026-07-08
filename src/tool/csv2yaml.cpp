@@ -440,14 +440,14 @@ bool Csv2YamlTool::initialize( int32 argc, char* argv[] ){
 	}
 
 	item_group_txt_data(path_db_mode, path_db);
-	if (!process("ITEM_GROUP_DB", 4, { path_db_mode }, "item_group_db", [](const std::string &path, const std::string &name_ext) -> bool {
+	if (!process("ITEM_GROUP_DB", 5, { path_db_mode }, "item_group_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return itemdb_read_group_yaml();
 	})) {
 		return false;
 	}
 
 	item_group_txt_data(path_db_import, path_db_import);
-	if (!process("ITEM_GROUP_DB", 4, { path_db_import }, "item_group_db", [](const std::string &path, const std::string &name_ext) -> bool {
+	if (!process("ITEM_GROUP_DB", 5, { path_db_import }, "item_group_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return itemdb_read_group_yaml();
 	})) {
 		return false;
@@ -512,7 +512,7 @@ bool Csv2YamlTool::initialize( int32 argc, char* argv[] ){
 	}
 
 	elemental_skill_txt_data(path_db_mode, path_db);
-	if (!process("ELEMENTAL_DB", 1, root_paths, "elemental_db", [](const std::string &path, const std::string &name_ext) -> bool {
+	if (!process("ELEMENTAL_DB", 2, root_paths, "elemental_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 26, 26, -1, &read_elementaldb, false);
 	})) {
 		return false;

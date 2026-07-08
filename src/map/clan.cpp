@@ -74,7 +74,7 @@ struct clan* clan_searchname( const char* name ){
 	return c;
 }
 
-map_session_data* clan_getavailablesd( struct clan& clan ){
+map_session_data* clan_getavailablesd( const clan& clan ){
 	int32 i;
 
 	ARR_FIND( 0, clan.max_member, i, clan.members[i] != nullptr );
@@ -82,7 +82,7 @@ map_session_data* clan_getavailablesd( struct clan& clan ){
 	return ( i < clan.max_member ) ? clan.members[i] : nullptr;
 }
 
-int32 clan_getMemberIndex( struct clan* clan, uint32 account_id ){
+static int32 clan_getMemberIndex( const clan* clan, uint32 account_id ){
 	int32 i;
 
 	nullpo_retr(-1,clan);

@@ -59,8 +59,8 @@ void do_init_party(void);
 void do_final_party(void);
 struct party_data* party_search(int32 party_id);
 struct party_data* party_searchname(const char* str);
-int32 party_getmemberid(struct party_data* p, map_session_data* sd);
-map_session_data* party_getavailablesd(struct party_data *p);
+int32 party_getmemberid(const party_data* p, const map_session_data* sd);
+map_session_data* party_getavailablesd(const party_data *p);
 
 int32 party_create( map_session_data& sd, char *name, int32 item, int32 item2 );
 void party_created(uint32 account_id,uint32 char_id,int32 fail,int32 party_id,char *name);
@@ -72,7 +72,7 @@ bool party_leave( map_session_data& sd, bool showMessage = false );
 bool party_removemember( map_session_data& sd, uint32 account_id, const char *name );
 int32 party_removemember2(map_session_data *sd,uint32 char_id,int32 party_id);
 int32 party_member_withdraw(int32 party_id, uint32 account_id, uint32 char_id, char *name, enum e_party_member_withdraw type);
-bool party_isleader( map_session_data* sd );
+bool party_isleader( const map_session_data* sd );
 void party_join( map_session_data& sd, int32 party_id );
 bool party_booking_load( uint32 account_id, uint32 char_id, struct s_party_booking_requirement* booking );
 bool party_reply_invite( map_session_data& sd, int32 party_id, int32 flag );
@@ -97,7 +97,7 @@ int32 party_share_loot(struct party_data* p, map_session_data* sd, struct item* 
 int32 party_send_dot_remove(map_session_data *sd);
 int32 party_sub_count(block_list *bl, va_list ap);
 int32 party_sub_count_class(block_list *bl, va_list ap);
-int32 party_foreachsamemap(int32 (*func)(block_list *,va_list),map_session_data *sd,int32 range,...);
+int32 party_foreachsamemap(int32 (*func)(block_list *,va_list),const map_session_data* sd,int32 range,...);
 
 /*==========================================
  * Party Booking in KRO [Spiria]

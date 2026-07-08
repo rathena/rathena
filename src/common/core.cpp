@@ -349,7 +349,7 @@ int32 Core::start( int32 argc, char **argv ){
 				ShowError("Couldn't change working directory to %s for %s, runtime will probably fail",pwd,SERVER_NAME);
 			free(pwd);
 		}else{
-			// On Windows the .bat files have the executeable names as parameters without any path seperator [Lemongrass]
+			// On Windows the .bat files have the executable names as parameters without any path separator [Lemongrass]
 			SERVER_NAME = argv[0];
 		}
 	}

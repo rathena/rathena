@@ -8585,7 +8585,7 @@ mosk_fild02,124,202,3	script	Lusalka#rus23	4_F_RUSGREEN,{
 				mes "[Lusalka]";
 				mes "Ah! Thank you so much! His name is '^0000ffIgor^000000'. Ah, give these earrings to him. He gave them to me as a present.";
 				next;
-				mes "- ^0000ffI recieve the^000000 -";
+				mes "- ^0000ffI receive the^000000 -";
 				mes "- ^0000ffgolden earrings^000000 -";
 				mes "- ^0000fffrom Lusalka!^000000 -";
 				rhea_rus_hair = 3;

@@ -204,7 +204,7 @@ static bool chrif_auth_logout(TBL_PC* sd, enum sd_state state) {
 	return chrif_sd_to_auth(sd, state);
 }
 
-bool chrif_auth_finished(map_session_data* sd) {
+bool chrif_auth_finished( const map_session_data* sd ) {
 	struct auth_node *node= chrif_search(sd->status.account_id);
 
 	if ( node && node->sd == sd && node->state == ST_LOGIN ) {
@@ -963,7 +963,7 @@ int32 chrif_changedsex(int32 fd) {
 		sd->status.sex = !sd->status.sex;
 
 		// Reset skills of gender split jobs.
-		if ((sd->class_&MAPID_UPPERMASK) == MAPID_BARDDANCER || (sd->class_&MAPID_UPPERMASK) == MAPID_KAGEROUOBORO) {
+		if ((sd->class_&MAPID_SECONDMASK) == MAPID_BARDDANCER || (sd->class_&MAPID_SECONDMASK) == MAPID_KAGEROUOBORO) {
 			const static struct {
 				e_skill start;
 				e_skill end;
@@ -1001,6 +1001,7 @@ int32 chrif_changedsex(int32 fd) {
 			else// Changed from male version of job.
 				sd->status.class_ += 1;
 			//sd->class_ Does not need to be updated as both versions of the job are the same.
+			sd->status.body = sd->status.class_;
 		}
 		// save character
 		sd->login_id1++; // change identify, because if player come back in char within the 5 seconds, he can change its characters
@@ -1184,7 +1185,7 @@ int32 chrif_disconnectplayer(int32 fd) {
 /*==========================================
  * Request/Receive top 10 Fame character list
  *------------------------------------------*/
-int32 chrif_updatefamelist(map_session_data &sd, e_rank ranktype) {
+int32 chrif_updatefamelist( const map_session_data& sd, e_rank ranktype ) {
 	chrif_check(-1);
 
 	WFIFOHEAD(char_fd, 11);
@@ -1270,12 +1271,12 @@ int32 chrif_updatefamelist_ack(int32 fd) {
 	return 1;
 }
 
-int32 chrif_save_scdata(map_session_data *sd) { //parses the sc_data of the player and sends it to the char-server for saving. [Skotlex]
+int32 chrif_save_scdata( const map_session_data* sd ) { //parses the sc_data of the player and sends it to the char-server for saving. [Skotlex]
 #ifdef ENABLE_SC_SAVING
 	int32 count=0;
 	t_tick tick;
-	struct status_change_data data;
-	status_change *sc = &sd->sc;
+	status_change_data data;
+	const status_change *sc = &sd->sc;
 	const struct TimerData *timer;
 
 	chrif_check(-1);
@@ -1355,7 +1356,7 @@ int32 chrif_load_scdata(int32 fd) {
  * @param sd: Player object
  * @return -1 on failure or 0 otherwise
  */
-int chrif_skillcooldown_save(map_session_data &sd) {
+int chrif_skillcooldown_save( const map_session_data& sd ) {
 	chrif_check(-1);
 
 	if (sd.scd.empty())
@@ -1427,7 +1428,7 @@ int32 chrif_skillcooldown_load(int fd) {
 /*=========================================
  * Tell char-server charcter disconnected [Wizputer]
  *-----------------------------------------*/
-int32 chrif_char_offline(map_session_data *sd) {
+int32 chrif_char_offline( const map_session_data* sd ) {
 	chrif_check(-1);
 
 	WFIFOHEAD(char_fd,10);
@@ -1480,7 +1481,7 @@ int32 chrif_char_reset_offline(void) {
  * Tell char-server charcter is online [Wizputer]
  *-----------------------------------------*/
 
-int32 chrif_char_online(map_session_data *sd) {
+int32 chrif_char_online( const map_session_data* sd ) {
 	chrif_check(-1);
 
 	WFIFOHEAD(char_fd,10);

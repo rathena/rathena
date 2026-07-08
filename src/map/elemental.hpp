@@ -69,6 +69,7 @@ struct s_elemental_db {
 	uint16 range2, range3;
 	status_data status;
 	view_data vd;
+	uint16 damagetaken;
 	std::unordered_map<e_elemental_skillmode, std::shared_ptr<s_elemental_skill>> skill;	/// mode, skill
 };
 
@@ -94,7 +95,7 @@ struct s_elemental_data : public block_list {
 
 class ElementalDatabase : public TypesafeYamlDatabase<int32, s_elemental_db> {
 public:
-	ElementalDatabase() : TypesafeYamlDatabase("ELEMENTAL_DB", 1) {
+	ElementalDatabase() : TypesafeYamlDatabase("ELEMENTAL_DB", 2, 1) {
 
 	}
 
@@ -123,7 +124,7 @@ t_tick elemental_get_lifetime(s_elemental_data *ed);
 
 int32 elemental_unlocktarget(s_elemental_data *ed);
 bool elemental_skillnotok( uint16 skill_id, s_elemental_data& ed );
-int32 elemental_set_target( map_session_data *sd, block_list *bl );
+int32 elemental_set_target( map_session_data *sd, const block_list* bl );
 int32 elemental_clean_effect(s_elemental_data *ed);
 int32 elemental_action(s_elemental_data *ed, block_list *bl, t_tick tick);
 struct s_skill_condition elemental_skill_get_requirements(uint16 skill_id, uint16 skill_lv);

@@ -42,6 +42,8 @@ struct Web_Config {
 	char webconf_name[256];						/// name of main config file
 	char msgconf_name[256];							/// name of msg_conf config file
 	bool allow_gifs;
+
+	std::string allowed_origin_cors;				// allowed origin for CORS
 };
 
 struct Inter_Config {

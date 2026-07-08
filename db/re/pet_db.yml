@@ -1,5 +1,5 @@
 # This file is a part of rAthena.
-#   Copyright(C) 2024 rAthena Development Team
+#   Copyright(C) 2025 rAthena Development Team
 #   https://rathena.org - https://github.com/rathena
 #
 # This program is free software: you can redistribute it and/or modify
@@ -3284,26 +3284,26 @@ Body:
 #         bonus2 bAddClass,Class_Normal,1;
 #      }
 #
-#  - Mob: DOMOVOI
-#    EggItem: Brownie_Egg
-#    FoodItem: Pet_Food   # unknown
-#    Fullness: 2   # unknown
-#    HungryDelay: 120   # unknown
-#    IntimacyFed: 15   # unknown
-#    CaptureRate: 0   # unknown
-#    SpecialPerformance: false   # unknown
-#    Script: >
-#      .@i = getpetinfo(PETINFO_INTIMATE);
-#
-#      if (.@i >= PET_INTIMATE_LOYAL) {
-#         bonus2 bAddRace,RC_DemiHuman,1;
-#         bonus2 bMagicAddRace,RC_DemiHuman,1;
-#         bonus2 bSubRace,RC_DemiHuman,1;
-#      }
+  - Mob: DOMOVOI
+    EggItem: Brownie_Egg
+    FoodItem: Pet_Food   # unknown
+    Fullness: 2   # unknown
+    HungryDelay: 120   # unknown
+    IntimacyFed: 15   # unknown
+    CaptureRate: 0   # unknown
+    SpecialPerformance: false   # unknown
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+
+      if (.@i >= PET_INTIMATE_LOYAL) {
+         bonus2 bAddRace,RC_DemiHuman,1;
+         bonus2 bMagicAddRace,RC_DemiHuman,1;
+         bonus2 bSubRace,RC_DemiHuman,1;
+      }
 #
 #  - Mob: WOODIE
 #    EggItem: Woodie_Egg
-#    FoodItem: Pet_Food   # unknown
+#    FoodItem: Jade_Leaf
 #    Fullness: 2   # unknown
 #    HungryDelay: 120   # unknown
 #    IntimacyFed: 15   # unknown
@@ -3319,7 +3319,7 @@ Body:
 #
 #  - Mob: ELEPHANT
 #    EggItem: Elephant_Egg
-#    FoodItem: Pet_Food   # unknown
+#    FoodItem: Banana_Can
 #    Fullness: 2   # unknown
 #    HungryDelay: 120   # unknown
 #    IntimacyFed: 15   # unknown
@@ -3336,7 +3336,7 @@ Body:
 #
 #  - Mob: GORILLA
 #    EggItem: Gorilla_Egg
-#    FoodItem: Pet_Food   # unknown
+#    FoodItem: Spicy_Rice_Cake
 #    Fullness: 2   # unknown
 #    HungryDelay: 120   # unknown
 #    IntimacyFed: 15   # unknown
@@ -3353,7 +3353,7 @@ Body:
 #
 #  - Mob: LION
 #    EggItem: Lion_Egg
-#    FoodItem: Pet_Food   # unknown
+#    FoodItem: Hotdog
 #    Fullness: 2   # unknown
 #    HungryDelay: 120   # unknown
 #    IntimacyFed: 15   # unknown
@@ -3370,7 +3370,7 @@ Body:
 #
 #  - Mob: RHINO
 #    EggItem: Rhino_Egg
-#    FoodItem: Pet_Food   # unknown
+#    FoodItem: Big_Wheel_Cracker
 #    Fullness: 2   # unknown
 #    HungryDelay: 120   # unknown
 #    IntimacyFed: 15   # unknown
@@ -3495,55 +3495,208 @@ Body:
 #         bonus3 bAutoSpell,"AL_HEAL",1,10;
 #      }
 #
-#  - Mob: ORK_HERO
-#    EggItem: Orc_Hero_Egg
-#    FoodItem: Pet_Food   # unknown
+  - Mob: ORK_HERO
+    EggItem: Orc_Hero_Egg
+    FoodItem: Pet_Food   # unknown
+    Fullness: 2   # unknown
+    HungryDelay: 120   # unknown
+    IntimacyFed: 15   # unknown
+    CaptureRate: 0   # unknown
+    SpecialPerformance: false   # unknown
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+
+      if (.@i >= PET_INTIMATE_LOYAL) {
+         bonus bBaseAtk,40;
+      }
+      else if (.@i >= PET_INTIMATE_CORDIAL) {
+         bonus bBaseAtk,30;
+      }
+      else if (.@i >= PET_INTIMATE_NEUTRAL) {
+         bonus bBaseAtk,20;
+      }
+      else {
+         bonus bBaseAtk,10;
+         bonus bDef,-3;
+      }
+
+  - Mob: ORC_LORD
+    EggItem: Orc_Lord_Egg
+    FoodItem: Pet_Food   # unknown
+    Fullness: 2   # unknown
+    HungryDelay: 120   # unknown
+    IntimacyFed: 15   # unknown
+    CaptureRate: 0   # unknown
+    SpecialPerformance: false   # unknown
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+
+      if (.@i >= PET_INTIMATE_LOYAL) {
+         bonus bMatk,20;
+         bonus bBaseAtk,20;
+      }
+      else if (.@i >= PET_INTIMATE_CORDIAL) {
+         bonus bMatk,15;
+         bonus bBaseAtk,15;
+      }
+      else if (.@i >= PET_INTIMATE_NEUTRAL) {
+         bonus bMatk,10;
+         bonus bBaseAtk,10;
+      }
+      else {
+         bonus bBaseAtk,10;
+         bonus bDef,-3;
+      }
+
+#  - Mob: C_TOWER_MANAGER2
+#    TameItem: aegis_103219
+#    EggItem: aegis_9169
+#    EquipItem: TODO
+#    FoodItem: TODO
+#    Fullness: 3   # unknown
+#    IntimacyFed: 50   # unknown
+#    CaptureRate: 2000   # unknown
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#
+#      if (.@i >= PET_INTIMATE_LOYAL) {
+#         bonus bAspdRate,3;
+#         bonus bFlee,10;
+#      }
+#      else if (.@i >= PET_INTIMATE_CORDIAL) {
+#         bonus bAspdRate,3;
+#         bonus bFlee,6;
+#      }
+#      else if (.@i >= PET_INTIMATE_NEUTRAL) {
+#         bonus bAspdRate,2;
+#         bonus bFlee,3;
+#      }
+#      else if (.@i >= PET_INTIMATE_AWKWARD || .@i >= PET_INTIMATE_SHY) {
+#         bonus bAspdRate,1;
+#      }
+#
+#    Evolution:
+#      - Target: TIMEHOLDER3
+#        ItemRequirements:
+#          - Item: Big_Ben_Card
+#            Amount: 10
+#          - Item: Big_Bell_Card
+#            Amount: 10
+#          - Item: Neo_Punk_Card
+#            Amount: 10
+#          - Item: Mightysoul_Essence
+#            Amount: 30
+#
+#  - Mob: ANGELGOLT3
+#    TameItem: aegis_103218
+#    EggItem: aegis_9170
+#    EquipItem: TODO
+#    FoodItem: TODO
+#    Fullness: 3   # unknown
+#    IntimacyFed: 50   # unknown
+#    CaptureRate: 2000   # unknown
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#
+#      if (.@i >= PET_INTIMATE_LOYAL) {
+#         bonus2 bMagicAtkEle,Ele_Holy,5;
+#         bonus bVariableCastrate,-5;
+#      }
+#      else if (.@i >= PET_INTIMATE_CORDIAL) {
+#         bonus2 bMagicAtkEle,Ele_Holy,3;
+#         bonus bVariableCastrate,-4;
+#      }
+#      else if (.@i >= PET_INTIMATE_NEUTRAL) {
+#         bonus bVariableCastrate,-3;
+#      }
+#      else if (.@i >= PET_INTIMATE_AWKWARD || .@i >= PET_INTIMATE_SHY) {
+#         bonus bVariableCastrate,-2;
+#      }
+#
+#  - Mob: TIMEHOLDER3
+#    EggItem: aegis_9171
+#    FoodItem: High_Class_Pet_food
 #    Fullness: 2   # unknown
 #    HungryDelay: 120   # unknown
 #    IntimacyFed: 15   # unknown
 #    CaptureRate: 0   # unknown
 #    SpecialPerformance: false   # unknown
+#    AllowAutoFeed: true
 #    Script: >
 #      .@i = getpetinfo(PETINFO_INTIMATE);
 #
 #      if (.@i >= PET_INTIMATE_LOYAL) {
-#         bonus bBaseAtk,40;
+#         bonus2 bMagicAtkEle,Ele_Holy,7;
+#         bonus2 bMagicAtkEle,Ele_Neutral,7;
+#         bonus bMatkRate,6;
 #      }
 #      else if (.@i >= PET_INTIMATE_CORDIAL) {
-#         bonus bBaseAtk,30;
+#         bonus2 bMagicAtkEle,Ele_Holy,5;
+#         bonus2 bMagicAtkEle,Ele_Neutral,5;
+#         bonus bMatkRate,5;
 #      }
 #      else if (.@i >= PET_INTIMATE_NEUTRAL) {
-#         bonus bBaseAtk,20;
+#         bonus bMatkRate,4;
 #      }
-#      else {
-#         bonus bBaseAtk,10;
-#         bonus bDef,-3;
-#      }
+#      bonus bMatkRate,3;
 #
-#  - Mob: ORC_LORD
-#    EggItem: Orc_Lord_Egg
-#    FoodItem: Pet_Food   # unknown
-#    Fullness: 2   # unknown
-#    HungryDelay: 120   # unknown
-#    IntimacyFed: 15   # unknown
-#    CaptureRate: 0   # unknown
-#    SpecialPerformance: false   # unknown
-#    Script: >
-#      .@i = getpetinfo(PETINFO_INTIMATE);
-#
-#      if (.@i >= PET_INTIMATE_LOYAL) {
-#         bonus bMatk,20;
-#         bonus bBaseAtk,20;
-#      }
-#      else if (.@i >= PET_INTIMATE_CORDIAL) {
-#         bonus bMatk,15;
-#         bonus bBaseAtk,15;
-#      }
-#      else if (.@i >= PET_INTIMATE_NEUTRAL) {
-#         bonus bMatk,10;
-#         bonus bBaseAtk,10;
-#      }
-#      else {
-#         bonus bBaseAtk,10;
-#         bonus bDef,-3;
-#      }
+  - Mob: SKEGGIOLD
+    EggItem: Skeggiold_Egg
+    FoodItem: Morning_Dew
+    Fullness: 2   # unknown
+    HungryDelay: 120   # unknown
+    IntimacyFed: 15   # unknown
+    CaptureRate: 0   # unknown
+    SpecialPerformance: false   # unknown
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+
+      if (.@i >= PET_INTIMATE_LOYAL) {
+         bonus2 bMagicAtkEle,Ele_Holy,2;
+         bonus bVariableCastrate,-2;
+      }
+      else if (.@i >= PET_INTIMATE_CORDIAL) {
+         bonus2 bMagicAtkEle,Ele_Holy,1;
+         bonus bVariableCastrate,-1;
+      }
+#    Evolution:
+#      - Target: ANGELGOLT3
+#        ItemRequirements:
+#          - Item: Angel_Dream
+#            Amount: 50
+#          - Item: Soft_Feather
+#            Amount: 100
+#          - Item: Rune_Of_Darkness
+#            Amount: 100
+#          - Item: Skeggiold_Card
+#            Amount: 10
+
+  - Mob: CLOCK
+    EggItem: aegis_9190
+    FoodItem: Mystic_Stone
+    Fullness: 2   # unknown
+    HungryDelay: 120   # unknown
+    IntimacyFed: 15   # unknown
+    CaptureRate: 0   # unknown
+    SpecialPerformance: false   # unknown
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+
+      if (.@i >= PET_INTIMATE_LOYAL) {
+         bonus bAspdRate,1;
+         bonus bFlee,3;
+      }
+      else if (.@i >= PET_INTIMATE_CORDIAL) {
+         bonus bAspdRate,1;
+      }
+#    Evolution:
+#      - Target: C_TOWER_MANAGER2
+#        ItemRequirements:
+#          - Item: Burnt_Parts
+#            Amount: 100
+#          - Item: Needle_Of_Alarm
+#            Amount: 200
+#          - Item: Screw
+#            Amount: 300
+#          - Item: Clock_Card
+#            Amount: 10

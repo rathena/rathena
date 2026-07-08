@@ -744,7 +744,7 @@ int32 pet_attackskill(pet_data *pd, int32 target_id)
  * @param type: pet's attack rate type
  * @return 0
  */
-int32 pet_target_check(pet_data *pd,block_list *bl,int32 type)
+int32 pet_target_check(pet_data *pd,const block_list* bl,int32 type)
 {
 	nullpo_ret(pd);
 
@@ -1457,7 +1457,7 @@ int32 pet_menu(map_session_data *sd,int32 menunum)
  * @param name : new pet name
  * @return 0:success, 1:failure
  */
-int32 pet_change_name(map_session_data *sd,char *name)
+int32 pet_change_name( const map_session_data* sd, char* name )
 {
 	int32 i;
 	pet_data *pd;
@@ -2197,7 +2197,7 @@ TIMER_FUNC(pet_skill_support_timer){
  * @param pet_id : pet ID of the pet
  * @return index of egg in player's inventory or -1 if the egg is not found.
  */
-int32 pet_egg_search(map_session_data* sd, int32 pet_id) {
+int32 pet_egg_search( const map_session_data* sd, int32 pet_id ) {
 	for (int32 i = 0; i < MAX_INVENTORY; i++) {
 		if (sd->inventory.u.items_inventory[i].card[0] == CARD0_PET &&
 			pet_id == MakeDWord(sd->inventory.u.items_inventory[i].card[1], sd->inventory.u.items_inventory[i].card[2]))

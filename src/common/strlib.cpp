@@ -53,8 +53,8 @@ char* trim(char* str)
 	return str;
 }
 
-// Converts one or more consecutive occurences of the delimiters into a single space
-// and removes such occurences from the beginning and end of string
+// Converts one or more consecutive occurrences of the delimiters into a single space
+// and removes such occurrences from the beginning and end of string
 // NOTE: make sure the string is not const!!
 char* normalize_name(char* str,const char* delims)
 {
@@ -511,7 +511,7 @@ int32 sv_parse_next( s_svstate& sv ){
 /// @param out_pos Array of resulting positions
 /// @param npos Size of the pos array
 /// @param opt Options that determine the parsing behaviour
-/// @return Number of fields found in the string or -1 if an error occured
+/// @return Number of fields found in the string or -1 if an error occurred
 size_t sv_parse( const char* str, size_t len, size_t startoff, char delim, size_t* out_pos, size_t npos, int32 opt, bool& error ){
 	// initialize
 	error = false;
@@ -582,7 +582,7 @@ size_t sv_parse( const char* str, size_t len, size_t startoff, char delim, size_
 /// @param out_fields Array of resulting fields
 /// @param nfields Size of the field array
 /// @param opt Options that determine the parsing behaviour
-/// @return Number of fields found in the string or -1 if an error occured
+/// @return Number of fields found in the string or -1 if an error occurred
 size_t sv_split( char* str, size_t len, size_t startoff, char delim, char** out_fields, size_t nfields, int32 opt, bool& error ){
 	if( out_fields == nullptr || nfields <= 0 ){
 		return 0; // nothing to do

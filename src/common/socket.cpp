@@ -378,7 +378,7 @@ int32 recv_to_fifo(int32 fd)
 	len = sRecv(fd, (char *) session[fd]->rdata + session[fd]->rdata_size, (int32)RFIFOSPACE(fd), 0);
 
 	if( len == SOCKET_ERROR )
-	{//An exception has occured
+	{//An exception has occurred
 		if( sErrno != S_EWOULDBLOCK ) {
 			//ShowDebug("recv_to_fifo: %s, closing connection #%d\n", error_msg(), fd);
 			set_eof(fd);
@@ -418,7 +418,7 @@ int32 send_from_fifo(int32 fd)
 	len = sSend(fd, (const char *) session[fd]->wdata, (int32)session[fd]->wdata_size, MSG_NOSIGNAL);
 
 	if( len == SOCKET_ERROR )
-	{//An exception has occured
+	{//An exception has occurred
 		if( sErrno != S_EWOULDBLOCK ) {
 			//ShowDebug("send_from_fifo: %s, ending connection #%d\n", error_msg(), fd);
 #ifdef SHOW_SERVER_STATS
@@ -1680,7 +1680,7 @@ uint32 str2ip(const char* ip_str)
 }
 
 // Reorders bytes from network to little endian (Windows).
-// Neccessary for sending port numbers to the RO client until Gravity notices that they forgot ntohs() calls.
+// Necessary for sending port numbers to the RO client until Gravity notices that they forgot ntohs() calls.
 uint16 ntows(uint16 netshort)
 {
 	return ((netshort & 0xFF) << 8) | ((netshort & 0xFF00) >> 8);

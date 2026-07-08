@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Skotlex
 //===== Last Updated: ========================================
-//= 20130209
+//= 2026-01-02
 //===== Description: =========================================
 //= A reference description of eA's inner job system (for use
 //= in scripts through the eaclass and roclass script commands).
@@ -42,33 +42,34 @@ The eA Job System:
   traced back to their root. The base job of all classes has to be one of the
   following:
 
-	EAJ_NOVICE		0x0
+	EAJ_NOVICE	0x0
 	EAJ_SWORDMAN	0x1
-	EAJ_MAGE		0x2
-	EAJ_ARCHER		0x3
-	EAJ_ACOLYTE		0x4
+	EAJ_MAGE	0x2
+	EAJ_ARCHER	0x3
+	EAJ_ACOLYTE	0x4
 	EAJ_MERCHANT	0x5
-	EAJ_THIEF		0x6
-	EAJ_TAEKWON		0x7
-	EAJ_GUNSLINGER	0x9
-	EAJ_NINJA		0x0A
-	EAJ_GANGSI		0x0D
-	EAJ_SUMMONER	0x10
+	EAJ_THIEF	0x6
+	EAJ_TAEKWON	0x7
+	EAJ_GUNSLINGER	0x8
+	EAJ_NINJA	0x9
+	EAJ_SUMMONER	0xA
+	EAJ_GANGSI	0xB
 
-- Branch: All classes can be classified as "1st Class", "2-1 Class" or
-  "2-2 Class":
+
+- Branch: All classes can be classified as "1st Class", "2-1 Class", "2-2 Class",
+	and then brought up to "3rd Class" and "4th Class":
 
 	EAJL_2_1	0x100
 	EAJL_2_2	0x200
 	EAJL_2		0x300
+	EAJL_THIRD	0x1000
+	EAJL_FOURTH	0x10000
 
 - The third category is type. Classes can either be normal, rebirth/advanced,
-  adopted, third class or fourth class.
+  or adopted.
 
-	EAJL_UPPER	0x1000
-	EAJL_BABY	0x2000
-	EAJL_THIRD	0x4000
-	EAJL_FOURTH	0x8000
+	EAJL_UPPER	0x100000
+	EAJL_BABY	0x200000
 
 So using these three categories, any job class can be constructed from the
 others. Let's take a swordman, for example.
@@ -86,16 +87,23 @@ The next step is to either become a 2-1 or a 2-2 job:
 	EAJ_SWORDMAN|EAJL_2_1 -> EAJ_KNIGHT
 	EAJ_SWORDMAN|EAJL_2_2 -> EAJ_CRUSADER
 
-Getting out the rebirth versions of a swordman:
-
-	EAJ_SWORDMAN|EAJL_UPPER 			-> EAJ_SWORDMAN_HIGH
-	EAJ_SWORDMAN|EAJL_2_1|EAJL_UPPER	-> EAJ_LORD_KNIGHT
-	EAJ_SWORDMAN|EAJL_2_2|EAJL_UPPER	-> EAJ_PALADIN
-
-Or getting the third job versions:
+Then getting the third job versions:
 
 	EAJ_SWORDMAN|EAJL_2_1|EAJL_THIRD	-> EAJ_RUNE_KNIGHT
 	EAJ_SWORDMAN|EAJL_2_2|EAJL_THIRD	-> EAJ_ROYAL_GUARD
+
+And finally the fourth job versions:
+
+	EAJ_SWORDMAN|EAJL_2_1|EAJL_THIRD|EAJL_FOURTH	-> EAJ_DRAGON_KNIGHT
+	EAJ_SWORDMAN|EAJL_2_2|EAJL_THIRD|EAJL_FOURTH	-> EAJ_IMPERIAL_GUARD
+
+Getting out the rebirth versions of a swordman:
+
+	EAJ_SWORDMAN|EAJL_UPPER 			-> EAJ_SWORDMAN_HIGH
+	EAJ_SWORDMAN|EAJL_2_1|EAJL_UPPER		-> EAJ_LORD_KNIGHT
+	EAJ_SWORDMAN|EAJL_2_2|EAJL_UPPER		-> EAJ_PALADIN
+	EAJ_SWORDMAN|EAJL_2_1|EAJL_THIRD|EAJL_UPPER	-> EAJ_RUNE_KNIGHT_T
+	EAJ_SWORDMAN|EAJL_2_2|EAJL_THIRD|EAJL_UPPER	-> EAJ_ROYAL_GUARD_T
 
 Why are we using the bitwise OR operand ('|') rather than just adding? Because
 the OR is wreck-proof:

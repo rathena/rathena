@@ -16,3 +16,7 @@ void SkillRuwach::castendNoDamageId(block_list *src, block_list *bl, uint16 skil
 
 	clif_skill_nodamage(src, *bl, getSkillId(), skill_lv, sc_start2(src, bl, type, 100, skill_lv, getSkillId(), skill_get_time(getSkillId(), skill_lv)));
 }
+
+void SkillRuwach::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {
+	base_skillratio += 45;
+}
