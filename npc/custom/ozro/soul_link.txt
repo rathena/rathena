@@ -16,46 +16,13 @@ yuno,145,185,4	script	Kessinger	4_M_ROTERT,{
 	mes "Dura unos " + (.duration / 60000) + " minutos.";
 	next;
 
-	switch (select("Si, vinculame", "Que espiritu me espera?", "No, gracias")) {
-	case 3:
+	.@menu = select("Si, vinculame", "Que espiritu me espera?", "No, gracias");
+	if (.@menu == 3) {
 		mes .@name$;
 		mes "Como quieras. Los espiritus esperaran.";
 		close;
-	case 2:
-		.@Spirit = callsub(S_ResolveSpirit);
-		if (!.@Spirit) {
-			mes .@name$;
-			mes "No encuentro un espiritu para tu camino.";
-			mes "BaseJob: " + BaseJob + " (" + jobname(BaseJob) + ")";
-			close;
-		}
-		callsub S_SpiritHint;
-		close;
-	case 1:
-		break;
 	}
 
-	.@Spirit = callsub(S_ResolveSpirit);
-	if (!.@Spirit) {
-		mes .@name$;
-		mes "No encuentro un espiritu para tu camino.";
-		mes "BaseJob: " + BaseJob + " (" + jobname(BaseJob) + ")";
-		close;
-	}
-
-	if (Zeny < .price) {
-		mes .@name$;
-		mes "Necesitas " + .price + " zeny para el ritual.";
-		close;
-	}
-
-	Zeny -= .price;
-	sc_start2 SC_SPIRIT, .duration, 5, .@Spirit;
-	skilleffect .@Spirit, 5;
-	callsub S_SpiritSuccess, .@Spirit;
-	close;
-
-S_ResolveSpirit:
 	.@Spirit = 0;
 	switch (BaseJob) {
 	case Job_Alchemist:      .@Spirit = SL_ALCHEMIST; break;
@@ -81,7 +48,30 @@ S_ResolveSpirit:
 			.@Spirit = 494; // SL_HIGH
 		break;
 	}
-	return .@Spirit;
+
+	if (!.@Spirit) {
+		mes .@name$;
+		mes "No encuentro un espiritu para tu camino.";
+		mes "BaseJob: " + BaseJob + " (" + jobname(BaseJob) + ")";
+		close;
+	}
+
+	if (.@menu == 2) {
+		callsub S_SpiritHint;
+		close;
+	}
+
+	if (Zeny < .price) {
+		mes .@name$;
+		mes "Necesitas " + .price + " zeny para el ritual.";
+		close;
+	}
+
+	Zeny -= .price;
+	sc_start2 SC_SPIRIT, .duration, 5, .@Spirit;
+	skilleffect .@Spirit, 5;
+	callsub S_SpiritSuccess, .@Spirit;
+	close;
 
 S_SpiritHint:
 	mes .@name$;
@@ -159,12 +149,8 @@ S_SpiritHint:
 		mes "Artillero que mide la vida en disparos certeros.";
 		break;
 	default:
-		if (Upper == 2 && BaseLevel < 70) {
-			mes "Veo un hilo de luz que aun no ha alcanzado su cima.";
-			mes "Un eco de quien fuiste, dispuesto a prestarte su vigor renacido.";
-		} else {
-			mes "Algo se agita en tu camino, pero aun no logro nombrarlo.";
-		}
+		mes "Veo un hilo de luz que aun no ha alcanzado su cima.";
+		mes "Un eco de quien fuiste, dispuesto a prestarte su vigor renacido.";
 		break;
 	}
 	next;
