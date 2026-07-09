@@ -35,19 +35,20 @@
 // Izlude
 //============================================================
 -	script	::Sailor_izlude	-1,{
-	mes "[Sailor]";
-	mes "Hey everybody!";
-	mes "Attention, attention!";
-	mes "Come and ride the wind";
-	mes "on a fascinating Ship!";
-	mes "Hurry, hurry!";
+	mes "[Marinero]";
+	mes "¡Atención, atención!";
+	mes "¡Último llamado para abordar!";
+	mes "¡Barcos con destino a";
+	mes "Byalan y Alberta!";
+	mes "¡No se queden atrás!";
 	next;
-	switch(select("Byalan Island -> 150 Zeny.:Alberta Marina  -> 500 Zeny.:Cancel.")) {
+	switch(select("Isla Byalan -> 150 Zeny.:Puerto de Alberta -> 500 Zeny.:Cancelar.")) {
 	case 1:
 		if (Zeny < 150) {
-			mes "[Sailor]";
-			mes "150 Zeny!";
-			mes "Only 150 Zeny to ride!";
+			mes "[Marinero]";
+			mes "Lo siento.";
+			mes "El pasaje cuesta";
+			mes "150 Zeny.";
 			close;
 		}
 		set Zeny, Zeny - 150;
@@ -55,9 +56,10 @@
 		end;
 	case 2:
 		if (Zeny < 500) {
-			mes "[Sailor]";
-			mes "500 Zeny!";
-			mes "Only 500 Zeny to ride!";
+			mes "[Marinero]";
+			mes "Lo siento.";
+			mes "El pasaje cuesta";
+			mes "500 Zeny.";
 			close;
 		}
 		set Zeny, Zeny - 500;
@@ -70,25 +72,27 @@
 
 -	script	::Bonne_izlude	-1,{
 	mes "[Bonne]";
-	mes "Greetings!";
-	mes "Izlude welcomes you.";
+	mes "¡Bienvenido!";
+	mes "Espero que disfrutes tu visita a Izlude.";
 	next;
 	mes "[Bonne]";
-	mes "Izlude is the satellite city of Prontera, capital of the Rune-Midgarts kingdom.";
+	mes "Izlude es la ciudad vecina de Prontera, la capital del Reino de Rune-Midgard.";
 	next;
 	mes "[Bonne]";
-	mes "Izlude is key to our kingdom because of the Swordsman Association located here, as well as the fact that Izlude is in charge of protecting the Rune-Midgarts coastline.";
+	mes "Nuestra ciudad es muy importante para el reino.";
+	mes "Aquí se encuentra la Asociación de Espadachines y también somos responsables de proteger toda la costa de Rune-Midgard.";
 	next;
 	mes "[Bonne]";
-	mes "I know, this bridge might look weak and fragile, but it is actually state of the art, built with the most sophisticated technology.";
+	mes "Tal vez este puente parezca frágil, pero en realidad fue construido con la tecnología más avanzada.";
 	next;
 	mes "[Bonne]";
-	mes "No matter how strong storms may be, or how many people may stand on it, this bridge will NEEEEVER collapse.";
+	mes "No importa cuán fuerte sea la tormenta o cuánta gente lo cruce...";
+	mes "¡Este puente jamás se derrumbará!";
 	next;
 	mes "[Bonne]";
-	mes "Please enjoy";
-	mes "your visit";
-	mes "here in Izlude.";
+	mes "Espero que disfrutes";
+	mes "tu estancia";
+	mes "en Izlude.";
 	close;
 }
 
@@ -96,29 +100,31 @@
 	mes "[Charfri]";
 	switch(rand(2)) {
 	case 1:
-		mes "Some people may think Izlude is just a satellite city of Prontera, and not really that important...";
+		mes "Muchos creen que Izlude es solo una ciudad vecina de Prontera y que no tiene demasiada importancia...";
 		next;
 		mes "[Charfri]";
-		mes "But Izlude is a beautiful town right next to the ocean, as well as beautiful Byalan Island.";
+		mes "Pero Izlude es una hermosa ciudad costera, además de ser la puerta de entrada hacia la maravillosa Isla Byalan.";
 		next;
 		mes "[Charfri]";
-		mes "You'll have to board on a ship at the port to get to Byalan Island. There are dangerous dungeons on that island, so don't go snooping around just anywhere.";
+		mes "Si quieres visitarla tendrás que tomar un barco en el puerto.";
+	mes "Solo ten cuidado... En esa isla hay peligrosas mazmorras, así que no vayas explorando sin estar preparado.";
 		close;
 	default:
-		mes "Though it is very beautiful, Byalan Island has a mysterious dungeon that extends deep under the sea.";
+		mes "Aunque Byalan es un lugar precioso, bajo la isla existe una misteriosa mazmorra que se adentra cada vez más en las profundidades del mar.";
 		next;
 		mes "[Charfri]";
-		mes "People who've actually been there have said that if you go deep enough, the dungeon actually descends underwater.";
+		mes "Quienes han logrado llegar hasta el fondo dicen que, en cierto punto, la mazmorra continúa completamente bajo el agua.";
 		next;
 		mes "[Charfri]";
-		mes "Surprisingly, once you're underwater, you can breathe just like a fish. Maybe some kind of supernatural force is in effect.";
+		mes "Lo más increíble es que allí puedes respirar con total normalidad. Debe de existir algún tipo de poder sobrenatural.";
 		next;
 		mes "[Charfri]";
 		mes "Ah...";
-		mes "The people who've seen the underwater view say it is so fantastic that they've kept dreaming of it ever since.";
+	mes "Los que han contemplado ese paisaje submarino aseguran que es tan hermoso que nunca han podido olvidarlo.";
 		next;
 		mes "[Charfri]";
-		mes "But unfortunately, the monsters are too strong for ordinary people to merely go sightseeing there. Still, just once, I'd like to go down there...";
+		mes "Lástima que los monstruos sean demasiado fuertes para ir solo a admirar el lugar.";
+	mes "Aun así... algún día me gustaría verlo con mis propios ojos.";
 		close;
 	}
 }
