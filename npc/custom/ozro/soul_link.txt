@@ -1,7 +1,7 @@
 //===== OzRo Script ==========================================
 //= Kessinger, Vinculador de Almas
 //===== Description: =========================================
-//= Soul Link de pago para jobs compatibles.
+//= Soul Link de pago. Espiritu segun BaseJob del personaje.
 //= Futuro: quest alarga .duration en OnInit (ver 04-npcs.md).
 //============================================================
 
@@ -10,21 +10,53 @@ yuno,145,185,4	script	Kessinger	4_M_ROTERT,{
 	.@name$ = "[ ^0000FFKessinger, Vinculador de Almas^000000 ]";
 
 	mes .@name$;
-	mes "Hola " + strcharinfo(0) + ".";
+	mes "Hola " + strcharinfo(0) + ",";
+	mes "quieres que te vincule con un espiritu ancestral?";
+	mes "El ritual cuesta " + .price + " zeny.";
+	mes "Dura unos " + (.duration / 60000) + " minutos.";
 	next;
 
-	// --- Debug: variables del personaje ---
-	mes .@name$;
-	mes "[Debug] Class: " + Class + " (" + jobname(Class) + ")";
-	mes "BaseJob: " + BaseJob + " (" + jobname(BaseJob) + ")";
-	mes "eaclass: " + eaclass();
-	mes "eaclass mask: " + (eaclass() & EAJ_UPPERMASK);
-	next;
+	switch (select("Si, vinculame", "Que espiritu me espera?", "No, gracias")) {
+	case 3:
+		mes .@name$;
+		mes "Como quieras. Los espiritus esperaran.";
+		close;
+	case 2:
+		.@Spirit = callsub(S_ResolveSpirit);
+		if (!.@Spirit) {
+			mes .@name$;
+			mes "No encuentro un espiritu para tu camino.";
+			mes "BaseJob: " + BaseJob + " (" + jobname(BaseJob) + ")";
+			close;
+		}
+		callsub S_SpiritHint;
+		close;
+	case 1:
+		break;
+	}
 
-	// --- Resolucion de espiritu (3 pasos) ---
+	.@Spirit = callsub(S_ResolveSpirit);
+	if (!.@Spirit) {
+		mes .@name$;
+		mes "No encuentro un espiritu para tu camino.";
+		mes "BaseJob: " + BaseJob + " (" + jobname(BaseJob) + ")";
+		close;
+	}
+
+	if (Zeny < .price) {
+		mes .@name$;
+		mes "Necesitas " + .price + " zeny para el ritual.";
+		close;
+	}
+
+	Zeny -= .price;
+	sc_start2 SC_SPIRIT, .duration, 5, .@Spirit;
+	skilleffect .@Spirit, 5;
+	callsub S_SpiritSuccess, .@Spirit;
+	close;
+
+S_ResolveSpirit:
 	.@Spirit = 0;
-
-	// Paso 1: job base 2-1 / 2-2 (funciona en la mayoria de 1st/2nd)
 	switch (BaseJob) {
 	case Job_Alchemist:      .@Spirit = SL_ALCHEMIST; break;
 	case Job_Monk:           .@Spirit = SL_MONK; break;
@@ -46,199 +78,110 @@ yuno,145,185,4	script	Kessinger	4_M_ROTERT,{
 	case Job_Gunslinger:     .@Spirit = SL_GUNNER; break;
 	default:
 		if (Upper == 2 && BaseLevel < 70)
-			.@Spirit = SL_HIGH;
+			.@Spirit = 494; // SL_HIGH
 		break;
 	}
+	return .@Spirit;
 
-	// Paso 2: Class actual (renewal / 3rd / 4th)
-	if (!.@Spirit) {
-		switch (Class) {
-		case Job_Creator:
-		case Job_Genetic:
-		case Job_Genetic_T:
-		case Job_Genetic_2ND:
-		case Job_Biolo:
-		case Job_Baby_Alchemist:     .@Spirit = SL_ALCHEMIST; break;
-		case Job_Lord_Knight:
-		case Job_Rune_Knight:
-		case Job_Rune_Knight_T:
-		case Job_Dragon_Knight:
-		case Job_Baby_Rune_Knight:   .@Spirit = SL_KNIGHT; break;
-		case Job_High_Wizard:
-		case Job_Warlock:
-		case Job_Warlock_T:
-		case Job_Arch_Mage:            .@Spirit = SL_WIZARD; break;
-		case Job_Sniper:
-		case Job_Ranger:
-		case Job_Ranger_T:
-		case Job_Windhawk:             .@Spirit = SL_HUNTER; break;
-		case Job_High_Priest:
-		case Job_Arch_Bishop:
-		case Job_Arch_Bishop_T:
-		case Job_Cardinal:             .@Spirit = SL_PRIEST; break;
-		case Job_Whitesmith:
-		case Job_Mechanic:
-		case Job_Mechanic_T:
-		case Job_Meister:              .@Spirit = SL_BLACKSMITH; break;
-		case Job_Assassin_Cross:
-		case Job_Guillotine_Cross:
-		case Job_Guillotine_Cross_T:
-		case Job_Shadow_Cross:         .@Spirit = SL_ASSASIN; break;
-		case Job_Paladin:
-		case Job_Royal_Guard:
-		case Job_Royal_Guard_T:
-		case Job_Imperial_Guard:       .@Spirit = SL_CRUSADER; break;
-		case Job_Professor:
-		case Job_Sorcerer:
-		case Job_Sorcerer_T:
-		case Job_Elemental_Master:       .@Spirit = SL_SAGE; break;
-		case Job_Champion:
-		case Job_Sura:
-		case Job_Sura_T:
-		case Job_Inquisitor:           .@Spirit = SL_MONK; break;
-		case Job_Clown:
-		case Job_Gypsy:
-		case Job_Minstrel:
-		case Job_Wanderer:
-		case Job_Minstrel_T:
-		case Job_Wanderer_T:
-		case Job_Troubadour:
-		case Job_Trouvere:             .@Spirit = SL_BARDDANCER; break;
-		case Job_Stalker:
-		case Job_Shadow_Chaser:
-		case Job_Shadow_Chaser_T:
-		case Job_Abyss_Chaser:         .@Spirit = SL_ROGUE; break;
-		case Job_Star_Emperor:
-		case Job_Star_Emperor2:
-		case Job_Baby_Star_Gladiator:  .@Spirit = SL_STAR; break;
-		case Job_Night_Watch:
-		case Job_Rebellion:            .@Spirit = SL_GUNNER; break;
-		case Job_Shinkiro:
-		case Job_Shiranui:             .@Spirit = SL_NINJA; break;
-		case Job_Death_Knight:         .@Spirit = SL_DEATHKNIGHT; break;
-		case Job_Dark_Collector:       .@Spirit = SL_COLLECTOR; break;
-		}
-	}
-
-	// Paso 3: eaclass mask (ultimo recurso)
-	if (!.@Spirit) {
-		switch (eaclass() & EAJ_UPPERMASK) {
-		case EAJ_KNIGHT:
-		case EAJ_LORD_KNIGHT:
-		case EAJ_RUNE_KNIGHT:          .@Spirit = SL_KNIGHT; break;
-		case EAJ_WIZARD:
-		case EAJ_HIGH_WIZARD:
-		case EAJ_WARLOCK:              .@Spirit = SL_WIZARD; break;
-		case EAJ_HUNTER:
-		case EAJ_SNIPER:
-		case EAJ_RANGER:               .@Spirit = SL_HUNTER; break;
-		case EAJ_PRIEST:
-		case EAJ_HIGH_PRIEST:
-		case EAJ_ARCH_BISHOP:          .@Spirit = SL_PRIEST; break;
-		case EAJ_BLACKSMITH:
-		case EAJ_WHITESMITH:
-		case EAJ_MECHANIC:             .@Spirit = SL_BLACKSMITH; break;
-		case EAJ_ASSASSIN:
-		case EAJ_ASSASSIN_CROSS:
-		case EAJ_GUILLOTINE_CROSS:     .@Spirit = SL_ASSASIN; break;
-		case EAJ_CRUSADER:
-		case EAJ_PALADIN:
-		case EAJ_ROYAL_GUARD:           .@Spirit = SL_CRUSADER; break;
-		case EAJ_SAGE:
-		case EAJ_PROFESSOR:
-		case EAJ_SORCERER:             .@Spirit = SL_SAGE; break;
-		case EAJ_MONK:
-		case EAJ_CHAMPION:
-		case EAJ_SURA:                 .@Spirit = SL_MONK; break;
-		case EAJ_BARDDANCER:
-		case EAJ_CLOWNGYPSY:
-		case EAJ_MINSTRELWANDERER:     .@Spirit = SL_BARDDANCER; break;
-		case EAJ_ROGUE:
-		case EAJ_STALKER:              .@Spirit = SL_ROGUE; break;
-		case EAJ_ALCHEMIST:
-		case EAJ_CREATOR:
-		case EAJ_GENETIC:
-		case EAJ_GENETIC_T:
-		case EAJ_BABY_ALCHEMIST:       .@Spirit = SL_ALCHEMIST; break;
-		case EAJ_SUPER_NOVICE:         .@Spirit = SL_SUPERNOVICE; break;
-		case EAJ_STAR_GLADIATOR:
-		case EAJ_STAR_EMPEROR:         .@Spirit = SL_STAR; break;
-		case EAJ_SOUL_LINKER:          .@Spirit = SL_SOULLINKER; break;
-		case EAJ_NINJA:                .@Spirit = SL_NINJA; break;
-		case EAJ_GUNSLINGER:
-		case EAJ_REBELLION:            .@Spirit = SL_GUNNER; break;
-		case EAJ_DEATH_KNIGHT:         .@Spirit = SL_DEATHKNIGHT; break;
-		case EAJ_DARK_COLLECTOR:       .@Spirit = SL_COLLECTOR; break;
-		}
-	}
-
-	// Nombre del espiritu en espanol (para probar el switch)
-	.@spiritName$ = "Ninguno";
-	switch (.@Spirit) {
-	case SL_HIGH:          .@spiritName$ = "Renacimiento"; break;
-	case SL_ALCHEMIST:     .@spiritName$ = "Alquimista"; break;
-	case SL_ASSASIN:       .@spiritName$ = "Asesino"; break;
-	case SL_BARDDANCER:    .@spiritName$ = "Bardo o Bailarin"; break;
-	case SL_BLACKSMITH:    .@spiritName$ = "Herrero"; break;
-	case SL_CRUSADER:      .@spiritName$ = "Cruzado"; break;
-	case SL_HUNTER:        .@spiritName$ = "Cazador"; break;
-	case SL_KNIGHT:        .@spiritName$ = "Caballero"; break;
-	case SL_MONK:          .@spiritName$ = "Monje"; break;
-	case SL_PRIEST:        .@spiritName$ = "Sacerdote"; break;
-	case SL_ROGUE:         .@spiritName$ = "Picaro"; break;
-	case SL_SAGE:          .@spiritName$ = "Sabio"; break;
-	case SL_SOULLINKER:    .@spiritName$ = "Vinculador de Almas"; break;
-	case SL_SUPERNOVICE:   .@spiritName$ = "Super Novicio"; break;
-	case SL_STAR:          .@spiritName$ = "Maestro Taekwon"; break;
-	case SL_WIZARD:        .@spiritName$ = "Mago"; break;
-	case SL_NINJA:         .@spiritName$ = "Ninja"; break;
-	case SL_GUNNER:        .@spiritName$ = "Pistolero"; break;
-	case SL_DEATHKNIGHT:   .@spiritName$ = "Caballero de la Muerte"; break;
-	case SL_COLLECTOR:     .@spiritName$ = "Coleccionista Oscuro"; break;
-	}
-
+S_SpiritHint:
 	mes .@name$;
-	if (!.@Spirit)
-		mes "No detecte espiritu compatible.";
-	else
-		mes "Espiritu detectado: ^00CCFF" + .@spiritName$ + "^000000 (ID " + .@Spirit + ")";
-	close;
-
-	/*
-	// --- Menu y vinculo (reactivar cuando el switch este OK) ---
-	mes .@name$;
-	mes "El ritual cuesta " + .price + " zeny.";
-	mes "Dura unos " + (.duration / 60000) + " minutos.";
+	mes "Cierra los ojos... dejame escuchar tu alma.";
 	next;
-	switch (select("Si, vinculame", "Que espiritu me espera?", "No, gracias")) {
-	case 3:
-		mes .@name$;
-		mes "Como quieras. Los espiritus esperaran.";
-		close;
-	case 2:
-		callsub S_SpiritHint;
-		close;
-	case 1:
+	mes .@name$;
+	switch (BaseJob) {
+	case Job_Alchemist:
+		mes "Huelo brebajes y vidrio. Un maestro de frascos";
+		mes "que convierte la alquimia en auxilio y furia contenida.";
+		break;
+	case Job_Assassin:
+		mes "Sombras que se pliegan dos veces antes del ultimo suspiro.";
+		mes "Un asesino cuyo golpe no perdona al que vacila.";
+		break;
+	case Job_Bard:
+	case Job_Dancer:
+		mes "Oigo una melodia que vuelve sobre quien la canta.";
+		mes "Bardo y bailarina comparten un mismo latido en el escenario.";
+		break;
+	case Job_Blacksmith:
+		mes "El martillo late como un segundo corazon.";
+		mes "Un herrero capaz de despertar el acero con adrenalina pura.";
+		break;
+	case Job_Crusader:
+		mes "Un escudo que vuelve como jabalina de fe.";
+		mes "Cruzado cuya devocion golpea dos veces con la misma furia.";
+		break;
+	case Job_Hunter:
+		mes "Rastros en el barro y flechas que conocen la debilidad de toda bestia.";
+		mes "Un cazador que lee el pulso del mundo salvaje.";
+		break;
+	case Job_Knight:
+		mes "Una mano firme y una hoja que no conoce la duda.";
+		mes "Caballero cuya velocidad nace del temple, no del miedo.";
+		break;
+	case Job_Monk:
+		mes "Punos que agitan el aire en cruce de tormenta.";
+		mes "Monje cuya furia interior alimenta cada combo.";
+		break;
+	case Job_Priest:
+		mes "Luz sagrada que arde con fe inquebrantable.";
+		mes "Sacerdote cuya oracion pesa como el juicio del cielo.";
+		break;
+	case Job_Rogue:
+		mes "Huellas que se borran entre la niebla.";
+		mes "Picaro que camina donde otros solo ven muros.";
+		break;
+	case Job_Sage:
+		mes "Paginas que se escriben solas en el instante preciso.";
+		mes "Sabio que invoca conocimiento cuando la mente lo exige.";
+		break;
+	case Job_Soul_Linker:
+		mes "Hilos invisibles que unen almas distintas.";
+		mes "Vinculador que comparte poder sin reservarlo solo para si.";
+		break;
+	case Job_SuperNovice:
+		mes "Un destino improbable escrito con tinta de estrellas.";
+		mes "Novicio eterno al que el mundo aun no termina de comprender.";
+		break;
+	case Job_Star_Gladiator:
+		mes "Constelaciones que arden en los nudillos de un guerrero.";
+		mes "Maestro marcial que canaliza el cosmos en un solo golpe.";
+		break;
+	case Job_Wizard:
+		mes "Gemas que obedecen sin quebrarse.";
+		mes "Mago que domina el coste de lo arcano como quien cuenta monedas.";
+		break;
+	case Job_Ninja:
+		mes "Hojas que caen antes de que el viento avise.";
+		mes "Sombra de Izlude que corta sin pedir permiso.";
+		break;
+	case Job_Gunslinger:
+		mes "Polvora, precision y humo que se disipa tarde.";
+		mes "Artillero que mide la vida en disparos certeros.";
+		break;
+	default:
+		if (Upper == 2 && BaseLevel < 70) {
+			mes "Veo un hilo de luz que aun no ha alcanzado su cima.";
+			mes "Un eco de quien fuiste, dispuesto a prestarte su vigor renacido.";
+		} else {
+			mes "Algo se agita en tu camino, pero aun no logro nombrarlo.";
+		}
 		break;
 	}
-	if (Zeny < .price) {
-		mes .@name$;
-		mes "Necesitas " + .price + " zeny para el ritual.";
-		close;
-	}
-	Zeny -= .price;
-	sc_start2 SC_SPIRIT, .duration, 5, .@Spirit;
-	skilleffect .@Spirit, 5;
-	callsub S_SpiritSuccess;
-	close;
+	next;
+	mes .@name$;
+	mes "Si deseas el vinculo, vuelve cuando estes listo.";
+	return;
 
-	S_SpiritHint:
-		// pistas lore por espiritu...
-		return;
-	S_SpiritSuccess:
-		// mensaje de exito por espiritu...
-		return;
-	*/
+S_SpiritSuccess:
+	mes .@name$;
+	if (getarg(0) == 494) {
+		mes "Has obtenido el ^0055FFEspiritu del Renacimiento^000000.";
+		mes "Siente como un eco de tu yo anterior te presta su fuerza.";
+	} else {
+		mes "Has obtenido el espiritu de un gran ^00CCFF" + jobname(BaseJob) + "^000000.";
+		mes "Que te guie en la batalla.";
+	}
+	return;
 
 OnInit:
 	.duration = 1200000; // 20 min; futuro: quest puede subir este valor
