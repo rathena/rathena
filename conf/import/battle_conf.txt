@@ -30,6 +30,7 @@ alchemist_summon_reward: 2
 
 //anunciar los objetos raros (1%)
 rare_drop_announce: 100
+item_auto_get: yes
 mercenary_autoloot: yes
 homunculus_autoloot: yes
 
