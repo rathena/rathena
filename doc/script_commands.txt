@@ -1206,6 +1206,25 @@ Similarly, you can create links to websites that launch in a new window:
 
 	<URL>Display Name<INFO>http://www.example.com/</INFO></URL>";
 
+Where <Display Name> is the text shown in the NPC dialogue and the
+<INFO> tag contains the web address that will be opened when clicked.
+
+The protocol (http:// or https://) is not required.
+
+We created the script command "meshyperlink" that allows you to generate the correct
+URL syntax automatically. We recommend that you use this script command
+instead of hardcoding the HTML-like tags.
+
+Syntax:
+
+	*meshyperlink(<display_text>,<url>);
+
+Example:
+
+	mes "Visit our " + meshyperlink("Website","example.com") + ".";
+	// Displays: Visit our Website.
+	// "Website" will be clickable and opens the specified URL.
+
 Quests
 ------
 You can link to a quest:
@@ -5961,9 +5980,9 @@ This command is not supported for PACKETVER 20150513 or newer.
 ---------------------------------------
 
 *mail <destination id>,"<sender name>","<title>","<body>"{,<zeny>{,<item id array>,<item amount array>{,refine{,bound{,<item card0 array>{,<item card1 array>{,<item card2 array>{,<item card3 array>
-		{,<random option id0 array>, <random option value0 array>, <random option paramter0 array>{,<random option id1 array>, <random option value1 array>, <random option paramter1 array>
-		{,<random option id2 array>, <random option value2 array>, <random option paramter2 array>{,<random option id3 array>, <random option value3 array>, <random option paramter3 array>
-		{,<random option id4 array>, <random option value4 array>, <random option paramter4 array>}}}}}}}}};
+		{,<random option id0 array>, <random option value0 array>, <random option parameter0 array>{,<random option id1 array>, <random option value1 array>, <random option parameter1 array>
+		{,<random option id2 array>, <random option value2 array>, <random option parameter2 array>{,<random option id3 array>, <random option value3 array>, <random option parameter3 array>
+		{,<random option id4 array>, <random option value4 array>, <random option parameter4 array>}}}}}}}}};
 
 This command will send mail to the <destination id> which is a character ID.
 A <sender name> can be specified but does not have to be from the direct creator
@@ -8604,6 +8623,15 @@ This command requires packet version 2015-12-02 or newer.
 Opens the enchantgrade UI for the attached character or the player given by the char ID parameter.
 
 This command requires packet version 2020-07-24 or newer.
+
+---------------------------------------
+
+*reputationui({<group>{,<type>{,<char id>}}})
+
+Opens the reputation UI for the attached character or the player given by the char ID parameter.
+If <group> is passed reputation UI will open in selected group table, 0 = All (Default).
+<type> is the client side index as stored in the Id field of the reputation.yml database files.
+If <type> is above 0 the specified reputation will be highlighted in red (Default: 0).
 
 ---------------------------------------
 
@@ -11376,6 +11404,58 @@ Examples:
 	mes mesitemicon( 1201 ); // Will display a Knife icon and will be clickable. If clicked it opens the description for Knife [3]
 	mes mesitemicon( "Knife" ); // Will display a Knife icon and will be clickable. If clicked it opens the description for Knife [3]
 
+---------------------------------------
+
+*meshyperlink(<display_text>,<url>);
+
+Generates a clickable hyperlink string that can be used with the NPC's mes
+command. The NPC message will show the <display_text> as a clickable link.
+When clicked, it will open the specified <url> in the player's default web browser
+(if supported by the client).
+
+This command is intended for use inside mes dialogues only. The client must
+support the <URL> and <INFO> tags in order for the link to function properly.
+
+Parameters:
+
+	<display_text> : The text that will be shown in the NPC dialogue.
+	<url>          : The web address that will be opened when the link is clicked.
+	                 The protocol (http:// or https://) is not required.
+
+Examples:
+
+	mes meshyperlink("Visit our website","example.com");
+	// Displays "Visit our website" as a clickable link.
+
+	mes "For more information, click " + meshyperlink("here","example.com") + ".";
+	// Displays: For more information, click here.
+	// The word "here" will be clickable and opens the URL.
+
+	mes meshyperlink("Join our Discord","discord.gg/kMeMXWEvSV");
+	// Displays "Join our Discord" as a clickable link.
+
+Notes:
+
+	- The protocol (http:// or https://) is optional.
+	- This command returns a string and must be used together with mes.
+
+---------------------------------------
+
+*mesemotion(<emotion_id>);
+
+Generates an emotion type string that can be used with an NPCs mes command.
+This allows NPC dialogue to display a client-side emotion icon inline with the message.
+The emotion can be specified either by its numeric ID or by using a valid emotion
+constant name. Invalid emotion IDs or unknown emotion names will return an empty string.
+
+This command requires packet version 2023-03-02 or newer.
+
+Examples:
+
+	mes mesemotion(ET_SMILE) + " Hello there!"; // Displays an NPC message with a smile emotion icon before the text.
+
+---------------------------------------
+
 ========================
 |14.- Channel commands.|
 ========================
@@ -11488,7 +11568,7 @@ Only for public and private channel.
 *channel_setgroup2 "<chname>",<array_of_groups>;
 
 Set group restriction for a channel. Only player with matching <group_id>
-are allowed to to join the channel.
+are allowed to join the channel.
 
 By using 0 in the first group channel, the group restriction will be
 removed from the channel config.

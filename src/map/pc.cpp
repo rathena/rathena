@@ -3551,6 +3551,19 @@ static void pc_bonus_addele(map_session_data* sd, unsigned char ele, int16 rate,
 	wd->addele2.push_back(entry);
 }
 
+static void pc_bonus_regen(std::vector<s_regen> &bonus, int16 value, int32 rate) {
+	if (rate < 1)
+		return;
+
+	s_regen entry = {};
+
+	entry.value = value;
+	entry.rate = rate;
+	entry.tick = 0;
+
+	bonus.push_back(entry);
+}
+
 /**
  * Reduce element bonus to player when attacking
  * @param sd: Player data
@@ -4744,28 +4757,44 @@ void pc_bonus2(map_session_data *sd,int32 type,int32 type2,int32 val)
 		pc_bonus_itembonus(sd->skillblown, type2, val, false);
 		break;
 	case SP_HP_LOSS_RATE: // bonus2 bHPLossRate,n,t;
-		if (sd->state.lr_flag != LR_FLAG_ARROW) {
-			sd->hp_loss.value = type2;
-			sd->hp_loss.rate = val;
+		if (sd->state.lr_flag == LR_FLAG_ARROW)
+			break;
+		if (sd->hp_loss.size() == MAX_PC_BONUS) {
+			ShowWarning("pc_bonus2: SP_HP_LOSS_RATE: Reached max (%d) number of bonus per character!\n", MAX_PC_BONUS);
+			break;
 		}
+
+		pc_bonus_regen(sd->hp_loss, type2, val);
 		break;
 	case SP_HP_REGEN_RATE: // bonus2 bHPRegenRate,n,t;
-		if (sd->state.lr_flag != LR_FLAG_ARROW) {
-			sd->hp_regen.value = type2;
-			sd->hp_regen.rate = val;
+		if (sd->state.lr_flag == LR_FLAG_ARROW)
+			break;
+		if (sd->hp_regen.size() == MAX_PC_BONUS) {
+			ShowWarning("pc_bonus2: SP_HP_REGEN_RATE: Reached max (%d) number of bonus per character!\n", MAX_PC_BONUS);
+			break;
 		}
+
+		pc_bonus_regen(sd->hp_regen, type2, val);
 		break;
 	case SP_REGEN_PERCENT_HP: // bonus2 bRegenPercentHP,n,t;
-		if (sd->state.lr_flag != LR_FLAG_ARROW) {
-			sd->percent_hp_regen.value = type2;
-			sd->percent_hp_regen.rate = val;
+		if (sd->state.lr_flag == LR_FLAG_ARROW)
+			break;
+		if (sd->percent_hp_regen.size() == MAX_PC_BONUS) {
+			ShowWarning("pc_bonus2: SP_REGEN_PERCENT_HP: Reached max (%d) number of bonus per character!\n", MAX_PC_BONUS);
+			break;
 		}
+
+		pc_bonus_regen(sd->percent_hp_regen, type2, val);
 		break;
 	case SP_REGEN_PERCENT_SP: // bonus2 bRegenPercentSP,n,t;
-		if (sd->state.lr_flag != LR_FLAG_ARROW) {
-			sd->percent_sp_regen.value = type2;
-			sd->percent_sp_regen.rate = val;
+		if (sd->state.lr_flag == LR_FLAG_ARROW)
+			break;
+		if (sd->percent_sp_regen.size() == MAX_PC_BONUS) {
+			ShowWarning("pc_bonus2: SP_REGEN_PERCENT_SP: Reached max (%d) number of bonus per character!\n", MAX_PC_BONUS);
+			break;
 		}
+
+		pc_bonus_regen(sd->percent_sp_regen, type2, val);
 		break;
 	case SP_ADDRACE2: // bonus2 bAddRace2,mr,x;
 		PC_BONUS_CHK_RACE2(type2,SP_ADDRACE2);
@@ -4846,16 +4875,24 @@ void pc_bonus2(map_session_data *sd,int32 type,int32 type2,int32 val)
 			pc_bonus_item_drop(sd->add_drop, 0, type2, CLASS_ALL, RC_NONE_, val);
 		break;
 	case SP_SP_LOSS_RATE: // bonus2 bSPLossRate,n,t;
-		if (sd->state.lr_flag != LR_FLAG_ARROW) {
-			sd->sp_loss.value = type2;
-			sd->sp_loss.rate = val;
+		if (sd->state.lr_flag == LR_FLAG_ARROW)
+			break;
+		if (sd->sp_loss.size() == MAX_PC_BONUS) {
+			ShowWarning("pc_bonus2: SP_SP_LOSS_RATE: Reached max (%d) number of bonus per character!\n", MAX_PC_BONUS);
+			break;
 		}
+
+		pc_bonus_regen(sd->sp_loss, type2, val);
 		break;
 	case SP_SP_REGEN_RATE: // bonus2 bSPRegenRate,n,t;
-		if (sd->state.lr_flag != LR_FLAG_ARROW) {
-			sd->sp_regen.value = type2;
-			sd->sp_regen.rate = val;
+		if (sd->state.lr_flag == LR_FLAG_ARROW)
+			break;
+		if (sd->sp_regen.size() == MAX_PC_BONUS) {
+			ShowWarning("pc_bonus2: SP_SP_REGEN_RATE: Reached max (%d) number of bonus per character!\n", MAX_PC_BONUS);
+			break;
 		}
+
+		pc_bonus_regen(sd->sp_regen, type2, val);
 		break;
 	case SP_HP_DRAIN_VALUE_RACE: // bonus2 bHPDrainValueRace,r,n;
 		PC_BONUS_CHK_RACE(type2,SP_HP_DRAIN_VALUE_RACE);
@@ -6876,41 +6913,6 @@ bool pc_steal_item(map_session_data *sd,block_list *bl, uint16 skill_lv)
 		intif_broadcast(message, strlen(message) + 1, BC_DEFAULT);
 	}
 	return true;
-}
-
-/*==========================================
- * Stole zeny from bl (mob)
- * return
- *	0 = fail
- *	1 = success
- *------------------------------------------*/
-int32 pc_steal_coin(map_session_data *sd,block_list *target)
-{
-	int32 rate, target_lv;
-	mob_data *md;
-
-	if(!sd || !target || target->type != BL_MOB)
-		return 0;
-
-	md = (TBL_MOB*)target;
-	target_lv = status_get_lv(target);
-
-	if (md->state.steal_coin_flag || md->sc.getSCE(SC_STONE) || md->sc.getSCE(SC_FREEZE) || md->sc.getSCE(SC_HANDICAPSTATE_FROSTBITE) || 
-		md->sc.getSCE(SC_HANDICAPSTATE_SWOONING) || md->sc.getSCE(SC_HANDICAPSTATE_LIGHTNINGSTRIKE) || md->sc.getSCE(SC_HANDICAPSTATE_CRYSTALLIZATION) || 
-		status_bl_has_mode(target,MD_STATUSIMMUNE) || util::vector_exists(status_get_race2(md), RC2_TREASURE))
-		return 0;
-
-	rate = sd->battle_status.dex / 2 + 2 * (sd->status.base_level - target_lv) + (10 * pc_checkskill(sd, RG_STEALCOIN)) + sd->battle_status.luk / 2;
-	if(rnd()%1000 < rate)
-	{
-		// Zeny Steal Amount: (rnd() % (10 * target_lv + 1 - 8 * target_lv)) + 8 * target_lv
-		int32 amount = (rnd() % (2 * target_lv + 1)) + 8 * target_lv; // Reduced formula
-
-		pc_getzeny(sd, amount, LOG_TYPE_STEAL);
-		md->state.steal_coin_flag = 1;
-		return 1;
-	}
-	return 0;
 }
 
 /*==========================================
@@ -9889,7 +9891,14 @@ int32 pc_dead(map_session_data *sd,block_list *src)
 	if ((sd->menuskill_id) != 0)
 		sd->menuskill_id = sd->menuskill_val = 0;
 	//Reset ticks.
-	sd->hp_loss.tick = sd->sp_loss.tick = sd->hp_regen.tick = sd->sp_regen.tick = 0;
+	for (auto &it : sd->hp_loss)
+		it.tick = 0;
+	for (auto &it : sd->sp_loss)
+		it.tick = 0;
+	for (auto &it : sd->hp_regen)
+		it.tick = 0;
+	for (auto &it : sd->sp_regen)
+		it.tick = 0;
 
 	if ( sd->spiritball !=0 )
 		pc_delspiritball(sd,sd->spiritball,0);
@@ -11083,7 +11092,7 @@ bool pc_jobchange(map_session_data *sd,int32 job, char upper)
 }
 
 /*==========================================
- * Tell client player sd has change equipement
+ * Tell client player sd has change equipment
  *------------------------------------------*/
 void pc_equiplookall(map_session_data *sd)
 {
@@ -12903,76 +12912,76 @@ map_session_data* pc_get_child(const map_session_data* sd )
 /*==========================================
  * Set player sd to bleed. (losing hp and/or sp each diff_tick)
  *------------------------------------------*/
-void pc_bleeding (map_session_data *sd, t_tick diff_tick)
+void pc_bleeding (map_session_data& sd, t_tick diff_tick)
 {
 	int32 hp = 0, sp = 0;
 
-	if( pc_isdead(sd) )
+	if( pc_isdead(&sd) )
 		return;
 
-	if (sd->hp_loss.value) {
-		sd->hp_loss.tick += diff_tick;
-		while (sd->hp_loss.tick >= sd->hp_loss.rate) {
-			hp += sd->hp_loss.value;
-			sd->hp_loss.tick -= sd->hp_loss.rate;
+	for (auto &it : sd.hp_loss) {
+		it.tick += diff_tick;
+		while (it.tick >= it.rate) {
+			hp += it.value;
+			it.tick -= it.rate;
 		}
-		if(hp >= sd->battle_status.hp)
-			hp = sd->battle_status.hp-1; //Script drains cannot kill you.
+		if (hp >= sd.battle_status.hp)
+			hp = sd.battle_status.hp-1; //Script drains cannot kill you.
 	}
 
-	if (sd->sp_loss.value) {
-		sd->sp_loss.tick += diff_tick;
-		while (sd->sp_loss.tick >= sd->sp_loss.rate) {
-			sp += sd->sp_loss.value;
-			sd->sp_loss.tick -= sd->sp_loss.rate;
+	for (auto &it : sd.sp_loss) {
+		it.tick += diff_tick;
+		while (it.tick >= it.rate) {
+			sp += it.value;
+			it.tick -= it.rate;
 		}
 	}
 
 	if (hp > 0 || sp > 0)
-		status_zap(sd, hp, sp);
+		status_zap(&sd, hp, sp);
 }
 
 //Character regen. Flag is used to know which types of regen can take place.
 //&1: HP regen
 //&2: SP regen
-void pc_regen (map_session_data *sd, t_tick diff_tick)
+void pc_regen (map_session_data& sd, t_tick diff_tick)
 {
 	int32 hp = 0, sp = 0;
 
-	if (sd->hp_regen.value) {
-		sd->hp_regen.tick += diff_tick;
-		while (sd->hp_regen.tick >= sd->hp_regen.rate) {
-			hp += sd->hp_regen.value;
-			sd->hp_regen.tick -= sd->hp_regen.rate;
+	for (auto &it : sd.hp_regen) {
+		it.tick += diff_tick;
+		while (it.tick >= it.rate) {
+			hp += it.value;
+			it.tick -= it.rate;
 		}
 	}
 
-	if (sd->sp_regen.value) {
-		sd->sp_regen.tick += diff_tick;
-		while (sd->sp_regen.tick >= sd->sp_regen.rate) {
-			sp += sd->sp_regen.value;
-			sd->sp_regen.tick -= sd->sp_regen.rate;
+	for (auto &it : sd.sp_regen) {
+		it.tick += diff_tick;
+		while (it.tick >= it.rate) {
+			sp += it.value;
+			it.tick -= it.rate;
 		}
 	}
 
-	if (sd->percent_hp_regen.value) {
-		sd->percent_hp_regen.tick += diff_tick;
-		while (sd->percent_hp_regen.tick >= sd->percent_hp_regen.rate) {
-			hp += sd->status.max_hp * sd->percent_hp_regen.value / 100;
-			sd->percent_hp_regen.tick -= sd->percent_hp_regen.rate;
+	for (auto &it : sd.percent_hp_regen) {
+		it.tick += diff_tick;
+		while (it.tick >= it.rate) {
+			hp += sd.status.max_hp * it.value / 100;
+			it.tick -= it.rate;
 		}
 	}
 
-	if (sd->percent_sp_regen.value) {
-		sd->percent_sp_regen.tick += diff_tick;
-		while (sd->percent_sp_regen.tick >= sd->percent_sp_regen.rate) {
-			sp += sd->status.max_sp * sd->percent_sp_regen.value / 100;
-			sd->percent_sp_regen.tick -= sd->percent_sp_regen.rate;
+	for (auto &it : sd.percent_sp_regen) {
+		it.tick += diff_tick;
+		while (it.tick >= it.rate) {
+			sp += sd.status.max_sp * it.value / 100;
+			it.tick -= it.rate;
 		}
 	}
 
 	if (hp > 0 || sp > 0)
-		status_heal(sd, hp, sp, 0);
+		status_heal(&sd, hp, sp, 0);
 }
 
 /*==========================================

@@ -202,7 +202,7 @@ int32 intif_rename( const map_session_data* sd, int32 type, char* name )
  * @param mes : Message to send
  * @param len ; Size of the message
  * @param type : Color of msg
- * @return 0=error occured, 1=msg sent
+ * @return 0=error occurred, 1=msg sent
  */
 int32 intif_broadcast( const char* mes, size_t len, int32 type ){
 	nullpo_ret(mes);
@@ -436,7 +436,7 @@ int32 intif_saveregistry(map_session_data *sd)
 		lValid = script_check_RegistryVariableLength(0,varname,&len);
 		++len;
 
-		if (!lValid) { //this is sql colum size, must be retrive from config
+		if (!lValid) { //this is sql colum size, must be retrieve from config
 			ShowError("intif_saveregistry: Variable name length is too long (aid: %d, cid: %d): '%s' sz=%" PRIuPTR "\n", sd->status.account_id, sd->status.char_id, varname, len);
 			continue;
 		}
@@ -1386,7 +1386,7 @@ int32 mapif_parse_WisToGM(int32 fd)
 /**
  * Request player registry
  * @param fd : char-serv link
- * @return 0=error, 1=sucess
+ * @return 0=error, 1=success
  */
 void intif_parse_Registers(int32 fd)
 {
@@ -1485,7 +1485,7 @@ void intif_parse_Registers(int32 fd)
 /**
  * Received a guild storage
  * @param fd : char-serv link
- * @return 0=error, 1=sucess
+ * @return 0=error, 1=success
  */
 int32 intif_parse_LoadGuildStorage(int32 fd)
 {
@@ -1558,7 +1558,7 @@ int32 intif_parse_PartyCreated(int32 fd)
 /**
  * Receive party info
  * @param fd : char-serv link
- * @return 0=error, 1=sucess
+ * @return 0=error, 1=success
  */
 int32 intif_parse_PartyInfo(int32 fd)
 {
@@ -1658,7 +1658,7 @@ int32 intif_parse_GuildCreated(int32 fd)
 /**
  * ACK guild infos
  * @param fd : char-serv link
- * @return 0=error, 1=sucess
+ * @return 0=error, 1=success
  */
 int32 intif_parse_GuildInfo(int32 fd)
 {
@@ -1723,7 +1723,7 @@ int32 intif_parse_GuildBroken(int32 fd)
  * basic guild info change notice
  * 0x3839 <packet len>.w <guild id>.l <type>.w <data>.?b
  * @param fd : char-serv link
- * @return 0=error, 1=sucess
+ * @return 0=error, 1=success
  */
 int32 intif_parse_GuildBasicInfoChanged(int32 fd)
 {
@@ -1749,7 +1749,7 @@ int32 intif_parse_GuildBasicInfoChanged(int32 fd)
  * guild member info change notice
  * 0x383a <packet len>.w <guild id>.l <account id>.l <char id>.l <type>.w <data>.?b
  * @param fd : char-serv link
- * @return 0=error, 1=sucess
+ * @return 0=error, 1=success
  */
 int32 intif_parse_GuildMemberInfoChanged(int32 fd)
 {
@@ -1938,7 +1938,7 @@ int32 intif_parse_DeletePetOk(int32 fd)
 /**
  * ACK changing name resquest, players,pets,hommon
  * @param fd : char-serv link
- * @return 0=error, 1=sucess
+ * @return 0=error, 1=success
  */
 int32 intif_parse_ChangeNameOk(int32 fd)
 {
@@ -1966,7 +1966,7 @@ int32 intif_parse_ChangeNameOk(int32 fd)
 /**
  * ACK Homunculus creation
  * @param fd : char-serv link
- * @return 0=error, 1=sucess
+ * @return 0=error, 1=success
  */
 int32 intif_parse_CreateHomunculus(int32 fd)
 {
@@ -1984,7 +1984,7 @@ int32 intif_parse_CreateHomunculus(int32 fd)
 /**
  * ACK homunculus get data (load homun from char)
  * @param fd : char-serv link
- * @return 0=error, 1=sucess
+ * @return 0=error, 1=success
  */
 int32 intif_parse_RecvHomunculusData(int32 fd)
 {
@@ -2413,7 +2413,7 @@ bool intif_mail_getattach( map_session_data* sd, struct mail_message *msg, enum 
 /**
  * Receive the attachment from char-serv of a mail
  * @param fd : char-serv link
- * @return 0=error, 1=sucess
+ * @return 0=error, 1=success
  */
 int32 intif_parse_Mail_getattach(int32 fd)
 {
@@ -3758,7 +3758,7 @@ int32 intif_parse_clan_onlinecount( int32 fd ){
  * @param fd : inter-serv link
  * @return
  *  0 (unknow packet).
- *  1 sucess (no error)
+ *  1 success (no error)
  *  2 invalid length of packet (not enough data yet)
  */
 int32 intif_parse(int32 fd)

@@ -403,7 +403,7 @@ moc_fild15,267,264,5	script	Bulletin Board#26	837,{
 glast_01,369,308,5	script	Bulletin Board#28	837,{
 	mes "[Glast Heim]";
 	mes "Glast Heim is an enormous dungeon with countless levels.";
-	mes "This dungeon is definately not for new or experienced adventurers";
+	mes "This dungeon is definitely not for new or experienced adventurers";
 	mes "but for dungeon experts.";
 	next;
 	mes "[Glast Heim]";

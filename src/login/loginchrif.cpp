@@ -148,7 +148,7 @@ int32 logchrif_parse_ackusercount(int32 fd, int32 id){
  * Transmit account data to char_server
  * S 2717 aid.W email.40B exp_time.L group_id.B char_slot.B birthdate.11B pincode.5B pincode_change.L
  *  isvip.1B char_vip.1B max_billing.1B (tot 75)  
- * @return -1 : account not found, 1:sucess
+ * @return -1 : account not found, 1:success
  */
 int32 logchrif_send_accdata(int32 fd, uint32 aid) {
 	struct mmo_account acc;

@@ -648,7 +648,7 @@ int32 hom_evolution(homun_data *hd)
  * Make an homonculus mutate in renewal homon
  * @param hd : homonculus datas
  * @param homun_id : id to make it transform into (must be a valid homon class)
- * @return 0:failure, 1:sucess
+ * @return 0:failure, 1:success
  */
 int32 hom_mutate(homun_data *hd, int32 homun_id)
 {
@@ -1109,7 +1109,7 @@ void hom_init_timers(homun_data * hd)
 /**
  * Make a player spawn a homonculus (call)
  * @param sd
- * @return False:failure, True:sucess
+ * @return False:failure, True:success
  */
 bool hom_call(map_session_data *sd)
 {
@@ -1170,7 +1170,7 @@ bool hom_call(map_session_data *sd)
  * @param account_id : owner account_id of the homon
  * @param sh : homonculus data from char-serv
  * @param flag : does the creation in inter-serv was a success (0:no,1:yes)
- * @return 0:failure, 1:sucess
+ * @return 0:failure, 1:success
  */
 int32 hom_recv_data(uint32 account_id, struct s_homunculus *sh, int32 flag)
 {

@@ -20597,7 +20597,7 @@ Body:
     Name: Flame Manteau of Naght Sieger
     Type: Armor
     Buy: 20
-    Weight: 70
+    Weight: 500
     Defense: 4
     Slots: 1
     Jobs:
@@ -20643,7 +20643,7 @@ Body:
     Name: Leather of Tendrilion
     Type: Armor
     Buy: 20
-    Weight: 300
+    Weight: 500
     Defense: 3
     Slots: 1
     Jobs:

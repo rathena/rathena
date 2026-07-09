@@ -69,6 +69,7 @@ struct s_elemental_db {
 	uint16 range2, range3;
 	status_data status;
 	view_data vd;
+	uint16 damagetaken;
 	std::unordered_map<e_elemental_skillmode, std::shared_ptr<s_elemental_skill>> skill;	/// mode, skill
 };
 
@@ -94,7 +95,7 @@ struct s_elemental_data : public block_list {
 
 class ElementalDatabase : public TypesafeYamlDatabase<int32, s_elemental_db> {
 public:
-	ElementalDatabase() : TypesafeYamlDatabase("ELEMENTAL_DB", 1) {
+	ElementalDatabase() : TypesafeYamlDatabase("ELEMENTAL_DB", 2, 1) {
 
 	}
 

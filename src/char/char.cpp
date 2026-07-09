@@ -1695,16 +1695,12 @@ enum e_char_del_response char_delete(struct char_session_data* sd, uint32 char_i
 	/* delete skills */
 	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id`='%d'", schema_config.skill_db, char_id) )
 		Sql_ShowDebug(sql_handle);
-
-	/* delete mail attachments (only received) */
-	if (SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `id` IN ( SELECT `id` FROM `%s` WHERE `dest_id`='%d' )", schema_config.mail_attachment_db, schema_config.mail_db, char_id))
-		Sql_ShowDebug(sql_handle);
 	
-	/* delete mails (only received) */
+	/* delete mails and attachments, where the receiver was the deleted character */
 	if (SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `dest_id`='%d'", schema_config.mail_db, char_id))
 		Sql_ShowDebug(sql_handle);
 
-	/* mark mails as sent from server, if a character gets deleted */
+	/* mark mails as sent from server, where the sender was the deleted character */
 	if (SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `send_id`='0' WHERE `send_id`='%d'", schema_config.mail_db, char_id))
 		Sql_ShowDebug(sql_handle);
 
@@ -2311,7 +2307,7 @@ bool char_checkdb(void){
 		schema_config.clan_table, schema_config.clan_alliance_table, schema_config.mail_attachment_db, schema_config.achievement_table
 	};
 	ShowInfo("Start checking DB integrity\n");
-	for (i=0; i<ARRAYLENGTH(sqltable); i++){ //check if they all exist and we can acces them in sql-server
+	for (i=0; i<ARRAYLENGTH(sqltable); i++){ //check if they all exist and we can access them in sql-server
 		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` LIMIT 1;", sqltable[i]) ){
 			Sql_ShowDebug(sql_handle);
 			return false;
@@ -2698,6 +2694,7 @@ void char_set_default_sql(){
 	safestrncpy(schema_config.party_db,"party",sizeof(schema_config.party_db));
 	safestrncpy(schema_config.pet_db,"pet",sizeof(schema_config.pet_db));
 	safestrncpy(schema_config.mail_db,"mail",sizeof(schema_config.mail_db)); // MAIL SYSTEM
+	safestrncpy(schema_config.mail_attachment_db,"mail_attachments",sizeof(schema_config.mail_attachment_db));
 	safestrncpy(schema_config.auction_db,"auction",sizeof(schema_config.auction_db)); // Auctions System
 	safestrncpy(schema_config.friend_db,"friends",sizeof(schema_config.friend_db));
 	safestrncpy(schema_config.hotkey_db,"hotkey",sizeof(schema_config.hotkey_db));
