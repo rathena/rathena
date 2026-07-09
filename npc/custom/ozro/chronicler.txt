@@ -17,13 +17,17 @@ geffen,139,72,4	script	Kaz el Cronista	4_M_ZONDAOYAJI,{
 
 	mes "[Kaz el Cronista]";
 	mes "^990000*Un sabio escribe en un gran tomo con una pluma*^000000";
-	
-	if(select("Preguntarle sobre su trabajo:Dejarlo a sus quehaceres") == 2) {
+	next;
+
+	if (select("Preguntarle sobre su trabajo:Dejarlo a sus quehaceres") == 2) {
+		clear;
 		mes "[Kaz el Cronista]";
 		mes "^990000*El sabio continua escribiendo, profundamente concentrado en su labor*^000000";
 		close;
 	}
-	
+
+	clear;
+	mes "[Kaz el Cronista]";
 	mes "Saludos, aventurero. Soy Kaz,";
 	mes "Cronista Real de Rune-Midgard.";
 	next;
@@ -39,13 +43,15 @@ geffen,139,72,4	script	Kaz el Cronista	4_M_ZONDAOYAJI,{
 	mes "mi trabajo para el reino?";
 	next;
 	
-	if(select("Si, cuéntame mas:Deberia dejarte trabajar") == 2) {
+	if (select("Si, cuentame mas:Deberia dejarte trabajar") == 2) {
+		clear;
 		mes "[Kaz el Cronista]";
 		mes "^990000*Asiente cortesmente y vuelve a escribir*^000000";
 		mes "Muy bien. Que tu viaje sea seguro.";
 		close;
 	}
-	
+
+	clear;
 	mes "[Kaz el Cronista]";
 	mes "^990000*Consulta sus registros cuidadosamente*^000000";
 	mes "Segun mis observaciones mas recientes,";

@@ -27,25 +27,29 @@ izlude,131,142,4	script	EndowedSage	2_M_SAGE_OLD,{
 	switch (select("Fuego ardiente", "Viento cortante", "Hielo gelido", "Tierra firme")) {
 	case 1:
 		.@item$ = "Boody_Red"; // Red Blood
-		.@sc_id = SC_PROPERTYFIRE;
+		.@sc_id = SC_FIREWEAPON;
+		.@skill_id = SA_FLAMELAUNCHER;
 		mes .npc_name$;
 		mes "El fuego, esencia del caos y la destruccion. Buena eleccion.";
 		break;
 	case 2:
 		.@item$ = "Wind_Of_Verdure"; // Wind of Verdure
-		.@sc_id = SC_PROPERTYWIND;
+		.@sc_id = SC_WINDWEAPON;
+		.@skill_id = SA_LIGHTNINGLOADER;
 		mes .npc_name$;
 		mes "El viento, fuerza invisible que dobla la voluntad. Excelente.";
 		break;
 	case 3:
 		.@item$ = "Crystal_Blue"; // Crystal Blue
-		.@sc_id = SC_PROPERTYWATER;
+		.@sc_id = SC_WATERWEAPON;
+		.@skill_id = SA_FROSTWEAPON;
 		mes .npc_name$;
 		mes "El agua, molde silencioso del mundo. Sabia decision.";
 		break;
 	case 4:
 		.@item$ = "Yellow_Live"; // Green Live
-		.@sc_id = SC_PROPERTYGROUND;
+		.@sc_id = SC_EARTHWEAPON;
+		.@skill_id = SA_SEISMICWEAPON;
 		mes .npc_name$;
 		mes "La tierra, cimiento de toda vida. Noble eleccion.";
 		break;
@@ -61,7 +65,8 @@ izlude,131,142,4	script	EndowedSage	2_M_SAGE_OLD,{
 
 	delitem .@item$, 1;
 	Zeny -= .zeny_cost;
-	sc_start .@sc_id, 1800000, 0;
+	sc_start .@sc_id, 1800000, 1;
+	skilleffect .@skill_id, 1;
 	mes .npc_name$;
 	mes "Listo. Que tus enemigos tiemblen ante tu arma.";
 	mes "Ve y trae equilibrio... o caos, si eso prefieres.";
