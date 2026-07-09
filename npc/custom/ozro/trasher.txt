@@ -159,8 +159,7 @@ geffen,143,70,3	script	Garrett	1_M_SIGN1,{
 	case 2:
 		mes .npc_name$;
 		mes "Llevo " + TRSH_TotalSpent + " zeny invertidos en chatarra de aventureros.";
-		mes "He cerrado " + TRSH_TRADES + " tratos contigo en total.";
-		mes "Los que cuentan para mi confianza: " + TRSH_UniqueTrades + ".";
+		mes "Y contigo he cerrado " + TRSH_TRADES + " tratos. Cada uno cuenta.";
 		break;
 
 	case 3:
