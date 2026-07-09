@@ -24,6 +24,15 @@ yuno,145,185,4	script	Kessinger	4_M_ROTERT,{
 	}
 
 	.@Spirit = 0;
+
+	// Debug: valores reales de constantes vs personaje
+	mes .@name$;
+	mes "[Debug] BaseJob: " + BaseJob + " (" + jobname(BaseJob) + ")";
+	mes "Job_Alchemist = " + Job_Alchemist;
+	mes "SL_ALCHEMIST = " + SL_ALCHEMIST;
+	mes "BaseJob == Job_Alchemist: " + (BaseJob == Job_Alchemist);
+	next;
+
 	switch (BaseJob) {
 	case Job_Alchemist:      .@Spirit = SL_ALCHEMIST; break;
 	case Job_Monk:           .@Spirit = SL_MONK; break;
@@ -52,7 +61,8 @@ yuno,145,185,4	script	Kessinger	4_M_ROTERT,{
 	if (!.@Spirit) {
 		mes .@name$;
 		mes "No encuentro un espiritu para tu camino.";
-		mes "BaseJob: " + BaseJob + " (" + jobname(BaseJob) + ")";
+		mes "BaseJob: " + BaseJob + " | Job_Alchemist: " + Job_Alchemist;
+		mes "SL_ALCHEMIST: " + SL_ALCHEMIST + " | .@Spirit: " + .@Spirit;
 		close;
 	}
 
