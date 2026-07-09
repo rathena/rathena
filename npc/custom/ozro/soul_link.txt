@@ -2,6 +2,7 @@
 //= Kessinger, Vinculador de Almas
 //===== Description: =========================================
 //= Soul Link de pago. Espiritu segun BaseJob del personaje.
+//= IDs de espiritu = skill_db.yml (SL_* no existen como constante en scripts).
 //= Futuro: quest alarga .duration en OnInit (ver 04-npcs.md).
 //============================================================
 
@@ -24,34 +25,25 @@ yuno,145,185,4	script	Kessinger	4_M_ROTERT,{
 	}
 
 	.@Spirit = 0;
-
-	// Debug: valores reales de constantes vs personaje
-	mes .@name$;
-	mes "[Debug] BaseJob: " + BaseJob + " (" + jobname(BaseJob) + ")";
-	mes "Job_Alchemist = " + Job_Alchemist;
-	mes "SL_ALCHEMIST = " + SL_ALCHEMIST;
-	mes "BaseJob == Job_Alchemist: " + (BaseJob == Job_Alchemist);
-	next;
-
 	switch (BaseJob) {
-	case Job_Alchemist:      .@Spirit = SL_ALCHEMIST; break;
-	case Job_Monk:           .@Spirit = SL_MONK; break;
-	case Job_Star_Gladiator: .@Spirit = SL_STAR; break;
-	case Job_Sage:           .@Spirit = SL_SAGE; break;
-	case Job_Crusader:       .@Spirit = SL_CRUSADER; break;
-	case Job_SuperNovice:    .@Spirit = SL_SUPERNOVICE; break;
-	case Job_Knight:         .@Spirit = SL_KNIGHT; break;
-	case Job_Wizard:         .@Spirit = SL_WIZARD; break;
-	case Job_Priest:         .@Spirit = SL_PRIEST; break;
+	case Job_Alchemist:      .@Spirit = 445; break; // SL_ALCHEMIST
+	case Job_Monk:           .@Spirit = 447; break; // SL_MONK
+	case Job_Star_Gladiator: .@Spirit = 448; break; // SL_STAR
+	case Job_Sage:           .@Spirit = 449; break; // SL_SAGE
+	case Job_Crusader:       .@Spirit = 450; break; // SL_CRUSADER
+	case Job_SuperNovice:    .@Spirit = 451; break; // SL_SUPERNOVICE
+	case Job_Knight:         .@Spirit = 452; break; // SL_KNIGHT
+	case Job_Wizard:         .@Spirit = 453; break; // SL_WIZARD
+	case Job_Priest:         .@Spirit = 454; break; // SL_PRIEST
 	case Job_Bard:
-	case Job_Dancer:         .@Spirit = SL_BARDDANCER; break;
-	case Job_Rogue:          .@Spirit = SL_ROGUE; break;
-	case Job_Assassin:       .@Spirit = SL_ASSASIN; break;
-	case Job_Blacksmith:     .@Spirit = SL_BLACKSMITH; break;
-	case Job_Hunter:         .@Spirit = SL_HUNTER; break;
-	case Job_Soul_Linker:    .@Spirit = SL_SOULLINKER; break;
-	case Job_Ninja:          .@Spirit = SL_NINJA; break;
-	case Job_Gunslinger:     .@Spirit = SL_GUNNER; break;
+	case Job_Dancer:         .@Spirit = 455; break; // SL_BARDDANCER
+	case Job_Rogue:          .@Spirit = 456; break; // SL_ROGUE
+	case Job_Assassin:       .@Spirit = 457; break; // SL_ASSASIN
+	case Job_Blacksmith:     .@Spirit = 458; break; // SL_BLACKSMITH
+	case Job_Hunter:         .@Spirit = 460; break; // SL_HUNTER
+	case Job_Soul_Linker:    .@Spirit = 461; break; // SL_SOULLINKER
+	case Job_Ninja:          .@Spirit = 574; break; // SL_NINJA
+	case Job_Gunslinger:     .@Spirit = 575; break; // SL_GUNNER
 	default:
 		if (Upper == 2 && BaseLevel < 70)
 			.@Spirit = 494; // SL_HIGH
@@ -61,8 +53,7 @@ yuno,145,185,4	script	Kessinger	4_M_ROTERT,{
 	if (!.@Spirit) {
 		mes .@name$;
 		mes "No encuentro un espiritu para tu camino.";
-		mes "BaseJob: " + BaseJob + " | Job_Alchemist: " + Job_Alchemist;
-		mes "SL_ALCHEMIST: " + SL_ALCHEMIST + " | .@Spirit: " + .@Spirit;
+		mes "BaseJob: " + BaseJob + " (" + jobname(BaseJob) + ")";
 		close;
 	}
 
