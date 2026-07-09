@@ -35,9 +35,6 @@ geffen,139,72,4	script	Kaz el Cronista	4_M_ZONDAOYAJI,{
 	mes "[Kaz el Cronista]";
 	mes "Por decreto de Su Majestad, mantengo";
 	mes "registros detallados de todos los aventureros";
-	next;
-
-	mes "[Kaz el Cronista]";
 	mes "que viajan a traves de nuestro reino.";
 	next;
 
@@ -62,10 +59,7 @@ geffen,139,72,4	script	Kaz el Cronista	4_M_ZONDAOYAJI,{
 	mes "[Kaz el Cronista]";
 	mes "Segun mis observaciones mas recientes,";
 	mes "he visto ^0075E9" + getusers(1) + " aventureros^000000";
-	next;
-
-	mes "[Kaz el Cronista]";
-	mes "explorando nuestras tierras recientemente.";
+	mes "explorando nuestras tierras hoy.";
 	next;
 
 	mes "[Kaz el Cronista]";
