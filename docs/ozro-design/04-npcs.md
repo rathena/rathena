@@ -133,4 +133,5 @@ Hoy: 20 min de vinculo (`.duration` = 1.200.000 ms en `OnInit`).
 
 ## Comentarios
 
-<!-- Borrador libre para ideas de NPCs; luego organizar arriba -->
+Un Warper, para cuando se esta cazando por ejemplo un mvp y se muere mucho y hay que ir al mapa una y otra vez, en lugar de tener un monton de acolytes con warp portals memorizados, una lista de mapas precargados (o la posibilidad de grabar uno si se puede)
+cumpliendo algunos requisitos, como viajar primero hasta el mapa manualmente, que le vinculo dure solo un tiempo y luego se deba renovar y que gaste items, ademas de una quest con lore para desbloquearlo, una especie de Priest Viajero muy sabio que tiene memorizados muchos mapas y asi... o que en distintas ciudades uno lo encuentre y el le cuente que estuvo viajando por ciertas zonas y le habilite tp temporal a esas zonas.... y luego toque buscarlo en otra ciudad para otras zonas, o que el npc se oculte y toque hacer la mini quest para que vuelva a salir y asi....
