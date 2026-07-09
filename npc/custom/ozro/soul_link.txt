@@ -200,14 +200,22 @@ S_SpiritHint:
 	case Job_Ninja:
 		mes .name$;
 		mes "Hojas que caen antes de que el viento avise.";
-		mes "La sombra de Izlude te cubre";
-		mes "con un espiritu de sigilo letal.";
+		mes "Tu ataque magico crece un diez por ciento.";
+		mes "Tu vitalidad aumenta con tu nivel.";
+		next;
+		mes .name$;
+		mes "Las sombras refuerzan tu cuerpo";
+		mes "como si cada nivel te diera nueva vida.";
 		break;
 	case Job_Gunslinger:
 		mes .name$;
 		mes "Polvora, precision y humo tardio.";
-		mes "Cada disparo cuenta cuando el espiritu";
-		mes "del artillero guia tu punteria.";
+		mes "Con tu revolver podras usar habilidades";
+		mes "de cualquier arma que domines.";
+		next;
+		mes .name$;
+		mes "Tracking ya no exige tiempo de conjuro.";
+		mes "Y tu cuerpo se fortalece ocn cada nivel.";
 		break;
 	default:
 		mes .name$;
@@ -302,11 +310,13 @@ S_SpiritSuccess:
 		break;
 	case Job_Ninja:
 		mes "Has obtenido el espiritu de un gran ^666666Ninja^000000.";
-		mes "Que el silencio y la hoja sean tu aliado.";
+		mes "+10% de ataque magico y mas HP";
+		mes "segun tu nivel base.";
 		break;
 	case Job_Gunslinger:
 		mes "Has obtenido el espiritu de un gran ^CC9966Gunslinger^000000.";
-		mes "Que cada disparo cuente una historia breve.";
+		mes "Revolver universal, Tracking instantaneo";
+		mes "y mas HP segun tu nivel base.";
 		break;
 	default:
 		mes "Has obtenido el ^0055FFEspiritu del Renacimiento^000000.";
