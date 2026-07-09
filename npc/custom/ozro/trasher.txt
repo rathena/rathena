@@ -1,230 +1,246 @@
-/*=========================================================
-Garrett the Scavenger
-by Ozcodex
-===========================================================
-Description:
-A shrewd merchant with an eye for hidden value.
-He sees potential in items others might overlook,
-selecting two different items each day to purchase
-at premium prices.
-===========================================================
-Compatibility:
-Optimised for Hercules emulators.
-===========================================================
-Changelog:
-v1.0 - First version.
-v1.1 - Added price limits to maintain game economy
-v2.0 - Major refactor:
-       - Changed to 2 items (1 common, 1 misc) instead of 3
-       - Improved item selection to avoid duplicates
-       - Added daily spending tracking and limits
-       - Added historical spending tracking
-       - Improved price calculation with configurable increment
-       - Enhanced user interface and item display
-       - Added option to check total historical spending
-       - Better handling of insufficient items case
-v2.1 - Character enhancement:
-       - Renamed to Garrett the Scavenger
-       - Added more personality to dialogues
-       - Improved item inspection narrative
-v2.2 - Fixed bug where the NPC changes items every relog
-=========================================================*/
+//===== OzRo Script ==========================================
+//= Garrett el Recolector
+//===== Description: =========================================
+//= Compra chatarra diaria a buen precio. Karma por PJ.
+//= Cada 10 intercambios: Moneda de Bronce OzRo (silencioso).
+//============================================================
 
 geffen,143,70,3	script	Garrett	1_M_SIGN1,{
-	
-	/*-----------------------------------------------------
-	Script
-	-----------------------------------------------------*/
-	// Initialize account variables if they don't exist (only when player interacts)
-	if (#TRSH_DailySpend <= 0) #TRSH_DailySpend = 0;
-	if (#TRSH_TotalSpent <= 0) #TRSH_TotalSpent = 0;
-	
-	mes .npc_name$;
-	
-	// Check if we have reached the daily spending limit
-	if (#TRSH_DailySpend >= .daily_spending_limit) {
-		mes "Ah, amigo mio! He agotado mi bolsa de monedas por hoy.";
-		mes "El mercado ha sido bastante generoso, no crees?";
-		mes "Vuelve otro dia, seguro tendre nuevas oportunidades para ambos.";
+
+	.@weekday = gettime(DT_DAYOFWEEK);
+
+	if (.@weekday != TRSH_LastDay || TRSH_Item0$ == "" || TRSH_Item1$ == "") {
+		TRSH_LastDay = .@weekday;
+		TRSH_DailySpend = 0;
+		.@size0 = getarraysize(.common_items$);
+		.@size1 = getarraysize(.misc_items$);
+		TRSH_Item0$ = .common_items$[rand(.@size0)];
+		do {
+			TRSH_Item1$ = .misc_items$[rand(.@size1)];
+		} while (TRSH_Item1$ == TRSH_Item0$);
+	}
+
+	if (TRSH_DailySpend >= .daily_spending_limit) {
+		mes .npc_name$;
+		mes "Amigo, ya no me queda una moneda en la bolsa hoy.";
+		mes "Vuelve manana. Siempre hay basura nueva que vale la pena.";
 		close;
 	}
-	
-	// Get weekday and check if we need to update
-	.@weekday = gettime(GETTIME_WEEKDAY);
-	
-	// Update items if:
-	// - It's a different day than last update
-	// - LastTrashDay is invalid (not 0-6)
-	// - Any selected item is invalid (id = 0)
-	if (.@weekday != #LastTrashDay || 
-		#LastTrashDay < 0 || #LastTrashDay > 6 ||
-		#TodayItem0 == 0 || 
-		#TodayItem1 == 0) {
-		
-		// Reset daily spending and update last day
-		#LastTrashDay = .@weekday;
-		#TRSH_DailySpend = 0;
-		
-		// Select one item from common items
-		.@rand = rand(getarraysize(.common_items));
-		#TodayItem0 = .common_items[.@rand];
 
-		// Select one item from misc items
-		.@rand = rand(1,getarraysize(.misc_items));
-		#TodayItem1 = .misc_items[.@rand];
-	}
-	
-	// Calculate prices for both items
-	.@item_id0 = #TodayItem0;
-	.@base_price0 = getiteminfo(.@item_id0, ITEMINFO_SELLPRICE);
-	.@price0 = .@base_price0 * .increment;
+	.@price0 = getiteminfo(TRSH_Item0$, ITEMINFO_SELL) * .increment;
 	if (.@price0 < .min_price) .@price0 = .min_price;
 	if (.@price0 > .max_price) .@price0 = .max_price;
-	
-	.@item_id1 = #TodayItem1;
-	.@base_price1 = getiteminfo(.@item_id1, ITEMINFO_SELLPRICE);
-	.@price1 = .@base_price1 * .increment;
+
+	.@price1 = getiteminfo(TRSH_Item1$, ITEMINFO_SELL) * .increment;
 	if (.@price1 < .min_price) .@price1 = .min_price;
 	if (.@price1 > .max_price) .@price1 = .max_price;
-	
-	mes "Ah, bienvenido amigo! Dicen que la basura de un hombre es el tesoro de otro...";
-	mes "Y hoy, tengo mi ojo puesto en algunos articulos particularmente interesantes.";
-	next;
-	
+
 	mes .npc_name$;
-	mes "Mi bolsa aun tiene " + (.daily_spending_limit - #TRSH_DailySpend) + " zeny para las aventuras de hoy.";
+	if (OZRO_KARMA < 0) {
+		mes "Tu otra vez...";
+		mes "No me gusta tu aura, pero el negocio es el negocio.";
+	} else if (OZRO_KARMA > 0) {
+		mes "Ah, " + strcharinfo(0) + "! Me alegra verte.";
+		mes "Tienes buen ojo para lo que vale la pena, eso se nota.";
+	} else {
+		mes "Bienvenido, forastero.";
+		mes "Dicen que la basura de un hombre es el tesoro de otro.";
+	}
+	mes "Hoy tengo el ojo puesto en cosas interesantes.";
 	next;
-	
+
 	mes .npc_name$;
-	mes "Ahora, dejame decirte que ha captado mi ojo experto:";
-	mes "- Un fino " + getitemname(#TodayItem0) + " - ofrecere " + .@price0 + " zeny cada uno";
-	mes "- Y cualquier " + getitemname(#TodayItem1) + " - vale " + .@price1 + " zeny para mi";
-	
+	mes "Me quedan " + (.daily_spending_limit - TRSH_DailySpend) + " zeny para comprar hoy.";
 	next;
-	switch(select("Comerciar con Garrett:Preguntar sobre el negocio:Marcharse")) {
-		case 1:
+
+	mes .npc_name$;
+	mes "Busco:";
+	mes "- " + getitemname(TRSH_Item0$) + " — " + .@price0 + " zeny c/u";
+	mes "- " + getitemname(TRSH_Item1$) + " — " + .@price1 + " zeny c/u";
+	next;
+
+	switch (select("Comerciar", "Sobre tu negocio", "Marcharme")) {
+	case 1:
+		.@menu$ = getitemname(TRSH_Item0$) + ":" + getitemname(TRSH_Item1$) + ":Cambie de opinion";
+		.@selected = select(.@menu$) - 1;
+		if (.@selected == 2) {
 			mes .npc_name$;
-			mes "Excelente! De cual tesoro te gustaria desprenderte?";
+			mes "Sin prisa. Los buenos tratos requieren calma.";
+			close;
+		}
+
+		if (.@selected == 0) {
+			.@item$ = TRSH_Item0$;
+			.@price = .@price0;
+		} else {
+			.@item$ = TRSH_Item1$;
+			.@price = .@price1;
+		}
+
+		mes .npc_name$;
+		mes "Cuantos " + getitemname(.@item$) + " me vendes?";
+		mes "Tienes " + countitem(.@item$) + " en el inventario.";
+		next;
+
+		input .@amount;
+		if (.@amount <= 0) {
+			mes .npc_name$;
+			mes "Vamos, hablemos en serio.";
+			close;
+		}
+		if (countitem(.@item$) < .@amount) {
+			mes .npc_name$;
+			mes "No tienes tantos. Solo llevas " + countitem(.@item$) + ".";
 			next;
-			
-			.@menu$ = getitemname(#TodayItem0);
-			.@menu$ += ":" + getitemname(#TodayItem1);
-			.@menu$ += ":Cambie de opinion";
-			
-			.@selected = select(.@menu$) - 1;
-			if (.@selected == 2) {
+			if (select("Vendo los que tengo", "Mejor despues") == 2) {
 				mes .npc_name$;
-				mes "Sin prisa, amigo. Los buenos negocios requieren reflexion.";
+				mes "Vuelve cuando tengas mas.";
 				close;
 			}
-			
-			.@item_id = getd("#TodayItem" + .@selected);
-			.@price = getd(".@price" + .@selected);
-			
+			.@amount = countitem(.@item$);
+			if (.@amount <= 0) close;
+		}
+
+		.@total = .@price * .@amount;
+		if (TRSH_DailySpend + .@total > .daily_spending_limit) {
 			mes .npc_name$;
-			mes "Ah, el " + getitemname(.@item_id) + "! Cuantos te gustaria comerciar?";
-			mes "Veo que tienes " + countitem(.@item_id) + " contigo.";
-			next;
-			
-			input .@amount;
-			if (.@amount <= 0) {
-				mes .npc_name$;
-				mes "Vamos, seamos serios con nuestros negocios.";
-				close;
-			}
-			if (countitem(.@item_id) < .@amount) {
-				mes .npc_name$;
-				mes "Hmm... pareces estar corto de inventario.";
-				mes "Solo tienes " + countitem(.@item_id) + " " + getitemname(.@item_id) + "(s).";
-				mes "Negociamos con lo que tienes?";
-				next;
-				if(select("Si, hagamoslo:No, quiza despues") == 1) {
-					.@amount = countitem(.@item_id);
-				} else {
-					mes .npc_name$;
-					mes "Muy bien. Vuelve cuando tu inventario iguale tu ambicion!";
-					close;
-				}
-			}
-			
-			.@total = .@price * .@amount;
-			if (#TRSH_DailySpend + .@total > .daily_spending_limit) {
-				mes .npc_name$;
-				mes "Ah, me temo que eso excede mi presupuesto diario.";
-				mes "Solo puedo gastar " + (.daily_spending_limit - #TRSH_DailySpend) + " zeny mas hoy.";
-				mes "Quizas una cantidad menor?";
-				close;
-			}
-			
+			mes "Eso pasa mi presupuesto de hoy.";
+			mes "Solo puedo gastar " + (.daily_spending_limit - TRSH_DailySpend) + " zeny mas.";
+			close;
+		}
+
+		mes .npc_name$;
+		mes .@amount + " x " + getitemname(.@item$) + " = " + .@total + " zeny. Trato?";
+		next;
+		if (select("Trato hecho", "Paso") == 2) {
 			mes .npc_name$;
-			mes "Por " + .@amount + " " + getitemname(.@item_id) + "(s), pagare " + .@total + " zeny.";
-			mes "Un trato justo, no crees?";
-			next;
-			
-			if(select("Trato hecho!:Paso") == 2) {
-				mes .npc_name$;
-				mes "La puerta a la oportunidad permanece abierta, amigo.";
-				close;
-			}
-			
-			delitem .@item_id, .@amount;
-			Zeny += .@total;
-			#TRSH_DailySpend += .@total;
-			#TRSH_TotalSpent += .@total;
-			
-			mes .npc_name$;
-			mes "Un placer hacer negocios!";
-			if (#TRSH_DailySpend >= .daily_spending_limit) {
-				mes "Y con eso, he alcanzado mi limite de gasto por hoy.";
-				mes "Pero manana trae nuevas oportunidades!";
-			} else {
-				mes "Siempre estoy al acecho de mas tesoros.";
-				mes "Cada dia trae nuevos intereses!";
-			}
-			break;
-			
-		case 2:
-			mes .npc_name$;
-			mes "Curioso sobre mis empresas? He invertido " + #TRSH_TotalSpent + " zeny en tesoros de aventureros como tu.";
-			mes "Cada moneda bien gastada, diria yo!";
-			break;
-			
-		case 3:
-			mes .npc_name$;
-			mes "Viajes seguros, amigo. Recuerda, la basura de hoy podria ser la riqueza de manana!";
-			break;
+			mes "La puerta sigue abierta.";
+			close;
+		}
+
+		delitem .@item$, .@amount;
+		Zeny += .@total;
+		TRSH_DailySpend += .@total;
+		TRSH_TotalSpent += .@total;
+		TRSH_TRADES++;
+		OZRO_KARMA += .karma_per_trade;
+
+		mes .npc_name$;
+		mes "Un placer hacer negocios.";
+		if (TRSH_DailySpend >= .daily_spending_limit) {
+			mes "Con eso agoto el presupuesto de hoy.";
+			mes "Manana habra mas oportunidades.";
+		}
+
+		if (TRSH_TRADES % .trades_for_coin == 0) {
+			getitem "Ozro_Bronze_Coin", 1;
+			mes "Por cierto... eres un sujeto agradable.";
+			mes "Creo que esto te sirve mas a ti que a mi.";
+		}
+		break;
+
+	case 2:
+		mes .npc_name$;
+		mes "Llevo " + TRSH_TotalSpent + " zeny invertidos en chatarra de aventureros.";
+		mes "Y contigo he cerrado " + TRSH_TRADES + " tratos. Cada uno cuenta.";
+		break;
+
+	case 3:
+		mes .npc_name$;
+		mes "Buen viaje. La basura de hoy puede ser la riqueza de manana.";
+		break;
 	}
 	close;
-	
-	/*-----------------------------------------------------
-	Configuration
-	-----------------------------------------------------*/
-	OnInit:
-		.npc_name$ = "[ ^0000FFGarrett el Recolector^000000 ]";
-		// Price limits configuration
-		.increment = 10;     // Price multiplier
-		.min_price = 100;    // Minimum price for any item
-		.max_price = 2000;   // Maximum price for any item
-		.daily_spending_limit = 1243000; // 1M zeny daily limit
-		
-		// Item list configuration - Common items and misc items
-		setarray(.common_items[0],
-			511, 609, 512, 967, 962, 960, 959, 955, 951, 948,
-			943, 941, 938, 937, 936, 935, 934, 932, 930, 928,
-			926, 924, 920, 919, 918, 916, 915, 913, 909, 908,
-			907, 746);
-			
-		setarray(.misc_items[0],
-			511, 609, 512, 967, 962, 960, 959, 955, 951, 948,
-			943, 941, 938, 937, 936, 935, 934, 932, 930, 928,
-			926, 924, 920, 919, 918, 916, 915, 913, 909, 908,
-			907, 746,
-			1099, 1098, 1096, 1095, 1057, 1056, 1055, 1054,
-			1052, 1045, 1043, 1042, 1037, 1035, 1034, 1033,
-			1028, 1024, 1023, 1022, 1020, 1019, 1018, 1001,
-			7568, 7507, 7347, 7345, 7319, 7317, 7262, 7197,
-			7188, 7167, 7150, 7126, 7123, 7122, 7116, 7070,
-			7069, 7067, 7066, 7054, 7053, 7047, 7032, 7030,
-			7006, 7005, 7004, 7001);
-		end;
+
+OnInit:
+	.npc_name$ = "[ ^0000FFGarrett el Recolector^000000 ]";
+	.increment = 10;
+	.min_price = 100;
+	.max_price = 2000;
+	.daily_spending_limit = 300000;
+	.trades_for_coin = 10;
+	.karma_per_trade = 1;
+
+	setarray .common_items$[0],
+		"Jellopy",          // 909
+		"Garlet",           // 910
+		"Scell",            // 911
+		"Zargon",           // 912
+		"Tooth_Of_Bat",     // 913
+		"Fluff",            // 914
+		"Chrysalis",        // 915
+		"Feather_Of_Birds", // 916
+		"Talon",            // 917
+		"Spawn",            // 918
+		"Peaked_Hat",       // 919
+		"Fin",              // 920
+		"Cactus_Needle",    // 921
+		"Stone_Heart",      // 953
+		"Shining_Scales",   // 954
+		"Worm_Peelings",    // 955
+		"Gill",             // 956
+		"Decayed_Nail",     // 957
+		"Horrendous_Mouth", // 958
+		"Rotten_Scale",     // 959 Stinky Scale
+		"Nipper",           // 960
+		"Conch",            // 961
+		"Coral_Reef",       // 962
+		"Limpid_Celestial_Robe", // 964
+		"Cyfar",            // 7053
+		"Brigan",           // 7054
+		"Animal's_Skin",    // skin
+		"Feather";          // 949
+
+	setarray .misc_items$[0],
+		"Sticky_Mucus",     // 938
+		"Bee_Sting",        // 939
+		"Grasshopper's_Leg",// 940
+		"Solid_Shell",      // 943
+		"Horseshoe",        // 944
+		"Raccoon_Leaf",     // 945
+		"Snail's_Shell",    // 946
+		"Horn",             // 947
+		"Bear's_Foot",      // 948
+		"Feather",          // 949
+		"Heart_Of_Mermaid", // 950
+		"Fin",              // 920
+		"Cactus_Needle",    // 921
+		"Stone",            // 7049
+		"Wooden_Block",     // 1019 Trunk
+		"Tree_Root",        // 902
+		"Stem",             // 905
+		"Pointed_Scale",    // 906
+		"Resin",            // 907
+		"Spawn",            // 918
+		"Powder_Of_Butterfly", // 924
+		"Bill_Of_Birds",    // 925
+		"Scale_Of_Snakes",  // 926 Snake Scale
+		"Insect_Feeler",    // 928
+		"Immortal_Heart",   // 929
+		"Rotten_Bandage",   // 930
+		"Orcish_Voucher",   // 931
+		"Skel_Bone",        // 932
+		"Mementos",         // 934
+		"Skull",            // 935
+		"Red_Socks_With_Holes", // 736
+		"Phracon",          // 1010
+		"Emveretarcon",     // 1011
+		"Nail_Of_Orc",      // 1043 Orc Claw
+		"Evil_Horn",        // 923
+		"Detrimindexta",    // 971
+		"Karvodailnirol",   // 972
+		"Fish_Tail",        // 1023
+		"Jaws_Of_Ant",      // 1014 Ant Jaw
+		"Anolian_Skin",     // 7003
+		"Piece_Of_Egg_Shell", // 7032
+		"Poison_Spore",     // 7033
+		"Sticky_Webfoot",   // 7041
+		"Starsand_Of_Witch", // 1061 Witched Starsand
+		"Burning_Heart",    // 7097
+		"Live_Coal",        // 7098
+		"Old_Frying_Pan",   // 7031
+		"Yoyo_Tail",        // 942
+		"Cyfar",            // 7053
+		"Brigan";           // 7054
+	end;
 }

@@ -14,6 +14,10 @@ Inventario de NPCs OzRo. Config: `npc/scripts_custom.conf`
 | Card Collector | `card_collector.txt` | Archivo de cartas por cuenta, % progreso |
 | Card Remover | `card_remover.txt` | Quitar cartas de equip |
 | Kaz el Cronista | `chronicler.txt` | Lore básico; conteo jugadores — **expandir como guía** |
+| Sabio de los Elementos | `endow_sage.txt` | Endow elemental (zeny + piedra) — Izlude, Prontera, Morocc, Geffen |
+| Ludovico el Sepulturero | `gravekeeper.txt` | Muertes del PJ + contador global `$OZRO_DEATHS_TOTAL` |
+| Kessinger | `soul_link.txt` | Soul Link de pago (20k zeny); incluye Ninja, Gunslinger, Renacimiento |
+| Garrett el Recolector | `trasher.txt` | Compra chatarra diaria; karma por PJ; moneda bronce cada 10 tratos |
 | Bounty Boards | `bounty/*.txt` | Misiones de caza por ciudad (14 mapas) |
 | Quests repetibles | `repeteables/*.txt` | EXP repetible por monstruo (17 quests) |
 
@@ -22,10 +26,6 @@ Inventario de NPCs OzRo. Config: `npc/scripts_custom.conf`
 | NPC | Archivo | Función | Notas |
 |-----|---------|---------|-------|
 | Dungeon Warper | `dungeon_warper.txt` | Teleport a dungeons | QoL solo/LAN |
-| Endow Sage | `endow_sage.txt` | Encanta armas elementales | Doc viejo: "Endower" |
-| Gravekeeper | `gravekeeper.txt` | ? | Revisar script |
-| Soul Linker | `soul_link.txt` | Buffs SL por zeny | Doc: añadir Rebirth Soul |
-| Thrasher | `trasher.txt` | Compra items aleatorios caro | Sink de zeny |
 | Hunting Missions | `hunting_missions.txt` | Misiones caza aleatorias + shop | Candidato daily loop |
 
 ## Perdidos / sin portar desde Hercules `hercules`
@@ -58,6 +58,16 @@ Inventario de NPCs OzRo. Config: `npc/scripts_custom.conf`
 | Floating rates | `npc/custom/etc/floating_rates.txt` | Evento automático rates |
 | Marriage | `npc/custom/etc/marriage.txt` | ? |
 | Monster arena | `npc/custom/etc/monster_arena.txt` | Competencia PvE |
+
+## Variables de script (NPCs)
+
+| Variable | Alcance | Uso |
+|----------|---------|-----|
+| `OZRO_KARMA` | Personaje | Reputacion/karma firmado (`>0` bueno, `<0` malo). Garrett suma +1 por trato |
+| `TRSH_TRADES` | Personaje | Intercambios con Garrett |
+| `TRSH_DailySpend` / `TRSH_TotalSpent` / `TRSH_LastDay` | Personaje | Economia diaria Garrett |
+| `TRSH_Item0$` / `TRSH_Item1$` | Personaje | Items del dia (AegisName) |
+| `$OZRO_DEATHS_TOTAL` | Global servidor | Muertes registradas (`ozro_death_tracker`) |
 
 ## Evolución planificada por NPC
 

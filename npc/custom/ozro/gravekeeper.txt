@@ -1,32 +1,61 @@
-//===== Hercules Script ======================================
-//= Gravekeeper Ludovico
-//===== By: ==================================================
-//= Ozcodex
-//===== Current Version: =====================================
-//= 1.0
+//===== OzRo Script ==========================================
+//= Ludovico el Sepulturero + contador global de muertes
 //===== Description: =========================================
-//= Tracks and narrates a player's death count.
+//= Narra las muertes del personaje y estadisticas del reino.
 //============================================================
+
+-	script	ozro_death_tracker	-1,{
+OnPCDieEvent:
+	set $OZRO_DEATHS_TOTAL, $OZRO_DEATHS_TOTAL + 1;
+	end;
+}
 
 prontera,274,352,3	script	Gravekeeper Ludovico	1_M_PASTOR,{
 
-    .@deaths = PC_DIE_COUNTER;
+	.@deaths = PC_DIE_COUNTER;
+	.@global = $OZRO_DEATHS_TOTAL;
 
-    mes "^FF0000[Gravekeeper Ludovico]^000000";
-    mes "Cada vez que un alma se separa de su vasija, deja un eco frio en este mundo.";
-    mes "Yo soy quien escucha esos ecos.";
-    next;
+	mes "^FF0000[Ludovico el Sepulturero]^000000";
+	mes "Cada vez que un alma se separa de su vasija, deja un eco frio en este mundo.";
+	mes "Yo soy quien escucha esos ecos.";
+	next;
 
-    if (.@deaths == 0) {
-        mes "^FF0000[Ludovico]^000000";
-        mes "Tu hilo de vida es notablemente fuerte, viajero. Ni un solo nudo, ni una sola ruptura.";
-        mes "Que los dioses lo mantengan asi.";
-    } else {
-        mes "^FF0000[Ludovico]^000000";
-        mes "Tu destino esta marcado por la lucha y la perseverancia.";
-        mes "Veo el peso de ^FF0000" + .@deaths + " muertes^000000 sobre tus hombros.";
-        mes "No te averguences. Cada retorno del abismo es una victoria sobre Hela misma.";
-    }
-    
-    close;
+	switch (select("Mis muertes", "Ecos del reino", "Irme")) {
+	case 1:
+		mes "^FF0000[Ludovico]^000000";
+		if (.@deaths == 0) {
+			mes "Tu hilo de vida es notablemente fuerte, viajero.";
+			mes "Ni un solo nudo, ni una sola ruptura.";
+			mes "Que los dioses lo mantengan asi.";
+		} else if (.@deaths <= 10) {
+			mes "Tu destino esta marcado por la lucha y la perseverancia.";
+			mes "Veo el peso de ^FF0000" + .@deaths + " muertes^000000 sobre tus hombros.";
+			mes "No te averguences. Cada retorno del abismo es una victoria.";
+		} else if (.@deaths <= 50) {
+			mes "Has caido muchas veces, y aun asi sigues en pie.";
+			mes "Llevas ^FF0000" + .@deaths + " muertes^000000 en tu registro.";
+			mes "Los veteranos saben que el abismo tambien ensenna.";
+		} else {
+			mes "Por los dioses... ^FF0000" + .@deaths + " muertes^000000.";
+			mes "Tu alma conoce el camino de vuelta mejor que nadie.";
+			mes "Hela misma debe reconocerte al ver llegar.";
+		}
+		break;
+	case 2:
+		mes "^FF0000[Ludovico]^000000";
+		mes "En todo el reino he contado ^FF0000" + .@global + " ecos de muerte^000000.";
+		mes "Cada caida de un aventurero deja huella en la tierra.";
+		if (.@global == 0) {
+			mes "Aun no he sentido ninguna... un tiempo de paz, quizas.";
+		} else if (.@deaths > 0 && .@global > 0) {
+			.@pct = .@deaths * 100 / .@global;
+			mes "Tus caidas representan aproximadamente el ^0075E9" + .@pct + "%^000000 de los ecos que he escuchado.";
+		}
+		break;
+	case 3:
+		mes "^FF0000[Ludovico]^000000";
+		mes "Que tu hilo de vida se mantenga firme, viajero.";
+		break;
+	}
+	close;
 }

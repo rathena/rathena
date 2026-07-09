@@ -1,25 +1,32 @@
+//===== OzRo Script ==========================================
+//= Kessinger, Vinculador de Almas
+//===== Description: =========================================
+//= Soul Link de pago para jobs compatibles.
+//============================================================
+
 yuno,145,185,4	script	Kessinger	4_M_ROTERT,{
 
-	.@name$ = "[ ^0000FFKessinger^000000 ]";
-	.@Duration = 1200000; // Buff duration (ms)
-	.@Price = 20000; // Price in zeny
+	.@name$ = "[ ^0000FFKessinger, Vinculador de Almas^000000 ]";
 
-	mes(.@name$);
-	mesf("Hello %s, do", strcharinfo(PC_NAME));
-	mes("you want me to Soul Link you?");
-	next();
-	if (select("Yes", "No") == 2) {
-		mes(.@name$);
-		mes("Okay, goodbye!");
-		close();
-	}
-	if (Zeny < .@Price) {
-		mes(.@name$);
-		mes("You need 50,000 Zeny for a Soul Link.");
-		close();
+	mes .@name$;
+	mes "Hola " + strcharinfo(0) + ",";
+	mes "quieres que te vincule con un espiritu ancestral?";
+	mes "El ritual cuesta " + .price + " zeny.";
+	next;
+
+	if (select("Si, vinculame", "No, gracias") == 2) {
+		mes .@name$;
+		mes "Como quieras. Los espiritus esperaran.";
+		close;
 	}
 
-	Zeny -= .@Price;
+	if (Zeny < .price) {
+		mes .@name$;
+		mes "Necesitas " + .price + " zeny para el ritual.";
+		close;
+	}
+
+	.@Spirit = 0;
 	switch (BaseJob) {
 	case Job_Alchemist:
 		.@Spirit = SL_ALCHEMIST;
@@ -67,22 +74,39 @@ yuno,145,185,4	script	Kessinger	4_M_ROTERT,{
 	case Job_Soul_Linker:
 		.@Spirit = SL_SOULLINKER;
 		break;
+	case Job_Ninja:
+		.@Spirit = SL_NINJA;
+		break;
+	case Job_Gunslinger:
+		.@Spirit = SL_GUNNER;
+		break;
 	default:
-		if (Upper == ITEMUPPER_UPPER && BaseLevel < 70)
+		if (Upper == 2 && BaseLevel < 70)
 			.@Spirit = SL_HIGH;
-		else {
-			mes(.@name$);
-			mes("Unable to Soul Link.");
-			close();
-		}
 		break;
 	}
 
-	if (.@Spirit) {
-		sc_start2(SC_SOULLINK, .@Duration, 5, .@Spirit);
-		skilleffect(.@Spirit, 5);
+	if (!.@Spirit) {
+		mes .@name$;
+		mes "Lo siento. No encuentro un espiritu compatible con tu camino.";
+		close;
 	}
-	close();
+
+	Zeny -= .price;
+	sc_start2 SC_SOULLINK, .duration, 5, .@Spirit;
+	skilleffect .@Spirit, 5;
+
+	mes .@name$;
+	if (.@Spirit == SL_HIGH)
+		mes "Siente el ^0055FFEspiritu del Renacimiento^000000 fluir en ti.";
+	else
+		mes "El vinculo esta hecho. Que el espiritu te guie en batalla.";
+	close;
+
+OnInit:
+	.duration = 1200000;
+	.price = 20000;
+	end;
 }
 
 prontera,161,185,4	duplicate(Kessinger)	Kessinger#protera	4_M_ROTERT

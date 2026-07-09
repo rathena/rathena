@@ -1,81 +1,78 @@
+//===== OzRo Script ==========================================
+//= Sabio de los Elementos
+//===== Description: =========================================
+//= Imbuye propiedad elemental al arma (endow) a cambio de
+//= zeny y piedra elemental.
+//============================================================
+
 izlude,131,142,4	script	EndowedSage	2_M_SAGE_OLD,{
 
-    /*-----------------------------------------------------
-    Script
-    -----------------------------------------------------*/
-    mes(.npc_name$);
-    mes("Ah, a seeker of power approaches!");
-    mes("Do you wish to wield the forces of nature upon your weapon?");
-    mes("It will cost you only " + .zeny_cost + " zeny and the corresponding elemental stone.");
-    next;
+	mes .npc_name$;
+	mes "Ah, un buscador de poder se acerca.";
+	mes "Deseas canalizar las fuerzas de la naturaleza en tu arma?";
+	mes "Solo te costara " + .zeny_cost + " zeny y la piedra elemental correspondiente.";
+	next;
 
-    if (Zeny < .zeny_cost) {
-        mes(.npc_name$);
-        mes("Tsk, tsk! Power is not for the penniless, my friend.");
-        mes("Return when you have the coin to pay for nature's blessings.");
-        close;
-    }
+	if (Zeny < .zeny_cost) {
+		mes .npc_name$;
+		mes "Tsk, tsk. El poder no es para los que no tienen monedas.";
+		mes "Vuelve cuando puedas pagar las bendiciones de la naturaleza.";
+		close;
+	}
 
-    mes(.npc_name$);
-    mes("Tell me, which element do you seek?");
-    next;
+	mes .npc_name$;
+	mes "Dime, que elemento buscas?";
+	next;
 
-    switch (select("Blazing Fire", "Gust Wind", "Freezing Ice", "Seismic Stone")) {
-        case 1:
-            .@item_name$ = "Red Blood";
-            .@sc_id = SC_PROPERTYFIRE;
-            mes(.npc_name$);
-            mes("Fire, the very essence of chaos and destruction. A fine choice!");
-            break;
-        case 2:
-            .@item_name$ = "Wind of Verdure";
-            .@sc_id = SC_PROPERTYWIND;
-            mes(.npc_name$);
-            mes("Wind, the invisible force that bends all to its will. An excellent pick!");
-            break;
-        case 3:
-            .@item_name$ = "Crystal Blue";
-            .@sc_id = SC_PROPERTYWATER;
-            mes(.npc_name$);
-            mes("Water, the silent and relentless shaper of worlds. Wise indeed!");
-            break;
-        case 4:
-            .@item_name$ = "Green Live";
-            .@sc_id = SC_PROPERTYGROUND;
-            mes(.npc_name$);
-            mes("Earth, the unyielding foundation of life itself. A noble selection!");
-            break;
-    }
-    next;
-    if (countitem(.@item_name$) > 0) {
-        delitem .@item_name$, 1;
-        Zeny -= .zeny_cost;
-        sc_start(.@sc_id, 1800000, 0);
-        mes(.npc_name$);
-        mes("Ah, the deed is done! May your enemies tremble before your might.");
-        mes("Go forth and bring balance... or chaos, if that suits your fancy.");
-    } else {
-        mes(.npc_name$);
-        mes("You dare to request nature's power without the proper offering?");
-        mes("Begone, and return only when you have the necessary stone!");
-    }
-    close;
+	switch (select("Fuego ardiente", "Viento cortante", "Hielo gelido", "Tierra firme")) {
+	case 1:
+		.@item$ = "Boody_Red"; // Red Blood
+		.@sc_id = SC_PROPERTYFIRE;
+		mes .npc_name$;
+		mes "El fuego, esencia del caos y la destruccion. Buena eleccion.";
+		break;
+	case 2:
+		.@item$ = "Wind_Of_Verdure"; // Wind of Verdure
+		.@sc_id = SC_PROPERTYWIND;
+		mes .npc_name$;
+		mes "El viento, fuerza invisible que dobla la voluntad. Excelente.";
+		break;
+	case 3:
+		.@item$ = "Crystal_Blue"; // Crystal Blue
+		.@sc_id = SC_PROPERTYWATER;
+		mes .npc_name$;
+		mes "El agua, molde silencioso del mundo. Sabia decision.";
+		break;
+	case 4:
+		.@item$ = "Yellow_Live"; // Green Live
+		.@sc_id = SC_PROPERTYGROUND;
+		mes .npc_name$;
+		mes "La tierra, cimiento de toda vida. Noble eleccion.";
+		break;
+	}
+	next;
 
-    /*-----------------------------------------------------
-    Configuration
-    -----------------------------------------------------*/
-    OnInit:
-        .npc_name$ = "[ ^0000FFWell Endowed Sage^000000 ]";
-        .zeny_cost = 15000; // Cost in zeny for the service
-        end;
+	if (countitem(.@item$) < 1) {
+		mes .npc_name$;
+		mes "Pides el poder de la naturaleza sin la ofrenda adecuada?";
+		mes "Vete, y vuelve con la piedra que corresponde.";
+		close;
+	}
 
+	delitem .@item$, 1;
+	Zeny -= .zeny_cost;
+	sc_start .@sc_id, 1800000, 0;
+	mes .npc_name$;
+	mes "Listo. Que tus enemigos tiemblen ante tu arma.";
+	mes "Ve y trae equilibrio... o caos, si eso prefieres.";
+	close;
+
+OnInit:
+	.npc_name$ = "[ ^0000FFSabio de los Elementos^000000 ]";
+	.zeny_cost = 15000;
+	end;
 }
-
-/*-----------------------------------------------------
-Duplicates
------------------------------------------------------*/
 
 prontera,159,186,4	duplicate(EndowedSage)	EndowedSage#protera	2_M_SAGE_OLD
 morocc,168,106,4	duplicate(EndowedSage)	EndowedSage#morocc	2_M_SAGE_OLD
 geffen,125,68,4	duplicate(EndowedSage)	EndowedSage#geffen	2_M_SAGE_OLD
-
