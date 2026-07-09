@@ -45,12 +45,8 @@ prontera,274,352,3	script	Gravekeeper Ludovico	1_M_PASTOR,{
 		mes "^FF0000[Ludovico]^000000";
 		mes "En todo el reino he contado ^FF0000" + .@global + " ecos de muerte^000000.";
 		mes "Cada caida de un aventurero deja huella en la tierra.";
-		if (.@global == 0) {
+		if (.@global == 0)
 			mes "Aun no he sentido ninguna... un tiempo de paz, quizas.";
-		} else if (.@deaths > 0 && .@global > 0) {
-			.@pct = .@deaths * 100 / .@global;
-			mes "Tus caidas representan aproximadamente el ^0075E9" + .@pct + "%^000000 de los ecos que he escuchado.";
-		}
 		break;
 	case 3:
 		mes "^FF0000[Ludovico]^000000";

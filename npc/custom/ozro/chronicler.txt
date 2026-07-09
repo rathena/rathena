@@ -31,18 +31,21 @@ geffen,139,72,4	script	Kaz el Cronista	4_M_ZONDAOYAJI,{
 	mes "Saludos, aventurero. Soy Kaz,";
 	mes "Cronista Real de Rune-Midgard.";
 	next;
-	
+
 	mes "[Kaz el Cronista]";
 	mes "Por decreto de Su Majestad, mantengo";
 	mes "registros detallados de todos los aventureros";
+	next;
+
+	mes "[Kaz el Cronista]";
 	mes "que viajan a traves de nuestro reino.";
 	next;
-	
+
 	mes "[Kaz el Cronista]";
 	mes "Deseas saber mas sobre";
 	mes "mi trabajo para el reino?";
 	next;
-	
+
 	if (select("Si, cuentame mas:Deberia dejarte trabajar") == 2) {
 		clear;
 		mes "[Kaz el Cronista]";
@@ -54,15 +57,24 @@ geffen,139,72,4	script	Kaz el Cronista	4_M_ZONDAOYAJI,{
 	clear;
 	mes "[Kaz el Cronista]";
 	mes "^990000*Consulta sus registros cuidadosamente*^000000";
+	next;
+
+	mes "[Kaz el Cronista]";
 	mes "Segun mis observaciones mas recientes,";
-	mes "he visto ^0075E9"+ getusers(1) +" aventureros^000000";
+	mes "he visto ^0075E9" + getusers(1) + " aventureros^000000";
+	next;
+
+	mes "[Kaz el Cronista]";
 	mes "explorando nuestras tierras recientemente.";
 	next;
-	
+
 	mes "[Kaz el Cronista]";
 	mes "^990000*Moja su pluma en tinta*^000000";
-	mes "Ahora, dejaré constancia de tu presencia...";
+	mes "Ahora, dejare constancia de tu presencia...";
+	next;
+
+	mes "[Kaz el Cronista]";
 	mes "Listo! Has sido documentado correctamente";
 	mes "en las cronicas de hoy.";
 	close;
-} 
+}

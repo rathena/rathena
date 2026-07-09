@@ -3,6 +3,8 @@
 //===== Description: =========================================
 //= Imbuye propiedad elemental al arma (endow) a cambio de
 //= zeny y piedra elemental.
+//= Futuro: quest desbloquea Holy/Ghost/Shadow (ver 04-npcs.md).
+//= Futuro: quest alarga .duration_ms / .duration_min.
 //============================================================
 
 izlude,131,142,4	script	EndowedSage	2_M_SAGE_OLD,{
@@ -11,6 +13,7 @@ izlude,131,142,4	script	EndowedSage	2_M_SAGE_OLD,{
 	mes "Ah, un buscador de poder se acerca.";
 	mes "Deseas canalizar las fuerzas de la naturaleza en tu arma?";
 	mes "Solo te costara " + .zeny_cost + " zeny y la piedra elemental correspondiente.";
+	mes "El efecto dura unos " + .duration_min + " minutos.";
 	next;
 
 	if (Zeny < .zeny_cost) {
@@ -25,6 +28,8 @@ izlude,131,142,4	script	EndowedSage	2_M_SAGE_OLD,{
 	next;
 
 	switch (select("Fuego ardiente", "Viento cortante", "Hielo gelido", "Tierra firme")) {
+	// Futuro (quest): anadir al select: "Luz sagrada:Espectro ghost:Sombra shadow"
+	// y descomentar los casos 5-7 con item + requisito de quest.
 	case 1:
 		.@item$ = "Boody_Red"; // Red Blood
 		.@sc_id = SC_FIREWEAPON;
@@ -53,6 +58,27 @@ izlude,131,142,4	script	EndowedSage	2_M_SAGE_OLD,{
 		mes .npc_name$;
 		mes "La tierra, cimiento de toda vida. Noble eleccion.";
 		break;
+	//case 5: // Luz sagrada — desbloquear con quest
+	//	.@item$ = ""; // ej. item custom quest
+	//	.@sc_id = SC_ASPERSIO;
+	//	.@skill_id = AL_ASPERSIO;
+	//	mes .npc_name$;
+	//	mes "La luz purifica el acero. Eleccion rara.";
+	//	break;
+	//case 6: // Espectro — desbloquear con quest
+	//	.@item$ = "";
+	//	.@sc_id = SC_GHOSTWEAPON;
+	//	.@skill_id = 0;
+	//	mes .npc_name$;
+	//	mes "Lo intangible corta mas hondo de lo que parece.";
+	//	break;
+	//case 7: // Sombra — desbloquear con quest
+	//	.@item$ = "";
+	//	.@sc_id = SC_SHADOWWEAPON;
+	//	.@skill_id = 0;
+	//	mes .npc_name$;
+	//	mes "La sombra obedece a quien domina su propia oscuridad.";
+	//	break;
 	}
 	next;
 
@@ -65,16 +91,18 @@ izlude,131,142,4	script	EndowedSage	2_M_SAGE_OLD,{
 
 	delitem .@item$, 1;
 	Zeny -= .zeny_cost;
-	sc_start .@sc_id, 1800000, 1;
+	sc_start .@sc_id, .duration_ms, 1;
 	skilleffect .@skill_id, 1;
 	mes .npc_name$;
 	mes "Listo. Que tus enemigos tiemblen ante tu arma.";
-	mes "Ve y trae equilibrio... o caos, si eso prefieres.";
+	mes "La imbuicion durara unos " + .duration_min + " minutos.";
 	close;
 
 OnInit:
 	.npc_name$ = "[ ^0000FFSabio de los Elementos^000000 ]";
 	.zeny_cost = 15000;
+	.duration_ms = 1800000; // futuro: quest puede subir este valor
+	.duration_min = 30;
 	end;
 }
 

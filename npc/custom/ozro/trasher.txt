@@ -2,7 +2,7 @@
 //= Garrett el Recolector
 //===== Description: =========================================
 //= Compra chatarra diaria a buen precio. Karma por PJ.
-//= Cada 10 intercambios: Moneda de Bronce OzRo (silencioso).
+//= Moneda bronce cada 10 tratos unicos (1 por item del dia, max 2/dia).
 //============================================================
 
 geffen,143,70,3	script	Garrett	1_M_SIGN1,{
@@ -12,6 +12,8 @@ geffen,143,70,3	script	Garrett	1_M_SIGN1,{
 	if (.@weekday != TRSH_LastDay || TRSH_Item0$ == "" || TRSH_Item1$ == "") {
 		TRSH_LastDay = .@weekday;
 		TRSH_DailySpend = 0;
+		TRSH_DoneItem0 = 0;
+		TRSH_DoneItem1 = 0;
 		.@size0 = getarraysize(.common_items$);
 		.@size1 = getarraysize(.misc_items$);
 		TRSH_Item0$ = .common_items$[rand(.@size0)];
@@ -55,8 +57,8 @@ geffen,143,70,3	script	Garrett	1_M_SIGN1,{
 
 	mes .npc_name$;
 	mes "Busco:";
-	mes "- " + getitemname(TRSH_Item0$) + " — " + .@price0 + " zeny c/u";
-	mes "- " + getitemname(TRSH_Item1$) + " — " + .@price1 + " zeny c/u";
+	mes "- " + getitemname(TRSH_Item0$) + " - " + .@price0 + " zeny c/u";
+	mes "- " + getitemname(TRSH_Item1$) + " - " + .@price1 + " zeny c/u";
 	next;
 
 	switch (select("Comerciar", "Sobre tu negocio", "Marcharme")) {
@@ -123,7 +125,22 @@ geffen,143,70,3	script	Garrett	1_M_SIGN1,{
 		TRSH_DailySpend += .@total;
 		TRSH_TotalSpent += .@total;
 		TRSH_TRADES++;
-		OZRO_KARMA += .karma_per_trade;
+
+		.@is_item0 = (.@item$ == TRSH_Item0$);
+		.@is_item1 = (.@item$ == TRSH_Item1$);
+		.@first_trade_today = 0;
+		if (.@is_item0 && !TRSH_DoneItem0) {
+			TRSH_DoneItem0 = 1;
+			.@first_trade_today = 1;
+		} else if (.@is_item1 && !TRSH_DoneItem1) {
+			TRSH_DoneItem1 = 1;
+			.@first_trade_today = 1;
+		}
+
+		if (.@first_trade_today) {
+			TRSH_UniqueTrades++;
+			OZRO_KARMA += .karma_per_trade;
+		}
 
 		mes .npc_name$;
 		mes "Un placer hacer negocios.";
@@ -132,7 +149,7 @@ geffen,143,70,3	script	Garrett	1_M_SIGN1,{
 			mes "Manana habra mas oportunidades.";
 		}
 
-		if (TRSH_TRADES % .trades_for_coin == 0) {
+		if (.@first_trade_today && TRSH_UniqueTrades % .trades_for_coin == 0) {
 			getitem "Ozro_Bronze_Coin", 1;
 			mes "Por cierto... eres un sujeto agradable.";
 			mes "Creo que esto te sirve mas a ti que a mi.";
@@ -142,7 +159,8 @@ geffen,143,70,3	script	Garrett	1_M_SIGN1,{
 	case 2:
 		mes .npc_name$;
 		mes "Llevo " + TRSH_TotalSpent + " zeny invertidos en chatarra de aventureros.";
-		mes "Y contigo he cerrado " + TRSH_TRADES + " tratos. Cada uno cuenta.";
+		mes "He cerrado " + TRSH_TRADES + " tratos contigo en total.";
+		mes "Los que cuentan para mi confianza: " + TRSH_UniqueTrades + ".";
 		break;
 
 	case 3:
@@ -155,7 +173,7 @@ geffen,143,70,3	script	Garrett	1_M_SIGN1,{
 OnInit:
 	.npc_name$ = "[ ^0000FFGarrett el Recolector^000000 ]";
 	.increment = 10;
-	.min_price = 100;
+	.min_price = 500;
 	.max_price = 2000;
 	.daily_spending_limit = 300000;
 	.trades_for_coin = 10;

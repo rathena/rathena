@@ -17,7 +17,7 @@ Inventario de NPCs OzRo. Config: `npc/scripts_custom.conf`
 | Sabio de los Elementos | `endow_sage.txt` | Endow elemental (zeny + piedra) — Izlude, Prontera, Morocc, Geffen |
 | Ludovico el Sepulturero | `gravekeeper.txt` | Muertes del PJ + contador global `$OZRO_DEATHS_TOTAL` |
 | Kessinger | `soul_link.txt` | Soul Link de pago (20k zeny); incluye Ninja, Gunslinger, Renacimiento |
-| Garrett el Recolector | `trasher.txt` | Compra chatarra diaria; karma por PJ; moneda bronce cada 10 tratos |
+| Garrett el Recolector | `trasher.txt` | Compra chatarra diaria; karma/moneda solo en 1er trato por item del dia (max 2/dia) |
 | Bounty Boards | `bounty/*.txt` | Misiones de caza por ciudad (14 mapas) |
 | Quests repetibles | `repeteables/*.txt` | EXP repetible por monstruo (17 quests) |
 
@@ -63,8 +63,10 @@ Inventario de NPCs OzRo. Config: `npc/scripts_custom.conf`
 
 | Variable | Alcance | Uso |
 |----------|---------|-----|
-| `OZRO_KARMA` | Personaje | Reputacion/karma firmado (`>0` bueno, `<0` malo). Garrett suma +1 por trato |
-| `TRSH_TRADES` | Personaje | Intercambios con Garrett |
+| `OZRO_KARMA` | Personaje | Reputacion/karma firmado (`>0` bueno, `<0` malo). Garrett suma +1 por trato unico del dia |
+| `TRSH_TRADES` | Personaje | Ventas totales con Garrett (todas, incluye repetir el mismo item) |
+| `TRSH_UniqueTrades` | Personaje | Primer trato de cada item del dia; max +2/dia; cada 10 → moneda bronce + karma |
+| `TRSH_DoneItem0` / `TRSH_DoneItem1` | Personaje | Flag diario: ya vendiste ese slot hoy (solo karma/moneda en el primero) |
 | `TRSH_DailySpend` / `TRSH_TotalSpent` / `TRSH_LastDay` | Personaje | Economia diaria Garrett |
 | `TRSH_Item0$` / `TRSH_Item1$` | Personaje | Items del dia (AegisName) |
 | `$OZRO_DEATHS_TOTAL` | Global servidor | Muertes registradas (`ozro_death_tracker`) |
@@ -95,6 +97,21 @@ Doc viejo: "muy roto" — cambiar a entregar cualquier fruta al azar. Revisar si
 ### Reset `probar`
 
 Doc viejo: una vez por personaje. Hoy: infinito con birthstone. Alinear con filosofía reset fácil.
+
+### Sabio de los Elementos `implementado` → expandir
+
+Hoy: Fuego, Viento, Agua, Tierra (30 min; `.duration_ms` en `OnInit`).
+
+**Futuro (quest):**
+- Desbloquear imbuiciones **Holy** (`SC_ASPERSIO`), **Ghost** (`SC_GHOSTWEAPON`), **Shadow** (`SC_SHADOWWEAPON`) — casos comentados en `endow_sage.txt`.
+- Quest que alargue duracion del endow (subir `.duration_ms` / `.duration_min`).
+
+### Kessinger (Soul Linker) `implementado` → expandir
+
+Hoy: 20 min de vinculo (`.duration` = 1.200.000 ms en `OnInit`).
+
+**Futuro (quest):**
+- Alargar duracion del soul link para el PJ (mismo patron que el Sabio).
 
 ### Kafra Staff / Cool Event Corp (votación de dungeon) `pendiente`
 

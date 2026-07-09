@@ -2,6 +2,7 @@
 //= Kessinger, Vinculador de Almas
 //===== Description: =========================================
 //= Soul Link de pago para jobs compatibles.
+//= Futuro: quest alarga .duration en OnInit (ver 04-npcs.md).
 //============================================================
 
 yuno,145,185,4	script	Kessinger	4_M_ROTERT,{
@@ -87,13 +88,115 @@ yuno,145,185,4	script	Kessinger	4_M_ROTERT,{
 	}
 
 	if (!.@Spirit) {
+		switch (Class) {
+		case Job_Creator:
+		case Job_Genetic:
+		case Job_Genetic_T:
+		case Job_Biolo:
+		case Job_Baby_Alchemist:
+			.@Spirit = SL_ALCHEMIST;
+			break;
+		case Job_Lord_Knight:
+		case Job_Rune_Knight:
+		case Job_Rune_Knight_T:
+		case Job_Dragon_Knight:
+		case Job_Baby_Rune_Knight:
+			.@Spirit = SL_KNIGHT;
+			break;
+		case Job_High_Wizard:
+		case Job_Warlock:
+		case Job_Warlock_T:
+		case Job_Arch_Mage:
+			.@Spirit = SL_WIZARD;
+			break;
+		case Job_Sniper:
+		case Job_Ranger:
+		case Job_Ranger_T:
+		case Job_Windhawk:
+			.@Spirit = SL_HUNTER;
+			break;
+		case Job_High_Priest:
+		case Job_Arch_Bishop:
+		case Job_Arch_Bishop_T:
+		case Job_Cardinal:
+			.@Spirit = SL_PRIEST;
+			break;
+		case Job_Whitesmith:
+		case Job_Mechanic:
+		case Job_Mechanic_T:
+		case Job_Meister:
+			.@Spirit = SL_BLACKSMITH;
+			break;
+		case Job_Assassin_Cross:
+		case Job_Guillotine_Cross:
+		case Job_Guillotine_Cross_T:
+		case Job_Shadow_Cross:
+			.@Spirit = SL_ASSASIN;
+			break;
+		case Job_Paladin:
+		case Job_Royal_Guard:
+		case Job_Royal_Guard_T:
+		case Job_Imperial_Guard:
+			.@Spirit = SL_CRUSADER;
+			break;
+		case Job_Professor:
+		case Job_Sorcerer:
+		case Job_Sorcerer_T:
+		case Job_Elemental_Master:
+			.@Spirit = SL_SAGE;
+			break;
+		case Job_Champion:
+		case Job_Sura:
+		case Job_Sura_T:
+		case Job_Inquisitor:
+			.@Spirit = SL_MONK;
+			break;
+		case Job_Clown:
+		case Job_Gypsy:
+		case Job_Minstrel:
+		case Job_Wanderer:
+		case Job_Minstrel_T:
+		case Job_Wanderer_T:
+		case Job_Troubadour:
+		case Job_Trouvere:
+			.@Spirit = SL_BARDDANCER;
+			break;
+		case Job_Stalker:
+		case Job_Shadow_Chaser:
+		case Job_Shadow_Chaser_T:
+		case Job_Abyss_Chaser:
+			.@Spirit = SL_ROGUE;
+			break;
+		case Job_Star_Emperor:
+		case Job_Star_Emperor2:
+		case Job_Baby_Star_Gladiator:
+			.@Spirit = SL_STAR;
+			break;
+		case Job_Night_Watch:
+		case Job_Rebellion:
+			.@Spirit = SL_GUNNER;
+			break;
+		case Job_Shinkiro:
+		case Job_Shiranui:
+			.@Spirit = SL_NINJA;
+			break;
+		case Job_Death_Knight:
+			.@Spirit = SL_DEATHKNIGHT;
+			break;
+		case Job_Dark_Collector:
+			.@Spirit = SL_COLLECTOR;
+			break;
+		}
+	}
+
+	if (!.@Spirit) {
 		mes .@name$;
 		mes "Lo siento. No encuentro un espiritu compatible con tu camino.";
 		close;
 	}
 
 	Zeny -= .price;
-	sc_start2 SC_SOULLINK, .duration, 5, .@Spirit;
+	sc_start2 SC_SPIRIT, .duration, 5, .@Spirit;
 	skilleffect .@Spirit, 5;
 
 	mes .@name$;
@@ -104,7 +207,7 @@ yuno,145,185,4	script	Kessinger	4_M_ROTERT,{
 	close;
 
 OnInit:
-	.duration = 1200000;
+	.duration = 1200000; // 20 min; futuro: quest puede subir este valor
 	.price = 20000;
 	end;
 }
