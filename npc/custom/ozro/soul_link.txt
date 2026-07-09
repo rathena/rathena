@@ -92,6 +92,7 @@ yuno,145,185,4	script	Kessinger	4_M_ROTERT,{
 		case Job_Creator:
 		case Job_Genetic:
 		case Job_Genetic_T:
+		case Job_Genetic_2ND:
 		case Job_Biolo:
 		case Job_Baby_Alchemist:
 			.@Spirit = SL_ALCHEMIST;
@@ -190,8 +191,98 @@ yuno,145,185,4	script	Kessinger	4_M_ROTERT,{
 	}
 
 	if (!.@Spirit) {
+		.@eac = eaclass();
+		switch (.@eac & EAJ_UPPERMASK) {
+		case EAJ_KNIGHT:
+		case EAJ_LORD_KNIGHT:
+		case EAJ_RUNE_KNIGHT:
+			.@Spirit = SL_KNIGHT;
+			break;
+		case EAJ_WIZARD:
+		case EAJ_HIGH_WIZARD:
+		case EAJ_WARLOCK:
+			.@Spirit = SL_WIZARD;
+			break;
+		case EAJ_HUNTER:
+		case EAJ_SNIPER:
+		case EAJ_RANGER:
+			.@Spirit = SL_HUNTER;
+			break;
+		case EAJ_PRIEST:
+		case EAJ_HIGH_PRIEST:
+		case EAJ_ARCH_BISHOP:
+			.@Spirit = SL_PRIEST;
+			break;
+		case EAJ_BLACKSMITH:
+		case EAJ_WHITESMITH:
+		case EAJ_MECHANIC:
+			.@Spirit = SL_BLACKSMITH;
+			break;
+		case EAJ_ASSASSIN:
+		case EAJ_ASSASSIN_CROSS:
+		case EAJ_GUILLOTINE_CROSS:
+			.@Spirit = SL_ASSASIN;
+			break;
+		case EAJ_CRUSADER:
+		case EAJ_PALADIN:
+		case EAJ_ROYAL_GUARD:
+			.@Spirit = SL_CRUSADER;
+			break;
+		case EAJ_SAGE:
+		case EAJ_PROFESSOR:
+		case EAJ_SORCERER:
+			.@Spirit = SL_SAGE;
+			break;
+		case EAJ_MONK:
+		case EAJ_CHAMPION:
+		case EAJ_SURA:
+			.@Spirit = SL_MONK;
+			break;
+		case EAJ_BARDDANCER:
+		case EAJ_CLOWNGYPSY:
+		case EAJ_MINSTRELWANDERER:
+			.@Spirit = SL_BARDDANCER;
+			break;
+		case EAJ_ROGUE:
+		case EAJ_STALKER:
+			.@Spirit = SL_ROGUE;
+			break;
+		case EAJ_ALCHEMIST:
+		case EAJ_CREATOR:
+			.@Spirit = SL_ALCHEMIST;
+			break;
+		case EAJ_SUPER_NOVICE:
+			.@Spirit = SL_SUPERNOVICE;
+			break;
+		case EAJ_STAR_GLADIATOR:
+		case EAJ_STAR_EMPEROR:
+			.@Spirit = SL_STAR;
+			break;
+		case EAJ_SOUL_LINKER:
+			.@Spirit = SL_SOULLINKER;
+			break;
+		case EAJ_NINJA:
+			.@Spirit = SL_NINJA;
+			break;
+		case EAJ_GUNSLINGER:
+		case EAJ_REBELLION:
+			.@Spirit = SL_GUNNER;
+			break;
+		case EAJ_DEATH_KNIGHT:
+			.@Spirit = SL_DEATHKNIGHT;
+			break;
+		case EAJ_DARK_COLLECTOR:
+			.@Spirit = SL_COLLECTOR;
+			break;
+		}
+	}
+
+	if (!.@Spirit) {
 		mes .@name$;
 		mes "Lo siento. No encuentro un espiritu compatible con tu camino.";
+		mes "Class: " + Class + " (" + jobname(Class) + ")";
+		mes "BaseJob: " + BaseJob + " (" + jobname(BaseJob) + ")";
+		mes "eaclass: " + eaclass();
 		close;
 	}
 
