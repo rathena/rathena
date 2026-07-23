@@ -1767,10 +1767,10 @@ int32 clif_spawn( const block_list* bl, bool walking ){
 /// 0x7db <type>.W <value>.L (ZC_HO_PAR_CHANGE)
 /// 0xba5 <type>.W <value>.Q (ZC_HO_PAR_CHANGE2)
 void clif_homunculus_updatestatus( const map_session_data& sd, _sp type ) {
-#if PACKETVER >= 20090610
 	if( !hom_is_active(sd.hd) )
 		return;
 
+#if PACKETVER >= 20090610
 	PACKET_ZC_HO_PAR_CHANGE p = {};
 
 	p.packetType = HEADER_ZC_HO_PAR_CHANGE;
@@ -1817,6 +1817,8 @@ void clif_homunculus_updatestatus( const map_session_data& sd, _sp type ) {
 	}
 
 	clif_send(&p, sizeof(p), &sd, SELF);
+#else
+	clif_hominfo(&sd, sd.hd, 0);
 #endif
 }
 
