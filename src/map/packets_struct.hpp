@@ -3975,7 +3975,8 @@ struct PACKET_ZC_USESKILL_ACK {
 	uint8 disposable;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_USESKILL_ACK, 0x07fb);
-#elif PACKETVER_MAIN_NUM >= 20090406 || PACKETVER_SAK_NUM >= 20080618 || PACKETVER_RE_NUM >= 20080827 || defined(PACKETVER_ZERO)
+// 2008-09-10aSakexe uses shuffled CZ skill packets but still expects the classic cast ACK.
+#elif PACKETVER_MAIN_NUM >= 20090406 || PACKETVER == 20080910 || PACKETVER_SAK_NUM >= 20080618 || PACKETVER_RE_NUM >= 20080827 || defined(PACKETVER_ZERO)
 struct PACKET_ZC_USESKILL_ACK {
 	int16 packetType;
 	uint32 srcId;
