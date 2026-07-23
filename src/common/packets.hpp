@@ -53,6 +53,11 @@ struct CHARACTER_INFO{
 	int64 maxhp;
 	int64 sp;
 	int64 maxsp;
+#elif PACKETVER < 20081217
+	int16 hp;
+	int16 maxhp;
+	int16 sp;
+	int16 maxsp;
 #else
 	int32 hp;
 	int32 maxhp;
@@ -81,9 +86,16 @@ struct CHARACTER_INFO{
 	uint8 Int;
 	uint8 Dex;
 	uint8 Luk;
+#if PACKETVER < 20061023
+	int16 CharNum;
+#elif PACKETVER < 20081217
+	int16 CharNum;
+	int16 bIsChangedCharName;
+#else
 	uint8 CharNum;
 	uint8 hairColor;
 	int16 bIsChangedCharName;
+#endif
 #if (PACKETVER >= 20100720 && PACKETVER <= 20100727) || PACKETVER >= 20100803
 	char mapName[16];
 #endif
@@ -103,6 +115,12 @@ struct CHARACTER_INFO{
 	uint8 sex;
 #endif
 } __attribute__((packed));
+
+#if PACKETVER < 20061023
+static_assert( sizeof( CHARACTER_INFO ) == 106, "Legacy CHARACTER_INFO size mismatch" );
+#elif PACKETVER < 20081217
+static_assert( sizeof( CHARACTER_INFO ) == 108, "Legacy CHARACTER_INFO size mismatch" );
+#endif
 
 struct PACKET_CA_LOGIN{
 	int16 packetType;
