@@ -42154,7 +42154,7 @@ Body:
     MaxLevel: 5
     Type: Magic
     TargetType: Attack
-    Range: 11
+    Range: 9
     Hit: Single
     HitCount: 1
     Element: Endowed
@@ -42490,7 +42490,7 @@ Body:
           Amount: 170
         - Level: 10
           Amount: 180
-      ApCost: 180
+      ApCost: 160
     Status: Heaven_and_Earth
   - Id: 5449
     Name: HN_SELFSTUDY_TATICS
