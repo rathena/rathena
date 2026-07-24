@@ -1,0 +1,33 @@
+name: Build ARM64 via QEMU (Renewal)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Ini kuncinya: Mengaktifkan emulator ARM64 di dalam runner x86
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      # Kita jalanin container Ubuntu ARM64, lalu clone & compile di dalamnya
+      - name: Compile inside ARM64 container
+        run: |
+          docker run --rm -v $PWD:/build -w /build arm64v8/ubuntu:22.04 /bin/bash -c "
+            apt update &&
+            apt install -y git make gcc g++ libpcre3-dev zlib1g-dev &&
+            ./configure --disable-prere &&
+            make -j\$(nproc) server
+          "
+
+      - name: Upload binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: rathena-arm64-renewal
+          path: |
+            login-server
+            char-server
+            map-server
