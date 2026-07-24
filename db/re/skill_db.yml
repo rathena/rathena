@@ -38704,7 +38704,7 @@ Body:
     FixedCastTime: 1000
     Requires:
       SpCost: 300
-      ApCost: 125
+      ApCost: 120
     Status: CalamityGale
   - Id: 5329
     Name: WH_HAWKBOOMERANG
@@ -39023,7 +39023,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
-    GiveAp: 1
+    GiveAp: 2
     CastTime: 1000
     AfterCastActDelay: 700
     Duration1: 10000
