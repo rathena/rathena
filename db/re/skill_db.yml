@@ -36004,7 +36004,17 @@ Body:
         Time: 6000
       - Level: 5
         Time: 7000
-    Cooldown: 1500
+    Cooldown:
+      - Level: 1
+        Time: 1800
+      - Level: 2
+        Time: 1600
+      - Level: 3
+        Time: 1400
+      - Level: 4
+        Time: 1200
+      - Level: 5
+        Time: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -36070,7 +36080,7 @@ Body:
     SplashArea: 4
     AfterCastActDelay: 500
     Duration1: 150000
-    Cooldown: 5000
+    Cooldown: 3500
     Requires:
       SpCost: 100
       ApCost: 12
