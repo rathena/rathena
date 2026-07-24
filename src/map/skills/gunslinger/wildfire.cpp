@@ -32,11 +32,14 @@ void SkillWildFire::calculateSkillRatio(const Damage* wd, const block_list* src,
 	const status_change* sc = status_get_sc(src);
 	const status_data* sstatus = status_get_status_data(*src);
 
-	skillratio += -100 + 1500 + 3000 * skill_lv;
+	skillratio += -100 + 1500 + 3450 * skill_lv;
 	skillratio += 5 * sstatus->con;
+
 	if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
 		skillratio += sc->getSCE(SC_INTENSIVE_AIM_COUNT)->val1 * 500 * skill_lv;
+
 	if (sd && sd->weapontype1 == W_SHOTGUN)
-		skillratio += 200 * skill_lv;
+		skillratio += 100 * skill_lv;
+
 	RE_LVL_DMOD(100);
 }

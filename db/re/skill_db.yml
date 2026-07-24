@@ -41775,7 +41775,7 @@ Body:
     FixedCastTime: 2000
     Requires:
       SpCost: 150
-      ApCost: 150
+      ApCost: 125
     Status: Hidden_Card
   - Id: 5415
     Name: NW_MISSION_BOMBARD
@@ -44615,7 +44615,7 @@ Body:
         Area: 3
       - Level: 5
         Area: 3
-    GiveAp: 2
+    GiveAp: 3
     AfterCastActDelay: 1000
     Cooldown: 750
     CastCancel: true
@@ -44662,7 +44662,7 @@ Body:
         Area: 3
       - Level: 5
         Area: 3
-    GiveAp: 2
+    GiveAp: 3
     AfterCastActDelay: 1000
     Cooldown: 700
     CastCancel: true

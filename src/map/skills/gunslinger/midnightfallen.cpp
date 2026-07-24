@@ -30,7 +30,7 @@ void SkillMidnightFallen::calculateSkillRatio(const Damage* wd, const block_list
 	const status_change* sc = status_get_sc(src);
 	const status_data* sstatus = status_get_status_data(*src);
 
-	skillratio += -100 + 2400 + 800 * skill_lv;
+	skillratio += -100 + 2500 + 850 * skill_lv;
 	if (sd != nullptr && sc != nullptr && sc->hasSCE(SC_HIDDEN_CARD)) {
 		if (sd->weapontype1 == W_GATLING)
 			skillratio += 200 * skill_lv;
