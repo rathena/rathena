@@ -1537,6 +1537,7 @@ int32 pc_equipswitch( map_session_data* sd, int32 index );
 void pc_equipswitch_remove( map_session_data* sd, int32 index );
 void pc_checkitem(map_session_data*);
 void pc_check_available_item(map_session_data *sd, uint8 type);
+bool pc_changegendercard(map_session_data* sd, int32 n);
 int32 pc_useitem(map_session_data*,int32);
 
 int32 pc_skillatk_bonus(map_session_data *sd, uint16 skill_id);

@@ -678,6 +678,33 @@ enum e_clif_messages : uint16 {
 
 	// Enchantment failed!
 	MSI_ENCHANT_FAILED = 3858,
+
+	// Gender change failed because of the character's job.
+	MSI_GENDER_CHANGE_FAILED_CAUSE_JOB = 4130,
+
+	// You need to leave your party or guild.
+	MSI_GENDER_CHANGE_FAILED_CAUSE_GROUP = 4131,
+
+	// Gender change failed because the character is married.
+	MSI_GENDER_CHANGE_FAILED_CAUSE_MARRIED = 4132,
+
+	// Gender change failed because the character is transformed.
+	MSI_GENDER_CHANGE_FAILED_CAUSE_MONSTER_TRANSFORM = 4133,
+
+	// Gender change confirmation message.
+	MSI_GENDER_CHANGE_MESSAGE_CONFIRM = 4134,
+
+	// Gender change confirmation button text.
+	MSI_GENDER_CHANGE_MESSAGE_OK = 4135,
+
+	// Gender change cancel button text.
+	MSI_GENDER_CHANGE_MESSAGE_CANCEL = 4136,
+
+	// Gender change completed.
+	MSI_GENDER_CHANGE_MESSAGE_COMPLETE = 4137,
+
+	// Gender change failed because the character is riding.
+	MSI_GENDER_CHANGE_FAILED_CAUSE_RIDING = 4208,
 };
 
 enum e_personalinfo : uint8_t {

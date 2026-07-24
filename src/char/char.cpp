@@ -345,20 +345,21 @@ int32 char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
  		(p->karma != cp->karma) || (p->manner != cp->manner) ||
 		(p->fame != cp->fame) || (p->inventory_slots != cp->inventory_slots) ||
 		(p->body_direction != cp->body_direction) || (p->disable_call != cp->disable_call) || (p->disable_partyinvite != cp->disable_partyinvite) ||
-		(p->disable_showcostumes != cp->disable_showcostumes)
+		(p->disable_showcostumes != cp->disable_showcostumes) || (p->sex != cp->sex)
 	)
 	{
 		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `class`='%d',"
 			"`hair`='%d', `hair_color`='%d', `clothes_color`='%d', `body`='%d',"
 			"`partner_id`='%u', `father`='%u', `mother`='%u', `child`='%u',"
 			"`karma`='%d',`manner`='%d', `fame`='%d', `inventory_slots`='%hu',"
-			"`body_direction`='%d',`disable_call`='%d',`disable_partyinvite`='%d',`disable_showcostumes`='%d'"
+			"`body_direction`='%d',`disable_call`='%d',`disable_partyinvite`='%d',`disable_showcostumes`='%d',`sex`='%c'"
 			" WHERE  `account_id`='%d' AND `char_id` = '%d'",
 			schema_config.char_db, p->class_,
 			p->hair, p->hair_color, p->clothes_color, p->body,
 			p->partner_id, p->father, p->mother, p->child,
 			p->karma, p->manner, p->fame, p->inventory_slots,
 			p->body_direction, p->disable_call, p->disable_partyinvite, p->disable_showcostumes,
+			p->sex == SEX_MALE ? 'M' : 'F',
 			p->account_id, p->char_id) )
 		{
 			Sql_ShowDebug(sql_handle);

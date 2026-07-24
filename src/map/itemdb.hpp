@@ -115,6 +115,7 @@ enum item_itemid : t_itemid
 	ITEMID_INVENTORY_EX					= 25793,
 	ITEMID_WL_MB_SG						= 100065,
 	ITEMID_HOMUNCULUS_SUPPLEMENT		= 100371,
+	ITEMID_CHANGE_GENDER_CARD			= 103061,
 };
 
 ///Rune Knight
