@@ -1,27 +1,33 @@
-name: Build rAthena Renewal Terbaru (ARM64)
+name: Cross-Compile rAthena ARM64 (Renewal)
 
 on:
   workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install dependencies
+      - name: Setup Multiarch & Install ARM64 Compiler
         run: |
+          sudo dpkg --add-architecture arm64
           sudo apt update
-          sudo apt install -y zlib1g-dev libpcre3-dev gcc g++ make
+          sudo apt install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
+          sudo apt install -y libpcre3-dev:arm64 zlib1g-dev:arm64
+          sudo apt install -y pkg-config
 
-      - name: Configure (Renewal + Packet terbaru)
+      - name: Configure (Renewal, Packet Terbaru)
+        env:
+          CC: aarch64-linux-gnu-gcc
+          CXX: aarch64-linux-gnu-g++
         run: |
-          ./configure --enable-prere=no
+          ./configure --host=aarch64-linux-gnu --disable-prere
 
-      - name: Compile (make server)
+      - name: Compile
         run: make -j$(nproc) server
 
-      - name: Upload binaries (ARM64)
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: rathena-renewal-arm64
