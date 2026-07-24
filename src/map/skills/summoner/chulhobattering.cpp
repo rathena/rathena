@@ -16,7 +16,7 @@ void SkillChulhoBattering::calculateSkillRatio(const Damage *wd, const block_lis
 	const status_data* sstatus = status_get_status_data(*src);
 	const map_session_data* sd = BL_CAST(BL_PC, src);
 
-	skillratio += -100 + 480 + 160 * skill_lv;
+	skillratio += -100 + 550 + 250 * skill_lv;
 	skillratio += 70 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
 	skillratio += 5 * sstatus->pow;
 	RE_LVL_DMOD(100);

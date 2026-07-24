@@ -40896,7 +40896,7 @@ Body:
     TargetType: Attack
     DamageFlags:
       Critical: true
-    Range: -11
+    Range: -9
     Hit: Multi_Hit
     HitCount: -2
     GiveAp: 1
@@ -41283,7 +41283,7 @@ Body:
     MaxLevel: 7
     Type: Magic
     TargetType: Attack
-    Range: -11
+    Range: -9
     GiveAp: 1
     Hit: Single
     HitCount: 1
@@ -41320,18 +41320,18 @@ Body:
     FixedCastTime: 1500
     Duration1:
       - Level: 1
-        Time: 30000
-      - Level: 2
         Time: 60000
-      - Level: 3
+      - Level: 2
         Time: 90000
+      - Level: 3
+        Time: 120000
       - Level: 4
-        Time: 12000
-      - Level: 5
         Time: 150000
+      - Level: 5
+        Time: 180000
     Requires:
       SpCost: 100
-      ApCost: 150
+      ApCost: 125
     Status: Temporary_Communion
   - Id: 5448
     Name: SH_BLESSING_OF_MYSTICAL_CREATURES
@@ -44818,7 +44818,7 @@ Body:
     TargetType: Attack
     DamageFlags:
       Critical: true
-    Range: 7
+    Range: 9
     Hit: Multi_Hit
     HitCount: 5
     GiveAp: 1
@@ -44839,7 +44839,7 @@ Body:
       - Level: 7
         Area: 3
     CastCancel: true
-    AfterCastActDelay: 1000
+    AfterCastActDelay: 700
     Cooldown: 700
     FixedCastTime: 1000
     Requires:
