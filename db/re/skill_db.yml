@@ -43679,7 +43679,7 @@ Body:
         Time: 900000
     Requires:
       SpCost: 100
-      ApCost: 150
+      ApCost: 120
     Status: Sky_Enchant
   - Id: 5476
     Name: SS_TOKEDASU

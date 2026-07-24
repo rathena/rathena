@@ -16,7 +16,7 @@ void SkillSkyMoon::calculateSkillRatio(const Damage* wd, const block_list* src, 
 	const map_session_data* sd = BL_CAST(BL_PC, src);
 	const status_data* sstatus = status_get_status_data(*src);
 
-	skillratio += -100 + 1200 + 450 * skill_lv;
+	skillratio += -100 + 1250 + 500 * skill_lv;
 	skillratio += skill_lv * 9 * pc_checkskill(sd, SKE_SKY_MASTERY);
 	skillratio += 5 * sstatus->pow;
 	RE_LVL_DMOD(100);
