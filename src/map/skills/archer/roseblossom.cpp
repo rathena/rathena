@@ -58,7 +58,7 @@ void SkillRoseBlossomAttack::calculateSkillRatio(const Damage* wd, const block_l
 	const status_data* sstatus = status_get_status_data(*src);
 	const status_data* tstatus = status_get_status_data(*target);
 
-	skillratio += -100 + 250 + 2800 * skill_lv;
+	skillratio += -100 + 550 + 3850 * skill_lv;
 
 	if (sd && pc_checkskill(sd, TR_STAGE_MANNER) > 0)
 		skillratio += 3 * sstatus->con;
