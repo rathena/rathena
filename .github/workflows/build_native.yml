@@ -1,0 +1,30 @@
+name: Build ARM64 Native (Renewal)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    # 🔥 INI KUNCI: Runner ARM64 asli dari GitHub
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y make gcc g++ libpcre3-dev zlib1g-dev
+
+      - name: Configure (Renewal, Packet Terbaru)
+        run: ./configure --disable-prere
+
+      - name: Compile
+        run: make -j$(nproc) server
+
+      - uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08  # v4.6.0
+        with:
+          name: rathena-arm64-renewal
+          path: |
+            login-server
+            char-server
+            map-server
