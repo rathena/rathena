@@ -43264,7 +43264,7 @@ Body:
     FixedCastTime: 1000
     Requires:
       SpCost: 150
-      ApCost: 150
+      ApCost: 120
     Status: Breakinglimit
   - Id: 5462
     Name: HN_RULEBREAK
@@ -43279,7 +43279,7 @@ Body:
     FixedCastTime: 1000
     Requires:
       SpCost: 150
-      ApCost: 150
+      ApCost: 120
     Status: Rulebreak
   - Id: 5463
     Name: SKE_SKY_MASTERY
