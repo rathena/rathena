@@ -1,0 +1,18 @@
+[Unit]
+Description=P2P Coordinator — WebRTC signaling and auth for WARP-p2p-client
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+ExecStart=python3 -m p2p_coordinator.main
+Restart=always
+RestartSec=5
+WorkingDirectory=%h/rathena-AI-world/src/p2p-coordinator-python
+Environment=P2P_COORDINATOR_HOST=0.0.0.0
+Environment=P2P_COORDINATOR_PORT=8001
+Environment=P2P_JWT_SECRET=change-me-in-production-use-a-real-secret
+Environment=P2P_LOG_LEVEL=INFO
+
+[Install]
+WantedBy=multi-user.target
