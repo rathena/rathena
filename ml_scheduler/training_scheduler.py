@@ -169,8 +169,9 @@ class TrainingScheduler:
         self.logger.info(f"  Auto-Deploy: {auto_deploy}")
         
         # Prepare command
-        training_script = '/home/lot399/RagnarokOnlineServer/rathena-AI-world/ml_training/scripts/train_all_models.py'
-        python_path = '/opt/ml_monster_ai/venv/bin/python'
+        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        training_script = os.path.join(base_dir, 'ml_training', 'scripts', 'train_all_models.py')
+        python_path = os.path.join(base_dir, '.venv', 'bin', 'python')
         
         # Check if venv exists, otherwise use system python
         if not os.path.exists(python_path):
@@ -209,7 +210,7 @@ class TrainingScheduler:
                     cmd,
                     stdout=f,
                     stderr=subprocess.STDOUT,
-                    cwd='/home/lot399/RagnarokOnlineServer/rathena-AI-world/ml_training',
+                    cwd=os.path.join(base_dir, 'ml_training'),
                     env={**os.environ, 'PYTHONUNBUFFERED': '1', 'CUDA_VISIBLE_DEVICES': '0'}
                 )
             
@@ -359,7 +360,7 @@ class TrainingScheduler:
         try:
             # Step 1: Export to ONNX
             self.logger.info("Step 1/4: Exporting models to ONNX...")
-            export_script = '/home/lot399/RagnarokOnlineServer/rathena-AI-world/ml_training/scripts/export_to_onnx.py'
+            export_script = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'ml_training', 'scripts', 'export_to_onnx.py')
             
             result = subprocess.run(
                 ['python3', export_script, '--all', '--verify', '--fp32'],

@@ -5,7 +5,7 @@
 
 set -e
 
-BASE_DIR="/home/lot399/RagnarokOnlineServer/rathena-AI-world"
+BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$BASE_DIR"
 
 echo "========================================"
