@@ -117,9 +117,9 @@ void AsyncRequestManager::cleanup(int max_age_seconds) {
 //=============================================================================
 
 static std::string generate_request_id() {
-    static std::random_device rd;
-    static std::mt19937_64 gen(rd());
-    static std::uniform_int_distribution<uint64_t> dis;
+    thread_local std::random_device rd;
+    thread_local std::mt19937_64 gen(rd());
+    thread_local std::uniform_int_distribution<uint64_t> dis;
     
     auto now = std::chrono::system_clock::now().time_since_epoch();
     auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(now).count();

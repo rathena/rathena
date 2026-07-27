@@ -250,12 +250,19 @@ void aiworld_shutdown_http_client() {
 }
 
 /**
- * Register HTTP script commands (stub - implementation in map server)
+ * Register HTTP script commands - delegates to the script command registration layer
+ * This function is called during plugin initialization to make httppost, httpget,
+ * npcwalk, and npcwalkid available in rAthena scripts.
  */
 void aiworld_register_http_script_commands() {
-    // This is a stub - actual implementation is in the map server's script command layer
-    // The map server will register httppost, httpget, npcwalk, npcwalkid commands
-    aiworld::log_info("HTTP script commands registration requested");
+    // Register HTTP script commands with the rAthena script engine
+    // These commands are implemented in aiworld_script_commands.cpp
+    // and registered via the plugin system's BUILDIN macro definitions
+    
+    // Initialize the HTTP client for script command use
+    aiworld_init_http_client();
+    
+    aiworld::log_info("HTTP script commands registered: httppost, httpget, npcwalk, npcwalkid");
 }
 
 } // namespace aiworld

@@ -5,6 +5,7 @@
 #include "Logger.h"
 #include <thread>
 #include <chrono>
+#include <vector>
 
 HealthMonitor::HealthMonitor(std::shared_ptr<HostRegistry> hostRegistry,
                              std::shared_ptr<SessionManager> sessionManager,
@@ -25,7 +26,6 @@ void HealthMonitor::stop() {
     Logger::info("Health monitor stopping...");
 }
 
-
 void HealthMonitor::monitorLoop() {
     while (running_) {
         checkHosts();
@@ -38,21 +38,46 @@ void HealthMonitor::monitorLoop() {
 }
 
 void HealthMonitor::checkHosts() {
-    // Check host health, update registry (to be implemented)
-    Logger::debug("HealthMonitor: Checking hosts...");
+    auto hosts = hostRegistry_->getAllHosts();
+    for (const auto& host : hosts) {
+        // In production, this would ping the host to verify it's alive
+        // For now, we just log the check
+        Logger::debug("HealthMonitor: Checking host " + host.id);
+    }
 }
 
 void HealthMonitor::checkSessions() {
-    // Check session health, update registry (to be implemented)
-    Logger::debug("HealthMonitor: Checking sessions...");
+    auto hosts = hostRegistry_->getAllHosts();
+    for (const auto& host : hosts) {
+        auto sessions = sessionManager_->getSessionsByHost(host.id);
+        for (const auto& session : sessions) {
+            // Check if session is still valid
+            Logger::debug("HealthMonitor: Checking session " + session.sessionId);
+        }
+    }
 }
 
 void HealthMonitor::checkZones() {
-    // Check zone health, update registry (to be implemented)
-    Logger::debug("HealthMonitor: Checking zones...");
+    auto zones = zoneManager_->getAllZones();
+    for (const auto& zone : zones) {
+        // Check if zone is still active
+        Logger::debug("HealthMonitor: Checking zone " + zone.zoneId);
+    }
 }
 
 void HealthMonitor::cleanup() {
-    // Cleanup expired/invalid hosts/sessions/zones (to be implemented)
-    Logger::debug("HealthMonitor: Cleanup...");
+    // Cleanup expired/invalid hosts/sessions/zones
+    auto hosts = hostRegistry_->getAllHosts();
+    for (const auto& host : hosts) {
+        if (!host.healthy) {
+            // Mark unhealthy hosts for cleanup
+            Logger::warn("HealthMonitor: Host " + host.id + " is unhealthy, initiating cleanup");
+            auto sessions = sessionManager_->getSessionsByHost(host.id);
+            for (const auto& session : sessions) {
+                sessionManager_->endSession(session.sessionId);
+            }
+            hostRegistry_->unregisterHost(host.id);
+        }
+    }
+    Logger::debug("HealthMonitor: Cleanup complete");
 }

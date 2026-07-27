@@ -73,6 +73,38 @@ void Logger::log(const std::string& level, const std::string& msg) {
     // Always write to console
     std::cout << logEntry << std::endl;
 }
-// Stub implementations for missing Logger methods
-void Logger::openLogFile() {}
-void Logger::rotateLogsIfNeeded() {}
+// File rotation implementation
+void Logger::openLogFile() {
+    if (logFilePath_.empty()) return;
+    
+    logFile_ = std::make_unique<std::ofstream>(logFilePath_, std::ios::app);
+    if (!logFile_->is_open()) {
+        std::cerr << "Failed to open log file: " << logFilePath_ << std::endl;
+        logFile_.reset();
+    }
+}
+
+void Logger::rotateLogsIfNeeded() {
+    if (!logFile_ || maxFileSize_ == 0) return;
+    
+    // Check current file size
+    auto currentPos = logFile_->tellp();
+    if (currentPos < 0 || static_cast<size_t>(currentPos) < maxFileSize_) return;
+    
+    // Close current file
+    logFile_->close();
+    logFile_.reset();
+    
+    // Rotate: remove oldest, shift, create new
+    for (int i = maxFiles_ - 1; i > 0; --i) {
+        std::string oldName = logFilePath_ + "." + std::to_string(i);
+        std::string newName = logFilePath_ + "." + std::to_string(i + 1);
+        std::filesystem::rename(oldName, newName);
+    }
+    
+    // Rename current to .1
+    std::filesystem::rename(logFilePath_, logFilePath_ + ".1");
+    
+    // Open new file
+    openLogFile();
+}

@@ -1,15 +1,20 @@
 #include "worker_pool.hpp"
-void WorkerPool::set_p2p_coordinator(std::shared_ptr<P2PCoordinator>) {}
-void WorkerPool::set_dragonflydb_client(std::shared_ptr<DragonflyDBClient>) {}
-#include "worker_pool.hpp"
 #include <memory>
 class P2PCoordinator;
 class DragonflyDBClient;
-// Remove stub class and methods to avoid redefinition
-// Temporary stubs for distributed protocol integration
-// enum class InterServerProtocol { LEGACY_TCP, QUIC, P2P };
-// void set_inter_server_protocol(InterServerProtocol) {}
-// #include "worker_pool_config.cpp"
+
+// Store the p2p coordinator reference
+void WorkerPool::set_p2p_coordinator(std::shared_ptr<P2PCoordinator> coordinator) {
+    p2p_coordinator = std::move(coordinator);
+    log("P2P coordinator set", "info");
+}
+
+// Store the dragonflydb client reference
+void WorkerPool::set_dragonflydb_client(std::shared_ptr<DragonflyDBClient> client) {
+    dragonflydb_client = std::move(client);
+    log("DragonflyDB client set", "info");
+}
+
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // Multi-CPU/Threaded Worker Pool for AI Entity Processing
 // -------------------------------------------------------

@@ -2,6 +2,9 @@
 #include "RedisClient.h"
 #include "Logger.h"
 #include <stdexcept>
+#include <nlohmann/json.hpp>
+
+using json = nlohmann::json;
 
 HostRegistry::HostRegistry(std::shared_ptr<RedisClient> redis)
     : redis_(std::move(redis)) {
@@ -75,15 +78,32 @@ void HostRegistry::loadFromRedis() {
     for (const auto& id : hostIds) {
         auto data = redis_->hget("hosts", id);
         if (data) {
-            // Deserialize data to HostInfo (assume JSON, to be implemented)
-            // HostInfo host = HostInfo::fromJson(*data);
-            // hosts_[id] = host;
+            try {
+                auto j = json::parse(*data);
+                HostInfo host;
+                host.id = j.value("id", "");
+                host.address = j.value("address", "");
+                host.port = j.value("port", 0);
+                host.healthy = j.value("healthy", true);
+                host.qualityScore = j.value("qualityScore", 1.0);
+                hosts_[id] = host;
+            } catch (const std::exception& ex) {
+                Logger::error("Failed to deserialize host " + id + ": " + ex.what());
+            }
         }
     }
 }
 
 void HostRegistry::persistToRedis(const HostInfo& host) {
-    // Serialize HostInfo to JSON (to be implemented)
-    // std::string data = host.toJson();
-    // redis_->hset("hosts", host.id, data);
+    try {
+        json j;
+        j["id"] = host.id;
+        j["address"] = host.address;
+        j["port"] = host.port;
+        j["healthy"] = host.healthy;
+        j["qualityScore"] = host.qualityScore;
+        redis_->hset("hosts", host.id, j.dump());
+    } catch (const std::exception& ex) {
+        Logger::error("Failed to persist host to Redis: " + std::string(ex.what()));
+    }
 }

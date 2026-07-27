@@ -4,6 +4,9 @@
 #include "Logger.h"
 #include <stdexcept>
 #include <algorithm>
+#include <nlohmann/json.hpp>
+
+using json = nlohmann::json;
 
 ZoneManager::ZoneManager(std::shared_ptr<SessionManager> sessionManager, std::shared_ptr<RedisClient> redis)
     : sessionManager_(std::move(sessionManager)), redis_(std::move(redis)) {
@@ -80,15 +83,30 @@ void ZoneManager::loadFromRedis() {
     for (const auto& id : zoneIds) {
         auto data = redis_->hget("zones", id);
         if (data) {
-            // Deserialize data to ZoneInfo (assume JSON, to be implemented)
-            // ZoneInfo zone = ZoneInfo::fromJson(*data);
-            // zones_[id] = zone;
+            try {
+                auto j = json::parse(*data);
+                ZoneInfo zone;
+                zone.zoneId = j.value("zoneId", "");
+                if (j.contains("sessionIds") && j["sessionIds"].is_array()) {
+                    for (const auto& sid : j["sessionIds"]) {
+                        zone.sessionIds.push_back(sid.get<std::string>());
+                    }
+                }
+                zones_[id] = zone;
+            } catch (const std::exception& ex) {
+                Logger::error("Failed to deserialize zone " + id + ": " + ex.what());
+            }
         }
     }
 }
 
 void ZoneManager::persistToRedis(const ZoneInfo& zone) {
-    // Serialize ZoneInfo to JSON (to be implemented)
-    // std::string data = zone.toJson();
-    // redis_->hset("zones", zone.zoneId, data);
+    try {
+        json j;
+        j["zoneId"] = zone.zoneId;
+        j["sessionIds"] = zone.sessionIds;
+        redis_->hset("zones", zone.zoneId, j.dump());
+    } catch (const std::exception& ex) {
+        Logger::error("Failed to persist zone to Redis: " + std::string(ex.what()));
+    }
 }
