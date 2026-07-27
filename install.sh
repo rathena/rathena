@@ -938,7 +938,6 @@ run_verification() {
 print_next_steps() {
     print_section "Installation Complete!"
 
-    echo ""
     echo -e "${GREEN}  ✓ rAthena AI World has been installed successfully!${NC}"
     echo ""
 
@@ -1121,6 +1120,22 @@ main() {
 
     if ${BUILD_CPP_SERVER}; then
         build_cpp_server || log_warn "C++ build step had issues"
+    fi
+
+    # Create conf/import/ from templates (required by rAthena)
+    if [ ! -d "conf/import" ]; then
+        log "Creating conf/import/ from templates..."
+        mkdir -p conf/import
+        for tmpl in conf/import-tmpl/*; do
+            base=$(basename "$tmpl")
+            if [ ! -f "conf/import/$base" ]; then
+                cp "$tmpl" "conf/import/$base"
+                log "  Created conf/import/$base"
+            fi
+        done
+        log "✓ conf/import/ directory created"
+    else
+        log "✓ conf/import/ already exists"
     fi
 
     if ${SETUP_POSTGRES}; then
