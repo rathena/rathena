@@ -43,14 +43,13 @@ class EmbeddedAIBridge:
         # Import and initialize orchestrator
         try:
             from agents.orchestrator import AgentOrchestrator
-            from database import get_db
+            from database import DatabaseManager
             from config import get_settings
-            
+
             settings = get_settings()
-            
-            # Create orchestrator instance
-            # Note: In production, you'd want to properly initialize with database
-            self.orchestrator = AgentOrchestrator(settings=settings)
+
+            # Create orchestrator instance with config dict
+            self.orchestrator = AgentOrchestrator(config=settings.model_dump() if hasattr(settings, 'model_dump') else settings.__dict__)
             logger.info("AgentOrchestrator initialized successfully")
             
         except Exception as e:

@@ -35,7 +35,7 @@ MAP_OBJ = $(shell find . -type f -name "*.cpp" \
 #MAP_OBJ += $(shell ls *.c | sed -e "s/\.c/\.o/g")
 
 # Add custom AI Bridge files
-CUSTOM_OBJ = ../custom/ai_bridge.o ../custom/script_http.o
+CUSTOM_OBJ = ../custom/ai_bridge.o ../custom/script_http.o ../custom/script_ai_ipc.o
 
 # Add AIWorld module files
 AIWORLD_OBJ = ../aiworld/aiworld_ipc.o \
@@ -166,6 +166,10 @@ obj/../custom/ai_bridge.o: ../custom/ai_bridge.cpp ../custom/ai_bridge.hpp $(HTT
 	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(RA_INCLUDE) $(LIBCONFIG_INCLUDE) $(RAPIDYAML_INCLUDE) $(HTTPLIB_INCLUDE) $(NLOHMANN_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 obj/../custom/script_http.o: ../custom/script_http.cpp ../custom/script_http.hpp $(HTTPLIB_H) $(COMMON_H)
+	@echo "	CXX	$<"
+	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(RA_INCLUDE) $(LIBCONFIG_INCLUDE) $(RAPIDYAML_INCLUDE) $(HTTPLIB_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+
+obj/../custom/script_ai_ipc.o: ../custom/script_ai_ipc.cpp ../custom/script_ai_ipc.hpp $(HTTPLIB_H) $(COMMON_H)
 	@echo "	CXX	$<"
 	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(RA_INCLUDE) $(LIBCONFIG_INCLUDE) $(RAPIDYAML_INCLUDE) $(HTTPLIB_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
