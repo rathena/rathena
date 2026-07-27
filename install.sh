@@ -258,10 +258,13 @@ install_system_dependencies() {
         make \
         pkg-config \
         libmysqlclient-dev \
-        zlib1g-dev \
         libpcre3-dev \
         libssl-dev \
         libpq-dev \
+        libzmq3-dev \
+        libhiredis-dev \
+        libcurl4-openssl-dev \
+        nlohmann-json3-dev \
         python3 \
         python3-pip \
         python3-venv \
@@ -407,10 +410,17 @@ setup_postgresql() {
     sudo -u postgres psql -d "${POSTGRES_DB}" -c "CREATE EXTENSION IF NOT EXISTS vector CASCADE;" 2>/dev/null || log_info "pgvector extension not loaded"
 
     # Run schema initialization if available
-    if [[ -f "${SCRIPT_DIR}/ai-autonomous-world/init_postgres.sql" ]]; then
+    if [[ -f "${SCRIPT_DIR}/ai-autonomous-world/database/init.sql" ]]; then
         log "Initializing database schema..."
-        sudo -u postgres psql -d "${POSTGRES_DB}" -f "${SCRIPT_DIR}/ai-autonomous-world/init_postgres.sql" 2>&1 | tail -3 || log_warn "Schema initialization had issues"
+        sudo -u postgres psql -d "${POSTGRES_DB}" -f "${SCRIPT_DIR}/ai-autonomous-world/database/init.sql" 2>&1 | tail -3 || log_warn "Schema initialization had issues"
     fi
+    # Run migrations
+    for mig in "${SCRIPT_DIR}/ai-autonomous-world/database/migrations/"*.sql; do
+        if [[ -f "$mig" ]]; then
+            log "Applying migration: $(basename "$mig")..."
+            sudo -u postgres psql -d "${POSTGRES_DB}" -f "$mig" 2>&1 | tail -3 || log_warn "Migration $(basename "$mig") had issues"
+        fi
+    done
 
     log "PostgreSQL setup complete"
 }
@@ -474,7 +484,7 @@ setup_mysql() {
     sudo mysql -u root -e "FLUSH PRIVILEGES;" 2>/dev/null || true
 
     # Import rAthena SQL files if they exist
-    local sql_files=("${SCRIPT_DIR}/sql-files/main.sql" "${SCRIPT_DIR}/sql-files/logs.sql")
+    local sql_files=("${SCRIPT_DIR}/sql-files/main.sql" "${SCRIPT_DIR}/sql-files/logs.sql" "${SCRIPT_DIR}/sql-files/ai_ipc_tables.sql")
     for sql_file in "${sql_files[@]}"; do
         if [[ -f "$sql_file" ]]; then
             log "Importing $(basename "$sql_file")..."
@@ -545,7 +555,7 @@ setup_python_environment() {
 
     # --- AI Autonomous World ---
     local ai_dir="${SCRIPT_DIR}/ai-autonomous-world"
-    local ai_venv="${ai_dir}/venv"
+    local ai_venv="${SCRIPT_DIR}/.venv"
 
     if [[ -d "$ai_dir" ]]; then
         log "Setting up AI Autonomous World Python environment..."
@@ -747,7 +757,7 @@ create_systemd_services() {
 
     local user
     user=$(whoami)
-    local ai_venv="${SCRIPT_DIR}/ai-autonomous-world/venv"
+    local ai_venv="${SCRIPT_DIR}/.venv"
     local ai_workdir="${SCRIPT_DIR}/ai-autonomous-world/ai-service"
 
     # AI Service
@@ -899,9 +909,9 @@ run_verification() {
 
     # 6. Check Python environments
     log "Checking Python environments..."
-    if [[ -d "${SCRIPT_DIR}/ai-autonomous-world/venv" ]]; then
+    if [[ -d "${SCRIPT_DIR}/.venv" ]]; then
         log "  ✓ AI Autonomous World venv exists"
-        if source "${SCRIPT_DIR}/ai-autonomous-world/venv/bin/activate" && python3 -c "import fastapi" 2>/dev/null; then
+        if source "${SCRIPT_DIR}/.venv/bin/activate" && python3 -c "import fastapi" 2>/dev/null; then
             log "  ✓ FastAPI importable"
         else
             log_warn "  ⚠ FastAPI not importable (dependencies may be missing)"
@@ -957,7 +967,7 @@ print_next_steps() {
 
     echo "  2. ${BLUE}Start the AI Service${NC}"
     echo "     cd ${SCRIPT_DIR}/ai-autonomous-world/ai-service"
-    echo "     source ../venv/bin/activate"
+    echo "     source ${SCRIPT_DIR}/.venv/bin/activate"
     echo "     python main.py"
     echo "     # Or via systemd: sudo systemctl start rathena-ai-service"
     echo ""
