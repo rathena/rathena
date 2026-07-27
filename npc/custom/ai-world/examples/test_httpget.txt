@@ -79,7 +79,7 @@ prontera,155,185,4	script	AI Health Check	1_M_BARD,{
 		mes "Using legacy httpget() API...";
 		next;
 		
-		.@response$ = httpget("http://192.168.0.100:8000/api/v1/health");
+		.@response$ = httpget("http://localhost:8000/api/v1/health");
 		
 		if (.@response$ == "") {
 			mes "^FF0000Error: AI service is not responding!^000000";
@@ -105,7 +105,7 @@ prontera,155,185,4	script	AI Health Check	1_M_BARD,{
 		
 		// Legacy API
 		.@start2 = gettimetick(2);
-		.@resp2$ = httpget("http://192.168.0.100:8000/api/v1/health");
+		.@resp2$ = httpget("http://localhost:8000/api/v1/health");
 		.@time2 = gettimetick(2) - .@start2;
 		
 		mes "^0000FFNew API (ai_db_*):^000000";

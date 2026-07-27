@@ -104,7 +104,7 @@ L_Login:
 		.@payload$ = .@payload$ + "}";
 		
 		// Send to AI service (wrapper uses ai_db_* internally)
-		.@response$ = httppost("http://192.168.0.100:8000/api/v1/events/dispatch", .@payload$);
+		.@response$ = httppost("http://localhost:8000/api/v1/events/dispatch", .@payload$);
 		
 		next;
 		mes "[AI Event Tester]";
@@ -244,7 +244,7 @@ L_Compare:
 	// Test Legacy API
 	.@start2 = gettimetick(2);
 	for (.@i = 0; .@i < 5; .@i++) {
-		.@resp$ = httppost("http://192.168.0.100:8000/api/v1/events/dispatch", .@payload$);
+		.@resp$ = httppost("http://localhost:8000/api/v1/events/dispatch", .@payload$);
 	}
 	.@time2 = gettimetick(2) - .@start2;
 	

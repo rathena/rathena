@@ -20,7 +20,7 @@ fi
 # Database credentials from .env
 DB_NAME="${POSTGRES_DB:-ai_world_memory}"
 DB_USER="${POSTGRES_USER:-ai_world_user}"
-DB_PASS="${POSTGRES_PASSWORD:-ai_world_pass_2025}"
+DB_PASS="${POSTGRES_PASSWORD:-}"
 DB_HOST="${POSTGRES_HOST:-localhost}"
 DB_PORT="${POSTGRES_PORT:-5432}"
 

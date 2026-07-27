@@ -80,7 +80,8 @@ if check_service "PostgreSQL" "systemctl is-active postgresql"; then ((PASSED_CH
 if check_port "DragonflyDB/Redis" 6379; then ((PASSED_CHECKS++)); fi; ((TOTAL_CHECKS++))
 
 # Check PostgreSQL connection
-if PGPASSWORD='ai_world_pass_2025' psql -h localhost -U ai_world_user -d ai_world_memory -c "SELECT 1" > /dev/null 2>&1; then
+DB_PASS="${POSTGRES_PASSWORD:-}"
+if [ -n "$DB_PASS" ] && PGPASSWORD="$DB_PASS" psql -h localhost -U ai_world_user -d ai_world_memory -c "SELECT 1" > /dev/null 2>&1; then
     echo -e "${GREEN}✓${NC} PostgreSQL Connection: ${GREEN}OK${NC}"
     ((PASSED_CHECKS++))
 else
@@ -100,7 +101,7 @@ echo ""
 
 echo -e "${BLUE}4. Checking Database Tables${NC}"
 echo "-----------------------------------"
-TABLE_COUNT=$(PGPASSWORD='ai_world_pass_2025' psql -h localhost -U ai_world_user -d ai_world_memory -t -c "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = 'public';" 2>/dev/null | tr -d ' ')
+TABLE_COUNT=$(PGPASSWORD="$DB_PASS" psql -h localhost -U ai_world_user -d ai_world_memory -t -c "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = 'public';" 2>/dev/null | tr -d ' ')
 if [ "$TABLE_COUNT" -ge 18 ]; then
     echo -e "${GREEN}✓${NC} Database Tables: ${GREEN}$TABLE_COUNT tables found${NC}"
     ((PASSED_CHECKS++))

@@ -19,7 +19,7 @@ prontera,155,185,4	script	Faction Monitor	4_F_KNIGHT_GOLD,{
 	next;
 	
 	// Call AI service to get faction alignment
-	.@url$ = "http://192.168.0.100:8000/api/v1/progression/factions/alignment";
+	.@url$ = "http://localhost:8000/api/v1/progression/factions/alignment";
 	.@response$ = ai_http_get(.@url$);
 	
 	// Parse response (simplified - would use JSON parser)
@@ -30,7 +30,7 @@ prontera,155,185,4	script	Faction Monitor	4_F_KNIGHT_GOLD,{
 	// Get player's reputation with each faction
 	mes "^0000FFYour Faction Standing:^000000";
 	
-	.@url$ = "http://192.168.0.100:8000/api/v1/progression/factions/" + .@player_id + "/reputation";
+	.@url$ = "http://localhost:8000/api/v1/progression/factions/" + .@player_id + "/reputation";
 	.@rep_response$ = ai_http_get(.@url$);
 	
 	mes .@rep_response$;
@@ -74,7 +74,7 @@ OnKillMonster:
 		"}";
 		
 		// Send to AI service
-		.@url$ = "http://192.168.0.100:8000/api/v1/progression/factions/" + .@player_id + "/action";
+		.@url$ = "http://localhost:8000/api/v1/progression/factions/" + .@player_id + "/action";
 		.@response$ = ai_http_post(.@url$, .@payload$);
 		
 		// Also record reputation gain
@@ -84,7 +84,7 @@ OnKillMonster:
 			"\"source\": \"faction_quest\"" +
 		"}";
 		
-		.@rep_url$ = "http://192.168.0.100:8000/api/v1/progression/reputation/" + .@player_id + "/gain";
+		.@rep_url$ = "http://localhost:8000/api/v1/progression/reputation/" + .@player_id + "/gain";
 		.@rep_response$ = ai_http_post(.@rep_url$, .@rep_payload$);
 		
 		// Reward player
@@ -112,7 +112,7 @@ prontera,165,185,4	script	Reputation Monitor	4_F_SAGE_A,{
 	next;
 	
 	// Get player's total influence
-	.@url$ = "http://192.168.0.100:8000/api/v1/progression/reputation/" + .@player_id;
+	.@url$ = "http://localhost:8000/api/v1/progression/reputation/" + .@player_id;
 	.@response$ = ai_http_get(.@url$);
 	
 	// Display (would parse JSON properly)
@@ -121,7 +121,7 @@ prontera,165,185,4	script	Reputation Monitor	4_F_SAGE_A,{
 	next;
 	
 	// Get unlocked benefits
-	.@benefits_url$ = "http://192.168.0.100:8000/api/v1/progression/reputation/" + .@player_id + "/benefits";
+	.@benefits_url$ = "http://localhost:8000/api/v1/progression/reputation/" + .@player_id + "/benefits";
 	.@benefits$ = ai_http_get(.@benefits_url$);
 	
 	mes "^00FF00Unlocked Benefits:^000000";
@@ -151,7 +151,7 @@ OnBossSpawnEvaluate:
 	"}";
 	
 	// Check if boss should spawn
-	.@eval_url$ = "http://192.168.0.100:8000/api/v1/progression/boss/evaluate-spawn";
+	.@eval_url$ = "http://localhost:8000/api/v1/progression/boss/evaluate-spawn";
 	.@eval_response$ = ai_http_post(.@eval_url$, .@world_state$);
 	
 	// If conditions met, spawn boss
@@ -166,7 +166,7 @@ OnBossSpawnEvaluate:
 			"\"difficulty_modifier\": 1.0" +
 		"}";
 		
-		.@spawn_url$ = "http://192.168.0.100:8000/api/v1/progression/boss/spawn";
+		.@spawn_url$ = "http://localhost:8000/api/v1/progression/boss/spawn";
 		.@boss$ = ai_http_post(.@spawn_url$, .@spawn_payload$);
 		
 		// Would parse boss data and actually spawn monster
@@ -186,7 +186,7 @@ OnBossKilled:
 		"\"time_participated\": 300" +
 	"}";
 	
-	.@encounter_url$ = "http://192.168.0.100:8000/api/v1/progression/boss/" + .@boss_id + "/encounter";
+	.@encounter_url$ = "http://localhost:8000/api/v1/progression/boss/" + .@boss_id + "/encounter";
 	ai_http_post(.@encounter_url$, .@encounter_payload$);
 	
 	// Check if boss defeated (last player)
@@ -199,7 +199,7 @@ OnBossKilled:
 			"\"time_to_kill\": 600" +
 		"}";
 		
-		.@defeat_url$ = "http://192.168.0.100:8000/api/v1/progression/boss/" + .@boss_id + "/defeat";
+		.@defeat_url$ = "http://localhost:8000/api/v1/progression/boss/" + .@boss_id + "/defeat";
 		.@rewards$ = ai_http_post(.@defeat_url$, .@defeat_payload$);
 		
 		// Distribute rewards (would parse JSON)
@@ -224,7 +224,7 @@ prontera,170,185,4	script	Influence Rewards	4_F_ACROSS,{
 	next;
 	
 	// Get player's unlocked benefits
-	.@url$ = "http://192.168.0.100:8000/api/v1/progression/reputation/" + .@player_id + "/benefits";
+	.@url$ = "http://localhost:8000/api/v1/progression/reputation/" + .@player_id + "/benefits";
 	.@benefits$ = ai_http_get(.@url$);
 	
 	// Would parse JSON to show available benefits
@@ -275,21 +275,27 @@ prontera,170,185,4	script	Influence Rewards	4_F_ACROSS,{
 // HELPER FUNCTIONS
 // ============================================================================
 
-// HTTP GET wrapper (uses rAthena's http_get if available)
+// HTTP GET wrapper using ai_db_request/ai_db_wait
 function	script	ai_http_get	{
 	.@url$ = getarg(0);
-	// In production, would use actual HTTP client
-	// return http_get(.@url$);
-	return "{}"; // Placeholder
+	.@req_id = ai_db_request("http_get", .@url$, "{}", 5);
+	if (.@req_id > 0) {
+		.@response$ = ai_db_wait(.@req_id, 10000);
+		return .@response$;
+	}
+	return "{}";
 }
 
-// HTTP POST wrapper
+// HTTP POST wrapper using ai_db_request/ai_db_wait
 function	script	ai_http_post	{
 	.@url$ = getarg(0);
 	.@payload$ = getarg(1);
-	// In production, would use actual HTTP client
-	// return http_post(.@url$, .@payload$);
-	return "{}"; // Placeholder
+	.@req_id = ai_db_request("http_post", .@url$, .@payload$, 5);
+	if (.@req_id > 0) {
+		.@response$ = ai_db_wait(.@req_id, 10000);
+		return .@response$;
+	}
+	return "{}";
 }
 
 // ============================================================================

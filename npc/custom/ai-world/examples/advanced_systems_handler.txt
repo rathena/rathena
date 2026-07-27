@@ -32,7 +32,7 @@ prontera,150,180,4	script	Dungeon Master	4_M_SAGE_A,{
 	switch(select("View Dungeon:Create Instance:Leaderboard:Cancel")) {
 	case 1:
 		// Get current dungeon
-		.@url$ = "http://192.168.0.100:8000/api/v1/advanced/dungeon/current";
+		.@url$ = "http://localhost:8000/api/v1/advanced/dungeon/current";
 		.@response$ = requestget(.@url$);
 		
 		mes "[Dungeon Master]";
@@ -52,7 +52,7 @@ prontera,150,180,4	script	Dungeon Master	4_M_SAGE_A,{
 		}
 		
 		// Create instance
-		.@url$ = "http://192.168.0.100:8000/api/v1/advanced/dungeon/instance/create";
+		.@url$ = "http://localhost:8000/api/v1/advanced/dungeon/instance/create";
 		.@body$ = "{\"party_id\":" + getcharid(1) + ",\"participants\":[" + getcharid(0) + "]}";
 		.@response$ = requestpost(.@url$, .@body$);
 		
@@ -68,7 +68,7 @@ prontera,150,180,4	script	Dungeon Master	4_M_SAGE_A,{
 		
 	case 3:
 		// Get leaderboard
-		.@url$ = "http://192.168.0.100:8000/api/v1/advanced/dungeon/leaderboard?limit=5";
+		.@url$ = "http://localhost:8000/api/v1/advanced/dungeon/leaderboard?limit=5";
 		.@response$ = requestget(.@url$);
 		
 		mes "[Dungeon Master]";
@@ -111,7 +111,7 @@ prontera,150,180,4	script	Dungeon Master	4_M_SAGE_A,{
 	.@spot_id = atoi(strnpcinfo(2));  // Extract from NPC name
 	
 	// Call AI service to dig
-	.@url$ = "http://192.168.0.100:8000/api/v1/advanced/archaeology/dig-spots/" + .@spot_id + "/dig";
+	.@url$ = "http://localhost:8000/api/v1/advanced/archaeology/dig-spots/" + .@spot_id + "/dig";
 	.@body$ = "{\"player_id\":" + getcharid(0) + ",\"archaeology_level\":" + readparam(bBaseLevel) + "}";
 	.@response$ = requestpost(.@url$, .@body$);
 	
@@ -152,7 +152,7 @@ prontera,160,180,4	script	Archaeologist	4_F_SAGE,{
 	}
 	
 	// Get progress
-	.@url$ = "http://192.168.0.100:8000/api/v1/advanced/archaeology/" + getcharid(0) + "/progress";
+	.@url$ = "http://localhost:8000/api/v1/advanced/archaeology/" + getcharid(0) + "/progress";
 	.@response$ = requestget(.@url$);
 	
 	mes "[Archaeologist]";
@@ -175,7 +175,7 @@ prontera,160,180,4	script	Archaeologist	4_F_SAGE,{
 	.@chain_id = atoi(strnpcinfo(2));  // Extract chain_id from NPC name
 	
 	// Get current step
-	.@url$ = "http://192.168.0.100:8000/api/v1/advanced/chains/" + .@chain_id + "/current-step";
+	.@url$ = "http://localhost:8000/api/v1/advanced/chains/" + .@chain_id + "/current-step";
 	.@response$ = requestget(.@url$);
 	
 	// Display dialogue
@@ -196,12 +196,12 @@ prontera,160,180,4	script	Archaeologist	4_F_SAGE,{
 		mes "Thank you for listening.";
 		
 		// Advance chain with success
-		.@advance_url$ = "http://192.168.0.100:8000/api/v1/advanced/chains/" + .@chain_id + "/advance";
+		.@advance_url$ = "http://localhost:8000/api/v1/advanced/chains/" + .@chain_id + "/advance";
 		.@advance_body$ = "{\"outcome\":\"success\"}";
 		requestpost(.@advance_url$, .@advance_body$);
 		
 		// Record participation
-		.@part_url$ = "http://192.168.0.100:8000/api/v1/advanced/chains/" + .@chain_id + "/participate";
+		.@part_url$ = "http://localhost:8000/api/v1/advanced/chains/" + .@chain_id + "/participate";
 		.@part_body$ = "{\"player_id\":" + getcharid(0) + ",\"contribution\":10}";
 		requestpost(.@part_url$, .@part_body$);
 		
@@ -222,7 +222,7 @@ prontera,140,180,4	script	Chain Master	4_M_CHncasi,{
 	next;
 	
 	// Get active chains
-	.@url$ = "http://192.168.0.100:8000/api/v1/advanced/chains/active";
+	.@url$ = "http://localhost:8000/api/v1/advanced/chains/active";
 	.@response$ = requestget(.@url$);
 	
 	.@total = getjsonint(.@response$, "total");
@@ -242,37 +242,61 @@ prontera,140,180,4	script	Chain Master	4_M_CHncasi,{
 // UTILITY FUNCTIONS
 // ============================================================================
 
-// Helper function to make HTTP requests (simplified)
-// Production would use actual HTTP request functions from rAthena
+// Helper function to make HTTP requests using ai_db_request/ai_db_wait
 function	script	requestget	{
-	// .@url$ = getarg(0);
-	// Use callhttprequest or similar
-	// Returns JSON response string
-	return "{}";  // Placeholder
+	.@url$ = getarg(0);
+	.@req_id = ai_db_request("http_get", .@url$, "{}", 5);
+	if (.@req_id > 0) {
+		.@response$ = ai_db_wait(.@req_id, 10000);
+		return .@response$;
+	}
+	return "{}";
 }
 
 function	script	requestpost	{
-	// .@url$ = getarg(0);
-	// .@body$ = getarg(1);
-	// Use callhttprequest or similar
-	// Returns JSON response string
-	return "{}";  // Placeholder
+	.@url$ = getarg(0);
+	.@body$ = getarg(1);
+	.@req_id = ai_db_request("http_post", .@url$, .@body$, 5);
+	if (.@req_id > 0) {
+		.@response$ = ai_db_wait(.@req_id, 10000);
+		return .@response$;
+	}
+	return "{}";
 }
 
 function	script	getjsonstr	{
-	// .@json$ = getarg(0);
-	// .@path$ = getarg(1);
-	// Parse JSON and extract string value
-	// Returns extracted value
-	return "";  // Placeholder
+	.@json$ = getarg(0);
+	.@path$ = getarg(1);
+	// Extract string value from JSON using string operations
+	.@key$ = "\"" + .@path$ + "\":\"";
+	.@pos = findstr(.@json$, .@key$);
+	if (.@pos > 0) {
+		.@start = .@pos + getstrlen(.@key$);
+		.@end = findstr(.@json$, "\"", .@start);
+		if (.@end > .@start) {
+			return substr$(.@json$, .@start, .@end);
+		}
+	}
+	return "";
 }
 
 function	script	getjsonint	{
-	// .@json$ = getarg(0);
-	// .@path$ = getarg(1);
-	// Parse JSON and extract integer value
-	// Returns extracted value
-	return 0;  // Placeholder
+	.@json$ = getarg(0);
+	.@path$ = getarg(1);
+	.@key$ = "\"" + .@path$ + "\":";
+	.@pos = findstr(.@json$, .@key$);
+	if (.@pos > 0) {
+		.@start = .@pos + getstrlen(.@key$);
+		.@end_str$ = substr$(.@json$, .@start, 10);
+		.@comma = findstr(.@end_str$, ",");
+		.@brace = findstr(.@end_str$, "}");
+		if (.@comma > 0 && (.@brace < 0 || .@comma < .@brace)) {
+			return atoi(substr$(.@end_str$, 0, .@comma));
+		} else if (.@brace > 0) {
+			return atoi(substr$(.@end_str$, 0, .@brace));
+		}
+	}
+	return 0;
 }
 
 // ============================================================================

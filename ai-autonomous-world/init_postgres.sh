@@ -10,7 +10,7 @@ echo ""
 # Database configuration
 DB_NAME="ai_world_memory"
 DB_USER="ai_world_user"
-DB_PASS="ai_world_pass_2025"
+DB_PASS="${POSTGRES_PASSWORD:-}"
 
 # Check if running as postgres user or with sudo
 if [ "$EUID" -eq 0 ] || [ "$(whoami)" = "postgres" ]; then

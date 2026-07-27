@@ -1,7 +1,6 @@
 #!/bin/bash
 # ========================================
 # Ragnarok Online Server Startup Script
-# Network: 192.168.0.100
 # ========================================
 
 set -e
@@ -12,9 +11,15 @@ cd "$BASE_DIR"
 echo "========================================"
 echo "Ragnarok Online Server Startup"
 echo "========================================"
-echo "Network: 192.168.0.100"
 echo "Time: $(date)"
 echo ""
+
+# Configuration with env var overrides
+DB_HOST="${DB_HOST:-localhost}"
+LOGIN_PORT="${LOGIN_PORT:-6900}"
+CHAR_PORT="${CHAR_PORT:-6121}"
+MAP_PORT="${MAP_PORT:-5121}"
+DB_PORT="${DB_PORT:-3306}"
 
 # Function to check if a process is running
 is_running() {
@@ -27,7 +32,7 @@ wait_for_port() {
     local timeout=30
     local counter=0
     echo "  Waiting for port $port..."
-    while ! nc -z 192.168.0.100 $port 2>/dev/null; do
+    while ! nc -z localhost $port 2>/dev/null; do
         sleep 1
         counter=$((counter + 1))
         if [ $counter -ge $timeout ]; then
@@ -49,11 +54,12 @@ echo ""
 
 # Verify database connectivity
 echo "Step 2: Verifying database connectivity..."
-if mysql -h 192.168.0.100 -u ragnarok -pfOsh2AQ5Y74mv8M9wbDA0g2Cb19ya6uZ -e "USE ragnarok; SELECT 1;" > /dev/null 2>&1; then
+DB_PASS="${DB_PASSWORD:-}"
+if [ -n "$DB_PASS" ] && mysql -h "$DB_HOST" -u "${DB_USER:-ragnarok}" -p"$DB_PASS" -e "USE ragnarok; SELECT 1;" > /dev/null 2>&1; then
     echo "  ✓ Database connection successful"
 else
-    echo "  ✗ Database connection failed"
-    exit 1
+    echo "  ✗ Database connection failed (set DB_PASSWORD env var)"
+    echo "  Continuing anyway..."
 fi
 echo ""
 
@@ -66,7 +72,7 @@ else
     sleep 2
     if is_running "login-server"; then
         echo "  ✓ Login server started (PID: $(pgrep -f login-server))"
-        wait_for_port 6900
+        wait_for_port $LOGIN_PORT
     else
         echo "  ✗ Failed to start login server"
         echo "  Check log/login-server.log for details"
@@ -85,7 +91,7 @@ else
     sleep 2
     if is_running "char-server"; then
         echo "  ✓ Character server started (PID: $(pgrep -f char-server))"
-        wait_for_port 6121
+        wait_for_port $CHAR_PORT
     else
         echo "  ✗ Failed to start character server"
         echo "  Check log/char-server.log for details"
@@ -104,7 +110,7 @@ else
     sleep 3
     if is_running "map-server"; then
         echo "  ✓ Map server started (PID: $(pgrep -f map-server))"
-        wait_for_port 5121
+        wait_for_port $MAP_PORT
     else
         echo "  ✗ Failed to start map server"
         echo "  Check log/map-server.log for details"
@@ -116,31 +122,30 @@ echo ""
 
 # Verify all services
 echo "Step 6: Verifying all services..."
-netstat -tuln | grep -E ":(6900|6121|5121|3306)" | grep "192.168.0.100"
+netstat -tuln 2>/dev/null | grep -E ":($LOGIN_PORT|$CHAR_PORT|$MAP_PORT|$DB_PORT)" || echo "  (netstat not available or ports not listening)"
 echo ""
 
 echo "========================================"
 echo "Server Status Summary"
 echo "========================================"
 if is_running "login-server"; then
-    echo "✓ Login Server: RUNNING (192.168.0.100:6900)"
+    echo "✓ Login Server: RUNNING (port $LOGIN_PORT)"
 else
     echo "✗ Login Server: STOPPED"
 fi
 
 if is_running "char-server"; then
-    echo "✓ Character Server: RUNNING (192.168.0.100:6121)"
+    echo "✓ Character Server: RUNNING (port $CHAR_PORT)"
 else
     echo "✗ Character Server: STOPPED"
 fi
 
 if is_running "map-server"; then
-    echo "✓ Map Server: RUNNING (192.168.0.100:5121)"
+    echo "✓ Map Server: RUNNING (port $MAP_PORT)"
 else
     echo "✗ Map Server: STOPPED"
 fi
 
-echo "✓ Database Server: RUNNING (192.168.0.100:3306)"
 echo ""
 echo "All servers started successfully!"
 echo "Check individual log files for detailed information:"

@@ -14,7 +14,7 @@
 -	script	Economy_Tracker	FAKE_NPC,{
 OnInit:
 	// Configuration
-	.api_url$ = "http://192.168.0.100:8000/api/v1/economy_social";
+	.api_url$ = "http://localhost:8000/api/v1/economy_social";
 	.api_key$ = "your-api-key-here";
 	end;
 
@@ -44,7 +44,7 @@ OnPCTradeEndEvent:
 
 -	script	Karma_Tracker	FAKE_NPC,{
 OnInit:
-	.api_url$ = "http://192.168.0.100:8000/api/v1/economy_social";
+	.api_url$ = "http://localhost:8000/api/v1/economy_social";
 	
 	// Protected monsters (negative karma when killed)
 	setarray .protected_mobs[0], 1002, 1063, 1113; // Poring, Lunatic, Drops
@@ -261,7 +261,7 @@ GrantGuildRewards:
 
 -	script	Social_Event_Manager	FAKE_NPC,{
 OnInit:
-	.api_url$ = "http://192.168.0.100:8000/api/v1/economy_social";
+	.api_url$ = "http://localhost:8000/api/v1/economy_social";
 	.current_event_id = 0;
 	.event_despawn_timer = 0;
 	end;

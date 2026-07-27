@@ -24,7 +24,7 @@ L_ViewHazards:
 	mes "Fetching active hazards...";
 	
 	// Call AI Service API
-	.@response$ = aiworld_http_get("http://192.168.0.100:8000/api/v1/environmental/hazards/active");
+	.@response$ = aiworld_http_get("http://localhost:8000/api/v1/environmental/hazards/active");
 	.@json = json_decode(.@response$);
 	
 	.@count = json_array_length(.@json);
@@ -55,7 +55,7 @@ L_CheckMap:
 	mes "Checking hazards in current map...";
 	
 	.@map$ = strcharinfo(3);
-	.@response$ = aiworld_http_get("http://192.168.0.100:8000/api/v1/environmental/hazards/" + .@map$);
+	.@response$ = aiworld_http_get("http://localhost:8000/api/v1/environmental/hazards/" + .@map$);
 	.@json = json_decode(.@response$);
 	
 	.@count = json_array_length(.@json);
@@ -89,7 +89,7 @@ L_Stats:
 	mes "[Hazard Monitor]";
 	mes "Fetching statistics...";
 	
-	.@response$ = aiworld_http_get("http://192.168.0.100:8000/api/v1/environmental/metrics");
+	.@response$ = aiworld_http_get("http://localhost:8000/api/v1/environmental/metrics");
 	.@json = json_decode(.@response$);
 	
 	.@hazards_today = json_get_int(.@json, "hazards_generated_today");
@@ -119,7 +119,7 @@ L_CurrentWeather:
 	mes "[Weather Sage]";
 	
 	// Get current weather
-	.@response$ = aiworld_http_get("http://192.168.0.100:8000/api/v1/environmental/weather/current");
+	.@response$ = aiworld_http_get("http://localhost:8000/api/v1/environmental/weather/current");
 	.@json = json_decode(.@response$);
 	
 	.@type$ = json_get_str(.@json, "weather_type");
@@ -146,7 +146,7 @@ L_Forecast:
 	mes "[Weather Sage]";
 	mes "Looking into the future...";
 	
-	.@response$ = aiworld_http_get("http://192.168.0.100:8000/api/v1/environmental/weather/forecast?hours=24");
+	.@response$ = aiworld_http_get("http://localhost:8000/api/v1/environmental/weather/forecast?hours=24");
 	.@json = json_decode(.@response$);
 	.@forecast = json_get_array(.@json, "forecast");
 	
@@ -168,7 +168,7 @@ L_Forecast:
 L_TimeOfDay:
 	mes "[Weather Sage]";
 	
-	.@response$ = aiworld_http_get("http://192.168.0.100:8000/api/v1/environmental/time/current");
+	.@response$ = aiworld_http_get("http://localhost:8000/api/v1/environmental/time/current");
 	.@json = json_decode(.@response$);
 	
 	.@time$ = json_get_str(.@json, "time_of_day");
@@ -218,7 +218,7 @@ prt_fild01,100,150,0	script	Hidden Treasure#1	HIDDEN_NPC,{
 L_Open:
 	// Call AI Service to process discovery
 	.@player_id = getcharid(0);
-	.@url$ = "http://192.168.0.100:8000/api/v1/environmental/treasure/" + .@treasure_id + "/discover?player_id=" + .@player_id;
+	.@url$ = "http://localhost:8000/api/v1/environmental/treasure/" + .@treasure_id + "/discover?player_id=" + .@player_id;
 	.@response$ = aiworld_http_post(.@url$, "{}");
 	.@json = json_decode(.@response$);
 	
@@ -324,7 +324,7 @@ prontera,160,150,4	script	Fragment Collector#env	4_M_ALCHE_C,{
 
 L_CheckFragments:
 	.@player_id = getcharid(0);
-	.@url$ = "http://192.168.0.100:8000/api/v1/environmental/treasure/" + .@player_id + "/fragments";
+	.@url$ = "http://localhost:8000/api/v1/environmental/treasure/" + .@player_id + "/fragments";
 	.@response$ = aiworld_http_get(.@url$);
 	.@json = json_decode(.@response$);
 	
@@ -350,7 +350,7 @@ L_ExchangeCard:
 	mes "[Fragment Collector]";
 	mes "Exchanging 100 fragments...";
 	
-	.@url$ = "http://192.168.0.100:8000/api/v1/environmental/treasure/" + .@player_id + "/claim-card";
+	.@url$ = "http://localhost:8000/api/v1/environmental/treasure/" + .@player_id + "/claim-card";
 	.@response$ = aiworld_http_post(.@url$, "{}");
 	.@json = json_decode(.@response$);
 	
@@ -405,7 +405,7 @@ OnPCLoginEvent:
 	.@player_id = getcharid(0);
 	
 	// Get current weather
-	.@response$ = aiworld_http_get("http://192.168.0.100:8000/api/v1/environmental/weather/current");
+	.@response$ = aiworld_http_get("http://localhost:8000/api/v1/environmental/weather/current");
 	.@json = json_decode(.@response$);
 	
 	.@weather$ = json_get_str(.@json, "weather_type");
@@ -421,7 +421,7 @@ OnPCLoginEvent:
 	}
 	
 	// Get time effects
-	.@time_response$ = aiworld_http_get("http://192.168.0.100:8000/api/v1/environmental/time/current");
+	.@time_response$ = aiworld_http_get("http://localhost:8000/api/v1/environmental/time/current");
 	.@time_json = json_decode(.@time_response$);
 	
 	.@time$ = json_get_str(.@time_json, "time_of_day");
@@ -444,7 +444,7 @@ OnPCMapMoveEvent:
 	// Check for map hazards when changing maps
 	.@map$ = strcharinfo(3);
 	
-	.@response$ = aiworld_http_get("http://192.168.0.100:8000/api/v1/environmental/hazards/" + .@map$);
+	.@response$ = aiworld_http_get("http://localhost:8000/api/v1/environmental/hazards/" + .@map$);
 	.@json = json_decode(.@response$);
 	
 	.@count = json_array_length(.@json);
@@ -481,7 +481,7 @@ L_Dig:
 	.@player_id = getcharid(0);
 	.@treasure_id = .treasure_id;  // Set by TreasureManager
 	
-	.@url$ = "http://192.168.0.100:8000/api/v1/environmental/treasure/" + .@treasure_id + "/discover?player_id=" + .@player_id;
+	.@url$ = "http://localhost:8000/api/v1/environmental/treasure/" + .@treasure_id + "/discover?player_id=" + .@player_id;
 	.@response$ = aiworld_http_post(.@url$, "{}");
 	.@json = json_decode(.@response$);
 	
@@ -525,7 +525,7 @@ OnPCMapMoveEvent:
 	.@player_id = getcharid(0);
 	
 	// Check for hazard
-	.@response$ = aiworld_http_get("http://192.168.0.100:8000/api/v1/environmental/hazards/" + .@map$);
+	.@response$ = aiworld_http_get("http://localhost:8000/api/v1/environmental/hazards/" + .@map$);
 	.@json = json_decode(.@response$);
 	
 	.@count = json_array_length(.@json);
@@ -547,7 +547,7 @@ OnPCMapMoveEvent:
 			
 			// Record encounter
 			.@data$ = "{\"time_in_hazard\": " + .@time_in_hazard + ", \"items_dropped\": 0, \"deaths\": 0}";
-			.@url$ = "http://192.168.0.100:8000/api/v1/environmental/hazards/" + .@current_hazard + "/encounter";
+			.@url$ = "http://localhost:8000/api/v1/environmental/hazards/" + .@current_hazard + "/encounter";
 			.@response$ = aiworld_http_post(.@url$, .@data$);
 			
 			// Clear tracking

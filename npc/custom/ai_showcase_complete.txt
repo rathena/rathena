@@ -38,10 +38,10 @@
 OnInit:
 	// === API Configuration ===
 	// Base URL for AI service (without trailing slash)
-	setd ".ai_base_url$", "http://192.168.0.100:8000";
+	setd ".ai_base_url$", "http://localhost:8000";
 	
 	// OpenMemory URL for memory operations
-	setd ".memory_url$", "http://192.168.0.100:8080";
+	setd ".memory_url$", "http://localhost:8080";
 	
 	// === Timeout Configuration ===
 	setd ".default_timeout", 30000;      // 30 seconds default

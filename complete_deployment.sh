@@ -129,7 +129,7 @@ sudo -u postgres psql <<EOF
 DO \$\$
 BEGIN
     IF NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = 'ai_world_user') THEN
-        CREATE USER ai_world_user WITH PASSWORD 'ai_world_pass_2025';
+        CREATE USER ai_world_user WITH PASSWORD '${POSTGRES_PASSWORD:-change_me_in_production}';
     END IF;
 END
 \$\$;
@@ -411,7 +411,7 @@ echo "    - Used by: login-server, char-server, map-server, web-server"
 echo ""
 echo "  ${BLUE}PostgreSQL (AI Services ONLY):${NC}"
 echo "    - AI Memory Database: ai_world_memory"
-echo "      User: ai_world_user / ai_world_pass_2025"
+echo "      User: ai_world_user / ${POSTGRES_PASSWORD:-change_me_in_production}"
 echo "    - P2P Database: p2p_coordinator"
 echo "      User: p2p_user / p2p_pass_2025"
 echo "    - Used by: ai-world service, p2p-coordinator"

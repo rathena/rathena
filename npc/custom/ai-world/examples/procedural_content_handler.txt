@@ -352,7 +352,7 @@ aiworld_get_avg_player_level() -> int
 aiworld_register_system(system_name$)
 
 All functions communicate with the AI Service at:
-http://192.168.0.100:8000/api/v1/procedural/*
+http://localhost:8000/api/v1/procedural/*
 */
 
 //============================================================
@@ -476,7 +476,7 @@ INTEGRATION CHECKLIST:
 4. Testing:
    - Use "Procedural Tester" NPC to verify functionality
    - Check logs: logs/ai-service.log
-   - Monitor metrics: http://192.168.0.100:8000/metrics
+   - Monitor metrics: http://localhost:8000/metrics
 
 5. Production Deployment:
    - Set proper API keys for security
