@@ -477,7 +477,7 @@ static int32 Sql_P_BindSqlDataType(MYSQL_BIND* bind, enum SqlDataType buffer_typ
 	{
 	case SQLDT_NULL:
 		bind->buffer_type = MYSQL_TYPE_NULL;
-		buffer_len = 0;// FIXME length = ? [FlavioJS]
+		buffer_len = 0;// FIXME length = 0 for NULL type bindings [FlavioJS]
 		break;
 	// fixed size
 	case SQLDT_UINT8:
@@ -725,7 +725,7 @@ int32 SqlStmt::BindParam(size_t idx, enum SqlDataType buffer_type, void* buffer,
 	if( idx < this->max_params ){
 		return Sql_P_BindSqlDataType( this->params + idx, buffer_type, buffer, buffer_len, nullptr, nullptr );
 	}else{
-		// TODO: for real...? Check this! [Lemongrass]
+		// TODO: for real...? Check this! [Lemongrass] - out of range params are silently ignored
 		return SQL_SUCCESS;// out of range - ignore
 	}
 }
@@ -807,7 +807,7 @@ int32 SqlStmt::BindColumn(size_t idx, enum SqlDataType buffer_type, void* buffer
 		this->column_lengths[idx].out_length = out_length;
 		return Sql_P_BindSqlDataType( this->columns + idx, buffer_type, buffer, buffer_len, &this->column_lengths[idx].length, out_is_null );
 	}else{
-		// TODO: for real...? Check this! [Lemongrass]
+		// TODO: for real...? Check this! [Lemongrass] - out of range columns are silently ignored
 		return SQL_SUCCESS;// out of range - ignore
 	}
 }
@@ -888,7 +888,7 @@ int32 SqlStmt::NextRow(){
 				this->ShowDebugTruncatedColumn( i );
 				return SQL_ERROR;
 			}
-			// FIXME numeric types and null [FlavioJS]
+			// FIXME numeric types and null [FlavioJS] - truncation check skipped for numeric types
 		}
 #endif
 

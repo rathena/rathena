@@ -335,7 +335,8 @@ public:
 #if defined(SQL_REMOVE_SHOWDEBUG)
 #define SqlStmt_ShowDebug(self) (void)0
 #else
-// TODO: we have to keep this until C++20 and std::source_location is available [Lemongrass]
+// Kept for backward compatibility until C++20 and std::source_location is available [Lemongrass]
+// Once C++20 is adopted, replace with std::source_location::current() for compile-time file/line capture.
 #define SqlStmt_ShowDebug(self) (self).ShowDebug_( __FILE__, __LINE__ )
 #endif
 

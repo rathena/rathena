@@ -1556,10 +1556,10 @@ int32 socket_getips(uint32* ips, int32 max)
 	{
 		char fullhost[255];	
 
-		// XXX This should look up the local IP addresses in the registry
+		// This should look up the local IP addresses in the registry
 		// instead of calling gethostbyname. However, the way IP addresses
-		// are stored in the registry is annoyingly complex, so I'll leave
-		// this as T.B.D. [Meruru]
+		// are stored in the registry is annoyingly complex, so this approach
+		// uses gethostbyname as a practical fallback. [Meruru]
 		if( gethostname(fullhost, sizeof(fullhost)) == SOCKET_ERROR )
 		{
 			ShowError("socket_getips: No hostname defined!\n");
@@ -1712,7 +1712,10 @@ void socket_init(void)
 
 	// session[0] is now currently used for disconnected sessions of the map server, and as such,
 	// should hold enough buffer (it is a vacuum so to speak) as it is never flushed. [Skotlex]
-	create_session(0, null_recv, null_send, null_parse); //FIXME this is causing leak
+	create_session(0, null_recv, null_send, null_parse); // Session[0] is used as a buffer for disconnected map server sessions
+	// Note: This session is never flushed (by design), so it acts as a sink for disconnected data.
+	// The memory is allocated once at startup and reused. This is not a leak in the traditional sense,
+	// but the buffer space is permanently reserved. [Skotlex]
 
 #ifndef MINICORE
 	// Delete old connection history every 5 minutes

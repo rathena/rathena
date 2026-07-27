@@ -82,7 +82,7 @@ public:
 	e_core_status get_status();
 	e_core_type get_type();
 	bool is_running();
-	// TODO: refactor to protected
+	// @TODO: refactor to protected - currently public for backward compatibility
 	void set_run_once( bool run_once );
 	void signal_crash();
 	void signal_shutdown();

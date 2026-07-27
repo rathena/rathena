@@ -80,7 +80,7 @@ void display_versionscreen(bool do_exit)
 /**
  * Read the option specified in the command line
  * and assign the confs used by the different servers.
- * @TODO remove and place into csnlif of different serv
+ * @TODO refactor: move option parsing into each server's cnslif module
  * @param argc: arguments count (from main)
  * @param argv: arguments values (from main)
  * @return true or exit on failure

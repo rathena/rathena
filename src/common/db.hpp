@@ -15,7 +15,7 @@
  *  functions of the database only ask for the key and/or data to be         *
  *  released.                                                                *
  *                                                                           *
- *  TODO:                                                                    *
+ *  Future improvements:                                                      *
  *  - create a custom database allocator                                     *
  *  - see what functions need or should be added to the database interface   *
  *                                                                           *

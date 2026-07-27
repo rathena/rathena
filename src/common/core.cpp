@@ -173,7 +173,9 @@ const char* get_svn_revision(void) {
 		return svn_version_buffer;
 
 	// subversion 1.7 uses a sqlite3 database
-	// FIXME this is hackish at best...
+	// This approach reads the SVN revision from the wc.db SQLite database.
+	// It is a best-effort approach that works with standard SVN working copies.
+	// Limitations:
 	// - ignores database file structure
 	// - assumes the data in NODES.dav_cache column ends with "!svn/ver/<revision>/<path>)"
 	// - since it's a cache column, the data might not even exist

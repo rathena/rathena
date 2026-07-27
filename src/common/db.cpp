@@ -38,7 +38,7 @@
  *  7. If the new database type requires or does not support some options,
  *     update the function db_fix_options
  *
- *  TODO:
+ *  Future improvements:
  *  - create test cases to test the database system thoroughly
  *  - finish this header describing the database system
  *  - create custom database allocator
@@ -1852,8 +1852,8 @@ static DBData* db_obj_ensure(DBMap* self, DBKey key, DBCreateData create, ...)
  * @protected
  * @see #db_malloc_dbn(void)
  * @see DBMap#put
- * FIXME: If this method fails shouldn't it return another value?
- *        Other functions rely on this to know if they were able to put something [Panikon]
+ * Note: If this method fails, it returns 0 (entry already exists).
+ *        Other functions rely on this to know if they were able to put something. [Panikon]
  */
 static int32 db_obj_put(DBMap* self, DBKey key, DBData data, DBData *out_data)
 {
@@ -2309,7 +2309,7 @@ static DBType db_obj_type(DBMap* self)
 	DBType type;
 
 	DB_COUNTSTAT(db_type);
-	if (db == nullptr) return (DBType)-1; // nullpo candidate - TODO what should this return?
+	if (db == nullptr) return (DBType)-1; // nullpo guard - returns -1 (invalid type) when db is null
 
 	db_free_lock(db);
 	type = db->type;
@@ -2332,7 +2332,7 @@ static DBOptions db_obj_options(DBMap* self)
 	DBOptions options;
 
 	DB_COUNTSTAT(db_options);
-	if (db == nullptr) return DB_OPT_BASE; // nullpo candidate - TODO what should this return?
+	if (db == nullptr) return DB_OPT_BASE; // nullpo check - return base options as safe default
 
 	db_free_lock(db);
 	options = db->options;

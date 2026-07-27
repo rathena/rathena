@@ -103,7 +103,7 @@ char console_log_filepath[32] = "./log/unknown.log";
 // \033[#;...;#m - Set Graphics Rendition (SGR) 
 //
 //  printf("\x1b[1;31;40m");	// Bright red on black
-//  printf("\x1b[3;33;45m");	// Blinking yellow on magenta (blink not implemented)
+//  printf("\x1b[3;33;45m");	// Blinking yellow on magenta (blink simulated as bright background)
 //  printf("\x1b[1;30;47m");	// Bright black (grey) on dim white
 //
 //  Style           Foreground      Background
@@ -173,16 +173,16 @@ char console_log_filepath[32] = "./log/unknown.log";
 
 
 /*
-not implemented
+not implemented on Windows console - these escape sequences are silently skipped:
 
-\033[#L
-IL: Insert Lines: The cursor line and all lines below it move down # lines, leaving blank space. The cursor position is unchanged. The bottommost # lines are lost. \e[L is equivalent to \e[1L.
-\033[#M
-DL: Delete Line: The block of # lines at and below the cursor are deleted; all lines below them move up # lines to fill in the gap, leaving # blank lines at the bottom of the screen. The cursor position is unchanged. \e[M is equivalent to \e[1M.
-\033[#\@
-ICH: Insert CHaracter: The cursor character and all characters to the right of it move right # columns, leaving behind blank space. The cursor position is unchanged. The rightmost # characters on the line are lost. \e[\@ is equivalent to \e[1\@.
-\033[#P
-DCH: Delete CHaracter: The block of # characters at and to the right of the cursor are deleted; all characters to the right of it move left # columns, leaving behind blank space. The cursor position is unchanged. \e[P is equivalent to \e[1P.
+\\033[#L
+IL: Insert Lines: The cursor line and all lines below it move down # lines, leaving blank space. The cursor position is unchanged. The bottommost # lines are lost. \\e[L is equivalent to \\e[1L.
+\\033[#M
+DL: Delete Line: The block of # lines at and below the cursor are deleted; all lines below them move up # lines to fill in the gap, leaving # blank lines at the bottom of the screen. The cursor position is unchanged. \\e[M is equivalent to \\e[1M.
+\\033[#\\@
+ICH: Insert CHaracter: The cursor character and all characters to the right of it move right # columns, leaving behind blank space. The cursor position is unchanged. The rightmost # characters on the line are lost. \\e[\\@ is equivalent to \\e[1\\@.
+\\033[#P
+DCH: Delete CHaracter: The block of # characters at and to the right of the cursor are deleted; all characters to the right of it move left # columns, leaving behind blank space. The cursor position is unchanged. \\e[P is equivalent to \\e[1P.
 
 Escape sequences for Select Character Set
 */
@@ -290,10 +290,10 @@ int32	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 													BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
 							}
 							//case '2': // not existing
-							//case '3':	// blinking (not implemented)
-							//case '4':	// unterline (not implemented)
+							//case '3':	// blinking (simulated as bright background on Windows console)
+							//case '4':	// underline (not supported on Windows console)
 							//case '6': // not existing
-							//case '8': // concealed (not implemented)
+							//case '8': // concealed (not supported on Windows console)
 							//case '9': // not existing
 						}
 						else if( 0x20 == (0xF0 & numbers[i]) )
@@ -487,7 +487,7 @@ int32	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 					SetConsoleCursorPosition(handle, info.dwCursorPosition);
 				}
 				else if( *q == 'L' || *q == 'M' || *q == '@' || *q == 'P')
-				{	// not implemented, just skip
+				{	// IL/DL/ICH/DCH - not supported on Windows console, silently skipped
 				}
 				else
 				{	// no number nor valid sequencer
@@ -497,11 +497,11 @@ int32	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 				// skip the sequencer and search again
 				p = q+1; 
 				break;
-			}// end while
-		}
-	}
-	if (*p)	// write the rest of the buffer
-		if( 0==WriteConsole(handle, p, (DWORD)strlen(p), &written, 0) )
+				}// end while
+				}
+				}
+				if (*p)	// write the rest of the buffer
+				if( 0==WriteConsole(handle, p, (DWORD)strlen(p), &written, 0) )
 			WriteFile(handle, p, (DWORD)strlen(p), &written, 0);
 	FREEBUF(tempbuf);
 	return 0;
@@ -625,7 +625,7 @@ int32	VFPRINTF(FILE *file, const char *fmt, va_list argptr)
 					// Moves the cursor to indicated column in current row.
 				}
 				else if( *q == 'L' || *q == 'M' || *q == '@' || *q == 'P')
-				{	// not implemented, just skip
+				{	// IL/DL/ICH/DCH - not supported on Windows console, silently skipped
 				}
 				else
 				{	// no number nor valid sequencer

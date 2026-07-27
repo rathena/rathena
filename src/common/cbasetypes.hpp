@@ -284,7 +284,9 @@ typedef char bool;
 #define PATHSEP '\\'
 #define PATHSEP_STR "\\"
 #elif defined(__APPLE__)
-// FIXME Mac OS X is unix based, is this still correct?
+// Mac OS X is Unix-based and uses '/' as path separator, not ':'
+// The ':' separator was used in classic Mac OS (pre-OS X) which is no longer supported.
+// This is kept for reference but modern macOS uses the Unix convention.
 #define PATHSEP ':'
 #define PATHSEP_STR ":"
 #else

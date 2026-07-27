@@ -385,7 +385,7 @@ enum e_skill_flag : int8
 	SKILL_FLAG_TEMPORARY,
 	SKILL_FLAG_PLAGIARIZED,
 	SKILL_FLAG_PERM_GRANTED, // Permanent, granted through someway e.g. script
-	SKILL_FLAG_TMP_COMBO, //@FIXME for homunculus combo atm
+	SKILL_FLAG_TMP_COMBO, // Temporary combo flag, used for homunculus combo skills (e.g., homunculus S attack combos)
 
 	//! NOTE: This flag be the last flag, and don't change the value if not needed!
 	SKILL_FLAG_REPLACED_LV_0 = 10, // temporary skill overshadowing permanent skill of level 'N - SKILL_FLAG_REPLACED_LV_0',
