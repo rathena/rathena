@@ -283,7 +283,7 @@ web-server
 mapcache
 csv2yaml
 rathena_unit_tests
-p2p-coordinator
+/p2p-coordinator
 
 # ===========================
 # Cache
