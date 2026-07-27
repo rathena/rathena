@@ -5,6 +5,7 @@ Monitors GPU health, OOM detection, performance tracking
 
 import psutil
 import logging
+import os
 from typing import Dict, Any, Optional
 import time
 from datetime import datetime
@@ -235,7 +236,7 @@ class HealthMonitor:
             Disk health dictionary
         """
         try:
-            disk = psutil.disk_usage('/opt/ml_monster_ai')
+            disk = psutil.disk_usage(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
             
             usage_percent = disk.percent / 100.0
             

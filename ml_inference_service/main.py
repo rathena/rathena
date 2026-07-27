@@ -32,7 +32,9 @@ class MLInferenceService:
     Polls PostgreSQL, checks cache, runs inference, writes responses
     """
     
-    def __init__(self, config_path: str = "/opt/ml_monster_ai/configs/inference_config.yaml"):
+    def __init__(self, config_path: Optional[str] = None):
+        if config_path is None:
+            config_path = str(Path(__file__).resolve().parent / 'inference_config.yaml')
         """
         Initialize ML Inference Service
         

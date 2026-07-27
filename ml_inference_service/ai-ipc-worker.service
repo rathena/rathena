@@ -1,8 +1,8 @@
 [Unit]
 Description=AI IPC Worker Service - Database-based IPC for NPC-AI Communication
 Documentation=https://github.com/iskandarsulaili/rathena-AI-world
-After=network.target postgresql.service
-Wants=postgresql.service
+After=network.target mariadb.service mysql.service
+Wants=mariadb.service mysql.service
 
 [Service]
 Type=simple
@@ -13,7 +13,7 @@ WorkingDirectory=/home/lot399/rathena-AI-world/ml_inference_service
 # Environment variables
 Environment="PYTHONUNBUFFERED=1"
 Environment="DB_HOST=localhost"
-Environment="DB_PORT=5432"
+Environment="DB_PORT=3306"
 Environment="DB_NAME=ragnarok"
 Environment="DB_USER=ragnarok"
 EnvironmentFile=-/home/lot399/rathena-AI-world/.env

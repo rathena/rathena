@@ -23,9 +23,11 @@ class ONNXInferenceEngine:
     Loads all 54 models (9 types × 6 archetypes) in FP16
     """
     
-    def __init__(self, model_dir: str = "/opt/ml_monster_ai/models",
+    def __init__(self, model_dir: Optional[str] = None,
                  device: str = "cuda:0", batch_size: int = 128,
                  precision: str = "fp16"):
+        if model_dir is None:
+            model_dir = str(Path(__file__).resolve().parent.parent / 'models')
         """
         Initialize inference engine
         

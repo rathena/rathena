@@ -23,7 +23,7 @@ class ConfigLoader:
             config_path: Path to YAML config file. If None, uses default location.
         """
         if config_path is None:
-            config_path = "/opt/ml_monster_ai/configs/inference_config.yaml"
+            config_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'inference_config.yaml')
         
         self.config_path = Path(config_path)
         self.config: Dict[str, Any] = {}
@@ -156,7 +156,7 @@ def load_config(config_path: Optional[str] = None) -> Dict[str, Any]:
 # Default configuration (used if file doesn't exist)
 DEFAULT_CONFIG = {
     'models': {
-        'directory': '/opt/ml_monster_ai/models',
+        'directory': 'models',
         'format': 'onnx',
         'precision': 'fp16',
         'archetypes': ['aggressive', 'defensive', 'support', 'mage', 'tank', 'ranged'],
@@ -225,7 +225,7 @@ DEFAULT_CONFIG = {
     'logging': {
         'level': 'INFO',
         'format': 'json',
-        'file': '/opt/ml_monster_ai/logs/inference_service.log',
+        'file': 'logs/inference_service.log',
         'max_bytes': 100 * 1024 * 1024,  # 100MB
         'backup_count': 10
     }
