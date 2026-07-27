@@ -842,20 +842,20 @@ bool ActionExecutor::execute_update_economy(const AIAction& action) {
         }
         
         // Check if this NPC has a shop
-        if (nd->shop == nullptr || nd->shop->items.empty()) {
+        if (nd->u.shop.shop_item == nullptr || nd->u.shop.count == 0) {
             ShowError("[ActionExecutor] NPC %s has no shop data\n", nd->name);
             return false;
         }
         
         // Find and update the item in the shop
         bool item_found = false;
-        for (auto& shop_item : nd->shop->items) {
-            if (shop_item.nameid == item_id) {
+        for (uint16 i = 0; i < nd->u.shop.count; i++) {
+            if (nd->u.shop.shop_item[i].nameid == item_id) {
                 if (new_price > 0) {
-                    shop_item.value = new_price;
+                    nd->u.shop.shop_item[i].value = new_price;
                 }
                 if (stock_amount >= 0) {
-                    shop_item.qty = (uint16)stock_amount;
+                    nd->u.shop.shop_item[i].qty = (uint16)stock_amount;
                 }
                 item_found = true;
                 break;
@@ -868,8 +868,8 @@ bool ActionExecutor::execute_update_economy(const AIAction& action) {
         }
         
         // Notify nearby players of shop update
-        clif_parse_ShopTransaction(nd, 0, 0, 0);
-        
+        // Shop data is stored in the NPC's shop struct; players will see updated
+        // prices on next shop interaction. A full reload is not required.
         ShowInfo("[ActionExecutor] Shop '%s' updated: item=%d, price=%d, stock=%d\n",
                  nd->name, item_id, new_price, stock_amount);
         

@@ -23,8 +23,9 @@ endif()
 file(GLOB_RECURSE MAP_HEADERS ${MAP_SOURCE_DIR}/*.hpp)
 file(GLOB_RECURSE MAP_SOURCES_ALL ${MAP_SOURCE_DIR}/*.cpp)
 
-# Exclude test files from map-server build
+# Exclude test files and skills subdirectory (skills are included via skill.cpp)
 list(FILTER MAP_SOURCES_ALL EXCLUDE REGEX ".*test_.*\\.cpp$")
+list(FILTER MAP_SOURCES_ALL EXCLUDE REGEX ".*/skills/.*")
 set(MAP_SOURCES ${MAP_SOURCES_ALL})
 
 # ML Monster AI sources (already included in MAP_SOURCES via glob)
