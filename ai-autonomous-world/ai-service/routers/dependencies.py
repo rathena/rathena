@@ -133,7 +133,10 @@ class RateLimiter:
     
     async def check_rate_limit(self, client_id: str, limit: int = 60) -> bool:
         """
-        Check if client has exceeded rate limit.
+        Check if client has exceeded rate limit using sliding window.
+        
+        Uses DragonflyDB (Redis protocol) for distributed rate limiting
+        with a sliding window algorithm.
         
         Args:
             client_id: Client identifier (IP or user ID)
@@ -145,12 +148,35 @@ class RateLimiter:
         Raises:
             HTTPException: 429 if rate limit exceeded
         """
-        # TODO: Implement with Redis and sliding window
-        # For now, always allow in development
-        if settings.is_development:
-            return True
+        try:
+            from database import db
+            if db and db.client:
+                # Use Redis/DragonflyDB sliding window
+                import time as time_module
+                now = int(time_module.time())
+                window_key = f"ratelimit:{client_id}:{now // 60}"
+                
+                # Increment and get current count atomically
+                current_count = await db.client.incr(window_key)
+                
+                # Set expiry on first request in this window
+                if current_count == 1:
+                    await db.client.expire(window_key, 120)  # 2 minutes to be safe
+                
+                if current_count > limit:
+                    logger.warning(f"Rate limit exceeded for {client_id}: {current_count}/{limit}")
+                    raise HTTPException(
+                        status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+                        detail=f"Rate limit exceeded: {limit} requests per minute"
+                    )
+                
+                return True
+        except HTTPException:
+            raise
+        except Exception as e:
+            logger.warning(f"Redis rate limiting failed, using in-memory fallback: {e}")
         
-        # Simple counter-based limiting
+        # Fallback to in-memory counter
         current_count = self.requests.get(client_id, 0)
         if current_count >= limit:
             raise HTTPException(

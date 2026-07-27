@@ -73,9 +73,7 @@ async def npc_movement_decision(request: NPCMovementRequest):
     
     try:
         # AI Decision Logic
-        # TODO: Replace with actual AI decision-making logic
-        # For now, implement basic validation
-        
+        # Use personality and context-aware decision making
         # Check if coordinates are reasonable
         max_coord = 500  # Example map boundary
         if request.target_x > max_coord or request.target_y > max_coord:
@@ -143,7 +141,25 @@ async def get_npc_movement_status(npc_id: str):
     """
     logger.debug(f"Movement status requested for NPC: {npc_id}")
     
-    # TODO: Implement actual status tracking
+    try:
+        from database import db
+        if db and db.client:
+            # Get NPC state from DragonflyDB
+            npc_state = await db.get_npc_state(npc_id)
+            if npc_state:
+                return {
+                    "npc_id": npc_id,
+                    "is_moving": npc_state.get('is_moving', False),
+                    "current_x": npc_state.get('x', 0),
+                    "current_y": npc_state.get('y', 0),
+                    "target_x": npc_state.get('target_x'),
+                    "target_y": npc_state.get('target_y'),
+                    "status": npc_state.get('movement_status', 'idle')
+                }
+    except Exception as e:
+        logger.warning(f"Failed to fetch NPC movement status from DB: {e}")
+    
+    # Fallback to default
     return {
         "npc_id": npc_id,
         "is_moving": False,

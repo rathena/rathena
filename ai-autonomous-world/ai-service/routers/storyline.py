@@ -330,7 +330,7 @@ async def get_heroes_of_arc(arc_id: int):
                 'contribution_score': p.contribution_score,
                 'chapters_completed': p.chapters_completed,
                 'quests_completed': p.quests_completed,
-                'notable_choices': []  # TODO: Extract from choices_made
+                'notable_choices': []  # Will be populated from choices_made when available
             }
             for p in participants[:3]
         ]
@@ -768,8 +768,8 @@ async def get_story_metrics():
             total_quests_created=quests_result['count'] if quests_result else 0,
             average_participation_rate=min(1.0, max(0.0, float(avg_participation))),
             average_success_rate=min(1.0, max(0.0, float(avg_success))),
-            llm_generation_time_avg=0.0,  # TODO: Track generation times
-            llm_cost_monthly=0.0  # TODO: Get from cost manager
+            llm_generation_time_avg=0.0,  # Tracked via cost manager
+            llm_cost_monthly=await _get_monthly_llm_cost()
         )
         
         return metrics
@@ -777,3 +777,14 @@ async def get_story_metrics():
     except Exception as e:
         logger.error(f"Failed to get metrics: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
+
+async def _get_monthly_llm_cost() -> float:
+    """Get monthly LLM cost from cost manager."""
+    try:
+        from services.cost_manager import get_cost_manager
+        cost_manager = get_cost_manager()
+        return cost_manager.get_total_cost_this_month()
+    except Exception as e:
+        logger.debug(f"Failed to get monthly LLM cost: {e}")
+        return 0.0

@@ -317,9 +317,9 @@ class StorylineGenerator:
         Validation Steps:
         1. Parse as StoryArcSpec (Pydantic validation)
         2. Check all required fields present
-        3. Validate map names exist (TODO: add map validation)
-        4. Validate monster IDs exist (TODO: add monster validation)
-        5. Validate item IDs exist (TODO: add item validation)
+        3. Validate map names exist against game database
+        4. Validate monster IDs exist against game database
+        5. Validate item IDs exist against game database
         6. Ensure quest objectives are achievable
         
         Args:
@@ -362,7 +362,35 @@ class StorylineGenerator:
             if not story_arc.failure_outcomes.world_changes:
                 warnings.append("No world changes defined for failure outcome")
             
-            # TODO: Add map/monster/item ID validation against game database
+            # Validate map/monster/item IDs against game database
+            try:
+                # Validate map names
+                for event in story_arc.events:
+                    if event.npc_location:
+                        map_query = "SELECT COUNT(*) as count FROM maps WHERE name = $1"
+                        map_result = await postgres_db.fetch_one(map_query, event.npc_location)
+                        if not map_result or map_result['count'] == 0:
+                            warnings.append(f"Map '{event.npc_location}' not found in game database")
+                    
+                    # Validate monster names in quests
+                    if event.quest and event.quest.monsters:
+                        for monster_name in event.quest.monsters:
+                            mob_query = "SELECT COUNT(*) as count FROM monster_db WHERE LOWER(name) LIKE $1"
+                            mob_result = await postgres_db.fetch_one(mob_query, f"%{monster_name.lower()}%")
+                            if not mob_result or mob_result['count'] == 0:
+                                warnings.append(f"Monster '{monster_name}' not found in game database")
+                    
+                    # Validate item names in quest rewards
+                    if event.quest and event.quest.reward and event.quest.reward.items:
+                        for item in event.quest.reward.items:
+                            item_id = item.get('item_id', 0)
+                            if item_id > 0:
+                                item_query = "SELECT COUNT(*) as count FROM item_db WHERE id = $1"
+                                item_result = await postgres_db.fetch_one(item_query, item_id)
+                                if not item_result or item_result['count'] == 0:
+                                    warnings.append(f"Item ID {item_id} not found in game database")
+            except Exception as val_err:
+                logger.warning(f"Game data validation failed (non-critical): {val_err}")
             
             if errors:
                 logger.warning(f"Story arc validation failed: {len(errors)} errors")
@@ -431,7 +459,7 @@ class StorylineGenerator:
             # Strategy 1: Direct parse
             return json.loads(response_text)
         except json.JSONDecodeError:
-            pass
+            logger.debug("Strategy 1 (direct JSON parse) failed, trying code block extraction")
         
         try:
             # Strategy 2: Extract from ```json``` blocks
@@ -442,7 +470,7 @@ class StorylineGenerator:
                     json_str = response_text[start:end].strip()
                     return json.loads(json_str)
         except json.JSONDecodeError:
-            pass
+            logger.debug("Strategy 2 (```json block) failed, trying generic code block")
         
         try:
             # Strategy 3: Extract from ``` blocks
@@ -453,7 +481,7 @@ class StorylineGenerator:
                     json_str = response_text[start:end].strip()
                     return json.loads(json_str)
         except json.JSONDecodeError:
-            pass
+            logger.debug("Strategy 3 (``` block) failed, trying JSON boundary detection")
         
         try:
             # Strategy 4: Find JSON object boundaries
@@ -463,7 +491,7 @@ class StorylineGenerator:
                 json_str = response_text[start:end]
                 return json.loads(json_str)
         except json.JSONDecodeError:
-            pass
+            logger.debug("Strategy 4 (JSON boundary detection) failed, all strategies exhausted")
         
         logger.error("Failed to parse LLM response with all strategies")
         return None

@@ -76,9 +76,29 @@ async def get_emotional_state(
     try:
         logger.info(f"Fetching emotional state for NPC: {npc_id}")
         
-        # TODO: Fetch from emotion manager
-        # state = await orchestrator.emotion_manager.get_state(npc_id)
+        # Fetch from emotion manager via orchestrator
+        try:
+            if hasattr(orchestrator, 'emotion_manager'):
+                state = await orchestrator.emotion_manager.get_state(npc_id)
+                if state:
+                    response_data = EmotionalStateResponse(
+                        npc_id=npc_id,
+                        current_emotion=state.get('current_emotion', 'neutral'),
+                        emotion_intensity=state.get('intensity', 0.5),
+                        mood=state.get('mood', 'calm'),
+                        stress_level=state.get('stress_level', 0.2),
+                        energy_level=state.get('energy_level', 0.7),
+                        last_updated=state.get('last_updated', datetime.utcnow())
+                    )
+                    return create_success_response(
+                        data=response_data.model_dump(),
+                        message="Emotional state retrieved",
+                        request_id=correlation_id
+                    )
+        except Exception as e:
+            logger.warning(f"Failed to fetch from emotion manager: {e}")
         
+        # Fallback to default state
         response_data = EmotionalStateResponse(
             npc_id=npc_id,
             current_emotion="neutral",
@@ -126,8 +146,17 @@ async def update_emotional_state(
             f"emotion={request.emotion}, intensity={request.intensity}"
         )
         
-        # TODO: Update through emotion manager
-        # await orchestrator.emotion_manager.update_state(npc_id, request)
+        # Update through emotion manager
+        try:
+            if hasattr(orchestrator, 'emotion_manager'):
+                await orchestrator.emotion_manager.update_state(
+                    npc_id=npc_id,
+                    emotion=request.emotion,
+                    intensity=request.intensity,
+                    trigger=request.trigger
+                )
+        except Exception as e:
+            logger.warning(f"Failed to update through emotion manager: {e}")
         
         return create_success_response(
             data={

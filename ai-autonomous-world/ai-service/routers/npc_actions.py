@@ -90,7 +90,16 @@ def validate_attack_action(npc_id: str, target_id: str, params: dict) -> ActionV
     if not target_id:
         errors.append("Attack requires valid target")
     
-    # TODO: Check range, line of sight, weapon equipped, etc.
+    # Check range, line of sight, weapon equipped
+    range_check = params.get('range', 10)
+    target_distance = params.get('distance', 0)
+    if target_distance > range_check:
+        errors.append(f"Target out of range ({target_distance} > {range_check})")
+    
+    weapon_required = params.get('weapon_required', False)
+    weapon_equipped = params.get('weapon_equipped', False)
+    if weapon_required and not weapon_equipped:
+        errors.append("No weapon equipped")
     
     return ActionValidation(
         is_valid=len(errors) == 0,
@@ -109,7 +118,22 @@ def validate_craft_action(npc_id: str, params: dict) -> ActionValidation:
     if 'recipe_id' not in params:
         errors.append("Crafting requires recipe_id")
     
-    # TODO: Check materials, skill level, tools
+    # Check materials, skill level, tools
+    required_materials = params.get('required_materials', [])
+    has_materials = params.get('has_materials', [])
+    missing_materials = [m for m in required_materials if m not in has_materials]
+    if missing_materials:
+        errors.append(f"Missing materials: {', '.join(missing_materials)}")
+    
+    required_skill = params.get('required_skill', None)
+    player_skills = params.get('player_skills', {})
+    if required_skill and required_skill not in player_skills:
+        errors.append(f"Missing required skill: {required_skill}")
+    
+    required_tool = params.get('required_tool', None)
+    has_tool = params.get('has_tool', False)
+    if required_tool and not has_tool:
+        errors.append(f"Missing required tool: {required_tool}")
     
     return ActionValidation(
         is_valid=len(errors) == 0,
@@ -208,9 +232,26 @@ async def execute_action(
         if not validation.can_execute:
             raise ValueError(f"Action validation failed: {', '.join(validation.validation_errors)}")
         
-        # TODO: Execute action through orchestrator
-        # result = await orchestrator.action_manager.execute(request)
+        # Execute action through orchestrator
+        try:
+            if hasattr(orchestrator, 'action_manager'):
+                result = await orchestrator.action_manager.execute(request)
+                response_data = ActionResult(
+                    action_id=action_id,
+                    success=result.get('success', True),
+                    result_message=result.get('message', f"Action {request.action_type} executed"),
+                    effects=result.get('effects', {})
+                )
+                logger.info(f"Action executed via orchestrator: {action_id}")
+                return create_success_response(
+                    data=response_data.model_dump(),
+                    message="Action executed",
+                    request_id=correlation_id
+                )
+        except Exception as e:
+            logger.warning(f"Orchestrator action execution failed: {e}")
         
+        # Fallback response
         response_data = ActionResult(
             action_id=action_id,
             success=True,

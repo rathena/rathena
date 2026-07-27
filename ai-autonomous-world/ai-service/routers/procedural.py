@@ -3,7 +3,7 @@ Procedural Content API Router
 Exposes endpoints for Problem Agent, Dynamic NPC Agent, and World Event Agent
 """
 
-from typing import List, Optional
+from typing import List, Optional, Dict, Any
 from fastapi import APIRouter, HTTPException, status, Depends
 from loguru import logger
 

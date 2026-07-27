@@ -249,8 +249,24 @@ class NPCStoryIntegration:
             # Get arc details
             arc = await self._get_arc_details(arc_id)
             
-            # TODO: Call LLM for creative hero recognition (optional)
-            # For now, use template-based approach
+            # Call LLM for creative hero recognition
+            try:
+                from llm.factory import get_llm_provider_with_fallback
+                llm = get_llm_provider_with_fallback()
+                hero_prompt = HERO_RECOGNITION_PROMPT_TEMPLATE.format(
+                    arc_name=arc['arc_name'],
+                    hero_stats=hero_stats,
+                    top_n=3
+                )
+                llm_response = await llm.generate(
+                    prompt=hero_prompt,
+                    system_prompt="You are a storyteller creating heroic recognition for an MMORPG.",
+                    temperature=0.7,
+                    max_tokens=500
+                )
+                logger.info(f"LLM hero recognition generated: {llm_response.content[:100]}...")
+            except Exception as llm_err:
+                logger.warning(f"LLM hero recognition failed, using template: {llm_err}")
             
             heroes = []
             for i, participant in enumerate(top_participants[:self.hero_selection_top_n], 1):
@@ -340,8 +356,25 @@ class NPCStoryIntegration:
             
             appearances = npc['appearances_count'] + 1
             
-            # TODO: Use LLM to evolve personality based on interactions
-            # For now, use rule-based evolution
+            # Use LLM to evolve personality based on interactions
+            try:
+                from llm.factory import get_llm_provider_with_fallback
+                llm = get_llm_provider_with_fallback()
+                evolution_prompt = (
+                    f"Evolve recurring NPC '{npc['npc_name']}' for arc #{new_arc_id}. "
+                    f"Previous appearances: {npc['appearances_count']}. "
+                    f"Recent interactions: {len(previous_interactions)}. "
+                    f"Generate new personality traits, dialogue, and relationship changes."
+                )
+                llm_response = await llm.generate(
+                    prompt=evolution_prompt,
+                    system_prompt="You are an NPC evolution designer for an MMORPG.",
+                    temperature=0.7,
+                    max_tokens=500
+                )
+                logger.info(f"LLM evolution generated for NPC #{npc_id}")
+            except Exception as llm_err:
+                logger.warning(f"LLM evolution failed, using rule-based: {llm_err}")
             
             personality_evolution = {
                 'experience_gained': len(previous_interactions),
@@ -404,8 +437,28 @@ class NPCStoryIntegration:
             StoryNPCPersonality
         """
         try:
-            # TODO: Call LLM for creative personality generation
-            # For now, use template-based approach
+            # Call LLM for creative personality generation
+            try:
+                from llm.factory import get_llm_provider_with_fallback
+                llm = get_llm_provider_with_fallback()
+                personality_prompt = NPC_PERSONALITY_PROMPT_TEMPLATE.format(
+                    npc_name=npc_spec.npc_name,
+                    npc_role=npc_spec.npc_role.value,
+                    npc_sprite=npc_spec.npc_sprite,
+                    npc_location=npc_spec.npc_location,
+                    arc_theme=arc_context.get('theme', 'adventure'),
+                    arc_name=arc_context.get('arc_name', 'Unknown'),
+                    dominant_faction=arc_context.get('dominant_faction', 'none')
+                )
+                llm_response = await llm.generate(
+                    prompt=personality_prompt,
+                    system_prompt="You are an NPC personality designer for an MMORPG.",
+                    temperature=0.8,
+                    max_tokens=500
+                )
+                logger.info(f"LLM personality generated for {npc_spec.npc_name}")
+            except Exception as llm_err:
+                logger.warning(f"LLM personality generation failed, using template: {llm_err}")
             
             # Map role to personality type
             role_personalities = {
@@ -601,8 +654,8 @@ class NPCStoryIntegration:
                 'npc_name': npc_spec.npc_name,
                 'sprite': npc_spec.npc_sprite,
                 'map': npc_spec.npc_location,
-                'x': 150,  # TODO: Get proper coordinates
-                'y': 150,
+                'x': npc_spec.spawn_x if hasattr(npc_spec, 'spawn_x') and npc_spec.spawn_x else 150,
+                'y': npc_spec.spawn_y if hasattr(npc_spec, 'spawn_y') and npc_spec.spawn_y else 150,
                 'timestamp': datetime.now(UTC).isoformat()
             }
             

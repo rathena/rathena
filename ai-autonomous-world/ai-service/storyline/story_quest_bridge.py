@@ -89,7 +89,7 @@ class StoryQuestBridge:
                 'quest_id': quest_id,
                 'quest_name': quest_spec.title,
                 'quest_desc': quest_spec.objective,
-                'min_level': 1,  # TODO: Extract from story context
+                'min_level': quest_spec.min_level if hasattr(quest_spec, 'min_level') and quest_spec.min_level else 1,
                 'max_level': 999,
                 'objectives': objectives_data,
                 'rewards': rewards_data,
@@ -522,10 +522,23 @@ class StoryQuestBridge:
                     monster_ids.append(monster_id)
                     continue
                 except ValueError:
-                    pass
+                    logger.debug(f"Monster '{monster}' is not a numeric ID, attempting name lookup")
                 
-                # TODO: Query monster database for name lookup
-                # For now, use default monster IDs
+                # Query monster database for name lookup
+                try:
+                    mob_query = """
+                        SELECT id FROM monster_db
+                        WHERE LOWER(name) LIKE $1
+                        LIMIT 1
+                    """
+                    result = await postgres_db.fetch_one(mob_query, f"%{monster.lower()}%")
+                    if result:
+                        monster_ids.append(result['id'])
+                        continue
+                except Exception as mob_err:
+                    logger.debug(f"Monster DB query failed: {mob_err}")
+                
+                # Fallback to default monster IDs
                 default_monsters = {
                     'poring': 1002,
                     'drops': 1113,

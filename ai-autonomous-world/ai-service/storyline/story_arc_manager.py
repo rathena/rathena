@@ -371,7 +371,7 @@ class StoryArcManager:
                     started_at=result['started_at'],
                     expected_end_at=result['expected_end_at'],
                     npcs_spawned=npcs_spawned,
-                    quests_created=0  # TODO: Count quests
+                    quests_created=await self._count_arc_quests(result['arc_id'])
                 )
                 
                 # Cache for 5 minutes
@@ -676,6 +676,18 @@ class StoryArcManager:
         except Exception as e:
             logger.error(f"Failed to get arc #{arc_id}: {e}")
             return None
+    
+    async def _count_arc_quests(self, arc_id: int) -> int:
+        """Count quests associated with an arc"""
+        try:
+            query = """
+                SELECT COUNT(*) as count FROM story_quests WHERE arc_id = $1
+            """
+            result = await postgres_db.fetch_one(query, arc_id)
+            return result['count'] if result else 0
+        except Exception as e:
+            logger.warning(f"Failed to count quests for arc #{arc_id}: {e}")
+            return 0
     
     async def _create_chapter(
         self,

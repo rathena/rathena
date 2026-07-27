@@ -129,8 +129,49 @@ async def get_performance_metrics():
             }
         }
         
-        # TODO: Integrate with actual metrics collection system
-        # (Prometheus, StatsD, or custom metrics)
+        # Integrate with Prometheus metrics collection
+        try:
+            from prometheus_client import REGISTRY
+            # Collect API metrics
+            api_requests = REGISTRY.get_sample_value('http_requests_total')
+            api_errors = REGISTRY.get_sample_value('http_errors_total')
+            api_latency = REGISTRY.get_sample_value('http_request_duration_seconds_sum')
+            
+            if api_requests and api_requests > 0:
+                metrics['api']['requests_per_second'] = api_requests / 60.0
+                metrics['api']['error_rate'] = (api_errors or 0) / api_requests
+            if api_latency and api_requests:
+                metrics['api']['avg_response_time_ms'] = (api_latency / api_requests) * 1000
+            
+            # Collect database metrics
+            db_queries = REGISTRY.get_sample_value('db_query_duration_seconds_count')
+            db_latency = REGISTRY.get_sample_value('db_query_duration_seconds_sum')
+            if db_queries and db_queries > 0:
+                metrics['database']['avg_query_time_ms'] = (db_latency / db_queries) * 1000
+            
+            # Collect LLM metrics
+            llm_requests = REGISTRY.get_sample_value('llm_requests_total')
+            llm_tokens = REGISTRY.get_sample_value('llm_tokens_total')
+            llm_cost = REGISTRY.get_sample_value('llm_cost_total')
+            llm_latency = REGISTRY.get_sample_value('llm_latency_seconds_sum')
+            if llm_requests and llm_requests > 0:
+                metrics['llm']['total_requests_24h'] = int(llm_requests)
+                metrics['llm']['avg_latency_ms'] = (llm_latency / llm_requests) * 1000 if llm_latency else 0
+            if llm_tokens:
+                metrics['llm']['total_tokens_24h'] = int(llm_tokens)
+            if llm_cost:
+                metrics['llm']['total_cost_24h'] = llm_cost
+            
+            # Collect agent metrics
+            agent_execs = REGISTRY.get_sample_value('ai_agent_exec_time_seconds_count')
+            agent_latency = REGISTRY.get_sample_value('ai_agent_exec_time_seconds_sum')
+            agent_failures = REGISTRY.get_sample_value('ai_agent_failure_total')
+            if agent_execs and agent_execs > 0:
+                metrics['agents']['total_executions_24h'] = int(agent_execs)
+                metrics['agents']['avg_execution_time_ms'] = (agent_latency / agent_execs) * 1000 if agent_latency else 0
+                metrics['agents']['failure_rate'] = (agent_failures or 0) / agent_execs
+        except Exception as e:
+            logger.warning(f"Failed to collect Prometheus metrics: {e}")
         
         return metrics
     except Exception as e:
@@ -170,7 +211,18 @@ async def websocket_live_updates(websocket: WebSocket):
                     await websocket.send_json({"type": "pong"})
                 elif data.get("type") == "subscribe":
                     # Handle subscription to specific event types
-                    pass
+                    event_types = data.get("event_types", [])
+                    if event_types:
+                        logger.info(f"Client subscribed to events: {event_types}")
+                        await websocket.send_json({
+                            "type": "subscribed",
+                            "event_types": event_types
+                        })
+                    else:
+                        await websocket.send_json({
+                            "type": "error",
+                            "message": "No event_types specified for subscription"
+                        })
                     
             except WebSocketDisconnect:
                 break
@@ -248,13 +300,40 @@ async def get_server_health_data() -> Dict[str, Any]:
 
 
 async def get_active_player_count() -> int:
-    """Get current active player count from rAthena"""
-    # TODO: Query rAthena database for online players
-    # SELECT COUNT(*) FROM `char` WHERE `online` = 1
-    return 0
+    """Get current active player count from rAthena database"""
+    try:
+        from database import postgres_db
+        if postgres_db and postgres_db.pool:
+            query = 'SELECT COUNT(*) as count FROM "char" WHERE "online" = 1'
+            result = await postgres_db.fetch_one(query)
+            if result:
+                return result['count']
+        return 0
+    except Exception as e:
+        logger.warning(f"Failed to query active player count: {e}")
+        return 0
 
 
 async def get_active_events_count() -> int:
     """Get count of currently active world events"""
-    # TODO: Query events table
-    return 0
+    try:
+        from database import postgres_db
+        if postgres_db and postgres_db.pool:
+            query = """
+                SELECT COUNT(*) as count FROM world_events
+                WHERE status = 'active' AND expires_at > NOW()
+            """
+            result = await postgres_db.fetch_one(query)
+            if result:
+                return result['count']
+        
+        # Fallback: check DragonflyDB for active event keys
+        from database import db
+        if db and db.client:
+            event_keys = await db.client.keys("environment:event:*")
+            return len(event_keys) if event_keys else 0
+        
+        return 0
+    except Exception as e:
+        logger.warning(f"Failed to query active events count: {e}")
+        return 0

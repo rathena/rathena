@@ -101,23 +101,53 @@ async def calculate_path(
             f"from=({request.start.x},{request.start.y}) to=({request.end.x},{request.end.y})"
         )
         
-        # TODO: Implement A* pathfinding
-        # path = await orchestrator.navigation_manager.find_path(request)
+        # Use A* pathfinding from utils
+        try:
+            from utils.pathfinding import Pathfinder, Position as PathPos
+            pathfinder = Pathfinder()
+            path_positions = pathfinder.astar(
+                start=PathPos(int(request.start.x), int(request.start.y)),
+                goal=PathPos(int(request.end.x), int(request.end.y))
+            )
+        except Exception as e:
+            logger.warning(f"A* pathfinding failed: {e}")
+            path_positions = None
         
-        # Mock simple path
-        distance = ((request.end.x - request.start.x)**2 + 
-                   (request.end.y - request.start.y)**2)**0.5
-        
-        response_data = PathfindResponse(
-            path=[
-                PathNode(position=request.start, distance_from_start=0, estimated_time=0),
-                PathNode(position=request.end, distance_from_start=distance, estimated_time=distance/5.0)
-            ],
-            total_distance=distance,
-            estimated_duration=distance/5.0,
-            is_valid=True,
-            warnings=[]
-        )
+        if path_positions:
+            # Use actual pathfinding results
+            total_distance = 0.0
+            path_nodes = []
+            for i, pos in enumerate(path_positions):
+                if i > 0:
+                    dx = pos.x - path_positions[i-1].x
+                    dy = pos.y - path_positions[i-1].y
+                    total_distance += (dx**2 + dy**2)**0.5
+                path_nodes.append(PathNode(
+                    position=Position(x=float(pos.x), y=float(pos.y)),
+                    distance_from_start=total_distance,
+                    estimated_time=total_distance / 5.0
+                ))
+            response_data = PathfindResponse(
+                path=path_nodes,
+                total_distance=total_distance,
+                estimated_duration=total_distance / 5.0,
+                is_valid=True,
+                warnings=[]
+            )
+        else:
+            # Fallback to direct path
+            distance = ((request.end.x - request.start.x)**2 + 
+                       (request.end.y - request.start.y)**2)**0.5
+            response_data = PathfindResponse(
+                path=[
+                    PathNode(position=request.start, distance_from_start=0, estimated_time=0),
+                    PathNode(position=request.end, distance_from_start=distance, estimated_time=distance/5.0)
+                ],
+                total_distance=distance,
+                estimated_duration=distance/5.0,
+                is_valid=True,
+                warnings=[]
+            )
         
         return create_success_response(
             data=response_data.model_dump(),
@@ -153,9 +183,32 @@ async def get_map_info(
     try:
         logger.info(f"Fetching map info: {map_name}")
         
-        # TODO: Fetch map data
-        # map_info = await orchestrator.navigation_manager.get_map_info(map_name)
+        # Fetch map data from database
+        try:
+            from database import db
+            if db and db.client:
+                map_key = f"map:{map_name}"
+                map_data = await db.get(map_key)
+                if map_data:
+                    response_data = MapInfoResponse(
+                        map_name=map_name,
+                        width=map_data.get('width', 500.0),
+                        height=map_data.get('height', 500.0),
+                        walkable_area_percentage=map_data.get('walkable_pct', 75.0),
+                        points_of_interest=map_data.get('pois', [
+                            {"name": "Town Center", "x": 250, "y": 250},
+                            {"name": "Shop District", "x": 300, "y": 200}
+                        ])
+                    )
+                    return create_success_response(
+                        data=response_data.model_dump(),
+                        message="Map info retrieved",
+                        request_id=correlation_id
+                    )
+        except Exception as e:
+            logger.warning(f"Failed to fetch map data from DB: {e}")
         
+        # Fallback to default map info
         response_data = MapInfoResponse(
             map_name=map_name,
             width=500.0,
