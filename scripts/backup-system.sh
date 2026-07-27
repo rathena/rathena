@@ -18,9 +18,9 @@ NC='\033[0m'
 # Configuration
 BACKUP_BASE_DIR="/opt/backups"
 BACKUP_DIR="$BACKUP_BASE_DIR/$(date +%Y%m%d)"
-DB_HOST="192.168.0.100"
-DB_NAME="ai_world_memory"
-DB_USER="ai_world_user"
+DB_HOST="${DB_HOST:-localhost}"
+DB_NAME="${DB_NAME:-ai_world_memory}"
+DB_USER="${DB_USER:-ai_world_user}"
 RETENTION_DAYS=30
 LOG_FILE="/var/log/backup_$(date +%Y%m%d).log"
 

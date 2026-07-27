@@ -21,9 +21,9 @@ LOG_FILE="/var/log/deployment_$(date +%Y%m%d_%H%M%S).log"
 AI_SERVICE_DIR="$INSTALL_DIR/rathena-AI-world/ai-autonomous-world/ai-service"
 RATHENA_DIR="$INSTALL_DIR/rathena-AI-world"
 DASHBOARD_DIR="$INSTALL_DIR/rathena-AI-world/dashboard"
-DB_HOST="192.168.0.100"
-DB_NAME="ai_world_memory"
-DB_USER="ai_world_user"
+DB_HOST="${DB_HOST:-localhost}"
+DB_NAME="${DB_NAME:-ai_world_memory}"
+DB_USER="${DB_USER:-ai_world_user}"
 
 # Functions
 log() {
@@ -250,7 +250,7 @@ start_services() {
     sleep 10  # Wait for initialization
     
     # Verify AI service started
-    if ! curl -s http://192.168.0.100:8000/api/v1/health > /dev/null; then
+    if ! curl -s http://localhost:8000/api/v1/health > /dev/null; then
         error "AI service failed to start!"
         return 1
     fi
@@ -278,7 +278,7 @@ smoke_tests() {
     
     # Test 1: AI Service health
     log "Test 1: AI Service health check..."
-    if curl -s http://192.168.0.100:8000/api/v1/health | grep -q "healthy"; then
+    if curl -s http://localhost:8000/api/v1/health | grep -q "healthy"; then
         success "AI Service is healthy"
         ((tests_passed++))
     else
@@ -288,7 +288,7 @@ smoke_tests() {
     
     # Test 2: Agent status
     log "Test 2: Checking agent status..."
-    local active_agents=$(curl -s http://192.168.0.100:8000/api/v1/world/agents/status | \
+    local active_agents=$(curl -s http://localhost:8000/api/v1/world/agents/status | \
         jq '[.agents[] | select(.status == "active")] | length')
     
     if [ "$active_agents" -eq 21 ]; then
@@ -332,7 +332,7 @@ smoke_tests() {
     
     # Test 6: WebSocket
     log "Test 6: WebSocket connection..."
-    if timeout 5 wscat -c ws://192.168.0.100:8000/ws < /dev/null 2>&1 | grep -q "connected"; then
+    if timeout 5 wscat -c ws://localhost:8000/ws < /dev/null 2>&1 | grep -q "connected"; then
         success "WebSocket connection successful"
         ((tests_passed++))
     else
@@ -428,7 +428,7 @@ main() {
         log "Next steps:"
         log "1. Monitor logs for 1 hour: sudo journalctl -u ai-service -f"
         log "2. Check dashboard: http://localhost:3000"
-        log "3. Verify agent status: curl http://192.168.0.100:8000/api/v1/world/agents/status"
+        log "3. Verify agent status: curl http://localhost:8000/api/v1/world/agents/status"
         log "4. Review deployment checklist: docs/DEPLOYMENT_CHECKLIST.md"
         exit 0
     else

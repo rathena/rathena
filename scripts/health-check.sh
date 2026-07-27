@@ -16,13 +16,13 @@ BLUE='\033[0;34m'
 NC='\033[0m'
 
 # Configuration
-DB_HOST="192.168.0.100"
-DB_NAME="ai_world_memory"
-DB_USER="ai_world_user"
-AI_SERVICE_URL="http://192.168.0.100:8000"
-DASHBOARD_URL="http://localhost:3000"
-REDIS_HOST="192.168.0.100"
-REDIS_PORT="6379"
+DB_HOST="${DB_HOST:-localhost}"
+DB_NAME="${DB_NAME:-ai_world_memory}"
+DB_USER="${DB_USER:-ai_world_user}"
+AI_SERVICE_URL="${AI_SERVICE_URL:-http://localhost:8000}"
+DASHBOARD_URL="${DASHBOARD_URL:-http://localhost:3000}"
+REDIS_HOST="${REDIS_HOST:-localhost}"
+REDIS_PORT="${REDIS_PORT:-6379}"
 
 # Flags
 VERBOSE=false
