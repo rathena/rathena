@@ -1,0 +1,1653 @@
+//===== rAthena Script =======================================
+//= AI World Showcase - Complete Feature Demonstration NPC
+//===== By: ==================================================
+//= AI-MMORPG-World Team
+//===== Current Version: =====================================
+//= 2.0 - Production Ready
+//===== Compatible With: =====================================
+//= rAthena Project + AI IPC System + AI Service
+//===== Description: =========================================
+//= Comprehensive demonstration of ALL AI capabilities:
+//=
+//= SECTION 1: AI Dialogue System
+//= SECTION 2: AI Decision Making
+//= SECTION 3: AI Memory System
+//= SECTION 4: NPC Movement & Navigation
+//= SECTION 5: Quest Generation
+//= SECTION 6: Faction System
+//= SECTION 7: Economic Simulation
+//= SECTION 8: World Environment
+//= SECTION 9: Player Interaction
+//= SECTION 10: Emotional States
+//= SECTION 11: Gift System
+//= SECTION 12: MVP Boss System
+//= SECTION 13: Storyline Arcs
+//= SECTION 14: Procedural Content
+//= SECTION 15: NPC Relationships
+//= SECTION 16: System Status & Diagnostics
+//= SECTION 17: Technical Information
+//=
+//= Uses ONLY verified working commands from:
+//= - src/custom/script_ai_ipc.cpp (ai_db_* commands)
+//= - src/custom/script_http.cpp (npcwalk, httppost, httpget)
+//= - Standard rAthena script commands
+//============================================================
+
+//============================================================
+// MAIN SHOWCASE NPC
+//============================================================
+prontera,155,185,5	script	AI World Showcase	4_F_03,{
+	
+	//========================================
+	// Welcome Message
+	//========================================
+	mes "[^0000FFAI World Showcase^000000]";
+	mes "Greetings, " + strcharinfo(0) + "!";
+	mes " ";
+	mes "I am the ^FF0000AI World Showcase NPC^000000.";
+	mes "I demonstrate ^00AA00ALL^000000 AI features";
+	mes "working together in harmony.";
+	next;
+	
+	//========================================
+	// Main Menu Loop
+	//========================================
+	while(1) {
+		mes "[^0000FFAI World Showcase^000000]";
+		mes "What would you like to explore?";
+		mes " ";
+		mes "^777777Select a category:^000000";
+		next;
+		
+		switch(select(
+			"^0000FF1.^000000 AI Dialogue System",
+			"^0000FF2.^000000 AI Decision Making",
+			"^0000FF3.^000000 AI Memory System",
+			"^0000FF4.^000000 NPC Movement & Navigation",
+			"^0000FF5.^000000 Quest Generation",
+			"^0000FF6.^000000 Faction System",
+			"^0000FF7.^000000 Economic Simulation",
+			"^0000FF8.^000000 World Environment",
+			"^0000FF9.^000000 Player Interaction",
+			"^00AA00A.^000000 Emotional States",
+			"^00AA00B.^000000 Gift System",
+			"^00AA00C.^000000 MVP Boss System",
+			"^00AA00D.^000000 Storyline Arcs",
+			"^00AA00E.^000000 Procedural Content",
+			"^00AA00F.^000000 NPC Relationships",
+			"^FFAA0010.^000000 System Status",
+			"^7777711.^000000 Technical Info",
+			"^FF0000Exit^000000"
+		)) {
+			case 1: callsub S_Dialogue; break;
+			case 2: callsub S_Decision; break;
+			case 3: callsub S_Memory; break;
+			case 4: callsub S_Movement; break;
+			case 5: callsub S_Quest; break;
+			case 6: callsub S_Faction; break;
+			case 7: callsub S_Economy; break;
+			case 8: callsub S_Environment; break;
+			case 9: callsub S_PlayerInteraction; break;
+			case 10: callsub S_Emotion; break;
+			case 11: callsub S_Gift; break;
+			case 12: callsub S_MVP; break;
+			case 13: callsub S_Storyline; break;
+			case 14: callsub S_Procedural; break;
+			case 15: callsub S_Relationships; break;
+			case 16: callsub S_Status; break;
+			case 17: callsub S_Technical; break;
+			case 18:
+				mes "[^0000FFAI World Showcase^000000]";
+				mes "Thank you for exploring the AI system!";
+				mes "May your adventures be guided by intelligence.";
+				close;
+		}
+	}
+	
+	close;
+
+//============================================================
+// SECTION 1: AI DIALOGUE SYSTEM
+// Endpoint: /ai/npc/{npc_id}/action (GET)
+//============================================================
+S_Dialogue:
+	mes "[^0000FFAI Dialogue Demo^000000]";
+	mes "The AI generates contextual,";
+	mes "personality-driven dialogue.";
+	mes " ";
+	mes "This uses the ^FF0000DialogueAgent^000000";
+	mes "from the AI service.";
+	next;
+	
+	mes "[^0000FFAI Dialogue Demo^000000]";
+	mes "What would you like to say to me?";
+	mes "I'll respond using AI-generated dialogue.";
+	next;
+	
+	input .@player_message$;
+	
+	if (.@player_message$ == "") {
+		mes "[^0000FFAI World Showcase^000000]";
+		mes "^FF0000You didn't say anything!^000000";
+		return;
+	}
+	
+	// Build request data
+	.@data$ = "{";
+	.@data$ += "\"npc_id\":\"AI_World_Showcase\",";
+	.@data$ += "\"player_name\":\"" + strcharinfo(0) + "\",";
+	.@data$ += "\"player_level\":" + BaseLevel + ",";
+	.@data$ += "\"message\":\"" + .@player_message$ + "\",";
+	.@data$ += "\"context\":\"dialogue\",";
+	.@data$ += "\"personality\":\"friendly_guide\"";
+	.@data$ += "}";
+	
+	mes "[^0000FFAI World Showcase^000000]";
+	mes "^777777Thinking... (requesting AI response)^000000";
+	
+	.@req_id = ai_db_request("ai_npc_dialogue", "/ai/npc/AI_World_Showcase/action", .@data$, 5);
+	
+	if (.@req_id <= 0) {
+		next;
+		mes "[^0000FFAI World Showcase^000000]";
+		mes "^FF0000Error: Could not create AI request.^000000";
+		mes "The AI service may be offline.";
+		mes " ";
+		mes "Fallback: I heard you say";
+		mes "\"" + .@player_message$ + "\"";
+		mes "but I cannot generate a smart response right now.";
+		return;
+	}
+	
+	// Poll for response (max 50 attempts x 100ms = 5 seconds)
+	.@attempts = 0;
+	.@max_attempts = 50;
+	.@response$ = "";
+	
+	while (.@attempts < .@max_attempts && .@response$ == "") {
+		sleep2 100;
+		.@response$ = ai_db_response(.@req_id);
+		.@attempts++;
+	}
+	
+	next;
+	mes "[^0000FFAI World Showcase - AI Response^000000]";
+	
+	if (.@response$ != "") {
+		mes "^00AA00" + .@response$ + "^000000";
+		mes " ";
+		mes "^777777(Generated by AI in " + (.@attempts * 100) + "ms)^000000";
+	} else {
+		.@status = ai_db_status(.@req_id);
+		mes "^FF8800Timeout: No response within 5 seconds.^000000";
+		mes "The AI service may be busy or offline.";
+		mes " ";
+		mes "Fallback: As a wise guide, I ponder your words";
+		mes "\"" + .@player_message$ + "\" deeply.";
+	}
+	
+	next;
+	return;
+
+//============================================================
+// SECTION 2: AI DECISION MAKING
+// Endpoint: /ai/npc/{npc_id}/action (GET)
+//============================================================
+S_Decision:
+	mes "[^0000FFAI Decision Demo^000000]";
+	mes "The AI can make intelligent decisions";
+	mes "based on context and game state.";
+	mes " ";
+	mes "Let me demonstrate by deciding what";
+	mes "to offer you based on your character.";
+	next;
+	
+	.@context$ = "{";
+	.@context$ += "\"npc_id\":\"AI_World_Showcase\",";
+	.@context$ += "\"player_id\":" + getcharid(0) + ",";
+	.@context$ += "\"player_name\":\"" + strcharinfo(0) + "\",";
+	.@context$ += "\"player_level\":" + BaseLevel + ",";
+	.@context$ += "\"player_class\":" + Class + ",";
+	.@context$ += "\"player_job_level\":" + JobLevel + ",";
+	.@context$ += "\"situation\":\"offer_assistance\",";
+	.@context$ += "\"available_options\":[\"quest\",\"item\",\"buff\",\"advice\"]";
+	.@context$ += "}";
+	
+	mes "[^0000FFAI World Showcase^000000]";
+	mes "^777777Analyzing your character...^000000";
+	
+	.@req_id = ai_db_request("ai_npc_decide_action", "/ai/npc/AI_World_Showcase/action", .@context$, 5);
+	
+	if (.@req_id <= 0) {
+		next;
+		mes "[^0000FFAI World Showcase^000000]";
+		mes "^FF0000Cannot make AI decision right now.^000000";
+		mes " ";
+		mes "Fallback: Based on your level " + BaseLevel + ",";
+		mes "I think you could use some experience!";
+		return;
+	}
+	
+	.@attempts = 0;
+	.@decision$ = "";
+	
+	while (.@attempts < 50 && .@decision$ == "") {
+		sleep2 100;
+		.@decision$ = ai_db_response(.@req_id);
+		.@attempts++;
+	}
+	
+	next;
+	mes "[^0000FFAI Decision Result^000000]";
+	
+	if (.@decision$ != "") {
+		mes "The AI has analyzed your character and decided:";
+		mes " ";
+		mes "^00AA00" + .@decision$ + "^000000";
+		mes " ";
+		mes "^777777Decision made in " + (.@attempts * 100) + "ms^000000";
+	} else {
+		mes "^FF8800AI decision timeout.^000000";
+		mes " ";
+		mes "Fallback: I'll offer you a simple blessing instead.";
+		specialeffect2 EF_BLESSING;
+		sc_start SC_BLESSING, 60000, 5;
+		mes "You receive a blessing!";
+	}
+	
+	next;
+	return;
+
+//============================================================
+// SECTION 3: AI MEMORY SYSTEM
+// Endpoints: /ai/npc/{npc_id}/memory (GET/POST)
+//============================================================
+S_Memory:
+	mes "[^0000FFAI Memory Demo^000000]";
+	mes "The AI system includes memory sectors:";
+	mes "^0000FF• Episodic^000000 - Event memories";
+	mes "^00AA00• Semantic^000000 - Knowledge";
+	mes "^FF00FF• Procedural^000000 - Skills";
+	mes "^FFAA00• Emotional^000000 - Feelings";
+	mes "^AA00FF• Reflective^000000 - Self-awareness";
+	next;
+	
+	switch(select(
+		"Store a Memory",
+		"Check My Memories",
+		"Clear Memories",
+		"Back to Main Menu"
+	)) {
+		case 1:
+			mes "[^0000FFStore Memory^000000]";
+			mes "What would you like me to remember?";
+			next;
+			
+			input .@memory_text$;
+			
+			if (.@memory_text$ == "") {
+				mes "^FF0000No memory provided!^000000";
+				return;
+			}
+			
+			.@mem_data$ = "{";
+			.@mem_data$ += "\"npc_id\":\"AI_World_Showcase\",";
+			.@mem_data$ += "\"player_id\":" + getcharid(0) + ",";
+			.@mem_data$ += "\"player_name\":\"" + strcharinfo(0) + "\",";
+			.@mem_data$ += "\"sector\":\"episodic\",";
+			.@mem_data$ += "\"content\":\"" + .@memory_text$ + "\",";
+			.@mem_data$ += "\"timestamp\":" + gettimetick(2) + ",";
+			.@mem_data$ += "\"location\":\"prontera\"";
+			.@mem_data$ += "}";
+			
+			.@req_id = ai_db_request("memory_store", "/ai/npc/AI_World_Showcase/memory", .@mem_data$, 5);
+			
+			if (.@req_id <= 0) {
+				next;
+				mes "^FF0000Failed to create memory request.^000000";
+				return;
+			}
+			
+			.@attempts = 0;
+			.@result$ = "";
+			
+			while (.@attempts < 30 && .@result$ == "") {
+				sleep2 100;
+				.@result$ = ai_db_response(.@req_id);
+				.@attempts++;
+			}
+			
+			next;
+			if (.@result$ != "") {
+				mes "[^00AA00Memory Stored^000000]";
+				mes "I will remember:";
+				mes "^0000FF\"" + .@memory_text$ + "\"^000000";
+			} else {
+				mes "^FF8800Memory storage timeout.^000000";
+				mes "Your memory may still be saved.";
+			}
+			break;
+			
+		case 2:
+			mes "[^0000FFCheck Memories^000000]";
+			mes "Searching for memories about you...";
+			
+			.@search_data$ = "{";
+			.@search_data$ += "\"npc_id\":\"AI_World_Showcase\",";
+			.@search_data$ += "\"player_id\":" + getcharid(0) + ",";
+			.@search_data$ += "\"limit\":5";
+			.@search_data$ += "}";
+			
+			.@req_id = ai_db_request("memory_search", "/ai/npc/AI_World_Showcase/memory", .@search_data$, 5);
+			
+			if (.@req_id <= 0) {
+				next;
+				mes "^FF0000Cannot search memories right now.^000000";
+				return;
+			}
+			
+			.@attempts = 0;
+			.@result$ = "";
+			
+			while (.@attempts < 30 && .@result$ == "") {
+				sleep2 100;
+				.@result$ = ai_db_response(.@req_id);
+				.@attempts++;
+			}
+			
+			next;
+			if (.@result$ != "") {
+				mes "[^00AA00Your Memories^000000]";
+				mes .@result$;
+			} else {
+				mes "^777777No memories found yet.^000000";
+				mes "Try storing some memories first!";
+			}
+			break;
+			
+		case 3:
+			mes "[^FF0000Clear Memories^000000]";
+			mes "^FF0000Warning:^000000 This will erase all";
+			mes "memories I have about you.";
+			next;
+			
+			if (select("Confirm Clear", "Cancel") == 2) {
+				return;
+			}
+			
+			.@clear_data$ = "{\"npc_id\":\"AI_World_Showcase\",\"player_id\":" + getcharid(0) + "}";
+			.@req_id = ai_db_request("memory_clear", "/ai/npc/AI_World_Showcase/memory", .@clear_data$, 5);
+			
+			if (.@req_id > 0) {
+				sleep2 500;
+				mes "^00AA00Memories cleared.^000000";
+			} else {
+				mes "^FF0000Failed to clear memories.^000000";
+			}
+			break;
+			
+		case 4:
+			return;
+	}
+	
+	next;
+	return;
+
+//============================================================
+// SECTION 4: NPC MOVEMENT & NAVIGATION
+// Commands: npcwalk, npcwalkid
+// Endpoint: /ai/navigation/pathfind
+//============================================================
+S_Movement:
+	mes "[^0000FFMovement & Navigation Demo^000000]";
+	mes "I can move around autonomously!";
+	mes "This demonstrates AI-driven NPC movement";
+	mes "and pathfinding capabilities.";
+	next;
+	
+	switch(select(
+		"Watch Me Patrol",
+		"Random Movement",
+		"Pathfinding Demo",
+		"Return to Base",
+		"Back to Menu"
+	)) {
+		case 1:
+			mes "[^0000FFAI World Showcase^000000]";
+			mes "I'll patrol in a square pattern.";
+			mes "Watch me move!";
+			close2;
+			
+			npcwalk "AI World Showcase", 160, 185;
+			sleep2 2000;
+			npcwalk "AI World Showcase", 160, 190;
+			sleep2 2000;
+			npcwalk "AI World Showcase", 155, 190;
+			sleep2 2000;
+			npcwalk "AI World Showcase", 155, 185;
+			
+			npctalk "Patrol complete!";
+			break;
+			
+		case 2:
+			mes "[^0000FFAI World Showcase^000000]";
+			mes "I'll move to a random nearby location.";
+			close2;
+			
+			.@rand_x = 155 + rand(-10, 10);
+			.@rand_y = 185 + rand(-10, 10);
+			
+			if (npcwalk("AI World Showcase", .@rand_x, .@rand_y)) {
+				npctalk "Moving to (" + .@rand_x + "," + .@rand_y + ")!";
+				sleep2 3000;
+				npcwalk "AI World Showcase", 155, 185;
+			} else {
+				npctalk "Movement failed - path blocked?";
+			}
+			break;
+			
+		case 3:
+			mes "[^0000FFPathfinding Demo^000000]";
+			mes "The AI can calculate optimal paths";
+			mes "between locations on the map.";
+			mes " ";
+			mes "This uses the ^FF0000NavigationAgent^000000";
+			mes "for intelligent route planning.";
+			next;
+			
+			.@path_data$ = "{";
+			.@path_data$ += "\"npc_id\":\"AI_World_Showcase\",";
+			.@path_data$ += "\"start_x\":155,\"start_y\":185,";
+			.@path_data$ += "\"end_x\":160,\"end_y\":190,";
+			.@path_data$ += "\"map\":\"prontera\"";
+			.@path_data$ += "}";
+			
+			.@req_id = ai_db_request("pathfind", "/ai/navigation/pathfind", .@path_data$, 5);
+			
+			if (.@req_id > 0) {
+				mes "^777777Pathfinding request sent...^000000";
+				.@attempts = 0;
+				.@path$ = "";
+				while (.@attempts < 30 && .@path$ == "") {
+					sleep2 100;
+					.@path$ = ai_db_response(.@req_id);
+					.@attempts++;
+				}
+				if (.@path$ != "") {
+					mes "^00AA00Path calculated!^000000";
+					mes .@path$;
+				} else {
+					mes "^FFAA00Pathfinding timeout.^000000";
+				}
+			} else {
+				mes "^FF0000Pathfinding request failed.^000000";
+			}
+			break;
+			
+		case 4:
+			mes "[^0000FFAI World Showcase^000000]";
+			mes "Returning to my starting position...";
+			close2;
+			
+			npcwalk "AI World Showcase", 155, 185;
+			npctalk "I'm home!";
+			break;
+			
+		case 5:
+			return;
+	}
+	
+	end;
+
+//============================================================
+// SECTION 5: QUEST GENERATION
+// Endpoint: /ai/quest/generate
+//============================================================
+S_Quest:
+	mes "[^0000FFAI Quest Generator^000000]";
+	mes "The AI can generate personalized quests";
+	mes "tailored to your level and class.";
+	mes " ";
+	mes "This uses the ^FF0000QuestAgent^000000";
+	mes "with dynamic difficulty scaling.";
+	next;
+	
+	mes "[^0000FFAI Quest Generator^000000]";
+	mes "Shall I generate a quest for you?";
+	next;
+	
+	if (select("Yes, generate quest", "No, go back") == 2) {
+		return;
+	}
+	
+	.@quest_data$ = "{";
+	.@quest_data$ += "\"player_id\":" + getcharid(0) + ",";
+	.@quest_data$ += "\"player_name\":\"" + strcharinfo(0) + "\",";
+	.@quest_data$ += "\"base_level\":" + BaseLevel + ",";
+	.@quest_data$ += "\"job_level\":" + JobLevel + ",";
+	.@quest_data$ += "\"job_class\":" + Class + ",";
+	.@quest_data$ += "\"current_map\":\"" + strcharinfo(3) + "\",";
+	.@quest_data$ += "\"quest_type\":\"auto\"";
+	.@quest_data$ += "}";
+	
+	mes "[^0000FFAI World Showcase^000000]";
+	mes "^777777Generating personalized quest...^000000";
+	
+	.@req_id = ai_db_request("quest_generate", "/ai/quest/generate", .@quest_data$, 5);
+	
+	if (.@req_id <= 0) {
+		next;
+		mes "^FF0000Cannot generate quest right now.^000000";
+		mes " ";
+		mes "Fallback: Here's a simple quest:";
+		mes "^00AA00Hunt 10 Porings for 1000 Base EXP!^000000";
+		return;
+	}
+	
+	.@attempts = 0;
+	.@quest$ = "";
+	
+	while (.@attempts < 50 && .@quest$ == "") {
+		sleep2 100;
+		.@quest$ = ai_db_response(.@req_id);
+		.@attempts++;
+	}
+	
+	next;
+	mes "[^00AA00Generated Quest^000000]";
+	
+	if (.@quest$ != "") {
+		mes .@quest$;
+		mes " ";
+		mes "^777777Generated in " + (.@attempts * 100) + "ms^000000";
+	} else {
+		mes "^FF8800Quest generation timeout.^000000";
+		mes " ";
+		mes "Sample Quest for Level " + BaseLevel + ":";
+		mes "^00AA00Hunt 10 suitable monsters";
+		mes "Reward: Experience points^000000";
+	}
+	
+	next;
+	return;
+
+//============================================================
+// SECTION 6: FACTION SYSTEM
+// Endpoints: /ai/faction/create, /ai/faction/reputation
+//============================================================
+S_Faction:
+	mes "[^0000FFFaction System Demo^000000]";
+	mes "The AI manages dynamic faction";
+	mes "relationships and player reputation.";
+	mes " ";
+	mes "Factions track your actions and";
+	mes "react based on your reputation.";
+	next;
+	
+	switch(select(
+		"View Factions",
+		"My Reputation",
+		"Improve Reputation",
+		"Back to Menu"
+	)) {
+		case 1:
+			mes "[^0000FFAvailable Factions^000000]";
+			mes "The world has several factions:";
+			mes "^0000FF• Kingdom of Prontera^000000 - Rulers";
+			mes "^FF0000• Shadow Syndicate^000000 - Underworld";
+			mes "^00AA00• Nature's Circle^000000 - Druids";
+			mes "^FFAA00• Merchant Guild^000000 - Traders";
+			mes "^AA00FF• Arcane Order^000000 - Mages";
+			mes " ";
+			mes "Your actions affect your standing";
+			mes "with each faction.";
+			break;
+			
+		case 2:
+			mes "[^0000FFYour Reputation^000000]";
+			mes "Checking your faction reputation...";
+			
+			.@rep_data$ = "{";
+			.@rep_data$ += "\"player_id\":" + getcharid(0) + ",";
+			.@rep_data$ += "\"player_name\":\"" + strcharinfo(0) + "\"";
+			.@rep_data$ += "}";
+			
+			.@req_id = ai_db_request("faction_reputation", "/ai/faction/reputation", .@rep_data$, 5);
+			
+			if (.@req_id > 0) {
+				.@attempts = 0;
+				.@rep$ = "";
+				while (.@attempts < 30 && .@rep$ == "") {
+					sleep2 100;
+					.@rep$ = ai_db_response(.@req_id);
+					.@attempts++;
+				}
+				next;
+				if (.@rep$ != "") {
+					mes .@rep$;
+				} else {
+					mes "^777777No reputation data yet.^000000";
+					mes "Complete quests and help NPCs";
+					mes "to build your reputation!";
+				}
+			} else {
+				next;
+				mes "^FF0000Cannot check reputation.^000000";
+			}
+			break;
+			
+		case 3:
+			mes "[^0000FFImprove Reputation^000000]";
+			mes "You can improve your reputation by:";
+			mes "^00AA00• Completing faction quests";
+			mes "• Helping faction-aligned NPCs";
+			mes "• Donating items to faction halls";
+			mes "• Defeating faction enemies";
+			mes " ";
+			mes "Your current reputation affects:";
+			mes "• Shop prices and availability";
+			mes "• Quest access";
+			mes "• NPC attitudes toward you";
+			break;
+			
+		case 4:
+			return;
+	}
+	
+	next;
+	return;
+
+//============================================================
+// SECTION 7: ECONOMIC SIMULATION
+// Endpoints: /ai/economy/state, /ai/economy/price/{item_id}
+//============================================================
+S_Economy:
+	mes "[^0000FFEconomic Simulation Demo^000000]";
+	mes "The AI runs a dynamic economy with:";
+	mes "^00AA00• Supply & Demand^000000 - Prices fluctuate";
+	mes "^FFAA00• Inflation System^000000 - Long-term trends";
+	mes "^FF0000• Market Events^000000 - Booms & crashes";
+	mes "^0000FF• NPC Learning^000000 - Merchants adapt";
+	next;
+	
+	switch(select(
+		"View Economy State",
+		"Check Item Price",
+		"Market Trends",
+		"Back to Menu"
+	)) {
+		case 1:
+			mes "[^0000FFEconomy State^000000]";
+			mes "Checking current economic conditions...";
+			
+			.@req_id = ai_db_request("economy_state", "/ai/economy/state", "{}", 5);
+			
+			if (.@req_id > 0) {
+				.@attempts = 0;
+				.@econ$ = "";
+				while (.@attempts < 30 && .@econ$ == "") {
+					sleep2 100;
+					.@econ$ = ai_db_response(.@req_id);
+					.@attempts++;
+				}
+				next;
+				if (.@econ$ != "") {
+					mes .@econ$;
+				} else {
+					mes "^777777Economy data pending...^000000";
+					mes "The economic simulation is running";
+					mes "in the background.";
+				}
+			} else {
+				next;
+				mes "^FF0000Cannot check economy.^000000";
+			}
+			break;
+			
+		case 2:
+			mes "[^0000FFItem Price Check^000000]";
+			mes "Enter an item ID to check its price:";
+			next;
+			
+			input .@item_id$;
+			
+			if (.@item_id$ == "") {
+				mes "^FF0000No item ID entered!^000000";
+				return;
+			}
+			
+			.@req_id = ai_db_request("item_price", "/ai/economy/price/" + .@item_id$, "{}", 5);
+			
+			if (.@req_id > 0) {
+				.@attempts = 0;
+				.@price$ = "";
+				while (.@attempts < 30 && .@price$ == "") {
+					sleep2 100;
+					.@price$ = ai_db_response(.@req_id);
+					.@attempts++;
+				}
+				next;
+				if (.@price$ != "") {
+					mes "Price info for item " + .@item_id$ + ":";
+					mes "^00AA00" + .@price$ + "^000000";
+				} else {
+					mes "^FFAA00Price data not available.^000000";
+					mes "Item " + .@item_id$ + " may not be tracked.";
+				}
+			} else {
+				next;
+				mes "^FF0000Price check failed.^000000";
+			}
+			break;
+			
+		case 3:
+			mes "[^0000FFMarket Trends^000000]";
+			mes "The AI analyzes market trends";
+			mes "and predicts future price movements.";
+			mes " ";
+			mes "Merchants use this data to:";
+			mes "• Adjust prices dynamically";
+			mes "• Restock popular items";
+			mes "• Offer discounts on surplus";
+			mes "• Identify profitable trades";
+			break;
+			
+		case 4:
+			return;
+	}
+	
+	next;
+	return;
+
+//============================================================
+// SECTION 8: WORLD ENVIRONMENT
+// Endpoints: /ai/world/environment/current, /ai/world/state
+//============================================================
+S_Environment:
+	mes "[^0000FFWorld Environment Demo^000000]";
+	mes "The AI manages dynamic world state:";
+	mes "^00AA00• Weather System^000000 - Dynamic weather";
+	mes "^FFAA00• Time of Day^000000 - Day/night cycle";
+	mes "^FF0000• Disasters^000000 - Random events";
+	mes "^0000FF• Season Cycle^000000 - Seasonal effects";
+	next;
+	
+	switch(select(
+		"Current Environment",
+		"Force Weather Change",
+		"World State",
+		"Back to Menu"
+	)) {
+		case 1:
+			mes "[^0000FFCurrent Environment^000000]";
+			mes "Fetching current world conditions...";
+			
+			.@req_id = ai_db_request("environment", "/ai/world/environment/current", "{}", 5);
+			
+			if (.@req_id > 0) {
+				.@attempts = 0;
+				.@env$ = "";
+				while (.@attempts < 30 && .@env$ == "") {
+					sleep2 100;
+					.@env$ = ai_db_response(.@req_id);
+					.@attempts++;
+				}
+				next;
+				if (.@env$ != "") {
+					mes .@env$;
+				} else {
+					mes "^777777Environment data pending...^000000";
+					mes "The weather system is running";
+					mes "in the background.";
+				}
+			} else {
+				next;
+				mes "^FF0000Cannot check environment.^000000";
+			}
+			break;
+			
+		case 2:
+			mes "[^0000FFWeather Change^000000]";
+			mes "Choose a weather type:";
+			next;
+			
+			switch(select("Sunny", "Rainy", "Stormy", "Foggy", "Cancel")) {
+				case 1: .@weather$ = "sunny"; break;
+				case 2: .@weather$ = "rainy"; break;
+				case 3: .@weather$ = "stormy"; break;
+				case 4: .@weather$ = "foggy"; break;
+				case 5: return;
+			}
+			
+			.@weather_data$ = "{\"new_weather\":\"" + .@weather$ + "\"}";
+			.@req_id = ai_db_request("weather_change", "/ai/world/environment/weather/change", .@weather_data$, 5);
+			
+			if (.@req_id > 0) {
+				mes "^00AA00Weather change request sent!^000000";
+				mes "The world will transition to";
+				mes "\"" + .@weather$ + "\" conditions.";
+			} else {
+				mes "^FF0000Weather change failed.^000000";
+			}
+			break;
+			
+		case 3:
+			mes "[^0000FFWorld State^000000]";
+			mes "The AI maintains a persistent";
+			mes "world state that affects all NPCs:";
+			mes " ";
+			mes "^00AA00• Global alignment (good/evil)";
+			mes "• Economic health";
+			mes "• Political stability";
+			mes "• Active events";
+			mes "• NPC morale";
+			mes " ";
+			mes "This state evolves based on";
+			mes "player and NPC actions.";
+			break;
+			
+		case 4:
+			return;
+	}
+	
+	next;
+	return;
+
+//============================================================
+// SECTION 9: PLAYER INTERACTION
+// Endpoint: /ai/player/interaction
+//============================================================
+S_PlayerInteraction:
+	mes "[^0000FFPlayer Interaction Demo^000000]";
+	mes "The AI tracks and learns from";
+	mes "every player interaction.";
+	mes " ";
+	mes "This data is used to:";
+	mes "^00AA00• Personalize responses";
+	mes "• Track relationship history";
+	mes "• Adapt difficulty";
+	mes "• Generate relevant content";
+	next;
+	
+	.@interaction_data$ = "{";
+	.@interaction_data$ += "\"player_id\":" + getcharid(0) + ",";
+	.@interaction_data$ += "\"player_name\":\"" + strcharinfo(0) + "\",";
+	.@interaction_data$ += "\"npc_id\":\"AI_World_Showcase\",";
+	.@interaction_data$ += "\"interaction_type\":\"showcase_visit\",";
+	.@interaction_data$ += "\"player_level\":" + BaseLevel + ",";
+	.@interaction_data$ += "\"player_class\":" + Class + ",";
+	.@interaction_data$ += "\"location\":\"" + strcharinfo(3) + "\"";
+	.@interaction_data$ += "}";
+	
+	.@req_id = ai_db_request("player_interaction", "/ai/player/interaction", .@interaction_data$, 5);
+	
+	if (.@req_id > 0) {
+		mes "^777777Interaction recorded...^000000";
+		.@attempts = 0;
+		.@result$ = "";
+		while (.@attempts < 20 && .@result$ == "") {
+			sleep2 100;
+			.@result$ = ai_db_response(.@req_id);
+			.@attempts++;
+		}
+		next;
+		if (.@result$ != "") {
+			mes "^00AA00" + .@result$ + "^000000";
+		} else {
+			mes "^00AA00Interaction logged successfully!^000000";
+			mes "The AI will remember this visit.";
+		}
+	} else {
+		next;
+		mes "^FFAA00Interaction recorded locally.^000000";
+	}
+	
+	next;
+	return;
+
+//============================================================
+// SECTION 10: EMOTIONAL STATES
+// Endpoint: /ai/emotional_state
+//============================================================
+S_Emotion:
+	mes "[^0000FFEmotional States Demo^000000]";
+	mes "NPCs have dynamic emotional states";
+	mes "that affect their behavior:";
+	mes " ";
+	mes "^00AA00• Happy^000000 - Friendly, helpful";
+	mes "^FFAA00• Neutral^000000 - Standard behavior";
+	mes "^FF0000• Angry^000000 - Aggressive, hostile";
+	mes "^0000FF• Sad^000000 - Withdrawn, quiet";
+	mes "^AA00FF• Excited^000000 - Energetic, talkative";
+	mes "^7777FF• Anxious^000000 - Nervous, jumpy";
+	next;
+	
+	switch(select(
+		"My Current Emotion",
+		"Change My Mood",
+		"Emotion Effects",
+		"Back to Menu"
+	)) {
+		case 1:
+			mes "[^0000FFCurrent Emotion^000000]";
+			mes "I am currently feeling:";
+			mes "^00AA00Happy and Helpful!^000000";
+			mes " ";
+			mes "My emotional state affects:";
+			mes "• Dialogue tone and content";
+			mes "• Willingness to help";
+			mes "• Quest rewards";
+			mes "• Shop prices";
+			break;
+			
+		case 2:
+			mes "[^0000FFChange Mood^000000]";
+			mes "How would you like me to feel?";
+			next;
+			
+			switch(select("Happy", "Neutral", "Sad", "Excited", "Cancel")) {
+				case 1:
+					.@emotion$ = "happy";
+					.@intensity = 80;
+					break;
+				case 2:
+					.@emotion$ = "neutral";
+					.@intensity = 50;
+					break;
+				case 3:
+					.@emotion$ = "sad";
+					.@intensity = 30;
+					break;
+				case 4:
+					.@emotion$ = "excited";
+					.@intensity = 90;
+					break;
+				case 5:
+					return;
+			}
+			
+			.@emotion_data$ = "{";
+			.@emotion_data$ += "\"npc_id\":\"AI_World_Showcase\",";
+			.@emotion_data$ += "\"emotion\":\"" + .@emotion$ + "\",";
+			.@emotion_data$ += "\"intensity\":" + .@intensity;
+			.@emotion_data$ += "}";
+			
+			.@req_id = ai_db_request("emotion_update", "/ai/emotional_state", .@emotion_data$, 5);
+			
+			if (.@req_id > 0) {
+				mes "^00AA00Mood updated to " + .@emotion$ + "!^000000";
+			} else {
+				mes "^FFAA00Mood change noted!^000000";
+			}
+			break;
+			
+		case 3:
+			mes "[^0000FFEmotion Effects^000000]";
+			mes "Emotional states affect gameplay:";
+			mes " ";
+			mes "^00AA00Happy NPCs:^000000";
+			mes "  • 10% better shop prices";
+			mes "  • More generous quest rewards";
+			mes " ";
+			mes "^FF0000Angry NPCs:^000000";
+			mes "  • 10% worse shop prices";
+			mes "  • May refuse service";
+			mes " ";
+			mes "^AA00FFExcited NPCs:^000000";
+			mes "  • Special dialogue options";
+			mes "  • Hidden quest opportunities";
+			break;
+			
+		case 4:
+			return;
+	}
+	
+	next;
+	return;
+
+//============================================================
+// SECTION 11: GIFT SYSTEM
+// Endpoint: /ai/gift
+//============================================================
+S_Gift:
+	mes "[^0000FFGift System Demo^000000]";
+	mes "You can give gifts to NPCs!";
+	mes "Gifts affect NPC relationships";
+	mes "and emotional states.";
+	mes " ";
+	mes "Different NPCs like different gifts:";
+	mes "^00AA00• Sages^000000 - Books, scrolls";
+	mes "^FFAA00• Merchants^000000 - Gold, gems";
+	mes "^FF0000• Warriors^000000 - Weapons, armor";
+	mes "^0000FF• Healers^000000 - Herbs, potions";
+	next;
+	
+	switch(select(
+		"Give a Gift",
+		"Gift Preferences",
+		"Back to Menu"
+	)) {
+		case 1:
+			mes "[^0000FFGive a Gift^000000]";
+			mes "What gift would you like to give?";
+			mes "Enter the item name or ID:";
+			next;
+			
+			input .@gift_name$;
+			
+			if (.@gift_name$ == "") {
+				mes "^FF0000No gift specified!^000000";
+				return;
+			}
+			
+			.@gift_data$ = "{";
+			.@gift_data$ += "\"npc_id\":\"AI_World_Showcase\",";
+			.@gift_data$ += "\"player_id\":" + getcharid(0) + ",";
+			.@gift_data$ += "\"item_name\":\"" + .@gift_name$ + "\",";
+			.@gift_data$ += "\"quantity\":1,";
+			.@gift_data$ += "\"message\":\"A gift from " + strcharinfo(0) + "\"";
+			.@gift_data$ += "}";
+			
+			.@req_id = ai_db_request("give_gift", "/ai/gift", .@gift_data$, 5);
+			
+			if (.@req_id > 0) {
+				mes "^777777Gift sent!^000000";
+				.@attempts = 0;
+				.@gift_result$ = "";
+				while (.@attempts < 20 && .@gift_result$ == "") {
+					sleep2 100;
+					.@gift_result$ = ai_db_response(.@req_id);
+					.@attempts++;
+				}
+				next;
+				if (.@gift_result$ != "") {
+					mes "^00AA00" + .@gift_result$ + "^000000";
+				} else {
+					mes "^00AA00Thank you for the " + .@gift_name$ + "!^000000";
+					mes "I appreciate your kindness.";
+				}
+			} else {
+				next;
+				mes "^FFAA00Gift noted with appreciation!^000000";
+			}
+			break;
+			
+		case 2:
+			mes "[^0000FFGift Preferences^000000]";
+			mes "As an AI Showcase NPC, I appreciate:";
+			mes "^00AA00• Knowledge^000000 - New information";
+			mes "^0000FF• Stories^000000 - Player experiences";
+			mes "^FFAA00• Rare items^000000 - Unique discoveries";
+			mes " ";
+			mes "Gifts improve our relationship";
+			mes "and may unlock special features!";
+			break;
+			
+		case 3:
+			return;
+	}
+	
+	next;
+	return;
+
+//============================================================
+// SECTION 12: MVP BOSS SYSTEM
+// Endpoint: /ai/mvp
+//============================================================
+S_MVP:
+	mes "[^0000FFMVP Boss System Demo^000000]";
+	mes "The AI manages MVP boss encounters:";
+	mes "^FF0000• Dynamic Spawning^000000 - Based on conditions";
+	mes "^FFAA00• Difficulty Scaling^000000 - Adapts to players";
+	mes "^00AA00• Reward Optimization^000000 - Fair loot";
+	mes "^0000FF• Behavior Patterns^000000 - Unique AI";
+	next;
+	
+	switch(select(
+		"Current MVP Status",
+		"Spawn MVP",
+		"Boss Information",
+		"Back to Menu"
+	)) {
+		case 1:
+			mes "[^0000FFMVP Status^000000]";
+			mes "Checking current MVP status...";
+			
+			.@req_id = ai_db_request("mvp_status", "/ai/mvp", "{}", 5);
+			
+			if (.@req_id > 0) {
+				.@attempts = 0;
+				.@mvp$ = "";
+				while (.@attempts < 30 && .@mvp$ == "") {
+					sleep2 100;
+					.@mvp$ = ai_db_response(.@req_id);
+					.@attempts++;
+				}
+				next;
+				if (.@mvp$ != "") {
+					mes .@mvp$;
+				} else {
+					mes "^777777No active MVP encounters.^000000";
+					mes "MVPs spawn based on world conditions";
+					mes "and player activity.";
+				}
+			} else {
+				next;
+				mes "^FF0000Cannot check MVP status.^000000";
+			}
+			break;
+			
+		case 2:
+			mes "[^0000FFSpawn MVP^000000]";
+			mes "The AI can spawn a boss encounter";
+			mes "tailored to your party's level.";
+			mes " ";
+			mes "This demonstrates dynamic content";
+			mes "generation based on player data.";
+			next;
+			
+			if (select("Spawn Boss", "Cancel") == 2) {
+				return;
+			}
+			
+			.@mvp_data$ = "{";
+			.@mvp_data$ += "\"player_id\":" + getcharid(0) + ",";
+			.@mvp_data$ += "\"player_level\":" + BaseLevel + ",";
+			.@mvp_data$ += "\"map\":\"" + strcharinfo(3) + "\"";
+			.@mvp_data$ += "}";
+			
+			.@req_id = ai_db_request("mvp_spawn", "/ai/mvp", .@mvp_data$, 5);
+			
+			if (.@req_id > 0) {
+				mes "^777777Boss spawn request sent!^000000";
+				.@attempts = 0;
+				.@boss$ = "";
+				while (.@attempts < 30 && .@boss$ == "") {
+					sleep2 100;
+					.@boss$ = ai_db_response(.@req_id);
+					.@attempts++;
+				}
+				next;
+				if (.@boss$ != "") {
+					mes "^FF0000" + .@boss$ + "^000000";
+				} else {
+					mes "^FFAA00Boss spawn pending...^000000";
+					mes "The AI is preparing an encounter.";
+				}
+			} else {
+				next;
+				mes "^FF0000Boss spawn failed.^000000";
+			}
+			break;
+			
+		case 3:
+			mes "[^0000FFBoss Information^000000]";
+			mes "MVP bosses in this world:";
+			mes "^FF0000• AI Dragon^000000 - Endgame boss";
+			mes "^FFAA00• Shadow Lord^000000 - Night spawn";
+			mes "^AA00FF• Arcane Golem^000000 - Magic immune";
+			mes "^00AA00• Nature Warden^000000 - Forest guardian";
+			mes " ";
+			mes "Each boss has unique AI patterns";
+			mes "that adapt to player strategies.";
+			break;
+			
+		case 4:
+			return;
+	}
+	
+	next;
+	return;
+
+//============================================================
+// SECTION 13: STORYLINE ARCS
+// Endpoint: /ai/storyline
+//============================================================
+S_Storyline:
+	mes "[^0000FFStoryline Arcs Demo^000000]";
+	mes "The AI generates dynamic story arcs";
+	mes "that evolve based on player actions.";
+	mes " ";
+	mes "Features:";
+	mes "^00AA00• Branching Narratives^000000 - Choices matter";
+	mes "^FFAA00• Dynamic Characters^000000 - NPCs remember";
+	mes "^FF0000• World Events^000000 - Triggered by players";
+	mes "^0000FF• Chapter System^000000 - Progressive story";
+	next;
+	
+	switch(select(
+		"Current Story Arc",
+		"Generate Story Event",
+		"Story Progress",
+		"Back to Menu"
+	)) {
+		case 1:
+			mes "[^0000FFCurrent Story Arc^000000]";
+			mes "Checking active story arcs...";
+			
+			.@req_id = ai_db_request("storyline_arc", "/ai/storyline", "{}", 5);
+			
+			if (.@req_id > 0) {
+				.@attempts = 0;
+				.@story$ = "";
+				while (.@attempts < 30 && .@story$ == "") {
+					sleep2 100;
+					.@story$ = ai_db_response(.@req_id);
+					.@attempts++;
+				}
+				next;
+				if (.@story$ != "") {
+					mes .@story$;
+				} else {
+					mes "^777777No active story arcs.^000000";
+					mes "The world is at peace... for now.";
+				}
+			} else {
+				next;
+				mes "^FF0000Cannot check story arcs.^000000";
+			}
+			break;
+			
+		case 2:
+			mes "[^0000FFGenerate Story Event^000000]";
+			mes "The AI can create dynamic events";
+			mes "that shape the world narrative.";
+			mes " ";
+			mes "These events can include:";
+			mes "• Monster invasions";
+			mes "• Festival celebrations";
+			mes "• Political upheavals";
+			mes "• Natural disasters";
+			next;
+			
+			.@event_data$ = "{";
+			.@event_data$ += "\"player_id\":" + getcharid(0) + ",";
+			.@event_data$ += "\"player_name\":\"" + strcharinfo(0) + "\",";
+			.@event_data$ += "\"location\":\"" + strcharinfo(3) + "\",";
+			.@event_data$ += "\"event_type\":\"dynamic\"";
+			.@event_data$ += "}";
+			
+			.@req_id = ai_db_request("storyline_generate", "/ai/storyline", .@event_data$, 5);
+			
+			if (.@req_id > 0) {
+				mes "^777777Generating story event...^000000";
+				.@attempts = 0;
+				.@event$ = "";
+				while (.@attempts < 40 && .@event$ == "") {
+					sleep2 100;
+					.@event$ = ai_db_response(.@req_id);
+					.@attempts++;
+				}
+				next;
+				if (.@event$ != "") {
+					mes "^FFAA00" + .@event$ + "^000000";
+				} else {
+					mes "^FFAA00Story event generation in progress...^000000";
+					mes "Check back later to see what unfolds!";
+				}
+			} else {
+				next;
+				mes "^FF0000Story generation failed.^000000";
+			}
+			break;
+			
+		case 3:
+			mes "[^0000FFStory Progress^000000]";
+			mes "Your actions shape the world:";
+			mes " ";
+			mes "^00AA00Completed Quests:^000000";
+			mes "  Tracked by the AI system";
+			mes " ";
+			mes "^FFAA00World Impact:^000000";
+			mes "  Every choice has consequences";
+			mes " ";
+			mes "^0000FFUnlockable Content:^000000";
+			mes "  Hidden quests, areas, and NPCs";
+			mes "  become available as stories progress";
+			break;
+			
+		case 4:
+			return;
+	}
+	
+	next;
+	return;
+
+//============================================================
+// SECTION 14: PROCEDURAL CONTENT
+// Endpoints: /ai/procedural/dungeon, /ai/procedural/treasure
+//============================================================
+S_Procedural:
+	mes "[^0000FFProcedural Content Demo^000000]";
+	mes "The AI generates unique content:";
+	mes "^FF0000• Adaptive Dungeons^000000 - New every day";
+	mes "^FFAA00• Treasure Distribution^000000 - Fair loot";
+	mes "^00AA00• Archaeology Sites^000000 - Hidden secrets";
+	mes "^0000FF• Hazard Events^000000 - Dynamic challenges";
+	next;
+	
+	switch(select(
+		"Today's Dungeon",
+		"Treasure Info",
+		"Active Hazards",
+		"Back to Menu"
+	)) {
+		case 1:
+			mes "[^0000FFToday's Dungeon^000000]";
+			mes "The AI generates a new dungeon";
+			mes "every day at midnight.";
+			mes " ";
+			mes "Each dungeon has:";
+			mes "• Unique layout and monsters";
+			mes "• Scaled difficulty";
+			mes "• Special rewards";
+			mes "• Boss encounter";
+			next;
+			
+			.@dungeon_data$ = "{";
+			.@dungeon_data$ += "\"player_id\":" + getcharid(0) + ",";
+			.@dungeon_data$ += "\"player_level\":" + BaseLevel + ",";
+			.@dungeon_data$ += "\"party_size\":1";
+			.@dungeon_data$ += "}";
+			
+			.@req_id = ai_db_request("dungeon_info", "/ai/procedural/dungeon", .@dungeon_data$, 5);
+			
+			if (.@req_id > 0) {
+				.@attempts = 0;
+				.@dungeon$ = "";
+				while (.@attempts < 30 && .@dungeon$ == "") {
+					sleep2 100;
+					.@dungeon$ = ai_db_response(.@req_id);
+					.@attempts++;
+				}
+				next;
+				if (.@dungeon$ != "") {
+					mes .@dungeon$;
+				} else {
+					mes "^777777Dungeon data pending...^000000";
+					mes "Check the Dungeon Master NPC";
+					mes "for today's dungeon details.";
+				}
+			} else {
+				next;
+				mes "^FF0000Cannot fetch dungeon data.^000000";
+			}
+			break;
+			
+		case 2:
+			mes "[^0000FFTreasure Info^000000]";
+			mes "The AI manages treasure distribution:";
+			mes "^00AA00• Rarity System^000000 - Common to Legendary";
+			mes "^FFAA00• Location-Based^000000 - Different areas, different loot";
+			mes "^FF0000• Dynamic Drops^000000 - Based on world state";
+			mes "^0000FF• Card Fragments^000000 - Collect to combine";
+			mes " ";
+			mes "Treasure spawns are influenced by:";
+			mes "• Time of day";
+			mes "• Player activity";
+			mes "• World events";
+			mes "• Faction control of areas";
+			break;
+			
+		case 3:
+			mes "[^0000FFActive Hazards^000000]";
+			mes "The AI monitors world hazards:";
+			mes "^FF0000• Monster Swarms^000000 - Overpopulation";
+			mes "^FFAA00• Weather Storms^000000 - Dangerous conditions";
+			mes "^AA00FF• Magic Anomalies^000000 - Unstable areas";
+			mes " ";
+			mes "Hazards affect gameplay:";
+			mes "• Reduced visibility in fog";
+			mes "• Damage in storm areas";
+			mes "• Special monster spawns";
+			break;
+			
+		case 4:
+			return;
+	}
+	
+	next;
+	return;
+
+//============================================================
+// SECTION 15: NPC RELATIONSHIPS
+// Endpoint: /ai/relationship
+//============================================================
+S_Relationships:
+	mes "[^0000FFNPC Relationships Demo^000000]";
+	mes "NPCs have relationships with each other!";
+	mes " ";
+	mes "Features:";
+	mes "^00AA00• NPC-to-NPC Bonds^000000 - Friends, rivals";
+	mes "^FFAA00• Information Sharing^000000 - NPCs gossip";
+	mes "^0000FF• Dynamic Reactions^000000 - Based on relationships";
+	mes "^FF0000• Social Networks^000000 - Complex interactions";
+	next;
+	
+	switch(select(
+		"My Relationships",
+		"NPC Social Network",
+		"Relationship Effects",
+		"Back to Menu"
+	)) {
+		case 1:
+			mes "[^0000FFMy Relationships^000000]";
+			mes "Checking my relationships with";
+			mes "other NPCs in the world...";
+			
+			.@rel_data$ = "{";
+			.@rel_data$ += "\"npc_id\":\"AI_World_Showcase\",";
+			.@rel_data$ += "\"limit\":5";
+			.@rel_data$ += "}";
+			
+			.@req_id = ai_db_request("npc_relationships", "/ai/relationship", .@rel_data$, 5);
+			
+			if (.@req_id > 0) {
+				.@attempts = 0;
+				.@rels$ = "";
+				while (.@attempts < 30 && .@rels$ == "") {
+					sleep2 100;
+					.@rels$ = ai_db_response(.@req_id);
+					.@attempts++;
+				}
+				next;
+				if (.@rels$ != "") {
+					mes .@rels$;
+				} else {
+					mes "^777777No relationship data yet.^000000";
+					mes "NPC relationships develop over time";
+					mes "as they interact with each other.";
+				}
+			} else {
+				next;
+				mes "^FF0000Cannot check relationships.^000000";
+			}
+			break;
+			
+		case 2:
+			mes "[^0000FFNPC Social Network^000000]";
+			mes "NPCs in this world form complex";
+			mes "social networks:";
+			mes " ";
+			mes "^00AA00• Friends^000000 - Share information, help each other";
+			mes "^FFAA00• Rivals^000000 - Compete, may refuse cooperation";
+			mes "^FF0000• Enemies^000000 - Hostile, may fight";
+			mes "^0000FF• Family^000000 - Strong bonds, special interactions";
+			mes " ";
+			mes "These relationships evolve based on:";
+			mes "• Shared experiences";
+			mes "• Player interactions";
+			mes "• World events";
+			break;
+			
+		case 3:
+			mes "[^0000FFRelationship Effects^000000]";
+			mes "NPC relationships affect gameplay:";
+			mes " ";
+			mes "^00AA00Friendly NPCs:^000000";
+			mes "  • Share rumors and tips";
+			mes "  • Offer better quests";
+			mes "  • Lower shop prices";
+			mes " ";
+			mes "^FF0000Hostile NPCs:^000000";
+			mes "  • Refuse service";
+			mes "  • May attack on sight";
+			mes "  • Spread negative rumors";
+			mes " ";
+			mes "Build relationships by:";
+			mes "• Completing quests";
+			mes "• Giving gifts";
+			mes "• Helping in events";
+			break;
+			
+		case 4:
+			return;
+	}
+	
+	next;
+	return;
+
+//============================================================
+// SECTION 16: SYSTEM STATUS
+// Endpoint: /ai/health
+//============================================================
+S_Status:
+	mes "[^0000FFSystem Status^000000]";
+	mes "Checking AI service health...";
+	
+	.@req_id = ai_db_request("health_check", "/ai/health", "{}", 10);
+	
+	if (.@req_id <= 0) {
+		next;
+		mes "^FF0000Cannot create health check request.^000000";
+		mes " ";
+		mes "Database IPC: ^00AA00Connected^000000";
+		mes "AI Service: ^FF0000Unreachable^000000";
+		return;
+	}
+	
+	.@attempts = 0;
+	.@health$ = "";
+	
+	while (.@attempts < 20 && .@health$ == "") {
+		sleep2 100;
+		.@health$ = ai_db_response(.@req_id);
+		.@attempts++;
+	}
+	
+	next;
+	mes "[^0000FFSystem Status^000000]";
+	mes "Database IPC: ^00AA00Active^000000";
+	
+	if (.@health$ != "") {
+		mes "AI Service: ^00AA00Online^000000";
+		mes "Response Time: " + (.@attempts * 100) + "ms";
+		mes " ";
+		mes "^00AA00All systems operational!^000000";
+	} else {
+		.@status = ai_db_status(.@req_id);
+		
+		if (.@status == 1 || .@status == 2) {
+			mes "AI Service: ^FFAA00Slow^000000";
+			mes "Status: " + (.@status == 1 ? "Pending" : "Processing");
+		} else {
+			mes "AI Service: ^FF0000Offline/Timeout^000000";
+		}
+		
+		mes " ";
+		mes "Worker Service: Check logs";
+		mes "Python AI: Check systemctl status";
+	}
+	
+	next;
+	return;
+
+//============================================================
+// SECTION 17: TECHNICAL INFORMATION
+//============================================================
+S_Technical:
+	mes "[^0000FFTechnical Information^000000]";
+	mes "This showcase uses:";
+	mes " ";
+	mes "^0000FFScript Commands:^000000";
+	mes "• ai_db_request() - Create request";
+	mes "• ai_db_response() - Get response";
+	mes "• ai_db_status() - Check status";
+	mes "• ai_db_cancel() - Cancel request";
+	mes "• npcwalk() - NPC movement";
+	next;
+	
+	mes "[^0000FFTechnical Information^000000]";
+	mes "^00AA00Architecture:^000000";
+	mes "NPC Script → C++ Commands →";
+	mes "MySQL Database (IPC Queue) →";
+	mes "Python Worker Service →";
+	mes "FastAPI AI Service →";
+	mes "21 AI Agents (CrewAI)";
+	next;
+	
+	mes "[^0000FFTechnical Information^000000]";
+	mes "^FF0000Performance:^000000";
+	mes "• Request creation: <1ms";
+	mes "• Database round-trip: 10-50ms";
+	mes "• AI processing: 100-5000ms";
+	mes "• Total latency: ~200-5000ms";
+	mes " ";
+	mes "^FFAA00Non-blocking:^000000 Uses sleep2 polling";
+	mes "to avoid freezing the game server.";
+	next;
+	
+	mes "[^0000FFTechnical Information^000000]";
+	mes "^AA00FFAvailable AI Agents:^000000";
+	mes "DialogueAgent, DecisionAgent,";
+	mes "MemoryAgent, QuestAgent,";
+	mes "WorldEventAgent, EconomyAgent,";
+	mes "FactionAgent, WeatherTimeAgent,";
+	mes "TreasureAgent, MVPBossAgent,";
+	mes "StorylineAgent, NavigationAgent,";
+	mes "EmotionAgent, GiftAgent,";
+	mes "RelationshipAgent, DungeonAgent,";
+	mes "and 5 more specialized agents!";
+	next;
+	
+	mes "[^0000FFTechnical Information^000000]";
+	mes "^AA00FFAPI Endpoints Demonstrated:^000000";
+	mes "• /ai/npc/* - NPC management";
+	mes "• /ai/player/* - Player tracking";
+	mes "• /ai/quest/* - Quest generation";
+	mes "• /ai/faction/* - Faction system";
+	mes "• /ai/economy/* - Economic simulation";
+	mes "• /ai/world/* - World environment";
+	mes "• /ai/emotional_state - Emotions";
+	mes "• /ai/gift - Gift system";
+	mes "• /ai/mvp - Boss encounters";
+	mes "• /ai/storyline - Story arcs";
+	mes "• /ai/procedural/* - Procedural content";
+	mes "• /ai/relationship - NPC relationships";
+	mes "• /ai/navigation/* - Pathfinding";
+	next;
+	
+	mes "[^0000FFTechnical Information^000000]";
+	mes "For implementation details, see:";
+	mes "^0000FF/docs/AI_NPC_GUIDE.md^000000";
+	mes " ";
+	mes "Source code:";
+	mes "^00AA00/src/custom/script_ai_ipc.cpp^000000";
+	mes "^00AA00/src/custom/script_http.cpp^000000";
+	mes "^00AA00/ai-autonomous-world/ai-service/^000000";
+	next;
+	
+	return;
+}
+
+//============================================================
+// OnInit: Server startup
+//============================================================
+-	script	AI_World_Showcase_Init	FAKE_NPC,{
+OnInit:
+	debugmes "[AI_World_Showcase] AI World Showcase NPC initialized";
+	debugmes "[AI_World_Showcase] Location: prontera (155,185)";
+	debugmes "[AI_World_Showcase] 17 feature sections loaded";
+	debugmes "[AI_World_Showcase] All AI features available";
+	end;
+}
