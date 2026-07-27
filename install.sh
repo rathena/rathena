@@ -259,6 +259,7 @@ install_system_dependencies() {
         pkg-config \
         libmysqlclient-dev \
         libpcre3-dev \
+        zlib1g-dev \
         libssl-dev \
         libpq-dev \
         libzmq3-dev \
@@ -484,11 +485,24 @@ setup_mysql() {
     sudo mysql -u root -e "FLUSH PRIVILEGES;" 2>/dev/null || true
 
     # Import rAthena SQL files if they exist
-    local sql_files=("${SCRIPT_DIR}/sql-files/main.sql" "${SCRIPT_DIR}/sql-files/logs.sql" "${SCRIPT_DIR}/sql-files/ai_ipc_tables.sql")
+    local sql_files=(
+        "${SCRIPT_DIR}/sql-files/main.sql"
+        "${SCRIPT_DIR}/sql-files/logs.sql"
+        "${SCRIPT_DIR}/sql-files/web.sql"
+        "${SCRIPT_DIR}/sql-files/ai_ipc_tables.sql"
+    )
     for sql_file in "${sql_files[@]}"; do
         if [[ -f "$sql_file" ]]; then
             log "Importing $(basename "$sql_file")..."
             sudo mysql -u root "${MYSQL_DB}" < "$sql_file" 2>&1 | tail -2 || log_warn "Failed to import $(basename "$sql_file")"
+        fi
+    done
+    # Import item/mob databases (18 files)
+    log "Importing item and monster databases..."
+    for sql_file in "${SCRIPT_DIR}/sql-files/item_db"*.sql "${SCRIPT_DIR}/sql-files/mob_db"*.sql "${SCRIPT_DIR}/sql-files/mob_skill_db"*.sql; do
+        if [[ -f "$sql_file" ]]; then
+            log "  Importing $(basename "$sql_file")..."
+            sudo mysql -u root "${MYSQL_DB}" < "$sql_file" 2>&1 | tail -1 || log_warn "Failed to import $(basename "$sql_file")"
         fi
     done
 
@@ -578,9 +592,7 @@ setup_python_environment() {
             pip install -r "${ai_dir}/ai-service/requirements.txt" 2>&1 | tail -5 || {
                 log_warn "Some AI service dependencies failed to install"
             }
-        fi
-
-        if [[ -f "${ai_dir}/ai-service/requirements-minimal.txt" ]]; then
+        elif [[ -f "${ai_dir}/ai-service/requirements-minimal.txt" ]]; then
             log "Installing minimal dependencies..."
             pip install -r "${ai_dir}/ai-service/requirements-minimal.txt" 2>&1 | tail -3 || true
         fi
@@ -899,7 +911,7 @@ run_verification() {
 
     # 5. Check server binaries
     log "Checking server binaries..."
-    for bin in map-server login-server char-server; do
+    for bin in map-server login-server char-server web-server; do
         if [[ -f "${SCRIPT_DIR}/${bin}" ]]; then
             log "  ✓ ${bin} exists"
         else
