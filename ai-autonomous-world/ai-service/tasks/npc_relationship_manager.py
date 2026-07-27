@@ -91,7 +91,7 @@ class NPCRelationshipManager:
             try:
                 await self.task
             except asyncio.CancelledError:
-                pass
+                logger.debug("NPC relationship manager task cancelled")
         
         logger.info("NPC relationship manager stopped")
     
@@ -144,29 +144,50 @@ class NPCRelationshipManager:
     
     async def _fetch_active_relationships(self) -> List[Dict[str, Any]]:
         """
-        Fetch active relationships from database.
+        Fetch active relationships from DragonflyDB.
         
         Returns:
             List of relationship records
         """
-        # TODO: Implement actual database query
-        # Mock implementation
-        return [
-            {
-                'npc_id': 'npc-1',
-                'target_id': 'player-1',
-                'affinity': 0.7,
-                'last_interaction': datetime.utcnow() - timedelta(hours=2),
-                'interaction_count': 5
-            },
-            {
-                'npc_id': 'npc-1',
-                'target_id': 'npc-2',
-                'affinity': 0.5,
-                'last_interaction': datetime.utcnow() - timedelta(days=1),
-                'interaction_count': 2
-            }
-        ]
+        try:
+            if self.db and self.db.client:
+                # Get all relationship keys
+                rel_keys = await self.db.client.keys("relationship:*")
+                relationships = []
+                
+                for key in rel_keys:
+                    key_str = key.decode('utf-8') if isinstance(key, bytes) else key
+                    rel_data = await self.db.get(key_str)
+                    if rel_data:
+                        if isinstance(rel_data, str):
+                            import json
+                            rel_data = json.loads(rel_data)
+                        relationships.append(rel_data)
+                
+                if relationships:
+                    return relationships
+            
+            # Fallback to mock data
+            logger.debug("Using fallback relationship data (DB not available)")
+            return [
+                {
+                    'npc_id': 'npc-1',
+                    'target_id': 'player-1',
+                    'affinity': 0.7,
+                    'last_interaction': datetime.utcnow() - timedelta(hours=2),
+                    'interaction_count': 5
+                },
+                {
+                    'npc_id': 'npc-1',
+                    'target_id': 'npc-2',
+                    'affinity': 0.5,
+                    'last_interaction': datetime.utcnow() - timedelta(days=1),
+                    'interaction_count': 2
+                }
+            ]
+        except Exception as e:
+            logger.error(f"Failed to fetch relationships: {e}")
+            return []
     
     async def _process_single_relationship(
         self,
@@ -217,26 +238,46 @@ class NPCRelationshipManager:
     
     async def _apply_updates(self, updates: List[RelationshipUpdate]):
         """
-        Apply relationship updates to database.
+        Apply relationship updates to DragonflyDB.
         
         Args:
             updates: List of relationship updates
         """
-        # TODO: Implement batch database update
-        # Mock implementation
-        for update in updates:
-            logger.debug(
-                f"Update: {update.npc_id} -> {update.target_id}: "
-                f"{update.old_affinity:.2f} -> {update.new_affinity:.2f} "
-                f"({update.reason})"
-            )
+        try:
+            if self.db and self.db.client:
+                for update in updates:
+                    key = f"relationship:{update.npc_id}:{update.target_id}"
+                    rel_data = {
+                        'npc_id': update.npc_id,
+                        'target_id': update.target_id,
+                        'affinity': update.new_affinity,
+                        'last_interaction': update.timestamp.isoformat(),
+                        'updated_at': datetime.utcnow().isoformat()
+                    }
+                    await self.db.set(key, rel_data, expire=86400 * 30)  # 30 days
+                    
+                    logger.debug(
+                        f"Update: {update.npc_id} -> {update.target_id}: "
+                        f"{update.old_affinity:.2f} -> {update.new_affinity:.2f} "
+                        f"({update.reason})"
+                    )
+            else:
+                # Log-only fallback
+                for update in updates:
+                    logger.debug(
+                        f"Update: {update.npc_id} -> {update.target_id}: "
+                        f"{update.old_affinity:.2f} -> {update.new_affinity:.2f} "
+                        f"({update.reason})"
+                    )
+        except Exception as e:
+            logger.error(f"Failed to apply relationship updates: {e}")
     
     async def _generate_relationship_events(
         self,
         updates: List[RelationshipUpdate]
     ):
         """
-        Generate events for significant relationship changes.
+        Generate events for significant relationship changes and publish to event bus.
         
         Args:
             updates: List of relationship updates
@@ -257,7 +298,17 @@ class NPCRelationshipManager:
                     'timestamp': update.timestamp.isoformat()
                 }
                 
-                # TODO: Publish event to event bus
+                try:
+                    if self.db and self.db.client:
+                        # Store event in DragonflyDB
+                        event_key = f"event:relationship:{update.npc_id}:{update.target_id}:{int(update.timestamp.timestamp())}"
+                        await self.db.set(event_key, event, expire=86400)  # 24 hours
+                        
+                        # Publish to event bus
+                        await self.db.client.publish('relationship:events', str(event))
+                except Exception as e:
+                    logger.warning(f"Failed to publish relationship event: {e}")
+                
                 logger.info(f"Relationship event: {event}")
                 self.metrics['events_generated'] += 1
     

@@ -148,7 +148,7 @@ class EnvironmentSystem:
             try:
                 await self.task
             except asyncio.CancelledError:
-                pass
+                logger.debug("Environment system task cancelled")
         
         logger.info("Environment system stopped")
     
@@ -248,7 +248,7 @@ class EnvironmentSystem:
             })
     
     async def _store_state(self):
-        """Store current environment state in database."""
+        """Store current environment state in DragonflyDB."""
         state = {
             'weather': self.current_weather.value,
             'time_of_day': self.current_time.value,
@@ -256,18 +256,33 @@ class EnvironmentSystem:
             'timestamp': datetime.utcnow().isoformat()
         }
         
-        # TODO: Store in database
-        logger.debug(f"Environment state: {state}")
+        try:
+            if self.db and self.db.client:
+                await self.db.set_world_state('environment', state)
+                logger.debug(f"Environment state stored: {state}")
+        except Exception as e:
+            logger.warning(f"Failed to store environment state: {e}")
+            logger.debug(f"Environment state: {state}")
     
     async def _notify_npcs(self):
-        """Notify NPCs of environment changes."""
-        # TODO: Send notifications to NPCs to adjust behavior
-        # For example: NPCs seek shelter in rain, sleep at night, etc.
-        pass
+        """Notify NPCs of environment changes via DragonflyDB pub/sub."""
+        try:
+            if self.db and self.db.client:
+                notification = {
+                    'weather': self.current_weather.value,
+                    'time_of_day': self.current_time.value,
+                    'season': self.current_season.value,
+                    'timestamp': datetime.utcnow().isoformat()
+                }
+                # Publish to environment notification channel
+                await self.db.client.publish('environment:updates', str(notification))
+                logger.debug(f"Environment notification sent: {notification}")
+        except Exception as e:
+            logger.warning(f"Failed to notify NPCs: {e}")
     
     async def _generate_event(self, event_type: str, data: Dict[str, Any]):
         """
-        Generate environment event.
+        Generate environment event and publish to event bus.
         
         Args:
             event_type: Type of event
@@ -279,7 +294,17 @@ class EnvironmentSystem:
             'timestamp': datetime.utcnow().isoformat()
         }
         
-        # TODO: Publish to event bus
+        try:
+            if self.db and self.db.client:
+                # Store event in DragonflyDB
+                event_key = f"environment:event:{event_type}:{int(datetime.utcnow().timestamp())}"
+                await self.db.set(event_key, event, expire=3600)  # 1 hour TTL
+                
+                # Publish to event bus channel
+                await self.db.client.publish('environment:events', str(event))
+        except Exception as e:
+            logger.warning(f"Failed to publish event: {e}")
+        
         logger.info(f"Environment event: {event}")
         self.metrics['events_generated'] += 1
     

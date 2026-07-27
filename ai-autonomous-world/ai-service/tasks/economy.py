@@ -515,8 +515,9 @@ async def get_market_trends(category: Optional[str] = None, limit: int = 20) -> 
             import json
             try:
                 state_data = json.loads(state_data)
-            except json.JSONDecodeError:
-                pass
+            except json.JSONDecodeError as e:
+                logger.warning(f"Failed to parse economic state JSON: {e}")
+                state_data = {}
 
         # Generate trends based on available data
         if isinstance(state_data, dict):

@@ -187,8 +187,21 @@ class RelationshipManager:
                     logger.warning(f"Failed to parse cached relationship: {e}")
         
         # Fetch from PostgreSQL
-        # TODO: Implement actual database fetch
-        # rel = await self._fetch_from_db(entity_a, entity_b)
+        if self.postgres:
+            try:
+                query = """
+                    SELECT * FROM relationships
+                    WHERE (entity_a = $1 AND entity_b = $2)
+                    OR (entity_a = $2 AND entity_b = $1)
+                    LIMIT 1
+                """
+                row = await self.postgres.fetch_one(query, entity_a, entity_b)
+                if row:
+                    rel = Relationship.from_dict(dict(row))
+                    self._relationship_cache[rel_key] = rel
+                    return rel
+            except Exception as e:
+                logger.warning(f"Failed to fetch relationship from DB: {e}")
         
         return None
     
@@ -320,8 +333,38 @@ class RelationshipManager:
             except Exception as e:
                 logger.error(f"Failed to cache relationship: {e}")
         
-        # TODO: Save to PostgreSQL
-        # await self._save_to_db(relationship)
+        # Save to PostgreSQL
+        if self.postgres:
+            try:
+                query = """
+                    INSERT INTO relationships
+                    (entity_a, entity_b, affinity, relationship_type, interaction_count,
+                     last_interaction, formed_at, notes, metadata)
+                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+                    ON CONFLICT (entity_a, entity_b)
+                    DO UPDATE SET
+                        affinity = $3,
+                        relationship_type = $4,
+                        interaction_count = $5,
+                        last_interaction = $6,
+                        notes = $8,
+                        metadata = $9
+                """
+                import json
+                await self.postgres.execute(
+                    query,
+                    relationship.entity_a,
+                    relationship.entity_b,
+                    relationship.affinity,
+                    relationship.relationship_type.value,
+                    relationship.interaction_count,
+                    relationship.last_interaction,
+                    relationship.formed_at,
+                    json.dumps(relationship.notes),
+                    json.dumps(relationship.metadata)
+                )
+            except Exception as e:
+                logger.warning(f"Failed to save relationship to PostgreSQL: {e}")
     
     async def get_entity_relationships(
         self,
@@ -340,26 +383,42 @@ class RelationshipManager:
         Returns:
             List of relationships
         """
-        # TODO: Implement database query
-        # For now, return from cache
         relationships = []
         
-        for rel in self._relationship_cache.values():
-            if entity_id not in (rel.entity_a, rel.entity_b):
-                continue
-            
+        # Try PostgreSQL first
+        if self.postgres:
+            try:
+                query = """
+                    SELECT * FROM relationships
+                    WHERE entity_a = $1 OR entity_b = $1
+                """
+                rows = await self.postgres.fetch_all(query, entity_id)
+                for row in rows:
+                    rel = Relationship.from_dict(dict(row))
+                    relationships.append(rel)
+            except Exception as e:
+                logger.warning(f"Failed to query relationships from DB: {e}")
+        
+        # Fallback to cache
+        if not relationships:
+            for rel in self._relationship_cache.values():
+                if entity_id not in (rel.entity_a, rel.entity_b):
+                    continue
+                relationships.append(rel)
+        
+        # Apply filters
+        filtered = []
+        for rel in relationships:
             if min_affinity is not None and rel.affinity < min_affinity:
                 continue
-            
             if relationship_types and rel.relationship_type not in relationship_types:
                 continue
-            
-            relationships.append(rel)
+            filtered.append(rel)
         
         # Sort by affinity
-        relationships.sort(key=lambda r: r.affinity, reverse=True)
+        filtered.sort(key=lambda r: r.affinity, reverse=True)
         
-        return relationships
+        return filtered
     
     async def decay_relationships(self, entity_id: str) -> int:
         """

@@ -41,7 +41,9 @@ class ErrorType(str, Enum):
 
 class RetryableError(Exception):
     """Exception for errors that can be retried."""
-    pass
+    def __init__(self, message: str = "Retriable error occurred", retry_after: Optional[float] = None):
+        super().__init__(message)
+        self.retry_after = retry_after
 
 
 def create_error_response(
@@ -88,8 +90,7 @@ def handle_api_errors(
     Usage:
         @handle_api_errors(include_traceback=False)
         async def my_endpoint():
-            # Your code here
-            pass
+            return {"status": "ok", "data": await fetch_data()}
     """
     def decorator(func: Callable) -> Callable:
         @functools.wraps(func)
@@ -184,8 +185,7 @@ def handle_db_errors(
     Usage:
         @handle_db_errors(retry_on_operational=True)
         async def my_db_operation():
-            # Your database code here
-            pass
+            return await db.fetch_all("SELECT * FROM users")
     """
     def decorator(func: Callable) -> Callable:
         @functools.wraps(func)
@@ -277,8 +277,7 @@ def handle_llm_errors(
     Usage:
         @handle_llm_errors(retry_on_rate_limit=True, fallback_provider='ollama')
         async def call_llm():
-            # Your LLM code here
-            pass
+            return await llm_provider.generate(prompt="Hello")
     """
     def decorator(func: Callable) -> Callable:
         @functools.wraps(func)

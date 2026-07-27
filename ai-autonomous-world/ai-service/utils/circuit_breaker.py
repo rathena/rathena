@@ -204,7 +204,8 @@ class CircuitBreaker:
 
 class CircuitBreakerError(Exception):
     """Raised when circuit breaker is open"""
-    pass
+    def __init__(self, message: str = "Circuit breaker is open"):
+        super().__init__(message)
 
 
 # Global circuit breakers for each LLM provider

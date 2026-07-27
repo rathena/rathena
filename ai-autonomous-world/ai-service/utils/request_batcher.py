@@ -100,7 +100,7 @@ class RequestBatcher:
             try:
                 await self.processor_task
             except asyncio.CancelledError:
-                pass
+                logger.debug("Request batcher processor task cancelled")
         
         # Flush remaining requests
         await self._flush_batch()

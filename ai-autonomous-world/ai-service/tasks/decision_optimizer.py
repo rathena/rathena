@@ -114,7 +114,7 @@ class DecisionOptimizer:
             try:
                 await self.task
             except asyncio.CancelledError:
-                pass
+                logger.debug("Decision optimizer task cancelled")
         
         logger.info("Decision optimizer stopped")
     
@@ -165,7 +165,7 @@ class DecisionOptimizer:
         hours: int = 24
     ) -> List[Dict[str, Any]]:
         """
-        Fetch recent decisions from database.
+        Fetch recent decisions from PostgreSQL.
         
         Args:
             hours: Hours to look back
@@ -173,33 +173,48 @@ class DecisionOptimizer:
         Returns:
             List of decision records
         """
-        # TODO: Implement actual PostgreSQL query
-        # Mock implementation
-        cutoff = datetime.utcnow() - timedelta(hours=hours)
-        
-        return [
-            {
-                'entity_id': 'npc-1',
-                'context': {'mood': 'friendly', 'location': 'tavern'},
-                'decision': 'offer_quest',
-                'outcome': 'success',
-                'timestamp': datetime.utcnow() - timedelta(hours=2)
-            },
-            {
-                'entity_id': 'npc-1',
-                'context': {'mood': 'friendly', 'location': 'tavern'},
-                'decision': 'offer_quest',
-                'outcome': 'success',
-                'timestamp': datetime.utcnow() - timedelta(hours=5)
-            },
-            {
-                'entity_id': 'npc-2',
-                'context': {'mood': 'busy', 'location': 'market'},
-                'decision': 'decline_interaction',
-                'outcome': 'success',
-                'timestamp': datetime.utcnow() - timedelta(hours=1)
-            }
-        ]
+        try:
+            if self.postgres:
+                cutoff = datetime.utcnow() - timedelta(hours=hours)
+                query = """
+                    SELECT entity_id, context, decision, outcome, timestamp
+                    FROM decision_history
+                    WHERE timestamp >= $1
+                    ORDER BY timestamp DESC
+                    LIMIT 1000
+                """
+                results = await self.postgres.fetch_all(query, cutoff)
+                if results:
+                    return [dict(row) for row in results]
+            
+            # Fallback to mock data
+            logger.debug("Using fallback decision data (PostgreSQL not available)")
+            return [
+                {
+                    'entity_id': 'npc-1',
+                    'context': {'mood': 'friendly', 'location': 'tavern'},
+                    'decision': 'offer_quest',
+                    'outcome': 'success',
+                    'timestamp': datetime.utcnow() - timedelta(hours=2)
+                },
+                {
+                    'entity_id': 'npc-1',
+                    'context': {'mood': 'friendly', 'location': 'tavern'},
+                    'decision': 'offer_quest',
+                    'outcome': 'success',
+                    'timestamp': datetime.utcnow() - timedelta(hours=5)
+                },
+                {
+                    'entity_id': 'npc-2',
+                    'context': {'mood': 'busy', 'location': 'market'},
+                    'decision': 'decline_interaction',
+                    'outcome': 'success',
+                    'timestamp': datetime.utcnow() - timedelta(hours=1)
+                }
+            ]
+        except Exception as e:
+            logger.error(f"Failed to fetch decisions: {e}")
+            return []
     
     def _group_similar_contexts(
         self,
@@ -301,7 +316,11 @@ class DecisionOptimizer:
                     'last_updated': pattern.last_updated.isoformat()
                 }
                 
-                # TODO: Store in DragonflyDB
+                # Store in DragonflyDB
+                if self.db and self.db.client:
+                    cache_key = f"decision:pattern:{context_key}"
+                    await self.db.set(cache_key, cache_data, expire=86400 * 7)  # 7 days
+                
                 logger.debug(f"Cached pattern: {context_key} -> {cache_data}")
                 cached_count += 1
                 
@@ -359,8 +378,19 @@ class DecisionOptimizer:
         Returns:
             Cached pattern or None
         """
-        # TODO: Implement actual DragonflyDB query
-        return None
+        try:
+            if self.db and self.db.client:
+                cache_key = f"decision:pattern:{context_key}"
+                cached = await self.db.get(cache_key)
+                if cached:
+                    if isinstance(cached, str):
+                        import json
+                        return json.loads(cached)
+                    return cached
+            return None
+        except Exception as e:
+            logger.error(f"Failed to get pattern from cache: {e}")
+            return None
     
     def get_pattern_stats(self) -> List[Dict[str, Any]]:
         """

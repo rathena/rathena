@@ -372,10 +372,18 @@ class QuestTriggerEngine:
             if relationship_level > rt.relationship_level_max:
                 return False
 
-        # Check type (if implemented)
+        # Check relationship type
         if rt.relationship_type:
-            # This would require additional relationship type tracking
-            pass
+            try:
+                # Get relationship type from DragonflyDB
+                type_key = f"relationship_type:{npc_id}:{player_id}"
+                rel_type = await db.client.get(type_key)
+                if rel_type:
+                    rel_type_str = rel_type.decode('utf-8') if isinstance(rel_type, bytes) else rel_type
+                    if rel_type_str != rt.relationship_type:
+                        return False
+            except Exception as e:
+                logger.warning(f"Failed to check relationship type: {e}")
 
         return True
 

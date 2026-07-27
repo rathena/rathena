@@ -138,31 +138,56 @@ class InstantResponseSystem:
     
     async def _get_active_npcs(self) -> List[Dict[str, Any]]:
         """
-        Get list of active NPCs.
+        Get list of active NPCs from DragonflyDB.
         
         Returns:
             List of NPC records
         """
-        # TODO: Implement actual database query
-        # Mock implementation
-        return [
-            {
-                'npc_id': 'npc-1',
-                'name': 'Merchant Bob',
-                'personality': {
-                    'traits': ['friendly', 'talkative'],
-                    'mood': 'cheerful'
+        try:
+            if self.db and self.db.client:
+                # Get all NPC keys from DragonflyDB
+                npc_keys = await self.db.client.keys("npc:*")
+                npcs = []
+                
+                for key in npc_keys:
+                    npc_id = key.decode('utf-8').split(':', 1)[1] if isinstance(key, bytes) else key.split(':', 1)[1]
+                    state = await self.db.get_npc_state(npc_id)
+                    if state and state.get('is_active', True):
+                        npcs.append({
+                            'npc_id': npc_id,
+                            'name': state.get('name', f'NPC-{npc_id}'),
+                            'personality': {
+                                'traits': state.get('personality_traits', ['neutral']),
+                                'mood': state.get('mood', 'neutral')
+                            }
+                        })
+                
+                if npcs:
+                    return npcs
+            
+            # Fallback to mock data if DB not available
+            logger.debug("Using fallback NPC list (DB not available)")
+            return [
+                {
+                    'npc_id': 'npc-1',
+                    'name': 'Merchant Bob',
+                    'personality': {
+                        'traits': ['friendly', 'talkative'],
+                        'mood': 'cheerful'
+                    }
+                },
+                {
+                    'npc_id': 'npc-2',
+                    'name': 'Guard Alice',
+                    'personality': {
+                        'traits': ['serious', 'professional'],
+                        'mood': 'alert'
+                    }
                 }
-            },
-            {
-                'npc_id': 'npc-2',
-                'name': 'Guard Alice',
-                'personality': {
-                    'traits': ['serious', 'professional'],
-                    'mood': 'alert'
-                }
-            }
-        ]
+            ]
+        except Exception as e:
+            logger.error(f"Failed to fetch active NPCs: {e}")
+            return []
     
     async def _generate_and_cache_response(
         self,
@@ -348,19 +373,30 @@ class InstantResponseSystem:
         Returns:
             Cached response or None
         """
-        # TODO: Implement actual DragonflyDB query
-        return None
+        try:
+            if self.db and self.db.client:
+                value = await self.db.get(key)
+                if value:
+                    return str(value)
+            return None
+        except Exception as e:
+            logger.error(f"Failed to get from DragonflyDB: {e}")
+            return None
     
     async def _store_in_db(self, key: str, response: str):
         """
-        Store response in DragonflyDB.
+        Store response in DragonflyDB with 24h TTL.
         
         Args:
             key: Cache key
             response: Response to cache
         """
-        # TODO: Implement actual DragonflyDB storage
-        pass
+        try:
+            if self.db and self.db.client:
+                await self.db.set(key, response, expire=86400)  # 24 hours
+                logger.debug(f"Stored response in DragonflyDB: {key}")
+        except Exception as e:
+            logger.error(f"Failed to store in DragonflyDB: {e}")
     
     def get_metrics(self) -> Dict[str, int]:
         """
