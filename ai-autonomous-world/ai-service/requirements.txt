@@ -1,59 +1,59 @@
 # Core Web Framework
-fastapi==0.121.2
-uvicorn[standard]==0.38.0
-pydantic==2.12.4
-pydantic-settings==2.12.0
+fastapi==0.140.0
+uvicorn[standard]==0.44.0
+pydantic==2.13.4
+pydantic-settings==2.14.2
 
 # AI Agent Frameworks
-crewai==1.5.0
-crewai-tools==1.5.0
+crewai==1.15.7
+crewai-tools==1.15.7
 
 # LLM Providers
-openai==2.8.0
-anthropic==0.73.0
-google-generativeai==0.8.5
-ollama==0.4.4
-azure-identity==1.25.1
+openai==2.48.0
+anthropic==0.120.0
+google-generativeai==0.8.6
+ollama==0.6.2
+azure-identity==1.25.3
 
 # Database and Caching (DragonFlyDB backend, Redis protocol)
-redis==7.0.1
-sqlalchemy==2.0.44
-asyncpg==0.29.0
+redis==8.0.1
+sqlalchemy==2.0.51
+asyncpg==0.31.0
 
 # HTTP Clients
-aiohttp==3.13.2
-requests==2.32.5
+aiohttp==3.14.3
+requests==2.34.2
 
 # Environment and Configuration
-python-dotenv==1.2.1
+python-dotenv==1.2.2
 pyyaml==6.0.3
 
 # Data Processing
-numpy==2.3.5
-pandas==2.3.3
-scikit-learn==1.7.2
-xgboost==3.1.1
+numpy==2.5.1
+pandas==3.0.5
+scikit-learn==1.9.0
+xgboost==3.3.0
 
 # Deep Learning Frameworks
 torch>=2.4.0  # PyTorch for neural network training and reinforcement learning
 transformers>=4.45.0  # Hugging Face transformers for LLM/NLP tasks
 accelerate>=0.34.0  # Hugging Face acceleration library for multi-GPU and distributed training
-tensorflow==2.20.0  # TensorFlow for additional ML models
+tensorflow==2.21.0  # TensorFlow for additional ML models
 
 # Vector Operations
-sentence-transformers==5.1.2
-faiss-cpu==1.12.0
+sentence-transformers==5.6.1
+faiss-cpu==1.14.3
 
 # Logging and Monitoring
 loguru==0.7.3
-prometheus-client==0.23.1
+prometheus-client==0.26.0
 
 # Background Task Scheduling
-apscheduler==3.11.1
+apscheduler==3.11.3
 
 # Rate Limiting and Security
-slowapi==0.1.9
-python-multipart==0.0.20
+slowapi==0.1.10
+python-multipart==0.0.32
 
 # Async and Concurrency
 asyncio==4.0.0
@@ -61,21 +61,21 @@ aiofiles==25.1.0
 
 # Utilities
 python-dateutil==2.9.0.post0
-pytz==2025.2
-tenacity==9.1.2
+pytz==2026.3.post1
+tenacity==9.1.4
 
 # Testing
-pytest==9.0.1
-pytest-asyncio==1.3.0
-pytest-cov==7.0.0
+pytest==9.1.1
+pytest-asyncio==1.4.0
+pytest-cov==7.1.0
 pytest-benchmark==5.2.3
-respx==0.22.0
+respx==0.23.1
 
 # Development
-black==25.11.0
+black==26.5.1
 flake8==7.3.0
-mypy==1.18.2
-isort==7.0.0
+mypy==2.3.0
+isort==8.0.1
 
 # Type Stubs
 types-redis==4.6.0.20241004

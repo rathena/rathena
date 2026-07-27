@@ -337,7 +337,7 @@ class StoryQuestSpec(BaseModel):
     objectives: List[StoryQuestObjective]
     reward: StoryQuestReward
     required_level: int = Field(default=1, ge=1, le=999)
-    time_limit_hours: Optional<br> = Field(None, description="Quest time limit")
+    time_limit_hours: Optional[float] = Field(None, description="Quest time limit")
     is_repeatable: bool = Field(default=False)
 
 

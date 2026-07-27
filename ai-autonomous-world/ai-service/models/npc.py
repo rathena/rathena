@@ -5,6 +5,114 @@ NPC-related data models
 from datetime import datetime
 from typing import Optional, Dict, Any, List
 from pydantic import BaseModel, Field
+from enum import Enum
+
+
+class Emotion(str, Enum):
+    """NPC emotional states"""
+    HAPPY = "happy"
+    SAD = "sad"
+    ANGRY = "angry"
+    FEARFUL = "fearful"
+    SURPRISED = "surprised"
+    DISGUSTED = "disgusted"
+    NEUTRAL = "neutral"
+    EXCITED = "excited"
+    CALM = "calm"
+    ANXIOUS = "anxious"
+    CONFIDENT = "confident"
+    CONFUSED = "confused"
+    GRATEFUL = "grateful"
+    HOPEFUL = "hopeful"
+    LONELY = "lonely"
+    PROUD = "proud"
+    ASHAMED = "ashamed"
+    JEALOUS = "jealous"
+    LOVING = "loving"
+    TRUSTING = "trusting"
+
+
+class EmotionalState(BaseModel):
+    """NPC emotional state with intensity and mood"""
+    current_emotion: Emotion = Field(Emotion.NEUTRAL, description="Current emotion")
+    emotion_intensity: float = Field(0.5, ge=0.0, le=1.0, description="Emotion intensity")
+    mood: str = Field("neutral", description="Overall mood")
+    emotional_triggers: List[str] = Field(default_factory=list, description="Recent emotional triggers")
+    last_updated: datetime = Field(default_factory=datetime.utcnow, description="Last update timestamp")
+
+
+class Personality(BaseModel):
+    """NPC personality traits"""
+    openness: float = Field(0.5, ge=0.0, le=1.0, description="Openness to experience")
+    conscientiousness: float = Field(0.5, ge=0.0, le=1.0, description="Conscientiousness")
+    extraversion: float = Field(0.5, ge=0.0, le=1.0, description="Extraversion")
+    agreeableness: float = Field(0.5, ge=0.0, le=1.0, description="Agreeableness")
+    neuroticism: float = Field(0.5, ge=0.0, le=1.0, description="Neuroticism")
+    moral_alignment: str = Field("true_neutral", description="Moral alignment")
+    quirks: List[str] = Field(default_factory=list, description="Personality quirks")
+
+
+class NPCPhysical(BaseModel):
+    """NPC physical characteristics"""
+    race: str = Field("Human", description="NPC race")
+    gender: str = Field("", description="NPC gender")
+    age: int = Field(30, description="NPC age")
+    height_cm: float = Field(170.0, description="NPC height in cm")
+    weight_kg: float = Field(70.0, description="NPC weight in kg")
+    appearance: str = Field("", description="Physical appearance description")
+
+
+class NPCBackground(BaseModel):
+    """NPC background story and physical characteristics"""
+    history: str = Field("", description="Procedurally generated history")
+    skills: List[str] = Field(default_factory=list, description="Social, economic, creative, combat skills")
+    appearance: Dict[str, Any] = Field(default_factory=dict, description="Physical appearance, age, health status")
+    occupation: str = Field("", description="NPC occupation")
+    social_class: str = Field("commoner", description="NPC social class")
+    hometown: str = Field("", description="NPC hometown")
+
+
+class NPCState(BaseModel):
+    """Complete NPC state including all subsystems"""
+    npc_id: str = Field(..., description="Unique NPC identifier")
+    name: str = Field(..., description="NPC name")
+    title: str = Field("", description="NPC title")
+    npc_class: str = Field("generic", description="NPC class/type")
+    level: int = Field(1, ge=1, le=999, description="NPC level")
+    location: str = Field("prontera", description="Current map location")
+    position_x: float = Field(0.0, description="X coordinate")
+    position_y: float = Field(0.0, description="Y coordinate")
+    is_active: bool = Field(True, description="Whether NPC is active")
+    faction_id: Optional[str] = Field(None, description="Faction ID")
+    personality: Optional[Personality] = Field(None, description="NPC personality")
+    emotional_state: Optional[EmotionalState] = Field(None, description="NPC emotional state")
+    background: Optional[NPCBackground] = Field(None, description="NPC background")
+    physical: Optional[NPCPhysical] = Field(None, description="NPC physical characteristics")
+    reputation: Dict[str, float] = Field(default_factory=dict, description="Reputation with entities")
+    interaction_count: int = Field(0, description="Total interaction count")
+    last_interaction: Optional[datetime] = Field(None, description="Last interaction timestamp")
+
+    def record_interaction(self):
+        """Record an interaction"""
+        self.interaction_count += 1
+        self.last_interaction = datetime.utcnow()
+
+    def update_emotion(self, emotion: Emotion, intensity: float = 0.5):
+        """Update NPC emotional state"""
+        if self.emotional_state is None:
+            self.emotional_state = EmotionalState()
+        self.emotional_state.current_emotion = emotion
+        self.emotional_state.emotion_intensity = intensity
+        self.emotional_state.last_updated = datetime.utcnow()
+
+    def add_reputation(self, entity_id: str, value: float):
+        """Add reputation for an entity"""
+        self.reputation[entity_id] = value
+
+
+# Alias for backward compatibility
+Background = NPCBackground
+
 
 class NPCPosition(BaseModel):
     """NPC position in the game world"""
@@ -12,11 +120,6 @@ class NPCPosition(BaseModel):
     x: int = Field(..., description="X coordinate")
     y: int = Field(..., description="Y coordinate")
 
-class NPCBackground(BaseModel):
-    """NPC background story and physical characteristics"""
-    history: str = Field("", description="Procedurally generated history")
-    skills: List[str] = Field(default_factory=list, description="Social, economic, creative, combat skills")
-    appearance: Dict[str, Any] = Field(default_factory=dict, description="Physical appearance, age, health status")
 
 class NPCPersonality(BaseModel):
     """NPC personality traits (Big Five + custom traits + dynamic alignment)"""

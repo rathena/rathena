@@ -23,10 +23,21 @@ class QuestType(str, Enum):
     DIALOGUE = "dialogue"  # Talk to NPCs
     CRAFT = "craft"  # Create items
     INVESTIGATE = "investigate"  # Solve mystery
+    COLLECT = "collect"  # Collect items (alias for FETCH)
+
+
+class DifficultyLevel(str, Enum):
+    """Quest difficulty levels"""
+    TRIVIAL = "trivial"
+    EASY = "easy"
+    NORMAL = "normal"
+    HARD = "hard"
+    VERY_HARD = "very_hard"
+    EPIC = "epic"
 
 
 class QuestDifficulty(str, Enum):
-    """Quest difficulty levels"""
+    """Quest difficulty levels (alias for DifficultyLevel)"""
     TRIVIAL = "trivial"
     EASY = "easy"
     NORMAL = "normal"
@@ -39,9 +50,58 @@ class QuestStatus(str, Enum):
     """Quest status"""
     AVAILABLE = "available"
     ACTIVE = "active"
+    IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
     FAILED = "failed"
     EXPIRED = "expired"
+
+
+class QuestData(BaseModel):
+    """Quest data for storage and transfer"""
+    quest_id: str
+    title: str
+    description: str
+    quest_type: QuestType
+    difficulty: DifficultyLevel
+    status: QuestStatus = QuestStatus.AVAILABLE
+    min_level: int = 1
+    npc_id: str = ""
+    npc_name: str = ""
+    start_location: str = ""
+    objectives: List[Dict[str, Any]] = Field(default_factory=list)
+    rewards: Dict[str, Any] = Field(default_factory=dict)
+    requirements: Dict[str, Any] = Field(default_factory=dict)
+    accepted_count: int = 0
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    accepted_at: Optional[datetime] = None
+    completed_at: Optional[datetime] = None
+
+    def can_accept(self, player_level: int, completed_quests: List[str] = None) -> tuple:
+        """Check if player can accept this quest"""
+        if self.status != QuestStatus.AVAILABLE:
+            return False, "Quest is not available"
+        if player_level < self.min_level:
+            return False, f"Minimum level required: {self.min_level}"
+        return True, ""
+
+    def accept(self):
+        """Accept the quest"""
+        self.status = QuestStatus.IN_PROGRESS
+        self.accepted_count += 1
+        self.accepted_at = datetime.utcnow()
+
+    def complete(self):
+        """Complete the quest"""
+        self.status = QuestStatus.COMPLETED
+        self.completed_at = datetime.utcnow()
+
+    def add_objective(self, objective: 'QuestObjective'):
+        """Add an objective to the quest"""
+        self.objectives.append(objective.dict())
+
+    def check_completion(self) -> bool:
+        """Check if all objectives are completed"""
+        return all(obj.get("completed", False) for obj in self.objectives)
 
 
 class QuestObjective(BaseModel):
@@ -54,6 +114,17 @@ class QuestObjective(BaseModel):
     current_count: int = 0
     completed: bool = False
     optional: bool = False
+
+    @property
+    def is_completed(self) -> bool:
+        """Check if objective is completed"""
+        return self.completed or self.current_count >= self.required_count
+
+    def update_progress(self, amount: int = 1):
+        """Update progress towards completion"""
+        self.current_count += amount
+        if self.current_count >= self.required_count:
+            self.completed = True
 
 
 class QuestReward(BaseModel):
