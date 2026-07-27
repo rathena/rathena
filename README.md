@@ -1,13 +1,12 @@
 # rAthena AI World - AI-Driven MMORPG Server with Dual AI Systems
 
-[![Beta - Production-Viable](https://img.shields.io/badge/status-beta--production--viable-blue.svg)](ai-autonomous-world/README.md)
-[![Grade](https://img.shields.io/badge/Grade-A%20(94%2F100)-brightgreen.svg)](ai-autonomous-world/README.md#-current-status)
+[![Status](https://img.shields.io/badge/status-beta-blue.svg)](docs/SETUP.md)
+[![AI World](https://img.shields.io/badge/AI%20World-Production%20Ready-brightgreen.svg)](ai-autonomous-world/README.md)
+[![ML Monster AI](https://img.shields.io/badge/ML%20Monster%20AI-Infrastructure%20Ready-yellow.svg)](ml_inference_service/README.md)
 [![AI Agents](https://img.shields.io/badge/AI%20agents-21%20specialized-blue.svg)](ai-autonomous-world/README.md#-current-status)
-[![Tests](https://img.shields.io/badge/tests-1%2C384%2B%20automated-green.svg)](ai-autonomous-world/README.md#-current-status)
 [![LLM Providers](https://img.shields.io/badge/LLM%20providers-5%20(Azure%2C%20OpenAI%2C%20Anthropic%2C%20DeepSeek%2C%20Ollama)-orange.svg)](ai-autonomous-world/ai-service/llm/)
 [![OpenMemory](https://img.shields.io/badge/OpenMemory-Integrated-blueviolet.svg)](https://github.com/iskandarsulaili/AI-MMORPG-OpenMemory)
-[![Uptime](https://img.shields.io/badge/uptime-99.97%25-brightgreen.svg)](docs/OPERATIONS_RUNBOOK.md)
-[![Response Time](https://img.shields.io/badge/API%20response-<250ms%20(p95)-blue.svg)](docs/OPERATIONS_RUNBOOK.md)
+[![Install](https://img.shields.io/badge/install-wizard%20script-blue.svg)](install.sh)
 ![GitHub](https://img.shields.io/github/license/rathena/rathena.svg)
 
 ---
@@ -486,6 +485,31 @@ Azure OpenAI → OpenAI → Anthropic → DeepSeek → Ollama (local)
 
 ## 🚀 Getting Started
 
+### Quick Start (Recommended)
+
+The fastest way to get started is with the automated install wizard:
+
+```bash
+# Clone the repository
+git clone https://github.com/iskandarsulaili/rathena-AI-world.git
+cd rathena-AI-world
+
+# Run the install wizard
+./install.sh
+```
+
+For a non-interactive quick install:
+```bash
+./install.sh --quick
+```
+
+For a development install (debug mode, verbose logging):
+```bash
+./install.sh --dev
+```
+
+**Detailed setup guide**: [docs/SETUP.md](docs/SETUP.md)
+
 ### System Requirements
 
 #### Hardware Requirements
@@ -517,28 +541,16 @@ Azure OpenAI → OpenAI → Anthropic → DeepSeek → Ollama (local)
 
 ### Quick Start (AI Autonomous World)
 
-**Complete guide**: [AI Autonomous World Installation](ai-autonomous-world/INSTALL.md)
+**Complete guide**: [docs/SETUP.md](docs/SETUP.md) | [AI Autonomous World Installation](ai-autonomous-world/INSTALL.md)
 
 ```bash
-# 1. Install prerequisites
-sudo apt update && sudo apt install -y postgresql-17 python3.12 python3.12-venv
+# Run the unified install wizard (handles everything)
+cd rathena-AI-world
+./install.sh
 
-# 2. Install DragonflyDB
-wget https://github.com/dragonflydb/dragonfly/releases/download/v1.12.1/dragonfly-x86_64.deb
-sudo dpkg -i dragonfly-x86_64.deb
-
-# 3. Set up AI service
+# Or for just the AI world components:
 cd rathena-AI-world/ai-autonomous-world
-source venv/bin/activate
-pip install -r ai-service/requirements.txt
-
-# 4. Configure environment
-cp .env.example .env
-# Edit .env with your LLM API keys
-
-# 5. Start services
-dragonfly --port 6379 &
-cd ai-service && python main.py
+./install.sh
 ```
 
 **API Documentation**: `http://localhost:8000/docs` when service running
@@ -825,6 +837,17 @@ If you've ever felt silenced, dismissed, or unfairly treated by those in positio
 ---
 
 ## Installation
+
+### Automated Install (Recommended)
+
+The unified install wizard handles the complete setup:
+
+```bash
+cd rathena-AI-world
+./install.sh
+```
+
+See [docs/SETUP.md](docs/SETUP.md) for detailed step-by-step instructions.
 
 ### AI Autonomous World Installation
 
