@@ -61,7 +61,7 @@ database:
   
   # MariaDB for AI IPC (game database)
   mariadb:
-    host: "192.168.0.100"  # Game database server
+    host: "localhost"  # Game database server
     port: 3306
     database: "ragnarok"
     user: "${DB_USER}"  # Set via environment variable

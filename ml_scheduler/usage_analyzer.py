@@ -443,7 +443,7 @@ async def main():
     
     # Test configuration
     config = {
-        'mariadb_host': '192.168.0.100',
+        'mariadb_host': 'localhost',
         'mariadb_port': 3306,
         'mariadb_database': 'ragnarok',
         'mariadb_user': 'ragnarok',

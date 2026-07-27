@@ -3,40 +3,40 @@
 # Python 3.11+
 
 # Core ML frameworks
-torch==2.5.1
-torchvision==0.20.1
-torchaudio==2.5.1
+torch==2.13.0
+torchvision==0.28.0
+torchaudio==2.11.0
 
 # ONNX and inference
-onnx==1.17.0
-onnxruntime-gpu==1.19.2
-onnxconverter-common==1.14.0
+onnx==1.22.0
+onnxruntime-gpu==1.27.0
+onnxconverter-common==1.16.0
 
 # Database
-asyncpg==0.30.0
-psycopg2-binary==2.9.10
+asyncpg==0.31.0
+psycopg2-binary==2.9.12
 
 # Data processing
-numpy==1.26.4
-pandas==2.2.3
-scipy==1.14.1
+numpy==2.5.1
+pandas==3.0.5
+scipy==1.18.0
 
 # Configuration
-pyyaml==6.0.2
-python-dotenv==1.0.1
+pyyaml==6.0.3
+python-dotenv==1.2.2
 
 # Logging and monitoring
-tensorboard==2.18.0
-prometheus-client==0.21.0
+tensorboard==2.21.0
+prometheus-client==0.26.0
 
 # Utilities
-tqdm==4.67.1
-colorlog==6.9.0
-click==8.1.8
+tqdm==4.69.1
+colorlog==6.12.0
+click==8.4.2
 
 # Testing
-pytest==8.3.4
-pytest-asyncio==0.24.0
+pytest==9.1.1
+pytest-asyncio==1.4.0
 
 # Optional but recommended
 # wandb==0.18.7  # Weights & Biases (optional)

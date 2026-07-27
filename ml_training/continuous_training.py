@@ -726,9 +726,8 @@ class ContinuousTrainer:
         Returns:
             New PyTorch model
         """
-        # Import model architectures
-        # This would import from your models module
-        # For now, creating placeholder
+        # Import model architectures and create fresh model instance
+        # Each model type has its own architecture class
         
         if model_type == 'combat_dqn':
             from models.dqn import EnhancedCombatDQN

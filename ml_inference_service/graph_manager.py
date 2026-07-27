@@ -1500,8 +1500,11 @@ class AGEGraphManager:
             if 'content' in result and isinstance(result['content'], str):
                 try:
                     result['content'] = json.loads(result['content'])
-                except json.JSONDecodeError:
-                    pass
+                except json.JSONDecodeError as e:
+                    logger.warning(
+                        f"Failed to parse signal content JSON for monster {monster_id}: {e}. "
+                        f"Content preview: {str(result.get('content', ''))[:100]}"
+                    )
         
         return results
     

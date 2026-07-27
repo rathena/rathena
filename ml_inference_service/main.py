@@ -832,8 +832,10 @@ class MLInferenceService:
             try:
                 data = await request.json()
                 model_path = data.get('model_path')
-            except Exception:
-                pass
+            except Exception as e:
+                self.logger.warning(
+                    f"Failed to parse JSON body in reload request for {archetype}/{model_type}: {e}"
+                )
         
         # Reload model
         try:

@@ -36,7 +36,7 @@ logger = logging.getLogger('ai_ipc_worker')
 class WorkerConfig:
     """Configuration for AI IPC Worker"""
     # Database settings
-    db_host: str = os.getenv('DB_HOST', '192.168.0.100')
+    db_host: str = os.getenv('DB_HOST', 'localhost')
     db_port: int = int(os.getenv('DB_PORT', '3306'))
     db_user: str = os.getenv('DB_USER', 'ragnarok')
     db_password: str = os.getenv('DB_PASSWORD', '')

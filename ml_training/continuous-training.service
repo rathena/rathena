@@ -9,10 +9,10 @@ Wants=ml-inference.service
 Type=simple
 User=ml_user
 Group=ml_user
-WorkingDirectory=/opt/ml_monster_ai/training
+WorkingDirectory=/home/lot399/rathena-AI-world/ml_training
 
 # Main execution
-ExecStart=/opt/ml_monster_ai/venv/bin/python continuous_training.py --config /opt/ml_monster_ai/configs/continuous_training_config.yaml
+ExecStart=/home/lot399/rathena-AI-world/.venv/bin/python continuous_training.py --config /home/lot399/rathena-AI-world/ml_training/config/continuous_training_config.yaml
 
 # Restart policy
 Restart=always
@@ -22,7 +22,7 @@ StartLimitBurst=5
 
 # Environment
 Environment="CUDA_VISIBLE_DEVICES=0"
-Environment="PYTHONPATH=/opt/ml_monster_ai/training"
+Environment="PYTHONPATH=/home/lot399/rathena-AI-world/ml_training"
 Environment="PYTHONUNBUFFERED=1"
 Environment="OMP_NUM_THREADS=4"
 Environment="MKL_NUM_THREADS=4"

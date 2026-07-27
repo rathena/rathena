@@ -3,31 +3,31 @@
 # Python 3.11+
 
 # Core ML dependencies
-torch>=2.5.1
-onnxruntime-gpu>=1.19.0  # GPU version with TensorRT support
-numpy>=1.26.0
+torch>=2.13.0
+onnxruntime-gpu>=1.27.0  # GPU version with TensorRT support
+numpy>=2.5.1
 
 # Database drivers
-asyncpg>=0.29.0  # PostgreSQL async driver (supports Apache AGE Cypher queries)
-psycopg2-binary>=2.9.9  # PostgreSQL driver for AGE native operations
+asyncpg>=0.31.0  # PostgreSQL async driver (supports Apache AGE Cypher queries)
+psycopg2-binary>=2.9.12  # PostgreSQL driver for AGE native operations
 aiomysql>=0.2.0  # MySQL/MariaDB async driver for AI IPC worker
-redis>=5.0.1  # Redis/DragonFlyDB client
+redis>=8.0.1  # Redis/DragonFlyDB client
 
 # HTTP client for AI IPC worker
-aiohttp>=3.9.0  # Async HTTP client for AI service communication
+aiohttp>=3.14.3  # Async HTTP client for AI service communication
 
 # Monitoring & Metrics
-prometheus-client>=0.19.0
+prometheus-client>=0.26.0
 
 # System utilities
 psutil>=5.9.8  # System and process utilities
 
 # Configuration
-PyYAML>=6.0.1
+PyYAML>=6.0.3
 
 # Optional: For TensorRT support (NVIDIA GPUs)
 nvidia-tensorrt>=8.6.0
 
 # Development/Testing
-pytest>=7.4.0
-pytest-asyncio>=0.21.0
+pytest>=9.1.1
+pytest-asyncio>=1.4.0

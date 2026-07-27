@@ -7,15 +7,15 @@ Wants=postgresql.service mariadb.service
 Type=oneshot
 User=ml_user
 Group=ml_user
-WorkingDirectory=/home/lot399/RagnarokOnlineServer/rathena-AI-world/ml_scheduler
+WorkingDirectory=/home/lot399/rathena-AI-world/ml_scheduler
 
 # Environment
-Environment="PATH=/opt/ml_monster_ai/venv/bin:/usr/local/bin:/usr/bin:/bin"
+Environment="PATH=/home/lot399/rathena-AI-world/.venv/bin:/usr/local/bin:/usr/bin:/bin"
 Environment="PYTHONUNBUFFERED=1"
 Environment="CUDA_VISIBLE_DEVICES=0"
 
 # Main execution
-ExecStart=/opt/ml_monster_ai/venv/bin/python scheduler_main.py --config /opt/ml_monster_ai/configs/scheduler_config.yaml
+ExecStart=/home/lot399/rathena-AI-world/.venv/bin/python scheduler_main.py --config /home/lot399/rathena-AI-world/ml_scheduler/config/scheduler_config.yaml
 
 # Logging
 StandardOutput=journal
