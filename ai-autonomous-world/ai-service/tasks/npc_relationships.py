@@ -58,6 +58,11 @@ class NPCRelationshipManager:
             self._proximity_check_task.cancel()
         if self._relationship_decay_task:
             self._relationship_decay_task.cancel()
+        # Await cancellation
+        await asyncio.gather(
+            *(t for t in [self._proximity_check_task, self._relationship_decay_task] if t is not None),
+            return_exceptions=True
+        )
         logger.info("✓ NPC relationship background tasks stopped")
     
     async def _proximity_check_loop(self):

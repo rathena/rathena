@@ -44,6 +44,14 @@ class BatchProcessor:
         
         logger.info(f"BatchProcessor initialized (batch_size={batch_size}, max_wait={max_wait_time}s)")
     
+    async def shutdown(self):
+        """Cancel all pending processing tasks."""
+        for key, task in list(self._processing_tasks.items()):
+            if not task.done():
+                task.cancel()
+        self._processing_tasks.clear()
+        logger.info("BatchProcessor: All processing tasks cancelled")
+
     async def add_to_batch(
         self,
         batch_key: str,
