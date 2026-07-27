@@ -827,7 +827,92 @@ WantedBy=multi-user.target
 EOF
     fi
 
-    # rAthena Map Server
+    # --- AI IPC Worker Service ---
+    if [[ -f "${SCRIPT_DIR}/ml_inference_service/ai_ipc_worker.py" ]]; then
+        log "Creating ai-ipc-worker.service..."
+        sudo tee /etc/systemd/system/ai-ipc-worker.service > /dev/null << EOF
+[Unit]
+Description=AI IPC Worker Service - Database-based IPC for NPC-AI Communication
+Documentation=https://github.com/iskandarsulaili/rathena-AI-world
+After=network.target mariadb.service mysql.service
+Wants=mariadb.service mysql.service
+
+[Service]
+Type=simple
+User=${user}
+Group=${user}
+WorkingDirectory=${SCRIPT_DIR}/ml_inference_service
+Environment="PATH=${ai_venv}/bin"
+Environment="PYTHONUNBUFFERED=1"
+Environment="DB_HOST=localhost"
+Environment="DB_PORT=3306"
+Environment="DB_NAME=${MYSQL_DB}"
+Environment="DB_USER=${MYSQL_USER}"
+EnvironmentFile=${SCRIPT_DIR}/.env
+ExecStart=${ai_venv}/bin/python ai_ipc_worker.py
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+EOF
+    fi
+
+    # --- ML Training Scheduler ---
+    if [[ -d "${SCRIPT_DIR}/ml_scheduler" ]]; then
+        log "Creating ml-training-scheduler.service..."
+        sudo tee /etc/systemd/system/ml-training-scheduler.service > /dev/null << EOF
+[Unit]
+Description=ML Model Training Scheduler Service
+After=network.target postgresql.service mariadb.service
+Wants=postgresql.service mariadb.service
+
+[Service]
+Type=oneshot
+User=${user}
+Group=${user}
+WorkingDirectory=${SCRIPT_DIR}/ml_scheduler
+Environment="PATH=${ai_venv}/bin:/usr/local/bin:/usr/bin:/bin"
+Environment="PYTHONUNBUFFERED=1"
+EnvironmentFile=${SCRIPT_DIR}/.env
+ExecStart=${ai_venv}/bin/python scheduler_main.py --config ${SCRIPT_DIR}/ml_scheduler/config/scheduler_config.yaml
+
+[Install]
+WantedBy=multi-user.target
+EOF
+    fi
+
+    # --- Continuous Training ---
+    if [[ -d "${SCRIPT_DIR}/ml_training" ]]; then
+        log "Creating continuous-training.service..."
+        sudo tee /etc/systemd/system/continuous-training.service > /dev/null << EOF
+[Unit]
+Description=Continuous ML Training Service for Monster AI
+After=network.target postgresql.service
+Requires=postgresql.service
+
+[Service]
+Type=simple
+User=${user}
+Group=${user}
+WorkingDirectory=${SCRIPT_DIR}/ml_training
+Environment="PATH=${ai_venv}/bin"
+Environment="PYTHONUNBUFFERED=1"
+EnvironmentFile=${SCRIPT_DIR}/.env
+ExecStart=${ai_venv}/bin/python continuous_training.py --config ${SCRIPT_DIR}/ml_training/config/continuous_training_config.yaml
+Restart=always
+RestartSec=30
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+EOF
+    fi
+
+    # --- rAthena Map Server ---
     if [[ -f "${SCRIPT_DIR}/map-server" ]]; then
         log "Creating rathena-map.service..."
         sudo tee /etc/systemd/system/rathena-map.service > /dev/null << EOF
