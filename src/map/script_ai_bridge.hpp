@@ -26,7 +26,7 @@ struct script_state;
 /**
  * @brief HTTP GET script command
  *
- * Usage: .@response$ = httpget("http://192.168.0.100:8000/api/v1/health");
+ * Usage: .@response$ = httpget("http://localhost:8000/api/v1/health");
  *
  * @param st Script state
  * @return SCRIPT_CMD_SUCCESS or SCRIPT_CMD_FAILURE
@@ -36,7 +36,7 @@ int32 buildin_httpget(struct script_state* st);
 /**
  * @brief HTTP POST script command
  *
- * Usage: .@response$ = httppost("http://192.168.0.100:8000/api/v1/events/dispatch",
+ * Usage: .@response$ = httppost("http://localhost:8000/api/v1/events/dispatch",
  *                               "{\"event_type\":\"player_login\"}");
  *
  * @param st Script state

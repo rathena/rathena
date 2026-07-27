@@ -220,7 +220,7 @@ class HTTPClient {
 public:
     /**
      * @brief Construct HTTP client
-     * @param base_url Base URL for all requests (e.g., "http://192.168.0.100:8000")
+     * @param base_url Base URL for all requests (e.g., "http://localhost:8000")
      * @param timeout_ms Request timeout in milliseconds (default: 5000)
      * @param max_retries Maximum retry attempts (default: 3)
      */

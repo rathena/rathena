@@ -1,7 +1,7 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // P2P Coordinator interface for rAthena networking
-// This file provides the interface and stubs for P2P coordinator integration.
-// To be extended with a real P2P implementation (e.g., libp2p, custom coordinator).
+// This file provides the interface for P2P coordinator integration.
+// The implementation uses TCP fallback with hooks for libp2p integration.
 
 #ifndef P2P_COORDINATOR_HPP
 #define P2P_COORDINATOR_HPP

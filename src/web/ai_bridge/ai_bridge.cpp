@@ -33,7 +33,7 @@ bool BridgeLayer::initialize(const std::string& config_path) {
     }
     
     // Get AI service configuration
-    std::string base_url = config.get_string("ai_service", "base_url", "http://192.168.0.100:8000");
+    std::string base_url = config.get_string("ai_service", "base_url", "http://localhost:8000");
     int64_t timeout_connect = config.get_int("ai_service", "timeout_connect", 5000);
     int64_t timeout_read = config.get_int("ai_service", "timeout_read", 30000);
     int64_t max_retries = config.get_int("http_pool", "max_retries", 3);

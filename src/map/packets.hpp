@@ -871,7 +871,7 @@ struct PACKET_ZC_GUILD_CHAT {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_GUILD_CHAT, 0x17f)
 
-// TODO: no idea when it changed
+// TODO: no idea when it changed - this packet version check needs verification
 #if defined(PACKETVER)
 struct PACKET_ZC_UPDATE_CHARSTAT {
 	uint16 packetType;
@@ -1243,7 +1243,7 @@ struct PACKET_ZC_ACK_ADDITEM_TO_CART {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_ACK_ADDITEM_TO_CART, 0x12c);
 
-// TODO : not sure for client date [Napster]
+// TODO : not sure for client date [Napster] - this packet version threshold needs verification
 #if PACKETVER >= 20141016
 struct PACKET_ZC_DELETEITEM_FROM_MCSTORE {
 	int16 packetType;

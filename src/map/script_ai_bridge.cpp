@@ -31,7 +31,7 @@ using namespace AIBridge;
  * Returns response body as string or empty string on error
  *
  * Example:
- *   .@response$ = httpget("http://192.168.0.100:8000/api/v1/health");
+ *   .@response$ = httpget("http://localhost:8000/api/v1/health");
  *   mes .@response$;
  */
 BUILDIN_FUNC(httpget) {
@@ -87,7 +87,7 @@ BUILDIN_FUNC(httpget) {
  *
  * Example:
  *   .@data$ = "{\"player_id\":150001,\"action\":\"login\"}";
- *   .@response$ = httppost("http://192.168.0.100:8000/api/v1/events/dispatch", .@data$);
+ *   .@response$ = httppost("http://localhost:8000/api/v1/events/dispatch", .@data$);
  *   mes .@response$;
  */
 BUILDIN_FUNC(httppost) {

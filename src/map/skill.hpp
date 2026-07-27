@@ -212,7 +212,7 @@ enum e_skill_display {
 #define MAX_SKILL_STATUS_REQUIRE 3 /// Maximum required statuses
 #define MAX_SKILL_EQUIP_REQUIRE 10 /// Maximum required equipped item
 
-/// Single skill requirement. !TODO: Cleanup the variable types
+/// Single skill requirement. !TODO: Cleanup the variable types - currently uses int32 for all fields, could use more specific types
 struct s_skill_condition {
 	int32 hp;								///< HP cost
 	int32 mhp;								///< Max HP to trigger
@@ -2612,16 +2612,16 @@ enum e_skill_unit_id : uint16 {
 	UNT_FIREWALL,
 	UNT_WARP_WAITING,
 	UNT_WARP_ACTIVE,
-	UNT_BENEDICTIO, //TODO
+	UNT_BENEDICTIO, //TODO - behavior not fully implemented
 	UNT_SANCTUARY,
 	UNT_MAGNUS,
 	UNT_PNEUMA,
 	UNT_DUMMYSKILL, //These show no effect on the client
 	UNT_FIREPILLAR_WAITING,
 	UNT_FIREPILLAR_ACTIVE,
-	UNT_HIDDEN_TRAP, //TODO
-	UNT_TRAP, //TODO
-	UNT_HIDDEN_WARP_NPC, //TODO
+	UNT_HIDDEN_TRAP, //TODO - trap visibility behavior not fully implemented
+	UNT_TRAP, //TODO - trap behavior not fully implemented
+	UNT_HIDDEN_WARP_NPC, //TODO - hidden warp behavior not fully implemented
 	UNT_USED_TRAPS,
 	UNT_ICEWALL,
 	UNT_QUAGMIRE,
@@ -2668,7 +2668,7 @@ enum e_skill_unit_id : uint16 {
 	UNT_SPIDERWEB,
 	UNT_GRAVITATION,
 	UNT_HERMODE,
-	UNT_KAENSIN, //TODO
+	UNT_KAENSIN, //TODO - behavior not fully implemented
 	UNT_SUITON,
 	UNT_TATAMIGAESHI,
 	UNT_KAEN,
@@ -2677,13 +2677,13 @@ enum e_skill_unit_id : uint16 {
 	UNT_GROUNDDRIFT_POISON,
 	UNT_GROUNDDRIFT_WATER,
 	UNT_GROUNDDRIFT_FIRE,
-	UNT_DEATHWAVE, //TODO
-	UNT_WATERATTACK, //TODO
-	UNT_WINDATTACK, //TODO
+	UNT_DEATHWAVE, //TODO - behavior not fully implemented
+	UNT_WATERATTACK, //TODO - behavior not fully implemented
+	UNT_WINDATTACK, //TODO - behavior not fully implemented
 	UNT_EARTHQUAKE,
 	UNT_EVILLAND,
-	UNT_DARK_RUNNER, //TODO
-	UNT_DARK_TRANSFER, //TODO
+	UNT_DARK_RUNNER, //TODO - behavior not fully implemented
+	UNT_DARK_TRANSFER, //TODO - behavior not fully implemented
 	UNT_EPICLESIS,
 	UNT_EARTHSTRAIN,
 	UNT_MANHOLE,

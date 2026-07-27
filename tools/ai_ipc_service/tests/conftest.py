@@ -67,7 +67,7 @@ class TestConfig:
     db_host: str = "localhost"
     db_port: int = 3306
     db_user: str = "ragnarok"
-    db_password: str = "ragnarok"
+    db_password: str = os.getenv("TEST_DB_PASSWORD", "ragnarok")
     db_name: str = "ragnarok"
     test_table_prefix: str = "test_ai_"
     ai_backend_url: str = "http://localhost:8080"

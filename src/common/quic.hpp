@@ -1,7 +1,7 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // QUIC protocol support interface for rAthena networking
-// This file provides the interface and stubs for QUIC protocol integration.
-// To be extended with a real QUIC implementation (e.g., msquic, quiche).
+// This file provides the interface for QUIC protocol integration.
+// The implementation uses TCP fallback with hooks for msquic/ngtcp2 integration.
 
 #ifndef QUIC_HPP
 #define QUIC_HPP
