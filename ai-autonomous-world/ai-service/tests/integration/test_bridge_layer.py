@@ -370,7 +370,7 @@ class TestActionExecutor:
                 'location': 'prontera',
                 'x': 155,
                 'y': 180,
-                'sprite_id': 4_W_M_03,
+                'sprite_id': '4_W_M_03',
                 'dialogue_tree': 'chapter_1_traveler'
             }
         }

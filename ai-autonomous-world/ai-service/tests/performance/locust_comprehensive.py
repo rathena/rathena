@@ -4,7 +4,7 @@ Simulates realistic user load across all system components.
 
 Run with:
 locust -f tests/performance/locust_comprehensive.py \
-  --host http://192.168.0.100:8000 \
+  --host http://localhost:8000 \
   --users 1000 \
   --spawn-rate 100 \
   --run-time 10m \

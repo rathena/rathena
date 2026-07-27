@@ -404,9 +404,11 @@ class TestErrorHandling:
             response = await agent.execute(agent_context_with_dialogue)
             # May succeed or fail gracefully
             assert response.status in [AgentStatus.COMPLETED, AgentStatus.FAILED]
-        except Exception:
+        except Exception as e:
             # Acceptable to throw exception for invalid state
-            pass
+            # Log the exception for debugging
+            logger = logging.getLogger(__name__)
+            logger.debug(f"Dialogue agent threw exception for invalid state: {e}")
 
 
 @pytest.mark.unit
