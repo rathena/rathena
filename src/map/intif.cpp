@@ -3258,14 +3258,15 @@ void intif_parse_MessageToFD(int32 fd) {
 
 /**
  * Request to send broadcast item to all servers
- * ZI 3009 <cmd>.W <len>.W <nameid>.N <source>.W <type>.B <name>.?B
+ * ZI 3009 <cmd>.W <len>.W <nameid>.N <source>.W <type>.B <name>.?B <refine level>.L
  * @param sd Player who obtain the item
  * @param nameid Obtained item
  * @param sourceid Source of item, another item ID or monster ID
  * @param type Obtain type @see enum BROADCASTING_SPECIAL_ITEM_OBTAIN
+ * @param refine_level Refine level of obtained item
  * @return
  **/
-int32 intif_broadcast_obtain_special_item(map_session_data *sd, t_itemid nameid, t_itemid sourceid, unsigned char type) {
+int32 intif_broadcast_obtain_special_item(map_session_data *sd, t_itemid nameid, t_itemid sourceid, unsigned char type, uint32 refine_level) {
 	nullpo_retr(0, sd);
 
 	// Should not be here!
@@ -3275,7 +3276,7 @@ int32 intif_broadcast_obtain_special_item(map_session_data *sd, t_itemid nameid,
 	}
 
 	// Send local
-	clif_broadcast_obtain_special_item(sd->status.name, nameid, sourceid, (enum BROADCASTING_SPECIAL_ITEM_OBTAIN)type);
+	clif_broadcast_obtain_special_item(sd->status.name, nameid, sourceid, (enum BROADCASTING_SPECIAL_ITEM_OBTAIN)type, refine_level);
 
 	if (CheckForCharServer())
 		return 0;
@@ -3283,13 +3284,14 @@ int32 intif_broadcast_obtain_special_item(map_session_data *sd, t_itemid nameid,
 	if (other_mapserver_count < 1)
 		return 0;
 
-	WFIFOHEAD(inter_fd, 11 + NAME_LENGTH);
+	WFIFOHEAD(inter_fd, 11 + NAME_LENGTH + sizeof(refine_level));
 	WFIFOW(inter_fd, 0) = 0x3009;
-	WFIFOW(inter_fd, 2) = 11 + NAME_LENGTH;
+	WFIFOW(inter_fd, 2) = 11 + NAME_LENGTH + sizeof(refine_level);
 	WFIFOL(inter_fd, 4) = nameid;
 	WFIFOW(inter_fd, 8) = sourceid;
 	WFIFOB(inter_fd, 10) = type;
 	safestrncpy(WFIFOCP(inter_fd, 11), sd->status.name, NAME_LENGTH);
+	WFIFOL(inter_fd, 11 + NAME_LENGTH) = refine_level;
 	WFIFOSET(inter_fd, WFIFOW(inter_fd, 2));
 
 	return 1;
@@ -3308,7 +3310,7 @@ int32 intif_broadcast_obtain_special_item_npc(map_session_data *sd, t_itemid nam
 	nullpo_retr(0, sd);
 
 	// Send local
-	clif_broadcast_obtain_special_item(sd->status.name, nameid, 0, ITEMOBTAIN_TYPE_NPC);
+	clif_broadcast_obtain_special_item(sd->status.name, nameid, 0, ITEMOBTAIN_TYPE_NPC, 0);
 
 	if (CheckForCharServer())
 		return 0;
@@ -3335,13 +3337,16 @@ int32 intif_broadcast_obtain_special_item_npc(map_session_data *sd, t_itemid nam
  **/
 void intif_parse_broadcast_obtain_special_item(int32 fd) {
 	int32 type = RFIFOB(fd, 10);
+	uint32 refine_level = 0;
 	char name[NAME_LENGTH];
 
 	safestrncpy(name, RFIFOCP(fd, 11), NAME_LENGTH);
 	if (type == ITEMOBTAIN_TYPE_NPC)
 		safestrncpy(name, RFIFOCP(fd, 11 + NAME_LENGTH), NAME_LENGTH);
+	else if (RFIFOW(fd, 2) >= 11 + NAME_LENGTH + sizeof(refine_level))
+		refine_level = RFIFOL(fd, 11 + NAME_LENGTH);
 
-	clif_broadcast_obtain_special_item(name, RFIFOL(fd, 4), RFIFOW(fd, 8), (enum BROADCASTING_SPECIAL_ITEM_OBTAIN)type);
+	clif_broadcast_obtain_special_item(name, RFIFOL(fd, 4), RFIFOW(fd, 8), (enum BROADCASTING_SPECIAL_ITEM_OBTAIN)type, refine_level);
 }
 
 /*==========================================
