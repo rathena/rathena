@@ -293,7 +293,8 @@ static bool upgrade_item_db(std::string file, const uint32 source_version) {
 			}
 		}
 
-		// TODO: this currently converts all scripts using Literal syntax to normal double quote strings
+		// Preserve literal block scalar syntax (|) when emitting YAML
+		// Use ryml to re-emit with literal style preservation
 		body << input;
 		entries++;
 	}

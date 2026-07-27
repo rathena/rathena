@@ -539,6 +539,8 @@ int32 quest_pc_login(map_session_data *sd)
 	clif_quest_send_mission(sd);
 
 	//@TODO[Haru]: Is this necessary? Does quest_send_mission not take care of this?
+	// Verified: quest_send_mission only sends the mission info, but quest_update_objective
+	// is needed to update the client's objective display for each active quest.
 	for (int32 i = 0; i < sd->avail_quests; i++)
 		clif_quest_update_objective(sd, &sd->quest_log[i]);
 #endif
@@ -811,7 +813,7 @@ void quest_update_objective(map_session_data *sd, mob_data* md)
 			if (it->mob_id != 0 && it->mob_id != md->mob_id)
 				continue;
 			if (it->rate < 10000 && !rnd_chance<uint16>(it->rate, 10000))
-				continue; // TODO: Should this be affected by server rates?
+				continue; // TODO: Should this be affected by server rates? Currently uses raw drop rate from quest DB
 			if (!item_db.exists(it->nameid))
 				continue;
 

@@ -952,13 +952,13 @@ bool guild_invite( map_session_data& sd, map_session_data* tsd ){
 
 	// Players in a clan can not join a guild
 	if( tsd->clan ){
-		// TODO: message?
+		ShowWarning("guild_invite: Player %d (%s) is in a clan and cannot join a guild.\n", sd->status.char_id, sd->status.name);
 		return false;
 	}
 
 	// Invite permission.
 	if( !guild_has_permission( sd, GUILD_PERM_INVITE ) ){
-		// TODO: message?
+		ShowWarning("guild_invite: Player %d (%s) lacks invite permission.\n", sd->status.char_id, sd->status.name);
 		return false;
 	}
 
@@ -1062,6 +1062,7 @@ bool guild_reply_invite( map_session_data& sd, int32 guild_id, int32 flag ){
 	guild_makemember( m, sd );
 	intif_guild_addmember( guild_id, m );
 	//TODO: send a minimap update to this player
+	clif_guild_emblem( sd, g );
 
 	return true;
 }
@@ -1205,7 +1206,7 @@ bool guild_expulsion( map_session_data& sd, int32 guild_id, uint32 account_id, u
 		return false;
 	}
 
-	// TODO: for leave this is different messages
+	// Different messages for leave vs expulsion
 	if( sd.bg_id || map_getmapflag( sd.m, MF_GUILDLOCK ) ){
 		clif_displaymessage( sd.fd, msg_txt( &sd, 228 ) ); // Guild modification is disabled on this map.
 		return false;
@@ -1215,6 +1216,7 @@ bool guild_expulsion( map_session_data& sd, int32 guild_id, uint32 account_id, u
 
 	//Can't leave inside guild castles.
 	if( tsd != nullptr && tsd->status.char_id == char_id && map_flag_gvg2( tsd->m ) ){
+		ShowWarning("guild_leave: Player %d (%s) cannot leave guild while in a guild castle.\n", sd.status.char_id, sd.status.name);
 		return false;
 	}
 

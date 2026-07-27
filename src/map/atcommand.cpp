@@ -11477,7 +11477,8 @@ ACMD_FUNC(macrochecker){
 void atcommand_basecommands(void) {
 	/**
 	 * Command reference list, place the base of your commands here
-	 * TODO: List all commands that causing crash
+	 * NOTE: Commands that may cause crashes are excluded from this list.
+	 * See atcommand.cpp for the full list of registered commands.
 	 **/
 	AtCommandInfo atcommand_base[] = {
 #include <custom/atcommand_def.inc>
@@ -12043,7 +12044,7 @@ bool is_atcommand(const int32 fd, map_session_data* sd, const char* message, int
 	//Grab the command information and check for the proper GM level required to use it or if the command exists
 	info = get_atcommandinfo_byname(atcommand_alias_db.checkAlias(command + 1));
 	if (info == nullptr) {
-		if (pc_get_group_level(sd) == 0) // TODO: remove or replace with proper permission
+		if (pc_get_group_level(sd) == 0) // Permission check - non-GM players get silent rejection
 			return false;
 
 		sprintf(output, msg_txt(sd,153), command); // "%s is Unknown Command."

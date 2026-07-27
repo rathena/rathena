@@ -446,6 +446,8 @@ int32 battle_delay_damage(t_tick tick, int32 amotion, block_list *src, block_lis
 		damage = 0;
 		// This is a quick fix to make devotion protect from cast cancel and autocasts
 		// TODO: This currently also prevents "status change when hit", but shouldn't
+		// Ideally, devotion should only block cast cancel and autocasts, not status changes.
+		// A more granular approach would check the specific effect type.
 		if (dmg_lv == ATK_DEF)
 			dmg_lv = ATK_BLOCK;
 	}
@@ -729,6 +731,8 @@ static int32 battle_calc_cardfix_debuff( status_change& tsc, int32 rh_ele ){
 		ele_fix += 50;
 
 	// !TODO: unknown how it should work for physical damage, lh_ele is ignored for now
+	// Physical damage interaction with elemental debuffs is not fully documented.
+	// Current implementation only applies to magical damage (rh_ele).
 	switch(rh_ele) {
 		case ELE_FIRE:
 			if (tsc.getSCE(SC_CLIMAX_BLOOM))
@@ -1812,6 +1816,8 @@ int64 battle_calc_damage(block_list *src,block_list *bl,struct Damage *d,int64 d
 		}
 
 		if (tsc->getSCE(SC_SHADOW_SCAR)) // !TODO: Need official adjustment for this too.
+			// Shadow Scar damage bonus uses same formula as Holy Oil (3% per level)
+			// but may need official verification for exact values.
 			damage += damage * (3 * tsc->getSCE(SC_SHADOW_SCAR)->val1) / 100;
 
 		// Damage reductions
@@ -5941,6 +5947,7 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 
 				// TODO: This code is only accurate for pre-renewal
 				// In renewal, monsters should use NPC_EARTHQUAKE_K instead, but it's not implemented yet
+				// The renewal formula uses weapon ATK + STR*2 for players, while pre-renewal uses base ATK + RHW ATK.
 				if (sd != nullptr) {
 #ifdef RENEWAL
 					ad.damage = sstatus->str * 2 + battle_calc_weapon_attack(src, target, skill_id, skill_lv, mflag).damage;

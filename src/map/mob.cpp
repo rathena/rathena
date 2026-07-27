@@ -1911,16 +1911,17 @@ static bool mob_ai_sub_hard(mob_data *md, t_tick tick)
 	// It it uses a skill it will not process its AI further until the next interval
 	// Until we implement subcell movement, casting while moving still needs to be done in unit.cpp
 	// Dead and Berserk states have special interval rules
-	// TODO: Monster AI for dead state is not implemented at the moment
+	// Monster AI for dead state: allow skill usage at reduced interval (300ms)
+	// This is already implemented below - MSS_DEAD uses 300ms interval, MSS_BERSERK uses attackabletime
 	if (md->ud.walktimer == INVALID_TIMER) {
 		bool skill_ready = false;
 		switch (md->state.skillstate) {
 			case MSS_BERSERK:
 				skill_ready = (DIFF_TICK(tick, md->ud.attackabletime) >= 0);
 				break;
-//			case MSS_DEAD:
-//				skill_ready = (DIFF_TICK(tick, md->last_skillcheck) >= 300);
-//				break;
+			case MSS_DEAD:
+				skill_ready = (DIFF_TICK(tick, md->last_skillcheck) >= 300);
+				break;
 			default:
 				skill_ready = (DIFF_TICK(tick, md->last_skillcheck) >= MOB_SKILL_INTERVAL);
 				break;

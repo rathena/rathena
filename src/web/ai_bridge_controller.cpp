@@ -151,6 +151,7 @@ namespace AIBridge {
 				}
 				
 				// Fallback to HTTP for unimplemented IPC endpoints
+				// Try to handle the endpoint via HTTP fallback
 				ShowInfo("[AI Bridge] Endpoint not implemented in IPC, falling back to HTTP: %s\n", endpoint.c_str());
 			} catch (const std::exception& e) {
 				ShowError("[AI Bridge] Exception during IPC request: %s\n", e.what());

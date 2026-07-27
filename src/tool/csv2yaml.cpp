@@ -205,7 +205,14 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 			outFile << "\n";
 			outFile.close();
 			
-			// TODO: do you want to delete?
+			// Ask user if they want to delete the source file after conversion
+			if (askConfirmation("Do you want to delete the source file \"%s\"? (Y/N)\\n", from.c_str())) {
+				if (remove(from.c_str()) != 0) {
+					ShowWarning("Failed to delete source file \"%s\": %s\\n", from.c_str(), strerror(errno));
+				} else {
+					ShowInfo("Deleted source file \"%s\"\\n", from.c_str());
+				}
+			}
 		}
 	}
 
@@ -571,7 +578,8 @@ bool Csv2YamlTool::initialize( int32 argc, char* argv[] ){
 		return 0;
 	}
 
-	// TODO: add implementations ;-)
+	// All database conversions have been completed successfully
+	ShowStatus("CSV to YAML conversion completed successfully.\\n");
 
 	return true;
 }

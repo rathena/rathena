@@ -674,16 +674,25 @@ bool ActionExecutor::execute_set_map_flag(const AIAction& action) {
             return false;
         }
         
-        ShowWarning("[ActionExecutor] set_map_flag: Direct map flag manipulation not implemented\n");
-        ShowWarning("[ActionExecutor] Requested: map=%s, flag=%s, value=%d\n",
-                   map_name.c_str(), flag_name.c_str(), flag_value);
-        ShowWarning("[ActionExecutor] Use script commands or map configuration instead\n");
+        // Look up the mapflag by name
+        enum e_mapflag mf = map_getmapflag_by_name(flag_name.c_str());
+        if (mf == MF_MAX) {
+            ShowError("[ActionExecutor] Unknown map flag: %s\n", flag_name.c_str());
+            return false;
+        }
         
-        // NOTE: Direct mapflag manipulation requires access to internal map structures
-        // and is typically done through map configuration files or script commands.
-        // Implementing this safely requires adding new map API functions.
+        // Set the map flag using rAthena's built-in API
+        bool result = map_setmapflag_sub(m, mf, flag_value, nullptr);
         
-        return false; // Not fully implemented - requires map API extension
+        if (result) {
+            ShowInfo("[ActionExecutor] Map flag '%s' set to %d on map '%s'\n",
+                     flag_name.c_str(), flag_value, map_name.c_str());
+        } else {
+            ShowError("[ActionExecutor] Failed to set map flag '%s' on map '%s'\n",
+                     flag_name.c_str(), map_name.c_str());
+        }
+        
+        return result;
     } catch (const std::exception& e) {
         ShowError("[ActionExecutor] Failed to parse set_map_flag payload: %s\n", e.what());
         return false;
@@ -815,29 +824,56 @@ bool ActionExecutor::execute_update_economy(const AIAction& action) {
             return false;
         }
         
-        ShowWarning("[ActionExecutor] update_economy: Dynamic shop modification not implemented\n");
-        ShowWarning("[ActionExecutor] Requested: shop=%s/%d, item=%d, price=%d, stock=%d\n",
-                   shop_name.c_str(), shop_id, item_id, new_price, stock_amount);
-        ShowWarning("[ActionExecutor] Shop data is typically static from configuration\n");
-        ShowWarning("[ActionExecutor] Use script-based shops (openshop/sellitem) for dynamic economy\n");
+        // Implement dynamic shop modification using rAthena's shop API
+        // Find the shop NPC by name or ID
+        struct npc_data* nd = nullptr;
         
-        // NOTE: Implementing dynamic shop updates requires:
-        // 1. Finding the shop NPC (npc_name2id or iteration)
-        // 2. Accessing shop_data structure (may be private/protected)
-        // 3. Modifying item prices in the shop's item list
-        // 4. Updating stock if applicable (requires vending/shop tracking)
-        // 5. Notifying clients of price changes
-        //
-        // rAthena's shop system is designed for static configuration.
-        // Dynamic shops are better handled through:
-        // - Script-based vending systems
-        // - Cash shop management via web interface
-        // - Market board/auction house implementations
-        //
-        // Recommendation: Implement AI-driven pricing through script commands
-        // that NPCs can execute, rather than direct shop data manipulation.
+        if (!shop_name.empty()) {
+            nd = npc_name2id((char*)shop_name.c_str());
+        }
         
-        return false; // Not implemented - requires shop system redesign
+        if (nd == nullptr && shop_id > 0) {
+            nd = (struct npc_data*)map_id2bl(shop_id);
+        }
+        
+        if (nd == nullptr) {
+            ShowError("[ActionExecutor] Shop not found: %s/%d\n", shop_name.c_str(), shop_id);
+            return false;
+        }
+        
+        // Check if this NPC has a shop
+        if (nd->shop == nullptr || nd->shop->items.empty()) {
+            ShowError("[ActionExecutor] NPC %s has no shop data\n", nd->name);
+            return false;
+        }
+        
+        // Find and update the item in the shop
+        bool item_found = false;
+        for (auto& shop_item : nd->shop->items) {
+            if (shop_item.nameid == item_id) {
+                if (new_price > 0) {
+                    shop_item.value = new_price;
+                }
+                if (stock_amount >= 0) {
+                    shop_item.qty = (uint16)stock_amount;
+                }
+                item_found = true;
+                break;
+            }
+        }
+        
+        if (!item_found) {
+            ShowError("[ActionExecutor] Item %d not found in shop %s\n", item_id, nd->name);
+            return false;
+        }
+        
+        // Notify nearby players of shop update
+        clif_parse_ShopTransaction(nd, 0, 0, 0);
+        
+        ShowInfo("[ActionExecutor] Shop '%s' updated: item=%d, price=%d, stock=%d\n",
+                 nd->name, item_id, new_price, stock_amount);
+        
+        return true;
     } catch (const std::exception& e) {
         ShowError("[ActionExecutor] Failed to parse update_economy payload: %s\n", e.what());
         return false;

@@ -37,7 +37,7 @@ typedef enum e_log_filter
 	LOG_FILTER_PETITEM  = 0x080,  // Pet Accessories(8) + Eggs(7) (well, monsters don't drop 'em but we'll use the same system for ALL logs)
 	LOG_FILTER_PRICE    = 0x100,  // Log expensive items ( >= price_log )
 	LOG_FILTER_AMOUNT   = 0x200,  // Log large amount of items ( >= amount_log )
-	LOG_FILTER_REFINE   = 0x400,  // Log refined items ( refine >= refine_log ) [not implemented]
+	LOG_FILTER_REFINE   = 0x400,  // Log refined items ( refine >= refine_log ) [not implemented - requires item refinement tracking]
 	LOG_FILTER_CHANCE   = 0x800,  // Log rare items and Emperium ( drop chance <= rare_log )
 }
 e_log_filter;

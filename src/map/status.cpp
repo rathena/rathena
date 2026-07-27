@@ -5550,7 +5550,8 @@ void status_calc_state_sub( block_list& bl, status_change& sc, bool start, std::
 				constant_scs = "Unknown";
 			}
 
-			ShowError( "status_calc_state_sub: status \"%s\" is defined with \"%s\", but the condition is not implemented.\n", constant_sc, constant_scs );
+			ShowError( "status_calc_state_sub: status \"%s\" is defined with \"%s\", but the condition is not implemented. "
+			"Add the condition handler to func_switch or status_calc_state_sub.\n", constant_sc, constant_scs );
 			continue;
 		}
 

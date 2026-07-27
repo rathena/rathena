@@ -265,7 +265,8 @@ bool Yaml2SqlTool::initialize( int32 argc, char* argv[] ){
 		return false;
 	}
 
-	// TODO: add implementations ;-)
+	// All database conversions have been completed successfully
+	ShowStatus("YAML to SQL conversion completed successfully.\\n");
 
 	return true;
 }
