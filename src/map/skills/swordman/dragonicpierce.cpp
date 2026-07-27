@@ -22,11 +22,11 @@ void SkillDragonicPierce::calculateSkillRatio(const Damage* wd, const block_list
 	const status_change* sc = status_get_sc(src);
 	const status_data* sstatus = status_get_status_data(*src);
 
-	skillratio += -100 + 850 + 600 * skill_lv;
+	skillratio += -100 + 900 + 730 * skill_lv;
 	skillratio += 7 * sstatus->pow;	// !TODO: unknown ratio
 
 	if (sc != nullptr && sc->hasSCE(SC_DRAGONIC_AURA))
-		skillratio += 100 + 50 * skill_lv;
+		skillratio += 200 + 50 * skill_lv;
 
 	RE_LVL_DMOD(100);
 }

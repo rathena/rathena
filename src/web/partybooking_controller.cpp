@@ -306,7 +306,7 @@ HANDLER_FUNC(partybooking_get){
 	if( bookings.empty() ){
 		response = "{ \"Type\": 1 }";
 	}else{
-		response = "{ \"Type\": 1, data: " + bookings.at( 0 ).to_json( world_name ) + " }";
+		response = "{ \"Type\": 1, \"data\": " + bookings.at( 0 ).to_json( world_name ) + " }";
 	}
 
 	res.set_content( response, "application/json" );

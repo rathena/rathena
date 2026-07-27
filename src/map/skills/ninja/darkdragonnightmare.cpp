@@ -43,3 +43,8 @@ void SkillDarkDragonNightmare::castendNoDamageId(block_list *src, block_list *ta
 
 	map_foreachinrange( skill_area_sub, target, range, BL_CHAR, src, getSkillId(), skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id );
 }
+
+void SkillDarkDragonNightmare::modifyElement(const Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv, int32& element, int32 flag) const {
+	if (dmg.miscflag & SKILL_ALTDMG_FLAG)
+		element = ELE_FIRE;
+}

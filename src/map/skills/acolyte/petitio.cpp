@@ -16,7 +16,10 @@ void SkillPetitio::calculateSkillRatio(const Damage* wd, const block_list* src, 
 	const map_session_data* sd = BL_CAST(BL_PC, src);
 	const status_data* sstatus = status_get_status_data(*src);
 
-	skillratio += -100 + (1050 + pc_checkskill(sd, CD_MACE_BOOK_M) * 50) * skill_lv + 5 * sstatus->pow;
+	skillratio += -100 + 1200 * skill_lv;
+	skillratio += pc_checkskill(sd, CD_MACE_BOOK_M) * 50 * skill_lv;
+	skillratio += 5 * sstatus->pow;
+
 	RE_LVL_DMOD(100);
 }
 

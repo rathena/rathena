@@ -49,6 +49,7 @@
 #   AttackDelay             Attack speed. (Default: 504)
 #   AttackMotion            Attack animation speed. Base AttackMotion depends on the caster AttackMotion. (Default: 1020)
 #   DamageMotion            Damage animation speed. (Default: 360)
+#   DamageTaken             Rate at which the elemental will receive incoming damage. (Default: 100)
 #   Mode:                   List of elemental skills by mode. (Optional)
 #     <mode>:               Mode name to define the skill available. Available modes are Passive, Assist, and Aggressive.
 #       Skill               Skill name.
@@ -57,7 +58,7 @@
 
 Header:
   Type: ELEMENTAL_DB
-  Version: 1
+  Version: 2
 
 Body:
   - Id: 2114
@@ -241,6 +242,7 @@ Body:
     Size: Large
     Element: Water
     ElementLevel: 4
+    DamageTaken: 10
     Mode:
       Passive:
         Skill: EM_EL_COLD_FORCE
@@ -255,6 +257,7 @@ Body:
     Size: Large
     Element: Fire
     ElementLevel: 4
+    DamageTaken: 10
     Mode:
       Passive:
         Skill: EM_EL_FLAMETECHNIC
@@ -269,6 +272,7 @@ Body:
     Size: Large
     Element: Wind
     ElementLevel: 4
+    DamageTaken: 10
     Mode:
       Passive:
         Skill: EM_EL_GRACE_BREEZE
@@ -283,6 +287,7 @@ Body:
     Size: Large
     Element: Earth
     ElementLevel: 4
+    DamageTaken: 10
     Mode:
       Passive:
         Skill: EM_EL_EARTH_CARE
@@ -297,6 +302,7 @@ Body:
     Size: Large
     Element: Poison
     ElementLevel: 4
+    DamageTaken: 10
     Mode:
       Passive:
         Skill: EM_EL_DEEP_POISONING

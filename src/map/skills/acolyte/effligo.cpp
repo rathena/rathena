@@ -23,11 +23,14 @@ void SkillEffligo::calculateSkillRatio(const Damage* wd, const block_list* src, 
 	const status_data* sstatus = status_get_status_data(*src);
 	const status_data* tstatus = status_get_status_data(*target);
 
-	skillratio += -100 + 1650 * skill_lv + 7 * sstatus->pow;
+	skillratio += -100 + 1800 * skill_lv;
+	skillratio += 7 * sstatus->pow;
 	skillratio += 8 * pc_checkskill(sd, CD_MACE_BOOK_M);
+
 	if (tstatus->race == RC_UNDEAD || tstatus->race == RC_DEMON) {
-		skillratio += 150 * skill_lv;
+		skillratio += 200 * skill_lv;
 		skillratio += 7 * pc_checkskill(sd, CD_MACE_BOOK_M);
 	}
+
 	RE_LVL_DMOD(100);
 }

@@ -53,3 +53,10 @@ void SkillHowlingMine::calculateSkillRatio(const Damage* wd, const block_list* s
 		skillratio += -100 + 200 + 200 * skill_lv;
 	}
 }
+
+void SkillHowlingMine::modifyElement(const Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv, int32& element, int32 flag) const {
+	const map_session_data* sd = BL_CAST(BL_PC, &src);
+
+	if (sd != nullptr && sd->flicker) //Force RL_H_MINE deals fire damage if activated by RL_FLICKER
+		element = ELE_FIRE;
+}

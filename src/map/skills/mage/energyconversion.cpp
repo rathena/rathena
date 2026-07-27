@@ -21,5 +21,5 @@ void SkillEnergyConversion::castendNoDamageId(block_list *src, block_list *targe
 	
 	// Apply the SP gain to the caster
 	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
-	status_heal(target, 0, (skill_lv * (skill_lv + 1) / 2) * 40, 1);
+	status_heal(target, 0, (skill_lv * (skill_lv + 1) / 2) * 80, 1);
 }

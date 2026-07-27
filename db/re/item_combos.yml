@@ -7438,8 +7438,8 @@ Body:
           - Toast_C    # 5391
           - Amistr_Cap    # 5766
     Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
       bonus bMaxHP,100;
-      .@r = getrefine();
       if (.@r >= 7) {
          bonus bMaxHP,100;
          if (.@r >= 9) {
@@ -22169,7 +22169,7 @@ Body:
           - Tatenasi_Armor    # 15136
           - Novus__Card    # 4382
     Script: |
-      .@r = getrefine();
+      .@r = getequiprefinerycnt(EQI_ARMOR);
       if (.@r == 5) {
          bonus bDefEle,Ele_Earth;
       }
@@ -42604,7 +42604,7 @@ Body:
           - Cape_Of_Ancient_Lord_    # 2525
           - Robe_Of_Flattery    # 15146
     Script: |
-      .@r = getrefine();
+      .@r = getequiprefinerycnt(EQI_ARMOR);
       bonus bMaxSPrate,10+.@r;
       bonus bFlee,10+.@r;
   - Combos:
