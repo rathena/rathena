@@ -3,6 +3,8 @@
 
 #include "npcpsychicwave.hpp"
 
+#include "map/status.hpp"
+
 SkillNpcPsychicWave::SkillNpcPsychicWave() : SkillImpl(NPC_PSYCHIC_WAVE) {
 }
 

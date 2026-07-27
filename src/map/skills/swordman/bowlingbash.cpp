@@ -8,6 +8,7 @@
 #include <common/db.hpp>
 
 #include "map/battle.hpp"
+#include "map/pc.hpp"
 #include "map/unit.hpp"
 
 SkillBowlingBash::SkillBowlingBash() : SkillImpl(KN_BOWLINGBASH) {

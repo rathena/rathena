@@ -205,7 +205,10 @@ class TestKarmaAgent:
         """Test karma effects application for very good alignment"""
         agent = KarmaAgent()
         
-        effects = await agent.apply_karma_effects(KarmaAlignment.VERY_GOOD)
+        # Mock the postgres_db to avoid DB connection errors
+        with patch('agents.economy_social.karma_agent.postgres_db') as mock_db:
+            mock_db.execute = AsyncMock(return_value=None)
+            effects = await agent.apply_karma_effects(KarmaAlignment.VERY_GOOD)
         
         assert effects['alignment'] == 'very_good'
         assert effects['day_length_modifier'] == 1.3
@@ -217,7 +220,10 @@ class TestKarmaAgent:
         """Test karma effects application for very evil alignment"""
         agent = KarmaAgent()
         
-        effects = await agent.apply_karma_effects(KarmaAlignment.VERY_EVIL)
+        # Mock the postgres_db to avoid DB connection errors
+        with patch('agents.economy_social.karma_agent.postgres_db') as mock_db:
+            mock_db.execute = AsyncMock(return_value=None)
+            effects = await agent.apply_karma_effects(KarmaAlignment.VERY_EVIL)
         
         assert effects['alignment'] == 'very_evil'
         assert effects['day_length_modifier'] == 0.7

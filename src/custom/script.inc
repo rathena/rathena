@@ -15,20 +15,20 @@
 
 // AI Dialogue Generation
 // Usage: .@response$ = ai_dialogue(<npc_id>, "<player_message>");
-BUILDIN_DEF(ai_dialogue, "is"),
+// BUILDIN_DEF(ai_dialogue, "is"),
 
 // AI Decision Making
 // Usage: .@decision$ = ai_decision(<npc_id>, "<context_json>");
-BUILDIN_DEF(ai_decision, "is"),
+// BUILDIN_DEF(ai_decision, "is"),
 
 // AI Memory Storage
 // Usage: ai_remember(<npc_id>, "<memory_data>");
-BUILDIN_DEF(ai_remember, "is"),
+// BUILDIN_DEF(ai_remember, "is"),
 
 // AI Quest Generation
 // Usage: .@quest$ = ai_quest(<npc_id>, <player_level>);
-BUILDIN_DEF(ai_quest, "ii"),
+// BUILDIN_DEF(ai_quest, "ii"),
 
-// AI-Aware NPC Movement (different from npcwalk - uses embedded Python)
-// Usage: ai_walk(<npc_id>, <x>, <y>, "<map>");
-BUILDIN_DEF(ai_walk, "iiis")
+// AI Walk Command
+// Usage: ai_walk(<npc_id>, <x>, <y>, <speed>);
+// BUILDIN_DEF(ai_walk, "iiis")

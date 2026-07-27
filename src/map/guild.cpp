@@ -952,13 +952,13 @@ bool guild_invite( map_session_data& sd, map_session_data* tsd ){
 
 	// Players in a clan can not join a guild
 	if( tsd->clan ){
-		ShowWarning("guild_invite: Player %d (%s) is in a clan and cannot join a guild.\n", sd->status.char_id, sd->status.name);
+		ShowWarning("guild_invite: Player %d (%s) is in a clan and cannot join a guild.\n", sd.status.char_id, sd.status.name);
 		return false;
 	}
 
 	// Invite permission.
 	if( !guild_has_permission( sd, GUILD_PERM_INVITE ) ){
-		ShowWarning("guild_invite: Player %d (%s) lacks invite permission.\n", sd->status.char_id, sd->status.name);
+		ShowWarning("guild_invite: Player %d (%s) lacks invite permission.\n", sd.status.char_id, sd.status.name);
 		return false;
 	}
 
@@ -1062,7 +1062,7 @@ bool guild_reply_invite( map_session_data& sd, int32 guild_id, int32 flag ){
 	guild_makemember( m, sd );
 	intif_guild_addmember( guild_id, m );
 	//TODO: send a minimap update to this player
-	clif_guild_emblem( sd, g );
+	clif_guild_emblem( sd, g->guild );
 
 	return true;
 }
