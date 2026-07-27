@@ -34,11 +34,12 @@ try:
 except ModuleNotFoundError:
     from models.npc import NPCPersonality, NPCGoalState, NPCEmotionState, NPCMemoryState
 
-# Shared thread pool and metrics for all agents
+# Shared thread pool for all agents
 AGENT_THREAD_POOL = concurrent.futures.ThreadPoolExecutor(max_workers=os.cpu_count() or 4)
-AGENT_EXEC_HISTOGRAM = Histogram("ai_agent_exec_time_seconds", "Agent execution time", ["agent_type"])
-AGENT_SUCCESS_COUNTER = Counter("ai_agent_success_total", "Agent success count", ["agent_type"])
-AGENT_FAILURE_COUNTER = Counter("ai_agent_failure_total", "Agent failure count", ["agent_type"])
+# Module-level Prometheus metrics (unique names to avoid collision with orchestrator)
+AGENT_EXEC_HISTOGRAM = Histogram("ai_agent_base_exec_time_seconds", "Agent execution time (base)", ["agent_type"])
+AGENT_SUCCESS_COUNTER = Counter("ai_agent_base_success_total", "Agent success count (base)", ["agent_type"])
+AGENT_FAILURE_COUNTER = Counter("ai_agent_base_failure_total", "Agent failure count (base)", ["agent_type"])
 
 @dataclass
 class AgentContext:
