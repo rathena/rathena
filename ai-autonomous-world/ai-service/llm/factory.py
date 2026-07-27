@@ -32,8 +32,9 @@ class LLMProviderFactory:
     _instances: Dict[str, BaseLLMProvider] = {}
 
     def __init__(self):
-        """Initialize factory"""
-        pass
+        """Initialize factory with provider registry"""
+        self._providers = dict(self._providers)  # Copy class-level registry
+        logger.debug(f"LLMProviderFactory initialized with {len(self._providers)} provider types")
     
     def create_provider(
         self,
@@ -256,4 +257,63 @@ def get_llm_provider_with_fallback(
         max_failures=max_failures,
         recovery_check_rate=recovery_check_rate
     )
+
+
+class CircuitBreakerState:
+    """Circuit breaker state for provider health tracking"""
+    FAILURE_THRESHOLD = 5
+    COOLDOWN_PERIOD = 300  # 5 minutes
+
+    def __init__(self):
+        self.failures = 0
+        self.is_open = False
+        self.last_failure_time = 0.0
+
+    def record_failure(self):
+        """Record a failure and potentially open the circuit"""
+        self.failures += 1
+        self.last_failure_time = __import__('time').time()
+        if self.failures >= self.FAILURE_THRESHOLD:
+            self.is_open = True
+
+    def record_success(self):
+        """Record a success and reset the circuit"""
+        self.failures = 0
+        self.is_open = False
+
+    def should_attempt(self) -> bool:
+        """Check if we should attempt a request"""
+        if not self.is_open:
+            return True
+        # Check if cooldown has elapsed
+        if __import__('time').time() - self.last_failure_time > self.COOLDOWN_PERIOD:
+            self.is_open = False
+            self.failures = 0
+            return True
+        return False
+
+
+class ProviderHealth:
+    """Health tracking for a provider"""
+    HEALTHY_THRESHOLD = 0.7
+
+    def __init__(self):
+        self.success_count = 0
+        self.failure_count = 0
+        self.average_latency = 0.0
+        self.last_success_time = None
+        self.last_failure_time = None
+
+    @property
+    def success_rate(self) -> float:
+        """Calculate success rate"""
+        total = self.success_count + self.failure_count
+        if total == 0:
+            return 0.0
+        return self.success_count / total
+
+    @property
+    def is_healthy(self) -> bool:
+        """Check if provider is healthy"""
+        return self.success_rate >= self.HEALTHY_THRESHOLD
 

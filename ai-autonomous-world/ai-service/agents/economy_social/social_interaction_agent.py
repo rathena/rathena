@@ -208,7 +208,6 @@ class SocialInteractionAgent(BaseAIAgent):
             backstory="An AI system that fosters community bonds and reduces solo play",
             verbose=settings.crewai_verbose,
             allow_delegation=False,
-            llm=self.llm_provider if hasattr(self, 'llm_provider') else None
         )
     
     async def _process(self, context: AgentContext) -> AgentResponse:

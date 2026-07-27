@@ -325,3 +325,24 @@ class MemoryAgent(BaseAIAgent):
                 summary += f" [Reflection: {reflection}]"
             summary_parts.append(summary)
         return "; ".join(summary_parts)
+
+
+class MemoryEntry:
+    """Memory entry for NPC memory storage"""
+    def __init__(self, memory_id="", content="", memory_type="interaction",
+                 importance=0.5, timestamp=None, access_count=0, metadata=None):
+        self.memory_id = memory_id
+        self.content = content
+        self.memory_type = memory_type
+        self.importance = importance
+        self.timestamp = timestamp or datetime.utcnow()
+        self.access_count = access_count
+        self.metadata = metadata or {}
+
+
+class RelationshipMemory:
+    """Relationship memory tracking for NPC relationships"""
+    def __init__(self, entity_id=""):
+        self.entity_id = entity_id
+        self.interaction_count = 0
+        self.reputation_history = []

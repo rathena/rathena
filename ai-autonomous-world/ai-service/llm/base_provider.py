@@ -170,7 +170,6 @@ class BaseLLMProvider(ABC):
         if self.debug:
             logger.setLevel(logging.DEBUG)
     
-    @abstractmethod
     async def _make_request(
         self,
         messages: List[Dict[str, str]],
@@ -181,6 +180,9 @@ class BaseLLMProvider(ABC):
         """
         Make provider-specific API request.
         
+        Subclasses must override this method to implement provider-specific
+        API calls. This base implementation raises NotImplementedError.
+        
         Args:
             messages: List of message dicts with 'role' and 'content'
             temperature: Sampling temperature
@@ -189,8 +191,13 @@ class BaseLLMProvider(ABC):
             
         Returns:
             Raw API response
+            
+        Raises:
+            NotImplementedError: Subclasses must implement this method
         """
-        pass
+        raise NotImplementedError(
+            f"Provider {self.provider_type.value} must implement _make_request()"
+        )
     
     async def generate(
         self,
@@ -263,7 +270,10 @@ class BaseLLMProvider(ABC):
                         )
                 except RuntimeError:
                     # Cost manager not initialized, proceed without budget check
-                    pass
+                    logger.warning(
+                        f"Cost manager not initialized for {self.provider_type.value}, "
+                        f"proceeding without budget check"
+                    )
             
             # Rate limit check
             await self._check_rate_limit()

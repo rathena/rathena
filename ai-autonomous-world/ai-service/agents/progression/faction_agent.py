@@ -117,7 +117,6 @@ class FactionAgent(BaseAIAgent):
             backstory="An AI system that tracks faction influence and player standing",
             verbose=settings.crewai_verbose,
             allow_delegation=False,
-            llm=self.llm_provider if hasattr(self, 'llm_provider') else None
         )
     
     async def _process(self, context: AgentContext) -> AgentResponse:

@@ -105,7 +105,6 @@ class DynamicNPCAgent(BaseAIAgent):
             backstory="An AI that breathes life into wandering characters",
             verbose=settings.crewai_verbose,
             allow_delegation=False,
-            llm=self.llm_provider if hasattr(self, 'llm_provider') else None
         )
     
     async def _process(self, context: AgentContext) -> AgentResponse:

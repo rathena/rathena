@@ -36,6 +36,7 @@ from routers.progression import router as progression_router
 from routers.environmental import router as environmental_router
 from routers.economy_social import router as economy_social_router
 from routers.advanced import router as advanced_router
+from routers.storyline import router as storyline_router
 from middleware import (
     APIKeyMiddleware,
     RateLimitMiddleware,

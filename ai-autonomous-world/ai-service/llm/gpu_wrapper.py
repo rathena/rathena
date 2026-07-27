@@ -168,6 +168,42 @@ class GPULLMWrapper:
         **kwargs
     ) -> str:
         """Generate using TensorRT-LLM engine"""
-        # Placeholder for TensorRT-LLM generation
-        raise NotImplementedError("TensorRT-LLM generation not yet implemented")
+        if not self.tensorrt_engine:
+            logger.warning("TensorRT-LLM engine not initialized, falling back")
+            return None
+        
+        try:
+            # TensorRT-LLM generation via its Python bindings
+            # This is a simplified implementation - full TensorRT-LLM integration
+            # requires model-specific engine building and deployment
+            
+            # Build generation input
+            input_ids = self.tensorrt_engine.tokenize([prompt])
+            
+            # Configure generation parameters
+            generation_kwargs = {
+                "max_new_tokens": max_tokens,
+                "temperature": temperature,
+                "top_p": kwargs.get('top_p', 0.95),
+                "top_k": kwargs.get('top_k', 50),
+                "beam_width": kwargs.get('beam_width', 1),
+                "len_penalty": kwargs.get('len_penalty', 1.0),
+                "repetition_penalty": kwargs.get('repetition_penalty', 1.0),
+            }
+            
+            # Run generation
+            outputs = self.tensorrt_engine.generate(input_ids, **generation_kwargs)
+            
+            # Decode output tokens
+            generated_text = self.tensorrt_engine.tokenizer.decode(
+                outputs[0].tolist(),
+                skip_special_tokens=True
+            )
+            
+            logger.debug(f"TensorRT-LLM generated {len(generated_text)} chars")
+            return generated_text
+            
+        except Exception as e:
+            logger.error(f"TensorRT-LLM generation failed: {e}")
+            return None
 

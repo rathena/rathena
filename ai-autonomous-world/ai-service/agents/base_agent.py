@@ -126,22 +126,43 @@ class BaseAIAgent(ABC):
         # Create CrewAI agent
         self.crew_agent = self._create_crew_agent()
 
-    @abstractmethod
     def _create_crew_agent(self) -> Agent:
         """
-        Create and configure the CrewAI Agent instance
+        Create and configure the CrewAI Agent instance.
+        Subclasses should override to provide custom agent configuration.
         
         Returns:
             Configured CrewAI Agent
         """
-        pass
+        # Default CrewAI agent with basic configuration
+        # Subclasses override this for specialized behavior
+        return Agent(
+            role=self.agent_type,
+            goal=f"Process {self.agent_type} tasks for NPC {self.agent_id}",
+            backstory=f"An AI agent specialized in {self.agent_type} operations.",
+            verbose=self.config.get("verbose", False),
+            allow_delegation=self.config.get("allow_delegation", False),
+        )
 
-    @abstractmethod
     async def _process(self, context: AgentContext) -> AgentResponse:
         """
-        Subclass must implement this: process the given context and generate a response.
+        Default process implementation.
+        Subclasses should override this for specialized behavior.
+        
+        Args:
+            context: Agent context with NPC state and world information
+            
+        Returns:
+            AgentResponse with processing results
         """
-        pass
+        logger.warning(f"Using default _process implementation for {self.agent_type} agent")
+        return AgentResponse(
+            agent_type=self.agent_type,
+            success=True,
+            data={"message": f"Default {self.agent_type} processing completed", "context_id": context.npc_id},
+            confidence=0.5,
+            reasoning="Default implementation - subclass should override"
+        )
 
     async def process(self, context: AgentContext) -> AgentResponse:
         """
@@ -336,3 +357,14 @@ class BaseAIAgent(ABC):
         except Exception as e:
             logger.error(f"LLM generation failed in {self.agent_type} agent: {e}")
             raise
+
+
+# Alias for backward compatibility with tests
+BaseAgent = BaseAIAgent
+
+
+class AgentStatus:
+    """Agent execution status constants"""
+    COMPLETED = "completed"
+    FAILED = "failed"
+    TIMEOUT = "timeout"

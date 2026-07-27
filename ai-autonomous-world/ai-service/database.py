@@ -768,3 +768,25 @@ def get_postgres_pool():
     """Get the global PostgreSQL manager instance"""
     return postgres_db
 
+
+# Aliases for backward compatibility
+PostgreSQLConnection = PostgreSQLManager
+DragonflyConnection = Database
+
+
+class DatabaseManager:
+    """Manages both PostgreSQL and DragonflyDB connections"""
+    def __init__(self):
+        self.postgres = PostgreSQLManager()
+        self.dragonfly = Database()
+
+    async def connect_all(self):
+        """Connect to both databases"""
+        await self.postgres.connect()
+        await self.dragonfly.connect()
+
+    async def disconnect_all(self):
+        """Disconnect from both databases"""
+        await self.postgres.disconnect()
+        await self.dragonfly.disconnect()
+

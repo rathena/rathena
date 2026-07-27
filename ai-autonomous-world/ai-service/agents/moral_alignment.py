@@ -15,6 +15,17 @@ ALIGNMENT_TYPES = [
 ]
 
 class MoralAlignment:
+    # Alignment constants
+    LAWFUL_GOOD = "lawful_good"
+    NEUTRAL_GOOD = "neutral_good"
+    CHAOTIC_GOOD = "chaotic_good"
+    LAWFUL_NEUTRAL = "lawful_neutral"
+    TRUE_NEUTRAL = "true_neutral"
+    CHAOTIC_NEUTRAL = "chaotic_neutral"
+    LAWFUL_EVIL = "lawful_evil"
+    NEUTRAL_EVIL = "neutral_evil"
+    CHAOTIC_EVIL = "chaotic_evil"
+    
     def __init__(self, alignment: str = "true_neutral", spectrum: Optional[Dict[str, float]] = None):
         self.alignment = alignment if alignment in ALIGNMENT_TYPES else "true_neutral"
         self.spectrum = spectrum or {
@@ -122,3 +133,81 @@ class MoralAlignment:
             "history": list(self.history),
             "last_update": self.last_update.isoformat()
         }
+
+
+class AlignmentVector:
+    """Alignment vector representation with law_chaos and good_evil axes"""
+    def __init__(self, law_chaos=0.0, good_evil=0.0):
+        self.law_chaos = max(-1.0, min(1.0, law_chaos))
+        self.good_evil = max(-1.0, min(1.0, good_evil))
+
+
+class AlignmentInfluence:
+    """Static methods for alignment-based calculations"""
+    
+    ALIGNMENT_VECTORS = {
+        "lawful_good": (1.0, 1.0),
+        "neutral_good": (0.0, 1.0),
+        "chaotic_good": (-1.0, 1.0),
+        "lawful_neutral": (1.0, 0.0),
+        "true_neutral": (0.0, 0.0),
+        "chaotic_neutral": (-1.0, 0.0),
+        "lawful_evil": (1.0, -1.0),
+        "neutral_evil": (0.0, -1.0),
+        "chaotic_evil": (-1.0, -1.0),
+    }
+    
+    @classmethod
+    def get_vector(cls, alignment: str) -> AlignmentVector:
+        law, good = cls.ALIGNMENT_VECTORS.get(alignment, (0.0, 0.0))
+        return AlignmentVector(law, good)
+    
+    @classmethod
+    def from_vector(cls, vec: AlignmentVector) -> str:
+        best = "true_neutral"
+        best_dist = float("inf")
+        for alignment, (law, good) in cls.ALIGNMENT_VECTORS.items():
+            dist = (vec.law_chaos - law) ** 2 + (vec.good_evil - good) ** 2
+            if dist < best_dist:
+                best_dist = dist
+                best = alignment
+        return best
+    
+    @classmethod
+    def get_action_preference(cls, alignment: str, action: str) -> float:
+        vec = cls.get_vector(alignment)
+        action_bias = {
+            "help_others": (0.0, 1.0),
+            "harm_others": (0.0, -1.0),
+            "follow_rules": (1.0, 0.0),
+            "break_rules": (-1.0, 0.0),
+            "honor_duty": (0.5, 0.5),
+            "selfish_act": (0.0, -0.5),
+            "embrace_chaos": (-1.0, 0.0),
+        }
+        bias = action_bias.get(action, (0.0, 0.0))
+        score = (vec.law_chaos * bias[0] + vec.good_evil * bias[1]) / 2.0
+        return max(0.0, min(1.0, 0.5 + score))
+    
+    @classmethod
+    def get_dialogue_tone(cls, alignment: str) -> Dict[str, float]:
+        vec = cls.get_vector(alignment)
+        return {
+            "friendly": max(0.0, vec.good_evil),
+            "hostile": max(0.0, -vec.good_evil),
+            "formal": max(0.0, vec.law_chaos),
+            "casual": max(0.0, -vec.law_chaos),
+            "helpful": max(0.0, (vec.good_evil + vec.law_chaos) / 2),
+            "dismissive": max(0.0, (-vec.good_evil - vec.law_chaos) / 2),
+        }
+    
+    @classmethod
+    def calculate_compatibility(cls, alignment1: str, alignment2: str) -> float:
+        v1 = cls.get_vector(alignment1)
+        v2 = cls.get_vector(alignment2)
+        dot = v1.law_chaos * v2.law_chaos + v1.good_evil * v2.good_evil
+        return max(0.0, min(1.0, (dot + 2.0) / 4.0))
+    
+    @classmethod
+    def would_perform_action(cls, alignment: str, action: str, threshold: float = 0.5) -> bool:
+        return cls.get_action_preference(alignment, action) >= threshold

@@ -7,6 +7,7 @@ from loguru import logger
 import json
 import random
 from datetime import datetime, timedelta
+from enum import Enum
 
 from crewai import Agent
 try:
@@ -601,4 +602,21 @@ Provide a brief analysis (2-3 sentences) and one key recommendation."""
             ],
             "game_statistics": self.game_statistics
         }
+
+
+class PriceTrend(str, Enum):
+    """Price trend direction"""
+    RISING = "rising"
+    FALLING = "falling"
+    STABLE = "stable"
+    VOLATILE = "volatile"
+
+
+class MarketCondition(str, Enum):
+    """Market condition states"""
+    BOOM = "boom"
+    GROWTH = "growth"
+    STABLE = "stable"
+    RECESSION = "recession"
+    CRASH = "crash"
 

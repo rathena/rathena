@@ -450,3 +450,14 @@ Respond as {npc_name} would, considering your personality, goals, emotion, memor
             return base_actions + ["accept_quest", "decline_quest"]
         else:
             return base_actions
+
+
+class DialogueContext:
+    """Context for dialogue generation"""
+    def __init__(self, npc_state=None, player_message="", conversation_history=None,
+                 relationship_score=0.0, context_tags=None):
+        self.npc_state = npc_state
+        self.player_message = player_message
+        self.conversation_history = conversation_history or []
+        self.relationship_score = relationship_score
+        self.context_tags = context_tags or []

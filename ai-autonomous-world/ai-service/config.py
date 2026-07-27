@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     
     # Service Configuration
     service_name: str = Field(default="ai-service", env="SERVICE_NAME")
-    service_host: str = Field(default="192.168.0.100", env="SERVICE_HOST")
+    service_host: str = Field(default="0.0.0.0", env="SERVICE_HOST")
     service_port: int = Field(default=8000, env="SERVICE_PORT")
     environment: str = Field(default="development", env="ENVIRONMENT")
     debug: bool = Field(default=True, env="DEBUG")
@@ -29,18 +29,18 @@ class Settings(BaseSettings):
     # rAthena Bridge Configuration (for pushing commands back to game server)
 
     # DragonflyDB Configuration (for caching and real-time state)
-    redis_host: str = Field(default="192.168.0.100", env="REDIS_HOST")
+    redis_host: str = Field(default="localhost", env="REDIS_HOST")
     redis_port: int = Field(default=6379, env="REDIS_PORT")
     redis_db: int = Field(default=0, env="REDIS_DB")
     redis_password: Optional[str] = Field(default=None, env="REDIS_PASSWORD")
     redis_max_connections: int = Field(default=50, env="REDIS_MAX_CONNECTIONS")
 
     # PostgreSQL Configuration (for persistent memory storage via OpenMemory SDK)
-    postgres_host: str = Field(default="192.168.0.100", env="POSTGRES_HOST")
+    postgres_host: str = Field(default="localhost", env="POSTGRES_HOST")
     postgres_port: int = Field(default=5432, env="POSTGRES_PORT")
     postgres_db: str = Field(default="ai_world_memory", env="POSTGRES_DB")
     postgres_user: str = Field(default="ai_world_user", env="POSTGRES_USER")
-    postgres_password: str = Field(default="ai_world_pass_2025", env="POSTGRES_PASSWORD")
+    postgres_password: str = Field(default="", env="POSTGRES_PASSWORD")
     postgres_pool_size: int = Field(default=10, env="POSTGRES_POOL_SIZE")
     postgres_max_overflow: int = Field(default=20, env="POSTGRES_MAX_OVERFLOW")
     postgres_echo_sql: bool = Field(default=False, env="POSTGRES_ECHO_SQL")

@@ -264,7 +264,6 @@ class MapHazardAgent(BaseAIAgent):
             backstory="An AI system that manipulates environmental conditions to challenge players",
             verbose=settings.crewai_verbose,
             allow_delegation=False,
-            llm=self.llm_provider if hasattr(self, 'llm_provider') else None
         )
     
     async def _process(self, context: AgentContext) -> AgentResponse:

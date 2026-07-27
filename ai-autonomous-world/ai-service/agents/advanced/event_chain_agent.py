@@ -200,7 +200,6 @@ class EventChainAgent(BaseAIAgent):
             backstory="An AI system that weaves persistent narratives",
             verbose=settings.crewai_verbose,
             allow_delegation=False,
-            llm=self.llm_provider if hasattr(self, 'llm_provider') else None
         )
     
     async def _process(self, context: AgentContext) -> AgentResponse:

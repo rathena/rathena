@@ -112,7 +112,6 @@ class MerchantEconomyAgent(BaseAIAgent):
             backstory="An AI system that monitors and balances the game economy",
             verbose=settings.crewai_verbose,
             allow_delegation=False,
-            llm=self.llm_provider if hasattr(self, 'llm_provider') else None
         )
     
     async def _process(self, context: AgentContext) -> AgentResponse:

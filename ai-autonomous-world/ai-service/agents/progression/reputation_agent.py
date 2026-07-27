@@ -112,7 +112,6 @@ class ReputationAgent(BaseAIAgent):
             backstory="An AI system that measures player impact across all world systems",
             verbose=settings.crewai_verbose,
             allow_delegation=False,
-            llm=self.llm_provider if hasattr(self, 'llm_provider') else None
         )
     
     async def _process(self, context: AgentContext) -> AgentResponse:

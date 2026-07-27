@@ -111,7 +111,6 @@ class ProblemAgent(BaseAIAgent):
             backstory="An AI system that monitors the world and creates dynamic challenges",
             verbose=settings.crewai_verbose,
             allow_delegation=False,
-            llm=self.llm_provider if hasattr(self, 'llm_provider') else None
         )
     
     async def _process(self, context: AgentContext) -> AgentResponse:

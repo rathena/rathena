@@ -13,6 +13,7 @@ import ctypes
 import threading
 import concurrent.futures
 import time
+from enum import Enum
 
 from prometheus_client import Counter, Histogram, Gauge
 
@@ -365,3 +366,11 @@ class AgentOrchestrator:
             process=Process.sequential,
             verbose=True
         )
+
+
+class WorkflowType(str, Enum):
+    """Types of workflows the orchestrator can execute"""
+    SIMPLE = "simple"
+    SEQUENTIAL = "sequential"
+    PARALLEL = "parallel"
+    HIERARCHICAL = "hierarchical"

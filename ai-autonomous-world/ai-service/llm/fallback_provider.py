@@ -411,9 +411,12 @@ class FallbackLLMProvider(BaseLLMProvider):
             self.failure_counts[0] = 0
             llm_current_provider.set(self.current_index)
             
-        except Exception:
+        except Exception as e:
             # Still failing, stay on current provider
-            pass
+            logger.debug(f"Primary provider {primary_name} still unavailable: {e}")
+            # Increment failure count for primary
+            if len(self.failure_counts) > 0:
+                self.failure_counts[0] += 1
     
     def get_current_provider_name(self) -> str:
         """Get name of currently active provider"""

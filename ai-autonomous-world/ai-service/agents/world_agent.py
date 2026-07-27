@@ -3,9 +3,10 @@ World Agent - Analyzes and responds to world state changes
 Processes global events and their impact on NPCs
 """
 
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 from loguru import logger
 import json
+from datetime import datetime
 
 from crewai import Agent
 try:
@@ -13,6 +14,7 @@ try:
 except ModuleNotFoundError:
     from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
 from models.npc_relationship import NPCRelationship, NPCInteraction, SharedInformation
+from enum import Enum
 
 class WorldAgent(BaseAIAgent):
     """
@@ -452,3 +454,32 @@ Generate an appropriate world event. Respond with JSON only."""
             },
             "distance": abs(target_x - current_x) + abs(target_y - current_y)
         }
+
+
+class EventType(str, Enum):
+    """Types of world events"""
+    WEATHER_CHANGE = "weather_change"
+    TIME_TRANSITION = "time_transition"
+    FESTIVAL = "festival"
+    DISASTER = "disaster"
+    ECONOMIC_EVENT = "economic_event"
+    POLITICAL_EVENT = "political_event"
+    SOCIAL_EVENT = "social_event"
+    MAGICAL_EVENT = "magical_event"
+    MARKET_DAY = "market_day"
+    SPECIAL_EVENT = "special_event"
+
+
+class WorldEvent:
+    """A world event that affects NPCs and the game world"""
+    def __init__(self, event_id: str, event_type: EventType, title: str, description: str,
+                 severity: float = 0.5, duration_minutes: int = 60,
+                 affected_locations: List[str] = None):
+        self.event_id = event_id
+        self.event_type = event_type
+        self.title = title
+        self.description = description
+        self.severity = severity
+        self.duration_minutes = duration_minutes
+        self.affected_locations = affected_locations or []
+        self.start_time = datetime.utcnow()
