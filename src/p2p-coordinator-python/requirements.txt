@@ -3,3 +3,4 @@ uvicorn[standard]>=0.20.0
 pyjwt>=2.0.0
 websockets>=10.0
 pydantic>=2.0.0
+redis>=5.0.0
