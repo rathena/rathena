@@ -96,12 +96,16 @@ bool AIWorldIPCClient::receive_message(AIWorldMessage& msg, bool blocking) {
     uint8_t* data = static_cast<uint8_t*>(zmq_msg_data(&zmq_msg));
     size_t size = zmq_msg_size(&zmq_msg);
     zmq_msg_close(&zmq_msg);
-    if (size < 12) return false;
+    if (size < 12) {
+        return false;
+    }
     int32_t type, corr_len, payload_size;
     std::memcpy(&type, data, 4);
     std::memcpy(&corr_len, data + 4, 4);
     std::memcpy(&payload_size, data + 8, 4);
-    if (size < 12 + corr_len + payload_size) return false;
+    if (size < 12 + corr_len + payload_size) {
+        return false;
+    }
     msg.message_type = static_cast<IPCMessageType>(type);
     msg.correlation_id.assign(reinterpret_cast<char*>(data + 12), corr_len);
     thread_local std::vector<uint8_t> payload_buf;
