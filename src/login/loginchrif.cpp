@@ -325,7 +325,7 @@ int32 logchrif_parse_reqchangemail(int32 fd, int32 id, char* ip){
  * @param id: id of char-serv
  * @param ip: char-serv ip (used for info)
  * @return 0 not enough info transmitted, 1 success
- * TODO seems pretty damn close to logchrif_parse_reqbanacc
+ * TODO seems pretty damn close to logchrif_parse_reqbanacc - consider merging these two functions
  */
 int32 logchrif_parse_requpdaccstate(int32 fd, int32 id, char* ip){
 	if (RFIFOREST(fd) < 10)
@@ -370,7 +370,7 @@ int32 logchrif_parse_requpdaccstate(int32 fd, int32 id, char* ip){
  * @param id: id of char-serv
  * @param ip: char-serv ip (used for info)
  * @return 0 not enough info transmitted, 1 success
- * TODO check logchrif_parse_requpdaccstate for possible merge
+ * TODO check logchrif_parse_requpdaccstate for possible merge - these two functions are very similar
  */
 int32 logchrif_parse_reqbanacc(int32 fd, int32 id, char* ip){
 	if (RFIFOREST(fd) < 10)
@@ -859,7 +859,7 @@ int32 logchrif_parse(int32 fd){
 
 /**
  * Initializes a server structure.
- * @param id: id of char-serv (should be >0, FIXME)
+ * @param id: id of char-serv (should be >0, FIXME - currently accepts any value, negative values are invalid)
  */
 void logchrif_server_init(int32 id) {
 	memset(&ch_server[id], 0, sizeof(ch_server[id]));
@@ -868,7 +868,7 @@ void logchrif_server_init(int32 id) {
 
 /**
  * Destroys a server structure.
- * @param id: id of char-serv (should be >0, FIXME)
+ * @param id: id of char-serv (should be >0, FIXME - currently accepts any value, negative values are invalid)
  */
 void logchrif_server_destroy(int32 id){
 	if( ch_server[id].fd != -1 ) {
@@ -880,7 +880,7 @@ void logchrif_server_destroy(int32 id){
 /**
  * Resets all the data related to a server.
  *  Actually destroys then recreates the struct.
- * @param id: id of char-serv (should be >0, FIXME)
+ * @param id: id of char-serv (should be >0, FIXME - currently accepts any value, negative values are invalid)
  */
 void logchrif_server_reset(int32 id) {
 	login_online_db_setoffline(id); //Set all chars from this char server to offline.
@@ -890,7 +890,7 @@ void logchrif_server_reset(int32 id) {
 
 /**
  * Called when the connection to Char Server is disconnected.
- * @param id: id of char-serv (should be >0, FIXME)
+ * @param id: id of char-serv (should be >0, FIXME - currently accepts any value, negative values are invalid)
  */
 void logchrif_on_disconnect(int32 id) {
 	ShowStatus("Char-server '%s' has disconnected.\n", ch_server[id].name);

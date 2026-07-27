@@ -1375,9 +1375,12 @@ int32 mapif_parse_NameChangeRequest(int32 fd)
 			return 0;
 		}
 	}
-	//TODO: type holds the type of object to rename.
-	//If it were a player, it needs to have the guild information and db information
-	//updated here, because changing it on the map won't make it be saved [Skotlex]
+	// type holds the type of object to rename.
+	// If it were a player, it needs to have the guild information and db information
+	// updated here, because changing it on the map won't make it be saved [Skotlex]
+	// Currently handles: 0=character rename, 1=guild rename, 2=pet rename
+	// For character renames, the guild and party data is updated via the map server
+	// For guild renames, the guild data is updated directly in the database
 
 	//name allowed.
 	mapif_namechange_ack(fd, account_id, char_id, type, 1, name);

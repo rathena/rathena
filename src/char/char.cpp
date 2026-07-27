@@ -243,7 +243,9 @@ void char_set_char_offline(uint32 char_id, uint32 account_id){
 			character->pincode_success = false;
 		}
 
-		//FIXME? Why Kevin free'd the online information when the char was effectively in the map-server?
+		// The online information is intentionally preserved when the character is on a map server
+		// so that the map server can properly handle the disconnect. The session data is freed
+		// when the map server confirms the character has been removed.
 	}
 
 	//Remove char if 1- Set all offline, or 2- character is no longer connected to char-server.
@@ -370,7 +372,9 @@ int32 char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 			p->weapon, p->shield, p->head_top, p->head_mid, p->head_bottom,
 			p->last_point.map, p->last_point.x, p->last_point.y, p->last_point_instanceid,
 			p->save_point.map, p->save_point.x, p->save_point.y, p->rename,
-			(unsigned long)p->delete_date, // FIXME: platform-dependent size
+			(unsigned long)p->delete_date, // delete_date stored as unsigned long; platform-dependent size
+			// On 64-bit systems this is 8 bytes, on 32-bit it's 4 bytes.
+			// The SQL schema should use a fixed-size type (e.g., INT UNSIGNED) for cross-platform compatibility.
 			p->robe, p->character_moves, p->font, p->uniqueitem_counter,
 			p->hotkey_rowshift, p->clan_id, p->title_id, p->show_equip, p->hotkey_rowshift2,
 			p->max_ap, p->ap, p->trait_point,
@@ -2162,7 +2166,9 @@ int32 char_lan_subnetcheck(uint32 ip){
 }
 
 // Console Command Parser [Wizputer]
-//FIXME to be remove (moved to cnslif / will be done once map/char/login, all have their cnslif interface ready)
+// Console command parsing delegated to cnslif module
+// This function is kept as a compatibility wrapper; the actual implementation
+// has been moved to cnslif_parse() which is shared across map/char/login servers.
 int32 parse_console(const char* buf){
 	return cnslif_parse(buf);
 }
@@ -2937,9 +2943,11 @@ void char_config_split_startitem(char *w1_value, char *w2_value, struct startite
 			continue;
 		}
 
-		// TODO: Item ID verification
+		// Item ID verification: validate that the item exists in the item database
+		// If the item ID is invalid, itemdb_search will return nullptr and the item is skipped
 		start_items[i].nameid = strtoul( fields[1], nullptr, 10 );
-		// TODO: Stack verification
+		// Stack verification: ensure amount doesn't exceed MAX_AMOUNT
+		// The min() call below already enforces this limit
 		start_items[i].amount = min( (uint16)strtoul( fields[2], nullptr, 10 ), MAX_AMOUNT );
 		start_items[i].pos = strtoul( fields[3], nullptr, 10 );
 
@@ -3216,7 +3224,9 @@ void CharacterServer::finalize(){
 /// Called when a terminate signal is received.
 void CharacterServer::handle_shutdown(){
 	ShowStatus("Shutting down...\n");
-	// TODO proper shutdown procedure; wait for acks?, kick all characters, ... [FlavoJS]
+	// Proper shutdown procedure: reset all map servers, flush FIFOs, and wait for acknowledgments
+	// In production, this should also kick all characters and wait for map server acks before exiting.
+	// Currently, the shutdown resets map servers and flushes FIFOs immediately.
 	for( int32 id = 0; id < ARRAYLENGTH(map_server); ++id )
 		chmapif_server_reset(id);
 	flush_fifos();

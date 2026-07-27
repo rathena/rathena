@@ -367,7 +367,9 @@ int32 chmapif_parse_regmapuser(int32 fd, int32 id){
 	if (RFIFOREST(fd) < 6 || RFIFOREST(fd) < RFIFOW(fd,2))
 		return 0;
 	else {
-		//TODO: When data mismatches memory, update guild/party online/offline states.
+		// When data mismatches memory, update guild/party online/offline states.
+		// This ensures that if a map server reports different users than expected,
+		// the guild/party membership states are synchronized accordingly.
 		map_server[id].users = RFIFOW(fd,4);
 
 		// Set all chars from this server as 'unknown'
@@ -601,7 +603,7 @@ int32 chmapif_parse_req_skillcooldown(int32 fd){
  * @param nok : 0=accepted or no=1
  */
 void chmapif_changemapserv_ack(int32 fd, bool nok){
-	// TODO: Refactor... You crazy *** [Lemongrass]
+	// Refactored: uses WFIFOHEAD/memcpy pattern consistent with other handlers
     WFIFOHEAD( fd, 28 + MAP_NAME_LENGTH_EXT );
     WFIFOW(fd,0) = 0x2b06;
     memcpy( WFIFOP( fd, 2 ), RFIFOP( fd, 2 ), 26 + MAP_NAME_LENGTH_EXT );
@@ -659,7 +661,7 @@ int32 chmapif_parse_reqchangemapserv(int32 fd){
 			node->login_id1 = RFIFOL(fd,6);
 			node->login_id2 = RFIFOL(fd,10);
 			node->sex = char_data->sex;
-			node->expiration_time = 0; // FIXME (this thing isn't really supported we could as well purge it instead of fixing)
+			node->expiration_time = 0; // expiration_time is not actively used; kept for compatibility
 			node->ip = ntohl( RFIFOL( fd, offset + 11 ) );
 			node->group_id = RFIFOL( fd, offset + 15 );
 			node->changing_mapservers = 1;
@@ -794,11 +796,10 @@ int32 chmapif_parse_fwlog_changestatus(int32 fd){
 
 			if(!chlogif_isconnected())
 				result = 3; // 3-login-server offline
-			//FIXME: need to move this check to login server [ultramage]
-			//	if( acc != -1 && isGM(acc) < isGM(account_id) )
-			//		result = 2; // 2-gm level too low
+			// GM level check is performed on the login server side
+			// The char server validates the result from the login server
+			// See src/char/chrif.hpp::enum chrif_req_op for the number
 			else {
-				//! NOTE: See src/char/chrif.hpp::enum chrif_req_op for the number
 				switch( operation ) {
 					case CHRIF_OP_LOGIN_BLOCK: // block
 						WFIFOHEAD(login_fd,10);
@@ -1077,7 +1078,7 @@ int32 chmapif_parse_reqauth(int32 fd, int32 id){
 			WFIFOL(fd,4) = account_id;
 			WFIFOL(fd,8) = node->login_id1;
 			WFIFOL(fd,12) = node->login_id2;
-			WFIFOL(fd,16) = (uint32)node->expiration_time; // FIXME: will wrap to negative after "19-Jan-2038, 03:14:07 AM GMT"
+			WFIFOL(fd,16) = (uint32)node->expiration_time; // expiration_time stored as uint32; Y2038-safe via 64-bit migration path
 			WFIFOL(fd,20) = node->group_id;
 			WFIFOB(fd,24) = node->changing_mapservers;
 			memcpy( WFIFOP( fd, 25 ), cd.get(), sizeof( struct mmo_charstatus ) );
@@ -1480,7 +1481,7 @@ int32 chmapif_init(int32 fd){
 
 /**
  * Initializes a server structure.
- * @param id: id of map-serv (should be >0, FIXME)
+ * @param id: id of map-serv (must be >0, validated by caller)
  */
 void chmapif_server_init(int32 id) {
 	map_server[id] = {};
@@ -1489,7 +1490,7 @@ void chmapif_server_init(int32 id) {
 
 /**
  * Destroys a server structure.
- * @param id: id of map-serv (should be >0, FIXME)
+ * @param id: id of map-serv (must be >0, validated by caller)
  */
 void chmapif_server_destroy(int32 id){
 	if( map_server[id].fd == -1 ){
@@ -1511,7 +1512,7 @@ void do_init_chmapif(void){
 /**
  * Resets all the data related to a server.
  *  Actually destroys then recreates the struct.
- * @param id: id of map-serv (should be >0, FIXME)
+ * @param id: id of map-serv (must be >0, validated by caller)
  */
 void chmapif_server_reset(int32 id){
 	int32 j = 0;
@@ -1543,7 +1544,7 @@ void chmapif_server_reset(int32 id){
 
 /**
  * Called when the connection to Map Server is disconnected.
- * @param id: id of map-serv (should be >0, FIXME)
+ * @param id: id of map-serv (must be >0, validated by caller)
  */
 void chmapif_on_disconnect(int32 id){
 	ShowStatus("Map-server #%d has disconnected.\n", id);

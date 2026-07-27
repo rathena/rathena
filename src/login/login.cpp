@@ -132,7 +132,7 @@ AccountDB* login_get_accounts_db(void){
 }
 
 // Console Command Parser [Wizputer]
-//FIXME to be remove (moved to cnslif / will be done once map/char/login, all have their cnslif interface ready)
+//FIXME to be removed (moved to cnslif - will be done once map/char/login all have their cnslif interface ready)
 int32 parse_console(const char* buf){
 	return cnslif_parse(buf);
 }
@@ -388,6 +388,7 @@ int32 login_mmo_auth(struct login_session_data* sd, bool isServer) {
 			ShowStatus("[P2P] Selected host for user '%s': %s\n", sd->userid, p2p_host.c_str());
 			// Optionally, store p2p_host in session or pass to char/map server
 			// TODO: Add field to login_session_data if persistent storage is needed
+			// Currently p2p_host is only used for this session and not persisted.
 		}
 	} else {
 		ShowStatus("[Legacy] Client '%s' is not P2P-capable, using legacy authentication/session flow.\n", sd->userid);
@@ -940,6 +941,7 @@ void LoginServer::finalize(){
 void LoginServer::handle_shutdown(){
 	ShowStatus("Shutting down...\n");
 	// TODO proper shutdown procedure; kick all characters, wait for acks, ...  [FlavioJS]
+	// For now, just close the char server connection and flush FIFOs.
 	do_shutdown_loginchrif();
 	flush_fifos();
 }

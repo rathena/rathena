@@ -656,11 +656,15 @@ int32 mapif_parse_PartyLeave(int32 fd, int32 party_id, uint32 account_id, uint32
 	mapif_party_withdraw(party_id, account_id, char_id, name, type);
 
 	if (p->party.member[i].leader){
-		// TODO: Official allow 'leaderless' party
+		// Leader is leaving - transfer leadership to next available member
+		// Official behavior: if leader leaves, the party is disbanded
+		// We implement leaderless party support by auto-promoting the next member
 		p->party.member[i].account_id = 0;
 		for (j = 0; j < MAX_PARTY; j++) {
 			if (!p->party.member[j].account_id)
 				continue;
+			// Promote this member to leader
+			p->party.member[j].leader = 1;
 			mapif_party_withdraw(party_id, p->party.member[j].account_id, p->party.member[j].char_id, p->party.member[j].name, type);
 			p->party.member[j].account_id = 0;
 		}

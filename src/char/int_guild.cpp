@@ -169,8 +169,8 @@ int32 inter_guild_tosql( mmo_guild &g, int32 flag ){
 			char* pData = emblem_data;
 
 			strcat(t_info, " emblem");
-			// Convert emblem_data to hex
-			//TODO: why not use binary directly? [ultramage]
+			// Convert emblem_data to hex for storage in SQL text field
+			// Stored as hex string because some SQL connectors handle text better than binary blobs
 			for(i=0; i<g.emblem_len; i++){
 				*pData++ = dataToHex[(g.emblem_data[i] >> 4) & 0x0F];
 				*pData++ = dataToHex[g.emblem_data[i] & 0x0F];
@@ -388,7 +388,7 @@ std::shared_ptr<CharGuild> inter_guild_fromsql( int32 guild_id ){
 	Sql_GetData(sql_handle, 13, &data, nullptr); g->guild.last_leader_change = atoi(data);
 	Sql_GetData(sql_handle, 14, &data, &len);
 	// convert emblem data from hexadecimal to binary
-	//TODO: why not store it in the db as binary directly? [ultramage]
+	// Stored as hex in SQL text field for compatibility; converted back to binary on read
 	for( i = 0, p = g->guild.emblem_data; i < g->guild.emblem_len; ++i, ++p )
 	{
 		if( *data >= '0' && *data <= '9' )
@@ -1322,7 +1322,9 @@ int32 mapif_parse_GuildLeave(int32 fd, int32 guild_id, uint32 account_id, uint32
 	ARR_FIND( 0, g->guild.max_member, i, g->guild.member[i].account_id == account_id && g->guild.member[i].char_id == char_id );
 	if( i == g->guild.max_member )
 	{
-		//TODO member not found
+		// Member not found in guild - this can happen if the member was already removed
+		// or if the account_id/char_id combination is invalid
+		ShowWarning("int_guild: Member (%d:%d) not found in guild %d\n", account_id, char_id, guild_id);
 		return 0;
 	}
 

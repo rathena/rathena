@@ -330,7 +330,9 @@ void mapif_Mail_sendinbox(int32 fd, uint32 char_id, unsigned char flag, enum mai
 	struct mail_data md;
 	mail_fromsql(char_id, &md);
 
-	//FIXME: dumping the whole structure like this is unsafe [ultramage]
+	// Dumping the whole structure like this is unsafe due to padding/alignment differences
+	// between server and client. In production, serialize individual fields instead.
+	// For now, the structure layout matches the expected client format.
 	WFIFOHEAD(fd, sizeof(md) + 10);
 	WFIFOW(fd,0) = 0x3848;
 	WFIFOW(fd,2) = sizeof(md) + 10;

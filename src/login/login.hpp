@@ -243,7 +243,7 @@ int32 login_mmo_auth_new(const char* userid, const char* pass, const char sex, c
  *	3: blacklisted (or registration limit exceeded if new acc);
  *	5: invalid client_version|hash;
  *	6: banned
- *	x: acc state (TODO document me deeper)
+ *	x: acc state (TODO document me deeper - see mmo.h for e_auth_state enum values)
  */
 int32 login_mmo_auth(struct login_session_data* sd, bool isServer);
 

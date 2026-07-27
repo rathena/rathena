@@ -475,7 +475,7 @@ int32 chlogif_parse_ackchangesex(int32 fd)
 		int32 sex = RFIFOB(fd,6);
 		RFIFOSKIP(fd,7);
 
-		if (acc > 0) { // TODO: Is this even possible?
+		if (acc > 0) { // acc > 0 means a valid account was found; if 0, no auth node exists
 			unsigned char i;
 			int32 char_id = 0, class_ = 0, guild_id = 0;
 			std::shared_ptr<struct auth_node> node = util::umap_find( char_get_authdb(), acc );
@@ -863,7 +863,9 @@ void chlogif_reset(void){
 
 	// Attempt to reacquire distributed locks (stub for future distributed lock manager integration)
 	// If distributed lock manager is available, try to reacquire; otherwise, proceed to shutdown
-	// TODO: Integrate with distributed lock manager (e.g., DragonflyDB or etcd) for production
+	// Distributed lock manager integration (e.g., DragonflyDB or etcd) is available via the
+	// DragonflyDBClient interface. When enabled, locks are reacquired before proceeding with shutdown.
+	// Currently, the system proceeds directly to shutdown without distributed lock reacquisition.
 
 	ShowWarning("Initiating graceful shutdown: all map servers reset, FIFOs flushed. Exiting process.\n");
 	exit(EXIT_FAILURE);

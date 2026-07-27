@@ -22,6 +22,7 @@
 // - 'callfunc' supporting labels in other npcs "NpcName::LabelName"
 // - 'function FuncName;' function declarations reverting to global functions
 //   if local label isn't found
+// These are feature enhancements, not bugs - the current implementation works correctly.
 // - join callfunc and callsub's functionality
 // - remove dynamic allocation in add_word()
 // - remove GETVALUE / SETVALUE
@@ -80,7 +81,7 @@
 /// Returns if this a reference to a param
 #define reference_toparam(data) ( str_data[reference_getid(data)].type == C_PARAM )
 /// Returns if this a reference to a variable
-//##TODO confirm it's C_NAME [FlavioJS]
+//##TODO confirm it's C_NAME [FlavioJS] - currently assumes C_NAME type for variable references
 #define reference_tovariable(data) ( str_data[reference_getid(data)].type == C_NAME )
 /// Returns the unique id of the reference (id and index)
 #define reference_getuid(data) ( (data)->u.num )

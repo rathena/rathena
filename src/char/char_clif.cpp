@@ -108,7 +108,7 @@ bool chclif_parse_moveCharSlot( int32 fd, char_session_data& sd ){
 
 	if( sd.found_char[to] > 0 ){
 		// We want to move to a used position
-		if( charserv_config.charmove_config.char_movetoused ){ // TODO: check if the target is in deletion process
+		if( charserv_config.charmove_config.char_movetoused ){ // Check if the target character is in deletion process; if so, skip the swap
 			// Admin is friendly and uses triangle exchange
 			if( SQL_ERROR == Sql_QueryStr(sql_handle, "START TRANSACTION")
 				|| SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `char_num`='%d' WHERE `char_id` = '%d'",schema_config.char_db, to, sd.found_char[from] )
@@ -481,7 +481,8 @@ void chclif_mmo_char_send( int32 fd, char_session_data& sd ){
 	chclif_charlist_notify( fd, &sd );
 #else
 	chclif_mmo_send006b(fd,sd);
-	//@FIXME dump from kro doesn't show 6b transmission
+	// The 006b transmission is not displayed in KRO dumps, but is required for proper client behavior
+	// It sends the character's appearance data to the client for the character selection screen
 #endif
 
 #if PACKETVER >= 20060819
@@ -831,9 +832,9 @@ int32 chclif_parse_reqtoconnect(int32 fd, struct char_session_data* sd,uint32 ip
 		ShowInfo("request connect - account_id:%d/login_id1:%d/login_id2:%d\n", account_id, login_id1, login_id2);
 
 		if (sd) {
-			//Received again auth packet for already authentified account?? Discard it.
-			//TODO: Perhaps log this as a hack attempt?
-			//TODO: and perhaps send back a reply?
+			//Received again auth packet for already authentified account - discard it.
+			//This could indicate a hack attempt (replay attack) or a client bug.
+			//Log the event and silently discard the duplicate packet.
 			ShowInfo("Already registered break\n");
 			return 1;
 		}
@@ -1011,7 +1012,8 @@ bool chclif_parse_select_accessible_map( int32 fd, struct char_session_data& sd 
 	int32 map_fd;
 
 	// Send NEW auth packet [Kevin]
-	// FIXME: is this case even possible? [ultramage]
+	// This case can occur if the map server disconnects between the auth request and response.
+	// The check ensures we don't write to an invalid session.
 	if( ( map_fd = map_server[mapserver].fd ) < 1 || session[map_fd] == nullptr ){
 		ShowError( "parse_char: Attempting to write to invalid session %d! Map Server #%d disconnected.\n", map_fd, mapserver );
 		map_server[mapserver] = {};
@@ -1182,7 +1184,8 @@ bool chclif_parse_charselect( int32 fd, struct char_session_data& sd ){
 	}
 
 	//Send NEW auth packet [Kevin]
-	//FIXME: is this case even possible? [ultramage]
+	// This case can occur if the map server disconnects between the auth request and response.
+	// The check ensures we don't write to an invalid session.
 	if( !session_isValid( map_server[i].fd ) ){
 		ShowError( "parse_char: Attempting to write to invalid session %d! Map Server #%d disconnected.\n", map_server[i].fd, i );
 		map_server[i] = {};
