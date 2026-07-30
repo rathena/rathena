@@ -30958,8 +30958,8 @@ Body:
     Script: |
       bonus2 bResEff,Eff_Confusion,10000;
       skill "AM_CP_HELM",5;
-    UnEquipScript: |
-      sc_end SC_CP_HELM;
+#   UnEquipScript: |     # TODO: field not supported
+#     sc_end SC_CP_HELM;
   - Combos:
       - Combo:
           - ILL_Kraken_Card    # 300151
@@ -33374,8 +33374,8 @@ Body:
       bonus2 bSkillCooldown,"WL_TELEKINESIS_INTENSE",-120000;
       bonus2 bSkillAtk,"WL_CRIMSONROCK",BaseLevel/3;
       bonus2 bSkillAtk,"WL_SOULEXPANSION",BaseLevel/3;
-    UnEquipScript: |
-      sc_end SC_TELEKINESIS_INTENSE;
+#   UnEquipScript: |     # TODO: field not supported
+#     sc_end SC_TELEKINESIS_INTENSE;
   - Combos:
       - Combo:
           - Noblesse_oblige    # 490206
@@ -33405,8 +33405,8 @@ Body:
     Script: |
       skill "RA_UNLIMIT",5;
       bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",BaseLevel/2;
-    UnEquipScript: |
-      sc_end SC_UNLIMIT;
+#   UnEquipScript: |     # TODO: field not supported
+#     sc_end SC_UNLIMIT;
   - Combos:
       - Combo:
           - CannonConverter_TW    # 32259
@@ -34729,8 +34729,8 @@ Body:
       .@r = getequiprefinerycnt(EQI_GARMENT);
       if (eaclass()&EAJL_THIRD && BaseJob == Job_Hunter)
          bonus2 bSkillCooldown,"RA_UNLIMIT",-18000;
-    UnEquipScript: |
-      sc_end SC_UNLIMIT;
+#   UnEquipScript: |     # TODO: field not supported
+#     sc_end SC_UNLIMIT;
   - Combos:
       - Combo:
           - aegis_29725    # 29725
@@ -35035,8 +35035,8 @@ Body:
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
       if (eaclass()&EAJL_THIRD && BaseJob == Job_Wizard)
          bonus2 bSkillCooldown,"WL_TELEKINESIS_INTENSE",-8000*.@r;
-    UnEquipScript: |
-      sc_end  SC_TELEKINESIS_INTENSE;
+#   UnEquipScript: |     # TODO: field not supported
+#     sc_end SC_TELEKINESIS_INTENSE;
   - Combos:
       - Combo:
           - aegis_29725    # 29725
@@ -35070,8 +35070,8 @@ Body:
          bonus bMatkRate,15;
          bonus2 bSkillCooldown,"WL_TELEKINESIS_INTENSE",-75000;
       }
-    UnEquipScript: |
-      sc_end SC_TELEKINESIS_INTENSE;
+#   UnEquipScript: |     # TODO: field not supported
+#     sc_end SC_TELEKINESIS_INTENSE;
   - Combos:
       - Combo:
           - aegis_29725    # 29725
@@ -37919,8 +37919,8 @@ Body:
     Script: |
       bonus2 bAddEle,Ele_All,15;
       bonus2 bSkillCooldown,"RA_UNLIMIT",-45000;
-    UnEquipScript: |
-      sc_end SC_UNLIMIT;
+#   UnEquipScript: |     # TODO: field not supported
+#     sc_end SC_UNLIMIT;
   - Combos:
       - Combo:
           - Water_Sprits_Armor    # 2346
@@ -40081,8 +40081,8 @@ Body:
           - aegis_311439    # 311439
     Script: |
       skill "RA_CAMOUFLAGE",5;
-    UnEquipScript: |
-      sc_end SC_CAMOUFLAGE;
+#   UnEquipScript: |     # TODO: field not supported
+#     sc_end SC_CAMOUFLAGE;
   - Combos:
       - Combo:
           - Bone_Detale_Card    # 300021
@@ -48243,8 +48243,8 @@ Body:
     Script: |
       bonus2 bSkillCooldown,"WL_CRIMSONROCK",-100;
       bonus2 bSkillCooldown,"WL_TELEKINESIS_INTENSE",-185000;
-    UnEquipScript: |
-      sc_end SC_TELEKINESIS_INTENSE;
+#   UnEquipScript: |     # TODO: field not supported
+#     sc_end SC_TELEKINESIS_INTENSE;
   - Combos:
       - Combo:
           - Hero    # 29509
@@ -48252,8 +48252,8 @@ Body:
     Script: |
       bonus2 bSkillCooldown,"RA_ARROWSTORM",-200;
       bonus2 bSkillCooldown,"RA_UNLIMIT",-240000;
-    UnEquipScript: |
-      sc_end SC_UNLIMIT;
+#   UnEquipScript: |     # TODO: field not supported
+#     sc_end SC_UNLIMIT;
   - Combos:
       - Combo:
           - Hero    # 29509
@@ -48309,8 +48309,8 @@ Body:
           - aegis_312841    # 312841
     Script: |
       autobonus3 "{}",30,100,"SC_TRIANGLESHOT","{ sc_start SC_UNLIMIT,20000,5; }";
-    UnEquipScript: |
-      sc_end SC_UNLIMIT;
+#   UnEquipScript: |     # TODO: field not supported
+#     sc_end SC_UNLIMIT;
   - Combos:
       - Combo:
           - Hero    # 29509
@@ -49453,8 +49453,8 @@ Body:
          bonus2 bSkillUseSPrate,"WM_SEVERE_RAINSTORM",60;
          bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-2000;
       }
-    UnEquipScript: |
-      sc_end SC_UNLIMIT;
+#   UnEquipScript: |     # TODO: field not supported
+#     sc_end SC_UNLIMIT;
   - Combos:
       - Combo:
           - Old_Camo_RabbitHood    # 18984
@@ -50592,8 +50592,8 @@ Body:
           - aegis_313318    # 313318
     Script: |
       bonus2 bSkillCooldown,"WL_TELEKINESIS_INTENSE",-75000;
-    UnEquipScript: |
-      sc_end SC_TELEKINESIS_INTENSE;
+#   UnEquipScript: |     # TODO: field not supported
+#     sc_end SC_TELEKINESIS_INTENSE;
   - Combos:
       - Combo:
           - Tendrilion_Card    # 4463
@@ -50708,8 +50708,8 @@ Body:
     Script: |
       if ((eaclass()&EAJL_FOURTH) && (BaseJob == Job_Bard || BaseJob == Job_Dancer))
          skill "RA_UNLIMIT",5;
-    UnEquipScript: |
-      sc_end SC_UNLIMIT;
+#   UnEquipScript: |     # TODO: field not supported
+#     sc_end SC_UNLIMIT;
   - Combos:
       - Combo:
           - Hero    # 29509
@@ -50734,8 +50734,8 @@ Body:
           - aegis_313301    # 313301
     Script: |
       bonus2 bSkillCooldown,"RA_UNLIMIT",-60000;
-    UnEquipScript: |
-      sc_end SC_UNLIMIT;
+#   UnEquipScript: |     # TODO: field not supported
+#     sc_end SC_UNLIMIT;
   - Combos:
       - Combo:
           - Hero    # 29509
@@ -50787,8 +50787,8 @@ Body:
     Script: |
       if (eaclass()&EAJL_FOURTH && BaseJob == Job_Rogue)
          skill "RA_UNLIMIT",5;
-    UnEquipScript: |
-      sc_end SC_UNLIMIT;
+#   UnEquipScript: |     # TODO: field not supported
+#     sc_end SC_UNLIMIT;
   - Combos:
       - Combo:
           - Release_Of_Magic    # 29371
@@ -51724,8 +51724,8 @@ Body:
     Script: |
       autobonus3 "{}",50,100,"WH_HAWKBOOMERANG","{ sc_start SC_UNLIMIT,20000,5; }";
       autobonus3 "{}",50,100,"WH_HAWKRUSH","{ sc_start SC_UNLIMIT,20000,5; }";
-    UnEquipScript: |
-      sc_end SC_UNLIMIT;
+#   UnEquipScript: |     # TODO: field not supported
+#     sc_end SC_UNLIMIT;
   - Combos:
       - Combo:
           - Release_Of_Magic    # 29371
@@ -51980,8 +51980,8 @@ Body:
       bonus bNoCastCancel;
       bonus5 bAutoSpell,"NPC_WIDESLEEP",2,50,BF_MAGIC,1;
       bonus5 bAutoSpell,"RA_UNLIMIT",3,50,BF_WEAPON,0;
-    UnEquipScript: |
-      sc_end SC_UNLIMIT;
+#   UnEquipScript: |     # TODO: field not supported
+#     sc_end SC_UNLIMIT;
   - Combos:
       - Combo:
           - Grand_Pere_Card    # 27106
@@ -52446,8 +52446,8 @@ Body:
     Script: |
       bonus2 bAddSize,Size_All,25;
       bonus2 bSkillCooldown,"RK_IGNITIONBREAK",-1000;
-    UnEquipScript: |
-      heal 0,-2000;
+#   UnEquipScript: |     # TODO: field not supported
+#     heal 0,-2000;
   - Combos:
       - Combo:
           - Real_Katrinn_Card    # 4686
@@ -52455,8 +52455,8 @@ Body:
     Script: |
       bonus2 bMagicAddSize,Size_All,25;
       bonus2 bSkillCooldown,"WL_CRIMSONROCK",-1500;
-    UnEquipScript: |
-      heal 0,-2000;
+#   UnEquipScript: |     # TODO: field not supported
+#     heal 0,-2000;
   - Combos:
       - Combo:
           - Real_Magaleta_Card    # 4685
@@ -52464,8 +52464,8 @@ Body:
     Script: |
       bonus2 bMagicAddSize,Size_All,25;
       bonus2 bSkillCooldown,"AB_ADORAMUS",-1000;
-    UnEquipScript: |
-      heal 0,-2000;
+#   UnEquipScript: |     # TODO: field not supported
+#     heal 0,-2000;
   - Combos:
       - Combo:
           - Real_Eremes_Card    # 4684
@@ -52473,8 +52473,8 @@ Body:
     Script: |
       bonus2 bAddSize,Size_All,25;
       bonus2 bSkillCooldown,"GC_DARKCROW",-10000;
-    UnEquipScript: |
-      heal 0,-2000;
+#   UnEquipScript: |     # TODO: field not supported
+#     heal 0,-2000;
   - Combos:
       - Combo:
           - Real_Shecil_Card    # 4687
@@ -52482,8 +52482,8 @@ Body:
     Script: |
       bonus2 bAddSize,Size_All,25;
       bonus2 bSkillCooldown,"RA_ARROWSTORM",-1500;
-    UnEquipScript: |
-      heal 0,-2000;
+#   UnEquipScript: |     # TODO: field not supported
+#     heal 0,-2000;
   - Combos:
       - Combo:
           - Real_Harword_Card    # 4688
@@ -52491,8 +52491,8 @@ Body:
     Script: |
       bonus2 bAddSize,Size_All,25;
       bonus2 bSkillCooldown,"NC_AXETORNADO",-2000;
-    UnEquipScript: |
-      heal 0,-2000;
+#   UnEquipScript: |     # TODO: field not supported
+#     heal 0,-2000;
   - Combos:
       - Combo:
           - Raven_Of_Tomb    # 410136
@@ -52556,8 +52556,8 @@ Body:
       bonus2 bSubEle,Ele_All,30;
       bonus2 bAddRace,RC_All,4*(.@r/2);
       bonus2 bSkillAtk,"SC_TRIANGLESHOT",10*(.@r/2);
-    UnEquipScript: |
-      sc_end SC_UNLIMIT;
+#   UnEquipScript: |     # TODO: field not supported
+#     sc_end SC_UNLIMIT;
   - Combos:
       - Combo:
           - Old_Driver_Band_R    # 18973
@@ -56090,8 +56090,8 @@ Body:
       bonus bAspd,1;
       bonus5 bAutoSpell,"RA_UNLIMIT",1,20,BF_LONG,0;
       bonus2 bSkillAtk,"ASC_BREAKER",10*(getequiprefinerycnt(EQI_HAND_R)/3);
-    UnEquipScript: |
-      sc_end SC_UNLIMIT;
+#   UnEquipScript: |     # TODO: field not supported
+#     sc_end SC_UNLIMIT;
   - Combos:
       - Combo:
           - Mercenary_Ring_A    # 28425
@@ -56695,8 +56695,8 @@ Body:
       bonus bNoCastCancel;
       bonus5 bAutoSpell,"NPC_WIDESLEEP",2,50,BF_MAGIC,1;
       bonus5 bAutoSpell,"RA_UNLIMIT",3,50,BF_LONG,0;
-    UnEquipScript: |
-      sc_end SC_UNLIMIT;
+#   UnEquipScript: |     # TODO: field not supported
+#     sc_end SC_UNLIMIT;
   - Combos:
       - Combo:
           - Thanos_Dagger    # 13093
