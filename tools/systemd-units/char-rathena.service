@@ -1,0 +1,15 @@
+[Unit]
+Description=rAthena Character Server
+After=network-online.target remote-fs.target nss-lookup.target
+
+[Service]
+Type=single
+PIDFile=/run/char-serv.pid
+User=rathena
+ExecStart=${replacewithpath}/char-server
+Restart=always
+RestartSec=3
+LimitCORE=infinity
+
+[Install]
+WantedBy=multi-user.target
