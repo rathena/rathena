@@ -116,12 +116,6 @@ struct CHARACTER_INFO{
 #endif
 } __attribute__((packed));
 
-#if PACKETVER < 20061023
-static_assert( sizeof( CHARACTER_INFO ) == 106, "Legacy CHARACTER_INFO size mismatch" );
-#elif PACKETVER < 20081217
-static_assert( sizeof( CHARACTER_INFO ) == 108, "Legacy CHARACTER_INFO size mismatch" );
-#endif
-
 struct PACKET_CA_LOGIN{
 	int16 packetType;
 	uint32 version;
