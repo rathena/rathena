@@ -264,83 +264,83 @@ struct Battle_Config
 	int32 pet_unequip_destroy;
 	int32 pet_master_dead;
 
-	int skill_min_damage;
-	int finger_offensive_type;
-	int heal_exp;
-	int max_heal_lv;
-	int max_heal; //Mitternacht
-	int resurrection_exp;
-	int shop_exp;
-	int combo_delay_rate;
-	int item_check;
-	int item_use_interval;	//[Skotlex]
-	int cashfood_use_interval;
-	int wedding_modifydisplay;
-	int wedding_ignorepalette;	//[Skotlex]
-	int xmas_ignorepalette;	// [Valaris]
-	int summer_ignorepalette; // [Zephyrus]
-	int hanbok_ignorepalette;
-	int oktoberfest_ignorepalette;
-	int natural_healhp_interval;
-	int natural_healsp_interval;
-	int natural_heal_skill_interval;
-	int natural_heal_weight_rate;
-	int natural_heal_weight_rate_renewal;
-	int arrow_decrement;
-	int ammo_unequip;
-	int ammo_check_weapon;
-	int max_aspd;
-	int max_walk_speed;	//Maximum walking speed after buffs [Skotlex]
-	int max_hp_lv99;
-	int max_hp_lv150;
-	int max_hp;
-	int max_sp;
-	int max_lv, aura_lv;
-	int max_parameter, max_baby_parameter;
-	int max_cart_weight;
-	int skill_log;
-	int battle_log;
-	int etc_log;
-	int save_clothcolor;
-	int undead_detect_type;
-	int auto_counter_type;
-	int min_hitrate;	//[Skotlex]
-	int max_hitrate;	//[Skotlex]
-	int agi_penalty_target;
-	int agi_penalty_type;
-	int agi_penalty_count;
-	int agi_penalty_num;
-	int vit_penalty_target;
-	int vit_penalty_type;
-	int vit_penalty_count;
-	int vit_penalty_num;
-	int weapon_defense_type;
-	int magic_defense_type;
-	int skill_reiteration;
-	int skill_nofootset;
-	int pc_cloak_check_type;
-	int monster_cloak_check_type;
-	int estimation_type;
-	int mob_changetarget_byskill;
-	int attack_direction_change;
-	int land_skill_limit;
-	int monster_class_change_recover;
-	int produce_item_name_input;
-	int display_skill_fail;
-	int chat_warpportal;
-	int mob_warp;
-	int dead_branch_active;
-	int vending_max_value;
-	int vending_over_max;
-	int vending_tax;
-	int vending_tax_min;
-	int show_steal_in_same_party;
-	int party_share_type;
-	int party_hp_mode;
-	int party_show_share_picker;
-	int show_picker_item_type;
-	int attack_attr_none;
-	int item_rate_mvp, item_rate_common, item_rate_common_boss, item_rate_card, item_rate_card_boss,
+	int32 skill_min_damage;
+	int32 finger_offensive_type;
+	int32 heal_exp;
+	int32 max_heal_lv;
+	int32 max_heal; //Mitternacht
+	int32 resurrection_exp;
+	int32 shop_exp;
+	int32 combo_delay_rate;
+	int32 item_check;
+	int32 item_use_interval;	//[Skotlex]
+	int32 cashfood_use_interval;
+	int32 wedding_modifydisplay;
+	int32 wedding_ignorepalette;	//[Skotlex]
+	int32 xmas_ignorepalette;	// [Valaris]
+	int32 summer_ignorepalette; // [Zephyrus]
+	int32 hanbok_ignorepalette;
+	int32 oktoberfest_ignorepalette;
+	int32 natural_healhp_interval;
+	int32 natural_healsp_interval;
+	int32 natural_heal_skill_interval;
+	int32 natural_heal_weight_rate;
+	int32 natural_heal_weight_rate_renewal;
+	int32 arrow_decrement;
+	int32 ammo_unequip;
+	int32 ammo_check_weapon;
+	int32 max_aspd;
+	int32 max_walk_speed;	//Maximum walking speed after buffs [Skotlex]
+	int32 max_hp_lv99;
+	int32 max_hp_lv150;
+	int32 max_hp;
+	int32 max_sp;
+	int32 max_lv, aura_lv;
+	int32 max_parameter, max_baby_parameter;
+	int32 max_cart_weight;
+	int32 skill_log;
+	int32 battle_log;
+	int32 etc_log;
+	int32 save_clothcolor;
+	int32 undead_detect_type;
+	int32 auto_counter_type;
+	int32 min_hitrate;	//[Skotlex]
+	int32 max_hitrate;	//[Skotlex]
+	int32 agi_penalty_target;
+	int32 agi_penalty_type;
+	int32 agi_penalty_count;
+	int32 agi_penalty_num;
+	int32 vit_penalty_target;
+	int32 vit_penalty_type;
+	int32 vit_penalty_count;
+	int32 vit_penalty_num;
+	int32 weapon_defense_type;
+	int32 magic_defense_type;
+	int32 skill_reiteration;
+	int32 skill_nofootset;
+	int32 pc_cloak_check_type;
+	int32 monster_cloak_check_type;
+	int32 estimation_type;
+	int32 mob_changetarget_byskill;
+	int32 attack_direction_change;
+	int32 land_skill_limit;
+	int32 monster_class_change_recover;
+	int32 produce_item_name_input;
+	int32 display_skill_fail;
+	int32 chat_warpportal;
+	int32 mob_warp;
+	int32 dead_branch_active;
+	int32 vending_max_value;
+	int32 vending_over_max;
+	int32 vending_tax;
+	int32 vending_tax_min;
+	int32 show_steal_in_same_party;
+	int32 party_share_type;
+	int32 party_hp_mode;
+	int32 party_show_share_picker;
+	int32 show_picker_item_type;
+	int32 attack_attr_none;
+	int32 item_rate_mvp, item_rate_common, item_rate_common_boss, item_rate_card, item_rate_card_boss,
 		item_rate_equip, item_rate_equip_boss, item_rate_heal, item_rate_heal_boss, item_rate_use,
 		item_rate_use_boss, item_rate_treasure, item_rate_adddrop, item_group_rate;
 	int32 item_rate_common_mvp, item_rate_heal_mvp, item_rate_use_mvp, item_rate_equip_mvp, item_rate_card_mvp;
@@ -526,7 +526,7 @@ struct Battle_Config
 	int32 hom_S_growth_level;
 
 	// [BattleGround Settings]
-	int bg_update_interval;
+	int32 bg_update_interval;
 	int32 bg_short_damage_rate;
 	int32 bg_long_damage_rate;
 	int32 bg_weapon_damage_rate;

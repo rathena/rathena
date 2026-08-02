@@ -825,7 +825,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 
 	struct map_data *mapdata = map_getmapdata(sd.m);
 
-	if (mapdata->getMapFlag(MF_NOSKILL) && skill_id != ALL_EQSWITCH && !sd.skillitem) //Item skills bypass noskill
+	if (mapdata != nullptr && mapdata->getMapFlag(MF_NOSKILL) && skill_id != ALL_EQSWITCH && !sd.skillitem) //Item skills bypass noskill
 		return true;
 
 	// Epoque:
@@ -851,9 +851,9 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 		return false;
 
 	uint32 skill_nocast = skill_get_nocast(skill_id);
-	// Check skill restrictions [Celest]
+
 	if (mapdata != nullptr && mapdata->zone->isSkillDisabled(skill_id, sd)) {
-			clif_msg_color( sd, MSI_IMPOSSIBLE_SKILL_AREA, color_table[COLOR_CYAN] ); // This skill cannot be used within this area.
+		clif_msg_color( sd, MSI_IMPOSSIBLE_SKILL_AREA, color_table[COLOR_CYAN] ); // This skill cannot be used within this area.
 		return true;
 	}
 
@@ -870,7 +870,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 		case ALL_GLASTHEIM_RECALL:
 		case ALL_THANATOS_RECALL:
 		case ALL_LIGHTHALZEN_RECALL:
-			if(mapdata->getMapFlag(MF_NOWARP)) {
+			if(mapdata != nullptr && mapdata->getMapFlag(MF_NOWARP)) {
 				clif_skill_teleportmessage( sd, NOTIFY_MAPINFO_CANT_TP );
 				return true;
 			}
@@ -880,7 +880,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 		case SC_DIMENSIONDOOR:
 		case ALL_ODINS_RECALL:
 		case WE_CALLALLFAMILY:
-			if(mapdata->getMapFlag(MF_NOTELEPORT)) {
+			if(mapdata != nullptr && mapdata->getMapFlag(MF_NOTELEPORT)) {
 				clif_skill_teleportmessage( sd, NOTIFY_MAPINFO_CANT_TP );
 				return true;
 			}
@@ -888,7 +888,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 		case WE_CALLPARTNER:
 		case WE_CALLPARENT:
 		case WE_CALLBABY:
-			if (mapdata->getMapFlag(MF_NOMEMO)) {
+			if (mapdata != nullptr && mapdata->getMapFlag(MF_NOMEMO)) {
 				clif_skill_teleportmessage( sd, NOTIFY_MAPINFO_CANT_MEMO );
 				return true;
 			}
@@ -937,7 +937,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 			return false; // always allowed
 		case WZ_ICEWALL:
 			// noicewall flag [Valaris]
-			if (mapdata->getMapFlag(MF_NOICEWALL)) {
+			if (mapdata != nullptr && mapdata->getMapFlag(MF_NOICEWALL)) {
 				clif_skill_fail( sd, skill_id );
 				return true;
 			}
@@ -953,7 +953,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 			if (
 				!(battle_config.emergency_call&((is_agit_start())?2:1)) ||
 				!(battle_config.emergency_call&(mapdata_flag_gvg2(mapdata)?8:4)) ||
-				(battle_config.emergency_call&16 && mapdata->getMapFlag(MF_NOWARPTO) && !(mapdata->getMapFlag(MF_GVG_CASTLE) || mapdata->getMapFlag(MF_GVG_TE_CASTLE)))
+				(battle_config.emergency_call&16 && mapdata != nullptr && mapdata->getMapFlag(MF_NOWARPTO) && !(mapdata->getMapFlag(MF_GVG_CASTLE) || mapdata->getMapFlag(MF_GVG_TE_CASTLE)))
 			)	{
 				clif_skill_fail( sd, skill_id );
 				return true;
@@ -14664,7 +14664,7 @@ bool skill_check_unit_movepos(uint8 check_flag, block_list *bl, int16 dst_x, int
 
 	struct map_data *mapdata = map_getmapdata(bl->m);
 
-	if (check_flag&1 && mapdata->getMapFlag(MF_BATTLEGROUND))
+	if (check_flag&1 && mapdata != nullptr && mapdata->getMapFlag(MF_BATTLEGROUND))
 		return false;
 	if (check_flag&2 && mapdata_flag_gvg(mapdata))
 		return false;

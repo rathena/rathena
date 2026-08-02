@@ -696,6 +696,8 @@ enum e_mapflag : int16 {
 	MF_NOBUYINGSTORE,
 	MF_NODYNAMICNPC,
 	MF_NOBANK,
+	MF_SPECIALPOPUP,
+	MF_NOMACROCHECKER,
 	MF_INVINCIBLE_TIME,
 	MF_WEAPON_DAMAGE_RATE,
 	MF_MAGIC_DAMAGE_RATE,
@@ -708,9 +710,6 @@ enum e_mapflag : int16 {
 	MF_FLEE_PENALTY,
 	MF_RESTRICTED,
 	MF_TOWN,
-	MF_SPECIALPOPUP,
-	MF_NOMACROCHECKER,
-	MF_INVINCIBLE_TIME,
 	MF_MAX
 };
 
@@ -843,9 +842,9 @@ public:
 
 	e_map_type getMapZone(int16 map_id);
 	bool isCommandDisabled(std::string name, map_session_data &sd);
-	bool isSkillDisabled(uint16 skill_id, map_session_data &sd);
-	bool isItemDisabled(t_itemid nameid, map_session_data &sd);
-	bool isStatusDisabled(sc_type sc, block_list &bl);
+	bool isSkillDisabled(uint16 skill_id, const map_session_data &sd);
+	bool isItemDisabled(t_itemid nameid, const map_session_data &sd);
+	bool isStatusDisabled(sc_type sc, const block_list &bl);
 	bool isJobRestricted(int32 job_id, uint16 group_lv);
 	void clear_all_disabled_status(map_session_data &sd);
 };

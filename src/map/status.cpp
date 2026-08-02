@@ -2059,11 +2059,14 @@ bool status_check_skilluse(const block_list* src, const block_list* target, uint
 			return false;
 	} else {
 		map_data *mapdata = map_getmapdata(src->m);
-		map_session_data *sd = BL_CAST(BL_PC, src);
 
-		if (mapdata != nullptr && mapdata->zone->isSkillDisabled(skill_id, *sd)) {
-			if (sd != nullptr)
-				clif_msg(sd, MSI_IMPOSSIBLE_SKILL_AREA); // This skill cannot be used within this area
+		if (mapdata != nullptr)
+			return false;
+
+		const map_session_data *sd = BL_CAST(BL_PC, src);
+
+		if (sd != nullptr && mapdata->zone->isSkillDisabled(skill_id, *sd)) {
+			clif_msg( *sd, MSI_IMPOSSIBLE_SKILL_AREA ); // This skill cannot be used within this area
 			return false;
 		}
 	}
@@ -3923,7 +3926,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		// Items may be equipped, their effects however are nullified.
 		if (opt&SCO_FIRST && sd->inventory_data[index]->equip_script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT)
 			|| !itemdb_isNoEquip(*sd, sd->inventory_data[index]->nameid))) { // Execute equip-script on login
-			run_script(sd->inventory_data[index]->equip_script,0,sd->bl.id,0);
+			run_script(sd->inventory_data[index]->equip_script,0,sd->id,0);
 			if (!calculating)
 				return 1;
 		}
@@ -4036,7 +4039,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 			}
 		} else if( sd->inventory_data[index]->type == IT_SHADOWGEAR ) { // Shadow System
 			if (sd->inventory_data[index]->script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(*sd, sd->inventory_data[index]->nameid))) {
-				run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
+				run_script(sd->inventory_data[index]->script,0,sd->id,0);
 				if( !calculating )
 					return 1;
 			}
@@ -4127,7 +4130,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 				if(!data)
 					continue;
 				if (opt&SCO_FIRST && data->equip_script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(*sd, data->nameid))) {// Execute equip-script on login
-					run_script(data->equip_script,0,sd->bl.id,0);
+					run_script(data->equip_script,0,sd->id,0);
 					if (!calculating)
 						return 1;
 				}
@@ -4323,10 +4326,11 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 				sc->getSCE(SC_ENDURE)->val4 = 0;
 			status_change_end(sd, SC_ENDURE);
 		}
-		if (sd->m >= 0 && !status_change_isDisabledOnMap(SC_ENDURE, map_getmapdata(sd->m))) {
+
+		if (map_data *mapdata = map_getmapdata(sd->m); mapdata == nullptr || !mapdata->zone->isStatusDisabled(SC_ENDURE, *sd))
 			clif_status_load(sd, EFST_ENDURE, 1);
+
 		base_status->mdef++;
-	}
 	}
 
 // ----- CONCENTRATION CALCULATION -----
@@ -9318,9 +9322,13 @@ bool status_isendure(const block_list& bl, t_tick tick, bool visible)
 	// Officially the bonus "no_walk_delay" is actually just SC_ENDURE with unlimited duration.
 	// Endure is forbidden on some maps, but the bonus is still set to true on such maps.
 	// That's why we need to check it here and disable the bonus to correctly mimic official behavior.
-	if (bl.m >= 0 && bl.type == BL_PC && !status_change_isDisabledOnMap(SC_ENDURE, map_getmapdata(bl.m))) {
-		if (static_cast<const map_session_data&>(bl).special_state.no_walk_delay)
-			return true;
+	if (bl.type == BL_PC) {
+		map_data *mapdata = map_getmapdata(bl.m);
+
+		if (mapdata == nullptr ||  mapdata->zone->isStatusDisabled(SC_ENDURE, bl)) {
+			if (static_cast<const map_session_data&>(bl).special_state.no_walk_delay)
+				return true;
+		}
 	}
 
 	if (const unit_data* ud = unit_bl2ud(&bl); ud != nullptr && DIFF_TICK(ud->endure_tick, tick) > 0)
@@ -10150,12 +10158,7 @@ TIMER_FUNC(status_change_start_timer) {
  * @param delay: Delay in milliseconds before the SC is applied
  * @return Whether the status change was resisted (false) or will be applied (true)
  */
-int status_change_start(struct block_list* src, struct block_list* bl,enum sc_type type,int rate,int val1,int val2,int val3,int val4,t_tick duration,unsigned char flag, int32 delay) {
-	status_change* sc;
-	struct status_change_entry* sce;
-	struct view_data *vd;
-	int undead_flag, tick_time = 0;
-	bool sc_isnew = true;
+bool status_change_start(block_list* src, block_list* bl, sc_type type, int32 rate, int32 val1, int32 val2, int32 val3, int32 val4, t_tick duration, uint8 flag, int32 delay) {
 	std::shared_ptr<s_status_change_db> scdb = status_db.find(type);
 
 	nullpo_ret(bl);
@@ -10179,9 +10182,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	if( bl->type != BL_NPC && status_isdead(*bl) && ( type != SC_NOCHAT && type != SC_JAILED ) ) // SC_NOCHAT and SC_JAILED should work even on dead characters
 		return false;
 
-	map_data *mapdata = map_getmapdata(bl->m);
-
-	if (mapdata != nullptr && mapdata->zone->isStatusDisabled(type, *bl))
+	if (map_data *mapdata = map_getmapdata(bl->m); mapdata != nullptr && mapdata->zone->isStatusDisabled(type, *bl))
 		return false;
 
 	if (sc->getSCE(SC_GRAVITYCONTROL))
@@ -10240,12 +10241,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	}
 
 	int32 tick = (int32)duration;
-	map_session_data *sd = BL_CAST(BL_PC, bl);
 
-	vd = status_get_viewdata(bl);
-
-	undead_flag = battle_check_undead(status->race,status->def_ele);
-	// Check for immunities / sc fails
+	// Type-specific checks that need to happen before the delay
 	switch (type) {
 		case SC_STONE:
 		case SC_STONEWAIT:
@@ -10255,7 +10252,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				// Undead race has opt1=undead without a related status change, so we need to hardcode it here
 				if (battle_config.undead_detect_type == 0 && status->race == RC_UNDEAD)
 					return false;
-			// Undead are immune to Freeze/Stone
+				// Undead are immune to Freeze/Stone
 				if (battle_check_undead(status->race, status->def_ele) != 0)
 					return false;
 			}

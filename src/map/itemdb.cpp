@@ -4414,14 +4414,15 @@ static int32 itemdb_read_sqldb(void) {
  * @param nameid: Item that will be checked
  * @return true: can't be used; false: can be used
  */
-bool itemdb_isNoEquip(map_session_data &sd, t_itemid nameid) {
-	struct map_data *mapdata = map_getmapdata(sd.bl.m);
+bool itemdb_isNoEquip(const map_session_data &sd, t_itemid nameid) {
+	map_data *mapdata = map_getmapdata(sd.m);
 
-	if (!mapdata)
+	if (mapdata == nullptr)
 		return true;
 
 	if (mapdata->zone->isItemDisabled(nameid, sd))
 		return true;
+
 	return false;
 }
 

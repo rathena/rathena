@@ -497,7 +497,10 @@ static void warp_get_suggestions(map_session_data* sd, const char *name) {
 
 	// check for maps that contain string
 	for (int32 i = 0; i < map_num; i++) {
-		struct map_data *mapdata = map_getmapdata(i);
+		map_data *mapdata = map_getmapdata(i);
+
+		if (mapdata == nullptr)
+			continue;
 
 		// Prevent suggestion of instance mapnames
 		if( mapdata->instance_id != 0 ){
@@ -4505,7 +4508,7 @@ ACMD_FUNC(reloadmotd){
 		clif_displaymessage(fd, msg_txt(sd,268)); // Reloaded the Message of the Day.
 
 	return 0;
-		}
+}
 
 ACMD_FUNC(reloadquestdb){
 	nullpo_retr(-1, sd);
@@ -4514,7 +4517,7 @@ ACMD_FUNC(reloadquestdb){
 		clif_displaymessage(fd, msg_txt(sd,1377)); // Quest database has been reloaded.
 
 	return 0;
-		}
+}
 
 ACMD_FUNC(reloadmsgconf){
 	nullpo_retr(-1, sd);
@@ -4564,12 +4567,17 @@ ACMD_FUNC(reloadbarterdb){
 ACMD_FUNC(reloadlogconf){
 	nullpo_retr(-1, sd);
 
-		log_config_read(LOG_CONF_NAME);
-		clif_displaymessage(fd, msg_txt(sd,1536)); // Log configuration has been reloaded.
-	} else if (strstr(command, "zonedb") || strncmp(message, "zonedb", 4) == 0) {
-		map_zone_db.reload();
+	log_config_read(LOG_CONF_NAME);
+	clif_displaymessage(fd, msg_txt(sd,1536)); // Log configuration has been reloaded.
+
+	return 0;
+}
+
+ACMD_FUNC(reloadzonedb){
+	nullpo_retr(-1, sd);
+
+	if (map_zone_db.reload())
 		clif_displaymessage(fd, msg_txt(sd, 834)); // Map Zone database has been reloaded.
-	}
 
 	return 0;
 }
@@ -4596,8 +4604,9 @@ ACMD_FUNC( reload ){
 		{ "skilldb", atcommand_reloadskilldb },
 		{ "statusdb", atcommand_reloadstatusdb },
 		{ "questdb", atcommand_reloadquestdb },
+		{ "zonedb", atcommand_reloadzonedb },
 	};
-
+	
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message) {
@@ -11618,7 +11627,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(reloadattendancedb),
 		ACMD_DEF(reloadbarterdb),
 		ACMD_DEF(reloadlogconf),
-		ACMD_DEF2("reloadzonedb",reload),
+		ACMD_DEF(reloadzonedb),
 		ACMD_DEF(partysharelvl),
 		ACMD_DEF(mapinfo),
 		ACMD_DEF(dye),
@@ -12093,10 +12102,10 @@ bool is_atcommand(const int32 fd, map_session_data* sd, const char* message, int
 		}
 	}
 
-	struct map_data *mapdata = map_getmapdata(sd->bl.m);
+	struct map_data *mapdata = map_getmapdata(sd->m);
 
 	if (mapdata->zone->isCommandDisabled(info->command, *sd)) {
-		clif_messagecolor(&sd->bl, color_table[COLOR_RED], msg_txt(sd, 833), false, SELF); // This command is disabled on this map.
+		clif_messagecolor(sd, color_table[COLOR_RED], msg_txt(sd, 833), false, SELF); // This command is disabled on this map.
 		return true;
 	}
 

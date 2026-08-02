@@ -838,13 +838,13 @@ void pc_setinvincibletimer(map_session_data& sd) {
 	t_tick val;
 	map_data* mapdata = map_getmapdata(sd.m);
 
-	if (val <= 0) {
-		if (sd.invincible_timer != INVALID_TIMER) {
-			delete_timer(sd.invincible_timer, pc_invincible_timer);
-			sd.invincible_timer = INVALID_TIMER;
-		}
+	if (mapdata != nullptr && mapdata->getMapFlag(MF_INVINCIBLE_TIME) > 0)
+		val = mapdata->getMapFlag(MF_INVINCIBLE_TIME);
+	else
+		val = battle_config.pc_invincible_time;
+
+	if (val <= 0)
 		return;
-	}
 
 	if( sd.invincible_timer != INVALID_TIMER )
 		delete_timer(sd.invincible_timer,pc_invincible_timer);
@@ -6511,7 +6511,7 @@ int32 pc_useitem(map_session_data *sd,int32 n)
 
 	/* on restricted maps the item is consumed but the effect is not used */
 	if (!pc_has_permission(sd,PC_PERM_ITEM_UNCONDITIONAL) && itemdb_isNoEquip(*sd, id->nameid)) {
-		clif_msg(sd, MSI_IMPOSSIBLE_USEITEM_AREA); // This item cannot be used within this area
+		clif_msg( *sd, MSI_IMPOSSIBLE_USEITEM_AREA ); // This item cannot be used within this area
 		if( battle_config.allow_consume_restricted_item && id->flag.delay_consume > 0 ) { //need confirmation for delayed consumption items
 			clif_useitemack(sd,n,item.amount-1,true);
 			pc_delitem(sd,n,1,1,0,LOG_TYPE_CONSUME);
@@ -9785,10 +9785,9 @@ int32 pc_dead(map_session_data *sd,block_list *src)
 		if( exp && get_percentage_exp(sd->status.base_exp, exp) >= 99 ) {
 			sd->state.snovice_dead_flag = 1;
 			pc_setrestartvalue(sd,1);
-			sc_start(&sd->bl,&sd->bl,SC_STEELBODY,100,5,skill_get_time(MO_STEELBODY,5));
 			status_percent_heal(sd, 100, 100);
 			clif_resurrection( *sd );
-			pc_setinvincibletimer(*sd, mapdata->getMapFlag(MF_INVINCIBLE_TIME));
+			pc_setinvincibletimer( *sd );
 			sc_start(sd,sd,SC_STEELBODY,100,5,skill_get_time(MO_STEELBODY,5));
 			if(mapdata_flag_gvg2(mapdata))
 				pc_respawn_timer(INVALID_TIMER, gettick(), sd->id, 0);
@@ -10156,7 +10155,7 @@ void pc_revive(map_session_data *sd,uint32 hp, uint32 sp, uint32 ap) {
 	if(ap) clif_updatestatus(*sd,SP_AP);
 
 	pc_setstand(sd, true);
-	pc_setinvincibletimer(*sd, map_getmapflag(sd->bl.m, MF_INVINCIBLE_TIME));
+	pc_setinvincibletimer( *sd );
 
 	if (sd->state.gmaster_flag && sd->guild) {
 		guild_guildaura_refresh(sd,GD_LEADERSHIP,guild_checkskill(sd->guild->guild,GD_LEADERSHIP));

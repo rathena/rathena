@@ -10798,14 +10798,9 @@ void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
 	if(sd->status.guild_id)
 		guild_send_memberinfoshort(sd,1);
 
-	struct map_data *mapdata = map_getmapdata(sd->m);
+	pc_setinvincibletimer( *sd );
 
-	if(battle_config.pc_invincible_time > 0) {
-		if (mapdata->getMapFlag(MF_INVINCIBLE_TIME) > 0)
-			pc_setinvincibletimer(sd, mapdata->getMapFlag(MF_INVINCIBLE_TIME));
-		else
-			pc_setinvincibletimer(sd,battle_config.pc_invincible_time);
-	}
+	struct map_data *mapdata = map_getmapdata(sd->m);
 
 	if( mapdata->users++ == 0 && battle_config.dynamic_mobs )
 		map_spawnmobs(sd->m);

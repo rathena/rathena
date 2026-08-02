@@ -766,7 +766,7 @@ bool c_map_zone_data::isCommandDisabled(std::string name, map_session_data &sd) 
  * @param sd: Player data
  * @return True when skill is disabled or false otherwise
  */
-bool c_map_zone_data::isSkillDisabled(uint16 skill_id, map_session_data &sd) {
+bool c_map_zone_data::isSkillDisabled(uint16 skill_id, const map_session_data &sd) {
 	if (this->disabled_skills.empty())
 		return false;
 
@@ -787,7 +787,7 @@ bool c_map_zone_data::isSkillDisabled(uint16 skill_id, map_session_data &sd) {
  * @param sd: Player session data
  * @return True when item is disabled or false otherwise
  */
-bool c_map_zone_data::isItemDisabled(t_itemid nameid, map_session_data &sd) {
+bool c_map_zone_data::isItemDisabled(t_itemid nameid, const map_session_data &sd) {
 	if (this->disabled_items.empty())
 		return false;
 
@@ -808,7 +808,7 @@ bool c_map_zone_data::isItemDisabled(t_itemid nameid, map_session_data &sd) {
  * @param bl: Block list data
  * @return True when status is disabled or false otherwise
  */
-bool c_map_zone_data::isStatusDisabled(sc_type sc, block_list &bl) {
+bool c_map_zone_data::isStatusDisabled(sc_type sc, const block_list &bl) {
 	if (this->disabled_statuses.empty())
 		return false;
 
@@ -817,7 +817,7 @@ bool c_map_zone_data::isStatusDisabled(sc_type sc, block_list &bl) {
 	if (status_lv == nullptr)
 		return false;
 
-	map_session_data *sd = BL_CAST(BL_PC, &bl);
+	const map_session_data *sd = BL_CAST(BL_PC, &bl);
 
 	if (sd == nullptr)
 		return false;
@@ -859,7 +859,7 @@ void c_map_zone_data::clear_all_disabled_status(map_session_data &sd) {
 
 	for (const auto &sc : this->disabled_statuses) {
 		if (sd.group->level < sc.second)
-			status_change_end(&sd.bl, sc.first);
+			status_change_end(&sd, sc.first);
 	}
 }
 
@@ -5565,7 +5565,6 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 				mapdata->setMapFlag(mapflag, false);
 			break;
 		case MF_SPECIALPOPUP:
-		case MF_INVINCIBLE_TIME:
 			if (status) {
 				nullpo_retr(false, args);
 
@@ -5644,8 +5643,11 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 			if (status) {
 				nullpo_retr(false, args);
 
-				// Default is 5 seconds.
-				mapdata->setMapFlag(mapflag, ((args->flag_val <= 0) ? 5000 : args->flag_val));
+				// Remove the mapflag when value is battle_config.pc_invincible_time
+				if (args->flag_val <= 0 || args->flag_val == battle_config.pc_invincible_time)
+					mapdata->setMapFlag(mapflag, false);
+				else
+					mapdata->setMapFlag(mapflag, args->flag_val);
 			} else
 				mapdata->setMapFlag(mapflag, false);
 			break;
