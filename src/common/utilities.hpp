@@ -27,10 +27,15 @@ class cScopeTimer {
 	cScopeTimer();
 };
 
-int levenshtein( const std::string &s1, const std::string &s2 );
+int32 levenshtein( const std::string &s1, const std::string &s2 );
 
-namespace rathena {
-	namespace util {
+namespace rathena::util {
+/**
+ * Determine if a key-value pair exists in the map
+ * @param map: Map to search through
+ * @param key: Key wanted
+ * @return True on success or false otherwise
+ */
 		template <typename K, typename V> bool map_exists( std::map<K,V>& map, K key ){
 			return map.find( key ) != map.end();
 		}
@@ -330,12 +335,37 @@ namespace rathena {
 		std::string string_left_pad(const std::string& original, char padding, size_t num);
 
 		/**
+* Converts a string (char pointer) to an int32 value
+* Returns the given default value when conversion fails or string is not a number
+* @param str: String to convert
+* @param def: Default value that should be returned on failure
+*
+* @return Converted int32 value
+*/
+int32 strtoint32def(const char* str, int32 def = 0);
+
+/**
 		* Encode base10 number to base62. Originally by lututui
 		* @param val: Base10 Number
 		* @return Base62 string
 		**/
 		std::string base62_encode( uint32 val );
+
+template <typename InstanceClass, typename InterfaceClass = InstanceClass> class Singleton {
+protected:
+	Singleton() = default;
+	~Singleton() = default;
+
+public:
+	static std::shared_ptr<InterfaceClass> getInstance() {
+		static std::shared_ptr<InterfaceClass> instance = std::make_shared<InstanceClass>();
+
+		return instance;
 	}
+
+	Singleton(const Singleton &) = delete;
+	Singleton& operator=(const Singleton &) = delete;
+};
 }
 
 #endif /* UTILILITIES_HPP */

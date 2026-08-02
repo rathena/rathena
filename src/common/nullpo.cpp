@@ -9,13 +9,13 @@
 
 #include "showmsg.hpp"
 
-static void nullpo_info_core(const char *file, int line, const char *func, const char *fmt, va_list ap);
-static void nullpo_info_core_(const char *file, int line, const char *func);
+static void nullpo_info_core(const char *file, int32 line, const char *func, const char *fmt, va_list ap);
+static void nullpo_info_core_(const char *file, int32 line, const char *func);
 
 /*======================================
  * Null Information output and check
  *--------------------------------------*/
-int nullpo_chk_f(const char *file, int line, const char *func, const void *target,
+int32 nullpo_chk_f(const char *file, int32 line, const char *func, const void *target,
                  const char *fmt, ...)
 {
 	va_list ap;
@@ -29,7 +29,7 @@ int nullpo_chk_f(const char *file, int line, const char *func, const void *targe
 	return 1;
 }
 
-int nullpo_chk(const char *file, int line, const char *func, const void *target)
+int32 nullpo_chk(const char *file, int32 line, const char *func, const void *target)
 {
  	if (target != nullptr)
 		return 0;
@@ -41,7 +41,7 @@ int nullpo_chk(const char *file, int line, const char *func, const void *target)
 /*======================================
  * nullpo Information output (external call)
  *--------------------------------------*/
-void nullpo_info_f(const char *file, int line, const char *func, 
+void nullpo_info_f(const char *file, int32 line, const char *func, 
                  const char *fmt, ...)
 {
 	va_list ap;
@@ -51,12 +51,12 @@ void nullpo_info_f(const char *file, int line, const char *func,
 	va_end(ap);
 }
 
-void nullpo_info(const char *file, int line, const char *func)
+void nullpo_info(const char *file, int32 line, const char *func)
 {
 	nullpo_info_core_(file, line, func);
 }
 
-static void nullpo_info_core_(const char *file, int line, const char *func){
+static void nullpo_info_core_(const char *file, int32 line, const char *func){
 	if (file == nullptr)
 		file = "??";
 	
@@ -72,7 +72,7 @@ static void nullpo_info_core_(const char *file, int line, const char *func){
 /*======================================
  * nullpo intelligence Output (Main)
  *--------------------------------------*/
-static void nullpo_info_core(const char *file, int line, const char *func, 
+static void nullpo_info_core(const char *file, int32 line, const char *func, 
                              const char *fmt, va_list ap)
 {
 	nullpo_info_core_(file,line,func);

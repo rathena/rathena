@@ -1926,17 +1926,23 @@ ama_in01,22,111,0	script	Grandma#ama2	761,{
 		mes "it won't harm me!! Yelp!^000000";
 		next;
 		select("Taaaah!!");
-		if ((BaseJob == Job_Priest || BaseJob != Job_Acolyte && BaseJob != Job_Monk) || (countitem(523) < 1 || countitem(948) < 1 || countitem(1029) < 1)) {
+		if (BaseJob == Job_Priest) {
 			if (rand(1,4) == 1)
 				set .@fox_kill,0;
 			else
 				set .@fox_kill,1;
 		}
-		else {
+		else if (BaseJob == Job_Acolyte || BaseJob == Job_Monk || countitem(523) > 0 || countitem(948) > 0 || countitem(1029) > 0) {
 			if (rand(1,2) == 1)
 				set .@fox_kill,0;
 			else
 				set .@fox_kill,1;
+		}
+		else {
+			if (rand(1,4) == 1)
+				set .@fox_kill,1;
+			else
+				set .@fox_kill,0;
 		}
 		if (.@fox_kill == 1) {
 			mes "[....]";

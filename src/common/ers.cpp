@@ -64,10 +64,10 @@ struct ers_instance_t;
 typedef struct ers_cache
 {
 	// Allocated object size, including ers_list size
-	unsigned int ObjectSize;
+	uint32 ObjectSize;
 
 	// Number of ers_instances referencing this
-	int ReferenceCount;
+	int32 ReferenceCount;
 
 	// Reuse linked list
 	struct ers_list *ReuseList;
@@ -76,19 +76,19 @@ typedef struct ers_cache
 	unsigned char **Blocks;
 
 	// Max number of blocks
-	unsigned int Max;
+	uint32 Max;
 
 	// Free objects count
-	unsigned int Free;
+	uint32 Free;
 
 	// Used blocks count
-	unsigned int Used;
+	uint32 Used;
 
 	// Objects in-use count
-	unsigned int UsedObjs;
+	uint32 UsedObjs;
 
 	// Default = ERS_BLOCK_ENTRIES, can be adjusted for performance for individual cache sizes.
-	unsigned int ChunkSize;
+	uint32 ChunkSize;
 
 	// Misc options, some options are shared from the instance
 	enum ERSOptions Options;
@@ -111,7 +111,7 @@ struct ers_instance_t {
 	ers_cache_t *Cache;
 
 	// Count of objects in use, used for detecting memory leaks
-	unsigned int Count;
+	uint32 Count;
 
 	struct ers_instance_t *Next, *Prev;
 };
@@ -124,7 +124,7 @@ static struct ers_instance_t *InstanceList = nullptr;
 /**
  * @param Options the options from the instance seeking a cache, we use it to give it a cache with matching configuration
  **/
-static ers_cache_t *ers_find_cache(unsigned int size, enum ERSOptions Options) {
+static ers_cache_t *ers_find_cache(uint32 size, enum ERSOptions Options) {
 	ers_cache_t *cache;
 
 	for (cache = CacheList; cache; cache = cache->Next)
@@ -160,7 +160,7 @@ static ers_cache_t *ers_find_cache(unsigned int size, enum ERSOptions Options) {
 
 static void ers_free_cache(ers_cache_t *cache, bool remove)
 {
-	unsigned int i;
+	uint32 i;
 
 	for (i = 0; i < cache->Used; i++)
 		aFree(cache->Blocks[i]);
@@ -277,7 +277,7 @@ static void ers_obj_destroy(ERS *self)
 	aFree(instance);
 }
 
-void ers_cache_size(ERS *self, unsigned int new_size) {
+void ers_cache_size(ERS *self, uint32 new_size) {
 	struct ers_instance_t *instance = (struct ers_instance_t *)self;
 
 	nullpo_retv(instance);
@@ -331,7 +331,7 @@ ERS *ers_new(uint32 size, const char *name, enum ERSOptions options)
 
 void ers_report(void) {
 	ers_cache_t *cache;
-	unsigned int cache_c = 0, blocks_u = 0, blocks_a = 0, memory_b = 0, memory_t = 0;
+	uint32 cache_c = 0, blocks_u = 0, blocks_a = 0, memory_b = 0, memory_t = 0;
 
 	for (cache = CacheList; cache; cache = cache->Next) {
 		cache_c++;

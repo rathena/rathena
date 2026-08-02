@@ -1,0 +1,9 @@
+name: "CodeQL config"
+
+queries:
+  # Trigger security and quality findings
+  - uses: security-and-quality
+query-filters:
+  - exclude:
+      # We use unity builds/amalgamated builds to optimize compile time for the skill TU
+      id:  cpp/include-non-header

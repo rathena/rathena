@@ -14,7 +14,7 @@
  * @param minutes: intervall to search
  * @return number of failed attempts
  */
-unsigned long loginlog_failedattempts(uint32 ip, unsigned int minutes);
+unsigned long loginlog_failedattempts(uint32 ip, uint32 minutes);
 
 /**
  * Records an event in the login log.
@@ -23,7 +23,7 @@ unsigned long loginlog_failedattempts(uint32 ip, unsigned int minutes);
  * @param rcode:
  * @param message:
  */
-void login_log(uint32 ip, const char* username, int rcode, const char* message);
+void login_log(uint32 ip, const char* username, int32 rcode, const char* message);
 
 /**
  * Read configuration options.

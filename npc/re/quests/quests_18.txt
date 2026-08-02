@@ -8031,6 +8031,13 @@ wolfvill,103,230,3	script	Budan#ep18	4_M_RACHMAN1,{
 		completequest 8693;
 		setquest 8694;
 		add_reputation_points(REPUTATION_EP18, 100);
+		if (get_reputation_points(REPUTATION_EP18) >= 1000 && ep18_main == 36) {// Custom implementation: reputation 1000 on wolfvill => player can continue the main quest
+			ep18_main = 37;
+			setquest 18082;
+			mes "^4d4dffThe villagers of the gray wolf have accepted you as part of the village.^000000";
+			mes "You are eligible to participate in the ^4d4dffconference.^000000";
+			next;
+		}
 		mes "[Budan]";
 		mes "We've had some good water for a while.";
 		close;

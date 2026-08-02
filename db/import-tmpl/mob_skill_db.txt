@@ -46,6 +46,8 @@
 //	mobnearbygt		When monsters in range become greater than specified number.
 //	groundattacked		When mob is hit by ground targeted skill (no condition value).
 //	damagedgt		When single attack deals greater damage than specified number.
+//	alchemist		When mob has a special AI, is not trickcasting, and is wounded (no condition value).
+//	trickcasting		Used once mob started moving through NPC_RANDOMMOVE until disabled (no condition value).
 //
 //	Status abnormalities specified through the statuson/statusoff system:
 //	    anybad (any type of state change) / stone / freeze / stun / sleep /

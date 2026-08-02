@@ -47,11 +47,11 @@
 #	define aStrdup2(p,file,line,func)		_mstrdup(p,file,line,func)
 #	define aFree2(p,file,line,func)			_mfree(p,file,line,func)
 
-	void* _mmalloc	(size_t size, const char *file, int line, const char *func);
-	void* _mcalloc	(size_t num, size_t size, const char *file, int line, const char *func);
-	void* _mrealloc	(void *p, size_t size, const char *file, int line, const char *func);
-	char* _mstrdup	(const char *p, const char *file, int line, const char *func);
-	void  _mfree	(void *p, const char *file, int line, const char *func);
+	void* _mmalloc	(size_t size, const char *file, int32 line, const char *func);
+	void* _mcalloc	(size_t num, size_t size, const char *file, int32 line, const char *func);
+	void* _mrealloc	(void *p, size_t size, const char *file, int32 line, const char *func);
+	char* _mstrdup	(const char *p, const char *file, int32 line, const char *func);
+	void  _mfree	(void *p, const char *file, int32 line, const char *func);
 
 #else
 
@@ -67,11 +67,11 @@
 #	define aStrdup2(p,file,line,func)		aStrdup_(p,file,line,func)
 #	define aFree2(p,file,line,func)			aFree_(p,file,line,func)
 
-	void* aMalloc_	(size_t size, const char *file, int line, const char *func);
-	void* aCalloc_	(size_t num, size_t size, const char *file, int line, const char *func);
-	void* aRealloc_	(void *p, size_t size, const char *file, int line, const char *func);
-	char* aStrdup_	(const char *p, const char *file, int line, const char *func);
-	void  aFree_	(void *p, const char *file, int line, const char *func);
+	void* aMalloc_	(size_t size, const char *file, int32 line, const char *func);
+	void* aCalloc_	(size_t num, size_t size, const char *file, int32 line, const char *func);
+	void* aRealloc_	(void *p, size_t size, const char *file, int32 line, const char *func);
+	char* aStrdup_	(const char *p, const char *file, int32 line, const char *func);
+	void  aFree_	(void *p, const char *file, int32 line, const char *func);
 
 #endif
 

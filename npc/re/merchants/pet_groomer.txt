@@ -1,0 +1,48 @@
+//===== rAthena Script =======================================
+//= Pet Groomer
+//===== Description: =========================================
+// Update Pet Groomer NPCs
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [Haydrich]
+//============================================================
+
+-	shop	Pet_Items	-1,25377:-1:0,537:-1,643:-1,10013:-1,10014:-1,6113:-1,6114:-1,6115:-1,6110:-1,6100:-1,6098:-1,6112:-1,6104:-1,6108:-1,6111:-1,6095:-1,7824:-1,6097:-1,6107:-1,6105:-1,6099:-1,25231:-1,25232:-1,25233:-1,6106:-1,11616:-1,6109:-1,1000552:-1,1000889:-1
+
+-	script	#PetGroomer	HIDDEN_NPC,{
+	mes "[Pet Groomer]";
+	mes "Hello! Do you need some Q-Pet food?";
+	mes "Or maybe some accessories to decorate your Q-Pet?";
+	mes "There is also a Q-Pet taming item!";
+	next;
+	switch( select( "Buy Pet Food.", "Exchange Q-Pet Related Supplies.", "I'll come next time" )) {
+		case 1:
+			mes "[Pet Groomer]";
+			mes "Okay, please buy it yourself.";
+			close2;
+			callshop "Pet_Items", 1;
+			end;
+		case 2:
+			mes "[Pet Groomer]";
+			mes "Okay, let's barter.";
+			close2;
+			callshop "barter_Pet_Groomer";
+			end;
+		case 3:
+			mes "[Pet Groomer]";
+			mes "Okay, come back whenever you want.";
+			close;
+	}
+}
+
+//= Duplicate
+//============================================================
+prontera,218,211,4	duplicate(#PetGroomer)	Pet Groomer#prt	4_M_TELEPORTER
+moc_ruins,118,170,4	duplicate(#PetGroomer)	Pet Groomer#moc	4_M_TELEPORTER
+morocc,203,87,4	duplicate(#PetGroomer)	Pet Groomer#moc1	4_M_TELEPORTER
+geffen,193,152,4	duplicate(#PetGroomer)	Pet Groomer#gef	4_F_TELEPORTER
+payon,177,131,4	duplicate(#PetGroomer)	Pet Groomer#pay	4_F_TELEPORTER
+izlude_in,72,98,3	duplicate(#PetGroomer)	Pet Groomer#iz	4_F_TELEPORTER
+yuno,197,114,4	duplicate(#PetGroomer)	Pet Groomer#yuno	4_F_TELEPORTER
+lighthalzen,222,191,4	duplicate(#PetGroomer)	Pet Groomer#lhz	4_M_TELEPORTER
+brasilis,201,309,3	duplicate(#PetGroomer)	Pet Groomer#bra	4_M_BRZ_MAN1
+lasagna,179,176,6	duplicate(#PetGroomer)	Pet Groomer#las	4_M_TELEPORTER

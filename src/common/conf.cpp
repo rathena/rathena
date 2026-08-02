@@ -5,7 +5,7 @@
 
 #include "showmsg.hpp" // ShowError
 
-int conf_read_file(config_t *config, const char *config_filename)
+int32 conf_read_file(config_t *config, const char *config_filename)
 {
 	config_init(config);
 	if (!config_read_file(config, config_filename)) {
@@ -23,7 +23,7 @@ int conf_read_file(config_t *config, const char *config_filename)
 static void config_setting_copy_simple(config_setting_t *parent, const config_setting_t *src);
 static void config_setting_copy_elem(config_setting_t *parent, const config_setting_t *src);
 static void config_setting_copy_aggregate(config_setting_t *parent, const config_setting_t *src);
-int config_setting_copy(config_setting_t *parent, const config_setting_t *src);
+int32 config_setting_copy(config_setting_t *parent, const config_setting_t *src);
 
 void config_setting_copy_simple(config_setting_t *parent, const config_setting_t *src)
 {
@@ -76,7 +76,7 @@ void config_setting_copy_elem(config_setting_t *parent, const config_setting_t *
 void config_setting_copy_aggregate(config_setting_t *parent, const config_setting_t *src)
 {
 	config_setting_t *newAgg;
-	int i, n;
+	int32 i, n;
 
 	newAgg = config_setting_add(parent, config_setting_name(src), config_setting_type(src));
 
@@ -94,7 +94,7 @@ void config_setting_copy_aggregate(config_setting_t *parent, const config_settin
 	}
 }
 
-int config_setting_copy(config_setting_t *parent, const config_setting_t *src)
+int32 config_setting_copy(config_setting_t *parent, const config_setting_t *src)
 {
 	if (!config_setting_is_group(parent) && !config_setting_is_list(parent))
 		return CONFIG_FALSE;

@@ -26,7 +26,7 @@ std::string ipban_table = "ipbanlist";
 
 // globals
 static Sql* sql_handle = nullptr;
-static int cleanup_timer_id = INVALID_TIMER;
+static int32 cleanup_timer_id = INVALID_TIMER;
 static bool ipban_inited = false;
 
 //early declaration
@@ -40,7 +40,7 @@ TIMER_FUNC(ipban_cleanup);
 bool ipban_check(uint32 ip) {
 	uint8* p = (uint8*)&ip;
 	char* data = nullptr;
-	int matches;
+	int32 matches;
 
 	if( !login_config.ipban )
 		return false;// ipban disabled

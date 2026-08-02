@@ -101,6 +101,7 @@ Attack: Weapon's attack.
 ---------------------------------------
 
 MagicAttack: Weapon's magic attack. (Renewal only)
+             Unlike matk bonus from equipment, MagicAttack is taken into account in weapon variance calculation on Renewal.
 
 ---------------------------------------
 

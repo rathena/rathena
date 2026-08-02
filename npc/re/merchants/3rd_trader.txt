@@ -113,7 +113,7 @@ job3_guil01,91,93,3	script	Rare Herb Collector	1_M_03,{
 
 // Point Merchants (Sorcerer) :: point_3rd_trader
 //============================================================
--	shop	Shard_Seller	HIDDEN_NPC,no,6360:200,6363:200,6361:200,6362:200
+-	shop	Shard_Seller	HIDDEN_NPC,no,6360:200,6363:200,6361:200,6362:200,1000291:-1,1000292:-1,1000293:-1,1000294:-1,1000295:-1
 
 -	script	::pss	HIDDEN_NPC,{
 	npctalk "Do you have an element for each property?", "", bc_self;

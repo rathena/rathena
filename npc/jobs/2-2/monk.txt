@@ -385,7 +385,7 @@ monk_in,99,58,1	script	Sensei Moohae#mk	60,{
 		case 3: setarray .@items[0], 905,30, 909,5, 955,10, 5; changequest 3016,3019; break;
 		case 4: setarray .@items[0], 943,5, 935,20, 912,5, 6; changequest 3016,3020; break;
 		case 5: setarray .@items[0], 7053,5, 509,10, 508,10, 7; changequest 3016,3021; break;
-		case 6: setarray .@items[0], 913,10, 948,4, 7033,20, 8; changequest 3016,3022; break;
+		case 6: setarray .@items[0], 913,10, 948,5, 7033,20, 8; changequest 3016,3022; break;
 		case 7: setarray .@items[0], 1027,5, 1025,20, 1042,10, 9; changequest 3016,3023; break;
 		}
 		mes "[Sensei Moohae]";

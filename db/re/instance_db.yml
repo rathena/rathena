@@ -576,3 +576,10 @@ Body:
       Map: 1@jorlab
       X: 57
       Y: 45
+  - Id: 79
+    Name: Deep Forest
+    TimeLimit: 1200
+    Enter:
+      Map: 1@exsh
+      X: 90
+      Y: 35

@@ -1152,7 +1152,7 @@ airplane_01,32,61,4	script	Nils#ein	49,1,1,{
 		input .@save2$;
 		set .@end_time, gettimetick(1);
 		set .@total_time, .@total_time + (.@start_time - .@end_time);
-		set .@tasoo, (.@letters[.@wordtest] / .@total_time) * 6;
+		set .@tasoo, (.@letters[.@wordtest] / ( .@total_time > 0 ?  .@total_time : 1)) * 6;
 		if ((.@save1$ == .@word1$[.@wordtest]) && (.@save2$ == .@word2$[.@wordtest])) {
 			mes "[Nils]";
 			mes "Your record is ^ff0000" + .@total_time + " seconds^000000 and";

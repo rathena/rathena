@@ -596,6 +596,7 @@ OnInit:
 		unloadnpc "Dilemma";
 		unloadnpc "Tirehaus";
 		unloadnpc "Krugg";
+		unloadnpc "Dietrich";
 		unloadnpc "Hakhim";
 		unloadnpc "Abdula";
 		unloadnpc "Xenophon";

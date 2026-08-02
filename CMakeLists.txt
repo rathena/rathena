@@ -22,15 +22,8 @@
 #####################################################################
 
 
-#cmake_minimum_required( VERSION 2.8.4 )
-# Functional changes from 2.8.3 to 2.8.4:
-#   string(SUBSTRING) works with length -1 as "rest of string"
-#   changes to some CPack generators
-#   CYGWIN no longer defines WIN32
-#   CMP0017: Prefer files from the CMake module directory when including from there.
-# Update to 3.1 for CMAKE_CXX_STANDARD cross support definition
 set( CMAKE_LEGACY_CYGWIN_WIN32 0 )
-cmake_minimum_required( VERSION 3.1 )
+cmake_minimum_required( VERSION 3.13 )
 project( rAthena )
 if( CYGWIN )
 	unset( WIN32 )
@@ -124,7 +117,7 @@ include( TestBigEndian )
 #
 set( PACKETVER CACHE STRING "Sets the PACKETVER define of the servers. (see src/common/mmo.h)" )
 if( PACKETVER )
-	list( APPEND GLOBAL_DEFINITIONS  PACKETVER=${PACKETVER} )
+	set_property( CACHE GLOBAL_DEFINITIONS PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DPACKETVER=${PACKETVER}" )
 endif()
 
 
@@ -206,24 +199,37 @@ message( STATUS "Detecting dynamic loading library (dl) - done" )
 endif()
 
 
-#
-# networking library (Solaris/MinGW)
-#
-if( NOT MSVC )
-message( STATUS "Detecting networking library (socket/nsl/ws2_32)" )
-#set( CMAKE_REQUIRED_LIBRARIES ${GLOBAL_LIBRARIES} )
-#find_function_library( bind FUNCTION_BIND_LIBRARIES socket ws2_32 )
-#if( FUNCTION_BIND_LIBRARIES )
-#	message( STATUS "Adding global library: ${FUNCTION_BIND_LIBRARIES}" )
-#	set_property( CACHE GLOBAL_LIBRARIES  PROPERTY VALUE ${GLOBAL_LIBRARIES} ${FUNCTION_BIND_LIBRARIES} )
-#endif()
-set( CMAKE_REQUIRED_LIBRARIES ${GLOBAL_LIBRARIES} )
-find_function_library( gethostbyname FUNCTION_GETHOSTBYNAME_LIBRARIES nsl )
-if( FUNCTION_GETHOSTBYNAME_LIBRARIES )
-	message( STATUS "Adding global library: ${FUNCTION_GETHOSTBYNAME_LIBRARIES}" )
-	set_property( CACHE GLOBAL_LIBRARIES  PROPERTY VALUE ${GLOBAL_LIBRARIES} ${FUNCTION_GETHOSTBYNAME_LIBRARIES} )
-endif()
-message( STATUS "Detecting networking library (socket/nsl/ws2_32) - done" )
+# Check for getaddrinfo (modern networking API)
+check_function_exists(getaddrinfo HAVE_GETADDRINFO)
+if(HAVE_GETADDRINFO)
+    message(STATUS "Found getaddrinfo()")
+	add_definitions(-DHAVE_GETADDRINFO)
+else()
+    message(STATUS "getaddrinfo() not found, checking for legacy gethostbyname()")
+	#(Solaris/MinGW)
+	if( NOT MSVC )
+		message( STATUS "Detecting networking library (socket/nsl/ws2_32)" )
+		#set( CMAKE_REQUIRED_LIBRARIES ${GLOBAL_LIBRARIES} )
+		#find_function_library( bind FUNCTION_BIND_LIBRARIES socket ws2_32 )
+		#if( FUNCTION_BIND_LIBRARIES )
+		#	message( STATUS "Adding global library: ${FUNCTION_BIND_LIBRARIES}" )
+		#	set_property( CACHE GLOBAL_LIBRARIES  PROPERTY VALUE ${GLOBAL_LIBRARIES} ${FUNCTION_BIND_LIBRARIES} )
+		#endif()
+		set( CMAKE_REQUIRED_LIBRARIES ${GLOBAL_LIBRARIES} )
+		find_function_library( gethostbyname FUNCTION_GETHOSTBYNAME_LIBRARIES nsl )
+		if( FUNCTION_GETHOSTBYNAME_LIBRARIES )
+			message( STATUS "Adding global library: ${FUNCTION_GETHOSTBYNAME_LIBRARIES}" )
+			set_property( CACHE GLOBAL_LIBRARIES  PROPERTY VALUE ${GLOBAL_LIBRARIES} ${FUNCTION_GETHOSTBYNAME_LIBRARIES} )
+			set(HAVE_GETHOSTBYNAME TRUE CACHE INTERNAL "gethostbyname is available")
+		endif()
+		message( STATUS "Detecting networking library (socket/nsl/ws2_32) - done" )
+	else()
+		check_function_exists(gethostbyname HAVE_GETHOSTBYNAME)
+	endif()
+	if(HAVE_GETHOSTBYNAME)
+		message(STATUS "Found gethostbyname()")
+		add_definitions(-DHAVE_GETHOSTBYNAME)
+	endif()
 endif()
 
 #
@@ -252,20 +258,26 @@ endif()
 # checked but some systems define them even when they do not support it
 # (ref. bugreport:1003).
 #
-message( STATUS "Check for monotonic clock" )
-find_library( RT_LIBRARY rt )# (optional, rt on Debian)
-mark_as_advanced( RT_LIBRARY )
-set( CMAKE_REQUIRED_LIBRARIES ${GLOBAL_LIBRARIES} ${RT_LIBRARY} )
-file( READ "${CMAKE_SOURCE_DIR}/3rdparty/cmake/tests/HAVE_MONOTONIC_CLOCK.c" _SOURCE )
-CHECK_C_SOURCE_RUNS( "${_SOURCE}" HAVE_MONOTONIC_CLOCK )
-if( HAVE_MONOTONIC_CLOCK )
-	message( STATUS "Check for monotonic clock - yes" )
-	set_property( CACHE GLOBAL_LIBRARIES    PROPERTY VALUE ${GLOBAL_LIBRARIES} ${RT_LIBRARY} )
-	set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DHAVE_MONOTONIC_CLOCK" )
+if(NOT APPLE)
+	message( STATUS "Check for monotonic clock" )
+	find_library( RT_LIBRARY rt )# (optional, rt on Debian)
+	mark_as_advanced( RT_LIBRARY )
+	set( CMAKE_REQUIRED_LIBRARIES ${GLOBAL_LIBRARIES} ${RT_LIBRARY} )
+	file( READ "${CMAKE_SOURCE_DIR}/3rdparty/cmake/tests/HAVE_MONOTONIC_CLOCK.c" _SOURCE )
+	CHECK_C_SOURCE_RUNS( "${_SOURCE}" HAVE_MONOTONIC_CLOCK )
+	if( HAVE_MONOTONIC_CLOCK )
+		message( STATUS "Check for monotonic clock - yes" )
+		set_property( CACHE GLOBAL_LIBRARIES    PROPERTY VALUE ${GLOBAL_LIBRARIES} ${RT_LIBRARY} )
+		set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DHAVE_MONOTONIC_CLOCK" )
+	else()
+		message( STATUS "Check for monotonic clock - yes" )
+	endif()
 else()
 	message( STATUS "Check for monotonic clock - no" )
+    # macOS-specific behavior, assuming clock_gettime is available
+    set(HAVE_MONOTONIC_CLOCK TRUE)
+    set_property(CACHE GLOBAL_DEFINITIONS PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DHAVE_MONOTONIC_CLOCK")
 endif()
-
 
 #
 # Test if function exists:

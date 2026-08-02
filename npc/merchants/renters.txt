@@ -97,7 +97,7 @@ prontera,232,318,3	script	Peco Peco Breeder#cru	105,{
 	if(Upper==1) set .@price,3500; //Armored Peco
 	if(Upper==2) set .@price,3500; //Baby Peco
 
-	mes "[PecoPeco Breeder]";
+	mes "[Peco Peco Breeder]";
 	if (BaseJob == Job_Crusader && Class < Job_Rune_Knight) {
 		if(Upper != 1 ) mes "Welcome, Crusader.";
 		else mes "Welcome, Paladin.";
@@ -139,7 +139,7 @@ prontera,232,318,3	script	Peco Peco Breeder#cru	105,{
 			setriding;
 			close;
 		case 2:
-			mes "[PecoPeco Breeder]";
+			mes "[Peco Peco Breeder]";
 			mes "See you around.";
 			close;
 		}

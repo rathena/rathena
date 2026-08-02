@@ -215,7 +215,7 @@ function	script	cute_pet_manager	{
 		mes "[Cute Pet Manager]";
 		mes "You have chosen " + getitemname(.@tame_id) + ".";
 		mes "You can use it for taming";
-		mes "^FF0000" + strmobinfo(1,.@mob_id) + "^000000 monsters.";
+		mes "^FF0000" + getmonsterinfo(.@mob_id, MOB_NAME) + "^000000 monsters.";
 		next;
 		mes "[Cute Pet Manager]";
 		mes "Bring ^FF0000" + .@hunt_amount + " " + getitemname(.@hunt_id) + "^000000" + (.@hunt_id2 ? ", ^FF0000" + .@hunt_amount2 + " " + getitemname(.@hunt_id2) : "") + " ^000000 and ^FF00001 Dolly Capsule^000000";

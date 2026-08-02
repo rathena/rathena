@@ -433,7 +433,7 @@ yuno_in01,103,157,3	script	Bain#juno	98,{
 		mes "- after you lose some weight. -";
 		close;
 	}
-	if (countitem(974) > 0 && countitem(612) > 4 && countitem(1003) > 4 && countitem(7068) > 4 && countitem(7043) > 4 && countitem(757) > 2 && countitem(756) > 2 && Zeny > 2000) {
+	if (countitem(974) > 0 && countitem(612) > 4 && countitem(1003) > 4 && countitem(7068) > 4 && countitem(7043) > 4 && countitem(757) > 2 && countitem(756) > 2 && Zeny >= 2000) {
 		if (ALCH_Q == 23) set ALCH_Q,24;
 		set .@kyulkwa,rand(1,10);
 		mes "[Bain]";
@@ -565,7 +565,7 @@ yuno_in01,100,153,7	script	Bajin	47,0,0,{
 		mes "- after you lose some weight. -";
 		close;
 	}
-	if (countitem(974) > 0 && countitem(612) > 4 && countitem(1003) > 4 && countitem(7068) > 4 && countitem(7043) > 4 && countitem(757) > 2 && countitem(756) > 2 && Zeny > 2000) {
+	if (countitem(974) > 0 && countitem(612) > 4 && countitem(1003) > 4 && countitem(7068) > 4 && countitem(7043) > 4 && countitem(757) > 2 && countitem(756) > 2 && Zeny >= 2000) {
 		if (ALCH_Q == 23) set ALCH_Q,24;
 		set .@kyulkwa,rand(1,10);
 		mes "[Bajin]";

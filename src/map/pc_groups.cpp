@@ -30,8 +30,15 @@ bool PlayerGroupDatabase::parseCommands( const ryml::NodeRef& node, std::vector<
 		}
 
 		if( !atcommand_exists( command.c_str() ) ){
-			this->invalidWarning( it, "Unknown atcommand: %s\n", command.c_str() );
-			return false;
+			const char* command_str = command.c_str();
+			const char* alias_str = atcommand_alias_lookup( command );
+
+			if( strcmp( command_str, alias_str ) == 0 ){
+				this->invalidWarning( it, "Unknown atcommand: %s\n", command.c_str() );
+				return false;
+			}
+
+			command = alias_str;
 		}
 
 		util::tolower( command );
@@ -210,8 +217,8 @@ uint64 PlayerGroupDatabase::parseBodyNode( const ryml::NodeRef& node ){
 }
 
 void PlayerGroupDatabase::loadingFinished(){
-	static const int MAX_CYCLES = 10;
-	int i;
+	static const int32 MAX_CYCLES = 10;
+	int32 i;
 
 	for( i = 0; i < MAX_CYCLES; i++ ){
 		auto inheritanceIt = this->inheritance.begin();
@@ -315,7 +322,7 @@ PlayerGroupDatabase player_group_db;
  * @param command Command name without @/# and params
  * @param type enum AtCommanndType { COMMAND_ATCOMMAND = 1, COMMAND_CHARCOMMAND = 2 }
  */
-bool s_player_group::can_use_command( const std::string& command, AtCommandType type ){
+bool s_player_group::can_use_command( const std::string& command, AtCommandType type ) const{
 	if( this->has_permission( PC_PERM_USE_ALL_COMMANDS ) ){
 		return true;
 	}
@@ -358,14 +365,14 @@ void pc_group_pc_load(map_session_data * sd) {
  * Checks if player group has a permission
  * @param permission permission to check
  */
-bool s_player_group::has_permission( e_pc_permission permission ){
+bool s_player_group::has_permission( e_pc_permission permission ) const{
 	return this->permissions.test( permission );
 }
 
 /**
  * Checks commands used by player group should be logged
  */
-bool s_player_group::should_log_commands(){
+bool s_player_group::should_log_commands() const{
 	return this->log_commands;
 }
 

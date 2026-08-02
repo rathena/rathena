@@ -686,7 +686,7 @@ prt_are_in,98,14,3	script	Givu#arena	728,{
 			else if ($@arena_picture_id == 7777)
 				mes "Would you like to take a picture with a Valkyrie?";
 			else
-				mes "Would you like to take a picture with a "+getmonsterinfo($@arena_picture_id,0)+"?";
+				mes "Would you like to take a picture with a "+getmonsterinfo($@arena_picture_id, MOB_NAME)+"?";
 			next;
 			switch(select("Yes:No")) {
 			case 1:

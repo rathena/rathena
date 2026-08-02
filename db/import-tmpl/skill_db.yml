@@ -1,5 +1,5 @@
 # This file is a part of rAthena.
-#   Copyright(C) 2021 rAthena Development Team
+#   Copyright(C) 2024 rAthena Development Team
 #   https://rathena.org - https://github.com/rathena
 #
 # This program is free software: you can redistribute it and/or modify
@@ -58,7 +58,7 @@
 #   NoNearNPC:                Determines if the skill can be used near a NPC. (Optional)
 #     AdditionalRange         Number of cells from an NPC where the skill can be cast. (Optional)
 #     Type:                   Type of NPC.
-#   CastCancel                Cancel cast when hit. (Default: false)
+#   CastCancel                Cancel cast when hit. (Default: true)
 #   CastDefenseReduction      Defense reduction rate during skill cast. (Default: 0)
 #   CastTime:                 Time to cast the skill in milliseconds. (Default: 0)
 #     - Level                 Skill level.
@@ -140,4 +140,4 @@
 
 Header:
   Type: SKILL_DB
-  Version: 3
+  Version: 4

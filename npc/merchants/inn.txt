@@ -244,6 +244,76 @@ bra_in01,27,24,3	script	Hotel Keeper#bra1	478,{
 	}
 }
 
+//======================== Einbroch =================================
+ein_in01,206,224,3	script	Hotel Employee#ein	855,{
+	mes "[Hotel Employee]";
+	mes "Good day, welcome to the";
+	mes "Einbroch Hotel. The staff is";
+	mes "always striving to accommodate";
+	mes "our guests with the highest";
+	mes "standards in cleanliness,";
+	mes "service and convenience~";
+	next;
+	if (kain_ticket == 5) {
+		mes "[Hotel Employee]";
+		mes "Are you looking";
+		mes "for Mr. Defru Ark?";
+		mes "Oh right, he did mention";
+		mes "waiting for some package";
+		mes "from the Airport. Now let";
+		mes "me pull up that information...";
+		next;
+		mes "[Hotel Employee]";
+		mes "Ah, here we are.";
+		mes "Mr. Defru Ark is";
+		mes "staying in Room 201.";
+		next;
+	}
+	else {
+		switch(select("Save:Take Rest - 5,000 zeny:Cancel")) {
+		case 1:
+			mes "[Hotel Employee]";
+			mes "Your Respawn Point";
+			mes "has been saved here";
+			mes "in the Einbroch Hotel.";
+			mes "Thank you, and please";
+			mes "come again.";
+			close2;
+			savepoint "ein_in01",200,224,1,1;
+			end;
+		case 2:
+			if (Zeny > 4999) {
+				mes "[Hotel Employee]";
+				mes "Thank you.";
+				mes "Please enjoy";
+				mes "your rest~";
+				close2;
+				set Zeny, Zeny-5000;
+				percentheal 100,100;
+				warp "ein_in01",272,167;
+				end;
+			}
+			else {
+				mes "[Hotel Employee]";
+				mes "I'm sorry, but the";
+				mes "accommodation fee is";
+				mes "5,000 zeny. Next time,";
+				mes "please make sure that you";
+				mes "bring enough zeny, okay?";
+				close;
+			}
+		case 3:
+			mes "[Hotel Employee]";
+			mes "Thank you and";
+			mes "please come again~";
+			close;
+		}
+	}
+	mes "[Hotel Employee]";
+	mes "Have a good day.";
+	close;
+}
+
 //======================= Inn Function ==============================
 function	script	F_InnMaid	{
 	.@npc_name$ = getarg(0);

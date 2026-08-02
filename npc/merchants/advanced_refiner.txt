@@ -192,7 +192,7 @@ S_RefineValidate:
 			// anti-hack
 			if (callfunc("F_IsEquipIDHack", .@part, getarg(4)) ||
 				callfunc("F_IsEquipRefineHack", .@part, getarg(5)) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3])) {
-				mes "[Holink]";
+				mes "[Suhnbi]";
 				emotion ET_FRET;
 				mes "Wait a second...";
 				mes "Do you think I'm stupid?!";

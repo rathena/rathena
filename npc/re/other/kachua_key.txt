@@ -1,0 +1,75 @@
+//===== rAthena Script =======================================
+//= Dynamic NPC: Kachua's Secret Box
+//===== Description: =========================================
+//- [Official conversion]
+//= Kachua's Secret Box is a Gachapon NPC.
+//= It lets the player exchange a Kachua's Secret Key for a random item.
+//= It also gives a Kachua's Mileage Coupon for each pull.
+//===== Changelogs: ==========================================
+//= 1.0 First version. [secretdataz]
+//============================================================
+
+sec_in02,126,178,3	script	Kachua's Secret Box#bm	4_TREASURE_BOX,{
+	.@key$ = "K_Secret_Key";
+	.@keyname$ = getitemname( .@key$ );
+	.@box$ = "Main_Lucky_Box";
+	.@boxname$ = getitemname( .@box$ );
+	mes "A Secret Box where no one knows what's inside.";
+	mes "^4d4dffYou can open this box by consuming " + mesitemlink( .@key$ ) + ".^000000";
+	next;
+	switch(select("^4d4dffOpen the box 1 time (1 " + .@keyname$ + ")^000000","^4d4dffOpen the box 10 times (10 " + .@keyname$ + "s)^000000")) {
+		case 1:
+			mes "^FF0000[Notice]^000000";
+			mes "^FF0000Exchange one random item with one " + .@keyname$ + ".^000000";
+			mes "^FF0000The item exchanged above cannot be withdrawn, nor can it be exchanged to " + .@keyname$ + ".^000000";
+			next;
+			if(select("Keep going.","Stop conversation.") == 2) {
+				mes "You have decided not to open the Box.";
+				close;
+			} else if (countitem(.@key$) < 1) {
+				mes "Not enough " + mesitemlink( .@key$ ) + ".";
+				close;
+			} else {
+				if (checkweight(1201,1) == 0 || ((MaxWeight - Weight) * 100 / MaxWeight) < 10) {
+					mes "^4d4dffPlease make sure you have enough space in your inventory.^000000";
+					close;
+				}
+				delitem(.@key$, 1);
+				consumeitem(.@box$);
+				mes .@boxname$ + " was opened!";
+				mes "Were you lucky?";
+				specialeffect2 EF_VALLENTINE;
+				close;
+			}
+		case 2:
+			mes "^FF0000[Notice]^000000";
+			mes "^FF0000Exchange 10 random items with 10 " + .@keyname$ + "s.^000000";
+			mes "^FF0000The items exchanged above cannot be withdrawn, nor can it be exchanged to " + .@keyname$ + ".^000000";
+			next;
+			if(select("Keep going.","Stop conversation.") == 2) {
+				mes "You have decided not to open the Box.";
+				close;
+			} else if (countitem(.@key$) < 10) {
+				mes "You do not have enough " + mesitemlink( .@key$ ) + ".";
+				close;
+			} else {
+				for (.@i = 1; .@i <= 10; ++.@i) {
+					progressbar "4d4dff",2;
+					if (checkweight(1201,1) == 0 || ((MaxWeight - Weight) * 100 / MaxWeight) < 10) {
+						mes "^4d4dffPlease make sure you have enough space in your inventory.^000000";
+						close;
+					}
+					if (countitem(.@key$) < 1) { // Custom check, just in case
+						close;
+					}
+					delitem(.@key$, 1);
+					consumeitem(.@box$);
+					dispbottom .@boxname$ + " was opened " + .@i + " times. Another one is being opened.",0xFFFFFF;
+					specialeffect2 EF_VALLENTINE;
+				}
+				mes .@boxname$ + " was opened 10 times!";
+				mes "Were you lucky?";
+				close;
+			}
+	}
+}
