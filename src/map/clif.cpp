@@ -1670,7 +1670,7 @@ void clif_refresh_clothcolor( const block_list& bl, enum send_target target, con
 		tbl = &bl;
 	}
 
-	clif_sprite_change( const_cast<block_list*>( tbl ), bl.id, LOOK_CLOTHES_COLOR, vd->look[LOOK_CLOTHES_COLOR], 0, target );
+	clif_sprite_change( tbl, bl.id, LOOK_CLOTHES_COLOR, vd->look[LOOK_CLOTHES_COLOR], 0, target );
 #endif
 }
 
