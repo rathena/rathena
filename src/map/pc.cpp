@@ -8523,12 +8523,10 @@ void pc_gainexp(map_session_data *sd, block_list *src, t_exp base_exp, t_exp job
 			clif_updatestatus(*sd,SP_JOBEXP);
 	}
 
-#if PACKETVER >= 20091027
 	if (flag&1)
 		clif_displayexp(sd, (flag&4) ? 0 : base_exp, SP_BASEEXP, exp_flag&1, false);
 	if (flag&2)
 		clif_displayexp(sd, (flag&8) ? 0 : job_exp,  SP_JOBEXP, exp_flag&1, false);
-#endif
 
 	if (sd->state.showexp && (base_exp || job_exp))
 		pc_gainexp_disp(sd, base_exp, nextb, job_exp, nextj, false);
@@ -8547,18 +8545,14 @@ void pc_lostexp(map_session_data *sd, t_exp base_exp, t_exp job_exp) {
 	if (base_exp) {
 		base_exp = u64min(sd->status.base_exp, base_exp);
 		sd->status.base_exp -= base_exp;
-#if PACKETVER >= 20091027
 		clif_displayexp(sd, base_exp, SP_BASEEXP, false, true);
-#endif
 		clif_updatestatus(*sd, SP_BASEEXP);
 	}
 
 	if (job_exp) {
 		job_exp = u64min(sd->status.job_exp, job_exp);
 		sd->status.job_exp -= job_exp;
-#if PACKETVER >= 20091027
 		clif_displayexp(sd, job_exp, SP_JOBEXP, false, true);
-#endif
 		clif_updatestatus(*sd, SP_JOBEXP);
 	}
 
