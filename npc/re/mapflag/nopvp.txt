@@ -80,6 +80,7 @@ paramk	mapflag	pvp	off
 1@lab	mapflag	pvp	off
 1@uns	mapflag	pvp	off
 1@mcd	mapflag	pvp	off
+1@ffp	mapflag	pvp	off
 
 //============================================================
 // Municipality (Cities/Towns/Villages)
