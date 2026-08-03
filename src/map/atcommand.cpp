@@ -244,6 +244,13 @@ static const char* atcommand_help_string( const char* command ){
 	return info->help.c_str();
 }
 
+/// Normalize path separators so Windows-style paths work on all platforms.
+static void atcommand_normalize_npc_path(char* dst, const char* src, size_t size) {
+	safestrncpy(dst, src, size);
+	for (char* p = dst; *p; ++p)
+		if (*p == '\\')
+			*p = '/';
+}
 
 /*==========================================
  * @send (used for testing packet sends from the client)
@@ -5351,14 +5358,11 @@ ACMD_FUNC(loadnpc)
 		return -1;
 	}
 
-	// Normalize path separators so Windows-style paths work on all platforms
 	char path[1024];
-	safestrncpy(path, message, sizeof(path));
-	for (char* p = path; *p; ++p) if (*p == '\\') *p = '/';
+	atcommand_normalize_npc_path(path, message, sizeof(path));
 
 	if (!npc_addsrcfile(path, true)) {
 		clif_displaymessage(fd, msg_txt(sd,261)); // Script could not be loaded.
-		ShowDebug( "Loadnpcfile: NPC failed to load '" CL_WHITE "%s" CL_RESET "'.\n", path );
 		return -1;
 	}
 
@@ -5396,48 +5400,20 @@ ACMD_FUNC(unloadnpc)
 	return 0;
 }
 
-ACMD_FUNC(unloadnpcfile) {
-
-	if( !message || !*message ) {
-		clif_displaymessage(fd, msg_txt(sd,1385)); // Usage: @unloadnpcfile <file name>
-		return -1;
-	}
-
-	// Normalize path separators so Windows-style paths work on all platforms
-	char path[1024];
-	safestrncpy(path, message, sizeof(path));
-	for (char* p = path; *p; ++p) if (*p == '\\') *p = '/';
-
-	if( npc_unloadfile(path) ) {
-		clif_displaymessage(fd, msg_txt(sd,1386)); // File unloaded. Be aware that mapflags and monsters spawned directly are not removed.
-		ShowStatus( "NPC file '" CL_WHITE "%s" CL_RESET "' was unloaded.\n", path );
-	}
-	else {
-		clif_displaymessage(fd, msg_txt(sd,1387)); // File not found.
-		ShowDebug( "Unloadnpcfile: Unknown NPC filepath'" CL_WHITE "%s" CL_RESET "'.\n", path );
-		return -1;
-	}
-
-	return 0;
-}
-
 ACMD_FUNC(reloadnpcfile) {
 	if (!message || !*message) {
 		clif_displaymessage(fd, msg_txt(sd,733)); // Please enter a NPC file name (usage: @reloadnpcfile <file name>).
 		return -1;
 	}
 
-	// Normalize path separators so Windows-style paths work on all platforms
 	char path[1024];
-	safestrncpy(path, message, sizeof(path));
-	for (char* p = path; *p; ++p) if (*p == '\\') *p = '/';
+	atcommand_normalize_npc_path(path, message, sizeof(path));
 
 	if (npc_unloadfile(path))
 		clif_displaymessage(fd, msg_txt(sd,1386)); // File unloaded. Be aware that mapflags and monsters spawned directly are not removed.
 
 	if (!npc_addsrcfile(path, true)) {
 		clif_displaymessage(fd, msg_txt(sd,261)); // Script could not be loaded.
-		ShowDebug( "Reloadnpcfile: NPC Failed to load '" CL_WHITE "%s" CL_RESET "'.\n", path );
 		return -1;
 	}
 
@@ -10388,6 +10364,27 @@ ACMD_FUNC(rmvperm) {
 	return 0;
 }
 
+ACMD_FUNC(unloadnpcfile) {
+
+	if( !message || !*message ) {
+		clif_displaymessage(fd, msg_txt(sd,1385)); // Usage: @unloadnpcfile <file name>
+		return -1;
+	}
+
+	char path[1024];
+	atcommand_normalize_npc_path(path, message, sizeof(path));
+
+	if( npc_unloadfile(path) ) {
+		clif_displaymessage(fd, msg_txt(sd,1386)); // File unloaded. Be aware that mapflags and monsters spawned directly are not removed.
+		ShowStatus( "NPC file '" CL_WHITE "%s" CL_RESET "' was unloaded.\n", path );
+	}
+	else {
+		clif_displaymessage(fd, msg_txt(sd,1387)); // File not found.
+		return -1;
+	}
+
+	return 0;
+}
 ACMD_FUNC(cart) {
 #define MC_CART_MDFY(idx, x) \
 	sd->status.skill[(idx)].id = (x)?MC_PUSHCART:0; \
@@ -11648,7 +11645,6 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(hidenpc),
 		ACMD_DEF(loadnpc),
 		ACMD_DEF(unloadnpc),
-		ACMD_DEF(unloadnpcfile),
 		ACMD_DEF(reloadnpcfile),
 		ACMD_DEF(servertime),
 		ACMD_DEF(jail),
@@ -11785,6 +11781,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(sizeguild),
 		ACMD_DEF(addperm),
 		ACMD_DEF(rmvperm),
+		ACMD_DEF(unloadnpcfile),
 		ACMD_DEF(cart),
 		ACMD_DEF(mount2),
 		ACMD_DEF(join),
