@@ -1191,11 +1191,11 @@ bool status_change::hasSCE( enum sc_type type ) const{
 /**
  * Accessor for a status_change_entry in a status_change
  */
-status_change_entry * status_change::getSCE(enum sc_type type) {
+status_change_entry* status_change::getSCE( enum sc_type type ){
 	if( type == this->lastStatus.first ){
 		return this->lastStatus.second;
 	}
-	
+
 	status_change_entry* sc = util::umap_find( this->data, type );
 
 	this->lastStatus.first = type;
@@ -1208,7 +1208,7 @@ const status_change_entry* status_change::getSCE( sc_type type) const{
 	return const_cast<status_change*>(this)->getSCE(type);
 }
 
-status_change_entry * status_change::getSCE(uint32 type) {
+status_change_entry* status_change::getSCE( uint32 type ){
 	return this->getSCE( static_cast<sc_type>( type ) );
 }
 
@@ -1216,7 +1216,7 @@ const status_change_entry* status_change::getSCE( uint32 type) const{
 	return const_cast<status_change*>(this)->getSCE(type);
 }
 
-status_change_entry * status_change::createSCE(enum sc_type type) {
+status_change_entry* status_change::createSCE( enum sc_type type ){
 	status_change_entry& sc = this->data[type];
 
 	this->lastStatus.first = type;
@@ -1610,7 +1610,7 @@ int32 status_damage(block_list *src,block_list *target,int64 dhp, int64 dsp, int
 		if (src != nullptr) {
 			if (unit_data* ud = unit_bl2ud(target); ud != nullptr)
 				ud->dmg_tick = gettick();
-	}
+		}
 	}
 
 	// We need to log the real damage on exp_calc_type 1
@@ -3546,7 +3546,7 @@ static uint32 status_calc_maxhp_pc( map_session_data& sd, uint32 vit ){
 	// TODO: using bMaxHP* for usable items may cause rounding issue
 	double item_bonus = ( dmax * status_get_hpbonus_item( &sd ) / 100 );
 
-		dmax += equip_bonus + item_bonus;
+	dmax += equip_bonus + item_bonus;
 
 	// Aegis accuracy
 	dmax += static_cast<int64>( dmax * status_get_hpbonus( &sd, STATUS_BONUS_RATE ) / 100 );
@@ -3571,7 +3571,7 @@ static uint32 status_calc_maxsp_pc( map_session_data& sd, uint32 int_ ){
 
 	if( job == nullptr ){
 		return 1;
-}
+	}
 
 	// Prevent negative array index
 	uint32 level = umax( sd.status.base_level, 1 ) - 1;
@@ -3644,7 +3644,7 @@ static uint32 status_calc_maxap_pc( map_session_data& sd ){
 	// Make sure it's not negative before casting to uint32
 	if( dmax < 0. ){
 		dmax = 0.;
-}
+	}
 
 	return cap_value( static_cast<uint32>( dmax ), 0, std::numeric_limits<uint32>::max() );
 }
@@ -4194,11 +4194,11 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 
 	if (!sc->empty()){
 		if( status_change_entry* sce = sc->getSCE(SC_ITEMSCRIPT); sce != nullptr ){
-		std::shared_ptr<item_data> data = item_db.find(sc->getSCE(SC_ITEMSCRIPT)->val1);
+			std::shared_ptr<item_data> data = item_db.find(sc->getSCE(SC_ITEMSCRIPT)->val1);
 
-		if (data && data->script)
+			if (data && data->script)
 				run_script(data->script, 0, sd->id, 0);
-	}
+		}
 
 		for( const auto& it : *sc ){
 			if( std::shared_ptr<s_status_change_db> scdb = status_db.find( it.first ); scdb != nullptr && scdb->script != nullptr ){
@@ -4231,15 +4231,15 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 
 	// Damage modifiers from weapon type
 	if( std::shared_ptr<s_sizefix_db> right_weapon = size_fix_db.find(sd->weapontype1); right_weapon != nullptr ){
-	sd->right_weapon.atkmods[SZ_SMALL] = right_weapon->small;
-	sd->right_weapon.atkmods[SZ_MEDIUM] = right_weapon->medium;
-	sd->right_weapon.atkmods[SZ_BIG] = right_weapon->large;
+		sd->right_weapon.atkmods[SZ_SMALL] = right_weapon->small;
+		sd->right_weapon.atkmods[SZ_MEDIUM] = right_weapon->medium;
+		sd->right_weapon.atkmods[SZ_BIG] = right_weapon->large;
 	}
 
 	if( std::shared_ptr<s_sizefix_db> left_weapon = size_fix_db.find(sd->weapontype2); left_weapon != nullptr ){
-	sd->left_weapon.atkmods[SZ_SMALL] = left_weapon->small;
-	sd->left_weapon.atkmods[SZ_MEDIUM] = left_weapon->medium;
-	sd->left_weapon.atkmods[SZ_BIG] = left_weapon->large;
+		sd->left_weapon.atkmods[SZ_SMALL] = left_weapon->small;
+		sd->left_weapon.atkmods[SZ_MEDIUM] = left_weapon->medium;
+		sd->left_weapon.atkmods[SZ_BIG] = left_weapon->large;
 	}
 
 	if((pc_isriding(sd) || pc_isridingdragon(sd)) &&
@@ -4329,8 +4329,8 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 
 		if (map_data *mapdata = map_getmapdata(sd->m); mapdata == nullptr || !mapdata->zone->isStatusDisabled(SC_ENDURE, *sd))
 			clif_status_load(sd, EFST_ENDURE, 1);
-
-		base_status->mdef++;
+			base_status->mdef++;
+		}
 	}
 
 // ----- CONCENTRATION CALCULATION -----
@@ -4961,8 +4961,8 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 				sd->right_weapon.addele[element] += bonus;
 				if( !battle_config.left_cardfix_to_right ){
 					sd->left_weapon.addele[element] += bonus;
-		}
-		}
+				}
+			}
 		}
 		if( sc->getSCE(SC_HEAVEN_AND_EARTH) != nullptr ) {
 			i = sc->getSCE(SC_HEAVEN_AND_EARTH)->val2;
@@ -4970,7 +4970,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 			sd->bonus.short_attack_atk_rate += i;
 			sd->bonus.long_attack_atk_rate += i;
 		}
-		}
+	}
 	status_cpy(&sd->battle_status, base_status);
 
 // ----- CLIENT-SIDE REFRESH -----
@@ -5656,7 +5656,7 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 						}
 #endif
 						restriction = true;
-	}
+					}
 					break;
 
 				case SC_LONGING:
@@ -5685,7 +5685,7 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 				case SC_WINKCHARM:
 					if (bl.type != BL_PC) {
 						restriction = true;
-	}
+					}
 					break;
 
 				case SC_OBLIVIONCURSE:
@@ -5710,7 +5710,7 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 				case SC_NOCHAT:
 					if( ( sce.val1&MANNER_NOCHAT ) != 0 ){
 						restriction = true;
-	}
+					}
 					break;
 
 				default:
@@ -5738,7 +5738,7 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 
 				default:
 					return false;
-	}
+			}
 
 			return true;
 		} );
@@ -5759,7 +5759,7 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 					case SC_NOCHAT:
 						if( ( sce.val1&MANNER_NOITEM ) != 0 ){
 							restriction = true;
-		}
+						}
 						break;
 
 					default:
@@ -5778,7 +5778,7 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 					case SC_NOCHAT:
 						if( ( sce.val1&MANNER_NOITEM ) != 0 ){
 							restriction = true;
-		}
+						}
 						break;
 
 					default:
@@ -5807,7 +5807,7 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 					case SC_GRAVITATION:
 						if( sce.val3 == BCT_SELF ){
 							restriction = true;
-		}
+						}
 						break;
 
 					case SC_NOCHAT:
@@ -6248,7 +6248,7 @@ void status_calc_bl_main(block_list& bl, std::bitset<SCB_MAX> flag)
 #ifndef RENEWAL
 		int32 matk_min = status_base_matk_min(status);
 		int32 matk_max = status_base_matk_max(status);
-
+	
 		if (sd != nullptr) {
 			matk_min += sd->bonus.ematk;
 			matk_max += sd->bonus.ematk;
@@ -6259,7 +6259,7 @@ void status_calc_bl_main(block_list& bl, std::bitset<SCB_MAX> flag)
 			if (sd->matk_rate != 100) {
 				matk_min = matk_min * sd->matk_rate / 100;
 				matk_max = matk_max * sd->matk_rate / 100;
-				}
+			}
 		}
 
 		// Apply Recognized Spell buff - custom support (renewal status change)
@@ -6277,13 +6277,13 @@ void status_calc_bl_main(block_list& bl, std::bitset<SCB_MAX> flag)
 		if (sc && sc->getSCE(SC_MAGICPOWER) && sc->getSCE(SC_MAGICPOWER)->val4) {
 			matk_min += matk_min * sc->getSCE(SC_MAGICPOWER)->val3 / 100;
 			matk_max += matk_max * sc->getSCE(SC_MAGICPOWER)->val3 / 100;
-					}
+		}
 
 		// Custom since JOB_SOUL_REAPER does not exist in pre-renewal
 		if (sd != nullptr) {
 			matk_min += 3 * sd->soulball;
 			matk_max += 3 * sd->soulball;
-				}
+		}
 
 		status->matk_min = static_cast<uint16>( cap_value(matk_min,0,USHRT_MAX) );
 		status->matk_max = static_cast<uint16>( cap_value(matk_max,0,USHRT_MAX) );
@@ -6306,7 +6306,7 @@ void status_calc_bl_main(block_list& bl, std::bitset<SCB_MAX> flag)
 			if (b_status->lhw.matk > 0)
 				status->lhw.matk = b_status->lhw.matk;
 			if (b_status->rhw.matk > 0)
-					status->rhw.matk = b_status->rhw.matk;
+				status->rhw.matk = b_status->rhw.matk;
 
 			int32 wMatk = 0;
 			int32 variance = 0;
@@ -6314,15 +6314,15 @@ void status_calc_bl_main(block_list& bl, std::bitset<SCB_MAX> flag)
 			if (status->rhw.matk > 0) {
 				wMatk = status->rhw.matk;
 				variance = status->rhw.matk * status->rhw.wlv / 10;
-				}
+			}
 			if (status->lhw.matk > 0) {
-					wMatk += status->lhw.matk;
-					variance += status->lhw.matk * status->lhw.wlv / 10;
-				}
+				wMatk += status->lhw.matk;
+				variance += status->lhw.matk * status->lhw.wlv / 10;
+			}
 
 			matk_min += wMatk - variance;
 			matk_max += wMatk + variance;
-				}
+		}
 
 		// Apply Recognized Spell buff
 		// Also update homunculus MATK, hom Min Matk is always the same as Max Matk
@@ -6354,7 +6354,7 @@ void status_calc_bl_main(block_list& bl, std::bitset<SCB_MAX> flag)
 		if (sd != nullptr && sd->bonus.ematk_hidden != 0) {
 			matk_min += sd->bonus.ematk_hidden;
 			matk_max += sd->bonus.ematk_hidden;
-	}
+		}
 
 		// PseudoBuffMATK (flat MATK from skills)
 		matk_min = status_calc_pseudobuff_matk( sd, sc, matk_min );
@@ -8932,7 +8932,7 @@ const char* status_get_name( const block_list& bl ){
 					return sd.fakename;
 				}else{
 					return sd.status.name;
-	}
+				}
 			} break;
 
 		case BL_MOB:
@@ -9181,8 +9181,8 @@ int32 status_get_guild_id(const block_list* bl)
 					return md->guardian_data->guild_id;
 				if (md->special_state.ai){
 					if(map_session_data* msd = map_id2sd(md->master_id); msd != nullptr)
-					return msd->status.guild_id; // Alchemist's mobs [Skotlex]
-			}
+						return msd->status.guild_id; // Alchemist's mobs [Skotlex]
+				}
 			}
 			break;
 		case BL_HOM:
@@ -10849,7 +10849,7 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 				ud->canact_tick = endtick;
 				ud->canmove_tick = endtick;
 				ud->endure_tick = endtick;
-		}
+			}
 			break;
 		case SC_DECREASEAGI:
 		case SC_INCREASEAGI:
@@ -10891,7 +10891,7 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 		case SC_MAXIMIZEPOWER:
 			if (bl->type&BL_CONSUME) {
 				tick_time = val2 = tick>0?tick:10000; // SP consumption interval
-			tick = INFINITE_TICK; // Duration sent to the client should be infinite
+				tick = INFINITE_TICK; // Duration sent to the client should be infinite
 			}
 			else {
 				// If unit cannot consume SP, the duration is fixed to 10 seconds
@@ -11673,7 +11673,7 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 				val3 = 100; // 100% Def reduction
 			}
 			else {
-			val2 = 2+3*val1; // Atk increase
+				val2 = 2 + 3 * val1; // Atk increase
 				val3 = 5 + 5 * val1; // Def reduction
 			}
 			// val4 signals autoprovoke.
@@ -13456,49 +13456,49 @@ int32 status_change_end( block_list* bl, enum sc_type type, int32 tid ){
 	int32 val4;
 
 	if( status_change_entry* sce = sc->getSCE( type ); sce != nullptr ){
-	if (sce->timer != tid && tid != INVALID_TIMER)
-		return 0;
-
-	if (tid == INVALID_TIMER) {
-		if (type == SC_ENDURE && sce->val4)
-			// Do not end infinite endure.
+		if (sce->timer != tid && tid != INVALID_TIMER)
 			return 0;
-		if (type == SC_SPIDERWEB) {
-			//Delete the unit group first to expire found in the status change
-			std::shared_ptr<s_skill_unit_group> group, group2;
-			t_tick tick = gettick();
+
+		if (tid == INVALID_TIMER) {
+			if (type == SC_ENDURE && sce->val4)
+				// Do not end infinite endure.
+				return 0;
+			if (type == SC_SPIDERWEB) {
+				//Delete the unit group first to expire found in the status change
+				std::shared_ptr<s_skill_unit_group> group, group2;
+				t_tick tick = gettick();
 				int32 pos = 1;
-			if (sce->val2)
-				if (!(group = skill_id2group(sce->val2)))
+				if (sce->val2)
+					if (!(group = skill_id2group(sce->val2)))
+						sce->val2 = 0;
+				if (sce->val3) {
+					if (!(group2 = skill_id2group(sce->val3)))
+						sce->val3 = 0;
+					else if (!group || ((group->limit - DIFF_TICK(tick, group->tick)) > (group2->limit - DIFF_TICK(tick, group2->tick)))) {
+						group = group2;
+						pos = 2;
+					}
+				}
+				if (sce->val4) {
+					if (!(group2 = skill_id2group(sce->val4)))
+						sce->val4 = 0;
+					else if (!group || ((group->limit - DIFF_TICK(tick, group->tick)) > (group2->limit - DIFF_TICK(tick, group2->tick)))) {
+						group = group2;
+						pos = 3;
+					}
+				}
+				if (pos == 1)
 					sce->val2 = 0;
-			if (sce->val3) {
-				if (!(group2 = skill_id2group(sce->val3)))
+				else if (pos == 2)
 					sce->val3 = 0;
-				else if (!group || ((group->limit - DIFF_TICK(tick, group->tick)) > (group2->limit - DIFF_TICK(tick, group2->tick)))) {
-					group = group2;
-					pos = 2;
-				}
-			}
-			if (sce->val4) {
-				if (!(group2 = skill_id2group(sce->val4)))
+				else if (pos == 3)
 					sce->val4 = 0;
-				else if (!group || ((group->limit - DIFF_TICK(tick, group->tick)) > (group2->limit - DIFF_TICK(tick, group2->tick)))) {
-					group = group2;
-					pos = 3;
-				}
+				if (group)
+					skill_delunitgroup(group);
+				if (!status_isdead(*bl) && (sce->val2 || sce->val3 || sce->val4))
+					return 0; //Don't end the status change yet as there are still unit groups associated with it
 			}
-			if (pos == 1)
-				sce->val2 = 0;
-			else if (pos == 2)
-				sce->val3 = 0;
-			else if (pos == 3)
-				sce->val4 = 0;
-			if (group)
-				skill_delunitgroup(group);
-			if (!status_isdead(*bl) && (sce->val2 || sce->val3 || sce->val4))
-				return 0; //Don't end the status change yet as there are still unit groups associated with it
 		}
-	}
 
 		// Store a copy, if access is required later
 		val1 = sce->val1;
@@ -13538,7 +13538,7 @@ int32 status_change_end( block_list* bl, enum sc_type type, int32 tid ){
 				ud->canact_tick = endtick;
 				ud->canmove_tick = endtick;
 				ud->endure_tick = endtick;
-		}
+			}
 			break;
 		case SC_GRANITIC_ARMOR:
 			{
@@ -13811,8 +13811,8 @@ int32 status_change_end( block_list* bl, enum sc_type type, int32 tid ){
 				status_change* tsc = status_get_sc( tbl );
 
 				if( tsc != nullptr && tsc->getSCE( SC_STOP ) && tsc->getSCE( SC_STOP )->val2 == bl->id ){
-					status_change_end(tbl, SC_STOP);
-			}
+					status_change_end( tbl, SC_STOP );
+				}
 			}
 			break;
 		case SC_WINKCHARM:
@@ -14245,7 +14245,7 @@ TIMER_FUNC(status_change_timer){
 		}
 		// Repeat check every interval
 		sc_timer_next(100 + tick);
-			return 0;
+		return 0;
 
 	case SC_STONE:
 		if (sce->val4 >= 0 && status->hp > status->max_hp / 4)
@@ -15116,8 +15116,8 @@ TIMER_FUNC(status_change_timer){
 		break;
 	case SC_SOULCOLLECT:
 		pc_addsoulball( *sd, 1, sce->val2 );
-			sc_timer_next(sce->val3 + tick);
-			return 0;
+		sc_timer_next(sce->val3 + tick);
+		return 0;
 	case SC_HELPANGEL:
 		if (--(sce->val4) >= 0) {
 			status_heal(bl, 1000, 350, 0);	// Heal amount not displayed
@@ -15206,7 +15206,7 @@ TIMER_FUNC(status_change_timer){
 				// End the status change
 				sce->val4 = 0;
 				break;
-	}
+			}
 
 			int32 hp = sc->getSCE(SC_TALISMAN_OF_PROTECTION)->val3;
 
@@ -16290,7 +16290,7 @@ uint64 StatusDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 		status->script = parse_script( script.c_str(), this->getCurrentFile().c_str(), this->getLineNumber(node["Script"]), SCRIPT_IGNORE_EXTERNAL_BRACKETS );
 	}else{
-	if (!exists) {
+		if( !exists ){
 			status->script = nullptr;
 		}
 	}

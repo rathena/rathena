@@ -419,15 +419,15 @@
 	export_constant2("EAJ_BABY_SHADOW_CHASER",MAPID_BABY_SHADOW_CHASER);
 	export_constant2("EAJ_BABY_SOUL_REAPER",MAPID_BABY_SOUL_REAPER);
 
-	export_constant2("EAJ_HYPER_NOVICE", MAPID_HYPER_NOVICE);
+	export_constant2("EAJ_HYPER_NOVICE",MAPID_HYPER_NOVICE);
 	export_constant2("EAJ_DRAGON_KNIGHT",MAPID_DRAGON_KNIGHT);
 	export_constant2("EAJ_ARCH_MAGE",MAPID_ARCH_MAGE);
 	export_constant2("EAJ_WINDHAWK",MAPID_WINDHAWK);
 	export_constant2("EAJ_CARDINAL",MAPID_CARDINAL);
 	export_constant2("EAJ_MEISTER",MAPID_MEISTER);
 	export_constant2("EAJ_SHADOW_CROSS",MAPID_SHADOW_CROSS);
-	export_constant2("EAJ_SKY_EMPEROR", MAPID_SKY_EMPEROR);
-	export_constant2("EAJ_NIGHT_WATCH", MAPID_NIGHT_WATCH);
+	export_constant2("EAJ_SKY_EMPEROR",MAPID_SKY_EMPEROR);
+	export_constant2("EAJ_NIGHT_WATCH",MAPID_NIGHT_WATCH);
 	export_constant2("EAJ_SHINKIROSHIRANUI",MAPID_SHINKIROSHIRANUI);
 
 	export_constant2("EAJ_IMPERIAL_GUARD",MAPID_IMPERIAL_GUARD);
@@ -436,7 +436,7 @@
 	export_constant2("EAJ_INQUISITOR",MAPID_INQUISITOR);
 	export_constant2("EAJ_BIOLO",MAPID_BIOLO);
 	export_constant2("EAJ_ABYSS_CHASER",MAPID_ABYSS_CHASER);
-	export_constant2("EAJ_SOUL_ASCETIC", MAPID_SOUL_ASCETIC);
+	export_constant2("EAJ_SOUL_ASCETIC",MAPID_SOUL_ASCETIC);
 
 	/* sex */
 	export_constant(SEX_FEMALE);
@@ -4356,7 +4356,7 @@
 	export_constant(STOR_MODE_GET);
 	export_constant(STOR_MODE_PUT);
 	export_constant(STOR_MODE_ALL);
-	
+
 	/* instance enter */
 	export_constant(IE_OK);
 	export_constant(IE_NOMEMBER);

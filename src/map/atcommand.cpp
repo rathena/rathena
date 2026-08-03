@@ -762,7 +762,7 @@ ACMD_FUNC(jump)
  *------------------------------------------*/
 ACMD_FUNC(who) {
 	map_session_data* pl_sd = nullptr;
-	struct s_mapiterator *iter = nullptr;	
+	struct s_mapiterator *iter = nullptr;
 	char player_name[NAME_LENGTH] = "";
 	int32 count = 0;
 	int32 level = 0;
@@ -1170,7 +1170,7 @@ ACMD_FUNC(resetcooltime)
 		}
 
 		skill_blockpc_clear(*sd);
-		}
+	}
 
 	if( sd->hd != nullptr && hom_is_active( sd->hd ) ){
 		for (const auto &entry : sd->hd->scd) {
@@ -1294,12 +1294,12 @@ ACMD_FUNC(kami){
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
-		if (!message || !*message) {
-			clif_displaymessage(fd, msg_txt(sd,980)); // Please enter a message (usage: @kami <message>).
-			return -1;
-		}
+	if (!message || !*message) {
+		clif_displaymessage(fd, msg_txt(sd,980)); // Please enter a message (usage: @kami <message>).
+		return -1;
+	}
 
-		sscanf(message, "%255[^\n]", atcmd_output);
+	sscanf(message, "%255[^\n]", atcmd_output);
 
 	intif_broadcast(atcmd_output, strlen(atcmd_output) + 1, BC_DEFAULT);
 
@@ -1346,17 +1346,17 @@ ACMD_FUNC(kamic){
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
-		if(!message || !*message || (sscanf(message, "%20lx %199[^\n]", &color, atcmd_output) < 2)) {
-			clif_displaymessage(fd, msg_txt(sd,981)); // Please enter color and message (usage: @kamic <color> <message>).
-			return -1;
-		}
+	if(!message || !*message || (sscanf(message, "%20lx %199[^\n]", &color, atcmd_output) < 2)) {
+		clif_displaymessage(fd, msg_txt(sd,981)); // Please enter color and message (usage: @kamic <color> <message>).
+		return -1;
+	}
 
-		if(color > 0xFFFFFF) {
-			clif_displaymessage(fd, msg_txt(sd,982)); // Invalid color.
-			return -1;
-		}
+	if(color > 0xFFFFFF) {
+		clif_displaymessage(fd, msg_txt(sd,982)); // Invalid color.
+		return -1;
+	}
 
-		intif_broadcast2(atcmd_output, strlen(atcmd_output) + 1, color, 0x190, 12, 0, 0);
+	intif_broadcast2(atcmd_output, strlen(atcmd_output) + 1, color, 0x190, 12, 0, 0);
 
 	return 0;
 }
@@ -1902,7 +1902,6 @@ ACMD_FUNC(gvgoff)
 	}
 
 	map_setmapflag(sd->m, MF_GVG, false);
-
 	clif_displaymessage(fd, msg_txt(sd,33)); // GvG: Off.
 
 	return 0;
@@ -1921,7 +1920,6 @@ ACMD_FUNC(gvgon)
 	}
 
 	map_setmapflag(sd->m, MF_GVG, true);
-
 	clif_displaymessage(fd, msg_txt(sd,34)); // GvG: On.
 
 	return 0;
@@ -1968,7 +1966,7 @@ ACMD_FUNC(bodystyle){
 	std::shared_ptr<s_job_info> job = job_db.find( sd->status.class_ );
 
 	if( job == nullptr || job->alternate_outfits.empty() ){
-		clif_displaymessage(fd, msg_txt(sd,740));	// This job has no alternate body styles.
+		clif_displaymessage( fd, msg_txt( sd, 740 ) ); // This job has no alternate body styles.
 		return -1;
 	}
 
@@ -1985,7 +1983,7 @@ ACMD_FUNC(bodystyle){
 		if (sd->vd.look[LOOK_BODY2] != sd->status.class_) {
 			pc_changelook(sd, LOOK_BODY2, sd->status.class_);
 			clif_displaymessage( fd, msg_txt( sd, 1539 ) ); // Appearance changed to default.
-	} else {
+		} else {
 			clif_displaymessage( fd, msg_txt( sd, 1540 ) ); // Appearance is already set to default.
 		}
 
@@ -2003,7 +2001,7 @@ ACMD_FUNC(bodystyle){
 	}
 
 	if( body_style != sd->status.class_ && !util::vector_exists( job->alternate_outfits, body_style ) ){
-		clif_displaymessage(fd, msg_txt(sd,37)); // An invalid number was specified.
+		clif_displaymessage( fd, msg_txt( sd, 37 ) ); // An invalid number was specified.
 		return -1;
 	}
 
@@ -3523,7 +3521,7 @@ ACMD_FUNC(char_ban)
 		return -1;
 	}
 
-		chrif_req_charban(sd->status.account_id, atcmd_player_name,timediff);
+	chrif_req_charban(sd->status.account_id, atcmd_player_name,timediff);
 
 	safesnprintf(output, sizeof(output), msg_txt(sd,88), "char"); // Sending request to %s server...
 	clif_displaymessage(fd, output);
@@ -3592,7 +3590,7 @@ ACMD_FUNC(char_unban){
 		return -1;
 	}
 
-		chrif_req_charunban(sd->status.account_id,atcmd_player_name);
+	chrif_req_charunban(sd->status.account_id,atcmd_player_name);
 
 	sprintf(atcmd_output, msg_txt(sd,88), "char"); // Sending request to %s server...
 	clif_displaymessage(fd, atcmd_output);
@@ -4352,13 +4350,13 @@ ACMD_FUNC(reloadcashdb){
 	clif_displaymessage( fd, msg_txt( sd, 832 ) ); // Cash shop database has been reloaded.
 
 	return 0;
-	}
+}
 
 ACMD_FUNC(reloaditemdb){
 	nullpo_retr(-1, sd);
 
-		itemdb_reload();
-		clif_displaymessage(fd, msg_txt(sd,97)); // Item database has been reloaded.
+	itemdb_reload();
+	clif_displaymessage(fd, msg_txt(sd,97)); // Item database has been reloaded.
 
 	return 0;
 }
@@ -4366,12 +4364,12 @@ ACMD_FUNC(reloaditemdb){
 ACMD_FUNC(reloadmobdb){
 	nullpo_retr(-1, sd);
 
-		mob_reload();
-		pet_db.reload();
-		hom_reload();
-		mercenary_db.reload();
-		elemental_db.reload();
-		clif_displaymessage(fd, msg_txt(sd,98)); // Monster database has been reloaded.
+	mob_reload();
+	pet_db.reload();
+	hom_reload();
+	mercenary_db.reload();
+	elemental_db.reload();
+	clif_displaymessage(fd, msg_txt(sd,98)); // Monster database has been reloaded.
 
 	return 0;
 }
@@ -4379,9 +4377,9 @@ ACMD_FUNC(reloadmobdb){
 ACMD_FUNC(reloadskilldb){
 	nullpo_retr(-1, sd);
 
-		skill_reload();
-		homunculus_db.reload();
-		clif_displaymessage(fd, msg_txt(sd,99)); // Skill database has been reloaded.
+	skill_reload();
+	homunculus_db.reload();
+	clif_displaymessage(fd, msg_txt(sd,99)); // Skill database has been reloaded.
 
 	return 0;
 }
@@ -4424,9 +4422,9 @@ ACMD_FUNC(reloadscript){
 ACMD_FUNC(reloadatcommand){
 	nullpo_retr(-1, sd);
 
-		atcommand_doload();
-		pc_groups_reload();
-		clif_displaymessage(fd, msg_txt(sd,254)); // GM command configuration has been reloaded.
+	atcommand_doload();
+	pc_groups_reload();
+	clif_displaymessage(fd, msg_txt(sd,254)); // GM command configuration has been reloaded.
 
 	return 0;
 }
@@ -4434,51 +4432,51 @@ ACMD_FUNC(reloadatcommand){
 ACMD_FUNC(reloadbattleconf){
 	nullpo_retr(-1, sd);
 
-		struct Battle_Config prev_config;
-		memcpy(&prev_config, &battle_config, sizeof(prev_config));
+	struct Battle_Config prev_config;
+	memcpy(&prev_config, &battle_config, sizeof(prev_config));
 
-		battle_config_read(BATTLE_CONF_FILENAME);
+	battle_config_read(BATTLE_CONF_FILENAME);
 
-		if( prev_config.item_rate_mvp          != battle_config.item_rate_mvp
-		||  prev_config.item_rate_common       != battle_config.item_rate_common
-		||  prev_config.item_rate_common_boss  != battle_config.item_rate_common_boss
-		||  prev_config.item_rate_common_mvp   != battle_config.item_rate_common_mvp
-		||  prev_config.item_rate_card         != battle_config.item_rate_card
-		||  prev_config.item_rate_card_boss    != battle_config.item_rate_card_boss
-		||  prev_config.item_rate_card_mvp     != battle_config.item_rate_card_mvp
-		||  prev_config.item_rate_equip        != battle_config.item_rate_equip
-		||  prev_config.item_rate_equip_boss   != battle_config.item_rate_equip_boss
-		||  prev_config.item_rate_equip_mvp    != battle_config.item_rate_equip_mvp
-		||  prev_config.item_rate_heal         != battle_config.item_rate_heal
-		||  prev_config.item_rate_heal_boss    != battle_config.item_rate_heal_boss
-		||  prev_config.item_rate_heal_mvp     != battle_config.item_rate_heal_mvp
-		||  prev_config.item_rate_use          != battle_config.item_rate_use
-		||  prev_config.item_rate_use_boss     != battle_config.item_rate_use_boss
-		||  prev_config.item_rate_use_mvp      != battle_config.item_rate_use_mvp
-		||  prev_config.item_rate_treasure     != battle_config.item_rate_treasure
-		||  prev_config.item_rate_adddrop      != battle_config.item_rate_adddrop
-		||  prev_config.logarithmic_drops      != battle_config.logarithmic_drops
-		||  prev_config.item_drop_common_min   != battle_config.item_drop_common_min
-		||  prev_config.item_drop_common_max   != battle_config.item_drop_common_max
-		||  prev_config.item_drop_card_min     != battle_config.item_drop_card_min
-		||  prev_config.item_drop_card_max     != battle_config.item_drop_card_max
-		||  prev_config.item_drop_equip_min    != battle_config.item_drop_equip_min
-		||  prev_config.item_drop_equip_max    != battle_config.item_drop_equip_max
-		||  prev_config.item_drop_mvp_min      != battle_config.item_drop_mvp_min
-		||  prev_config.item_drop_mvp_max      != battle_config.item_drop_mvp_max
-		||  prev_config.item_drop_heal_min     != battle_config.item_drop_heal_min
-		||  prev_config.item_drop_heal_max     != battle_config.item_drop_heal_max
-		||  prev_config.item_drop_use_min      != battle_config.item_drop_use_min
-		||  prev_config.item_drop_use_max      != battle_config.item_drop_use_max
-		||  prev_config.item_drop_treasure_min != battle_config.item_drop_treasure_min
-		||  prev_config.item_drop_treasure_max != battle_config.item_drop_treasure_max
-		||  prev_config.base_exp_rate          != battle_config.base_exp_rate
-		||  prev_config.job_exp_rate           != battle_config.job_exp_rate
-		)
-		{	// Exp or Drop rates changed.
-			mob_reload(); //Needed as well so rate changes take effect.
-		}
-		clif_displaymessage(fd, msg_txt(sd,255)); // Battle configuration has been reloaded.
+	if( prev_config.item_rate_mvp          != battle_config.item_rate_mvp
+	||  prev_config.item_rate_common       != battle_config.item_rate_common
+	||  prev_config.item_rate_common_boss  != battle_config.item_rate_common_boss
+	||  prev_config.item_rate_common_mvp   != battle_config.item_rate_common_mvp
+	||  prev_config.item_rate_card         != battle_config.item_rate_card
+	||  prev_config.item_rate_card_boss    != battle_config.item_rate_card_boss
+	||  prev_config.item_rate_card_mvp     != battle_config.item_rate_card_mvp
+	||  prev_config.item_rate_equip        != battle_config.item_rate_equip
+	||  prev_config.item_rate_equip_boss   != battle_config.item_rate_equip_boss
+	||  prev_config.item_rate_equip_mvp    != battle_config.item_rate_equip_mvp
+	||  prev_config.item_rate_heal         != battle_config.item_rate_heal
+	||  prev_config.item_rate_heal_boss    != battle_config.item_rate_heal_boss
+	||  prev_config.item_rate_heal_mvp     != battle_config.item_rate_heal_mvp
+	||  prev_config.item_rate_use          != battle_config.item_rate_use
+	||  prev_config.item_rate_use_boss     != battle_config.item_rate_use_boss
+	||  prev_config.item_rate_use_mvp      != battle_config.item_rate_use_mvp
+	||  prev_config.item_rate_treasure     != battle_config.item_rate_treasure
+	||  prev_config.item_rate_adddrop      != battle_config.item_rate_adddrop
+	||  prev_config.logarithmic_drops      != battle_config.logarithmic_drops
+	||  prev_config.item_drop_common_min   != battle_config.item_drop_common_min
+	||  prev_config.item_drop_common_max   != battle_config.item_drop_common_max
+	||  prev_config.item_drop_card_min     != battle_config.item_drop_card_min
+	||  prev_config.item_drop_card_max     != battle_config.item_drop_card_max
+	||  prev_config.item_drop_equip_min    != battle_config.item_drop_equip_min
+	||  prev_config.item_drop_equip_max    != battle_config.item_drop_equip_max
+	||  prev_config.item_drop_mvp_min      != battle_config.item_drop_mvp_min
+	||  prev_config.item_drop_mvp_max      != battle_config.item_drop_mvp_max
+	||  prev_config.item_drop_heal_min     != battle_config.item_drop_heal_min
+	||  prev_config.item_drop_heal_max     != battle_config.item_drop_heal_max
+	||  prev_config.item_drop_use_min      != battle_config.item_drop_use_min
+	||  prev_config.item_drop_use_max      != battle_config.item_drop_use_max
+	||  prev_config.item_drop_treasure_min != battle_config.item_drop_treasure_min
+	||  prev_config.item_drop_treasure_max != battle_config.item_drop_treasure_max
+	||  prev_config.base_exp_rate          != battle_config.base_exp_rate
+	||  prev_config.job_exp_rate           != battle_config.job_exp_rate
+	)
+	{	// Exp or Drop rates changed.
+		mob_reload(); //Needed as well so rate changes take effect.
+	}
+	clif_displaymessage(fd, msg_txt(sd,255)); // Battle configuration has been reloaded.
 
 	return 0;
 }
@@ -4486,8 +4484,8 @@ ACMD_FUNC(reloadbattleconf){
 ACMD_FUNC(reloadstatusdb){
 	nullpo_retr(-1, sd);
 
-		status_readdb( true );
-		clif_displaymessage(fd, msg_txt(sd,256)); // Status database has been reloaded.
+	status_readdb( true );
+	clif_displaymessage(fd, msg_txt(sd,256)); // Status database has been reloaded.
 
 	return 0;
 }
@@ -4495,8 +4493,8 @@ ACMD_FUNC(reloadstatusdb){
 ACMD_FUNC(reloadpcdb){
 	nullpo_retr(-1, sd);
 
-		pc_readdb();
-		clif_displaymessage(fd, msg_txt(sd,257)); // Player database has been reloaded.
+	pc_readdb();
+	clif_displaymessage(fd, msg_txt(sd,257)); // Player database has been reloaded.
 
 	return 0;
 }
@@ -4504,8 +4502,8 @@ ACMD_FUNC(reloadpcdb){
 ACMD_FUNC(reloadmotd){
 	nullpo_retr(-1, sd);
 
-		pc_read_motd();
-		clif_displaymessage(fd, msg_txt(sd,268)); // Reloaded the Message of the Day.
+	pc_read_motd();
+	clif_displaymessage(fd, msg_txt(sd,268)); // Reloaded the Message of the Day.
 
 	return 0;
 }
@@ -4522,8 +4520,8 @@ ACMD_FUNC(reloadquestdb){
 ACMD_FUNC(reloadmsgconf){
 	nullpo_retr(-1, sd);
 
-		map_msg_reload();
-		clif_displaymessage(fd, msg_txt(sd,463)); // Message configuration has been reloaded.
+	map_msg_reload();
+	clif_displaymessage(fd, msg_txt(sd,463)); // Message configuration has been reloaded.
 
 	return 0;
 }
@@ -4531,8 +4529,8 @@ ACMD_FUNC(reloadmsgconf){
 ACMD_FUNC(reloadinstancedb){
 	nullpo_retr(-1, sd);
 
-		if (instance_db.reload())
-			clif_displaymessage(fd, msg_txt(sd,516)); // Instance database has been reloaded.
+	if (instance_db.reload())
+		clif_displaymessage(fd, msg_txt(sd,516)); // Instance database has been reloaded.
 
 	return 0;
 }
@@ -4540,8 +4538,8 @@ ACMD_FUNC(reloadinstancedb){
 ACMD_FUNC(reloadachievementdb){
 	nullpo_retr(-1, sd);
 
-		achievement_db_reload();
-		clif_displaymessage(fd, msg_txt(sd,771)); // Achievement database has been reloaded.
+	achievement_db_reload();
+	clif_displaymessage(fd, msg_txt(sd,771)); // Achievement database has been reloaded.
 
 	return 0;
 }
@@ -4549,8 +4547,8 @@ ACMD_FUNC(reloadachievementdb){
 ACMD_FUNC(reloadattendancedb){
 	nullpo_retr(-1, sd);
 
-		attendance_db.reload();
-		clif_displaymessage(fd, msg_txt(sd, 795)); // Attendance database has been reloaded.
+	attendance_db.reload();
+	clif_displaymessage(fd, msg_txt(sd, 795)); // Attendance database has been reloaded.
 
 	return 0;
 }
@@ -4558,8 +4556,8 @@ ACMD_FUNC(reloadattendancedb){
 ACMD_FUNC(reloadbarterdb){
 	nullpo_retr(-1, sd);
 
-		barter_db.reload();
-		clif_displaymessage(fd, msg_txt(sd, 830)); // Barter database has been reloaded.
+	barter_db.reload();
+	clif_displaymessage(fd, msg_txt(sd, 830)); // Barter database has been reloaded.
 
 	return 0;
 }
@@ -4606,7 +4604,7 @@ ACMD_FUNC( reload ){
 		{ "questdb", atcommand_reloadquestdb },
 		{ "zonedb", atcommand_reloadzonedb },
 	};
-	
+
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message) {
@@ -6335,9 +6333,9 @@ ACMD_FUNC(stockall)
 					count += amount;
 				}else{
 					count2 += amount;
+				}
 			}
 		}
-	}
 	}
 	sprintf(atcmd_output, msg_txt(sd,1535), count,count2); // %d items are transferred (%d skipped)!
 	clif_displaymessage(fd, atcmd_output); 
@@ -8173,32 +8171,32 @@ ACMD_FUNC(mobinfo)
 			uint32 j = 0;
 			int32 drop_modifier = 100;
 #ifdef RENEWAL_DROP
-		if( battle_config.atcommand_mobinfo_type ){
-			drop_modifier = pc_level_penalty_mod( sd, PENALTY_DROP, mob );
-		}
+			if( battle_config.atcommand_mobinfo_type ){
+				drop_modifier = pc_level_penalty_mod( sd, PENALTY_DROP, mob );
+			}
 #endif
 
 			for( const std::shared_ptr<s_mob_drop>& entry : mob->dropitem ){
 				if (entry->nameid == 0 || entry->rate < 1)
-				continue;
+					continue;
 
 				std::shared_ptr<item_data> id = item_db.find(entry->nameid);
 
-			if (id == nullptr)
-				continue;
+				if (id == nullptr)
+					continue;
 
 				int32 droprate = mob_getdroprate( sd, mob, entry->rate, drop_modifier );
 
-			sprintf(atcmd_output2, " - %s  %02.02f%%", item_db.create_item_link( id ).c_str(), (float)droprate / 100);
-			strcat(atcmd_output, atcmd_output2);
-			if (++j % 3 == 0) {
-				clif_displaymessage(fd, atcmd_output);
-				strcpy(atcmd_output, " ");
+				sprintf(atcmd_output2, " - %s  %02.02f%%", item_db.create_item_link( id ).c_str(), (float)droprate / 100);
+				strcat(atcmd_output, atcmd_output2);
+				if (++j % 3 == 0) {
+					clif_displaymessage(fd, atcmd_output);
+					strcpy(atcmd_output, " ");
+				}
 			}
-		}
 
 			if( j % 3 != 0 ){
-			clif_displaymessage(fd, atcmd_output);
+				clif_displaymessage(fd, atcmd_output);
 			}
 		}
 
@@ -8217,32 +8215,32 @@ ACMD_FUNC(mobinfo)
 
 				for( const std::shared_ptr<s_mob_drop>& entry : mob->mvpitem ){
 					if (entry->nameid == 0)
-					continue;
+						continue;
 
 					std::shared_ptr<item_data> id = item_db.find(entry->nameid);
 
-				if (id == nullptr)
-					continue;
+					if (id == nullptr)
+						continue;
 
-				//Because if there are 3 MVP drops at 50%, the first has a chance of 50%, the second 25% and the third 12.5%
+					//Because if there are 3 MVP drops at 50%, the first has a chance of 50%, the second 25% and the third 12.5%
 					float mvppercent = (float)entry->rate * mvpremain / 10000.0f;
-				if(battle_config.item_drop_mvp_mode == 0) {
-					mvpremain -= mvppercent;
-				}
-				if (mvppercent > 0) {
+					if(battle_config.item_drop_mvp_mode == 0) {
+						mvpremain -= mvppercent;
+					}
+					if (mvppercent > 0) {
 						sprintf(atcmd_output2, " - %s  %02.02f%%", item_db.create_item_link( id ).c_str(), mvppercent);
-					strcat(atcmd_output, atcmd_output2);
+						strcat(atcmd_output, atcmd_output2);
 						if (++j % 3 == 0) {
 							clif_displaymessage(fd, atcmd_output);
 							strcpy(atcmd_output, " ");
-				}
-			}
+						}
+					}
 				}
 
 				if( j % 3 != 0 ){
-				clif_displaymessage(fd, atcmd_output);
-		}
-	}
+					clif_displaymessage(fd, atcmd_output);
+				}
+			}
 		}
 	}
 	return 0;
@@ -9404,30 +9402,30 @@ ACMD_FUNC(cash)
 		return -1;
 	}
 
-		if( value > 0 ) {
-			if( (ret=pc_getcash(sd, value, 0, LOG_TYPE_COMMAND)) >= 0){
-				// If this option is set, the message is already sent by pc function
-				if( !battle_config.cashshop_show_points ){
-					sprintf(output, msg_txt(sd,505), ret, sd->cashPoints); // Gained %d cash points. Total %d points.
-				clif_messagecolor(sd, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
-				}
+	if( value > 0 ) {
+		if( (ret=pc_getcash(sd, value, 0, LOG_TYPE_COMMAND)) >= 0){
+			// If this option is set, the message is already sent by pc function
+			if( !battle_config.cashshop_show_points ){
+				sprintf(output, msg_txt(sd,505), ret, sd->cashPoints); // Gained %d cash points. Total %d points.
+			clif_messagecolor(sd, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 			}
-			else clif_displaymessage(fd, msg_txt(sd,149)); // Impossible to increase the number/value.
-		} else {
-			if (-value > sd->cashPoints) //By command, if cash < value, force it to remove all
-				value = -sd->cashPoints;
-			if( (ret=pc_paycash(sd, -value, 0, LOG_TYPE_COMMAND)) >= 0){
-				// If this option is set, the message is already sent by pc function
-				if( !battle_config.cashshop_show_points ){
-					sprintf(output, msg_txt(sd,410), ret, sd->cashPoints); // Removed %d cash points. Total %d points.
-				clif_messagecolor(sd, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
-				}
-			}
-			else clif_displaymessage(fd, msg_txt(sd,41)); // Unable to decrease the number/value.
 		}
+		else clif_displaymessage(fd, msg_txt(sd,149)); // Impossible to increase the number/value.
+	} else {
+		if (-value > sd->cashPoints) //By command, if cash < value, force it to remove all
+			value = -sd->cashPoints;
+		if( (ret=pc_paycash(sd, -value, 0, LOG_TYPE_COMMAND)) >= 0){
+			// If this option is set, the message is already sent by pc function
+			if( !battle_config.cashshop_show_points ){
+				sprintf(output, msg_txt(sd,410), ret, sd->cashPoints); // Removed %d cash points. Total %d points.
+			clif_messagecolor(sd, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
+			}
+		}
+		else clif_displaymessage(fd, msg_txt(sd,41)); // Unable to decrease the number/value.
+	}
 
 	return 0;
-	}
+}
 
 ACMD_FUNC(points){
 	char output[128];
@@ -9446,21 +9444,21 @@ ACMD_FUNC(points){
 		return -1;
 	}
 
-		if( value > 0 ) {
-			if( (ret=pc_getcash(sd, 0, value, LOG_TYPE_COMMAND)) >= 0){
-				sprintf(output, msg_txt(sd,506), ret, sd->kafraPoints); // Gained %d kafra points. Total %d points.
-			clif_messagecolor(sd, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
-			}
-			else clif_displaymessage(fd, msg_txt(sd,149)); // Impossible to increase the number/value.
-		} else {
-			if (-value > sd->kafraPoints) //By command, if cash < value, force it to remove all
-				value = -sd->kafraPoints;
-			if( (ret=pc_paycash(sd, 0, -value, LOG_TYPE_COMMAND)) >= 0){
-				sprintf(output, msg_txt(sd,411), ret, sd->kafraPoints); // Removed %d kafra points. Total %d points.
-			clif_messagecolor(sd, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
-			}
-			else clif_displaymessage(fd, msg_txt(sd,41)); // Unable to decrease the number/value.
+	if( value > 0 ) {
+		if( (ret=pc_getcash(sd, 0, value, LOG_TYPE_COMMAND)) >= 0){
+			sprintf(output, msg_txt(sd,506), ret, sd->kafraPoints); // Gained %d kafra points. Total %d points.
+		clif_messagecolor(sd, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 		}
+		else clif_displaymessage(fd, msg_txt(sd,149)); // Impossible to increase the number/value.
+	} else {
+		if (-value > sd->kafraPoints) //By command, if cash < value, force it to remove all
+			value = -sd->kafraPoints;
+		if( (ret=pc_paycash(sd, 0, -value, LOG_TYPE_COMMAND)) >= 0){
+			sprintf(output, msg_txt(sd,411), ret, sd->kafraPoints); // Removed %d kafra points. Total %d points.
+		clif_messagecolor(sd, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
+		}
+		else clif_displaymessage(fd, msg_txt(sd,41)); // Unable to decrease the number/value.
+	}
 
 	return 0;
 }
@@ -10162,7 +10160,7 @@ ACMD_FUNC(accinfo) {
 		clif_displaymessage(fd, msg_txt(sd,1365)); // Usage: @accinfo/@accountinfo <account_id/char name>
 		clif_displaymessage(fd, msg_txt(sd,1366)); // You may search partial name by making use of '%' in the search, ex. "@accinfo %Mario%" lists all characters whose name contains "Mario".
 		return -1;
-		}
+	}
 
 	intif_request_accinfo( sd->fd, sd->id, pc_get_group_level(sd), query);
 	return 0;
@@ -10369,7 +10367,7 @@ ACMD_FUNC(rmvperm) {
 		return -1;
 	}
 
-		sd->permissions.reset( pc_g_permission_name[i].permission );
+	sd->permissions.reset( pc_g_permission_name[i].permission );
 
 	sprintf(atcmd_output, msg_txt(sd,1384),sd->status.name); // User '%s' permissions updated successfully. The changes are temporary.
 	clif_displaymessage(fd, atcmd_output);
@@ -11137,13 +11135,13 @@ ACMD_FUNC(setquest){
 		return -1;
 	}
 
-		if (quest_check(sd, quest_id, HAVEQUEST) >= 0) {
-			sprintf(atcmd_output,  msg_txt(sd,1507), quest_id); // Character already has quest %d.
-			clif_displaymessage(fd, atcmd_output);
-			return -1;
-		}
-		quest_add(sd, quest_id);
-		pc_show_questinfo(sd);
+	if (quest_check(sd, quest_id, HAVEQUEST) >= 0) {
+		sprintf(atcmd_output,  msg_txt(sd,1507), quest_id); // Character already has quest %d.
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	}
+	quest_add(sd, quest_id);
+	pc_show_questinfo(sd);
 
 	return 0;
 }
@@ -11164,13 +11162,13 @@ ACMD_FUNC(erasequest) {
 		return -1;
 	}
 
-		if (quest_check(sd, quest_id, HAVEQUEST) < 0) {
-			sprintf(atcmd_output,  msg_txt(sd,1508), quest_id); // Character doesn't have quest %d.
-			clif_displaymessage(fd, atcmd_output);
-			return -1;
-		}
-		quest_delete(sd, quest_id);
-		pc_show_questinfo(sd);
+	if (quest_check(sd, quest_id, HAVEQUEST) < 0) {
+		sprintf(atcmd_output,  msg_txt(sd,1508), quest_id); // Character doesn't have quest %d.
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	}
+	quest_delete(sd, quest_id);
+	pc_show_questinfo(sd);
 
 	return 0;
 }
@@ -11191,11 +11189,11 @@ ACMD_FUNC(completequest){
 		return -1;
 	}
 
-		if (quest_check(sd, quest_id, HAVEQUEST) < 0)
-			quest_add(sd, quest_id);
-		if (quest_check(sd, quest_id, HAVEQUEST) < 2)
-			quest_update_status(sd, quest_id, Q_COMPLETE);
-		pc_show_questinfo(sd);
+	if (quest_check(sd, quest_id, HAVEQUEST) < 0)
+		quest_add(sd, quest_id);
+	if (quest_check(sd, quest_id, HAVEQUEST) < 2)
+		quest_update_status(sd, quest_id, Q_COMPLETE);
+	pc_show_questinfo(sd);
 
 	return 0;
 }
@@ -11216,14 +11214,14 @@ ACMD_FUNC(checkquest){
 		return -1;
 	}
 
-		sprintf(atcmd_output, msg_txt(sd,1509), quest_id); // Checkquest value for quest %d
-		clif_displaymessage(fd, atcmd_output);
-		sprintf(atcmd_output, msg_txt(sd,1510), quest_check(sd, quest_id, HAVEQUEST));	// HAVEQUEST : %d
-		clif_displaymessage(fd, atcmd_output);
-		sprintf(atcmd_output, msg_txt(sd,1511), quest_check(sd, quest_id, HUNTING));	// HUNTING   : %d
-		clif_displaymessage(fd, atcmd_output);
-		sprintf(atcmd_output, msg_txt(sd,1512), quest_check(sd, quest_id, PLAYTIME));	// PLAYTIME  : %d
-		clif_displaymessage(fd, atcmd_output);
+	sprintf(atcmd_output, msg_txt(sd,1509), quest_id); // Checkquest value for quest %d
+	clif_displaymessage(fd, atcmd_output);
+	sprintf(atcmd_output, msg_txt(sd,1510), quest_check(sd, quest_id, HAVEQUEST));	// HAVEQUEST : %d
+	clif_displaymessage(fd, atcmd_output);
+	sprintf(atcmd_output, msg_txt(sd,1511), quest_check(sd, quest_id, HUNTING));	// HUNTING   : %d
+	clif_displaymessage(fd, atcmd_output);
+	sprintf(atcmd_output, msg_txt(sd,1512), quest_check(sd, quest_id, PLAYTIME));	// PLAYTIME  : %d
+	clif_displaymessage(fd, atcmd_output);
 
 	return 0;
 }
@@ -12176,7 +12174,7 @@ void atcommand_doload(void) {
 		if( info == nullptr ){
 			ShowError( "atcommand_doload: No entry for atcommand \"%s\" found in \"%s\"\n", command_info->command, atcommand_alias_db.getDefaultLocation().c_str() );
 			continue;
-}
+		}
 
 		if( info->help.empty() ){
 			ShowError( "atcommand_doload: No help for atcommand \"%s\" contained in \"%s\"\n", command_info->command, atcommand_alias_db.getDefaultLocation().c_str() );

@@ -1508,8 +1508,8 @@ void pc_setinventorydata( map_session_data& sd ){
 			sd.inventory_data[i] = itemdb_search( id );
 		}else{
 			sd.inventory_data[i] = nullptr;
+		}
 	}
-}
 }
 
 /**
@@ -1562,7 +1562,7 @@ void pc_calcweapontype(map_session_data *sd)
 * Set equip index
 * @param sd : Player
 */
-void pc_setequipindex(map_session_data *sd)
+void pc_setequipindex( map_session_data *sd )
 {
 	uint16 i;
 
@@ -2899,11 +2899,11 @@ uint64 pc_calc_skilltree_normalize_job_sub( map_session_data *sd ){
 	if ((sd->class_ & MAPID_FIRSTMASK) != MAPID_SUMMONER)
 	{
 		// Novice's skill points for basic skill.
-		std::shared_ptr<s_job_info> novice_job = job_db.find( JOB_NOVICE );
+		std::shared_ptr<s_job_info> novice_job = job_db.find(JOB_NOVICE);
 
 		int32 novice_skills = novice_job->max_job_level - 1;
 
-		if( skill_point < novice_skills ){
+		if (skill_point < novice_skills) {
 			return MAPID_NOVICE;
 		}
 
@@ -2979,7 +2979,7 @@ uint64 pc_calc_skilltree_normalize_job_sub( map_session_data *sd ){
 	return sd->class_;
 }
 
-uint64 pc_calc_skilltree_normalize_job( map_session_data *sd ){
+uint64 pc_calc_skilltree_normalize_job( map_session_data* sd ){
 	if( !battle_config.skillup_limit || pc_has_permission( sd, PC_PERM_ALL_SKILL ) ){
 		return sd->class_;
 	}
@@ -3092,8 +3092,8 @@ int32 pc_disguise(map_session_data *sd, int32 class_)
 
 			if( cd != nullptr ){
 				clif_dispchat( *cd );
+			}
 		}
-	}
 	}
 	return 1;
 }
@@ -6214,15 +6214,15 @@ bool pc_takeitem(map_session_data *sd,flooritem_data *fitem)
 	if (fitem->first_get_charid == 0 || fitem->first_get_charid == sd->status.char_id) {
 		// Top attacker or no attacker, no wait time
 		item_get_tick = 0;
-		}
+	}
 	else if (fitem->second_get_charid > 0 && fitem->second_get_charid == sd->status.char_id && !share) {
 		// Second top attacker, needs to wait for top attacker
 		item_get_tick = fitem->first_get_tick;
-			}
+	}
 	else if (fitem->third_get_charid > 0 && fitem->third_get_charid == sd->status.char_id && !share) {
 		// Third top attacker, needs to wait for top and second attacker
 		item_get_tick = fitem->second_get_tick;
-				}
+	}
 	else if (share) {
 		// Party member loot priority
 		map_session_data* first_sd = nullptr;
@@ -6244,7 +6244,7 @@ bool pc_takeitem(map_session_data *sd,flooritem_data *fitem)
 			item_get_tick = fitem->first_get_tick;
 		else if (third_sd != nullptr && third_sd->status.party_id == sd->status.party_id)
 			item_get_tick = fitem->second_get_tick;
-			}
+	}
 
 	// Cannot get item when wait time is still active
 	if (DIFF_TICK(tick, item_get_tick) < 0)
@@ -6870,7 +6870,7 @@ bool pc_steal_item(map_session_data *sd,block_list *bl, uint16 skill_lv)
 			break;
 		}
 #else
-	// Droprate is affected by the skill success rate.
+		// Droprate is affected by the skill success rate.
 		if( rnd() % 10000 < entry->rate * rate / 100. ){
 			drop = entry;
 			break;
@@ -11626,7 +11626,7 @@ bool pc_setregistry_str(map_session_data *sd, int64 reg, const char *val)
  * @param value
  * @return True if success, false if failed.
  **/
-bool pc_setreg2(map_session_data *sd, const char *reg, int64 val) {
+bool pc_setreg2( map_session_data* sd, const char *reg, int64 val ) {
 	char prefix = reg[0];
 
 	nullpo_retr(false, sd);
@@ -13734,12 +13734,12 @@ uint32 JobDatabase::calc_basehp( const uint16 level, const std::shared_ptr<s_job
 #endif
 
 	if( (mapid&MAPID_FIRSTMASK) == MAPID_SUMMONER ){
-		base_hp += floor((base_hp / 2) + 0.5);
+		base_hp += floor( ( base_hp / 2 ) + 0.5 );
 	}else if( (mapid&MAPID_SECONDMASK) == MAPID_SUPER_NOVICE ){
 		// Supernovice lvl99 HP bonus.
 		if( level >= 99 ){
 			base_hp += 2000.;
-}
+		}
 
 		// Supernovice lvl150 HP bonus.
 		if( level >= 150 ){
@@ -13772,7 +13772,7 @@ uint32 JobDatabase::calc_basesp( const uint16 level, const std::shared_ptr<s_job
 			base_sp -= 22.;
 		}else{
 			base_sp = 11. + 3. * level;
-}
+		}
 	}else if( (mapid & MAPID_FIRSTMASK) == MAPID_GUNSLINGER ){
 		if( level >= 10 ){
 			base_sp -= 18.;
@@ -15993,18 +15993,18 @@ uint64 CaptchaDatabase::parseBodyNode(const ryml::NodeRef &node) {
 
 			cd->bonus_script = nullptr;
 		}else{
-		std::string script;
+			std::string script;
 
-		if (!this->asString(node, "Bonus", script)) {
-			return 0;
-		}
+			if (!this->asString(node, "Bonus", script)) {
+				return 0;
+			}
 
-		if (cd->bonus_script) {
-			script_free_code(cd->bonus_script);
-			cd->bonus_script = nullptr;
-		}
+			if (cd->bonus_script) {
+				script_free_code(cd->bonus_script);
+				cd->bonus_script = nullptr;
+			}
 
-		cd->bonus_script = parse_script(script.c_str(), this->getCurrentFile().c_str(), this->getLineNumber(node["Bonus"]), SCRIPT_IGNORE_EXTERNAL_BRACKETS);
+			cd->bonus_script = parse_script(script.c_str(), this->getCurrentFile().c_str(), this->getLineNumber(node["Bonus"]), SCRIPT_IGNORE_EXTERNAL_BRACKETS);
 		}
 	} else {
 		if (!exists)

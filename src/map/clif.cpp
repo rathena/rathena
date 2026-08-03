@@ -1646,7 +1646,7 @@ static inline bool clif_npc_mayapurple( const block_list& bl ){
 		// TODO: Confirm if waitingroom cause any special cases
 		if( /* nd->chat_id == 0 && */ nd.is_invisible ){
 			return true;
-	}
+		}
 	}
 
 	return false;
@@ -4019,7 +4019,7 @@ void clif_changelook(block_list *bl,int32 type,int32 val) {
 
 					if( vd->look[LOOK_BODY2] != 0 && sc->option&OPTION_COSTUME ){
 						vd->look[LOOK_BODY2] = 0;
-				}
+					}
 				}
 				break;
 			case LOOK_HAIR:
@@ -4559,7 +4559,7 @@ void clif_dispchat( const chat_data& cd ){
 	p->packetSize += static_cast<decltype(p->packetSize)>( max );
 
 	clif_send( p, p->packetSize, cd.owner, AREA_WOSC );
-	}
+}
 
 /// Chatroom properties adjustment.
 /// 00df <packet len>.W <owner id>.L <chat id>.L <limit>.W <users>.W <type>.B <title>.?B (ZC_CHANGE_CHATROOM)
@@ -5120,7 +5120,7 @@ void clif_getareachar_unit( map_session_data* sd,block_list *bl ){
 				for( const auto& entry : md->dmglog ){
 					if( entry.id == sd->status.char_id ){
 						clif_monster_hp_bar(md, sd->fd);
-			}
+					}
 				}
 			}
 #endif
@@ -5408,7 +5408,7 @@ void clif_getareachar_item( map_session_data& sd, flooritem_data& fitem ){
 /// 01c9 <id>.L <creator id>.L <x>.W <y>.W <unit id>.B <visible>.B <has msg>.B <msg>.80B (ZC_SKILL_ENTRY2)
 static void clif_graffiti( skill_unit& unit, send_target target, block_list& bl ){
 	packet_graffiti_entry p = {};
-	
+
 	p.PacketType = graffiti_entryType;
 	p.AID = unit.id;
 	p.creatorAID = unit.group->src_id;
@@ -5871,7 +5871,7 @@ void clif_skillinfo( const map_session_data& sd, uint16 skill_id, int32 inf ){
 		p.inf = skill_get_inf( skill_id );
 	}else{
 		p.inf = inf;
-}
+	}
 
 	if( sd.status.skill[idx].flag == SKILL_FLAG_PERMANENT && sd.status.skill[idx].lv < skill_tree_get_max( skill_id, sd.status.class_ ) ){
 		p.upFlag = true;
@@ -6094,7 +6094,7 @@ void clif_skill_damage( const block_list& src, const block_list& dst, t_tick tic
 		packet.AID = disguised_bl_id( src.id );
 		if (disguised(&dst)) {
 			packet.targetID = dst.id;
-}
+		}
 		if (damage > 0) {
 			packet.damage = -1;
 		}
@@ -6212,7 +6212,7 @@ void clif_skill_poseffect( block_list& bl, uint16 skill_id, uint16 skill_lv, uin
 		clif_send( &packet, sizeof( packet ), &bl, SELF );
 	} else {
 		clif_send( &packet, sizeof( packet ), &bl, AREA );
-}
+	}
 }
 
 /// Presents a list of available warp destinations.
@@ -6337,7 +6337,7 @@ void clif_skill_estimation( const map_session_data& sd, mob_data& md ){
 	packet.race = md.status.race;
 	packet.mdef = static_cast<decltype(packet.mdef)>( ((battle_config.estimation_type&1) ? md.status.mdef : 0 ) + ((battle_config.estimation_type&2) ? md.status.mdef2 : 0 ) );
 	packet.element = md.status.def_ele;
-//		The following caps negative attributes to 0 since the client displays them as 255-fix. [Skotlex]
+	// The following caps negative attributes to 0 since the client displays them as 255-fix. [Skotlex]
 	packet.water = static_cast<decltype(packet.water)>( std::max( elemental_attribute_db.getAttribute(md.status.ele_lv, ELE_WATER, md.status.def_ele), (int16)0 ) );
 	packet.earth = static_cast<decltype(packet.earth)>( std::max( elemental_attribute_db.getAttribute(md.status.ele_lv, ELE_EARTH, md.status.def_ele), (int16)0 ) );
 	packet.fire = static_cast<decltype(packet.fire)>( std::max( elemental_attribute_db.getAttribute(md.status.ele_lv, ELE_FIRE, md.status.def_ele), (int16)0 ) );
@@ -6887,6 +6887,7 @@ void clif_map_property( const block_list* bl, enum map_property property, enum s
 	const map_data *mapdata = map_getmapdata(bl->m);
 	const map_session_data* sd = BL_CAST(BL_PC,bl);
 
+	// TODO: mapdata nullptr
 	WBUFL(buf,4) = ((mapdata->getMapFlag(MF_PVP) || (sd && sd->duel_group > 0))<<0)| // PARTY - Show attack cursor on non-party members (PvP)
 		((mapdata->getMapFlag(MF_BATTLEGROUND) || mapdata_flag_gvg2(mapdata))<<1)|// GUILD - Show attack cursor on non-guild members (GvG)
 		((mapdata->getMapFlag(MF_BATTLEGROUND) || mapdata->getMapFlag(MF_HIDEDAMAGE) || mapdata_flag_gvg2(mapdata))<<2)|// SIEGE - Show emblem over characters heads when in GvG (WoE castle)
@@ -7146,7 +7147,7 @@ void clif_insert_card( const map_session_data& sd, int32 idx_equip, int32 idx_ca
 
 /// Presents a list of items that can be identified (ZC_ITEMIDENTIFY_LIST).
 /// 0177 <packet len>.W { <index>.W }*
-void clif_item_identify_list(map_session_data *sd)
+void clif_item_identify_list( map_session_data *sd)
 {
 	int32 i,c;
 	int32 fd;
@@ -7636,7 +7637,7 @@ void clif_closevendingboard( block_list& bl, send_target target, block_list* tbl
 	p.GID = bl.id;
 
 	clif_send( &p, sizeof( p ), tbl, target );
-	}
+}
 
 
 /// Sends a list of items in a shop.
@@ -8237,7 +8238,7 @@ void clif_pet_roulette( const map_session_data& sd, bool success ){
 
 /// Presents a list of pet eggs that can be hatched (ZC_PETEGG_LIST).
 /// 01a6 <packet len>.W { <index>.W }*
-void clif_sendegg(map_session_data *sd)
+void clif_sendegg( map_session_data* sd)
 {
 	int32 i,n=0,fd;
 
@@ -8302,12 +8303,12 @@ void clif_send_petdata( const map_session_data* sd, const pet_data& pd, e_change
 				num = pd.get_pet_db()->s_perfor ? 4 : 3;
 			else if (pd.pet.intimate > PET_INTIMATE_CORDIAL) //TODO: this is way too high
 				num = 2;
-	else
+			else
 				num = 1;
 
 			value = rnd_value(1, num);
 			break;
-}
+		}
 		case CHANGESTATEPET_HAIRSTYLE:
 			value = battle_config.pet_hair_style;
 			break;
@@ -8980,7 +8981,7 @@ void clif_guild_positionchanged(const struct mmo_guild &g,int32 idx)
 
 	if( sd == nullptr ){
 		return;
-}
+	}
 
 	PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO* p = reinterpret_cast<PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO*>( packet_buffer );
 
@@ -9011,7 +9012,7 @@ void clif_guild_memberpositionchanged(const struct mmo_guild &g, int32 idx)
 
 	if(sd == nullptr){
 		return;
-}
+	}
 
 	PACKET_ZC_ACK_REQ_CHANGE_MEMBERS* p = reinterpret_cast<PACKET_ZC_ACK_REQ_CHANGE_MEMBERS*>( packet_buffer );
 
@@ -9031,7 +9032,7 @@ void clif_guild_memberpositionchanged(const struct mmo_guild &g, int32 idx)
 
 /// Sends emblems bitmap data to the client that requested it.
 /// 0152 <packet len>.W <guild id>.L <emblem id>.L <emblem data>.?B (ZC_GUILD_EMBLEM_IMG)
-void clif_guild_emblem(const map_session_data &sd, const struct mmo_guild &g)
+void clif_guild_emblem( const map_session_data &sd, const struct mmo_guild &g )
 {
 	int32 fd = sd.fd;
 	if( g.emblem_len <= 0 )
@@ -9558,7 +9559,7 @@ void clif_GM_kickack( const map_session_data* sd, int32 id )
 }
 
 
-void clif_GM_kick(map_session_data *sd, map_session_data *tsd)
+void clif_GM_kick( map_session_data *sd, map_session_data *tsd)
 {
 	nullpo_retv(tsd);
 
@@ -10800,7 +10801,8 @@ void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
 
 	pc_setinvincibletimer( *sd );
 
-	struct map_data *mapdata = map_getmapdata(sd->m);
+	map_data *mapdata = map_getmapdata(sd->m);
+	// TODO: mapdata nullptr
 
 	if( mapdata->users++ == 0 && battle_config.dynamic_mobs )
 		map_spawnmobs(sd->m);
@@ -10871,7 +10873,7 @@ void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
 		clif_spawn(sd->hd);
 		clif_send_homdata( *sd->hd, SP_ACK );
 		// For some reason, official servers send the homunculus info twice, then update the HP/SP again.
-		clif_hominfo(sd,sd->hd,1);
+		clif_hominfo(sd, sd->hd, 1);
 		clif_hominfo(sd, sd->hd, 0);
 		clif_homunculus_updatestatus(*sd, SP_HP);
 		clif_homunculus_updatestatus(*sd, SP_SP);
@@ -11050,7 +11052,7 @@ void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
 		map_data *pmap = map_getmapdata(sd->state.pmap);
 
 		if (pmap != nullptr && pmap->getMapFlag(MF_FLEE_PENALTY)) {
-				status_calc_bl(sd, { SCB_FLEE }); //Refresh flee penalty
+			status_calc_bl(sd, { SCB_FLEE }); //Refresh flee penalty
 		}
 
 		if( night_flag && mapdata->getMapFlag(MF_NIGHTENABLED) )
@@ -11167,7 +11169,7 @@ void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
 	}
 
 	// Trigger skill effects if you appear standing on them
-	if (sd->invincible_timer == INVALID_TIMER)
+	if(sd->invincible_timer == INVALID_TIMER)
 		skill_unit_move(sd,gettick(),1);
 
 	pc_show_questinfo_reinit(sd);
@@ -12155,7 +12157,7 @@ void clif_parse_EquipItem( int32 fd, map_session_data* sd ){
 	//Client doesn't send the position for ammo.
 	if(sd->inventory_data[index]->type == IT_AMMO)
 		pc_equipitem(sd,index,EQP_AMMO);
-	else {
+	else{
 		pc_equipitem( sd, index, p->position );
 	}
 }
@@ -12548,7 +12550,7 @@ void clif_parse_TradeAddItem(int32 fd,map_session_data *sd)
 		trade_tradeaddzeny( sd, p->amount );
 	}else{
 		trade_tradeadditem( sd, server_index( p->index ), static_cast<int16>( p->amount ) );
-}
+	}
 }
 
 
@@ -13513,7 +13515,7 @@ void clif_parse_UseCard(int32 fd,map_session_data *sd)
 
 	if( idx >= MAX_INVENTORY ){
 		return;
-}
+	}
 
 	clif_use_card( sd, idx );
 }
@@ -13536,7 +13538,7 @@ void clif_parse_InsertCard(int32 fd,map_session_data *sd)
 
 	if( card_idx >= MAX_INVENTORY ){
 		return;
-}
+	}
 
 	if( equip_idx >= MAX_INVENTORY ){
 		return;
@@ -13580,7 +13582,7 @@ void clif_parse_ResetChar(int32 fd, map_session_data *sd) {
 			break;
 #if !(PACKETVER_MAIN_NUM >= 20220216 || PACKETVER_ZERO_NUM >= 20220203)
 		case 1:
-		safesnprintf(cmd,sizeof(cmd),"%cresetskill",atcommand_symbol);
+			safesnprintf( cmd, sizeof(cmd), "%cresetskill", atcommand_symbol );
 			break;
 #endif
 		default:
@@ -14990,13 +14992,13 @@ void clif_parse_GM_Item_Monster(int32 fd, map_session_data *sd)
 				mob = mob_db.find(mob_id);
 		}
 		// Call corresponding atcommand when a valid monster was found
-	if( mob != nullptr ) {
+		if( mob != nullptr ) {
 			char command[CHAT_SIZE_MAX];
 			safesnprintf(command, sizeof(command), "%cmonster %s", atcommand_symbol, mob->sprite.c_str());
 			is_atcommand(fd, sd, command, 1);
-		return;
+			return;
+		}
 	}
-}
 }
 
 
@@ -15243,7 +15245,7 @@ void clif_parse_PMIgnoreList(int32 fd,map_session_data *sd)
 {
 	if( sd == nullptr ){
 		return;
-}
+	}
 
 	clif_PMIgnoreList( *sd );
 }
@@ -15327,7 +15329,7 @@ int32 clif_friendslist_toggle_sub( map_session_data* tsd, va_list ap ){
 	uint32 char_id = va_arg( ap, uint32 );
 	bool online = va_arg( ap, int32 ) != 0;
 
-	//Seek friend.
+	// Seek friend.
 	for( const s_friend& their_friend : tsd->status.friends ){
 		// Cancel early
 		if( their_friend.char_id == 0 ){
@@ -15340,7 +15342,7 @@ int32 clif_friendslist_toggle_sub( map_session_data* tsd, va_list ap ){
 
 		if( their_friend.char_id != char_id ){
 			continue;
-}
+		}
 
 		clif_friendslist_toggle( *tsd, their_friend, online );
 		return 1;
@@ -15384,8 +15386,8 @@ void clif_friendslist_send( const map_session_data& sd ){
 
 		if( map_charid2sd( my_friend.char_id ) ){
 			clif_friendslist_toggle( sd, my_friend, true );
+		}
 	}
-}
 }
 
 
@@ -16773,7 +16775,7 @@ void clif_mail_removeitem( const map_session_data* sd, bool success, int32 index
 
 		if( sd->mail.item[i].index < 0 || sd->mail.item[i].index >= MAX_INVENTORY ){
 			continue;
-	}
+		}
 
 		item_data* id = sd->inventory_data[sd->mail.item[i].index];
 
@@ -17184,7 +17186,7 @@ void clif_parse_Auction_bid( int32 fd, map_session_data* sd ){
 	}
 
 	if( pc_payzeny( sd, p->money, LOG_TYPE_AUCTION ) != 0 ){
-		clif_Auction_message(fd, 8); // You do not have enough zeny
+		clif_Auction_message( fd, 8 ); // You do not have enough zeny
 		return;
 	}
 
@@ -17207,7 +17209,7 @@ void clif_parse_Auction_search(int32 fd, map_session_data* sd){
 	const PACKET_CZ_AUCTION_ITEM_SEARCH* p = reinterpret_cast<PACKET_CZ_AUCTION_ITEM_SEARCH*>( RFIFOP( fd, 0 ) );
 
 	if( !battle_config.feature_auction )
-		return; 
+		return;
 
 	clif_parse_Auction_cancelreg(fd, sd);
 
@@ -17613,7 +17615,7 @@ void clif_parse_Adopt_reply(int32 fd, map_session_data *sd){
 
 	// Check if the adoption was accepted
 	if( p->accepted == 0 ){
-	sd->adopt_invite = 0;
+		sd->adopt_invite = 0;
 		return;
 	}
 
@@ -17631,7 +17633,7 @@ void clif_parse_Adopt_reply(int32 fd, map_session_data *sd){
 	if( mother_sd == nullptr ){
 		sd->adopt_invite = 0;
 		return;
-}
+	}
 
 	if( sd->adopt_invite != father_sd->status.account_id ){
 		sd->adopt_invite = 0;
@@ -20030,7 +20032,7 @@ void clif_sub_ranklist( RANKLIST& ranklist, e_rank rankingtype ){
 	size_t i;
 	size_t size = std::min<size_t>( ARRAYLENGTH( ranklist.names ), MAX_FAME_LIST );
 
-	switch(rankingtype) {
+	switch( rankingtype ){
 		case RANK_BLACKSMITH:
 			list = smith_fame_list;
 			break;
@@ -20056,7 +20058,7 @@ void clif_sub_ranklist( RANKLIST& ranklist, e_rank rankingtype ){
 		if( list[i].id == 0 ){
 			safestrncpy( ranklist.names[i], "None", sizeof( ranklist.names[0] ) );
 			continue;
-			}
+		}
 
 		if( strcmp( list[i].name, "-" ) != 0 ){
 			safestrncpy( ranklist.names[i], list[i].name, sizeof( ranklist.names[0] ) );
@@ -20067,7 +20069,7 @@ void clif_sub_ranklist( RANKLIST& ranklist, e_rank rankingtype ){
 
 		if( name != nullptr ){
 			safestrncpy( ranklist.names[i], name, sizeof( ranklist.names[0] ) );
-		} else {
+		}else{
 			safestrncpy( ranklist.names[i], list[i].name, sizeof( ranklist.names[0] ) );
 		}
 	}
@@ -20251,7 +20253,7 @@ void clif_parse_ranklist_killer( int32 fd, map_session_data* sd ){
 
 	clif_ranklist( *sd, RANK_KILLER );
 #endif
-	}
+}
 
 ///
 /// 097c <type>.W (CZ_REQ_RANKING)
@@ -21809,7 +21811,7 @@ void clif_parse_sale_remove( int32 fd, map_session_data* sd ){
  * Sends all achievement data to the client (ZC_ALL_ACH_LIST).
  * 0a23 <packetLength>.W <ACHCount>.L <ACHPoint>.L
  */
-void clif_achievement_list_all(map_session_data *sd)
+void clif_achievement_list_all( map_session_data *sd )
 {
 	nullpo_retv(sd);
 

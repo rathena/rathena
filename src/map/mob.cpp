@@ -324,11 +324,11 @@ uint16 mobdb_searchname_array(const char *str, uint16 * out, uint16 size)
 	const auto &mob_list = mob_db.getCache();
 
 	// Full compare first
-	for( const auto &mob : mob_list ) {
+	for (const auto& mob : mob_list) {
 		if (mob == nullptr)
 			continue;
 		if (mobdb_searchname_sub(mob->id, str, true)) {
-				out[count] = mob->id;
+			out[count] = mob->id;
 			if (++count >= size)
 				return count;
 		}
@@ -341,8 +341,8 @@ uint16 mobdb_searchname_array(const char *str, uint16 * out, uint16 size)
 			if (mobdb_searchname_sub(mob->id, str, false) && !mobdb_searchname_sub(mob->id, str, true)) {
 				out[count] = mob->id;
 				if (++count >= size)
-	return count;
-}
+					return count;
+			}
 		}
 	}
 
@@ -1032,8 +1032,8 @@ int32 mob_linksearch(block_list *bl,va_list ap)
 	{
 		md->last_linktime = tick;
 		md->target_id = target_id;
-			return 1;
-		}
+		return 1;
+	}
 
 	return 0;
 }
@@ -1446,11 +1446,11 @@ static int32 mob_warpchase_sub(block_list *bl,va_list ap) {
 			npc_data* nd = reinterpret_cast<npc_data*>(bl);
 
 			// Not a warp
-	if(nd->subtype != NPCTYPE_WARP)
+			if (nd->subtype != NPCTYPE_WARP)
 				return 0;
 
 			// Does not lead to the same map as target
-	if(nd->u.warp.mapindex != map_getmapdata(target->m)->index)
+			if (nd->u.warp.mapindex != map_getmapdata(target->m)->index)
 				return 0;
 
 			// Leads to a different map that is set to not be accessible through warp chase
@@ -1461,14 +1461,14 @@ static int32 mob_warpchase_sub(block_list *bl,va_list ap) {
 			}
 
 			// Get distance from warp exit to target
-	cur_distance = distance_blxy(target, nd->u.warp.x, nd->u.warp.y);
+			cur_distance = distance_blxy(target, nd->u.warp.x, nd->u.warp.y);
 
 			//Pick warp that leads closest to target
 			if (cur_distance < *min_distance) {
 				*target_warp = nd;
-		*min_distance = cur_distance;
-		return 1;
-	}
+				*min_distance = cur_distance;
+				return 1;
+			}
 		}
 		break;
 
@@ -1478,7 +1478,7 @@ static int32 mob_warpchase_sub(block_list *bl,va_list ap) {
 			skill_unit* su = reinterpret_cast<skill_unit*>(bl);
 
 			if (su->group == nullptr)
-	return 0;
+				return 0;
 
 			switch (su->group->unit_id) {
 				case UNT_WARP_WAITING:
@@ -1495,7 +1495,7 @@ static int32 mob_warpchase_sub(block_list *bl,va_list ap) {
 						int16 warp_m = map_mapindex2mapid(su->group->val3);
 						if (warp_m != bl->m && map_getmapflag(warp_m, MF_NOBRANCH))
 							return 0;
-}
+					}
 
 					// Get distance from warp exit to target
 					cur_distance = distance_blxy(target, su->group->val2 >> 16, su->group->val2 & 0xffff);
@@ -1609,11 +1609,11 @@ static int32 mob_ai_sub_hard_slavemob(mob_data *md,t_tick tick)
 			if (tbl != nullptr) {
 				md->last_linktime = tick;
 				if (status_check_skilluse(md, tbl, 0, 0)) {
-				md->target_id=tbl->id;
-				return 1;
+					md->target_id = tbl->id;
+					return 1;
+				}
 			}
 		}
-	}
 	}
 	return 0;
 }
@@ -1638,7 +1638,7 @@ int32 mob_unlocktarget(mob_data *md, t_tick tick)
 	case MSS_IDLE:
 		if (md->ud.walktimer == INVALID_TIMER && md->idle_event[0] && npc_event_do_id(md->idle_event, md->id) > 0)
 			md->idle_event[0] = 0;
-			break;
+		break;
 	case MSS_LOOT:
 		// Looters that lost their target stop after 0.5-1.5 cells moved
 		unit_stop_walking_soon(*md, tick);
@@ -1928,7 +1928,7 @@ static bool mob_ai_sub_hard(mob_data *md, t_tick tick)
 				if (!status_check_visibility(md, tbl, true)) {
 					mob_unlocktarget(md, tick);
 					return true;
-	}
+				}
 			}
 		}
 	}
@@ -2012,7 +2012,7 @@ static bool mob_ai_sub_hard(mob_data *md, t_tick tick)
 		if (tbl == nullptr) {
 			// Search for items in loot range
 			map_foreachinshootrange(mob_ai_sub_hard_lootsearch, md, battle_config.loot_range, BL_ITEM, md, &tbl);
-	}
+		}
 		else if (tbl->type == BL_ITEM && battle_config.monster_loot_search_type == 0) {
 			// Looter already has a target item, but we want to check if there is an item that's closer
 			int16 dist = distance_bl(md, tbl) - 1;
@@ -2030,7 +2030,7 @@ static bool mob_ai_sub_hard(mob_data *md, t_tick tick)
 		if (tbl != nullptr && prev_id != md->target_id && battle_check_range(md, tbl, md->status.rhw.range)) {
 			md->state.aggressive = 0;
 			mob_setstate(*md, MSS_RUSH);
-	}
+		}
 	}
 	else
 	if (mode&MD_CHANGECHASE && (md->state.skillstate == MSS_RUSH || md->state.skillstate == MSS_FOLLOW))
@@ -2150,11 +2150,11 @@ static bool mob_ai_sub_hard(mob_data *md, t_tick tick)
 		// TODO: EFST_AUTOCOUNTER, EFST_BLADESTOP, NPC_SR_CURSEDCIRCLE
 		if (!(md->sc.option&OPTION_HIDE)) {
 			// Target within range and potentially able to use normal attack, engage
-		if (md->ud.target != tbl->id || md->ud.attacktimer == INVALID_TIMER) 
-		{ //Only attack if no more attack delay left
+			if (md->ud.target != tbl->id || md->ud.attacktimer == INVALID_TIMER)
+			{ //Only attack if no more attack delay left
 				stop_flag = unit_attack(md, tbl->id, 1);
-				}
 			}
+		}
 		else {
 			// These status changes pretend the attack was successful without attempting it
 			// This results in the monster going into an attack state despite not attacking
@@ -2165,7 +2165,7 @@ static bool mob_ai_sub_hard(mob_data *md, t_tick tick)
 		if (stop_flag != USW_NONE)
 			unit_stop_walking(md, stop_flag);
 
-	//Target still in attack range, no need to chase the target
+		//Target still in attack range, no need to chase the target
 		return true;
 	}
 
@@ -2202,7 +2202,7 @@ static bool mob_ai_sub_hard(mob_data *md, t_tick tick)
 	))
 		return true;
 
-	//Follow up if possible.
+	// Follow up if possible.
 
 	// Monsters in Angry state only start chasing when target is in chase range
 	if (md->state.skillstate == MSS_ANGRY && !mob_can_reach(md, tbl, md->db->range3)) {
@@ -2213,8 +2213,8 @@ static bool mob_ai_sub_hard(mob_data *md, t_tick tick)
 	if(!unit_walktobl(md, tbl, md->status.rhw.range, 2))
 		mob_unlocktarget(md, tick);
 
-			return true;
-	}
+	return true;
+}
 
 /**
  * End of attack timer event
@@ -2234,7 +2234,7 @@ bool mob_ai_sub_hard_attacktimer(mob_data &md, t_tick tick)
 
 	// Check for warp chase
 	if (mob_warpchase(&md, target) > 0)
-	return true;
+		return true;
 
 	// Monsters have a special visibility check at the end of their attack delay
 	// If they still have a target, but it is not visible, they drop the target
@@ -2264,7 +2264,7 @@ void mob_set_attacked_id(int32 src_id, int32 target_id, t_tick tick, bool is_nor
 		return;
 
 	switch (src->type)
-{
+	{
 		case BL_PET:
 		{
 			pet_data& pd = *reinterpret_cast<pet_data*>(src);
@@ -2721,7 +2721,7 @@ void mob_log_damage(mob_data* md, block_list* src, int64 damage, int64 damage_ta
 				if( msd )
 					char_id = msd->status.char_id;
 			}
-				break;
+			break;
 		}
 		case BL_ELEM:
 		{
@@ -2751,14 +2751,14 @@ void mob_log_damage(mob_data* md, block_list* src, int64 damage, int64 damage_ta
 			entry.dmg = util::safe_addition_cap(entry.dmg, damage, INT64_MAX);
 			entry.dmg_tanked = util::safe_addition_cap(entry.dmg_tanked, damage_tanked, INT64_MAX);
 			return;
-			}
-			}
+		}
+	}
 
 	// Check if the damage log is full
 	if( md->dmglog.size() == DAMAGELOG_SIZE ){
 		// Remove oldest entry
 		md->dmglog.pop_front();
-		}
+	}
 
 	// Add new character to damage log at last (newest) position
 	s_dmglog dmg = {};
@@ -2769,7 +2769,7 @@ void mob_log_damage(mob_data* md, block_list* src, int64 damage, int64 damage_ta
 	dmg.dmg_tanked = damage_tanked;
 
 	md->dmglog.push_back( dmg );
-		}
+}
 //Call when a mob has received damage.
 void mob_damage(mob_data *md, block_list *src, int32 damage)
 {
@@ -2799,7 +2799,7 @@ void mob_damage(mob_data *md, block_list *src, int32 damage)
 				continue;
 			}
 
-				clif_monster_hp_bar(md, sd->fd);
+			clif_monster_hp_bar( md, sd->fd );
 		}
 	}
 #endif
@@ -3014,7 +3014,7 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 				// Skip homunculus' share if inactive
 				if( !hom_is_active( tsd->hd ) ){
 					continue;
-		}
+				}
 				dmgbltypes |= BL_HOM;
 				break;
 			case MDLF_PET:
@@ -3074,7 +3074,7 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 		s_dmglog& entry = md->dmglog[0];
 		total_damage = util::safe_addition_cap(total_damage, entry.dmg, INT64_MAX);
 		entry.dmg = util::safe_addition_cap(entry.dmg, entry.dmg, INT64_MAX);
-		}
+	}
 
 	map_data *mapdata = map_getmapdata(m);
 
@@ -3175,7 +3175,7 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 			else {
 				double exp = apply_rate2(md->db->job_exp, per, 1);
 				exp = apply_rate(exp, bonus);
-				exp = apply_rate(exp, mapdata->getMapFlag(MF_JEXP));
+				exp = apply_rate(exp, map_getmapflag(m, MF_JEXP));
 				job_exp = (t_exp)cap_value(exp, 1, MAX_EXP);
 			}
 
@@ -3277,45 +3277,45 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 		if(sd) {
 			// process script-granted extra drop bonuses
 			if (mapdata->getMapFlag(MF_NOBONUSITEMDROP)) {
-        for (const auto &it : sd->add_drop) {
-          if (!&it || (!it.nameid && !it.group))
-            continue;
-          if ((it.race < RC_NONE_ && it.race == -md->mob_id) || //Race < RC_NONE_, use mob_id
-            (it.race == RC_ALL || it.race == status->race) || //Matched race
-            (it.class_ == CLASS_ALL || it.class_ == status->class_)) //Matched class
-          {
-            //Check if the bonus item drop rate should be multiplied with mob level/10 [Lupus]
-            if (it.rate < 0) {
-              //It's negative, then it should be multiplied. with mob_level/10
-              //rate = base_rate * (mob_level/10) + 1
-              drop_rate = (-it.rate) * md->level / 10 + 1;
-              drop_rate = cap_value(drop_rate, max(battle_config.item_drop_adddrop_min,1), min(battle_config.item_drop_adddrop_max,10000));
-            }
-            else
-              //it's positive, then it goes as it is
-              drop_rate = it.rate;
+				for (const auto &it : sd->add_drop) {
+					if (!&it || (!it.nameid && !it.group))
+						continue;
+					if ((it.race < RC_NONE_ && it.race == -md->mob_id) || //Race < RC_NONE_, use mob_id
+						(it.race == RC_ALL || it.race == status->race) || //Matched race
+						(it.class_ == CLASS_ALL || it.class_ == status->class_)) //Matched class
+					{
+						//Check if the bonus item drop rate should be multiplied with mob level/10 [Lupus]
+						if (it.rate < 0) {
+							//It's negative, then it should be multiplied. with mob_level/10
+							//rate = base_rate * (mob_level/10) + 1
+							drop_rate = (-it.rate) * md->level / 10 + 1;
+							drop_rate = cap_value(drop_rate, max(battle_config.item_drop_adddrop_min,1), min(battle_config.item_drop_adddrop_max,10000));
+						}
+						else
+							//it's positive, then it goes as it is
+							drop_rate = it.rate;
 
-            if (rnd()%10000 >= drop_rate)
-              continue;
+						if (rnd()%10000 >= drop_rate)
+							continue;
 
-					std::shared_ptr<s_mob_drop> mobdrop = std::make_shared<s_mob_drop>();
+						std::shared_ptr<s_mob_drop> mobdrop = std::make_shared<s_mob_drop>();
 
-					if (it.nameid > 0) {
-						mobdrop->nameid = it.nameid;
-						mobdrop->rate = drop_rate;
+						if (it.nameid > 0) {
+							mobdrop->nameid = it.nameid;
+							mobdrop->rate = drop_rate;
+						}
+						else {
+							std::shared_ptr<s_item_group_entry> entry = itemdb_group.get_random_entry(it.group, 1, GROUP_ALGORITHM_DROP);
+							if (entry == nullptr) continue;
+							mobdrop->nameid = entry->nameid;
+							mobdrop->rate = entry->adj_rate * drop_rate / 10000;
+						}
+
+						std::shared_ptr<s_item_drop> ditem = mob_setdropitem(mobdrop, 1, md->mob_id);
+
+						mob_item_drop(md, dlist, ditem, 0, mobdrop->rate, homkillonly || merckillonly);
 					}
-					else {
-						std::shared_ptr<s_item_group_entry> entry = itemdb_group.get_random_entry(it.group, 1, GROUP_ALGORITHM_DROP);
-						if (entry == nullptr) continue;
-						mobdrop->nameid = entry->nameid;
-						mobdrop->rate = entry->adj_rate * drop_rate / 10000;
-					}
-
-            std::shared_ptr<s_item_drop> ditem = mob_setdropitem(mobdrop, 1, md->mob_id);
-
-					mob_item_drop(md, dlist, ditem, 0, mobdrop->rate, homkillonly || merckillonly);
-          }
-        }
+				}
 			}
 
 			// process script-granted zeny bonus (get_zeny_num) [Skotlex]
@@ -3480,7 +3480,7 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 			if(battle_config.item_drop_mvp_mode == 1) {
 				//Random order
 				rnd_vector_order( mdrop );
-						}
+			}
 
 #if defined(RENEWAL_DROP)
 			int32 penalty = pc_level_penalty_mod( mvp_sd, PENALTY_MVP_DROP, nullptr, md );
@@ -3893,9 +3893,9 @@ void mob_heal(mob_data *md,uint32 heal)
 
 			// Check if in range
 			if( sd != nullptr && check_distance_bl( md, sd, AREA_SIZE ) ){
-					clif_monster_hp_bar(md, sd->fd);
+				clif_monster_hp_bar(md, sd->fd);
 			}
-	}
+		}
 	}
 #endif
 }
@@ -4390,7 +4390,7 @@ bool mobskill_use(mob_data *md, t_tick tick, int32 event, int64 damage)
 
 		if (!flag)
 			continue; //Skill requisite failed to be fulfilled.
-
+		
 		FreeBlockLock freeLock;
 		//Execute skill
 		if (skill_get_casttype(ms[i]->skill_id) == CAST_GROUND)
@@ -4854,7 +4854,7 @@ bool MobDatabase::parseDropNode( std::string nodeName, const ryml::NodeRef& node
 		bool exist;
 
 		if (this->nodeExists(dropit, "Index")) {
-		uint16 index;
+			uint16 index;
 
 			if (!this->asUInt16(dropit, "Index", index))
 				return false;
@@ -4871,7 +4871,7 @@ bool MobDatabase::parseDropNode( std::string nodeName, const ryml::NodeRef& node
 			}else if( index > drops.size() ){
 				// TODO: warning
 				continue;
-		} else {
+			}else{
 				// Overwrite existing entry
 				drop = drops[index];
 				exist = true;
@@ -4929,7 +4929,7 @@ bool MobDatabase::parseDropNode( std::string nodeName, const ryml::NodeRef& node
 
 		if( !exist ){
 			drops.push_back( drop );
-	}
+		}
 	}
 
 	return true;

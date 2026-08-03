@@ -2783,6 +2783,9 @@ static int32 battle_skill_damage_skill(block_list *src, block_list *target, uint
 
 	map_data *mapdata = map_getmapdata(src->m);
 
+	if (mapdata == nullptr)
+		return 0;
+
 	if ((damage->map&1 && (!mapdata->getMapFlag(MF_PVP) && !mapdata_flag_gvg2(mapdata) && !mapdata->getMapFlag(MF_BATTLEGROUND) && !mapdata->getMapFlag(MF_SKILL_DAMAGE))) ||
 		(damage->map&2 && mapdata->getMapFlag(MF_PVP)) ||
 		(damage->map&4 && mapdata_flag_gvg2(mapdata)) ||

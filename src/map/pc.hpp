@@ -1392,7 +1392,7 @@ void pc_reg_received(map_session_data *sd);
 void pc_close_npc(map_session_data *sd,int32 flag);
 TIMER_FUNC(pc_close_npc_timer);
 
-void pc_setequipindex(map_session_data *sd);
+void pc_setequipindex( map_session_data *sd );
 uint8 pc_isequip( const map_session_data* sd, int32 n );
 int32 pc_equippoint( const map_session_data* sd, int32 n );
 int32 pc_equippoint_sub( const map_session_data* sd, const item_data* id );
@@ -1590,7 +1590,7 @@ void pc_cleareventtimer(map_session_data *sd);
 void pc_addeventtimercount(map_session_data *sd,const char *name,int32 tick);
 
 int32 pc_calc_pvprank( map_session_data *sd );
-TIMER_FUNC(pc_calc_pvprank_timer);
+TIMER_FUNC( pc_calc_pvprank_timer );
 
 int32 pc_ismarried( const map_session_data* sd );
 bool pc_marriage(map_session_data *sd,map_session_data *dstsd);
@@ -1603,8 +1603,8 @@ map_session_data* pc_get_child( const map_session_data* sd );
 void pc_bleeding( map_session_data& sd, t_tick diff_tick);
 void pc_regen( map_session_data& sd, t_tick diff_tick);
 
-bool pc_setstand(map_session_data *sd, bool force);
-bool pc_candrop(map_session_data *sd,struct item *item);
+bool pc_setstand( map_session_data* sd, bool force );
+bool pc_candrop( map_session_data* sd,struct item *item );
 
 uint64 pc_jobid2mapid( uint16 b_class );	// Skotlex
 int32 pc_mapid2jobid( uint64 class_, int32 sex );	// Skotlex

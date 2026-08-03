@@ -3515,11 +3515,11 @@ public:
 	status_change();
 
 	bool hasSCE( enum sc_type type ) const;
-	status_change_entry * getSCE(enum sc_type type);
+	status_change_entry* getSCE( enum sc_type type );
 	const status_change_entry* getSCE( sc_type type ) const;
-	status_change_entry * getSCE(uint32 type);
+	status_change_entry* getSCE( uint32 type );
 	const status_change_entry* getSCE( uint32 type ) const;
-	status_change_entry * createSCE(enum sc_type type);
+	status_change_entry* createSCE( enum sc_type type );
 	void deleteSCE(enum sc_type type);
 	bool empty() const;
 	size_t size() const;
@@ -3572,7 +3572,7 @@ int32 status_revive(block_list *bl, unsigned char per_hp, unsigned char per_sp, 
 
 struct regen_data* status_get_regen_data( block_list* bl );
 const regen_data* status_get_regen_data( const block_list* bl );
-status_data* status_get_status_data(block_list& bl);
+status_data* status_get_status_data( block_list& bl );
 const status_data* status_get_status_data( const block_list& bl );
 struct status_data *status_get_base_status( block_list* bl );
 const status_data* status_get_base_status( const block_list* bl );
@@ -3673,9 +3673,9 @@ static bool sc_start4(block_list *src, block_list *bl, sc_type type, int32 rate,
 }
 int32 status_change_end(block_list* bl, enum sc_type type, int32 tid = INVALID_TIMER);
 TIMER_FUNC(status_change_timer);
-int status_change_timer_sub(struct block_list* bl, va_list ap);
-int status_change_clear(struct block_list* bl, int type);
-void status_change_clear_buffs(struct block_list* bl, uint8 type);
+int32 status_change_timer_sub(block_list* bl, va_list ap);
+int32 status_change_clear(block_list* bl, int32 type);
+void status_change_clear_buffs(block_list* bl, uint8 type);
 TIMER_FUNC(status_clear_lastEffect_timer);
 
 #define status_calc_mob(md, opt) status_calc_bl_((md), status_db.getSCB_ALL(), opt)

@@ -2890,7 +2890,7 @@ uint64 ItemPackageDatabase::parseBodyNode( const ryml::NodeRef& node ){
 					package_item->grade = static_cast<decltype(package_item->grade)>(constant);
 				}
 				else {
-				if( !package_item_exists ){
+					if (!package_item_exists) {
 						package_item->grade = static_cast<decltype(package_item->grade)>(ENCHANTGRADE_NONE);
 					}
 				}
@@ -2950,16 +2950,16 @@ std::shared_ptr<s_item_group_entry> ItemGroupDatabase::get_random_itemsubgroup(s
 	switch( algorithm ) {
 		case GROUP_ALGORITHM_DROP: {
 			// We pick a random item from the group and then do a drop check based on the rate. On fail, do not return any item
-		std::shared_ptr<s_item_group_entry> entry = util::umap_random(random->data);
+			std::shared_ptr<s_item_group_entry> entry = util::umap_random(random->data);
 			if (rnd_chance_official<uint16>(entry->adj_rate, 10000))
-			return entry;
+				return entry;
 			break;
-	}
+		}
 		case GROUP_ALGORITHM_ALL:
 			// This group algorithm is usually used to return all items in the group
 			// The code here is only reached when using this algorithm in a command that expects to return only one item
 			// In this case, we return a random item in the group
-	return util::umap_random(random->data);
+			return util::umap_random(random->data);
 		case GROUP_ALGORITHM_RANDOM: {
 			// Each item has x positions whereas x is the rate defined for the item in the umap
 			// We pick a random position and find the item that is at this position
@@ -2974,7 +2974,7 @@ std::shared_ptr<s_item_group_entry> ItemGroupDatabase::get_random_itemsubgroup(s
 				// If we passed the target position, entry is the item we are looking for
 				if (current_pos > pos)
 					return entry;
-}
+			}
 			break;
 		}
 		case GROUP_ALGORITHM_SHAREDPOOL: {
@@ -3137,10 +3137,10 @@ uint8 ItemGroupDatabase::pc_get_itemgroup( uint16 group_id, bool identify, map_s
 				break;
 			case GROUP_ALGORITHM_ALL:
 				for (const auto &it : random.second->data)
-			this->pc_get_itemgroup_sub( sd, identify, it.second );
+					this->pc_get_itemgroup_sub( sd, identify, it.second );
 				break;
-	}
 		}
+	}
 
 	return 0;
 }
@@ -3411,8 +3411,8 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 			uint16 subgroup;
 
-				if (!this->asUInt16(subit, "SubGroup", subgroup))
-					continue;
+			if (!this->asUInt16(subit, "SubGroup", subgroup))
+				continue;
 
 			std::shared_ptr<s_item_group_random> random = util::umap_find(group->random, subgroup);
 			bool random_exists = random != nullptr;
@@ -3686,7 +3686,7 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 					if (!this->asString(listit, "GradeMinimum", enchantgrade)) {
 						return 0;
-			}
+					}
 
 					std::string grade_constant = "ENCHANTGRADE_" + enchantgrade;
 					int64 constant;
@@ -3694,10 +3694,10 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 					if (!script_get_constant(grade_constant.c_str(), &constant) || constant < ENCHANTGRADE_NONE || constant > MAX_ENCHANTGRADE) {
 						this->invalidWarning(listit["GradeMinimum"], "Invalid enchantgrade %s, defaulting to None.\n", enchantgrade.c_str());
 						constant = ENCHANTGRADE_NONE;
-		}
+					}
 
 					entry->minimumEnchantgrade = static_cast<uint16>(constant);
-	}
+				}
 				else {
 					if (!exists) {
 						entry->minimumEnchantgrade = static_cast<uint16>( ENCHANTGRADE_NONE );
