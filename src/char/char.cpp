@@ -1838,12 +1838,6 @@ int32 char_mmo_char_tobuf( CHARACTER_INFO& info, mmo_charstatus& p ){
 #if PACKETVER >= 20061023
 	info.bIsChangedCharName = ( p.rename > 0 ) ? 0 : 1;
 #endif
-#elif PACKETVER >= 20061023
-	info.CharNum = p.slot;
-	info.bIsChangedCharName = ( p.rename > 0 ) ? 0 : 1;
-#else
-	info.CharNum = p.slot;
-#endif
 #if (PACKETVER >= 20100720 && PACKETVER <= 20100727) || PACKETVER >= 20100803
 	mapindex_getmapname_ext( p.last_point.map, info.mapName );
 #endif
