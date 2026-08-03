@@ -1831,7 +1831,6 @@ int32 char_mmo_char_tobuf( CHARACTER_INFO& info, mmo_charstatus& p ){
 	info.Int = (uint8)u16min( p.int_, UINT8_MAX );
 	info.Dex = (uint8)u16min( p.dex, UINT8_MAX );
 	info.Luk = (uint8)u16min( p.luk, UINT8_MAX );
-#if PACKETVER >= 20081217
 	info.CharNum = p.slot;
 	info.hairColor = (uint8)u16min( p.hair_color, UINT8_MAX );
 	info.bIsChangedCharName = ( p.rename > 0 ) ? 0 : 1;
