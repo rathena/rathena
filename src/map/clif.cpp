@@ -18970,6 +18970,7 @@ void clif_party_show_picker( const map_session_data* sd, const item* item_data )
  */
 void clif_displayexp( const map_session_data* sd, t_exp exp, char type, bool quest, bool lost )
 {
+#if PACKETVER >= 20091027
 	int32 fd;
 	int32 offset;
 #if PACKETVER >= 20170830
@@ -18995,6 +18996,7 @@ void clif_displayexp( const map_session_data* sd, t_exp exp, char type, bool que
 	WFIFOW(fd,10+offset) = type;
 	WFIFOW(fd,12+offset) = (quest && type != SP_JOBEXP) ? 1 : 0; // NOTE: Somehow JobEXP always in yellow color
 	WFIFOSET(fd,packet_len(cmd));
+#endif
 }
 
 
