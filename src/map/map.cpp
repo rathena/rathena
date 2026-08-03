@@ -2271,7 +2271,7 @@ int32 map_quit(map_session_data *sd) {
 			std::bitset<SCF_MAX> &flag = it.second->flag;
 
 			//No need to save infinite status
-			if (flag[SCF_NOSAVEINFINITE] && sd->sc.getSCE(it.first) && sd->sc.getSCE(it.first)->val4 > 0) {
+			if (flag[SCF_NOSAVEINFINITE] && sd->sc.getSCE(it.first) && (sd->sc.getSCE(it.first)->val4 > 0 || sd->sc.getSCE(it.first)->timer == INVALID_TIMER)) {
 				status_change_end(sd, static_cast<sc_type>(it.first));
 				continue;
 			}

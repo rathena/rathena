@@ -25,3 +25,10 @@ void SkillReleaseNinjaSpell::calculateSkillRatio(const Damage *wd, const block_l
 void SkillReleaseNinjaSpell::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	skill_attack(BF_MAGIC, src, src, target, getSkillId(), skill_lv, tick, flag);
 }
+
+void SkillReleaseNinjaSpell::modifyElement(const Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv, int32& element, int32 flag) const {
+	const map_session_data* sd = BL_CAST(BL_PC, &src);
+
+	if (sd != nullptr && sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm > 0)
+		element = sd->spiritcharm_type;
+}
