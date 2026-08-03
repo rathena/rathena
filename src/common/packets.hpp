@@ -53,9 +53,14 @@ struct CHARACTER_INFO{
 	int64 maxhp;
 	int64 sp;
 	int64 maxsp;
-#else
+#elif PACKETVER >= 20081217
 	int32 hp;
 	int32 maxhp;
+	int16 sp;
+	int16 maxsp;
+#else
+	int16 hp;
+	int16 maxhp;
 	int16 sp;
 	int16 maxsp;
 #endif
@@ -81,9 +86,16 @@ struct CHARACTER_INFO{
 	uint8 Int;
 	uint8 Dex;
 	uint8 Luk;
+#if PACKETVER >= 20081217
 	uint8 CharNum;
 	uint8 hairColor;
 	int16 bIsChangedCharName;
+#elif PACKETVER >= 20061023
+	int16 CharNum;
+	int16 bIsChangedCharName;
+#else
+	int16 CharNum;
+#endif
 #if (PACKETVER >= 20100720 && PACKETVER <= 20100727) || PACKETVER >= 20100803
 	char mapName[16];
 #endif
