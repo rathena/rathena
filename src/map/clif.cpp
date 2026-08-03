@@ -1653,7 +1653,7 @@ static inline bool clif_npc_mayapurple( const block_list& bl ){
 }
 
 /// For the stupid cloth-dye bug. Resends the given view data to the area specified by bl.
-void clif_refresh_clothcolor( const block_list& bl, enum send_target target, block_list* tbl = nullptr ){
+void clif_refresh_clothcolor( const block_list& bl, enum send_target target, const block_list* tbl = nullptr ){
 // Unconfirmed when this was fixed, if you encounter any problems, feel free to report them
 #if PACKETVER < 20091103
 	const view_data* vd = status_get_viewdata( &bl );
