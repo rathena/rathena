@@ -1835,7 +1835,9 @@ int32 char_mmo_char_tobuf( CHARACTER_INFO& info, mmo_charstatus& p ){
 #if PACKETVER >= 20081217
 	info.hairColor = (uint8)u16min( p.hair_color, UINT8_MAX );
 #endif
+#if PACKETVER >= 20061023
 	info.bIsChangedCharName = ( p.rename > 0 ) ? 0 : 1;
+#endif
 #elif PACKETVER >= 20061023
 	info.CharNum = p.slot;
 	info.bIsChangedCharName = ( p.rename > 0 ) ? 0 : 1;
