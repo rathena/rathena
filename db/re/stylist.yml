@@ -139,28 +139,28 @@ Body:
         Value: 7
         CostsHuman:
             Price: 100000
-        CostDoram:
+        CostsDoram:
             RequiredItem: J_Shop_Coupon2
             RequiredItemBox: J_Shop_Coupon2
       - Index: 8
         Value: 8
         CostsHuman:
             Price: 100000
-        CostDoram:
+        CostsDoram:
             RequiredItem: J_Shop_Coupon2
             RequiredItemBox: J_Shop_Coupon2
       - Index: 9
         Value: 9
         CostsHuman:
             Price: 100000
-        CostDoram:
+        CostsDoram:
             RequiredItem: J_Shop_Coupon2
             RequiredItemBox: J_Shop_Coupon2
       - Index: 10
         Value: 10
         CostsHuman:
             Price: 100000
-        CostDoram:
+        CostsDoram:
             RequiredItem: J_Shop_Coupon2
             RequiredItemBox: J_Shop_Coupon2
       - Index: 11

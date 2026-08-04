@@ -22,7 +22,7 @@
 # Homunculus Settings
 #
 ###########################################################################
-# - BaseClass               Base class.
+# - Class                   Base class.
 #   Name                    Name of homunculus.
 #   EvolutionClass          Evolution class.
 #   Food                    Homunculus food item. (Default: Pet_Food)
