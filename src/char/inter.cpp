@@ -1136,13 +1136,13 @@ int32 mapif_parse_broadcast(int32 fd)
 
 /**
  * Parse received item broadcast and sends it to all connected map-serves
- * ZI 3009 <cmd>.W <len>.W <nameid>.L <source>.W <type>.B <name>.24B <srcname>.24B
- * IZ 3809 <cmd>.W <len>.W <nameid>.L <source>.W <type>.B <name>.24B <srcname>.24B
+ * ZI 3009 <cmd>.W <len>.W <nameid>.L <source>.W <type>.B <name>.24B <srcname>.24B <refine level>.L
+ * IZ 3809 <cmd>.W <len>.W <nameid>.L <source>.W <type>.B <name>.24B <srcname>.24B <refine level>.L
  * @param fd
  * @return
  **/
 int32 mapif_parse_broadcast_item(int32 fd) {
-	unsigned char buf[11 + NAME_LENGTH*2];
+	unsigned char buf[11 + NAME_LENGTH*2 + sizeof(uint32)];
 
 	memcpy(WBUFP(buf, 0), RFIFOP(fd, 0), RFIFOW(fd,2));
 	WBUFW(buf, 0) = 0x3809;
@@ -1451,5 +1451,4 @@ int32 inter_parse_frommap(int32 fd)
 	RFIFOSKIP(fd, len);
 	return 1;
 }
-
 

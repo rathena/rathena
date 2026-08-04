@@ -25,7 +25,7 @@ int32 intif_parse(int32 fd);
 
 int32 intif_broadcast( const char* mes, size_t len, int32 type );
 int32 intif_broadcast2( const char* mes, size_t len, unsigned long fontColor, int16 fontType, int16 fontSize, int16 fontAlign, int16 fontY );
-int32 intif_broadcast_obtain_special_item(map_session_data *sd, t_itemid nameid, uint32 sourceid, unsigned char type);
+int32 intif_broadcast_obtain_special_item(map_session_data *sd, t_itemid nameid, uint32 sourceid, unsigned char type, uint32 refine_level = 0);
 int32 intif_broadcast_obtain_special_item_npc(map_session_data *sd, t_itemid nameid);
 int32 intif_main_message(map_session_data* sd, const char* message);
 

@@ -3105,7 +3105,7 @@ void ItemGroupDatabase::pc_get_itemgroup_sub( map_session_data& sd, bool identif
 
 		if( flag == ADDITEM_SUCCESS ){
 			if( data->isAnnounced ){
-				intif_broadcast_obtain_special_item( &sd, data->nameid, sd.itemid, ITEMOBTAIN_TYPE_BOXITEM );
+				intif_broadcast_obtain_special_item( &sd, data->nameid, sd.itemid, ITEMOBTAIN_TYPE_BOXITEM, tmp.refine );
 			}
 		}else{
 			clif_additem( &sd, 0, 0, flag );
