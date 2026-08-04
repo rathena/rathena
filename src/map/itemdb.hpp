@@ -3856,7 +3856,7 @@ bool itemdb_isequip2( const item_data *id);
 char itemdb_isidentified(t_itemid nameid);
 bool itemdb_isstackable2( const item_data *id );
 #define itemdb_isstackable(nameid) itemdb_isstackable2(itemdb_search(nameid))
-bool itemdb_isNoEquip( const item_data *id, uint16 m);
+bool itemdb_isNoEquip(const map_session_data &sd, t_itemid nameid);
 
 bool itemdb_parse_roulette_db(void);
 

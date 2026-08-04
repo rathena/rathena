@@ -1367,7 +1367,7 @@ int32 unit_blown(block_list* bl, int32 dx, int32 dy, int32 count, enum e_skill_b
  *		0x8 - Ignore target player 'special_state.no_knockback'
  * @return reason for immunity
  *		UB_KNOCKABLE - can be knocked back / stopped
- *		UB_NO_KNOCKBACK_MAP - at WOE/BG map
+ *		UB_NO_KNOCKBACK_MAP - on map with mapflag
  *		UB_MD_KNOCKBACK_IMMUNE - target is MD_KNOCKBACK_IMMUNE
  *		UB_TARGET_BASILICA - target is in Basilica area (Pre-Renewal)
  *		UB_TARGET_NO_KNOCKBACK - target has 'special_state.no_knockback'
@@ -1375,10 +1375,12 @@ int32 unit_blown(block_list* bl, int32 dx, int32 dy, int32 count, enum e_skill_b
  */
 enum e_unit_blown unit_blown_immune(const block_list* bl, uint8 flag)
 {
-	if ((flag&0x1)
-		&& (map_flag_gvg2(bl->m) || map_getmapflag(bl->m, MF_BATTLEGROUND))
-		&& ((flag&0x2) || !(battle_config.skill_trap_type&0x1)))
-		return UB_NO_KNOCKBACK_MAP; // No knocking back in WoE / BG
+	if (flag & 0x1 && (flag & 0x2 || !(battle_config.skill_trap_type & 0x1))) {
+		map_data *mapdata = map_getmapdata(bl->m);
+
+		if (mapdata != nullptr && mapdata->getMapFlag(MF_NOKNOCKBACK))
+			return UB_NO_KNOCKBACK_MAP; // No knocking back on this map.
+	}
 
 	switch (bl->type) {
 		case BL_MOB:

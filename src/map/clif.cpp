@@ -5709,7 +5709,7 @@ void clif_skillinfoblock( const map_session_data& sd ){
 	for ( i = 0, c = 0; i < MAX_SKILL; i++)
 	{
 		if( (id = sd.status.skill[i].id) != 0 )
-		{			
+		{
 			// skip WE_CALLPARTNER and send it in special way
 			if (id == WE_CALLPARTNER) {
 				haveCallPartnerSkill = true;
@@ -6089,7 +6089,7 @@ void clif_skill_damage( const block_list& src, const block_list& dst, t_tick tic
 	} else {
 		clif_send( &packet, sizeof( packet ), &dst, AREA );
 	}
-	
+
 	if (disguised(&src)) {
 		packet.AID = disguised_bl_id( src.id );
 		if (disguised(&dst)) {
@@ -6207,7 +6207,7 @@ void clif_skill_poseffect( block_list& bl, uint16 skill_id, uint16 skill_lv, uin
 
 	if (disguised(&bl)) {
 		clif_send( &packet, sizeof( packet ), &bl, AREA_WOS );
-		
+
 		packet.AID = disguised_bl_id( bl.id );
 		clif_send( &packet, sizeof( packet ), &bl, SELF );
 	} else {
@@ -6887,9 +6887,10 @@ void clif_map_property( const block_list* bl, enum map_property property, enum s
 	const map_data *mapdata = map_getmapdata(bl->m);
 	const map_session_data* sd = BL_CAST(BL_PC,bl);
 
+	// TODO: mapdata nullptr
 	WBUFL(buf,4) = ((mapdata->getMapFlag(MF_PVP) || (sd && sd->duel_group > 0))<<0)| // PARTY - Show attack cursor on non-party members (PvP)
 		((mapdata->getMapFlag(MF_BATTLEGROUND) || mapdata_flag_gvg2(mapdata))<<1)|// GUILD - Show attack cursor on non-guild members (GvG)
-		((mapdata->getMapFlag(MF_BATTLEGROUND) || mapdata_flag_gvg2(mapdata))<<2)|// SIEGE - Show emblem over characters heads when in GvG (WoE castle)
+		((mapdata->getMapFlag(MF_BATTLEGROUND) || mapdata->getMapFlag(MF_HIDEDAMAGE) || mapdata_flag_gvg2(mapdata))<<2)|// SIEGE - Show emblem over characters heads when in GvG (WoE castle)
 		((mapdata->getMapFlag(MF_FORCEMINEFFECT) || mapdata_flag_gvg2(mapdata))<<3)| // USE_SIMPLE_EFFECT - Forces simpler skill effects, like /mineffect command
 		((mapdata->getMapFlag(MF_NOLOCKON) || mapdata_flag_vs(mapdata) || (sd && sd->duel_group > 0))<<4)| // DISABLE_LOCKON - Only allow attacks on other players with shift key or /ns active
 		((mapdata->getMapFlag(MF_PVP))<<5)| // COUNT_PK - Show the PvP counter
@@ -8684,7 +8685,7 @@ void clif_guild_belonginfo( const map_session_data& sd ){
 void clif_guild_memberlogin_notice(const struct mmo_guild &g,int32 idx,int32 flag)
 {
 	map_session_data* sd;
-	
+
 	PACKET_ZC_UPDATE_CHARSTAT p = {};
 
 	p.packetType = HEADER_ZC_UPDATE_CHARSTAT;
@@ -10798,9 +10799,10 @@ void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
 	if(sd->status.guild_id)
 		guild_send_memberinfoshort(sd,1);
 
-	struct map_data *mapdata = map_getmapdata(sd->m);
-
 	pc_setinvincibletimer( *sd );
+
+	map_data *mapdata = map_getmapdata(sd->m);
+	// TODO: mapdata nullptr
 
 	if( mapdata->users++ == 0 && battle_config.dynamic_mobs )
 		map_spawnmobs(sd->m);
@@ -11047,11 +11049,10 @@ void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
 			guild_notice = false; // Do not display it twice
 		}
 
-		if (battle_config.bg_flee_penalty != 100 || battle_config.gvg_flee_penalty != 100) {
-			struct map_data *pmap = map_getmapdata(sd->state.pmap);
+		map_data *pmap = map_getmapdata(sd->state.pmap);
 
-			if ((pmap != nullptr && (mapdata_flag_gvg(pmap) || pmap->getMapFlag(MF_BATTLEGROUND))) || (mapdata != nullptr && (mapdata_flag_gvg(mapdata) || mapdata->getMapFlag(MF_BATTLEGROUND))))
-				status_calc_bl(sd, { SCB_FLEE }); //Refresh flee penalty
+		if (pmap != nullptr && pmap->getMapFlag(MF_FLEE_PENALTY)) {
+			status_calc_bl(sd, { SCB_FLEE }); //Refresh flee penalty
 		}
 
 		if( night_flag && mapdata->getMapFlag(MF_NIGHTENABLED) )
@@ -11087,7 +11088,8 @@ void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
 			sd->state.hpmeter_visible = 1;
 		}
 
-		status_change_clear_onChangeMap(sd, &sd->sc);
+		if (mapdata->zone != nullptr)
+			mapdata->zone->clear_all_disabled_status(*sd);
 		map_iwall_get(sd); // Updates Walls Info on this Map to Client
 		status_calc_pc(sd, sd->state.autotrade ? SCO_FIRST : SCO_NONE); // Some conditions are map-dependent so we must recalculate
 
@@ -14990,7 +14992,7 @@ void clif_parse_GM_Item_Monster(int32 fd, map_session_data *sd)
 				mob = mob_db.find(mob_id);
 		}
 		// Call corresponding atcommand when a valid monster was found
-		if (mob != nullptr) {
+		if( mob != nullptr ) {
 			char command[CHAT_SIZE_MAX];
 			safesnprintf(command, sizeof(command), "%cmonster %s", atcommand_symbol, mob->sprite.c_str());
 			is_atcommand(fd, sd, command, 1);
@@ -17182,7 +17184,7 @@ void clif_parse_Auction_bid( int32 fd, map_session_data* sd ){
 		clif_displaymessage( sd->fd, msg_txt( sd, 246 ) ); // Your GM level doesn't authorize you to perform this action.
 		return;
 	}
-		
+
 	// Check if char server is down (bugreport:1138)
 	if( CheckForCharServer() ){
 		clif_Auction_message(fd, 0); // You have failed to bid into the auction

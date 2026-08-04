@@ -285,6 +285,7 @@ struct Battle_Config
 	int32 natural_healsp_interval;
 	int32 natural_heal_skill_interval;
 	int32 natural_heal_weight_rate;
+	int32 natural_heal_weight_rate_renewal;
 	int32 arrow_decrement;
 	int32 ammo_unequip;
 	int32 ammo_check_weapon;
@@ -320,17 +321,6 @@ struct Battle_Config
 	int32 pc_cloak_check_type;
 	int32 monster_cloak_check_type;
 	int32 estimation_type;
-	int32 gvg_short_damage_rate;
-	int32 gvg_long_damage_rate;
-	int32 gvg_weapon_damage_rate;
-	int32 gvg_magic_damage_rate;
-	int32 gvg_misc_damage_rate;
-	int32 gvg_flee_penalty;
-	int32 pk_short_damage_rate;
-	int32 pk_long_damage_rate;
-	int32 pk_weapon_damage_rate;
-	int32 pk_magic_damage_rate;
-	int32 pk_misc_damage_rate;
 	int32 mob_changetarget_byskill;
 	int32 attack_direction_change;
 	int32 land_skill_limit;

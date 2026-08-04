@@ -3076,10 +3076,15 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 		entry.dmg = util::safe_addition_cap(entry.dmg, entry.dmg, INT64_MAX);
 	}
 
+	map_data *mapdata = map_getmapdata(m);
+
+	if (mapdata == nullptr)
+		return 3;
+
 	if(!(type&2) && //No exp
-		(!map_getmapflag(m, MF_PVP) || battle_config.pvp_exp) && //Pvp no exp rule [MouseJstr]
+		(!mapdata->getMapFlag(MF_PVP) || battle_config.pvp_exp) && //Pvp no exp rule [MouseJstr]
 		(!md->master_id || !md->special_state.ai) && //Only player-summoned mobs do not give exp. [Skotlex]
-		(!map_getmapflag(m, MF_NOBASEEXP) || !map_getmapflag(m, MF_NOJOBEXP)) //Gives Exp
+		(!mapdata->getMapFlag(MF_NOBASEEXP) || !mapdata->getMapFlag(MF_NOJOBEXP)) //Gives Exp
 	) { //Experience calculation.
 		int32 bonus = 100; //Bonus on top of your share (common to all attackers).
 		int32 pnum = 0;
@@ -3152,16 +3157,16 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 					zeny*=rnd()%250;
 			}
 
-			if (map_getmapflag(m, MF_NOBASEEXP) || !md->db->base_exp)
+			if (mapdata->getMapFlag(MF_NOBASEEXP) || !md->db->base_exp)
 				base_exp = 0;
 			else {
 				double exp = apply_rate2(md->db->base_exp, per, 1);
 				exp = apply_rate(exp, bonus);
-				exp = apply_rate(exp, map_getmapflag(m, MF_BEXP));
+				exp = apply_rate(exp, mapdata->getMapFlag(MF_BEXP));
 				base_exp = (t_exp)cap_value(exp, 1, MAX_EXP);
 			}
 
-			if (map_getmapflag(m, MF_NOJOBEXP) || !md->db->job_exp
+			if (mapdata->getMapFlag(MF_NOJOBEXP) || !md->db->job_exp
 #ifndef RENEWAL
 				|| entry.flag == MDLF_HOMUN // Homun earned job-exp is always lost.
 #endif
@@ -3248,7 +3253,7 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 		}
 	}
 
-	if( !(type&1) && !map_getmapflag(m, MF_NOMOBLOOT) && !md->state.rebirth && (
+	if( !(type&1) && !mapdata->getMapFlag(MF_NOMOBLOOT) && !md->state.rebirth && (
 		!md->special_state.ai || //Non special mob
 		battle_config.alchemist_summon_reward == 2 || //All summoned give drops
 		(md->special_state.ai==AI_SPHERE && battle_config.alchemist_summon_reward == 1) //Marine Sphere Drops items.
@@ -3271,43 +3276,45 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 		// These trigger for the killer of the monster
 		if(sd) {
 			// process script-granted extra drop bonuses
-			for (const auto &it : sd->add_drop) {
-				if (!&it || (!it.nameid && !it.group))
-					continue;
-				if ((it.race < RC_NONE_ && it.race == -md->mob_id) || //Race < RC_NONE_, use mob_id
-					(it.race == RC_ALL || it.race == status->race) || //Matched race
-					(it.class_ == CLASS_ALL || it.class_ == status->class_)) //Matched class
-				{
-					//Check if the bonus item drop rate should be multiplied with mob level/10 [Lupus]
-					if (it.rate < 0) {
-						//It's negative, then it should be multiplied. with mob_level/10
-						//rate = base_rate * (mob_level/10) + 1
-						drop_rate = (-it.rate) * md->level / 10 + 1;
-						drop_rate = cap_value(drop_rate, max(battle_config.item_drop_adddrop_min,1), min(battle_config.item_drop_adddrop_max,10000));
-					}
-					else
-						//it's positive, then it goes as it is
-						drop_rate = it.rate;
-
-					if (rnd()%10000 >= drop_rate)
+			if (mapdata->getMapFlag(MF_NOBONUSITEMDROP)) {
+				for (const auto &it : sd->add_drop) {
+					if (!&it || (!it.nameid && !it.group))
 						continue;
+					if ((it.race < RC_NONE_ && it.race == -md->mob_id) || //Race < RC_NONE_, use mob_id
+						(it.race == RC_ALL || it.race == status->race) || //Matched race
+						(it.class_ == CLASS_ALL || it.class_ == status->class_)) //Matched class
+					{
+						//Check if the bonus item drop rate should be multiplied with mob level/10 [Lupus]
+						if (it.rate < 0) {
+							//It's negative, then it should be multiplied. with mob_level/10
+							//rate = base_rate * (mob_level/10) + 1
+							drop_rate = (-it.rate) * md->level / 10 + 1;
+							drop_rate = cap_value(drop_rate, max(battle_config.item_drop_adddrop_min,1), min(battle_config.item_drop_adddrop_max,10000));
+						}
+						else
+							//it's positive, then it goes as it is
+							drop_rate = it.rate;
 
-					std::shared_ptr<s_mob_drop> mobdrop = std::make_shared<s_mob_drop>();
+						if (rnd()%10000 >= drop_rate)
+							continue;
 
-					if (it.nameid > 0) {
-						mobdrop->nameid = it.nameid;
-						mobdrop->rate = drop_rate;
+						std::shared_ptr<s_mob_drop> mobdrop = std::make_shared<s_mob_drop>();
+
+						if (it.nameid > 0) {
+							mobdrop->nameid = it.nameid;
+							mobdrop->rate = drop_rate;
+						}
+						else {
+							std::shared_ptr<s_item_group_entry> entry = itemdb_group.get_random_entry(it.group, 1, GROUP_ALGORITHM_DROP);
+							if (entry == nullptr) continue;
+							mobdrop->nameid = entry->nameid;
+							mobdrop->rate = entry->adj_rate * drop_rate / 10000;
+						}
+
+						std::shared_ptr<s_item_drop> ditem = mob_setdropitem(mobdrop, 1, md->mob_id);
+
+						mob_item_drop(md, dlist, ditem, 0, mobdrop->rate, homkillonly || merckillonly);
 					}
-					else {
-						std::shared_ptr<s_item_group_entry> entry = itemdb_group.get_random_entry(it.group, 1, GROUP_ALGORITHM_DROP);
-						if (entry == nullptr) continue;
-						mobdrop->nameid = entry->nameid;
-						mobdrop->rate = entry->adj_rate * drop_rate / 10000;
-					}
-
-					std::shared_ptr<s_item_drop> ditem = mob_setdropitem(mobdrop, 1, md->mob_id);
-
-					mob_item_drop(md, dlist, ditem, 0, mobdrop->rate, homkillonly || merckillonly);
 				}
 			}
 
@@ -3442,7 +3449,7 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 		clif_mvp_effect( *mvp_sd );
 
 		//mapflag: noexp check [Lorky]
-		if( md->db->mexp > 0 && !( map_getmapflag( m, MF_NOBASEEXP ) || type&2 ) ){
+		if( md->db->mexp > 0 && !( mapdata->getMapFlag(MF_NOBASEEXP) || type&2 ) ){
 			log_mvp_exp = md->db->mexp;
 
 #if defined(RENEWAL_EXP)
@@ -3465,11 +3472,11 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 			pc_gainexp( mvp_sd, md, log_mvp_exp, 0, 0 );
 		}
 
-		if( !(map_getmapflag(m, MF_NOMVPLOOT) || type&1) ) {
+		if( !(mapdata->getMapFlag(MF_NOMVPLOOT) || type&1) ) {
 			// Create a copy of the MVP drops vector
 			std::vector<std::shared_ptr<s_mob_drop>> mdrop = md->db->mvpitem;
 
-			// Order might be random depending on item_drop_mvp_mode config setting
+			//Order might be random depending on item_drop_mvp_mode config setting
 			if(battle_config.item_drop_mvp_mode == 1) {
 				//Random order
 				rnd_vector_order( mdrop );
@@ -3645,7 +3652,7 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 	}
 
 	// MvP tomb [GreenBox]
-	if (battle_config.mvp_tomb_enabled && md->spawn->state.boss && map_getmapflag(md->m, MF_NOTOMB) != 1)
+	if (battle_config.mvp_tomb_enabled && md->spawn->state.boss && mapdata->getMapFlag(MF_NOTOMB) != 1)
 		mvptomb_create(md, mvp_sd != nullptr ? mvp_sd->status.name : (first_sd != nullptr ? first_sd->status.name : nullptr), time(nullptr));
 
 	if( !rebirth )

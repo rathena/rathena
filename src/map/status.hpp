@@ -3676,7 +3676,6 @@ TIMER_FUNC(status_change_timer);
 int32 status_change_timer_sub(block_list* bl, va_list ap);
 int32 status_change_clear(block_list* bl, int32 type);
 void status_change_clear_buffs(block_list* bl, uint8 type);
-void status_change_clear_onChangeMap(block_list *bl, status_change *sc);
 TIMER_FUNC(status_clear_lastEffect_timer);
 
 #define status_calc_mob(md, opt) status_calc_bl_((md), status_db.getSCB_ALL(), opt)

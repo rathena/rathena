@@ -491,7 +491,6 @@
 	export_constant(MF_NORETURN);
 	export_constant(MF_NOWARPTO);
 	export_constant(MF_PVP_NIGHTMAREDROP);
-	export_constant(MF_RESTRICTED);
 	export_constant(MF_NOCOMMAND);
 	export_constant(MF_NODROP);
 	export_constant(MF_JEXP);
@@ -501,7 +500,6 @@
 	export_constant(MF_NOCHAT);
 	export_constant(MF_NOEXPPENALTY);
 	export_constant(MF_GUILDLOCK);
-	export_constant(MF_TOWN);
 	export_constant(MF_AUTOTRADE);
 	export_constant(MF_ALLOWKS);
 	export_constant(MF_MONSTER_NOTELEPORT);
@@ -533,6 +531,18 @@
 	export_constant(MF_NOBUYINGSTORE);
 	export_constant(MF_NODYNAMICNPC);
 	export_constant(MF_NOBANK);
+	export_constant(MF_INVINCIBLE_TIME);
+	export_constant(MF_WEAPON_DAMAGE_RATE);
+	export_constant(MF_MAGIC_DAMAGE_RATE);
+	export_constant(MF_MISC_DAMAGE_RATE);
+	export_constant(MF_LONG_DAMAGE_RATE);
+	export_constant(MF_SHORT_DAMAGE_RATE);
+	export_constant(MF_NOKNOCKBACK);
+	export_constant(MF_NOBONUSITEMDROP);
+	export_constant(MF_HIDEDAMAGE);
+	export_constant(MF_FLEE_PENALTY);
+	export_deprecated_constant(MF_RESTRICTED);
+	export_deprecated_constant(MF_TOWN);
 	export_constant(MF_SPECIALPOPUP);
 	export_constant(MF_NOMACROCHECKER);
 	export_constant(MF_INVINCIBLE_TIME);
@@ -10470,6 +10480,7 @@
 	export_constant(INF2_IGNOREGTB);
 	export_constant(INF2_TOGGLEABLE);
 	export_constant(INF2_IGNORENONCRITATKBONUS);
+	export_constant(INF2_IGNOREPKREDUCTION);
 
 	/* skill no near npc flags */
 	export_constant(SKILL_NONEAR_WARPPORTAL);
@@ -11082,6 +11093,42 @@
 	export_constant(GUILDINFO_NEXTEXP);
 	export_constant(GUILDINFO_MASTERID);
 	export_constant(GUILDINFO_MASTERNAME);
+
+	/* map zone types */
+	export_constant(MAPTYPE_VILLAGE);
+	export_constant(MAPTYPE_VILLAGE_IN);
+	export_constant(MAPTYPE_FIELD);
+	export_constant(MAPTYPE_DUNGEON);
+	export_constant(MAPTYPE_QUEST);
+	export_constant(MAPTYPE_PENALTY_FREEPKZONE);
+	export_constant(MAPTYPE_NOPENALTY_FREEPKZONE);
+	export_constant(MAPTYPE_EVENT_GUILDWAR);
+	export_constant(MAPTYPE_AGIT);
+	export_constant(MAPTYPE_DUNGEON2);
+	export_constant(MAPTYPE_DUNGEON3);
+	export_constant(MAPTYPE_PKSERVER);
+	export_constant(MAPTYPE_PVPSERVER);
+	export_constant(MAPTYPE_DENYSKILL);
+	export_constant(MAPTYPE_TURBOTRACK);
+	export_constant(MAPTYPE_JAIL);
+	export_constant(MAPTYPE_MONSTERTRACK);
+	export_constant(MAPTYPE_PORINGBATTLE);
+	export_constant(MAPTYPE_AGIT_SIEGEV15);
+	export_constant(MAPTYPE_BATTLEFIELD);
+	export_constant(MAPTYPE_PVP_TOURNAMENT);
+	export_constant(MAPTYPE_UNKNOWN_SEALED_SHRINE);
+	export_constant(MAPTYPE_UNKNOWN_FRANCEPVP);
+	export_constant(MAPTYPE_UNKNOWN_TOWN2);
+	export_constant(MAPTYPE_UNKNOWN_TRAINING_GROUNDS);
+	export_constant(MAPTYPE_SIEGE_LOWLEVEL);
+	export_constant(MAPTYPE_2012_RWC_BATTLE_FIELD);
+	export_constant(MAPTYPE_UNKNOWN_BOSSNIA);
+	export_constant(MAPTYPE_UNKNOWN_BLOODY_BRANCH);
+	export_constant(MAPTYPE_UNKNOWN_RWC);
+	export_constant(MAPTYPE_UNKNOWN_VILLAGE_PRONTERA);
+	export_constant(MAPTYPE_RATHENA_SIEGE);
+	export_constant(MAPTYPE_RATHENA_TE);
+	export_constant(MAPTYPE_RATHENA_VELUM);
 
 	#undef export_constant
 	#undef export_constant2
