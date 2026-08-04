@@ -14,7 +14,8 @@ SkillSkySun::SkillSkySun() : SkillImplRecursiveDamageSplash(SKE_SKY_SUN) {
 
 void SkillSkySun::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	clif_skill_nodamage(src,*target,getSkillId(),skill_lv);
-	skill_castend_damage_id(src, target, getSkillId(), skill_lv, tick, flag);
+
+	SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
 }
 
 void SkillSkySun::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& skillratio, int32 mflag) const {
@@ -25,10 +26,4 @@ void SkillSkySun::calculateSkillRatio(const Damage* wd, const block_list* src, c
 	skillratio += skill_lv * 7 * pc_checkskill(sd, SKE_SKY_MASTERY);
 	skillratio += 5 * sstatus->pow;
 	RE_LVL_DMOD(100);
-}
-
-void SkillSkySun::splashSearch(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
-	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
-
-	SkillImplRecursiveDamageSplash::splashSearch(src, target, skill_lv, tick, flag);
 }
