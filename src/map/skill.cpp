@@ -2079,11 +2079,6 @@ bool skill_strip_equip(block_list *src, block_list *target, uint16 skill_id, uin
 	nullpo_retr(false, src);
 	nullpo_retr(false, target);
 
-	status_change *tsc = status_get_sc(target);
-
-	if (!tsc || tsc->option&OPTION_MADOGEAR) // Mado Gear cannot be divested [Ind]
-		return false;
-
 	const int32 pos[6]             = { EQP_WEAPON, EQP_SHIELD, EQP_ARMOR, EQP_HELM, EQP_ACC, EQP_SHADOW_GEAR };
 	const enum sc_type sc_atk[6] = { SC_STRIPWEAPON, SC_STRIPSHIELD, SC_STRIPARMOR, SC_STRIPHELM, SC__STRIPACCESSORY, SC_SHADOW_STRIP };
 	const enum sc_type sc_def[6] = { SC_CP_WEAPON, SC_CP_SHIELD, SC_CP_ARMOR, SC_CP_HELM, SC_NONE, SC_PROTECTSHADOWEQUIP };
@@ -2186,6 +2181,8 @@ bool skill_strip_equip(block_list *src, block_list *target, uint16 skill_id, uin
 			location = EQP_SHADOW_GEAR;
 			break;
 	}
+
+	status_change *tsc = status_get_sc(target);
 
 	for (uint8 i = 0; i < ARRAYLENGTH(pos); i++) {
 		if (location&pos[i] && sc_def[i] > SC_NONE && tsc->getSCE(sc_def[i]))
@@ -4643,12 +4640,9 @@ static int8 skill_castend_id_check(block_list *src, block_list *target, uint16 s
 		return USESKILL_FAIL_MAX; // Don't show a skill fail message (NoDamage type doesn't consume requirements)
 
 	switch (skill_id) {
-		case AL_HEAL:
 		case AL_INCAGI:
 		case AL_DECAGI:
 		case SA_DISPELL: // Mado Gear is immune to Dispell according to bugreport:49 [Ind]
-		case AB_RENOVATIO:
-		case AB_HIGHNESSHEAL:
 			if (tsc && tsc->option&OPTION_MADOGEAR)
 				return USESKILL_FAIL_TOTARGET;
 			break;
@@ -7574,9 +7568,6 @@ int32 skill_unit_onplace_timer(skill_unit *unit, block_list *bl, t_tick tick)
 
 		case UNT_TOTEM_OF_TUTELARY:
 			if( bl->type == BL_PC ) {
-				if (tsc != nullptr && tsc->option&OPTION_MADOGEAR)
-					break;
-
 				int32 hp = 500;
 
 				hp += 500 * sg->skill_lv;
@@ -10067,6 +10058,10 @@ struct s_skill_condition skill_get_requirement(map_session_data* sd, uint16 skil
 		case BO_ACIDIFIED_ZONE_FIRE:
 			if (sc != nullptr && sc->hasSCE(SC_RESEARCHREPORT) && req.amount[0] > 0)
 				req.amount[0]--;
+			break;
+		case MT_A_MACHINE:
+			if (sc != nullptr && sc->hasSCE(SC_ABR_INFINITY))
+				req.amount[0] = 0;
 			break;
 	}
 
