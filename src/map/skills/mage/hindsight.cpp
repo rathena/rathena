@@ -5,6 +5,7 @@
 
 #include "map/clif.hpp"
 #include "map/pc.hpp"
+#include "map/skill.hpp"
 #include "map/status.hpp"
 
 SkillHindsight::SkillHindsight() : SkillImpl(SA_AUTOSPELL) {
@@ -19,36 +20,38 @@ void SkillHindsight::castendNoDamageId(block_list *src, block_list *target, uint
 		sd->state.workinprogress = WIP_DISABLE_ALL;
 		clif_autospell( *sd, skill_lv );
 	} else {
-		int32 maxlv=1,spellid=0;
-		static const int32 spellarray[3] = { MG_COLDBOLT,MG_FIREBOLT,MG_LIGHTNINGBOLT };
+		// Fully data-driven selection from skill_db AutoSpell entries.
+		// 1. Find the highest UnlockedAtLevel tier available for this skill_lv.
+		// 2. Collect all spells at that tier, pick one at random.
+// 3. Use the spell's MobMaxCastLevel as an upper bound.
 
-		if(skill_lv >= 10) {
-			spellid = MG_FROSTDIVER;
-//			if (tsc && tsc->getSCE(SC_SPIRIT) && tsc->getSCE(SC_SPIRIT)->val2 == SA_SAGE)
-//				maxlv = 10;
-//			else
-				maxlv = skill_lv - 9;
-		}
-		else if(skill_lv >=8) {
-			spellid = MG_FIREBALL;
-			maxlv = skill_lv - 7;
-		}
-		else if(skill_lv >=5) {
-			spellid = MG_SOULSTRIKE;
-			maxlv = skill_lv - 4;
-		}
-		else if(skill_lv >=2) {
-			int32 i_rnd = rnd()%3;
-			spellid = spellarray[i_rnd];
-			maxlv = skill_lv - 1;
-		}
-		else if(skill_lv > 0) {
-			spellid = MG_NAPALMBEAT;
-			maxlv = 3;
+		uint8 best_tier = 0;
+		for (const auto& it : skill_db) {
+			uint8 tier = it.second->autospell_unlocked_at;
+			if (tier > 0 && tier <= skill_lv && tier > best_tier)
+				best_tier = tier;
 		}
 
-		if(spellid > 0)
-			sc_start4(src,src,SC_AUTOSPELL,100,skill_lv,spellid,maxlv,0,
-				skill_get_time(SA_AUTOSPELL,skill_lv));
+		if (best_tier > 0) {
+			// Collect all spells available at the best tier
+			std::vector<std::shared_ptr<s_skill_db>> candidates;
+			for (const auto& it : skill_db) {
+				if (it.second->autospell_unlocked_at == best_tier)
+					candidates.push_back(it.second);
+			}
+
+			if (candidates.empty())
+				return;
+			const auto& chosen = candidates[rnd() % candidates.size()];
+			uint8 mob_max_cast_lv = chosen->autospell_mob_max_cast_level;
+			uint16 cast_lv = static_cast<uint16>(skill_lv / 2);
+			if (mob_max_cast_lv > 0 && cast_lv > mob_max_cast_lv)
+				cast_lv = mob_max_cast_lv;
+			if (cast_lv < 1)
+				cast_lv = 1;
+			sc_start4(src, src, SC_AUTOSPELL, 100, skill_lv,
+				chosen->nameid, cast_lv, 0,
+				skill_get_time(SA_AUTOSPELL, skill_lv));
+		}
 	}
 }

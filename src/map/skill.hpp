@@ -319,6 +319,9 @@ struct s_skill_db {
 	uint16 improvisedsong_rate;
 	sc_type sc;									///< Default SC for skill
 
+	uint8 autospell_unlocked_at;				///< Minimum SA_AUTOSPELL level required to offer this spell (0 = not offered)
+	uint8 autospell_mob_max_cast_level;			///< Max cast level used by NPC/mob AI when auto-spelling (MobMaxCastLevel in skill_db)
+
 	std::unique_ptr<const SkillImpl> impl;
 };
 
@@ -551,6 +554,8 @@ int32 skill_get_unit_target( uint16 skill_id );
 bool skill_get_nk_(uint16 skill_id, std::vector<e_skill_nk> nk);
 #define skill_get_inf2(skill_id, inf2) skill_get_inf2_(skill_id, { inf2 })
 bool skill_get_inf2_(uint16 skill_id, std::vector<e_skill_inf2> inf2);
+uint8 skill_get_autospell_unlocked_at(uint16 skill_id);
+uint8 skill_get_autospell_mob_max_cast_level(uint16 skill_id);
 #define skill_get_unit_flag(skill_id, unit) skill_get_unit_flag_(skill_id, { unit })
 bool skill_get_unit_flag_(uint16 skill_id, std::vector<e_skill_unit_flag> unit);
 int32 skill_get_unit_range(uint16 skill_id, uint16 skill_lv);
