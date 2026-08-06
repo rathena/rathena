@@ -4,6 +4,7 @@
 #include "socket.hpp"
 
 #include <cstdlib>
+#include <chrono>
 
 #ifdef WIN32
 	#include "winapi.hpp"
@@ -42,6 +43,7 @@
 
 #include "cbasetypes.hpp"
 #include "malloc.hpp"
+#include "metrics.hpp"
 #include "mmo.hpp"
 #include "showmsg.hpp"
 #include "strlib.hpp"
@@ -891,6 +893,7 @@ int32 WFIFOSET(int32 fd, size_t len)
 
 int32 do_sockets(t_tick next)
 {
+	const auto loop_start = std::chrono::steady_clock::now();
 #ifndef SOCKET_EPOLL
 	fd_set rfd;
 	struct timeval timeout;
@@ -929,6 +932,9 @@ int32 do_sockets(t_tick next)
 			ShowFatalError("do_sockets: select() failed, %s!\n", error_msg());
 			exit(EXIT_FAILURE);
 		}
+		const auto loop_elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>( std::chrono::steady_clock::now() - loop_start );
+		rathena::metrics::counter_inc( "server_socket_poll_cycles" );
+		rathena::metrics::observe_duration_ns( "server_socket_poll", static_cast<uint64_t>( loop_elapsed.count() ) );
 		return 0; // interrupted by a signal, just loop and try again
 	}
 #else
@@ -942,6 +948,9 @@ int32 do_sockets(t_tick next)
 			exit( EXIT_FAILURE );
 		}
 
+		const auto loop_elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>( std::chrono::steady_clock::now() - loop_start );
+		rathena::metrics::counter_inc( "server_socket_poll_cycles" );
+		rathena::metrics::observe_duration_ns( "server_socket_poll", static_cast<uint64_t>( loop_elapsed.count() ) );
 		return 0; // interrupted by a signal, just loop and try again
 	}
 #endif
@@ -1052,6 +1061,13 @@ int32 do_sockets(t_tick next)
 		socket_data_o = socket_data_co = 0;
 	}
 #endif
+
+	rathena::metrics::counter_inc( "server_socket_poll_cycles" );
+	if( ret > 0 ){
+		rathena::metrics::counter_inc( "server_socket_poll_events", static_cast<uint64_t>( ret ) );
+	}
+	const auto loop_elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>( std::chrono::steady_clock::now() - loop_start );
+	rathena::metrics::observe_duration_ns( "server_socket_poll", static_cast<uint64_t>( loop_elapsed.count() ) );
 
 	return 0;
 }
