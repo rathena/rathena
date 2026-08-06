@@ -1,0 +1,137 @@
+//===== rAthena Script ========================================
+//= Table Type Sample NPC
+//===== Description: ==========================================
+//= Demonstrates usage of the script table type.
+//= Tables are associative containers (string key -> value)
+//= that support int, string, and nested table values.
+//============================================================
+
+prontera,150,180,4	script	Table Demo	100,{
+	mes "[Table Demo]";
+	mes "Select a demo:";
+	next;
+	switch(select("Basic Usage:Nested Tables:Table Array:Function Pass:Deep Copy")) {
+	case 1:
+		// --- Basic Usage ---
+		// Create with literal syntax
+		.@item@ = {
+			id = 501,
+			name$ = "Red Potion",
+			price = 50,
+		};
+
+		mes "[Basic Usage]";
+		mes "Item: " + .@item@.name$;
+		mes "ID: " + .@item@.id;
+		mes "Price: " + .@item@.price + "z";
+
+		// Modify
+		.@item@.price = 30;
+		mes "Sale Price: " + .@item@.price + "z";
+
+		// Check and remove
+		mes "Has price? " + (table_has(.@item@, "price") ? "Yes" : "No");
+		table_remove(.@item@, "price");
+		mes "After remove: " + (table_has(.@item@, "price") ? "Yes" : "No");
+		mes "Fields: " + table_size(.@item@);
+		close;
+
+	case 2:
+		// --- Nested Tables ---
+		.@player@ = {
+			name$ = "Alice",
+			stats@ = {
+				str = 50,
+				agi = 30,
+				vit = 40,
+			},
+			pos@ = {
+				map$ = "prontera",
+				x = 150,
+				y = 180,
+			},
+		};
+
+		mes "[Nested Tables]";
+		mes "Name: " + .@player@.name$;
+		mes "STR: " + .@player@.stats@.str;
+		mes "AGI: " + .@player@.stats@.agi;
+		mes "Map: " + .@player@.pos@.map$;
+		mes "Coord: (" + .@player@.pos@.x + ", " + .@player@.pos@.y + ")";
+
+		// Modify nested field
+		.@player@.stats@.str = 99;
+		mes "New STR: " + .@player@.stats@.str;
+
+		// Debug output
+		mes " ";
+		mes "Debug: " + table_tostring(.@player@);
+		close;
+
+	case 3:
+		// --- Table Array ---
+		.@items@[0] = { id = 501, name$ = "Red Potion", qty = 10 };
+		.@items@[1] = { id = 502, name$ = "Orange Potion", qty = 5 };
+		.@items@[2] = { id = 503, name$ = "Yellow Potion", qty = 3 };
+		.@count = 3;
+
+		mes "[Table Array]";
+		for (.@i = 0; .@i < .@count; .@i++) {
+			mes .@items@[.@i].name$ + " x" + .@items@[.@i].qty;
+		}
+
+		// Access with chain syntax
+		mes " ";
+		mes "First item: " + .@items@[0].name$;
+		mes "Last item ID: " + .@items@[2].id;
+		close;
+
+	case 4:
+		// --- Function Pass ---
+		function BuildMonster;
+		function ShowMonster;
+
+		.@mob@ = BuildMonster("Poring", 1, 50);
+		ShowMonster(.@mob@);
+		close;
+
+		function BuildMonster {
+			.@m@ = {
+				name$ = getarg(0),
+				level = getarg(1),
+				hp = getarg(2),
+			};
+			return .@m@;
+		}
+
+		function ShowMonster {
+			.@m@ = getarg(0);
+			mes "[Monster Info]";
+			mes "Name: " + .@m@.name$;
+			mes "Level: " + .@m@.level;
+			mes "HP: " + .@m@.hp;
+			return;
+		}
+
+	case 5:
+		// --- Deep Copy ---
+		.@original@ = {
+			name$ = "Original",
+			value = 100,
+			inner@ = { x = 1 },
+		};
+
+		// Assignment is deep copy
+		.@copy@ = .@original@;
+		.@copy@.name$ = "Copy";
+		.@copy@.value = 999;
+		.@copy@.inner@.x = 99;
+
+		mes "[Deep Copy]";
+		mes "Original: " + .@original@.name$ + ", value=" + .@original@.value + ", x=" + .@original@.inner@.x;
+		mes "Copy: " + .@copy@.name$ + ", value=" + .@copy@.value + ", x=" + .@copy@.inner@.x;
+		mes " ";
+		mes "Modifying copy does not affect original.";
+		close;
+	}
+}
