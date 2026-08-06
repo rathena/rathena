@@ -1,2 +1,0 @@
-char_ip: char
-map_ip: 127.0.0.1
