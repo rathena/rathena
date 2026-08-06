@@ -782,6 +782,9 @@ struct Battle_Config
 	int32 hide_cloaked_units;
 	int32 oridecon_research_fix;
 
+	// Redirect Mild Wind buff icons to separate ones, to support "Use icons from stateiconimginfo.lub" client patch
+	int32 buff_icons_tk;
+
 #include <custom/battle_config_struct.inc>
 };
 
