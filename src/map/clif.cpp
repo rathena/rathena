@@ -24502,7 +24502,7 @@ void clif_enchantwindow_open( map_session_data& sd, uint64 clientLuaIndex ){
 	// Hardcoded clientside check
 	if( pc_getpercentweight(sd) >= 70 ){
 		clif_msg_color( sd, MSI_ENCHANT_FAILED_OVER_WEIGHT, color_table[COLOR_RED] );
-		sd.state.item_enchant_index = 0;
+		sd.state.item_enchant = {};
 		return;
 		
 	}
@@ -24515,7 +24515,9 @@ void clif_enchantwindow_open( map_session_data& sd, uint64 clientLuaIndex ){
 
 	clif_send( &p, sizeof( p ), &sd, SELF );
 
-	sd.state.item_enchant_index = clientLuaIndex;
+	sd.state.item_enchant.clientLuaIndex = clientLuaIndex;
+	sd.state.item_enchant.item_id = sd.itemid;
+	sd.state.item_enchant.itemindex = sd.itemindex;
 #endif
 }
 
@@ -24533,7 +24535,7 @@ void clif_enchantwindow_result( map_session_data& sd, bool success, t_itemid enc
 
 	clif_send( &p, sizeof( p ), &sd, SELF );
 
-	sd.state.item_enchant_index = 0;
+	sd.state.item_enchant = {};
 #endif
 }
 
@@ -24577,7 +24579,7 @@ void clif_parse_enchantwindow_general( int32 fd, map_session_data* sd ){
 #if PACKETVER_MAIN_NUM >= 20201118 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024
 	const PACKET_CZ_REQUEST_RANDOM_ENCHANT* p = reinterpret_cast<PACKET_CZ_REQUEST_RANDOM_ENCHANT*>( RFIFOP( fd, 0 ) );
 
-	if( sd->state.item_enchant_index != p->enchant_group ){
+	if( sd->state.item_enchant.clientLuaIndex != p->enchant_group ){
 		return;
 	}
 
@@ -24653,6 +24655,15 @@ void clif_parse_enchantwindow_general( int32 fd, map_session_data* sd ){
 		materials[idx] = entry.second;
 	}
 
+	if( sd->state.item_enchant.item_id != 0 ){
+		// Add the calling item as additional requirement
+		materials[sd->state.item_enchant.itemindex] += 1;
+
+		if( sd->inventory.u.items_inventory[sd->state.item_enchant.itemindex].amount < materials[sd->state.item_enchant.itemindex] ){
+			return;
+		}
+	}
+
 	if( pc_payzeny( sd, enchant_slot->normal.zeny, LOG_TYPE_ENCHANT ) != 0 ){
 		return;
 	}
@@ -24706,7 +24717,7 @@ void clif_parse_enchantwindow_perfect( int32 fd, map_session_data* sd ){
 #if PACKETVER_MAIN_NUM >= 20201118 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024
 	const PACKET_CZ_REQUEST_PERFECT_ENCHANT* p = reinterpret_cast<PACKET_CZ_REQUEST_PERFECT_ENCHANT*>( RFIFOP( fd, 0 ) );
 
-	if( sd->state.item_enchant_index != p->enchant_group ){
+	if( sd->state.item_enchant.clientLuaIndex != p->enchant_group ){
 		return;
 	}
 
@@ -24780,6 +24791,15 @@ void clif_parse_enchantwindow_perfect( int32 fd, map_session_data* sd ){
 		materials[idx] = entry.second;
 	}
 
+	if( sd->state.item_enchant.item_id != 0 ){
+		// Add the calling item as additional requirement
+		materials[sd->state.item_enchant.itemindex] += 1;
+
+		if( sd->inventory.u.items_inventory[sd->state.item_enchant.itemindex].amount < materials[sd->state.item_enchant.itemindex] ){
+			return;
+		}
+	}
+
 	if( pc_payzeny( sd, perfect_enchant->zeny, LOG_TYPE_ENCHANT ) != 0 ){
 		return;
 	}
@@ -24806,7 +24826,7 @@ void clif_parse_enchantwindow_upgrade( int32 fd, map_session_data* sd ){
 #if PACKETVER_MAIN_NUM >= 20201118 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024
 	const PACKET_CZ_REQUEST_UPGRADE_ENCHANT* p = reinterpret_cast<PACKET_CZ_REQUEST_UPGRADE_ENCHANT*>( RFIFOP( fd, 0 ) );
 
-	if( sd->state.item_enchant_index != p->enchant_group ){
+	if( sd->state.item_enchant.clientLuaIndex != p->enchant_group ){
 		return;
 	}
 
@@ -24877,6 +24897,15 @@ void clif_parse_enchantwindow_upgrade( int32 fd, map_session_data* sd ){
 		materials[idx] = entry.second;
 	}
 
+	if( sd->state.item_enchant.item_id != 0 ){
+		// Add the calling item as additional requirement
+		materials[sd->state.item_enchant.itemindex] += 1;
+
+		if( sd->inventory.u.items_inventory[sd->state.item_enchant.itemindex].amount < materials[sd->state.item_enchant.itemindex] ){
+			return;
+		}
+	}
+
 	if( pc_payzeny( sd, upgrade->zeny, LOG_TYPE_ENCHANT ) != 0 ){
 		return;
 	}
@@ -24903,7 +24932,7 @@ void clif_parse_enchantwindow_reset( int32 fd, map_session_data* sd ){
 #if PACKETVER_MAIN_NUM >= 20201118 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024
 	const PACKET_CZ_REQUEST_RESET_ENCHANT* p = reinterpret_cast<PACKET_CZ_REQUEST_RESET_ENCHANT*>( RFIFOP( fd, 0 ) );
 
-	if( sd->state.item_enchant_index != p->enchant_group ){
+	if( sd->state.item_enchant.clientLuaIndex != p->enchant_group ){
 		return;
 	}
 
@@ -24982,6 +25011,15 @@ void clif_parse_enchantwindow_reset( int32 fd, map_session_data* sd ){
 		materials[idx] = entry.second;
 	}
 
+	if( sd->state.item_enchant.item_id != 0 ){
+		// Add the calling item as additional requirement
+		materials[sd->state.item_enchant.itemindex] += 1;
+
+		if( sd->inventory.u.items_inventory[sd->state.item_enchant.itemindex].amount < materials[sd->state.item_enchant.itemindex] ){
+			return;
+		}
+	}
+
 	if( pc_payzeny( sd, enchant->reset.zeny, LOG_TYPE_ENCHANT ) != 0 ){
 		return;
 	}
@@ -25019,7 +25057,7 @@ void clif_parse_enchantwindow_reset( int32 fd, map_session_data* sd ){
 
 void clif_parse_enchantwindow_close( int32 fd, map_session_data* sd ){
 #if PACKETVER_MAIN_NUM >= 20201118 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024
-	sd->state.item_enchant_index = 0;
+	sd->state.item_enchant = {};
 #endif
 }
 
