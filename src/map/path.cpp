@@ -7,9 +7,10 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <queue>
+#include <functional>
 
 #include <common/cbasetypes.hpp>
-#include <common/db.hpp>
 #include <common/malloc.hpp>
 #include <common/nullpo.hpp>
 #include <common/random.hpp>
@@ -29,6 +30,16 @@
 /// @name Structures and defines for A* pathfinding
 /// @{
 
+namespace std {
+    template<>
+    struct hash<std::pair<int16, int16>> {
+        size_t operator()(const std::pair<int16, int16>& p) const noexcept {
+            // Shift first into high 16 bits, xor with second
+            return (static_cast<uint32_t>(p.first) << 16) ^ static_cast<uint16_t>(p.second);
+        }
+    };
+}
+
 /// Path node
 struct path_node {
 	struct path_node *parent; ///< pointer to parent (for path reconstruction)
@@ -39,16 +50,11 @@ struct path_node {
 	int16 flag; ///< SET_OPEN / SET_CLOSED
 };
 
-/// Binary heap of path nodes
-BHEAP_STRUCT_DECL(node_heap, struct path_node*);
-static BHEAP_STRUCT_VAR(node_heap, g_open_set);	// use static heap for all path calculations
-												// it get's initialized in do_init_path, freed in do_final_path.
+using node_heap = std::priority_queue<path_node*, std::vector<path_node*>, std::function<bool(path_node*, path_node*)>>;
 
-
-/// Comparator for binary heap of path nodes (minimum cost at top)
-#define NODE_MINTOPCMP(i,j) ((i)->f_cost - (j)->f_cost)
-
-#define calc_index(x,y) (((x)+(y)*MAX_WALKPATH) & (MAX_WALKPATH*MAX_WALKPATH-1))
+auto node_compare = [](path_node* a, path_node* b) {
+	return a->f_cost > b->f_cost; // Min-heap based on f_cost
+};
 
 /// Estimates the cost from (x0,y0) to (x1,y1).
 /// This is inadmissible (overestimating) heuristic used by game client.
@@ -65,11 +71,9 @@ static enum directions walk_choices [3][3] =
 
 
 void do_init_path(){
-	BHEAP_INIT(g_open_set);	// [fwi]: BHEAP_STRUCT_VAR already initialized the heap, this is rudendant & just for code-conformance/readability
 }//
 
 void do_final_path(){
-	BHEAP_CLEAR(g_open_set);
 }//
 
 
@@ -195,65 +199,51 @@ bool path_search_long(struct shootpath_data *spd,int16 m,int16 x0,int16 y0,int16
 /// @name A* pathfinding related functions
 /// @{
 
-/// Pushes path_node to the binary node_heap.
-/// Ensures there is enough space in array to store new element.
-
-static void heap_push_node(struct node_heap *heap, struct path_node *node)
-{
-#ifndef __clang_analyzer__ // TODO: Figure out why clang's static analyzer doesn't like this
-	BHEAP_ENSURE2(*heap, 1, 256, struct path_node **);
-	BHEAP_PUSH2(*heap, node, NODE_MINTOPCMP);
-#endif // __clang_analyzer__
-}
-
-/// Updates path_node in the binary node_heap.
-static int32 heap_update_node(struct node_heap *heap, struct path_node *node)
-{
-	int32 i;
-	ARR_FIND(0, BHEAP_LENGTH(*heap), i, BHEAP_DATA(*heap)[i] == node);
-	if (i == BHEAP_LENGTH(*heap)) {
-		ShowError("heap_update_node: node not found\n");
-		return 1;
-	}
-	BHEAP_UPDATE(*heap, i, NODE_MINTOPCMP);
-	return 0;
-}
-
 /// Path_node processing in A* pathfinding.
 /// Adds new node to heap and updates/re-adds old ones if necessary.
-static int32 add_path(struct node_heap *heap, struct path_node *tp, int16 x, int16 y, int32 g_cost, struct path_node *parent, int32 h_cost)
+
+/// @brief Adds a node to the open set or updates it if a better path is found.
+/// @param heap         Min-heap priority queue representing the open set.
+/// @param known_nodes  Hash map storing all discovered nodes, keyed by (x, y).
+/// @param x            X-coordinate of the target node.
+/// @param y            Y-coordinate of the target node.
+/// @param g_cost       New cost from the start to this node.
+/// @param parent       Pointer to the parent node in the path.
+/// @param h_cost       Heuristic cost estimate from this node to the goal.
+/// @return int32_t     Always returns 0, since collision issues are handled by the map.
+
+static int32 add_path(node_heap& heap, std::unordered_map<std::pair<int16, int16>, path_node>& known_nodes, int16 x, int16 y, int32 g_cost, struct path_node *parent, int32 h_cost)
 {
-	int32 i = calc_index(x, y);
+    std::pair<int16, int16> current_key = {x, y};
+    auto it = known_nodes.find(current_key);
 
-	if (tp[i].x == x && tp[i].y == y) { // We processed this node before
-		if (g_cost < tp[i].g_cost) { // New path to this node is better than old one
-			// Update costs and parent
-			tp[i].g_cost = g_cost;
-			tp[i].parent = parent;
-			tp[i].f_cost = g_cost + h_cost;
-			if (tp[i].flag == SET_CLOSED) {
-				heap_push_node(heap, &tp[i]); // Put it in open set again
-			}
-			else if (heap_update_node(heap, &tp[i])) {
-				return 1;
-			}
-			tp[i].flag = SET_OPEN;
-		}
-		return 0;
-	}
+    if (it != known_nodes.end()) {
+        // Node already exists: update if this path is cheaper
+        path_node& node = it->second;
+        if (g_cost < node.g_cost) {
+            node.g_cost = g_cost;
+            node.parent = parent;
+            node.f_cost = g_cost + h_cost;
+            
+            // Reopen node if closed, or adjust its position in the open set
+            heap.push(&node);
+            node.flag = SET_OPEN;
+        }
+    } else {
+        // New node: create and initialize
+        path_node& new_node = known_nodes[current_key];
+        new_node.x = x;
+		new_node.y = y;
+        new_node.g_cost = g_cost;
+        new_node.parent = parent;
+        new_node.f_cost = g_cost + h_cost;
+        new_node.flag = SET_OPEN;
 
-	if (tp[i].x || tp[i].y) // Index is already taken; see `tp` array FIXME for details
-		return 1;
+        // Add to open set
+        heap.push(&new_node);
+    }
 
-	// New node
-	tp[i].x = x;
-	tp[i].y = y;
-	tp[i].g_cost = g_cost;
-	tp[i].parent = parent;
-	tp[i].f_cost = g_cost + h_cost;
-	tp[i].flag = SET_OPEN;
-	heap_push_node(heap, &tp[i]);
-	return 0;
+    return 0;
 }
 ///@}
 
@@ -271,6 +261,7 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 	int32 i, x, y, dx = 0, dy = 0;
 	struct map_data *mapdata = map_getmapdata(m);
 	struct walkpath_data s_wpd;
+	node_heap g_open_set(node_compare);
 
 	if (flag&2)
 		return path_search_long(nullptr, m, x0, y0, x1, y1, cell);
@@ -324,10 +315,7 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 
 		return false; // easy path unsuccessful
 	} else { // !(flag&1)
-		// FIXME: This array is too small to ensure all paths shorter than MAX_WALKPATH
-		// can be found without node collision: calc_index(node1) = calc_index(node2).
-		// Figure out more proper size or another way to keep track of known nodes.
-		struct path_node tp[MAX_WALKPATH * MAX_WALKPATH];
+		std::unordered_map<std::pair<int16, int16>, path_node> known_nodes;
 		struct path_node *current, *it;
 		int32 xs = mapdata->xs - 1;
 		int32 ys = mapdata->ys - 1;
@@ -337,20 +325,17 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 		// A* (A-star) pathfinding
 		// We always use A* for finding walkpaths because it is what game client uses.
 		// Easy pathfinding cuts corners of non-walkable cells, but client always walks around it.
-		BHEAP_RESET(g_open_set);
-
-		memset(tp, 0, sizeof(tp));
 
 		// Start node
-		i = calc_index(x0, y0);
-		tp[i].parent = nullptr;
-		tp[i].x      = x0;
-		tp[i].y      = y0;
-		tp[i].g_cost = 0;
-		tp[i].f_cost = heuristic(x0, y0, x1, y1);
-		tp[i].flag   = SET_OPEN;
+		path_node& start_node = known_nodes[{x0, y0}];
+		start_node.parent = nullptr;
+		start_node.x = x0;
+		start_node.y = y0;
+		start_node.g_cost = 0;
+		start_node.f_cost = heuristic(x0, y0, x1, y1);
+		start_node.flag = SET_OPEN;
 
-		heap_push_node(&g_open_set, &tp[i]); // Put start node to 'open' set
+		g_open_set.push(&start_node); // Put start node to 'open' set
 
 		for(;;) {
 			int32 e = 0; // error flag
@@ -365,12 +350,12 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 
 			int32 g_cost;
 
-			if (BHEAP_LENGTH(g_open_set) == 0) {
+			if (g_open_set.size() == 0) {
 				return false;
 			}
 
-			current = BHEAP_PEEK(g_open_set); // Look for the lowest f_cost node in the 'open' set
-			BHEAP_POP2(g_open_set, NODE_MINTOPCMP); // Remove it from 'open' set
+			current = g_open_set.top(); // Look for the lowest f_cost node in the 'open' set
+			g_open_set.pop();
 
 			x      = current->x;
 			y      = current->y;
@@ -390,21 +375,21 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 #define chk_dir(d) ((allowed_dirs & (d)) == (d))
 			// Process neighbors of current node
 			if (chk_dir(PATH_DIR_SOUTH|PATH_DIR_EAST) && !map_getcellp(mapdata, x+1, y-1, cell))
-				e += add_path(&g_open_set, tp, x+1, y-1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x+1, y-1, x1, y1)); // (x+1, y-1) 5
+				e += add_path(g_open_set, known_nodes, x+1, y-1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x+1, y-1, x1, y1)); // (x+1, y-1) 5
 			if (chk_dir(PATH_DIR_EAST))
-				e += add_path(&g_open_set, tp, x+1, y, g_cost + MOVE_COST, current, heuristic(x+1, y, x1, y1)); // (x+1, y) 6
+				e += add_path(g_open_set, known_nodes, x+1, y, g_cost + MOVE_COST, current, heuristic(x+1, y, x1, y1)); // (x+1, y) 6
 			if (chk_dir(PATH_DIR_NORTH|PATH_DIR_EAST) && !map_getcellp(mapdata, x+1, y+1, cell))
-				e += add_path(&g_open_set, tp, x+1, y+1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x+1, y+1, x1, y1)); // (x+1, y+1) 7
+				e += add_path(g_open_set, known_nodes, x+1, y+1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x+1, y+1, x1, y1)); // (x+1, y+1) 7
 			if (chk_dir(PATH_DIR_NORTH))
-				e += add_path(&g_open_set, tp, x, y+1, g_cost + MOVE_COST, current, heuristic(x, y+1, x1, y1)); // (x, y+1) 0
+				e += add_path(g_open_set, known_nodes, x, y+1, g_cost + MOVE_COST, current, heuristic(x, y+1, x1, y1)); // (x, y+1) 0
 			if (chk_dir(PATH_DIR_NORTH|PATH_DIR_WEST) && !map_getcellp(mapdata, x-1, y+1, cell))
-				e += add_path(&g_open_set, tp, x-1, y+1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x-1, y+1, x1, y1)); // (x-1, y+1) 1
+				e += add_path(g_open_set, known_nodes, x-1, y+1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x-1, y+1, x1, y1)); // (x-1, y+1) 1
 			if (chk_dir(PATH_DIR_WEST))
-				e += add_path(&g_open_set, tp, x-1, y, g_cost + MOVE_COST, current, heuristic(x-1, y, x1, y1)); // (x-1, y) 2
+				e += add_path(g_open_set, known_nodes, x-1, y, g_cost + MOVE_COST, current, heuristic(x-1, y, x1, y1)); // (x-1, y) 2
 			if (chk_dir(PATH_DIR_SOUTH|PATH_DIR_WEST) && !map_getcellp(mapdata, x-1, y-1, cell))
-				e += add_path(&g_open_set, tp, x-1, y-1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x-1, y-1, x1, y1)); // (x-1, y-1) 3
+				e += add_path(g_open_set, known_nodes, x-1, y-1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x-1, y-1, x1, y1)); // (x-1, y-1) 3
 			if (chk_dir(PATH_DIR_SOUTH))
-				e += add_path(&g_open_set, tp, x, y-1, g_cost + MOVE_COST, current, heuristic(x, y-1, x1, y1)); // (x, y-1) 4
+				e += add_path(g_open_set, known_nodes, x, y-1, g_cost + MOVE_COST, current, heuristic(x, y-1, x1, y1)); // (x, y-1) 4
 #undef chk_dir
 			if (e) {
 				return false;
