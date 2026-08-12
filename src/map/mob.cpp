@@ -2577,9 +2577,11 @@ static TIMER_FUNC(mob_delay_item_drop) {
  * Sets the item_drop into the item_drop_list.
  * Also performs logging and autoloot if enabled.
  * rate is the drop-rate of the item, required for autoloot.
- * flag : Killed only by homunculus/mercenary?
+ * slavekilltypes : bitmask of AI slave types (BL_HOM|BL_MER) that killed the mob
+ * with no other damage source involved - each participating type must have its
+ * autoloot battle config enabled for the drop to be autolooted.
  *------------------------------------------*/
-static void mob_item_drop(mob_data *md, std::shared_ptr<s_item_drop_list>& dlist, std::shared_ptr<s_item_drop>& ditem, int32 loot, int32 drop_rate, bool flag)
+static void mob_item_drop(mob_data *md, std::shared_ptr<s_item_drop_list>& dlist, std::shared_ptr<s_item_drop>& ditem, int32 loot, int32 drop_rate, int32 slavekilltypes)
 {
 	TBL_PC* sd;
 	bool test_autoloot;
@@ -2591,7 +2593,9 @@ static void mob_item_drop(mob_data *md, std::shared_ptr<s_item_drop_list>& dlist
 	if( sd == nullptr ) sd = map_charid2sd(dlist->third_charid);
 	test_autoloot = sd 
 		&& (drop_rate <= sd->state.autoloot || pc_isautolooting(sd, ditem->item_data.nameid))
-		&& (flag ? ((battle_config.homunculus_autoloot ? (battle_config.hom_idle_no_share == 0 || !pc_isidle_hom(sd)) : 0) || (battle_config.mercenary_autoloot ? (battle_config.mer_idle_no_share == 0 || !pc_isidle_mer(sd)) : 0)) :
+		&& (slavekilltypes ?
+			( !(slavekilltypes&BL_HOM) || (battle_config.homunculus_autoloot && (battle_config.hom_idle_no_share == 0 || !pc_isidle_hom(sd))) ) &&
+			( !(slavekilltypes&BL_MER) || (battle_config.mercenary_autoloot && (battle_config.mer_idle_no_share == 0 || !pc_isidle_mer(sd))) ) :
 			(battle_config.idle_no_autoloot == 0 || DIFF_TICK(last_tick, sd->idletime) < battle_config.idle_no_autoloot));
 #ifdef AUTOLOOT_DISTANCE
 		test_autoloot = test_autoloot && sd->m == md->m
@@ -2673,6 +2677,7 @@ void mob_log_damage(mob_data* md, block_list* src, int64 damage, int64 damage_ta
 {
 	uint32 char_id = 0;
 	int32 flag = MDLF_NORMAL;
+	bool mer_dmg = ( src->type == BL_MER );
 
 	if( damage < 0 )
 		return; //Do nothing for absorbed damage.
@@ -2750,6 +2755,8 @@ void mob_log_damage(mob_data* md, block_list* src, int64 damage, int64 damage_ta
 			// Just add damage to it
 			entry.dmg = util::safe_addition_cap(entry.dmg, damage, INT64_MAX);
 			entry.dmg_tanked = util::safe_addition_cap(entry.dmg_tanked, damage_tanked, INT64_MAX);
+			entry.pc_dmg |= !mer_dmg;
+			entry.mer_dmg |= mer_dmg;
 			return;
 		}
 	}
@@ -2767,6 +2774,8 @@ void mob_log_damage(mob_data* md, block_list* src, int64 damage, int64 damage_ta
 	dmg.flag = flag;
 	dmg.dmg = damage;
 	dmg.dmg_tanked = damage_tanked;
+	dmg.pc_dmg = !mer_dmg;
+	dmg.mer_dmg = mer_dmg;
 
 	md->dmglog.push_back( dmg );
 }
@@ -2946,7 +2955,7 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 	int32 i, temp, count, m = md->m;
 	int32 dmgbltypes = 0;  // bitfield of all bl types, that caused damage to the mob and are elligible for exp distribution
 	t_tick tick = gettick();
-	bool rebirth, homkillonly, merckillonly;
+	bool rebirth, homkillonly;
 
 	status = &md->status;
 
@@ -3008,7 +3017,10 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 
 		switch( entry.flag ){
 			case MDLF_NORMAL:
-				dmgbltypes |= BL_PC;
+				if( entry.pc_dmg )
+					dmgbltypes |= BL_PC;
+				if( entry.mer_dmg )
+					dmgbltypes |= BL_MER;
 				break;
 			case MDLF_HOMUN:
 				// Skip homunculus' share if inactive
@@ -3064,8 +3076,8 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 
 	// determines, if the monster was killed by homunculus' damage only
 	homkillonly = (bool)( ( dmgbltypes&BL_HOM ) && !( dmgbltypes&~BL_HOM ) );
-	// determines if the monster was killed by mercenary damage only
-	merckillonly = (bool)((dmgbltypes & BL_MER) && !(dmgbltypes & ~BL_MER));
+	// Bitmask of AI slave types (BL_HOM|BL_MER) that killed the mob with no other damage source involved
+	int32 slavekilltypes = ( dmgbltypes&~(BL_HOM|BL_MER) ) ? 0 : ( dmgbltypes&(BL_HOM|BL_MER) );
 
 	// Determine MVP (need to do it here so that it's not influenced by first attacker bonus below)
 	map_session_data* mvp_sd = md->get_mvp_player(first_sd);
@@ -3244,7 +3256,7 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 	if (md->lootitems) {
 		for (i = 0; i < md->lootitem_count; i++) {
 			std::shared_ptr<s_item_drop> ditem = mob_setlootitem(md->lootitems[i], md->mob_id);
-			mob_item_drop(md, lootlist, ditem, 1, 10000, homkillonly || merckillonly);
+			mob_item_drop(md, lootlist, ditem, 1, 10000, slavekilltypes);
 		}
 	}
 
@@ -3307,7 +3319,7 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 
 					std::shared_ptr<s_item_drop> ditem = mob_setdropitem(mobdrop, 1, md->mob_id);
 
-					mob_item_drop(md, dlist, ditem, 0, mobdrop->rate, homkillonly || merckillonly);
+					mob_item_drop(md, dlist, ditem, 0, mobdrop->rate, slavekilltypes);
 				}
 			}
 
@@ -3351,7 +3363,7 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 			}
 			// Announce first, or else ditem will be freed. [Lance]
 			// By popular demand, use base drop rate for autoloot code. [Skotlex]
-			mob_item_drop(md, dlist, ditem, 0, battle_config.autoloot_adjust ? drop_rate : entry->rate, homkillonly || merckillonly);
+			mob_item_drop(md, dlist, ditem, 0, battle_config.autoloot_adjust ? drop_rate : entry->rate, slavekilltypes);
 		}
 
 		// Ore Discovery (triggers if owner has loot priority, does not require to be the killer)
@@ -3365,7 +3377,7 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 
 				std::shared_ptr<s_item_drop> ditem = mob_setdropitem(mobdrop, 1, md->mob_id);
 
-				mob_item_drop(md, dlist, ditem, 0, mobdrop->rate, homkillonly || merckillonly);
+				mob_item_drop(md, dlist, ditem, 0, mobdrop->rate, slavekilltypes);
 			}
 		}
 
@@ -3394,7 +3406,7 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 					// 'Cheat' for autoloot command: rate is changed from n/100000 to n/10000
 					int32 map_drops_rate = max(1, (final_rate / 10));
 					std::shared_ptr<s_item_drop> ditem = mob_setdropitem( it.second, 1, md->mob_id );
-					mob_item_drop( md, dlist, ditem, 0, map_drops_rate, homkillonly || merckillonly );
+					mob_item_drop( md, dlist, ditem, 0, map_drops_rate, slavekilltypes );
 				}
 			}
 
@@ -3415,7 +3427,7 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 						// 'Cheat' for autoloot command: rate is changed from n/100000 to n/10000
 						int32 map_drops_rate = max(1, (final_rate / 10));
 						std::shared_ptr<s_item_drop> ditem = mob_setdropitem( it.second, 1, md->mob_id );
-						mob_item_drop( md, dlist, ditem, 0, map_drops_rate, homkillonly || merckillonly );
+						mob_item_drop( md, dlist, ditem, 0, map_drops_rate, slavekilltypes );
 					}
 				}
 			}
