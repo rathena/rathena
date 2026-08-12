@@ -3268,10 +3268,10 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 		dlist->second_charid = (second_sd ? second_sd->status.char_id : 0);
 		dlist->third_charid = (third_sd ? third_sd->status.char_id : 0);
 
-		// These trigger for the killer of the monster
-		if(sd) {
+		// These trigger for the player who has the drop priority on the monster
+		if(first_sd) {
 			// process script-granted extra drop bonuses
-			for (const auto &it : sd->add_drop) {
+			for (const auto &it : first_sd->add_drop) {
 				if (!&it || (!it.nameid && !it.group))
 					continue;
 				if ((it.race < RC_NONE_ && it.race == -md->mob_id) || //Race < RC_NONE_, use mob_id
@@ -3312,10 +3312,10 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 			}
 
 			// process script-granted zeny bonus (get_zeny_num) [Skotlex]
-			if( sd->bonus.get_zeny_num && rnd()%100 < sd->bonus.get_zeny_rate ) {
-				i = sd->bonus.get_zeny_num > 0 ? sd->bonus.get_zeny_num : -md->level * sd->bonus.get_zeny_num;
+			if( first_sd->bonus.get_zeny_num && rnd()%100 < first_sd->bonus.get_zeny_rate ) {
+				i = first_sd->bonus.get_zeny_num > 0 ? first_sd->bonus.get_zeny_num : -md->level * first_sd->bonus.get_zeny_num;
 				if (!i) i = 1;
-				pc_getzeny(sd, 1+rnd()%i, LOG_TYPE_PICKDROP_MONSTER);
+				pc_getzeny(first_sd, 1+rnd()%i, LOG_TYPE_PICKDROP_MONSTER);
 			}
 		}
 
@@ -3329,7 +3329,7 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 			if (it == nullptr)
 				continue;
 
-			drop_rate = mob_getdroprate(src, md->db, entry->rate, drop_modifier, md);
+			drop_rate = mob_getdroprate(first_sd, md->db, entry->rate, drop_modifier, md);
 
 			// attempt to drop the item
 			if (rnd() % 10000 >= drop_rate)
