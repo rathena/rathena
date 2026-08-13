@@ -16,7 +16,7 @@ SkillRushStrike::SkillRushStrike() : SkillImplRecursiveDamageSplash(MT_RUSH_STRI
 void SkillRushStrike::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& skillratio, int32 mflag) const {
 	const status_data* sstatus = status_get_status_data(*src);
 
-	skillratio += -100 + 3500 * skill_lv;
+	skillratio += -100 + 650 + 3750 * skill_lv;
 	skillratio += 5 * sstatus->pow; // !TODO: check POW ratio
 	RE_LVL_DMOD(100);
 }
