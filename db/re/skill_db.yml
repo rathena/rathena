@@ -45311,7 +45311,7 @@ Body:
       - Level: 10
         Area: 3
     CastTime: 1000
-    AfterCastActDelay: 1200
+    AfterCastActDelay: 1000
     Cooldown: 700
     FixedCastTime: 1000
     Requires:
