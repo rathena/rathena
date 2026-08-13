@@ -1769,7 +1769,6 @@
 	export_constant(SC_RELIGIO);
 	export_constant(SC_BENEDICTUM);
 	export_constant(SC_AXE_STOMP);
-	export_constant(SC_A_MACHINE);
 	export_constant(SC_D_MACHINE);
 	export_constant(SC_ABR_BATTLE_WARIOR);
 	export_constant(SC_ABR_DUAL_CANNON);

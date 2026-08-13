@@ -2079,6 +2079,11 @@ bool skill_strip_equip(block_list *src, block_list *target, uint16 skill_id, uin
 	nullpo_retr(false, src);
 	nullpo_retr(false, target);
 
+	status_change *tsc = status_get_sc(target);
+
+	if (tsc == nullptr)
+		return false;
+
 	const int32 pos[6]             = { EQP_WEAPON, EQP_SHIELD, EQP_ARMOR, EQP_HELM, EQP_ACC, EQP_SHADOW_GEAR };
 	const enum sc_type sc_atk[6] = { SC_STRIPWEAPON, SC_STRIPSHIELD, SC_STRIPARMOR, SC_STRIPHELM, SC__STRIPACCESSORY, SC_SHADOW_STRIP };
 	const enum sc_type sc_def[6] = { SC_CP_WEAPON, SC_CP_SHIELD, SC_CP_ARMOR, SC_CP_HELM, SC_NONE, SC_PROTECTSHADOWEQUIP };
@@ -2182,15 +2187,12 @@ bool skill_strip_equip(block_list *src, block_list *target, uint16 skill_id, uin
 			break;
 	}
 
-	status_change *tsc = status_get_sc(target);
-
 	for (uint8 i = 0; i < ARRAYLENGTH(pos); i++) {
 		if (location&pos[i] && sc_def[i] > SC_NONE && tsc->getSCE(sc_def[i]))
 			location &=~ pos[i];
 	}
 	if (!location)
 		return false;
-
 	for (uint8 i = 0; i < ARRAYLENGTH(pos); i++) {
 		if (location&pos[i] && !sc_start(src, target, sc_atk[i], 100, skill_lv, time))
 			location &=~ pos[i];
