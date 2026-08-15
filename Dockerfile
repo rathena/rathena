@@ -14,7 +14,10 @@ COPY . .
 
 # Keep rAthena's checked-in default PACKETVER for the initial bootable image.
 # Client/server packet alignment will be configured in a later step.
+# Build rapidyaml serially first because its generated Makefile can race while
+# creating nested object directories under a parallel top-level build.
 RUN ./configure \
+    && make -j1 rapidyaml \
     && make -j"$(nproc)" login char map import
 
 

@@ -2,3 +2,6 @@
 
 login_ip: login
 char_ip: 127.0.0.1
+
+// Disable the secondary security-number/PIN prompt for the offline server.
+pincode_enabled: no
