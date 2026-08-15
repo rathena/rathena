@@ -714,8 +714,9 @@ bool chclif_parse_char_delete2_accept( int32 fd, char_session_data& sd ){
 	birthdate[7] = p->birthdate[5];
 	birthdate[8] = '\0';
 
-	// Only check for birthdate
-	if( !chclif_delchar_check( &sd, birthdate, CHAR_DEL_BIRTHDATE ) ){
+	// Modern clients always send a birthdate field, but an offline server may
+	// explicitly disable the server-side confirmation-code check.
+	if( charserv_config.char_config.char_del_option != 0 && !chclif_delchar_check( &sd, birthdate, CHAR_DEL_BIRTHDATE ) ){
 		chclif_char_delete2_accept_ack( fd, char_id, 5 );
 
 		return true;
@@ -1362,7 +1363,7 @@ bool chclif_parse_delchar( int fd, struct char_session_data& sd ){
 	ShowInfo(CL_RED "Request Char Deletion: " CL_GREEN "%u (%u)" CL_RESET "\n", sd.account_id, cid);
 	safestrncpy( email, p->key, sizeof( email ) );
 
-	if (!chclif_delchar_check(&sd, email, charserv_config.char_config.char_del_option)) {
+	if (charserv_config.char_config.char_del_option != 0 && !chclif_delchar_check(&sd, email, charserv_config.char_config.char_del_option)) {
 		chclif_refuse_delchar(fd,0); // 00 = Incorrect Email address
 		return true;
 	}

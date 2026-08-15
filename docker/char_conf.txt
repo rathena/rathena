@@ -1,0 +1,16 @@
+// Docker Compose infrastructure overrides only.
+
+login_ip: login
+char_ip: 127.0.0.1
+
+// Disable the secondary security-number/PIN prompt for the offline server.
+pincode_enabled: no
+
+// Allow immediate character deletion for the offline single-player server.
+char_del_delay: 0
+
+// Do not require an email address or birthdate confirmation code.
+char_del_option: 0
+
+// Allow deletion while the character belongs to a party or guild.
+char_del_restriction: 0

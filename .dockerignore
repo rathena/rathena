@@ -1,0 +1,15 @@
+.git
+.github
+.vs
+build
+log
+*.exe
+*.pdb
+*.sln
+*.slnLaunch
+*.vcxproj
+*.vcxproj.filters
+login-server
+char-server
+map-server
+web-server

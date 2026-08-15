@@ -1,0 +1,110 @@
+name: ragnarok-offline
+
+services:
+  db:
+    image: mariadb:11.8.8
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3306:3306"
+    environment:
+      MARIADB_RANDOM_ROOT_PASSWORD: "1"
+      MARIADB_DATABASE: ragnarok
+      MARIADB_USER: ragnarok
+      MARIADB_PASSWORD: ragnarok
+    volumes:
+      - ragnarok-db:/var/lib/mysql
+      - ./sql-files/main.sql:/docker-entrypoint-initdb.d/01-main.sql:ro
+      - ./sql-files/logs.sql:/docker-entrypoint-initdb.d/02-logs.sql:ro
+      - ./sql-files/roulette_default_data.sql:/docker-entrypoint-initdb.d/03-roulette.sql:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+
+  login:
+    image: ragnarok-offline-login:local
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: login
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+    ports:
+      - "127.0.0.1:6900:6900"
+    volumes:
+      - ./docker/inter_conf.txt:/rathena/conf/import/inter_conf.txt:ro
+      - login-logs:/rathena/log
+    healthcheck:
+      test: ["CMD", "nc", "-z", "127.0.0.1", "6900"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 10s
+    stop_grace_period: 30s
+
+  char:
+    image: ragnarok-offline-char:local
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: char
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+      login:
+        condition: service_healthy
+        restart: true
+    ports:
+      - "127.0.0.1:6121:6121"
+    volumes:
+      - ./docker/inter_conf.txt:/rathena/conf/import/inter_conf.txt:ro
+      - ./docker/char_conf.txt:/rathena/conf/import/char_conf.txt:ro
+      - char-logs:/rathena/log
+    healthcheck:
+      test: ["CMD", "nc", "-z", "127.0.0.1", "6121"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 10s
+    stop_grace_period: 30s
+
+  map:
+    image: ragnarok-offline-map:local
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: map
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+      char:
+        condition: service_healthy
+        restart: true
+    ports:
+      - "127.0.0.1:5121:5121"
+    volumes:
+      - ./docker/inter_conf.txt:/rathena/conf/import/inter_conf.txt:ro
+      - ./docker/map_conf.txt:/rathena/conf/import/map_conf.txt:ro
+      - map-logs:/rathena/log
+    healthcheck:
+      test: ["CMD", "nc", "-z", "127.0.0.1", "5121"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 10s
+    stop_grace_period: 30s
+
+volumes:
+  ragnarok-db:
+  login-logs:
+  char-logs:
+  map-logs:
