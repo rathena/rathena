@@ -12863,10 +12863,6 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 		case SC_POTENT_VENOM:
 			val2 = 2 * val1;// Res Pierce Percentage
 			break;
-		case SC_A_MACHINE:
-			val4 = tick / 1000;
-			tick_time = 1000;
-			break;
 		case SC_D_MACHINE:
 			val2 = 200 + 50 * val1;// DEF Increase
 			val3 = 20 * val1;// Res Increase
