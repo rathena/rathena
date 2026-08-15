@@ -4,6 +4,8 @@ services:
   db:
     image: mariadb:11.8.8
     restart: unless-stopped
+    ports:
+      - "127.0.0.1:3306:3306"
     environment:
       MARIADB_RANDOM_ROOT_PASSWORD: "1"
       MARIADB_DATABASE: ragnarok
