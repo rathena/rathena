@@ -59,8 +59,7 @@ function	script	F_CoolDown	{
 
 -	marketshop	para_mora10	FAKE_NPC,11526:5000:100,11525:5000:1000,11520:50000:100,12574:20000:100
 
-// Offline 2026-08-17: Hans metals stay cheap. Dus Ori/Elu remain the original premium 200000. City smelting merchants sell Ori/Elu at 5000.
--	marketshop	para_ref10	FAKE_NPC,998:1000:500,1003:2000:500,1002:500:500,999:3000:500
+-	marketshop	para_ref10	FAKE_NPC,998:10000:500,1003:10000:500,1002:10000:500,999:10000:500
 
 -	marketshop	para_ref20	FAKE_NPC,984:200000:10,985:200000:100,987:240000:1,988:600000:1,989:1200000:1
 

@@ -4,22 +4,21 @@
 //= Sells a curated cash-origin consumable whitelist for
 //= account-wide Cash Points. Browse is one hidden pointshop
 //= per function category. Category shops are filled at OnInit
-//= by a hidden NPC. Modest official packs replace loose bottles.
-//= Timed Infinite rental boxes remain. Upgrade stones use official
-//= 10-packs plus loose Oridecon, Elunium, Blacksmith Blessing, and
-//= Shadow Refine Hammer. Random boxes are omitted.
-//= Farmable Oridecon/Elunium are not sold in ordinary cities.
-//= Battle Manual 10-packs: 50 / 70 / 100 Cash Points (5k / 7k / 10k Zeny each).
-//= Bubble Gum 10-packs: 70 / 100 / 150 Cash Points (7k / 10k / 15k Zeny each).
-//= Combat buffs: 3-day Infinite ASPD boxes 100; food 10-packs 50;
-//= Blessing/AGI 5; Aspersio 20; Assumptio/Wind Walk/Adrenaline 8;
-//= Abrasive 5-pack 6; Mega Resist Potion 10.
-//= Recovery 10-packs: Small Life 30; Medium Life 50. Regeneration 5-pack 10.
-//= Convenience: Kafra 10; Giant Fly Wing 5; Insurance 30; Gym Pass 50;
-//= Token 5-pack 50; Convex 5-pack 10; Dungeon Teleport 5-pack 25;
-//= Greed 20-pack 10; Infinite Flywing 1/3/5/7-day 30/45/60/150.
-//= Upgrade: Oridecon/Elunium 5; Enriched 10-packs 100; HD Ori/Elu 10-packs 300;
-//= HD Bradium/Carnium 10-packs 1000; Blacksmith Blessing 13;
+//= by a hidden NPC. Ordinary buffs and upgrade stones are sold
+//= as singles. Timed Infinite rental boxes remain. Random boxes
+//= are omitted. Farmable basic ores are sold here. Ether and
+//= Etel stones are not.
+//= Battle Manual: 5 / 7 / 10 Cash Points (5k / 7k / 10k Zeny).
+//= Field Manual 300%: 10. Thick Battle Manual and Limit: 10.
+//= Bubble Gum: 7 / 10 / 15. Combat: 3-day Infinite ASPD boxes 100;
+//= food 5; Blessing/AGI 1; Aspersio 2; Assumptio/Wind Walk/Adrenaline 1;
+//= Abrasive 1; Mega Resist Potion 10.
+//= Recovery: Small Life 3; Medium Life 5; Regeneration 2.
+//= Convenience: Kafra 1; Giant Fly Wing 1; Insurance 3; Gym Pass 50;
+//= Token 10; Convex 2; Dungeon Teleport 5; Greed 1;
+//= Infinite Flywing 1/3/5/7-day 30/45/60/150.
+//= Upgrade: basic ores 1-2; Oridecon/Elunium 5; Enriched 10; HD Ori/Elu 30;
+//= HD Bradium/Carnium 100; Blacksmith Blessing 13;
 //= Shadow Refine Hammer 100. Neuralizer 1000 (1,000,000 Zeny).
 //============================================================
 
@@ -169,41 +168,36 @@ OnFillSearch:
 OnInit:
 	// Canonical SKUs only. Random boxes, regional copies, [Not For Sale], empty
 	// TODO scripts, and weaker same-name duplicates are excluded.
-	// Ordinary buffs use one modest official pack per family. Ability sets
-	// the 10-count price; pack volume scales it. Timed Infinite rental boxes
-	// remain. Battle Manual 10-packs use 5,000 / 7,000 / 10,000 Zeny per
-	// bottle. Bubble Gum 10-packs use 7,000 / 10,000 / 15,000 Zeny per
-	// bottle. 1 Cash Point = 1,000 Zeny. Recovery 10-packs use 3,000 /
-	// 5,000 Zeny per bottle. Regeneration 5-pack uses 2,000 Zeny each.
-	// Convenience uses the retuned per-piece Zeny prices below.
-	// Upgrade 10-packs use 10,000 / 30,000 / 100,000 Zeny per stone.
-	// Blacksmith Blessing is 12,500 Zeny (13). Shadow Refine Hammer is 100.
+	// Ordinary buffs and upgrade stones are singles. Piece Zeny under
+	// 1,000 is 1 Cash Point. Timed Infinite rental boxes remain.
+	// Battle Manual: 5,000 / 7,000 / 10,000 Zeny. Bubble Gum: 7,000 /
+	// 10,000 / 15,000 Zeny. 1 Cash Point = 1,000 Zeny.
 	// Category 0: EXP and Drop
-	setarray .ItemId[0],     12900, 13990, 13695, 13696, 16267, 13758, 12902, 16633, 16268, 12312, 12872;
-	setarray .ItemPrice[0],     50,    50,    50,    70,   100,   200,    70,   100,   150,    10,    10;
+	setarray .ItemId[0],     12208, 14592, 14532, 14533, 12411, 14545, 12210, 12562, 12412, 12312, 12872;
+	setarray .ItemPrice[0],      5,     5,     5,     7,    10,    10,     7,    10,    15,    10,    10;
 	setarray .ItemCat[0],        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0;
-	// Category 1: Combat Buffs
-	setarray .ItemId[11],    17263, 17264, 17265, 12903, 12904, 12905, 12906, 12907, 12908, 12913, 12914, 12915, 12916, 12917, 12918, 13717, 12299;
-	setarray .ItemPrice[11],   100,   100,   100,    50,    50,    50,    50,    50,    50,     5,     5,    20,     8,     8,     8,     6,    10;
+	// Category 1: Combat Buffs. 17263-17265 stay 3-day rental boxes.
+	setarray .ItemId[11],    17263, 17264, 17265, 12202, 12203, 12204, 12205, 12206, 12207, 12215, 12216, 12217, 12218, 12219, 12220, 14536, 12299;
+	setarray .ItemPrice[11],   100,   100,   100,     5,     5,     5,     5,     5,     5,     1,     1,     2,     1,     1,     1,     1,    10;
 	setarray .ItemCat[11],       1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1;
 	// Category 2: Recovery
-	setarray .ItemId[28],    13711, 13714, 13719;
-	setarray .ItemPrice[28],    30,    50,    10;
+	setarray .ItemId[28],    14534, 14535, 14537;
+	setarray .ItemPrice[28],     3,     5,     2;
 	setarray .ItemCat[28],       2,     2,     2;
-	// Category 3: Convenience
-	setarray .ItemId[31],    12909, 12910, 12901,  7776, 13600, 13582, 17314, 17251, 17474, 17229, 13553, 14347;
-	setarray .ItemPrice[31],    10,     5,    30,    50,    50,    10,    30,    45,    60,   150,    25,    10;
+	// Category 3: Convenience. 17314 / 17251 / 17474 / 17229 stay rental boxes.
+	setarray .ItemId[31],    12211, 12212, 12209,  7776,  7621, 12214, 17314, 17251, 17474, 17229, 14527, 14529;
+	setarray .ItemPrice[31],     1,     1,     3,    50,    10,     2,    30,    45,    60,   150,     5,     1;
 	setarray .ItemCat[31],       3,     3,     3,     3,     3,     3,     3,     3,     3,     3,     3,     3;
 	// Category 4: Reset
 	setarray .ItemId[43],    12213;
 	setarray .ItemPrice[43],  1000;
 	setarray .ItemCat[43],       4;
-	// Upgrade. Ordinary cities do not sell finished Oridecon/Elunium.
-	setarray .ItemId[44],      984,   985, 12920, 12921, 16394, 16396, 16260, 16261,  6635, 23436;
-	setarray .ItemPrice[44],     5,     5,   100,   100,   300,   300,  1000,  1000,    13,   100;
-	setarray .ItemCat[44],       5,     5,     5,     5,     5,     5,     5,     5,     5,     5;
+	// Upgrade. Basic ores only; no Ether/Etel; no rough stones.
+	setarray .ItemId[44],     1002,   998,  1003,   999,  1010,  1011,   984,   985,  7619,  7620,  6240,  6241,  6226,  6225,  6635, 23436;
+	setarray .ItemPrice[44],     1,     1,     1,     1,     1,     2,     5,     5,    10,    10,    30,    30,   100,   100,    13,   100;
+	setarray .ItemCat[44],       5,     5,     5,     5,     5,     5,     5,     5,     5,     5,     5,     5,     5,     5,     5,     5;
 
-	.ItemCount = 54;
+	.ItemCount = 60;
 	deletearray .CatHas[0], 6;
 
 	for (.@cat = 0; .@cat < 6; ++.@cat)
