@@ -2,8 +2,9 @@
 //= Monster Card Sellers A-Z
 //===== Description: =========================================
 //= Separate Normal, Miniboss, and MVP Card Sellers use Cash Points.
-//= Cards are grouped alphabetically. Normal and Miniboss cards are
-//= priced by source level; MVP and curated special cards use fixed prices.
+//= Cards are grouped alphabetically. Normal, Miniboss, and MVP cards
+//= cost the Card Collector offer plus 30%, rounded to the nearest point.
+//= Curated special cards use the midpoint MVP Collector offer plus 30%.
 //=
 //= Uses a reviewed card-to-canonical-source mapping.
 //===== Changelogs: ==========================================
@@ -15,7 +16,67 @@
 //= 3.0 Add Miniboss and MVP Card Sellers
 //= 3.1 Add curated special cards to the MVP Card Seller
 //= 3.2 Fix MVP shop initialization
+//= 3.3 Shop prices = Collector offer + 30%
+//= 3.4 Special cards = midpoint MVP offer + 30%
+//= 3.5 Veynar browse gates use Collector prices, not shop prices
+//= 3.6 Opening dialogue no longer recites shop rates
 //============================================================
+
+function	script	F_OfflineCardLerp	{
+	.@lv = getarg(0);
+	.@lv0 = getarg(1);
+	.@lv1 = getarg(2);
+	.@p0 = getarg(3);
+	.@p1 = getarg(4);
+	if (.@lv1 <= .@lv0)
+		return .@p0;
+	if (.@lv <= .@lv0)
+		return .@p0;
+	if (.@lv >= .@lv1)
+		return .@p1;
+	.@span = .@lv1 - .@lv0;
+	return .@p0 + ((.@lv - .@lv0) * (.@p1 - .@p0) + .@span / 2) / .@span;
+}
+
+function	script	F_OfflineCardCollectorOffer	{
+	.@lv = getarg(0);
+	.@tier = getarg(1);
+	if (.@lv < 1)
+		return 0;
+	switch (.@tier) {
+	case 3:
+		return callfunc("F_OfflineCardLerp", .@lv, 25, 255, 20000, 100000);
+	case 2:
+		return callfunc("F_OfflineCardLerp", .@lv, 27, 186, 7000, 20000);
+	case 1:
+		if (.@lv <= 50)
+			return callfunc("F_OfflineCardLerp", .@lv, 1, 50, 250, 1000);
+		if (.@lv <= 100)
+			return callfunc("F_OfflineCardLerp", .@lv, 51, 100, 2000, 4000);
+		return callfunc("F_OfflineCardLerp", .@lv, 101, 255, 7000, 15000);
+	}
+	return 0;
+}
+
+function	script	F_OfflineCardShopPrice	{
+	.@offer = callfunc("F_OfflineCardCollectorOffer", getarg(0), getarg(1));
+	if (.@offer < 1)
+		return 0;
+	return (.@offer * 13 + 5) / 10;
+}
+
+function	script	F_OfflineMvpMidCollectorOffer	{
+	.@lo = callfunc("F_OfflineCardCollectorOffer", 25, 3);
+	.@hi = callfunc("F_OfflineCardCollectorOffer", 255, 3);
+	return (.@lo + .@hi) / 2;
+}
+
+function	script	F_OfflineSpecialCardShopPrice	{
+	.@mid = callfunc("F_OfflineMvpMidCollectorOffer");
+	if (.@mid < 1)
+		return 0;
+	return (.@mid * 13 + 5) / 10;
+}
 
 paramk,47,186,4	script	Corvin#offline	512,{
 	.@menu$ = getvariableofnpc( .alphabet_menu$, "card_seller_creation" );
@@ -50,13 +111,6 @@ paramk,47,186,4	script	Corvin#offline	512,{
 	mes "I only have normal monster cards.";
 	mes "They are still useful... I think.";
 	mes "Please do not compare my shelves to theirs.";
-	next;
-	mes "[Corvin]";
-	mes "I sell cards from normal monsters for ^0055FF10-50 Cash Points^000000.";
-	mes "The stronger the source monster, the higher the price.";
-	mes "^777777Lv. 1-50: 10 | 51-100: 20 | 101-150: 30";
-	mes "151-200: 40 | 201+: 50^000000";
-	mes "Miniboss and MVP cards are not available here.";
 	mes "Would you like to browse the collection?";
 	next;
 	.@s = select(.@menu$) -1;
@@ -116,11 +170,6 @@ paramk,49,186,4	script	Corven#offline	512,{
 	mes "He has quantity. I have standards.";
 	mes "Do not misunderstand--his collection has its uses.";
 	mes "But when ordinary prey no longer impresses you, you come to me.";
-	next;
-	mes "[Corven]";
-	mes "I sell cards from miniboss monsters for ^0055FF50-70 Cash Points^000000.";
-	mes "The stronger the source monster, the higher the price.";
-	mes "^777777Lv. 1-50: 50 | 51-100: 60 | 101+: 70^000000";
 	mes "Every card here came from a monster worth remembering.";
 	mes "Would you like to browse the collection?";
 	next;
@@ -169,13 +218,14 @@ paramk,51,186,4	script	Veynar#offline	10576,{
 		mes "Interesting. You may proceed.";
 		next;
 	}
-	if (#CASHPOINTS < 70) {
+	.@min_look = callfunc("F_OfflineCardCollectorOffer", 25, 3);
+	if (#CASHPOINTS < .@min_look) {
 		mes "[Veynar]";
 		mes "No. I do not open my collection for visitors with such an unimpressive purse.";
 		mes "Come back when your purse has learned some dignity.";
 		next;
 		mes "[Veynar]";
-		mes "^777777...Seventy should be enough to earn a look.";
+		mes "^777777..." + .@min_look + " should be enough to earn a look.";
 		mes "Buying from me is another matter.^000000";
 		close;
 	}
@@ -186,14 +236,7 @@ paramk,51,186,4	script	Veynar#offline	10576,{
 	mes "If luck were enough, you would not be standing before me.";
 	next;
 	mes "[Veynar]";
-	mes "MVP cards cost ^0055FF100 Cash Points^000000 each.";
-	mes "My special cards cost ^0055FF120 Cash Points^000000 each.";
-	mes "Too expensive? Then search every corner of Rune-Midgard for another seller.";
-	mes "You will return empty-handed.";
-	next;
-	mes "[Veynar]";
 	mes "Only I can obtain these rarities.";
-	mes "Remember that before you question my price.";
 	mes "Normal cards? Miniboss cards?";
 	mes "Trinkets for beginners and collectors with modest ambitions.";
 	mes "The merchants beside me will gladly entertain you with those.";
@@ -210,12 +253,11 @@ paramk,51,186,4	script	Veynar#offline	10576,{
 		mes "[Veynar]";
 		mes "^777777...This one has taste.^000000";
 		mes "So, you know I keep something more valuable.";
-		if (#CASHPOINTS <= 100) {
+		.@special_look = callfunc("F_OfflineMvpMidCollectorOffer");
+		if (#CASHPOINTS < .@special_look) {
 			next;
 			mes "[Veynar]";
 			mes "Taste without the means to indulge it is merely appetite.";
-			mes "^777777...A hundr--";
-			mes "Ah. I cannot speak so carelessly.^000000";
 			close;
 		}
 		next;
@@ -282,7 +324,9 @@ OnInit:
 		.@source_level = getmonsterinfo(.SourceMobIds[.@i], MOB_LV);
 		if (.@source_level < 1)
 			continue;
-		.@price = min(50, 10 + 10 * ((.@source_level - 1) / 50));
+		.@price = callfunc("F_OfflineCardShopPrice", .@source_level, 1);
+		if (.@price < 1)
+			continue;
 		.@letter$ = strtoupper(charat(getitemname(.@item_id), 0));
 		.@letter_index = strpos(.@alphabet$, .@letter$);
 		if (.@letter_index < 0)
@@ -362,7 +406,9 @@ OnInit:
 		.@source_level = getmonsterinfo(.SourceMobIds[.@i], MOB_LV);
 		if (.@source_level < 1)
 			continue;
-		.@price = min(70, 50 + 10 * ((.@source_level - 1) / 50));
+		.@price = callfunc("F_OfflineCardShopPrice", .@source_level, 2);
+		if (.@price < 1)
+			continue;
 		.@letter$ = strtoupper(charat(getitemname(.@item_id), 0));
 		.@letter_index = strpos(.@alphabet$, .@letter$);
 		if (.@letter_index < 0)
@@ -422,10 +468,12 @@ OnInit:
 	.special_alphabet_menu$ = "";
 	.@alphabet$ = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-	// Reviewed MVP cards. Source monster data is not needed here because
-	// every MVP card uses the same fixed price.
+	// Reviewed MVP cards and their canonical source monsters.
+	// Sources are the lowest-ID MVP dropper of each card.
 	setarray .CardIds[0], 4121,4123,4128,4131,4132,4134,4135,4137,4142,4143,4144,4145,4146,4147,4148,4168,4236,4263,4276,4302,4305,4318,4324,4330,4342,4352,4357,4359,4361,4363,4365,4367,4372,4374,4376,4386,4399,4403,4407,4408,4419,4425,4430,4441,4451,4456,4507,4509,4520,4525,4526,4527,4528,4529,4534,4556,4557,4560,4561,4562,4563,4564,4565,4566,4574,4576,4578,4580,4592,4601,4603,4610,4625,4636,4647,4648,4649,4650,4651,4652;
 	setarray .CardIds[80], 4662,4671,4672,4673,4674,4675,4676,4677,4678,4679,4680,4681,4682,4683,4697,27020,27025,27081,27104,27106,27113,27119,27126,27150,27151,27152,27162,27164,27180,27182,27265,27294,27298,27305,27318,27319,27321,27326,27327,27346,27362,27363,31023,31026,300007,300078,300079,300080,300099,300100,300107,300145,300151,300217,300227,300239,300248,300262,300281;
+	setarray .SourceMobIds[0], 1159,1115,1086,1150,1059,1389,1190,1112,1046,1087,1038,1874,1147,1039,1157,1272,1511,1492,1373,1583,1312,1251,1252,1418,1623,1658,1646,1647,1648,1649,1651,1650,1630,1685,1688,1719,1708,1734,1751,1768,1779,1785,1832,1871,1957,2022,2087,2165,2156,2202,2188,2187,2189,2190,2194,2564,2564,2240,2237,2238,2236,2239,2235,2241,2253,2251,2249,2255,2319,2476,2475,3190,3074,3450,3427,3426,3428,3429,3430,2362;
+	setarray .SourceMobIds[80], 3505,3242,3243,3245,3220,3221,3222,3223,3224,3225,3240,3241,3244,3246,3124,3254,3658,3758,3757,3073,3796,3804,2068,3633,3628,3621,1885,2529,3741,3181,2942,20273,20277,20340,20346,20381,3097,3000,3029,20419,20421,20422,2996,3473,20601,20642,20620,20621,20667,20668,20648,20843,20811,21301,21314,21395,20943,20928,20934;
 
 	// Usable special/event cards with no active monster drop or ordinary
 	// acquisition path in this offline implementation. Includes sealed,
@@ -441,20 +489,37 @@ OnInit:
 	}
 
 	.@card_count = getarraysize(.CardIds);
+	if (.@card_count != getarraysize(.SourceMobIds)) {
+		debugmes "MVP Card Seller: card and source monster arrays are not aligned.";
+		freeloop 0;
+		end;
+	}
 	for (.@i = 0; .@i < .@card_count; ++.@i) {
 		.@item_id = .CardIds[.@i];
 		if (getiteminfo(.@item_id, ITEMINFO_TYPE) != IT_CARD ||
 			getiteminfo(.@item_id, ITEMINFO_SUBTYPE) != CARD_NORMAL)
+			continue;
+		.@source_level = getmonsterinfo(.SourceMobIds[.@i], MOB_LV);
+		if (.@source_level < 1)
+			continue;
+		.@price = callfunc("F_OfflineCardShopPrice", .@source_level, 3);
+		if (.@price < 1)
 			continue;
 		.@letter$ = strtoupper(charat(getitemname(.@item_id), 0));
 		.@letter_index = strpos(.@alphabet$, .@letter$);
 		if (.@letter_index < 0)
 			continue;
 		.HasAlphabet[.@letter_index] = true;
-		npcshopadditem "card_mvp#" + .@letter$, .@item_id, 100;
+		npcshopadditem "card_mvp#" + .@letter$, .@item_id, .@price;
 	}
 
 	.@special_count = getarraysize(.SpecialCardIds);
+	.@special_price = callfunc("F_OfflineSpecialCardShopPrice");
+	if (.@special_price < 1) {
+		debugmes "MVP Card Seller: special-card shop price is invalid.";
+		freeloop 0;
+		end;
+	}
 	for (.@i = 0; .@i < .@special_count; ++.@i) {
 		.@item_id = .SpecialCardIds[.@i];
 		if (getiteminfo(.@item_id, ITEMINFO_TYPE) != IT_CARD ||
@@ -468,7 +533,7 @@ OnInit:
 			.@letter_index = 0;
 		}
 		.SpecialHasAlphabet[.@letter_index] = true;
-		npcshopadditem "card_special#" + .@letter$, .@item_id, 120;
+		npcshopadditem "card_special#" + .@letter$, .@item_id, .@special_price;
 	}
 
 	for (.@i = 0; .@i < 26; ++.@i) {

@@ -1,0 +1,232 @@
+//===== Ragnarok Offline =====================================
+//= Black-Market Consumable Seller
+//===== Description: =========================================
+//= Sells a curated cash-origin consumable whitelist for
+//= account-wide Cash Points. Browse is one hidden pointshop
+//= per function category. Category shops are filled at OnInit
+//= by a hidden NPC. Modest official packs replace loose bottles.
+//= Timed Infinite rental boxes remain. Upgrade stones use official
+//= 10-packs plus loose Oridecon, Elunium, Blacksmith Blessing, and
+//= Shadow Refine Hammer. Random boxes are omitted.
+//= Farmable Oridecon/Elunium are not sold in ordinary cities.
+//= Battle Manual 10-packs: 50 / 70 / 100 Cash Points (5k / 7k / 10k Zeny each).
+//= Bubble Gum 10-packs: 70 / 100 / 150 Cash Points (7k / 10k / 15k Zeny each).
+//= Combat buffs: 3-day Infinite ASPD boxes 100; food 10-packs 50;
+//= Blessing/AGI 5; Aspersio 20; Assumptio/Wind Walk/Adrenaline 8;
+//= Abrasive 5-pack 6; Mega Resist Potion 10.
+//= Recovery 10-packs: Small Life 30; Medium Life 50. Regeneration 5-pack 10.
+//= Convenience: Kafra 10; Giant Fly Wing 5; Insurance 30; Gym Pass 50;
+//= Token 5-pack 50; Convex 5-pack 10; Dungeon Teleport 5-pack 25;
+//= Greed 20-pack 10; Infinite Flywing 1/3/5/7-day 30/45/60/150.
+//= Upgrade: Oridecon/Elunium 5; Enriched 10-packs 100; HD Ori/Elu 10-packs 300;
+//= HD Bradium/Carnium 10-packs 1000; Blacksmith Blessing 13;
+//= Shadow Refine Hammer 100. Neuralizer 1000 (1,000,000 Zeny).
+//============================================================
+
+paramk,39,185,4	script	Rooke#offline	542,{
+	.@eac = eaclass();
+	if ((.@eac&EAJ_BASEMASK) == EAJ_SUMMONER) {
+		mes "[Rooke]";
+		mes "Hey--the cat talks.";
+		mes "That's new. That's fine. I've mixed stranger things.";
+		mes "Come here. I can get you almost anything that goes in a bottle.";
+		next;
+	} else if (.@eac&EAJL_BABY) {
+		mes "[Rooke]";
+		mes "A kid?";
+		mes "...No. You don't feel like a kid.";
+		mes "Lucky for you, I don't check ages. I check whether you can pay.";
+		next;
+	}
+	mes "[Rooke]";
+	mes "Hey. Hey, don't walk past.";
+	mes "You look like you need something.";
+	mes "I can get medicine. Almost every kind.";
+	mes "The good kind. The kind the Kafra ladies pretend not to know about.";
+	next;
+	mes "[Rooke]";
+	mes "Manuals, gum, tonics, tickets... stones, if you know how to ask.";
+	mes "If it goes in a bottle, under the tongue, or into a forge, I can source it.";
+	mes "First taste is honest. ^0055FFCash Points^000000 only.";
+	mes "Tell me what you're craving, or whisper a name and I'll find it.";
+	next;
+	switch (select("EXP and Drop:Combat Buffs:Recovery:Convenience:Upgrade:Reset:Search this stall:")) {
+	case 1:
+		callsub S_OpenCategory, 0;
+		end;
+	case 2:
+		callsub S_OpenCategory, 1;
+		end;
+	case 3:
+		callsub S_OpenCategory, 2;
+		end;
+	case 4:
+		callsub S_OpenCategory, 3;
+		end;
+	case 5:
+		callsub S_OpenCategory, 5;
+		end;
+	case 6:
+		callsub S_OpenCategory, 4;
+		end;
+	case 7:
+		callsub S_Search;
+		end;
+	}
+	end;
+
+S_OpenCategory:
+	.@cat = getarg(0);
+	if (!getvariableofnpc(.CatHas[.@cat], "cons_seller_db")) {
+		mes "[Rooke]";
+		mes "Tch. Empty bottle. Ask me for something else.";
+		close;
+	}
+	close2;
+	callshop "cons" + .@cat, 1;
+	end;
+
+S_Search:
+	mes "[Rooke]";
+	mes "Whisper a name. Part of a name. Even a number.";
+	mes "If I've got it, it's yours.";
+	next;
+	input .@query$;
+	if (.@query$ == "") {
+		mes "[Rooke]";
+		mes "You went shy on me. Come back when you know what you want.";
+		close;
+	}
+	.@query_id = atoi(.@query$);
+	.@count = getvariableofnpc(.ItemCount, "cons_seller_db");
+	.@n = 0;
+	for (.@i = 0; .@i < .@count; ++.@i) {
+		if (.@n >= 10)
+			break;
+		.@id = getvariableofnpc(.ItemId[.@i], "cons_seller_db");
+		if (.@id < 1)
+			continue;
+		.@name$ = getitemname(.@id);
+		if (.@query_id > 0 && .@id == .@query_id) {
+			.@found_id[.@n] = .@id;
+			.@found_price[.@n] = getvariableofnpc(.ItemPrice[.@i], "cons_seller_db");
+			.@n += 1;
+			continue;
+		}
+		if (compare(.@name$, .@query$) || compare(getvariableofnpc(.ItemAegis$[.@i], "cons_seller_db"), .@query$)) {
+			.@found_id[.@n] = .@id;
+			.@found_price[.@n] = getvariableofnpc(.ItemPrice[.@i], "cons_seller_db");
+			.@n += 1;
+		}
+	}
+	if (!.@n) {
+		mes "[Rooke]";
+		mes "Not this time. I don't stock that... yet.";
+		mes "Try another name, or just let me show you the good stuff.";
+		close;
+	}
+	if (.@n > 1) {
+		.@choice_menu$ = "";
+		for (.@i = 0; .@i < .@n; ++.@i)
+			.@choice_menu$ += getitemname(.@found_id[.@i]) + " (" + .@found_price[.@i] + " CP):";
+		mes "[Rooke]";
+		if (.@n >= 10)
+			mes "Too many hits. I stopped at ten. Be greedier with the name.";
+		else
+			mes "Here. These are the ones that made me look twice.";
+		next;
+		.@s = select(.@choice_menu$) - 1;
+		.@found_id[0] = .@found_id[.@s];
+		.@found_price[0] = .@found_price[.@s];
+	}
+	set getvariableofnpc(.SearchId, "cons_seller_db"), .@found_id[0];
+	set getvariableofnpc(.SearchPrice, "cons_seller_db"), .@found_price[0];
+	donpcevent "cons_seller_db::OnFillSearch";
+	close2;
+	callshop "cons_search", 1;
+	end;
+
+OnInit:
+	setunittitle(getnpcid(0), "<Alchemist>");
+	end;
+}
+
+-	pointshop	cons_search	-1,#CASHPOINTS,501:2
+-	pointshop	cons0	-1,#CASHPOINTS,501:2
+-	pointshop	cons1	-1,#CASHPOINTS,501:2
+-	pointshop	cons2	-1,#CASHPOINTS,501:2
+-	pointshop	cons3	-1,#CASHPOINTS,501:2
+-	pointshop	cons4	-1,#CASHPOINTS,501:2
+-	pointshop	cons5	-1,#CASHPOINTS,501:2
+
+-	script	cons_seller_db	-1,{
+	end;
+
+OnFillSearch:
+	npcshopitem "cons_search", .SearchId, .SearchPrice;
+	end;
+
+OnInit:
+	// Canonical SKUs only. Random boxes, regional copies, [Not For Sale], empty
+	// TODO scripts, and weaker same-name duplicates are excluded.
+	// Ordinary buffs use one modest official pack per family. Ability sets
+	// the 10-count price; pack volume scales it. Timed Infinite rental boxes
+	// remain. Battle Manual 10-packs use 5,000 / 7,000 / 10,000 Zeny per
+	// bottle. Bubble Gum 10-packs use 7,000 / 10,000 / 15,000 Zeny per
+	// bottle. 1 Cash Point = 1,000 Zeny. Recovery 10-packs use 3,000 /
+	// 5,000 Zeny per bottle. Regeneration 5-pack uses 2,000 Zeny each.
+	// Convenience uses the retuned per-piece Zeny prices below.
+	// Upgrade 10-packs use 10,000 / 30,000 / 100,000 Zeny per stone.
+	// Blacksmith Blessing is 12,500 Zeny (13). Shadow Refine Hammer is 100.
+	// Category 0: EXP and Drop
+	setarray .ItemId[0],     12900, 13990, 13695, 13696, 16267, 13758, 12902, 16633, 16268, 12312, 12872;
+	setarray .ItemPrice[0],     50,    50,    50,    70,   100,   200,    70,   100,   150,    10,    10;
+	setarray .ItemCat[0],        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0;
+	// Category 1: Combat Buffs
+	setarray .ItemId[11],    17263, 17264, 17265, 12903, 12904, 12905, 12906, 12907, 12908, 12913, 12914, 12915, 12916, 12917, 12918, 13717, 12299;
+	setarray .ItemPrice[11],   100,   100,   100,    50,    50,    50,    50,    50,    50,     5,     5,    20,     8,     8,     8,     6,    10;
+	setarray .ItemCat[11],       1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1;
+	// Category 2: Recovery
+	setarray .ItemId[28],    13711, 13714, 13719;
+	setarray .ItemPrice[28],    30,    50,    10;
+	setarray .ItemCat[28],       2,     2,     2;
+	// Category 3: Convenience
+	setarray .ItemId[31],    12909, 12910, 12901,  7776, 13600, 13582, 17314, 17251, 17474, 17229, 13553, 14347;
+	setarray .ItemPrice[31],    10,     5,    30,    50,    50,    10,    30,    45,    60,   150,    25,    10;
+	setarray .ItemCat[31],       3,     3,     3,     3,     3,     3,     3,     3,     3,     3,     3,     3;
+	// Category 4: Reset
+	setarray .ItemId[43],    12213;
+	setarray .ItemPrice[43],  1000;
+	setarray .ItemCat[43],       4;
+	// Upgrade. Ordinary cities do not sell finished Oridecon/Elunium.
+	setarray .ItemId[44],      984,   985, 12920, 12921, 16394, 16396, 16260, 16261,  6635, 23436;
+	setarray .ItemPrice[44],     5,     5,   100,   100,   300,   300,  1000,  1000,    13,   100;
+	setarray .ItemCat[44],       5,     5,     5,     5,     5,     5,     5,     5,     5,     5;
+
+	.ItemCount = 54;
+	deletearray .CatHas[0], 6;
+
+	for (.@cat = 0; .@cat < 6; ++.@cat)
+		npcshopdelitem "cons" + .@cat, 501;
+	npcshopdelitem "cons_search", 501;
+
+	for (.@i = 0; .@i < .ItemCount; ++.@i) {
+		.@id = .ItemId[.@i];
+		.@type = getiteminfo(.@id, ITEMINFO_TYPE);
+		.@name$ = getitemname(.@id);
+		if (.@name$ == "" || .@name$ == "Unknown Item") {
+			debugmes "Consumable Seller: missing item " + .@id + ".";
+			.ItemId[.@i] = 0;
+			continue;
+		}
+		if (.@type != IT_USABLE && .@type != IT_HEALING && .@type != IT_DELAYCONSUME && .@type != IT_ETC && .@type != IT_CASH) {
+			debugmes "Consumable Seller: rejected type for item " + .@id + " (" + .@name$ + ").";
+			.ItemId[.@i] = 0;
+			continue;
+		}
+		.ItemAegis$[.@i] = getiteminfo(.@id, ITEMINFO_AEGISNAME);
+		.CatHas[.ItemCat[.@i]] = true;
+		npcshopadditem "cons" + .ItemCat[.@i], .@id, .ItemPrice[.@i];
+	}
+	end;
+}

@@ -19,6 +19,18 @@
 //= 3.5 Added Refine UI [Atemo, Lemongrass]
 //============================================================
 
+function	script	F_EinbrochOreHint	{
+	.@n$ = getarg(0);
+	mes "[" + .@n$ + "]";
+	mes "Oridecon and Elunium?";
+	mes "I don't keep those here.";
+	next;
+	mes "[" + .@n$ + "]";
+	mes "I have heard Einbroch is the city that stands out for smithing, though.";
+	mes "You should look around there.";
+	close;
+}
+
 // Christopher: Geffen Blacksmith
 //============================================================
 geffen_in,110,172,0	script	Christopher#1	63,{
@@ -160,88 +172,66 @@ geffen_in,110,172,0	script	Christopher#1	63,{
 		mes "[Christopher Guillenrow]";
 		mes "I prepare every Metal, and only the high quality ones o'course. Now then, which one do ye need?";
 		next;
-		switch(select("Phracon - 200z.:Emveretarcon - 1000z.:Cancel.")) {
+		switch(select("Phracon - 500z.:Emveretarcon - 2,000z.:Do ye have Oridecon or Elunium?:Cancel.")) {
 		case 1:
-			mes "[Christopher Guillenrow]";
-			mes "So, How many do ye wish to buy? If ye dont want anything, just type the number as '0.'";
-			next;
-			while(1) {
-				input .@input;
-				if (.@input == 0) {
-					mes "[Christopher Guillenrow]";
-					mes "Deal has";
-					mes "been canceled.";
-					mes "Fare ye well.";
-					close;
-				}
-				else if ((.@input < 0) || (.@input > 500)) {
-					mes "[Christopher Guillenrow]";
-					mes "Ye can buy 500, er less.";
-					next;
-				}
-				else {
-					break;
-				}
-			}
-			.@sell = .@input * 200;
-			if (Zeny < .@sell) {
-				mes "[Christopher Guillenrow]";
-				mes "Ye don't have enough money. Ye know I can't sell this at a lower price... You know how the wifey nags about Zeny.";
-				close;
-			}
-			if (checkweight(1010,.@input) == 0) {
-				mes "[Christopher Guillenrow]";
-				mes "Ye look like you don't have the room to carry anythin' new. Why don't ye put some things into Kafra Storage n' come back.";
-				close;
-			}
-			getitem 1010,.@input; // Phracon
-			Zeny = Zeny-.@sell;
-			mes "[Christopher Guillenrow]";
-			mes "Thank ye fer shopping at me workshop. Feel free to come anytime, whenever ye need.";
-			close;
+			.@item = 1010;
+			.@price = 500;
+			break;
 		case 2:
-			mes "[Christopher Guillenrow]";
-			mes "So, how many do ye wish to buy? If ye dont want anything at all, just type the number as '0.'";
-			next;
-			while(1) {
-				input .@input;
-				if (.@input == 0) {
-					mes "[Christopher Guillenrow]";
-					mes "Deal has";
-					mes "been canceled.";
-					mes "Fare ye well.";
-					close;
-				}
-				else if ((.@input < 0) || (.@input > 500)) {
-					mes "[Christopher Guillenrow]";
-					mes "Ye can buy 500, er less.";
-					next;
-				}
-				else {
-					break;
-				}
-			}
-			.@sell = .@input * 1000;
-			if (Zeny < .@sell) {
-				mes "[Christopher Guillenrow]";
-				mes "I don't think I can let ye have this with the zeny ye have. I can't lose me money because of ye.";
-				close;
-			}
-			if (checkweight(1011,.@input) == 0) {
-				mes "[Christopher Guillenrow]";
-				mes "Me friend... Seems to me ye don't have Inventory space. Why doncha put some things into Kafra Storage first?";
-				close;
-			}
-			getitem 1011,.@input; // Emveretarcon
-			Zeny = Zeny-.@sell;
-			mes "[Christopher Guillenrow]";
-			mes "Thank ye fer shopping at me workshop. Feel free to come anytime, whenever ye need, whenever ye want.";
-			close;
+			.@item = 1011;
+			.@price = 2000;
+			break;
 		case 3:
+			mes "[Christopher Guillenrow]";
+			mes "Oridecon n' Elunium, ye say?";
+			mes "Nay, I don't keep those here, laddy.";
+			next;
+			mes "[Christopher Guillenrow]";
+			mes "I hear Einbroch's the city that made its name on smithing, though.";
+			mes "I'd look around there if I were ye.";
+			close;
+		case 4:
 			mes "[Christopher Guillenrow]";
 			mes "Feel free to come anytime, whenever ye need. Fare ye well.";
 			close;
 		}
+		mes "[Christopher Guillenrow]";
+		mes "So, How many do ye wish to buy? If ye dont want anything, just type the number as '0.'";
+		next;
+		while(1) {
+			input .@input;
+			if (.@input == 0) {
+				mes "[Christopher Guillenrow]";
+				mes "Deal has";
+				mes "been canceled.";
+				mes "Fare ye well.";
+				close;
+			}
+			else if ((.@input < 0) || (.@input > 500)) {
+				mes "[Christopher Guillenrow]";
+				mes "Ye can buy 500, er less.";
+				next;
+			}
+			else {
+				break;
+			}
+		}
+		.@sell = .@input * .@price;
+		if (Zeny < .@sell) {
+			mes "[Christopher Guillenrow]";
+			mes "Ye don't have enough money. Ye know I can't sell this at a lower price... You know how the wifey nags about Zeny.";
+			close;
+		}
+		if (checkweight(.@item,.@input) == 0) {
+			mes "[Christopher Guillenrow]";
+			mes "Ye look like you don't have the room to carry anythin' new. Why don't ye put some things into Kafra Storage n' come back.";
+			close;
+		}
+		getitem .@item,.@input;
+		Zeny = Zeny-.@sell;
+		mes "[Christopher Guillenrow]";
+		mes "Thank ye fer shopping at me workshop. Feel free to come anytime, whenever ye need.";
+		close;
 	case 4:
 		mes "[Christopher Guillenrow]";
 		mes "I can purify yer Oridecon and Elunium. I make a refined Ore out of 5 o'each rough ones. Well... Which one do ye want to make?";
@@ -426,18 +416,27 @@ ein_in01,38,29,0	script	Paul Spanner	63,{
 	case 3:
 		mes "[Paul Spanner]";
 		mes "I have high quality metal.";
+		mes "Oridecon and Elunium I sell as rough stones. You will need five to process one.";
 		mes "So, which metal would you like to buy?";
 		next;
-		switch(select("Phracon - 200z.:Emveretarcon - 1,000z.:Quit.")) {
+		switch(select("Phracon - 500z.:Emveretarcon - 2,000z.:Rough Oridecon - 800z.:Rough Elunium - 800z.:Quit.")) {
 		case 1:
 			.@item = 1010;
-			.@item_price = 200;
+			.@item_price = 500;
 			break;
 		case 2:
 			.@item = 1011;
-			.@item_price = 1000;
+			.@item_price = 2000;
 			break;
 		case 3:
+			.@item = 756;
+			.@item_price = 800;
+			break;
+		case 4:
+			.@item = 757;
+			.@item_price = 800;
+			break;
+		case 5:
 			mes "[Paul Spanner]";
 			mes "If you need anything, just let me know.";
 			close;
@@ -1008,27 +1007,49 @@ function	script	phramain	{
 		close;
 	}
 	.@npc_name$ = getarg(0);
+	.@einbroch = (strnpcinfo(4) == "ein_in01");
 	mes "["+ .@npc_name$ +"]";
-	mes "I sell 2 kinds of Metal";
-	mes "for tempering weaponry.";
+	mes "I sell metals for tempering weaponry and armor.";
 	mes "I have ^007777Phracon^000000 for Level 1";
-	mes "Weapons, and ^007777Emveretarcon^000000";
+	mes "Weapons and ^007777Emveretarcon^000000";
 	mes "for Level 2 Weapons.";
+	if (.@einbroch) {
+		mes "I also have ^007777Rough Oridecon^000000 and ^007777Rough Elunium^000000";
+		mes "for higher gear. Five rough stones make one refined ore.";
+	}
 	next;
-	switch(select("Phracon - 200 Zeny:Emveretarcon - 1000 Zeny:Ask about other Metals")) {
+	if (.@einbroch)
+		.@s = select("Phracon - 500 Zeny:Emveretarcon - 2,000 Zeny:Rough Oridecon - 800 Zeny:Rough Elunium - 800 Zeny:Cancel");
+	else
+		.@s = select("Phracon - 500 Zeny:Emveretarcon - 2,000 Zeny:Do you have Oridecon or Elunium?:Cancel");
+	switch(.@s) {
 	case 1:
 		.@material = 1010;
-		.@price = 200;
+		.@price = 500;
 		break;
 	case 2:
 		.@material = 1011;
-		.@price = 1000;
+		.@price = 2000;
 		break;
 	case 3:
+		if (.@einbroch) {
+			.@material = 756;
+			.@price = 800;
+			break;
+		}
+		callfunc "F_EinbrochOreHint", .@npc_name$;
+	case 4:
+		if (.@einbroch) {
+			.@material = 757;
+			.@price = 800;
+			break;
+		}
 		mes "["+ .@npc_name$ +"]";
-		mes "Other metals?";
-		mes "Well, you'll need special metals to upgrade higher level weapons, or any kind of armor. But you know, Oridecon and Elunium is really";
-		mes "hard to just find...";
+		mes "Come back if you need ore.";
+		close;
+	case 5:
+		mes "["+ .@npc_name$ +"]";
+		mes "Come back if you need ore.";
 		close;
 	}
 	mes "["+ .@npc_name$ +"]";

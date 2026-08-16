@@ -4248,11 +4248,11 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Mille Feuille]";
 				mes "Ingredients- ^0000cd1 Clover, 1 Green Herb, 1 Red Herb^000000.";
 				next;
-				cutin "루나틱카드.bmp", 3;
+				cutin "??????.bmp", 3;
 				mes "[Dacquoise]";
 				mes "Clover and the Red Herb are dropped by Lunatic or Fabre monsters wandering everywhere on the field outside Izlude.";
 				next;
-				cutin "파브르카드.bmp", 3;
+				cutin "??????.bmp", 3;
 				mes "[Eclaire]";
 				mes "Green Herbs are dropped by Fabres.";
 				next;
@@ -4274,11 +4274,11 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Mille Feuille]";
 				mes "Ingredients are ^0000cd1 Apple & 2 Carrots^000000.";
 				next;
-				cutin "포링카드.bmp", 3;
+				cutin "???????.bmp", 3;
 				mes "[Dacquoise]";
 				mes "Apples are dropped by Porings bouncing around the field outside of Izlude.";
 				next;
-				cutin "루나틱카드.bmp", 3;
+				cutin "??????.bmp", 3;
 				mes "[Eclaire]";
 				mes "Carrots are given by Lunatics.";
 				next;
@@ -4300,15 +4300,15 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Mille Feuille]";
 				mes "Ingredients are ^0000cd1 Jellopy, 1 Fluff, 1 Feather^000000.";
 				next;
-				cutin "포링카드.bmp", 3;
+				cutin "???????.bmp", 3;
 				mes "[Dacquoise]";
 				mes "Jellopy are dropped by Porings bouncing around the field of Izlude.";
 				next;
-				cutin "파브르카드.bmp", 3;
+				cutin "??????.bmp", 3;
 				mes "[Eclaire]";
 				mes "Fluff can be received from Fabre or Lunatic.";
 				next;
-				cutin "루나틱카드.bmp", 3;
+				cutin "??????.bmp", 3;
 				mes "[Mille Feuille]";
 				mes "Feathers are dropped by Lunatics or Fabres.";
 				next;
@@ -4330,11 +4330,11 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Mille Feuille]";
 				mes "Ingredients are-^0000cd 1 Apple & 1 Clover^000000.";
 				next;
-				cutin "포링카드.bmp", 3;
+				cutin "???????.bmp", 3;
 				mes "[Dacquoise]";
 				mes "Apple can be found in Porings in the field outside of Izlude.";
 				next;
-				cutin "루나틱카드.bmp", 3;
+				cutin "??????.bmp", 3;
 				mes "[Eclaire]";
 				mes "Clovers are dropped by Lunatics or Fabre in the field outside Izlude.";
 				next;
@@ -13072,10 +13072,19 @@ izlude,145,122,7	script	Tadde#iz	4_M_04,{
 	}
 	mes "[Tadde]";
 	mes "We sell metals for refining iron or steel weapons here!";
-	mes "We have ^007777Phracons^000000 for level 1 weapons, and ^007777Emveretarcons^000000 for level 2 weapons.";
+	mes "We have ^007777Phracons^000000 for level 1 weapons and ^007777Emveretarcons^000000 for level 2 weapons.";
 	next;
-	switch(select("Phracon - 200 zeny.", "Emveretarcon - 1000 zeny.", "Ask for other metals.")) {
-	case 1:
+	.@s = select("Phracon - 500 zeny.:Emveretarcon - 2,000 zeny.:Do you have Oridecon or Elunium?:Ask about other metals.");
+	if (.@s == 3)
+		callfunc "F_EinbrochOreHint", "Tadde";
+	if (.@s == 1 || .@s == 2) {
+		if (.@s == 1) {
+			.@item = 1010;
+			.@price = 500;
+		} else {
+			.@item = 1011;
+			.@price = 2000;
+		}
 		mes "[Tadde]";
 		mes "How many would you like? Enter '0' if you want to end.";
 		next;
@@ -13093,7 +13102,7 @@ izlude,145,122,7	script	Tadde#iz	4_M_04,{
 				break;
 			}
 		}
-		.@sell = .@amount * 200;
+		.@sell = .@amount * .@price;
 		.@item_weight = .@amount * 200;
 		if (Zeny < .@sell) {
 			mes "[Tadde]";
@@ -13107,49 +13116,13 @@ izlude,145,122,7	script	Tadde#iz	4_M_04,{
 			close;
 		}
 		Zeny -= .@sell;
-		getitem 1010,.@amount;// Phracon
+		getitem .@item,.@amount;
 		mes "[Tadde]";
 		mes "This is what you wanted. Thank you very much!";
 		close;
-	case 2:
-		mes "[Tadde]";
-		mes "How many would you like? Enter '0' if you want to end.";
-		next;
-		while(1) {
-			input .@amount, 0, 501;
-			if (.@amount == 0) {
-				mes "[Tadde]";
-				mes "Trade ended.";
-				close;
-			} else if (.@amount > 500) {
-				mes "[Tadde]";
-				mes "Please reduce your quantity to 500 or less.";
-				next;
-			} else {
-				break;
-			}
-		}
-		.@sell = .@amount * 1000;
-		.@item_weight = .@amount * 200;
-		if (Zeny < .@sell) {
-			mes "[Tadde]";
-			mes "Oh dear...my apologies, but you don't have enough money.";
-			mes "I'm sorry we can't give it to you cheaper...we're only a small business.";
-			close;
-		}
-		if ((MaxWeight - Weight) < .@item_weight) {
-			mes "[Tadde]";
-			mes "Er...please sorts your inventory before you take these...";
-			close;
-		}
-		getitem 1011,.@amount;// Emveretarcon
-		Zeny -= .@sell;
-		mes "[Tadde]";
-		mes "This is what you wanted. Thank you very much!";
-		close;
-	case 3:
-		mes "[Tadde]";
-		mes "Any questions about the weapon level and safety refining?";
+	}
+	mes "[Tadde]";
+	mes "Any questions about the weapon level and safety refining?";
 		while(1) {
 			next;
 			switch(select("Weapon level", "Safety refining.", "Finish the question.")) {
@@ -13223,7 +13196,6 @@ izlude,145,122,7	script	Tadde#iz	4_M_04,{
 		mes "[Tadde]";
 		mes "The explanations about the charge and effect of the safe refining will be covered by Mr. Locas.";
 		close;
-	}
 }
 
 izlude_a,145,122,7	duplicate(Tadde#iz)	Tadde#iz_a	4_M_04
@@ -13274,7 +13246,7 @@ izlude,155,132,3	script	Locas#iz	4_M_02,{
 						mes "Refining of level 1 weapons requires ^3E86C3Phracon and 1000 zeny^000000.";
 						next;
 						mes "[Locas]";
-						mes "As Phracon is the most popular metal, you can get it from monsters but also from Tadde at 200 zeny.";
+						mes "As Phracon is the most popular metal, you can get it from monsters but also from Tadde at 500 zeny.";
 						next;
 						continue;
 					case 2:
@@ -13282,7 +13254,7 @@ izlude,155,132,3	script	Locas#iz	4_M_02,{
 						mes "Refining level 2 weapons requires ^3E86C3Emveretarcon and 2,000 zeny^000000.";
 						next;
 						mes "[Locas]";
-						mes "Emveretarcon is also a relatively popular metal. You can get it either from monsters or from Tadde at 1000 zeny.";
+						mes "Emveretarcon is also a relatively popular metal. You can get it either from monsters or from Tadde at 2,000 zeny.";
 						next;
 						continue;
 					case 3:
@@ -13290,7 +13262,7 @@ izlude,155,132,3	script	Locas#iz	4_M_02,{
 						mes "Refining of level 3 weapons requires ^3E86C3Oridecon and 10,000 zeny.^000000.";
 						next;
 						mes "[Locas]";
-						mes "Oridecon is such a rare metal that I don't sell it... But,";
+						mes "Ordinary city merchants do not sell Oridecon. Einbroch is known for its smithing; look around there for Rough Oridecon.";
 						next;
 						mes "[Locas]";
 						mes "If you have 5 Rough Oridecon obtainable from some monsters, you can refine them to make one Oridecon.";
@@ -13301,7 +13273,7 @@ izlude,155,132,3	script	Locas#iz	4_M_02,{
 						mes "Refining level 4 weapons requires ^3E86C3Oridecon and 20,000 zeny.^000000.";
 						next;
 						mes "[Locas]";
-						mes "Elunium is as rare a metal as Oridecon, like Oridecon, if you bring me 5 Rough Elunium obtainable from some monsters, I will refine them to make a Elunium for you.";
+						mes "Ordinary city merchants do not sell Oridecon. Einbroch is known for its smithing; look around there for Rough Oridecon. Five rough stones make one Oridecon.";
 						next;
 						continue;
 					case 5:
@@ -13309,7 +13281,7 @@ izlude,155,132,3	script	Locas#iz	4_M_02,{
 						mes "Refining the Armor requires ^3E86C3Elunium and 20000 zeny.^000000.";
 						next;
 						mes "[Locas]";
-						mes "Elunium is as rare a metal as Oridecon, like Oridecon, if you bring me 5 Rough Elunium obtainable from some monsters, I will refine them to make a Elunium for you.";
+						mes "Ordinary city merchants do not sell Elunium. Einbroch is known for its smithing; look around there for Rough Elunium. Five rough stones make one Elunium.";
 						next;
 						continue;
 					case 6:
@@ -13479,7 +13451,7 @@ izlude,155,132,3	script	Locas#iz	4_M_02,{
 						mes "Refining of level 1 weapons requires ^3E86C3Phracon and 1000 zeny^000000.";
 						next;
 						mes "[Locas]";
-						mes "As Phracon is the most popular metal, you can get it from monsters but also from Tadde at 200 zeny.";
+						mes "As Phracon is the most popular metal, you can get it from monsters but also from Tadde at 500 zeny.";
 						next;
 						continue;
 					case 2:
@@ -13487,7 +13459,7 @@ izlude,155,132,3	script	Locas#iz	4_M_02,{
 						mes "Refining level 2 weapons requires ^3E86C3Emveretarcon and 20,000 zeny^000000.";
 						next;
 						mes "[Locas]";
-						mes "Emveretarcon is also a relatively popular metal. You can get it either from monsters or from Tadde at 1000 zeny.";
+						mes "Emveretarcon is also a relatively popular metal. You can get it either from monsters or from Tadde at 2,000 zeny.";
 						next;
 						continue;
 					case 3:
@@ -13495,7 +13467,7 @@ izlude,155,132,3	script	Locas#iz	4_M_02,{
 						mes "Refining of level 3 weapons requires ^3E86C3Oridecon and 10,000 zeny.^000000.";
 						next;
 						mes "[Locas]";
-						mes "Oridecon is such a rare metal that I don't sell it... But,";
+						mes "Ordinary city merchants do not sell Oridecon. Einbroch is known for its smithing; look around there for Rough Oridecon.";
 						next;
 						mes "[Locas]";
 						mes "If you have 5 Rough Oridecon obtainable from some monsters, you can refine them to make one Oridecon.";
@@ -13506,7 +13478,7 @@ izlude,155,132,3	script	Locas#iz	4_M_02,{
 						mes "Refining level 4 weapons requires ^3E86C3Oridecon and 20,000 zeny.^000000.";
 						next;
 						mes "[Locas]";
-						mes "Elunium is as rare a metal as Oridecon, like Oridecon, if you bring me 5 Rough Elunium obtainable from some monsters, I will refine them to make a Elunium for you.";
+						mes "Ordinary city merchants do not sell Oridecon. Einbroch is known for its smithing; look around there for Rough Oridecon. Five rough stones make one Oridecon.";
 						next;
 						continue;
 					case 5:
@@ -13514,7 +13486,7 @@ izlude,155,132,3	script	Locas#iz	4_M_02,{
 						mes "Refining the Armor requires ^3E86C3Elunium and 20000 zeny.^000000.";
 						next;
 						mes "[Locas]";
-						mes "Elunium is as rare a metal as Oridecon, like Oridecon, if you bring me 5 Rough Elunium obtainable from some monsters, I will refine them to make a Elunium for you.";
+						mes "Ordinary city merchants do not sell Elunium. Einbroch is known for its smithing; look around there for Rough Elunium. Five rough stones make one Elunium.";
 						next;
 						continue;
 					case 6:

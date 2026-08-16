@@ -604,21 +604,27 @@ OnInit:
 		unloadnpc "Matestein";
 		unloadnpc "Fruel";
 
-		npcshopupdate "market_refine_prt_in",1010,200,999999;
-		npcshopupdate "market_refine_payon",1010,200,999999;
-		npcshopupdate "market_refine_morocc_in",1010,200,999999;
-		npcshopupdate "market_refine_alberta_in",1010,200,999999;
-		npcshopupdate "market_refine_yuno_in01",1010,200,999999;
-		npcshopupdate "market_refine_ein_in01",1010,200,999999;
-		npcshopupdate "market_refine_lhz_in02",1010,200,999999;
-		
-		npcshopupdate "market_refine_prt_in",1011,1000,999999;
-		npcshopupdate "market_refine_payon",1011,1000,999999;
-		npcshopupdate "market_refine_morocc_in",1011,1000,999999;
-		npcshopupdate "market_refine_alberta_in",1011,1000,999999;
-		npcshopupdate "market_refine_yuno_in01",1011,1000,999999;
-		npcshopupdate "market_refine_ein_in01",1011,1000,999999;
-		npcshopupdate "market_refine_lhz_in02",1011,1000,999999;
+		// Offline 2026-08-17: Phracon 500, Emveretarcon 2000. Finished Oridecon/Elunium are not sold in ordinary cities.
+		// Einbroch sells Rough Oridecon/Elunium 756/757 at 800 instead of finished stones.
+		npcshopupdate "market_refine_prt_in",1010,500,999999;
+		npcshopupdate "market_refine_payon",1010,500,999999;
+		npcshopupdate "market_refine_morocc_in",1010,500,999999;
+		npcshopupdate "market_refine_alberta_in",1010,500,999999;
+		npcshopupdate "market_refine_yuno_in01",1010,500,999999;
+		npcshopupdate "market_refine_ein_in01",1010,500,999999;
+		npcshopupdate "market_refine_lhz_in02",1010,500,999999;
+
+		npcshopupdate "market_refine_prt_in",1011,2000,999999;
+		npcshopupdate "market_refine_payon",1011,2000,999999;
+		npcshopupdate "market_refine_morocc_in",1011,2000,999999;
+		npcshopupdate "market_refine_alberta_in",1011,2000,999999;
+		npcshopupdate "market_refine_yuno_in01",1011,2000,999999;
+		npcshopupdate "market_refine_ein_in01",1011,2000,999999;
+		npcshopupdate "market_refine_lhz_in02",1011,2000,999999;
+
+		// Einbroch sells rough stones only. Five of 756/757 make one 984/985.
+		npcshopupdate "market_refine_ein_in01",756,800,999999;
+		npcshopupdate "market_refine_ein_in01",757,800,999999;
 	}
 	else {
 		unloadnpc "market_refine_prt_in";
@@ -635,22 +641,29 @@ OnInit:
 	end;
 }
 
--	marketshop	market_refine_prt_in	-1,1010:-1:999999,1011:-1:999999
--	marketshop	market_refine_payon	-1,1010:-1:999999,1011:-1:999999
--	marketshop	market_refine_morocc_in	-1,1010:-1:999999,1011:-1:999999
--	marketshop	market_refine_alberta_in	-1,1010:-1:999999,1011:-1:999999
--	marketshop	market_refine_yuno_in01	-1,1010:-1:999999,1011:-1:999999
--	marketshop	market_refine_ein_in01	-1,1010:-1:999999,1011:-1:999999
--	marketshop	market_refine_lhz_in02	-1,1010:-1:999999,1011:-1:999999
+-	marketshop	market_refine_prt_in	-1,1010:500:999999,1011:2000:999999
+-	marketshop	market_refine_payon	-1,1010:500:999999,1011:2000:999999
+-	marketshop	market_refine_morocc_in	-1,1010:500:999999,1011:2000:999999
+-	marketshop	market_refine_alberta_in	-1,1010:500:999999,1011:2000:999999
+-	marketshop	market_refine_yuno_in01	-1,1010:500:999999,1011:2000:999999
+-	marketshop	market_refine_ein_in01	-1,1010:500:999999,1011:2000:999999,756:800:999999,757:800:999999
+-	marketshop	market_refine_lhz_in02	-1,1010:500:999999,1011:2000:999999
 
 prt_in,63,69,3	script	Dietrich#ns_prt	4_M_02,{
 	mes "[" + strnpcinfo(1) + "]";
 	mes "We sell and exchange various ores used in smelting.";
 	next;
-	switch( select( "View basic smelting ores", "View advanced smelting ores", "View Ether smelting ores", "Cancel" ) ) {
+	if (strnpcinfo(4) == "ein_in01")
+		.@s = select("View basic smelting ores", "View advanced smelting ores", "View Ether smelting ores", "Cancel");
+	else
+		.@s = select("View basic smelting ores", "View advanced smelting ores", "View Ether smelting ores", "Do you have Oridecon or Elunium?", "Cancel");
+	switch(.@s) {
 	case 1:
 		mes "[" + strnpcinfo(1) + "]";
-		mes "Phracon and Emveretarcon are available for use in smelting low-level weapons.";
+		if (strnpcinfo(4) == "ein_in01")
+			mes "Phracon, Emveretarcon, and rough Oridecon and Elunium stones are available. Five rough stones make one refined ore.";
+		else
+			mes "Phracon and Emveretarcon are available for smelting.";
 		close2;
 		callshop "market_refine_" + strnpcinfo(4);
 		end;
@@ -667,6 +680,13 @@ prt_in,63,69,3	script	Dietrich#ns_prt	4_M_02,{
 		callshop "barter_refine_2";
 		end;
 	case 4:
+		if (strnpcinfo(4) == "ein_in01") {
+			mes "[" + strnpcinfo(1) + "]";
+			mes "If you lack the materials used for smelting, come anytime.";
+			close;
+		}
+		callfunc "F_EinbrochOreHint", strnpcinfo(1);
+	case 5:
 		mes "[" + strnpcinfo(1) + "]";
 		mes "If you lack the materials used for smelting, come anytime.";
 		close;

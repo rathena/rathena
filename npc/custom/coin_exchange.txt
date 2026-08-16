@@ -1,25 +1,27 @@
 //===== Ragnarok Offline =====================================
 //= Coin Exchange
 //===== Description: =========================================
-//= Converts Zeny into account-wide Cash Points.
-//= Base rate: 500,000 Zeny for 1 Cash Point.
-//= Promotion: every 10 purchased points awards 1 bonus point.
+//= Converts Zeny into account-wide Cash Points and cash-out
+//= Cash Points back into Zeny.
+//= Buy rate: 1,000 Zeny for 1 Cash Point.
+//= Buy promotion: every 10 purchased points awards 1 bonus point.
+//= Cash-out rate: 1 Cash Point for 750 Zeny. No cash-out bonus.
 //= Optional gacha: one 0-100 roll with a stake multiplier of
-//= 1 per 500,000 Zeny.
-//= The exchange is one-way and cannot be refunded.
+//= 1 per 1,000 Zeny.
 //============================================================
 
 paramk,26,181,4	script	Coin Exchange#offline	563,{
 	mes "[Coin Exchange]";
 	mes "^777777The slot machine rattles as its coin counter lights up.^000000";
-	mes "Insert ^0055FF500,000 Zeny^000000 to receive ^0055FF1 Cash Point^000000.";
+	mes "Insert ^0055FF" + .ZenyPerPoint + " Zeny^000000 to receive ^0055FF1 Cash Point^000000.";
+	mes "Cash out ^0055FF1 Cash Point^000000 for ^0055FF" + .ZenyPerCashOut + " Zeny^000000.";
 	next;
-	switch (select("Exchange Zeny.:Spin the gacha.:Check my Cash Points.:Leave.")) {
+	switch (select("Exchange Zeny.:Exchange Cash Points.:Spin the gacha.:Check my Cash Points.:Leave.")) {
 	case 1:
 		.@max_points = Zeny / .ZenyPerPoint;
 		if (.@max_points < 1) {
 			mes "[Coin Exchange]";
-			mes "You need at least ^0055FF500,000 Zeny^000000.";
+			mes "You need at least ^0055FF" + .ZenyPerPoint + " Zeny^000000.";
 			close;
 		}
 
@@ -35,7 +37,6 @@ paramk,26,181,4	script	Coin Exchange#offline	563,{
 		mes "[Coin Exchange]";
 		mes "Insert ^0055FF" + .@cost + " Zeny^000000";
 		mes "Receive ^0055FF" + .@base_points + " Cash Points^000000.";
-		mes "This exchange cannot be reversed.";
 		next;
 		if (select("Insert the Zeny.:Cancel.") != 1)
 			close;
@@ -68,10 +69,63 @@ paramk,26,181,4	script	Coin Exchange#offline	563,{
 		close;
 
 	case 2:
+		if (#CASHPOINTS < 1) {
+			mes "[Coin Exchange]";
+			mes "You have no Cash Points to cash out.";
+			close;
+		}
+		.@max_by_zeny = (MAX_ZENY - Zeny) / .ZenyPerCashOut;
+		if (.@max_by_zeny < 1) {
+			mes "[Coin Exchange]";
+			mes "Your Zeny pouch is already full.";
+			mes "The machine cannot spit out more coins.";
+			close;
+		}
+		.@max_points = #CASHPOINTS;
+		if (.@max_points > .@max_by_zeny)
+			.@max_points = .@max_by_zeny;
+
+		mes "[Coin Exchange]";
+		mes "You can cash out up to ^0055FF" + .@max_points + " Cash Points^000000.";
+		mes "Each point returns ^0055FF" + .ZenyPerCashOut + " Zeny^000000. No extras.";
+		mes "How many points do you want to cash out?";
+		next;
+		input .@points, 1, .@max_points;
+		.@payout = .@points * .ZenyPerCashOut;
+
+		mes "[Coin Exchange]";
+		mes "Insert ^0055FF" + .@points + " Cash Points^000000";
+		mes "Receive ^0055FF" + .@payout + " Zeny^000000.";
+		next;
+		if (select("Cash out.:Cancel.") != 1)
+			close;
+
+		// Revalidate immediately before committing the cash-out.
+		if (.@points < 1 ||
+			.@payout != .@points * .ZenyPerCashOut ||
+			#CASHPOINTS < .@points ||
+			.@payout > MAX_ZENY - Zeny) {
+			mes "[Coin Exchange]";
+			mes "The machine rejects the transaction.";
+			mes "Check your Cash Points and Zeny, then try again.";
+			close;
+		}
+
+		#CASHPOINTS -= .@points;
+		Zeny += .@payout;
+		logmes "Coin Exchange: cashed out " + .@points + " Cash Points for " + .@payout + " Zeny; balance " + #CASHPOINTS;
+
+		mes "[Coin Exchange]";
+		mes "^777777The hopper clanks. Coins spill into the tray--fewer than went in.^000000";
+		mes "You received ^0055FF" + .@payout + " Zeny^000000.";
+		mes "Current balance: ^0055FF" + #CASHPOINTS + " Cash Points^000000.";
+		close;
+
+	case 3:
 		.@max_multiplier = Zeny / .ZenyPerPoint;
 		if (.@max_multiplier < 1) {
 			mes "[Coin Exchange]";
-			mes "You need at least ^0055FF500,000 Zeny^000000 to spin.";
+			mes "You need at least ^0055FF" + .ZenyPerPoint + " Zeny^000000 to spin.";
 			close;
 		}
 
@@ -79,19 +133,19 @@ paramk,26,181,4	script	Coin Exchange#offline	563,{
 		mes "A shortcut to riches--or a shortcut to ruin.";
 		mes "Right this way.";
 		mes "One spin rolls a number from ^0055FF0 to 100^000000.";
-		mes "Every ^0055FF500,000 Zeny^000000 wagered adds ^0055FFx1^000000 to your payout multiplier.";
+		mes "Every ^0055FF" + .ZenyPerPoint + " Zeny^000000 wagered adds ^0055FFx1^000000 to your payout multiplier.";
 		mes "^7777770-49: 0 | 50-59: 1 | 60-69: 2";
 		mes "70-89: 3 | 90-97: 4 | 98-99: 5 | 100: 10^000000";
 		mes "A losing spin pays nothing.";
 		next;
 		mes "[Coin Exchange]";
-		mes "Enter your wager in exact multiples of ^0055FF500,000 Zeny^000000.";
+		mes "Enter your wager in exact multiples of ^0055FF" + .ZenyPerPoint + " Zeny^000000.";
 		mes "Maximum wager: ^0055FF" + (.@max_multiplier * .ZenyPerPoint) + " Zeny^000000.";
 		next;
 		input .@wager, .ZenyPerPoint, Zeny;
 		if (.@wager % .ZenyPerPoint != 0) {
 			mes "[Coin Exchange]";
-			mes "The machine accepts only exact multiples of ^0055FF500,000 Zeny^000000.";
+			mes "The machine accepts only exact multiples of ^0055FF" + .ZenyPerPoint + " Zeny^000000.";
 			close;
 		}
 		.@multiplier = .@wager / .ZenyPerPoint;
@@ -149,7 +203,7 @@ paramk,26,181,4	script	Coin Exchange#offline	563,{
 		mes "Current balance: ^0055FF" + #CASHPOINTS + " Cash Points^000000.";
 		close;
 
-	case 3:
+	case 4:
 		mes "[Coin Exchange]";
 		mes "Your account has ^0055FF" + #CASHPOINTS + " Cash Points^000000.";
 		close;
@@ -159,8 +213,9 @@ paramk,26,181,4	script	Coin Exchange#offline	563,{
 	}
 
 OnInit:
-	.ZenyPerPoint = 500000;
+	.ZenyPerPoint = 1000;
+	.ZenyPerCashOut = 750;
 	.PromotionSize = 10;
-	setunittitle(getnpcid(0), "<Zeny to Cash Points>");
+	setunittitle(getnpcid(0), "<Cash Point Exchange>");
 	end;
 }
