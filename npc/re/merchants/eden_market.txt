@@ -279,7 +279,7 @@ OnSat2200:
 }
 
 // Eden Market Group Hustler
-moc_para01,106,38,4	script	Market Group Hustler#ent	4_M_YOYOROGUE,{
+moc_para01,106,42,4	script	Market Group Hustler#ent	4_M_YOYOROGUE,{
 	mes "[Hustler]";
 	mes "Hey, adventurer.";
 	mes "I can take you to somewhere nice. Are you interested?";

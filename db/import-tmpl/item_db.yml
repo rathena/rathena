@@ -88,6 +88,17 @@ Header:
   Type: ITEM_DB
   Version: 3
 
+Body:
+  - Id: 35000
+    AegisName: Offline_MVP_Card_Album
+    Name: MVP Card Album
+    Type: Usable
+    Weight: 50
+    Flags:
+      Container: true
+    Script: |
+      callfunc("F_OfflineMvpCardAlbum");
+
 #Body:
 # THQ Quest Items
 #=============================================================
