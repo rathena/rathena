@@ -9,10 +9,11 @@
 //= and MVP card sales. Multiple milestones roll independently.
 //============================================================
 
-paramk,41,159,4	script	Card Collector#offline	4_M_MANAGER,{
-	mes "[Card Collector]";
-	mes "Cards have value here.";
-	mes "Not Zeny--^0055FFCash Points^000000.";
+paramk,41,159,4	script	Black Market Boss#offline	4_M_MANAGER,{
+	mes "[Black Market Boss]";
+	mes "So, you brought me cards.";
+	mes "Good. Every card that changes hands in this market eventually reaches my table.";
+	mes "I pay in ^0055FFCash Points^000000, not Zeny.";
 	mes "My offer depends on the monster behind each card.";
 	next;
 	switch (select("Sell cards.:Check points and loyalty.:Leave.")) {
@@ -30,8 +31,9 @@ paramk,41,159,4	script	Card Collector#offline	4_M_MANAGER,{
 		}
 
 		if (!.@card_count) {
-			mes "[Card Collector]";
-			mes "You aren't carrying any cards I can buy.";
+			mes "[Black Market Boss]";
+			mes "Do not waste my time.";
+			mes "You are not carrying any cards I accept.";
 			mes "Cards inserted into equipment don't count.";
 			close;
 		}
@@ -41,8 +43,8 @@ paramk,41,159,4	script	Card Collector#offline	4_M_MANAGER,{
 			.@start = .@page * .PageSize;
 			.@end = min(.@start + .PageSize, .@card_count);
 
-			mes "[Card Collector]";
-			mes "Choose a card from your inventory.";
+			mes "[Black Market Boss]";
+			mes "Put a card on the table.";
 			mes "^777777Page " + (.@page + 1) + " / " + ((.@card_count + .PageSize - 1) / .PageSize) + "^000000";
 			for (.@i = .@start; .@i < .@end; ++.@i)
 				mes "^0055FF" + (.@i + 1) + ".^000000 " + mesitemlink(.@card_ids[.@i], false) + " x" + countitem(.@card_ids[.@i]) + " (" + callsub(S_GetOffer, .@card_ids[.@i]) + " CP each)";
@@ -77,24 +79,24 @@ paramk,41,159,4	script	Card Collector#offline	4_M_MANAGER,{
 			break;
 		}
 
-		mes "[Card Collector]";
+		mes "[Black Market Boss]";
 		mes "Enter the number shown beside the card.";
 		input .@selection, .@start + 1, .@end;
 		.@selected_id = .@card_ids[.@selection - 1];
 		.@owned = countitem(.@selected_id);
 
-		mes "[Card Collector]";
+		mes "[Black Market Boss]";
 		mes "You have " + .@owned + " " + mesitemlink(.@selected_id, false) + ".";
-		mes "How many are you selling?";
+		mes "How many are you offering me?";
 		input .@amount, 1, .@owned;
 		.@points_each = callsub(S_GetOffer, .@selected_id);
 		.@payment = .@amount * .@points_each;
 		.@tier = callsub(S_GetTier, .@selected_id);
 
-		mes "[Card Collector]";
+		mes "[Black Market Boss]";
 		mes "^0055FF" + mesitemlink(.@selected_id, false) + "^000000 x" + .@amount;
 		mes "My offer: ^0055FF" + .@payment + " Cash Points^000000.";
-		mes "Once the cards join my collection, there are no refunds.";
+		mes "Once they enter my collection, the deal is final.";
 		next;
 		if (select("Sell the cards.:Keep them.") != 1)
 			close;
@@ -141,8 +143,9 @@ paramk,41,159,4	script	Card Collector#offline	4_M_MANAGER,{
 			}
 			break;
 		default:
-			mes "[Card Collector]";
-			mes "I can no longer classify that card.";
+			mes "[Black Market Boss]";
+			mes "That card no longer belongs in my catalog.";
+			mes "Take it away.";
 			close;
 		}
 
@@ -173,9 +176,9 @@ paramk,41,159,4	script	Card Collector#offline	4_M_MANAGER,{
 		}
 
 		if (.@reward_count && !checkweight2(.@reward_ids, .@reward_amounts)) {
-			mes "[Card Collector]";
-			mes "Your inventory cannot hold the loyalty reward.";
-			mes "Make room, then bring the cards back.";
+			mes "[Black Market Boss]";
+			mes "My payment includes more than your pockets can hold.";
+			mes "Make room, then return to my table.";
 			close;
 		}
 
@@ -185,9 +188,9 @@ paramk,41,159,4	script	Card Collector#offline	4_M_MANAGER,{
 			callsub(S_GetOffer, .@selected_id) != .@points_each ||
 			callsub(S_GetTier, .@selected_id) != .@tier ||
 			countitem(.@selected_id) < .@amount) {
-			mes "[Card Collector]";
-			mes "The deal changed before we could finish.";
-			mes "Check your inventory and try again.";
+			mes "[Black Market Boss]";
+			mes "Something changed before the deal was closed.";
+			mes "I do not conduct uncertain business.";
 			close;
 		}
 
@@ -202,8 +205,8 @@ paramk,41,159,4	script	Card Collector#offline	4_M_MANAGER,{
 			getitem .@reward_ids[.@i], .@reward_amounts[.@i];
 		logmes "Card Collector: sold " + .@amount + " x item " + .@selected_id + " for " + .@payment + " Cash Points; tier " + .@tier + "; milestones " + .@milestones + "; OCA " + .@old_card_albums + "; DB " + .@dead_branches + "; MCA " + .@magic_card_albums + "; MVP albums " + .@mvp_card_albums + "; BDB " + .@bloody_branches + "; bottles " + .@empty_bottles + "; backstabs " + .@backstabs + "; balance " + #CASHPOINTS;
 
-		mes "[Card Collector]";
-		mes "A clean deal.";
+		mes "[Black Market Boss]";
+		mes "A clean transaction. I expect nothing less.";
 		mes "You received ^0055FF" + .@payment + " Cash Points^000000.";
 		mes "Current balance: ^0055FF" + #CASHPOINTS + " Cash Points^000000.";
 		if (.@milestones) {
@@ -218,8 +221,9 @@ paramk,41,159,4	script	Card Collector#offline	4_M_MANAGER,{
 		if (.@backstabs) {
 			mes "...";
 			next;
-			mes "[Card Collector]";
-			mes "You really should have kept that MVP card.";
+			mes "[Black Market Boss]";
+			mes "You sold the wrong card to the wrong man.";
+			mes "A collector should know when not to sell.";
 			next;
 			close2;
 			unitkill getcharid(3);
@@ -228,7 +232,7 @@ paramk,41,159,4	script	Card Collector#offline	4_M_MANAGER,{
 		close;
 
 	case 2:
-		mes "[Card Collector]";
+		mes "[Black Market Boss]";
 		mes "Your account has ^0055FF" + #CASHPOINTS + " Cash Points^000000.";
 		mes "Normal-card loyalty: ^0055FF" + #CC_Normal + " / 30^000000.";
 		mes "Miniboss-card loyalty: ^0055FF" + #CC_Mini + " / 5^000000.";
@@ -285,7 +289,7 @@ OnInit:
 	setarray .MinibossCards[0], 4047,4054,4163,4169,4179,4183,4197,4203,4207,4237,4238,4241,4243,4250,4254,4266,4290,4300,4306,4354,4384,4391,4392,4393,4394,4395,4396,4397,4398,4406,4423,4426,4427,4428,4429,4431,4440,4462,4463,4508,4524,4532,4533,4575,4577,4579,4581,4590,4591,4605,4606,4631,4632,4642,4643,4645,4646,4684,4685,4686,4687,4688,4689,4690,4691,4692,4693,4694,4695,4696,27105,27109,27165,27183,27262,27263,27322,27323,27324,27325,31024,31025,300103,300228;
 	deletearray $@CC_MvpAlbumCards[0], getarraysize($@CC_MvpAlbumCards);
 	copyarray $@CC_MvpAlbumCards[0], .Offer10[0], getarraysize(.Offer10);
-	setunittitle(getnpcid(0), "<Card Buyer>");
+	setunittitle(getnpcid(0), "<Card Collector>");
 	end;
 }
 
@@ -319,7 +323,7 @@ S_Warn:
 		npctalk "Easy. Don't try anything.", strnpcinfo(0), bc_self;
 		break;
 	case 1:
-		npctalk "Watch yourself. The Collector is protected.", strnpcinfo(0), bc_self;
+		npctalk "Watch yourself. The Boss is protected.", strnpcinfo(0), bc_self;
 		break;
 	default:
 		npctalk "Keep your hands where I can see them.", strnpcinfo(0), bc_self;

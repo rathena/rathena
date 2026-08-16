@@ -1,98 +1,540 @@
 //===== rAthena Script =======================================
-//= Card Seller A-Z
+//= Monster Card Sellers A-Z
 //===== Description: =========================================
-//= Sells all cards dropped by mobs, grouped alphabetically.
-//= MVP cards are excluded from the list.
+//= Separate Normal, Miniboss, and MVP Card Sellers use Cash Points.
+//= Cards are grouped alphabetically. Normal and Miniboss cards are
+//= priced by source level; MVP and curated special cards use fixed prices.
 //=
-//= NOTE: Requires SQL item and mob databases.
+//= Uses a reviewed card-to-canonical-source mapping.
 //===== Changelogs: ==========================================
 //= 1.0 First version [AnnieRuru]
 //= 1.1 Minor edits [Euphy]
 //= 1.2 Update for monster mode and enchants [Lemongrass]
+//= 2.0 Offline Cash Point catalog; Normal cards only
+//= 2.1 Level-based 10-50 Cash Point pricing
+//= 3.0 Add Miniboss and MVP Card Sellers
+//= 3.1 Add curated special cards to the MVP Card Seller
+//= 3.2 Fix MVP shop initialization
 //============================================================
 
-prontera,155,177,5	script	Card Seller	100,{
+paramk,47,186,4	script	Corvin#offline	512,{
 	.@menu$ = getvariableofnpc( .alphabet_menu$, "card_seller_creation" );
 	if (.@menu$ == "") {
-		mes "[Card Seller]";
+		mes "[Corvin]";
 		mes "I am sorry, it seems like something went wrong.";
 		mes "I cannot find any cards in our database at the moment.";
 		mes "Please contact a game master.";
 		close;
 	}
-	mes "[Card Seller]";
-	mes "Welcome!";
-	mes "I can sell you any normal monster card in the game. Would you like to have a look?";
+	if ((eaclass()&EAJ_BASEMASK) == EAJ_SUMMONER) {
+		mes "[Corvin]";
+		mes "A-a cat?";
+		mes "The cat is talking.";
+		mes "Of course it is. Why would tonight make sense?";
+		next;
+	} else if (eaclass()&EAJL_BABY) {
+		mes "[Corvin]";
+		mes "Oh! A ch-child...?";
+		mes "No... that feeling...";
+		mes "Why does someone so small feel this dangerous?";
+		next;
+		mes "[Corvin]";
+		mes "P-please, browse anything you like.";
+		mes "Just... please do not hurt me.";
+		next;
+	}
+	mes "[Corvin]";
+	mes "U-um... welcome to our black-market card stall.";
+	mes "My brother handles the dangerous merchandise.";
+	mes "The man at the end handles things I would rather not ask about.";
+	mes "I only have normal monster cards.";
+	mes "They are still useful... I think.";
+	mes "Please do not compare my shelves to theirs.";
+	next;
+	mes "[Corvin]";
+	mes "I sell cards from normal monsters for ^0055FF10-50 Cash Points^000000.";
+	mes "The stronger the source monster, the higher the price.";
+	mes "^777777Lv. 1-50: 10 | 51-100: 20 | 101-150: 30";
+	mes "151-200: 40 | 201+: 50^000000";
+	mes "Miniboss and MVP cards are not available here.";
+	mes "Would you like to browse the collection?";
 	next;
 	.@s = select(.@menu$) -1;
 	close2;
 	callshop "card_mob#"+ getvariableofnpc( .alphabet$[.@s], "card_seller_creation" ), 1;
+	end;
+
+OnInit:
+	setunittitle(getnpcid(0), "<Normal Card Seller>");
+	end;
+}
+
+paramk,49,186,4	script	Corven#offline	512,{
+	.@menu$ = getvariableofnpc( .alphabet_menu$, "miniboss_card_seller_creation" );
+	if (.@menu$ == "") {
+		mes "[Corven]";
+		mes "I am sorry, it seems like something went wrong.";
+		mes "I cannot find any cards in our database at the moment.";
+		mes "Please contact a game master.";
+		close;
+	}
+	.@eac = eaclass();
+	if ((.@eac&EAJ_BASEMASK) == EAJ_SUMMONER) {
+		mes "[Corven]";
+		mes "Wait... a cat?";
+		mes "The cat can talk.";
+		mes "Fine. I have to see where this goes.";
+		next;
+	} else if (!(.@eac&EAJL_2)) {
+		if (.@eac&EAJL_UPPER) {
+			mes "[Corven]";
+			mes "Hm...? This child feels strangely familiar.";
+			mes "There is far too much power behind those young eyes.";
+			mes "Very well. I will make an exception.";
+			next;
+		} else {
+			mes "[Corven]";
+			mes "What is this? Who brought a child in here?";
+			mes "You are far too young for my collection.";
+			next;
+			mes "[Corven]";
+			mes "Come back after you have earned your second class.";
+			mes "Then perhaps I will consider opening my shelves.";
+			close;
+		}
+	} else if (.@eac&EAJL_BABY) {
+		mes "[Corven]";
+		mes "Another child--";
+		mes "...No. Something is wrong.";
+		mes "This one is dangerous. Very dangerous.";
+		mes "Fine. The shelves are open.";
+		next;
+	}
+	mes "[Corven]";
+	mes "Our family runs this black-market card row.";
+	mes "My brother beside me deals in normal cards.";
+	mes "He has quantity. I have standards.";
+	mes "Do not misunderstand--his collection has its uses.";
+	mes "But when ordinary prey no longer impresses you, you come to me.";
+	next;
+	mes "[Corven]";
+	mes "I sell cards from miniboss monsters for ^0055FF50-70 Cash Points^000000.";
+	mes "The stronger the source monster, the higher the price.";
+	mes "^777777Lv. 1-50: 50 | 51-100: 60 | 101+: 70^000000";
+	mes "Every card here came from a monster worth remembering.";
+	mes "Would you like to browse the collection?";
+	next;
+	.@s = select(.@menu$) -1;
+	close2;
+	callshop "card_miniboss#"+ getvariableofnpc( .alphabet$[.@s], "miniboss_card_seller_creation" ), 1;
+	end;
+
+OnInit:
+	setunittitle(getnpcid(0), "<Miniboss Card Seller>");
+	end;
+}
+
+paramk,51,186,4	script	Veynar#offline	10576,{
+	.@mvp_menu$ = getvariableofnpc( .alphabet_menu$, "mvp_card_seller_creation" );
+	.@special_menu$ = getvariableofnpc( .special_alphabet_menu$, "mvp_card_seller_creation" );
+	if (.@mvp_menu$ == "" || .@special_menu$ == "") {
+		mes "[Veynar]";
+		mes "I am sorry, it seems like something went wrong.";
+		mes "I cannot find any cards in our database at the moment.";
+		mes "Please contact a game master.";
+		close;
+	}
+	if (!(eaclass()&EAJL_THIRD) && Class != JOB_SPIRIT_HANDLER) {
+		mes "[Veynar]";
+		mes "No. Even Corven's standards are more generous than mine.";
+		mes "You are not nearly seasoned enough for what I sell.";
+		next;
+		mes "[Veynar]";
+		mes "Let the world leave a few more scars upon you.";
+		mes "Survive long enough to become someone worth remembering.";
+		mes "Then you may return.";
+		close;
+	}
+	if (Class == JOB_SPIRIT_HANDLER) {
+		mes "[Veynar]";
+		mes "A cat.";
+		mes "A talking cat with enough scars to stand before me.";
+		mes "Unexpected. Not unwelcome.";
+		next;
+	} else if (eaclass()&EAJL_BABY) {
+		mes "[Veynar]";
+		mes "A child?";
+		mes "...How deceptive.";
+		mes "There is something profoundly dangerous behind that small frame.";
+		mes "Interesting. You may proceed.";
+		next;
+	}
+	if (#CASHPOINTS < 70) {
+		mes "[Veynar]";
+		mes "No. I do not open my collection for visitors with such an unimpressive purse.";
+		mes "Come back when your purse has learned some dignity.";
+		next;
+		mes "[Veynar]";
+		mes "^777777...Seventy should be enough to earn a look.";
+		mes "Buying from me is another matter.^000000";
+		close;
+	}
+	mes "[Veynar]";
+	mes "Ah, another treasure hunter.";
+	mes "You have found the black market's finest card dealer.";
+	mes "You thought luck would bring you every card you wanted?";
+	mes "If luck were enough, you would not be standing before me.";
+	next;
+	mes "[Veynar]";
+	mes "MVP cards cost ^0055FF100 Cash Points^000000 each.";
+	mes "My special cards cost ^0055FF120 Cash Points^000000 each.";
+	mes "Too expensive? Then search every corner of Rune-Midgard for another seller.";
+	mes "You will return empty-handed.";
+	next;
+	mes "[Veynar]";
+	mes "Only I can obtain these rarities.";
+	mes "Remember that before you question my price.";
+	mes "Normal cards? Miniboss cards?";
+	mes "Trinkets for beginners and collectors with modest ambitions.";
+	mes "The merchants beside me will gladly entertain you with those.";
+	mes "Do not confuse their stock with mine.";
+	mes "Which collection have you come to see?";
+	next;
+	switch (select("Show me your MVP cards.:I know you have something more valuable.:")) {
+	case 1:
+		.@s = select(.@mvp_menu$) - 1;
+		close2;
+		callshop "card_mvp#" + getvariableofnpc( .alphabet$[.@s], "mvp_card_seller_creation" ), 1;
+		end;
+	case 2:
+		mes "[Veynar]";
+		mes "^777777...This one has taste.^000000";
+		mes "So, you know I keep something more valuable.";
+		if (#CASHPOINTS <= 100) {
+			next;
+			mes "[Veynar]";
+			mes "Taste without the means to indulge it is merely appetite.";
+			mes "^777777...A hundr--";
+			mes "Ah. I cannot speak so carelessly.^000000";
+			close;
+		}
+		next;
+		mes "[Veynar]";
+		mes "Very well. You may look upon the cards no other merchant can offer.";
+		next;
+		.@s = select(.@special_menu$) - 1;
+		close2;
+		callshop "card_special#" + getvariableofnpc( .special_alphabet$[.@s], "mvp_card_seller_creation" ), 1;
+		end;
+	}
+	end;
+
+OnInit:
+	setunittitle(getnpcid(0), "<MVP Card Seller>");
 	end;
 }
 
 -	script	card_seller_creation	-1,{
 	end;
 OnInit:
-	if (checkre(0)) {
-		.@mob_db$  = "mob_db_re";
-		.@item_db$ = "item_db_re";
-	} else {
-		.@mob_db$  = "mob_db";
-		.@item_db$ = "item_db";
-	}
 	freeloop 1;
-	
-	.@string$ = "( `name_aegis` IN ( SELECT DISTINCT `drop1_item` FROM `" + .@mob_db$ + "` WHERE COALESCE(`mode_mvp`,0) = 0 ) " +
-		"OR `name_aegis` IN ( SELECT DISTINCT `drop2_item` FROM `" + .@mob_db$ + "` WHERE COALESCE(`mode_mvp`,0) = 0 ) " +
-		"OR `name_aegis` IN ( SELECT DISTINCT `drop3_item` FROM `" + .@mob_db$ + "` WHERE COALESCE(`mode_mvp`,0) = 0 ) " +
-		"OR `name_aegis` IN ( SELECT DISTINCT `drop4_item` FROM `" + .@mob_db$ + "` WHERE COALESCE(`mode_mvp`,0) = 0 ) " +
-		"OR `name_aegis` IN ( SELECT DISTINCT `drop5_item` FROM `" + .@mob_db$ + "` WHERE COALESCE(`mode_mvp`,0) = 0 ) " +
-		"OR `name_aegis` IN ( SELECT DISTINCT `drop6_item` FROM `" + .@mob_db$ + "` WHERE COALESCE(`mode_mvp`,0) = 0 ) " +
-		"OR `name_aegis` IN ( SELECT DISTINCT `drop7_item` FROM `" + .@mob_db$ + "` WHERE COALESCE(`mode_mvp`,0) = 0 ) " +
-		"OR `name_aegis` IN ( SELECT DISTINCT `drop8_item` FROM `" + .@mob_db$ + "` WHERE COALESCE(`mode_mvp`,0) = 0 ) " +
-		"OR `name_aegis` IN ( SELECT DISTINCT `drop9_item` FROM `" + .@mob_db$ + "` WHERE COALESCE(`mode_mvp`,0) = 0 ) " +
-		"OR `name_aegis` IN ( SELECT DISTINCT `drop10_item` FROM `" + .@mob_db$ + "` WHERE COALESCE(`mode_mvp`,0) = 0 ) )";
+	deletearray .alphabet$[0], getarraysize(.alphabet$);
+	deletearray .HasAlphabet[0], getarraysize(.HasAlphabet);
+	.size_alphabet = 0;
+	.alphabet_menu$ = "";
+	.@alphabet$ = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-	.@total = query_sql( "SELECT DISTINCT LEFT( `name_english`, 1 ) AS alphabets FROM `"+ .@item_db$ +"` WHERE `type` = 'Card' AND " + .@string$ + " ORDER BY alphabets;", .@alphabet$ );
-	for ( .@i = 0; .@i < .@total; .@i++ ) {
-		.@nb = query_sql( "SELECT `"+ .@item_db$ +"`.`id` FROM `"+ .@item_db$ +"` WHERE `type` = 'Card' AND LEFT( `name_english`, 1 ) = '"+ .@alphabet$[.@i] +"' AND " + .@string$ + " ORDER BY `name_english` LIMIT 128;", .@id );
-		if (.@nb > 0) {
-			.alphabet$[.@size_alphabet++] = .@alphabet$[.@i];
-			.alphabet_menu$ = .alphabet_menu$ + .@alphabet$[.@i] +" Cards:";
-			npcshopdelitem "card_mob#"+ .@alphabet$[.@i], 501;
-			for ( .@j = 0; .@j < .@nb; .@j++ ) {
-				if (getiteminfo(.@id[.@j], ITEMINFO_SUBTYPE) == CARD_ENCHANT)// Skip enchants in case someone added them as card drop
-					continue;
-				npcshopadditem "card_mob#"+ .@alphabet$[.@i], .@id[.@j], 1000000;
-			}
+	// Reviewed Normal monster cards and their canonical source monsters.
+	setarray .CardIds[0], 4001,4002,4003,4004,4006,4007,4008,4009,4010,4011,4012,4013,4014,4015,4016,4017,4019,4020,4021,4022,4023,4024,4025,4026,4027,4028,4029,4030,4031,4032,4033,4034,4035,4036,4037,4038,4039,4040,4041,4042,4043,4044,4045,4046,4048,4049,4050,4051,4052,4053,4055,4056,4057,4058,4060,4061,4062,4063,4064,4065,4066,4067,4068,4069,4070,4071,4072,4073,4074,4075,4076,4077,4078,4079,4080,4081,4082,4083,4084,4085;
+	setarray .SourceMobIds[0], 1002,1007,1008,1113,1063,1047,1049,1011,1010,1050,1048,1097,1012,1009,1051,1167,1004,1005,1052,1014,1107,1161,1076,1053,1070,1175,1013,1020,1019,1094,1031,1024,1068,1055,1025,1015,1174,1018,1104,1042,1095,1056,1128,1145,1077,1066,1054,1057,1033,1176,1141,1114,1058,1034,1122,1067,1030,1103,1178,1072,1023,1064,1001,1111,1116,1153,1040,1071,1060,1100,1138,1158,1166,1139,1118,1127,1106,1162,1142,1152;
+	setarray .CardIds[80], 4086,4087,4088,4089,4090,4091,4092,4093,4094,4095,4096,4097,4098,4099,4100,4101,4102,4103,4104,4105,4106,4107,4108,4109,4110,4111,4112,4113,4114,4115,4116,4117,4118,4119,4120,4122,4124,4125,4126,4127,4129,4133,4136,4138,4139,4140,4141,4149,4150,4151,4152,4153,4154,4155,4156,4157,4158,4159,4160,4161,4162,4164,4165,4166,4167,4170,4171,4172,4173,4175,4176,4177,4178,4180,4181,4182,4184,4185,4186,4187;
+	setarray .SourceMobIds[80], 1028,1121,1119,1069,1026,1133,1169,1044,1016,1144,1177,1146,1110,1154,1170,1165,1179,1129,1164,1045,1041,1032,1151,1130,1036,1065,1140,1143,1099,1035,1029,1037,1155,1102,1156,1109,1148,1108,1149,1061,1101,1163,1132,1098,1131,1219,1117,1253,1372,1309,1391,1073,1409,1299,1280,1258,1384,1180,1403,1369,1381,1311,1387,1379,1255,1260,1198,1375,1378,1402,1504,1493,1321,1380,1506,1382,1366,1195,1254,1276;
+	setarray .CardIds[160], 4188,4189,4190,4191,4192,4193,4194,4195,4196,4199,4200,4201,4202,4204,4205,4206,4208,4209,4210,4211,4212,4213,4214,4215,4216,4217,4218,4219,4220,4221,4222,4223,4224,4225,4226,4227,4228,4229,4230,4231,4232,4233,4234,4235,4239,4240,4242,4244,4245,4246,4247,4248,4249,4251,4252,4253,4255,4256,4257,4258,4259,4260,4261,4262,4264,4265,4267,4268,4269,4270,4271,4272,4273,4274,4275,4277,4278,4279,4280,4281;
+	setarray .SourceMobIds[160], 1306,1291,1192,1505,1392,1509,1201,1586,1242,1264,1274,1310,1513,1292,1191,1249,1404,1390,1208,1088,1188,1211,1507,1367,1243,1410,1370,1281,1316,1290,1196,1278,1215,1495,1207,1322,1386,1270,1401,1516,1413,1415,1206,1246,1212,1194,1365,1193,1301,1315,1266,1297,1305,1377,1271,1275,1273,1189,1261,1416,1497,1498,1499,1412,1263,1517,1383,1257,1374,1304,1303,1514,1074,1298,1197,1200,1503,1385,1368,1417;
+	setarray .CardIds[240], 4282,4283,4284,4285,4286,4287,4288,4289,4291,4292,4293,4294,4295,4296,4297,4298,4299,4301,4303,4304,4307,4308,4309,4310,4311,4312,4313,4314,4315,4316,4317,4319,4320,4321,4322,4323,4325,4326,4327,4328,4329,4331,4332,4333,4334,4335,4336,4337,4338,4339,4340,4341,4343,4344,4345,4346,4347,4348,4349,4350,4351,4353,4355,4356,4358,4360,4362,4364,4366,4368,4369,4370,4371,4373,4375,4377,4378,4379,4380,4381;
+	setarray .SourceMobIds[240], 1405,1277,1250,1214,1400,1406,1267,1300,1296,1282,1265,1508,1587,1209,1248,1293,1269,1294,1186,1584,1494,1279,1500,1308,1314,1317,1199,1216,1256,1371,1313,1319,1268,1510,1213,1515,1376,1323,1408,1512,1202,1318,1617,1621,1620,1616,1618,1619,1615,1614,1622,1613,1628,1627,1629,1652,1654,1653,1655,1657,1656,1682,1632,1633,1634,1635,1636,1637,1639,1638,1675,1669,1668,1631,1686,1687,1713,1716,1714,1717;
+	setarray .CardIds[320], 4382,4383,4385,4387,4388,4389,4390,4400,4401,4402,4404,4405,4409,4410,4411,4412,4413,4414,4415,4416,4417,4418,4420,4421,4422,4424,4432,4433,4434,4435,4436,4437,4438,4439,4442,4443,4444,4445,4446,4447,4448,4449,4450,4452,4453,4458,4459,4460,4461,4464,4465,4466,4467,4468,4469,4470,4471,4472,4473,4474,4475,4476,4477,4505,4506,4510,4511,4512,4513,4514,4515,4516,4517,4518,4519,4521,4522,4523,4530,4531;
+	setarray .SourceMobIds[320], 1718,1715,1721,1699,1698,1693,1692,1737,1735,1736,1752,1753,1769,1770,1771,1772,1773,1774,1775,1776,1777,1778,1780,1781,1782,1784,1836,1837,1838,1864,1865,1866,1867,1869,1986,2016,2013,1994,3446,1987,1992,2023,1974,1999,1989,2018,2017,2020,2021,1796,1797,1975,1977,2015,1993,1988,2014,2024,2019,1979,1976,1995,1978,2083,2092,2137,2136,2134,2133,2132,2151,2152,2153,2154,2155,2204,2201,2203,2199,2197;
+	setarray .CardIds[400], 4545,4567,4568,4569,4570,4571,4572,4573,4582,4583,4584,4585,4586,4588,4589,4593,4594,4595,4596,4597,4598,4599,4600,4607,4626,4627,4628,4629,4630,4633,4634,4635,4637,4638,4639,4640,4641,4644,4653,4654,4655,4656,4657,4658,4659,4660,4661,4663,4664,4665,4666,4667,4668,4669,4670,4698,4699,27012,27013,27014,27015,27016,27017,27018,27019,27026,27027,27028,27029,27030,27082,27083,27084,27085,27086,27087,27088,27101,27102,27103;
+	setarray .SourceMobIds[400], 2398,2226,2223,2224,2222,2225,2221,2227,2309,2310,2311,2312,2313,2315,2316,2363,2364,2365,2366,2367,2368,2369,2370,2371,2916,2917,2919,2920,2918,3445,3447,3448,3451,3444,3443,3442,3452,3423,2358,2356,2353,2354,2360,2355,3495,3502,3503,3496,3497,3498,3499,3500,3501,3506,3507,3125,3126,3127,3128,3247,3248,3249,3250,3251,3252,3020,3021,3022,3023,3027,3759,3761,3762,3760,3763,3764,3765,3754,3750,3751;
+	setarray .CardIds[480], 27107,27108,27110,27111,27112,27114,27115,27116,27117,27118,27120,27121,27122,27123,27124,27125,27147,27148,27149,27157,27158,27159,27160,27161,27163,27166,27167,27168,27169,27170,27171,27172,27173,27174,27175,27176,27177,27178,27179,27181,27249,27250,27251,27252,27253,27254,27255,27256,27257,27258,27259,27260,27261,27264,27286,27287,27288,27289,27290,27291,27292,27293,27295,27296,27297,27304,27306,27307,27308,27309,27310,27311,27312,27313,27314,27315,27316,27317,27320,27328;
+	setarray .SourceMobIds[480], 3069,3070,3792,3793,3794,3802,3800,3803,3799,3801,2069,2070,2074,2073,2072,2071,3631,3632,3626,1880,1881,1883,1882,1884,2528,2540,2541,2542,2543,3736,3737,3738,3747,3748,3749,3788,3787,3740,3739,3175,2549,2550,2553,2552,2551,2554,2555,2556,2557,2558,2559,2560,2561,2939,20255,20260,20261,20262,20263,20270,20271,20272,20274,20275,20276,20342,20350,20356,20357,20358,20359,20360,20349,20362,20363,20364,20348,20366,20341,3010;
+	setarray .CardIds[560], 27347,27348,27349,27350,27351,27352,27353,27354,27355,27356,27357,27358,27359,27360,27361,31016,31017,31018,31019,31020,31021,31022,300001,300002,300003,300004,300005,300006,300076,300077,300081,300082,300083,300084,300085,300086,300087,300088,300089,300090,300091,300092,300093,300094,300095,300096,300097,300098,300101,300102,300104,300105,300106,300108,300109,300110,300111,300112,300113,300114,300115,300116,300117,300118,300119,300120,300121,300122,300123,300124,300125,300140,300141,300142,300143,300144,300146,300147,300148,300149;
+	setarray .SourceMobIds[560], 20377,20378,20376,20375,20374,20373,20372,20367,20368,20369,20370,20371,20379,20380,20420,2987,2989,2991,2992,2993,2994,2995,20592,20593,20602,20594,20603,20598,20639,20641,20622,20623,20624,20625,20626,20627,20631,20632,20665,20666,20669,20670,20671,20672,20674,20675,20677,20678,20633,20635,20683,20684,20649,20685,20686,20687,20688,20689,20690,20691,20692,20693,20694,20643,20645,20646,20644,20650,20652,20651,20653,20801,20802,20803,20804,20805,20806,20807,20808,20809;
+	setarray .CardIds[640], 300150,300211,300212,300213,300214,300215,300216,300218,300219,300220,300221,300222,300223,300230,300231,300232,300233,300234,300235,300236,300237,300238,300240,300241,300242,300243,300244,300245,300246,300247,300249,300250,300251,300252,300253,300254,300255,300256,300257,300258,300259,300260,300261,300265;
+	setarray .SourceMobIds[640], 20810,21295,21296,21297,21298,21299,21300,21302,21303,21304,21305,21306,21307,21386,21387,21388,21389,21390,21391,21392,21393,21394,20935,20937,20938,20939,20936,20940,20941,20942,20929,20930,20931,20932,20933,20924,20925,20926,20927,20920,20921,20922,20923,20543;
+
+	for (.@i = 0; .@i < 26; ++.@i)
+		npcshopdelitem "card_mob#" + charat(.@alphabet$, .@i), 501;
+
+	.@card_count = getarraysize(.CardIds);
+	if (.@card_count != getarraysize(.SourceMobIds)) {
+		debugmes "Card Seller: card and source monster arrays are not aligned.";
+		freeloop 0;
+		end;
+	}
+
+	for (.@i = 0; .@i < .@card_count; ++.@i) {
+		.@item_id = .CardIds[.@i];
+		if (getiteminfo(.@item_id, ITEMINFO_TYPE) != IT_CARD ||
+			getiteminfo(.@item_id, ITEMINFO_SUBTYPE) != CARD_NORMAL)
+			continue;
+		.@source_level = getmonsterinfo(.SourceMobIds[.@i], MOB_LV);
+		if (.@source_level < 1)
+			continue;
+		.@price = min(50, 10 + 10 * ((.@source_level - 1) / 50));
+		.@letter$ = strtoupper(charat(getitemname(.@item_id), 0));
+		.@letter_index = strpos(.@alphabet$, .@letter$);
+		if (.@letter_index < 0)
+			continue;
+		.HasAlphabet[.@letter_index] = true;
+		npcshopadditem "card_mob#" + .@letter$, .@item_id, .@price;
+	}
+
+	for (.@i = 0; .@i < 26; ++.@i) {
+		if (.HasAlphabet[.@i]) {
+			.@letter$ = charat(.@alphabet$, .@i);
+			.alphabet$[.size_alphabet++] = .@letter$;
+			.alphabet_menu$ += .@letter$ + " Cards:";
 		}
 	}
 	freeloop 0;
 	end;
 }
--	shop	card_mob#A	-1,501:1000
--	shop	card_mob#B	-1,501:1000
--	shop	card_mob#C	-1,501:1000
--	shop	card_mob#D	-1,501:1000
--	shop	card_mob#E	-1,501:1000
--	shop	card_mob#F	-1,501:1000
--	shop	card_mob#G	-1,501:1000
--	shop	card_mob#H	-1,501:1000
--	shop	card_mob#I	-1,501:1000
--	shop	card_mob#J	-1,501:1000
--	shop	card_mob#K	-1,501:1000
--	shop	card_mob#L	-1,501:1000
--	shop	card_mob#M	-1,501:1000
--	shop	card_mob#N	-1,501:1000
--	shop	card_mob#O	-1,501:1000
--	shop	card_mob#P	-1,501:1000
--	shop	card_mob#Q	-1,501:1000
--	shop	card_mob#R	-1,501:1000
--	shop	card_mob#S	-1,501:1000
--	shop	card_mob#T	-1,501:1000
--	shop	card_mob#U	-1,501:1000
--	shop	card_mob#V	-1,501:1000
--	shop	card_mob#W	-1,501:1000
--	shop	card_mob#X	-1,501:1000
--	shop	card_mob#Y	-1,501:1000
--	shop	card_mob#Z	-1,501:1000
+-	pointshop	card_mob#A	-1,#CASHPOINTS,501:10
+-	pointshop	card_mob#B	-1,#CASHPOINTS,501:10
+-	pointshop	card_mob#C	-1,#CASHPOINTS,501:10
+-	pointshop	card_mob#D	-1,#CASHPOINTS,501:10
+-	pointshop	card_mob#E	-1,#CASHPOINTS,501:10
+-	pointshop	card_mob#F	-1,#CASHPOINTS,501:10
+-	pointshop	card_mob#G	-1,#CASHPOINTS,501:10
+-	pointshop	card_mob#H	-1,#CASHPOINTS,501:10
+-	pointshop	card_mob#I	-1,#CASHPOINTS,501:10
+-	pointshop	card_mob#J	-1,#CASHPOINTS,501:10
+-	pointshop	card_mob#K	-1,#CASHPOINTS,501:10
+-	pointshop	card_mob#L	-1,#CASHPOINTS,501:10
+-	pointshop	card_mob#M	-1,#CASHPOINTS,501:10
+-	pointshop	card_mob#N	-1,#CASHPOINTS,501:10
+-	pointshop	card_mob#O	-1,#CASHPOINTS,501:10
+-	pointshop	card_mob#P	-1,#CASHPOINTS,501:10
+-	pointshop	card_mob#Q	-1,#CASHPOINTS,501:10
+-	pointshop	card_mob#R	-1,#CASHPOINTS,501:10
+-	pointshop	card_mob#S	-1,#CASHPOINTS,501:10
+-	pointshop	card_mob#T	-1,#CASHPOINTS,501:10
+-	pointshop	card_mob#U	-1,#CASHPOINTS,501:10
+-	pointshop	card_mob#V	-1,#CASHPOINTS,501:10
+-	pointshop	card_mob#W	-1,#CASHPOINTS,501:10
+-	pointshop	card_mob#X	-1,#CASHPOINTS,501:10
+-	pointshop	card_mob#Y	-1,#CASHPOINTS,501:10
+-	pointshop	card_mob#Z	-1,#CASHPOINTS,501:10
+
+-	script	miniboss_card_seller_creation	-1,{
+	end;
+OnInit:
+	freeloop 1;
+	deletearray .alphabet$[0], getarraysize(.alphabet$);
+	deletearray .HasAlphabet[0], getarraysize(.HasAlphabet);
+	.size_alphabet = 0;
+	.alphabet_menu$ = "";
+	.@alphabet$ = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+	// Reviewed Miniboss cards and their canonical source monsters.
+	setarray .CardIds[0], 4047,4054,4163,4169,4179,4183,4197,4203,4207,4237,4238,4241,4243,4250,4254,4266,4290,4300,4306,4354,4384,4391,4392,4393,4394,4395,4396,4397,4398,4406,4423,4426,4427,4428,4429,4431,4440,4462,4463,4508,4524,4532,4533,4575,4577,4579,4581,4590,4591,4605,4606,4631,4632,4642,4643,4645,4646,4684,4685,4686,4687,4688,4689,4690,4691,4692,4693,4694,4695,4696,27105,27109,27165,27183,27262,27263,27322,27323,27324,27325;
+	setarray .SourceMobIds[0], 1120,1096,1259,1302,1091,1092,1090,1262,1203,1320,1295,1388,2988,1205,1204,1093,1307,1283,1089,1681,1720,1702,1700,1701,1703,1706,1704,1705,1707,1754,1783,1839,1829,1830,1831,1833,1870,1990,1991,2161,2198,2208,2192,2254,2252,2250,2256,2317,2320,2473,2474,2921,2923,3421,3422,3424,3425,3208,3209,3210,3211,3212,3213,3226,3227,3228,3229,3230,3232,3231,3756,3108,2530,3191,2562,2563,3105,3106,3091,3092;
+	setarray .CardIds[80], 31024,31025,300103,300228;
+	setarray .SourceMobIds[80], 3474,3475,20647,21315;
+
+	for (.@i = 0; .@i < 26; ++.@i)
+		npcshopdelitem "card_miniboss#" + charat(.@alphabet$, .@i), 501;
+
+	.@card_count = getarraysize(.CardIds);
+	if (.@card_count != getarraysize(.SourceMobIds)) {
+		debugmes "Miniboss Card Seller: card and source monster arrays are not aligned.";
+		freeloop 0;
+		end;
+	}
+
+	for (.@i = 0; .@i < .@card_count; ++.@i) {
+		.@item_id = .CardIds[.@i];
+		if (getiteminfo(.@item_id, ITEMINFO_TYPE) != IT_CARD ||
+			getiteminfo(.@item_id, ITEMINFO_SUBTYPE) != CARD_NORMAL)
+			continue;
+		.@source_level = getmonsterinfo(.SourceMobIds[.@i], MOB_LV);
+		if (.@source_level < 1)
+			continue;
+		.@price = min(70, 50 + 10 * ((.@source_level - 1) / 50));
+		.@letter$ = strtoupper(charat(getitemname(.@item_id), 0));
+		.@letter_index = strpos(.@alphabet$, .@letter$);
+		if (.@letter_index < 0)
+			continue;
+		.HasAlphabet[.@letter_index] = true;
+		npcshopadditem "card_miniboss#" + .@letter$, .@item_id, .@price;
+	}
+
+	for (.@i = 0; .@i < 26; ++.@i) {
+		if (.HasAlphabet[.@i]) {
+			.@letter$ = charat(.@alphabet$, .@i);
+			.alphabet$[.size_alphabet++] = .@letter$;
+			.alphabet_menu$ += .@letter$ + " Cards:";
+		}
+	}
+	freeloop 0;
+	end;
+}
+-	pointshop	card_miniboss#A	-1,#CASHPOINTS,501:50
+-	pointshop	card_miniboss#B	-1,#CASHPOINTS,501:50
+-	pointshop	card_miniboss#C	-1,#CASHPOINTS,501:50
+-	pointshop	card_miniboss#D	-1,#CASHPOINTS,501:50
+-	pointshop	card_miniboss#E	-1,#CASHPOINTS,501:50
+-	pointshop	card_miniboss#F	-1,#CASHPOINTS,501:50
+-	pointshop	card_miniboss#G	-1,#CASHPOINTS,501:50
+-	pointshop	card_miniboss#H	-1,#CASHPOINTS,501:50
+-	pointshop	card_miniboss#I	-1,#CASHPOINTS,501:50
+-	pointshop	card_miniboss#J	-1,#CASHPOINTS,501:50
+-	pointshop	card_miniboss#K	-1,#CASHPOINTS,501:50
+-	pointshop	card_miniboss#L	-1,#CASHPOINTS,501:50
+-	pointshop	card_miniboss#M	-1,#CASHPOINTS,501:50
+-	pointshop	card_miniboss#N	-1,#CASHPOINTS,501:50
+-	pointshop	card_miniboss#O	-1,#CASHPOINTS,501:50
+-	pointshop	card_miniboss#P	-1,#CASHPOINTS,501:50
+-	pointshop	card_miniboss#Q	-1,#CASHPOINTS,501:50
+-	pointshop	card_miniboss#R	-1,#CASHPOINTS,501:50
+-	pointshop	card_miniboss#S	-1,#CASHPOINTS,501:50
+-	pointshop	card_miniboss#T	-1,#CASHPOINTS,501:50
+-	pointshop	card_miniboss#U	-1,#CASHPOINTS,501:50
+-	pointshop	card_miniboss#V	-1,#CASHPOINTS,501:50
+-	pointshop	card_miniboss#W	-1,#CASHPOINTS,501:50
+-	pointshop	card_miniboss#X	-1,#CASHPOINTS,501:50
+-	pointshop	card_miniboss#Y	-1,#CASHPOINTS,501:50
+-	pointshop	card_miniboss#Z	-1,#CASHPOINTS,501:50
+
+-	script	mvp_card_seller_creation	-1,{
+	end;
+OnInit:
+	freeloop 1;
+	deletearray .alphabet$[0], getarraysize(.alphabet$);
+	deletearray .HasAlphabet[0], getarraysize(.HasAlphabet);
+	deletearray .special_alphabet$[0], getarraysize(.special_alphabet$);
+	deletearray .SpecialHasAlphabet[0], getarraysize(.SpecialHasAlphabet);
+	.size_alphabet = 0;
+	.special_size_alphabet = 0;
+	.alphabet_menu$ = "";
+	.special_alphabet_menu$ = "";
+	.@alphabet$ = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+	// Reviewed MVP cards. Source monster data is not needed here because
+	// every MVP card uses the same fixed price.
+	setarray .CardIds[0], 4121,4123,4128,4131,4132,4134,4135,4137,4142,4143,4144,4145,4146,4147,4148,4168,4236,4263,4276,4302,4305,4318,4324,4330,4342,4352,4357,4359,4361,4363,4365,4367,4372,4374,4376,4386,4399,4403,4407,4408,4419,4425,4430,4441,4451,4456,4507,4509,4520,4525,4526,4527,4528,4529,4534,4556,4557,4560,4561,4562,4563,4564,4565,4566,4574,4576,4578,4580,4592,4601,4603,4610,4625,4636,4647,4648,4649,4650,4651,4652;
+	setarray .CardIds[80], 4662,4671,4672,4673,4674,4675,4676,4677,4678,4679,4680,4681,4682,4683,4697,27020,27025,27081,27104,27106,27113,27119,27126,27150,27151,27152,27162,27164,27180,27182,27265,27294,27298,27305,27318,27319,27321,27326,27327,27346,27362,27363,31023,31026,300007,300078,300079,300080,300099,300100,300107,300145,300151,300217,300227,300239,300248,300262,300281;
+
+	// Usable special/event cards with no active monster drop or ordinary
+	// acquisition path in this offline implementation. Includes sealed,
+	// anniversary, collaboration, tournament, labyrinth, Royal, Tarot,
+	// enhanced, and Chaotic card sets supported by the selected client.
+	setarray .SpecialCardIds[0], 4454,4455,4478,4479,4480,4481,4482,4483,4484,4485,4486,4487,4488,4489,4490,4491,4492,4493,4494,4495,4496,4497,4498,4499,4500,4501,4502,4503,4504,4535,4536,4537,4538,4539,4540,4541,4542,4543,4544,4546,4547,4548,4549,4550,4551,4552,4553,4554,4555,4623,27031,27032,27129,27130,27131,27132,27133,27134,27135,27136,27137,27138,27139,27140,27196,27197,27198,27199,27200,27201,27202,27203,27209,27211,27212,27213,27214,27215,27216,27217;
+	setarray .SpecialCardIds[80], 27218,27219,27220,27221,27222,27224,27225,27301,27330,27331,27332,27333,27334,27335,27336,27337,27338,27339,27340,27341,27342,27343,27364,27365,27366,27367,27393,27394,27395,27396,31006,31007,31008,31009,31010,31011,31012,31013,31014,31015,300127,300128,300129,300130,300131,300132,300133,300134,300135,300136,300163,300164,300165,300166,300167,300168,300177,300178,300179,300180,300181,300182,300183,300184,300185,300186,300187,300188,300189,300190,300191,300195,300201,300203,300209,300282,300283,300284,300285,300288;
+	setarray .SpecialCardIds[160], 300289,300307,300308,300309,300310,300421,300422,300423,300424,300425,300426,300486,300487,300488,300489,300490,300491,300492,300493,300494,300495,300496,300497,300547,300550,300551,300552,300618;
+
+	for (.@i = 0; .@i < 26; ++.@i) {
+		npcshopdelitem "card_mvp#" + charat(.@alphabet$, .@i), 501;
+		npcshopdelitem "card_special#" + charat(.@alphabet$, .@i), 501;
+	}
+
+	.@card_count = getarraysize(.CardIds);
+	for (.@i = 0; .@i < .@card_count; ++.@i) {
+		.@item_id = .CardIds[.@i];
+		if (getiteminfo(.@item_id, ITEMINFO_TYPE) != IT_CARD ||
+			getiteminfo(.@item_id, ITEMINFO_SUBTYPE) != CARD_NORMAL)
+			continue;
+		.@letter$ = strtoupper(charat(getitemname(.@item_id), 0));
+		.@letter_index = strpos(.@alphabet$, .@letter$);
+		if (.@letter_index < 0)
+			continue;
+		.HasAlphabet[.@letter_index] = true;
+		npcshopadditem "card_mvp#" + .@letter$, .@item_id, 100;
+	}
+
+	.@special_count = getarraysize(.SpecialCardIds);
+	for (.@i = 0; .@i < .@special_count; ++.@i) {
+		.@item_id = .SpecialCardIds[.@i];
+		if (getiteminfo(.@item_id, ITEMINFO_TYPE) != IT_CARD ||
+			getiteminfo(.@item_id, ITEMINFO_SUBTYPE) != CARD_NORMAL)
+			continue;
+		.@letter$ = strtoupper(charat(getitemname(.@item_id), 0));
+		.@letter_index = strpos(.@alphabet$, .@letter$);
+		if (.@letter_index < 0) {
+			// "11th Anniversary Card" is listed under A.
+			.@letter$ = "A";
+			.@letter_index = 0;
+		}
+		.SpecialHasAlphabet[.@letter_index] = true;
+		npcshopadditem "card_special#" + .@letter$, .@item_id, 120;
+	}
+
+	for (.@i = 0; .@i < 26; ++.@i) {
+		if (.HasAlphabet[.@i]) {
+			.@letter$ = charat(.@alphabet$, .@i);
+			.alphabet$[.size_alphabet++] = .@letter$;
+			.alphabet_menu$ += .@letter$ + " Cards:";
+		}
+		if (.SpecialHasAlphabet[.@i]) {
+			.@letter$ = charat(.@alphabet$, .@i);
+			.special_alphabet$[.special_size_alphabet++] = .@letter$;
+			.special_alphabet_menu$ += .@letter$ + " Cards:";
+		}
+	}
+	freeloop 0;
+	end;
+}
+-	pointshop	card_mvp#A	-1,#CASHPOINTS,501:100
+-	pointshop	card_mvp#B	-1,#CASHPOINTS,501:100
+-	pointshop	card_mvp#C	-1,#CASHPOINTS,501:100
+-	pointshop	card_mvp#D	-1,#CASHPOINTS,501:100
+-	pointshop	card_mvp#E	-1,#CASHPOINTS,501:100
+-	pointshop	card_mvp#F	-1,#CASHPOINTS,501:100
+-	pointshop	card_mvp#G	-1,#CASHPOINTS,501:100
+-	pointshop	card_mvp#H	-1,#CASHPOINTS,501:100
+-	pointshop	card_mvp#I	-1,#CASHPOINTS,501:100
+-	pointshop	card_mvp#J	-1,#CASHPOINTS,501:100
+-	pointshop	card_mvp#K	-1,#CASHPOINTS,501:100
+-	pointshop	card_mvp#L	-1,#CASHPOINTS,501:100
+-	pointshop	card_mvp#M	-1,#CASHPOINTS,501:100
+-	pointshop	card_mvp#N	-1,#CASHPOINTS,501:100
+-	pointshop	card_mvp#O	-1,#CASHPOINTS,501:100
+-	pointshop	card_mvp#P	-1,#CASHPOINTS,501:100
+-	pointshop	card_mvp#Q	-1,#CASHPOINTS,501:100
+-	pointshop	card_mvp#R	-1,#CASHPOINTS,501:100
+-	pointshop	card_mvp#S	-1,#CASHPOINTS,501:100
+-	pointshop	card_mvp#T	-1,#CASHPOINTS,501:100
+-	pointshop	card_mvp#U	-1,#CASHPOINTS,501:100
+-	pointshop	card_mvp#V	-1,#CASHPOINTS,501:100
+-	pointshop	card_mvp#W	-1,#CASHPOINTS,501:100
+-	pointshop	card_mvp#X	-1,#CASHPOINTS,501:100
+-	pointshop	card_mvp#Y	-1,#CASHPOINTS,501:100
+-	pointshop	card_mvp#Z	-1,#CASHPOINTS,501:100
+-	pointshop	card_special#A	-1,#CASHPOINTS,501:120
+-	pointshop	card_special#B	-1,#CASHPOINTS,501:120
+-	pointshop	card_special#C	-1,#CASHPOINTS,501:120
+-	pointshop	card_special#D	-1,#CASHPOINTS,501:120
+-	pointshop	card_special#E	-1,#CASHPOINTS,501:120
+-	pointshop	card_special#F	-1,#CASHPOINTS,501:120
+-	pointshop	card_special#G	-1,#CASHPOINTS,501:120
+-	pointshop	card_special#H	-1,#CASHPOINTS,501:120
+-	pointshop	card_special#I	-1,#CASHPOINTS,501:120
+-	pointshop	card_special#J	-1,#CASHPOINTS,501:120
+-	pointshop	card_special#K	-1,#CASHPOINTS,501:120
+-	pointshop	card_special#L	-1,#CASHPOINTS,501:120
+-	pointshop	card_special#M	-1,#CASHPOINTS,501:120
+-	pointshop	card_special#N	-1,#CASHPOINTS,501:120
+-	pointshop	card_special#O	-1,#CASHPOINTS,501:120
+-	pointshop	card_special#P	-1,#CASHPOINTS,501:120
+-	pointshop	card_special#Q	-1,#CASHPOINTS,501:120
+-	pointshop	card_special#R	-1,#CASHPOINTS,501:120
+-	pointshop	card_special#S	-1,#CASHPOINTS,501:120
+-	pointshop	card_special#T	-1,#CASHPOINTS,501:120
+-	pointshop	card_special#U	-1,#CASHPOINTS,501:120
+-	pointshop	card_special#V	-1,#CASHPOINTS,501:120
+-	pointshop	card_special#W	-1,#CASHPOINTS,501:120
+-	pointshop	card_special#X	-1,#CASHPOINTS,501:120
+-	pointshop	card_special#Y	-1,#CASHPOINTS,501:120
+-	pointshop	card_special#Z	-1,#CASHPOINTS,501:120
