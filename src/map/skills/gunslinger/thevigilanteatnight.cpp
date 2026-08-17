@@ -53,7 +53,7 @@ void SkillTheVigilanteAtNight::calculateSkillRatio(const Damage* wd, const block
 		if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
 			skillratio += sc->getSCE(SC_INTENSIVE_AIM_COUNT)->val1 * 100 * skill_lv;
 	} else {
-		skillratio += -100 + 800 + 850 * skill_lv;
+		skillratio += -100 + 850 + 800 * skill_lv;
 		if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
 			skillratio += sc->getSCE(SC_INTENSIVE_AIM_COUNT)->val1 * 200 * skill_lv;
 	}
