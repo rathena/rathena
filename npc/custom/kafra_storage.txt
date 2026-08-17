@@ -1,0 +1,93 @@
+//===== Ragnarok Offline =====================================
+//= Captive Kafra Storage Clerk
+//===== Description: =========================================
+//= A kidnapped Kafra Employee inside the Eden Market Grade
+//= Enhancement Center black-market room. She is not a member
+//= of the merchant network. She offers personal Storage only:
+//= no Save Point, Teleport, Cart Rental, or Guild Storage.
+//= Appearance reuses sprite 113 / 4_F_KAFRA5 and cut-in
+//= kafra_05. She is not Leilah.
+//= Storage fee: 40 Zeny, matching Prontera's official Kafra
+//= storage cost. Free Ticket for Kafra Storage (7059) is
+//= accepted. Kafra Points accrue at fee/5, same as F_KafStor.
+//============================================================
+
+paramk,48,161,2	script	Kafra Employee#offline	4_F_KAFRA5,{
+	cutin "kafra_05", 2;
+	.@eac = eaclass();
+
+	if ((.@eac & EAJ_BASEMASK) == EAJ_SUMMONER) {
+		mes "[Kafra Employee]";
+		mes "A... a talking cat?";
+		mes "I-I'm sorry. That was rude.";
+		mes "Kafra Corporation welcomes all customers. Even... even here.";
+		next;
+	} else if (.@eac & EAJL_BABY) {
+		mes "[Kafra Employee]";
+		mes "A child...? No. You don't look lost.";
+		mes "If you need Storage, I'll open it. Quickly.";
+		next;
+	}
+
+	mes "[Kafra Employee]";
+	mes "W-welcome to the Kafra Corporation...";
+	mes "This isn't an official branch. I know.";
+	mes "They brought me here. I can only open Storage.";
+	mes "Please... before they look this way.";
+	next;
+
+	while (true) {
+		switch (select("Use Storage:You're not with them, are you?:Cancel")) {
+		case 1:
+			callsub S_OpenStorage;
+			end;
+		case 2:
+			mes "[Kafra Employee]";
+			mes "N-no. I'm a Kafra Employee. That's all I've ever been.";
+			mes "They needed someone who could open Storage, so they took me.";
+			mes "I don't sell anything. I don't want to.";
+			mes "Please don't ask while they're listening.";
+			next;
+			break;
+		case 3:
+			mes "[Kafra Employee]";
+			mes "...Thank you. Please pretend you only came for Storage.";
+			close3;
+		}
+	}
+
+S_OpenStorage:
+	if (!callfunc("F_CanOpenStorage")) {
+		mes "[Kafra Employee]";
+		mes "I-I'm sorry. You still need the Novice's Basic Skill Level 6.";
+		mes "I can't open Storage without that. Those are still the rules.";
+		close3;
+	}
+
+	if (countitem(7059))
+		delitem 7059, 1;
+	else {
+		if (Zeny < .StorageFee) {
+			mes "[Kafra Employee]";
+			mes "I... I still have to collect the fee. I'm sorry.";
+			mes "Storage access is " + .StorageFee + " zeny.";
+			close3;
+		}
+		Zeny -= .StorageFee;
+		RESRVPTS += (.StorageFee / 5);
+	}
+
+	mes "[Kafra Employee]";
+	mes "Y-yes. Storage. I can still do this.";
+	mes "Please use it and... and go.";
+	callfunc "F_CheckKafCode";
+	close2;
+	openstorage;
+	cutin "", 255;
+	end;
+
+OnInit:
+	.StorageFee = 40;
+	setunittitle(getnpcid(0), "<Storage>");
+	end;
+}

@@ -481,51 +481,10 @@ prt_in,177,18,2	script	Marvin#pront	80,{
 	close;
 }
 
-prt_in,284,168,3	script	Ginedin Rephere#pront	55,{
-	mes "[Tailor Ginedin Rephere]";
-	mes "11...";
-	mes "12...";
-	mes "Mmm, good. I think I'll be able to finish before tonight's party.";
-	next;
-	mes "[Tailor Ginedin Rephere]";
-	mes "Oh! I didn't realize I had a guest. How may I help you?";
-	next;
-	switch(select("Talk:Dye Clothing:Cancel")) {
-	case 1:
-		mes "[Tailor Ginedin Rephere]";
-		mes "Life may have gotten a little better, but receiving all these orders? *Whew!* Young ladies these days must be very well off, so my services may no longer be a luxury.";
-		next;
-		mes "[Tailor Ginedin Rephere]";
-		mes "Well, people like them probably further the pursuit of beauty and fashion. But, of course, that's only my opinion.";
-		next;
-		mes "[Tailor Ginedin Rephere]";
-		mes "I believe for us humans, clothes are one of the few ways to show our personality, style, and beauty.";
-		next;
-		mes "[Tailor Ginedin Rephere]";
-		mes "Considering this, I personally think my job is very helpful and rather fancy. This in itself makes it all worthwhile. Coarse fabric and rough leather burst with energy and life when colored...";
-		next;
-		mes "[Tailor Ginedin Rephere]";
-		mes "It is a very hard and tedious process, but the happiness and delight you feel when your clothes are done makes up for all the hard work.";
-		close;
-	case 2:
-		mes "[Tailor Ginedin Rephere]";
-		mes "Ah...!";
-		mes "You came to dye";
-		mes "your clothes as well.";
-		next;
-		mes "[Tailor Ginedin Rephere]";
-		mes "But... I'm so sorry.";
-		mes "I don't have enough time to dye your clothes right now. I have so many orders that are still waiting to be done.";
-		next;
-		mes "[Tailor Ginedin Rephere]";
-		mes "I'm sorry for the inconvenience, but could you come back again next time?";
-		close;
-	case 3:
-		mes "[Tailor Ginedin Rephere]";
-		mes "Feel free to take your time and relax here. I apologize that I have nothing to serve you, though.";
-		close;
-	}
-}
+// Clothes dye is npc/merchants/clothes_dyer.txt (Dyer Ginedin Rephere).
+//prt_in,284,168,3	script	Ginedin Rephere#pront	55,{
+//	end;
+//}
 
 // Prontera Church
 //============================================================

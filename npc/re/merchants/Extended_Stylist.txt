@@ -27,21 +27,8 @@ alberta_in,55,142,7	script	Stylist#alberta	4_F_02,{
 
 //= Stylist of Prontera
 //===================================================
-prt_in,243,168,4	script	Stylist#prontera	4_F_02,{
-	mes "[Jovovich]";
-	mes "Welcome. I'm Jovovich, a famous stylist from Prontera. How can I help you?";
-	next;
-	switch(select("Change your style:End conversation")) {
-	case 1:
-		close2;
-		openstylist();
-		end;
-	case 2:
-		mes "[Jovovich]";
-		mes "Please visit us again~";
-		close;
-	}
-}
+// Replaced by npc/custom/second_costume.txt (Second Costume ticket talk).
+// Do not restore openstylist() here. Clothes dye is Ginedin.
 
 //= Stylist of Lighthalzen
 //===================================================

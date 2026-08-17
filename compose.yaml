@@ -94,6 +94,8 @@ services:
     volumes:
       - ./docker/inter_conf.txt:/rathena/conf/import/inter_conf.txt:ro
       - ./docker/map_conf.txt:/rathena/conf/import/map_conf.txt:ro
+      - ./npc:/rathena/npc:ro
+      - ./db:/rathena/db:ro
       - map-logs:/rathena/log
     healthcheck:
       test: ["CMD", "nc", "-z", "127.0.0.1", "5121"]

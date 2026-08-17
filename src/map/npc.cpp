@@ -2346,6 +2346,15 @@ bool npc_scriptcont(map_session_data* sd, int32 id, bool closing){
 			case STOP:
 				sd->st->state = RUN;
 				break;
+#ifdef SECURE_NPCTIMEOUT
+			// Window close during menu/prompt: same as client menu cancel (0xff)
+			case RERUNLINE:
+				if( sd->npc_idle_type == NPCT_MENU ){
+					sd->npc_menu = 0xff;
+					break;
+				}
+				[[fallthrough]];
+#endif
 			default:
 				sd->st->state = END;
 				ShowError( "npc_scriptcont: unexpected state '%d' for closing call. (AID: %u CID: %u)\n", sd->st->state, sd->status.account_id, sd->status.char_id );

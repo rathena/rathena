@@ -5,18 +5,23 @@
 //= account-wide Cash Points. Browse is one hidden pointshop
 //= per function category. Category shops are filled at OnInit
 //= by a hidden NPC. Ordinary buffs and upgrade stones are sold
-//= as singles. Timed Infinite rental boxes remain. Random boxes
-//= are omitted. Farmable basic ores are sold here. Ether and
-//= Etel stones are not.
+//= as singles unless the piece price is under 1,000 Zeny, in
+//= which case the official pack is stocked instead. Timed
+//= Infinite rental boxes remain. Random boxes are omitted.
+//= Farmable basic ores are sold here. Ether and Etel stones
+//= are not.
 //= Battle Manual: 5 / 7 / 10 Cash Points (5k / 7k / 10k Zeny).
 //= Field Manual 300%: 10. Thick Battle Manual and Limit: 10.
 //= Bubble Gum: 7 / 10 / 15. Combat: 3-day Infinite ASPD boxes 100;
-//= food 5; Blessing/AGI 1; Aspersio 2; Assumptio/Wind Walk/Adrenaline 1;
-//= Abrasive 1; Mega Resist Potion 10.
+//= food 5; Blessing/AGI 10-packs 5; Aspersio 2;
+//= Assumptio/Wind Walk/Adrenaline 10-packs 8; Abrasive 1;
+//= Mega Resist Potion 10.
 //= Recovery: Small Life 3; Medium Life 5; Regeneration 2.
-//= Convenience: Kafra 1; Giant Fly Wing 1; Insurance 3; Gym Pass 50;
-//= Token 10; Convex 2; Dungeon Teleport 5; Greed 1;
-//= Infinite Flywing 1/3/5/7-day 30/45/60/150.
+//= Convenience: Kafra 1; Giant Fly Wing 10-pack 5; Insurance 3;
+//= Gym Pass 50; Token 10; Convex 2; Dungeon Teleport 5;
+//= Greed 20-pack 10; Infinite Flywing 1/3/5/7-day 30/45/60/150.
+//= Style and Reset: dye coupons 20; Costume Change Ticket 100
+//= (100,000 Zeny); Neuralizer 1000 (1,000,000 Zeny).
 //= Upgrade: basic ores 1-2; Oridecon/Elunium 5; Enriched 10; HD Ori/Elu 30;
 //= HD Bradium/Carnium 100; Blacksmith Blessing 13;
 //= Shadow Refine Hammer 100. Neuralizer 1000 (1,000,000 Zeny).
@@ -49,7 +54,7 @@ paramk,39,185,4	script	Rooke#offline	542,{
 	mes "First taste is honest. ^0055FFCash Points^000000 only.";
 	mes "Tell me what you're craving, or whisper a name and I'll find it.";
 	next;
-	switch (select("EXP and Drop:Combat Buffs:Recovery:Convenience:Upgrade:Reset:Search this stall:")) {
+	switch (select("EXP and Drop:Combat Buffs:Recovery:Convenience:Upgrade:Style and Reset:Search this stall:")) {
 	case 1:
 		callsub S_OpenCategory, 0;
 		end;
@@ -168,36 +173,40 @@ OnFillSearch:
 OnInit:
 	// Canonical SKUs only. Random boxes, regional copies, [Not For Sale], empty
 	// TODO scripts, and weaker same-name duplicates are excluded.
-	// Ordinary buffs and upgrade stones are singles. Piece Zeny under
-	// 1,000 is 1 Cash Point. Timed Infinite rental boxes remain.
-	// Battle Manual: 5,000 / 7,000 / 10,000 Zeny. Bubble Gum: 7,000 /
-	// 10,000 / 15,000 Zeny. 1 Cash Point = 1,000 Zeny.
+	// Ordinary buffs and upgrade stones are singles unless piece
+	// Zeny is under 1,000; those families stay on official packs.
+	// Timed Infinite rental boxes remain. Battle Manual: 5,000 /
+	// 7,000 / 10,000 Zeny. Bubble Gum: 7,000 / 10,000 / 15,000
+	// Zeny. 1 Cash Point = 1,000 Zeny.
 	// Category 0: EXP and Drop
 	setarray .ItemId[0],     12208, 14592, 14532, 14533, 12411, 14545, 12210, 12562, 12412, 12312, 12872;
 	setarray .ItemPrice[0],      5,     5,     5,     7,    10,    10,     7,    10,    15,    10,    10;
 	setarray .ItemCat[0],        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0;
 	// Category 1: Combat Buffs. 17263-17265 stay 3-day rental boxes.
-	setarray .ItemId[11],    17263, 17264, 17265, 12202, 12203, 12204, 12205, 12206, 12207, 12215, 12216, 12217, 12218, 12219, 12220, 14536, 12299;
-	setarray .ItemPrice[11],   100,   100,   100,     5,     5,     5,     5,     5,     5,     1,     1,     2,     1,     1,     1,     1,    10;
+	// Blessing/AGI/Assumptio/Wind Walk/Adrenaline stay 10-packs;
+	// piece Zeny is under 1,000.
+	setarray .ItemId[11],    17263, 17264, 17265, 12202, 12203, 12204, 12205, 12206, 12207, 12913, 12914, 12217, 12916, 12917, 12918, 14536, 12299;
+	setarray .ItemPrice[11],   100,   100,   100,     5,     5,     5,     5,     5,     5,     5,     5,     2,     8,     8,     8,     1,    10;
 	setarray .ItemCat[11],       1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1;
 	// Category 2: Recovery
 	setarray .ItemId[28],    14534, 14535, 14537;
 	setarray .ItemPrice[28],     3,     5,     2;
 	setarray .ItemCat[28],       2,     2,     2;
 	// Category 3: Convenience. 17314 / 17251 / 17474 / 17229 stay rental boxes.
-	setarray .ItemId[31],    12211, 12212, 12209,  7776,  7621, 12214, 17314, 17251, 17474, 17229, 14527, 14529;
-	setarray .ItemPrice[31],     1,     1,     3,    50,    10,     2,    30,    45,    60,   150,     5,     1;
+	// Giant Fly Wing 10-pack and Greed 20-pack: piece Zeny under 1,000.
+	setarray .ItemId[31],    12211, 12910, 12209,  7776,  7621, 12214, 17314, 17251, 17474, 17229, 14527, 14347;
+	setarray .ItemPrice[31],     1,     5,     3,    50,    10,     2,    30,    45,    60,   150,     5,    10;
 	setarray .ItemCat[31],       3,     3,     3,     3,     3,     3,     3,     3,     3,     3,     3,     3;
-	// Category 4: Reset
-	setarray .ItemId[43],    12213;
-	setarray .ItemPrice[43],  1000;
-	setarray .ItemCat[43],       4;
+	// Category 4: Style and Reset. Dye coupons 20; Costume Change Ticket 100; Neuralizer 1000.
+	setarray .ItemId[43],     6046,  6047,  6959, 12213;
+	setarray .ItemPrice[43],    20,    20,   100,  1000;
+	setarray .ItemCat[43],       4,     4,     4,     4;
 	// Upgrade. Basic ores only; no Ether/Etel; no rough stones.
-	setarray .ItemId[44],     1002,   998,  1003,   999,  1010,  1011,   984,   985,  7619,  7620,  6240,  6241,  6226,  6225,  6635, 23436;
-	setarray .ItemPrice[44],     1,     1,     1,     1,     1,     2,     5,     5,    10,    10,    30,    30,   100,   100,    13,   100;
-	setarray .ItemCat[44],       5,     5,     5,     5,     5,     5,     5,     5,     5,     5,     5,     5,     5,     5,     5,     5;
+	setarray .ItemId[47],     1002,   998,  1003,   999,  1010,  1011,   984,   985,  7619,  7620,  6240,  6241,  6226,  6225,  6635, 23436;
+	setarray .ItemPrice[47],     1,     1,     1,     1,     1,     2,     5,     5,    10,    10,    30,    30,   100,   100,    13,   100;
+	setarray .ItemCat[47],       5,     5,     5,     5,     5,     5,     5,     5,     5,     5,     5,     5,     5,     5,     5,     5;
 
-	.ItemCount = 60;
+	.ItemCount = 63;
 	deletearray .CatHas[0], 6;
 
 	for (.@cat = 0; .@cat < 6; ++.@cat)

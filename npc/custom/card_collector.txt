@@ -332,7 +332,7 @@ function	script	F_OfflineMvpCardAlbum	{
 }
 
 // Bodyguards: visible and proximity-reactive, but they do not open dialogue.
-paramk,41,161,4	script	Guard#card_collector_1	405,2,1,{
+paramk,41,161,2	script	Guard#card_collector_1	405,2,1,{
 	callsub S_Warn;
 	end;
 
@@ -360,3 +360,32 @@ S_Warn:
 }
 
 paramk,41,157,2	duplicate(Guard#card_collector_1)	Guard#card_collector_2	405,2,1
+
+// Room-entrance guard: same balloon warning pattern, different sprite and lines.
+paramk,14,175,4	script	Guard#black_market_door	686,2,1,{
+	callsub S_Warn;
+	end;
+
+OnTouch:
+	callsub S_Warn;
+	end;
+
+S_Warn:
+	if (@BmDoorGuardWarningUntil > gettimetick(2))
+		return;
+	@BmDoorGuardWarningUntil = gettimetick(2) + 3;
+
+	switch (rand(3)) {
+	case 0:
+		npctalk "This isn't a hallway. State your business or move.", strnpcinfo(0), bc_self;
+		break;
+	case 1:
+		npctalk "Don't stand in the doorway. People inside don't like gawkers.", strnpcinfo(0), bc_self;
+		break;
+	default:
+		npctalk "Keep your eyes down and your mouth shut.", strnpcinfo(0), bc_self;
+		break;
+	}
+	return;
+}
+

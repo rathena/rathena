@@ -1,0 +1,117 @@
+//===== Ragnarok Offline =====================================
+//= Prontera Stylist — Second Costume
+//===== Description: =========================================
+//= Replaces Stylist#prontera. Standard 3rd jobs may toggle
+//= the official alternative (Second Costume) body for one
+//= Costume Change Ticket (6959). Does not open Style Shop.
+//= Clothes dye is Ginedin at prt_in,284,168.
+//============================================================
+
+prt_in,243,168,4	script	Stylist#prontera	4_F_02,{
+	.@outfit = callsub(S_GetOutfit);
+	.@body = getlook(LOOK_BODY2);
+	.@second = (.@outfit && .@body == .@outfit);
+
+	if (!.@outfit) {
+		mes "[Jovovich]";
+		mes "Come here a second.";
+		mes "Turn. Let me look at you.";
+		next;
+		mes "[Jovovich]";
+		mes "Needle, thread, a second set of clothes...";
+		mes "I had a whole speech ready.";
+		next;
+		mes "[Jovovich]";
+		mes "Those clothes already look right on you.";
+		mes "I'm not touching the cut.";
+		mes "If you want a different color, Ginedin beside me still dyes.";
+		close;
+	}
+
+	mes "[Jovovich]";
+	mes "Come here a second.";
+	mes "Turn. Let me look at you.";
+	next;
+	mes "[Jovovich]";
+	mes "I can change those clothes for you.";
+	mes "The alternative set, or back to the usual ones.";
+	mes "Interested?";
+	next;
+	if (select("I'm interested:Not now") == 2) {
+		mes "[Jovovich]";
+		mes "Come back when those clothes itch.";
+		mes "Color is Ginedin's counter, not mine.";
+		close;
+	}
+
+	mes "[Jovovich]";
+	mes "One " + getitemname(.TicketId) + " for the switch.";
+	mes "Do you have one on you?";
+	next;
+	if (select("I have it:I don't") == 2) {
+		mes "[Jovovich]";
+		mes "Then come back with a " + getitemname(.TicketId) + ".";
+		mes "Rooke in the black market sells them.";
+		close;
+	}
+	if (countitem(.TicketId) < 1) {
+		mes "[Jovovich]";
+		mes "You don't. Don't bluff a stylist.";
+		mes "Rooke sells those tickets.";
+		close;
+	}
+
+	delitem .TicketId, 1;
+	if (.@second)
+		setlook LOOK_BODY2, Class;
+	else
+		setlook LOOK_BODY2, .@outfit;
+
+	mes "[Jovovich]";
+	if (.@second)
+		mes "There. The usual clothes, same as before.";
+	else
+		mes "There. The alternative cut.";
+	mes "Bring another ticket when you want to switch again.";
+	mes "A new color is Ginedin, next to me.";
+	close;
+
+S_GetOutfit:
+	.@i = inarray(.Jobs[0], Class);
+	if (.@i < 0)
+		return 0;
+	return .Outfits[.@i];
+
+OnInit:
+	.TicketId = 6959;
+	setunittitle getnpcid(0), "<Second Costume>";
+	setarray .Jobs[0],
+		Job_Rune_Knight, Job_Rune_Knight2, Job_Rune_Knight_T, Job_Rune_Knight_T2, Job_Baby_Rune_Knight, Job_Baby_Rune_Knight2,
+		Job_Warlock, Job_Warlock_T, Job_Baby_Warlock,
+		Job_Ranger, Job_Ranger2, Job_Ranger_T, Job_Ranger_T2, Job_Baby_Ranger, Job_Baby_Ranger2,
+		Job_Arch_Bishop, Job_Arch_Bishop_T, Job_Baby_Arch_Bishop,
+		Job_Mechanic, Job_Mechanic2, Job_Mechanic_T, Job_Mechanic_T2, Job_Baby_Mechanic, Job_Baby_Mechanic2,
+		Job_Guillotine_Cross, Job_Guillotine_Cross_T, Job_Baby_Guillotine_Cross,
+		Job_Royal_Guard, Job_Royal_Guard2, Job_Royal_Guard_T, Job_Royal_Guard_T2, Job_Baby_Royal_Guard, Job_Baby_Royal_Guard2,
+		Job_Sorcerer, Job_Sorcerer_T, Job_Baby_Sorcerer,
+		Job_Minstrel, Job_Minstrel_T, Job_Baby_Minstrel,
+		Job_Wanderer, Job_Wanderer_T, Job_Baby_Wanderer,
+		Job_Sura, Job_Sura_T, Job_Baby_Sura,
+		Job_Genetic, Job_Genetic_T, Job_Baby_Genetic,
+		Job_Shadow_Chaser, Job_Shadow_Chaser_T, Job_Baby_Shadow_Chaser;
+	setarray .Outfits[0],
+		Job_Rune_Knight_2nd, Job_Rune_Knight_2nd, Job_Rune_Knight_2nd, Job_Rune_Knight_2nd, Job_Rune_Knight_2nd, Job_Rune_Knight_2nd,
+		Job_Warlock_2nd, Job_Warlock_2nd, Job_Warlock_2nd,
+		Job_Ranger_2nd, Job_Ranger_2nd, Job_Ranger_2nd, Job_Ranger_2nd, Job_Ranger_2nd, Job_Ranger_2nd,
+		Job_Archbishop_2nd, Job_Archbishop_2nd, Job_Archbishop_2nd,
+		Job_Mechanic_2nd, Job_Mechanic_2nd, Job_Mechanic_2nd, Job_Mechanic_2nd, Job_Mechanic_2nd, Job_Mechanic_2nd,
+		Job_Guillotine_Cross_2nd, Job_Guillotine_Cross_2nd, Job_Guillotine_Cross_2nd,
+		Job_Royal_Guard_2nd, Job_Royal_Guard_2nd, Job_Royal_Guard_2nd, Job_Royal_Guard_2nd, Job_Royal_Guard_2nd, Job_Royal_Guard_2nd,
+		Job_Sorcerer_2nd, Job_Sorcerer_2nd, Job_Sorcerer_2nd,
+		Job_Minstrel_2nd, Job_Minstrel_2nd, Job_Minstrel_2nd,
+		Job_Wanderer_2nd, Job_Wanderer_2nd, Job_Wanderer_2nd,
+		Job_Sura_2nd, Job_Sura_2nd, Job_Sura_2nd,
+		Job_Genetic_2nd, Job_Genetic_2nd, Job_Genetic_2nd,
+		Job_Shadow_Chaser_2nd, Job_Shadow_Chaser_2nd, Job_Shadow_Chaser_2nd;
+	end;
+}

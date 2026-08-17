@@ -1,0 +1,1279 @@
+// Generated from cloth-palette-index.tsv + job_to_pal_prefix.tsv
+// Do not edit by hand. Regenerator: Server/tools/GenerateClothDyePalettes.cs
+// F_ClothDyePals(class, is_male, second_costume) -> @cdye_pal[] count
+
+function	script	F_ClothDyePals	{
+	.@c = getarg(0);
+	.@male = getarg(1);
+	.@second = getarg(2);
+	deletearray @cdye_pal[0];
+	switch(.@c) {
+	case Job_Abyss_Chaser:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Acolyte:
+	case Job_Acolyte_High:
+	case Job_Baby_Acolyte:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			}
+		}
+		break;
+	case Job_Alchemist:
+	case Job_Baby_Alchemist:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			}
+		}
+		break;
+	case Job_Arch_Bishop:
+	case Job_Arch_Bishop_T:
+	case Job_Baby_Arch_Bishop:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Arch_Mage:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Archer:
+	case Job_Archer_High:
+	case Job_Baby_Archer:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			}
+		}
+		break;
+	case Job_Assassin:
+	case Job_Baby_Assassin:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			}
+		}
+		break;
+	case Job_Assassin_Cross:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		}
+		break;
+	case Job_Bard:
+	case Job_Baby_Bard:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			} else {
+				return 0;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			} else {
+				return 0;
+			}
+		}
+		break;
+	case Job_Biolo:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Blacksmith:
+	case Job_Baby_Blacksmith:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			}
+		}
+		break;
+	case Job_Cardinal:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Champion:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		}
+		break;
+	case Job_Clown:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				return 0;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				return 0;
+			}
+		}
+		break;
+	case Job_Creator:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		}
+		break;
+	case Job_Crusader:
+	case Job_Crusader2:
+	case Job_Baby_Crusader:
+	case Job_Baby_Crusader2:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		}
+		break;
+	case Job_Dancer:
+	case Job_Baby_Dancer:
+		if (.@second) {
+			if (.@male) {
+				return 0;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		} else {
+			if (.@male) {
+				return 0;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		}
+		break;
+	case Job_Dragon_Knight:
+	case Job_Dragon_Knight2:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Elemental_Master:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Genetic:
+	case Job_Genetic_T:
+	case Job_Baby_Genetic:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Guillotine_Cross:
+	case Job_Guillotine_Cross_T:
+	case Job_Baby_Guillotine_Cross:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Gunslinger:
+	case Job_Baby_Gunslinger:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Gypsy:
+		if (.@second) {
+			if (.@male) {
+				return 0;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		} else {
+			if (.@male) {
+				return 0;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		}
+		break;
+	case Job_High_Priest:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		}
+		break;
+	case Job_High_Wizard:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		}
+		break;
+	case Job_Hunter:
+	case Job_Baby_Hunter:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			}
+		}
+		break;
+	case Job_Hyper_Novice:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Imperial_Guard:
+	case Job_Imperial_Guard2:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Inquisitor:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Kagerou:
+	case Job_Baby_Kagerou:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				return 0;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				return 0;
+			}
+		}
+		break;
+	case Job_Knight:
+	case Job_Knight2:
+	case Job_Baby_Knight:
+	case Job_Baby_Knight2:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			}
+		}
+		break;
+	case Job_Lord_Knight:
+	case Job_Lord_Knight2:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		}
+		break;
+	case Job_Mage:
+	case Job_Mage_High:
+	case Job_Baby_Mage:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			}
+		}
+		break;
+	case Job_Mechanic:
+	case Job_Mechanic2:
+	case Job_Mechanic_T:
+	case Job_Mechanic_T2:
+	case Job_Baby_Mechanic:
+	case Job_Baby_Mechanic2:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Meister:
+	case Job_Meister2:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Merchant:
+	case Job_Merchant_High:
+	case Job_Baby_Merchant:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			}
+		}
+		break;
+	case Job_Minstrel:
+	case Job_Minstrel_T:
+	case Job_Baby_Minstrel:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				return 0;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				return 0;
+			}
+		}
+		break;
+	case Job_Monk:
+	case Job_Baby_Monk:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		}
+		break;
+	case Job_Night_Watch:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Ninja:
+	case Job_Baby_Ninja:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Novice:
+	case Job_Novice_High:
+	case Job_Baby:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Oboro:
+	case Job_Baby_Oboro:
+		if (.@second) {
+			if (.@male) {
+				return 0;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		} else {
+			if (.@male) {
+				return 0;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Paladin:
+	case Job_Paladin2:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		}
+		break;
+	case Job_Priest:
+	case Job_Baby_Priest:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			}
+		}
+		break;
+	case Job_Professor:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		}
+		break;
+	case Job_Ranger:
+	case Job_Ranger2:
+	case Job_Ranger_T:
+	case Job_Ranger_T2:
+	case Job_Baby_Ranger:
+	case Job_Baby_Ranger2:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Rebellion:
+	case Job_Baby_Rebellion:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Rogue:
+	case Job_Baby_Rogue:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		}
+		break;
+	case Job_Royal_Guard:
+	case Job_Royal_Guard2:
+	case Job_Royal_Guard_T:
+	case Job_Royal_Guard_T2:
+	case Job_Baby_Royal_Guard:
+	case Job_Baby_Royal_Guard2:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Rune_Knight:
+	case Job_Rune_Knight2:
+	case Job_Rune_Knight_T:
+	case Job_Rune_Knight_T2:
+	case Job_Baby_Rune_Knight:
+	case Job_Baby_Rune_Knight2:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Sage:
+	case Job_Baby_Sage:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		}
+		break;
+	case Job_Shadow_Chaser:
+	case Job_Shadow_Chaser_T:
+	case Job_Baby_Shadow_Chaser:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Shadow_Cross:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Shinkiro:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				return 0;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				return 0;
+			}
+		}
+		break;
+	case Job_Shiranui:
+		if (.@second) {
+			if (.@male) {
+				return 0;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		} else {
+			if (.@male) {
+				return 0;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Sky_Emperor:
+	case Job_Sky_Emperor2:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Sniper:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		}
+		break;
+	case Job_Sorcerer:
+	case Job_Sorcerer_T:
+	case Job_Baby_Sorcerer:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Soul_Ascetic:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Soul_Linker:
+	case Job_Baby_Soul_Linker:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Soul_Reaper:
+	case Job_Baby_Soul_Reaper:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Spirit_Handler:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Stalker:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		}
+		break;
+	case Job_Star_Emperor:
+	case Job_Star_Emperor2:
+	case Job_Baby_Star_Emperor:
+	case Job_Baby_Star_Emperor2:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Star_Gladiator:
+	case Job_Star_Gladiator2:
+	case Job_Baby_Star_Gladiator:
+	case Job_Baby_Star_Gladiator2:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Summoner:
+	case Job_Baby_Summoner:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Super_Novice:
+	case Job_Super_Baby:
+	case Job_Super_Novice_E:
+	case Job_Super_Baby_E:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Sura:
+	case Job_Sura_T:
+	case Job_Baby_Sura:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Swordman:
+	case Job_Swordman_High:
+	case Job_Baby_Swordman:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			}
+		}
+		break;
+	case Job_Taekwon:
+	case Job_Baby_Taekwon:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Thief:
+	case Job_Thief_High:
+	case Job_Baby_Thief:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			}
+		}
+		break;
+	case Job_Troubadour:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				return 0;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				return 0;
+			}
+		}
+		break;
+	case Job_Trouvere:
+		if (.@second) {
+			if (.@male) {
+				return 0;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		} else {
+			if (.@male) {
+				return 0;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Wanderer:
+	case Job_Wanderer_T:
+	case Job_Baby_Wanderer:
+		if (.@second) {
+			if (.@male) {
+				return 0;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		} else {
+			if (.@male) {
+				return 0;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Warlock:
+	case Job_Warlock_T:
+	case Job_Baby_Warlock:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Whitesmith:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3;
+			}
+		}
+		break;
+	case Job_Windhawk:
+	case Job_Windhawk2:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4,5,6,7;
+			}
+		}
+		break;
+	case Job_Wizard:
+	case Job_Baby_Wizard:
+		if (.@second) {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			}
+		} else {
+			if (.@male) {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			} else {
+				setarray @cdye_pal[0], 0,1,2,3,4;
+			}
+		}
+		break;
+	default:
+		return 0;
+	}
+	return getarraysize(@cdye_pal);
+}
