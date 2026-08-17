@@ -1,0 +1,891 @@
+//===== Ragnarok Offline =====================================
+//= Black-Market Hat Seller
+//===== Description: =========================================
+//= Sells reviewed iRO cash/event headgear for Cash Points.
+//= Browse is Equipment, Rental, Specialty, or Event, then Top /
+//= Eye / Mouth, then A-Z by client identifiedDisplayName. Letter
+//= shops are filled in that display-name order, then ID.
+//= Specialty is Temporal Circlets and Frontier Rune Crowns.
+//= Event is Racing Caps and RWC/RTC/RCC tournament hats. Hats that
+//= exist in item_db but have no client itemInfo.lua row stay on the
+//= shelf; client itemInfo is a later pass. Client-tagged rental hats
+//= are sold as duration boxes, not the loose SKU. Every SKU costs
+//= 100 Cash Points.
+//============================================================
+
+paramk,41,173,2	script	Harlan#offline	897,{
+	.@eac = eaclass();
+	if ((.@eac&EAJ_BASEMASK) == EAJ_SUMMONER) {
+		mes "[Harlan]";
+		mes "A talking cat. In a milliner's stall.";
+		mes "Sit still. I can still measure a head that talks.";
+		next;
+	} else if (.@eac&EAJL_BABY) {
+		mes "[Harlan]";
+		mes "You look like a child.";
+		mes "You do not feel like one.";
+		mes "I have sold hats to kings who frightened me less.";
+		next;
+	} else if (.@eac&EAJL_UPPER) {
+		mes "[Harlan]";
+		mes "That face is young. The way you stand is not.";
+		mes "I remember customers who came back after the world remade them.";
+		next;
+	}
+	mes "[Harlan]";
+	mes "Do not brush past. Hats are not an afterthought.";
+	mes "Crowns. Glasses. The little things people hide in their mouths.";
+	mes "I sell the hat itself. Timed boxes, if you only need it for a while.";
+	mes "Fitted circlets from harder work, if you would rather not fetch them.";
+	mes "Tournament leftovers, if you missed the crowd.";
+	mes "^0055FFCash Points^000000 only. No eggs.";
+	next;
+	switch (select("Equipment:Rental:Specialty:Event:Search this stall:")) {
+	case 1:
+		callsub S_OpenCatalog, 0;
+		end;
+	case 2:
+		callsub S_OpenCatalog, 1;
+		end;
+	case 3:
+		callsub S_OpenCatalog, 2;
+		end;
+	case 4:
+		callsub S_OpenCatalog, 3;
+		end;
+	case 5:
+		callsub S_Search;
+		end;
+	}
+	end;
+
+S_OpenCatalog:
+	.@kind = getarg(0);
+	.@slot = select("Top:Eye:Mouth:") - 1;
+	if (.@kind == 0) {
+		.@menu$ = getvariableofnpc(.HatMenu$[.@slot], "hat_seller_db");
+		.@prefix$ = "hat";
+	} else if (.@kind == 1) {
+		.@menu$ = getvariableofnpc(.RentMenu$[.@slot], "hat_seller_db");
+		.@prefix$ = "rent";
+	} else if (.@kind == 2) {
+		.@menu$ = getvariableofnpc(.SpecMenu$[.@slot], "hat_seller_db");
+		.@prefix$ = "spec";
+	} else {
+		.@menu$ = getvariableofnpc(.EvtMenu$[.@slot], "hat_seller_db");
+		.@prefix$ = "evt";
+	}
+	if (.@menu$ == "") {
+		mes "[Harlan]";
+		mes "That drawer is empty. Try another.";
+		close;
+	}
+	.@s = select(.@menu$) - 1;
+	.@idx = .@slot * 26 + .@s;
+	if (.@kind == 0)
+		.@letter$ = getvariableofnpc(.HatLetter$[.@idx], "hat_seller_db");
+	else if (.@kind == 1)
+		.@letter$ = getvariableofnpc(.RentLetter$[.@idx], "hat_seller_db");
+	else if (.@kind == 2)
+		.@letter$ = getvariableofnpc(.SpecLetter$[.@idx], "hat_seller_db");
+	else
+		.@letter$ = getvariableofnpc(.EvtLetter$[.@idx], "hat_seller_db");
+	close2;
+	callshop .@prefix$ + .@slot + "#" + .@letter$, 1;
+	end;
+
+S_Search:
+	mes "[Harlan]";
+	mes "Speak a name. Part of one. A number, if you insist.";
+	mes "Hats, timed boxes, fitted circlets, and event leftovers. If it is here, I will find it.";
+	next;
+	input .@query$;
+	if (.@query$ == "") {
+		mes "[Harlan]";
+		mes "You went quiet. Come back when you know what you want.";
+		close;
+	}
+	.@query_id = atoi(.@query$);
+	.@n = 0;
+	.@count = getvariableofnpc(.IroCount, "hat_seller_db");
+	for (.@i = 0; .@i < .@count; ++.@i)
+		callsub S_TryMatch, getvariableofnpc(.IroId[.@i], "hat_seller_db"), getvariableofnpc(.IroAegis$[.@i], "hat_seller_db"), getvariableofnpc(.IroDisp$[.@i], "hat_seller_db");
+	.@count = getvariableofnpc(.RentCount, "hat_seller_db");
+	for (.@i = 0; .@i < .@count; ++.@i) {
+		.@hat = getvariableofnpc(.RentHatId[.@i], "hat_seller_db");
+		callsub S_TryMatch, getvariableofnpc(.RentBoxId[.@i], "hat_seller_db"), getvariableofnpc(.RentAegis$[.@i], "hat_seller_db"), getvariableofnpc(.RentDisp$[.@i], "hat_seller_db"), .@hat, getiteminfo(.@hat, ITEMINFO_AEGISNAME), getitemname(.@hat);
+	}
+	.@count = getvariableofnpc(.SpecCount, "hat_seller_db");
+	for (.@i = 0; .@i < .@count; ++.@i)
+		callsub S_TryMatch, getvariableofnpc(.SpecId[.@i], "hat_seller_db"), getvariableofnpc(.SpecAegis$[.@i], "hat_seller_db"), getvariableofnpc(.SpecDisp$[.@i], "hat_seller_db");
+	.@count = getvariableofnpc(.EvtCount, "hat_seller_db");
+	for (.@i = 0; .@i < .@count; ++.@i)
+		callsub S_TryMatch, getvariableofnpc(.EvtId[.@i], "hat_seller_db"), getvariableofnpc(.EvtAegis$[.@i], "hat_seller_db"), getvariableofnpc(.EvtDisp$[.@i], "hat_seller_db");
+	if (!.@n) {
+		mes "[Harlan]";
+		mes "Not in my cases. Try another name, or browse properly.";
+		close;
+	}
+	if (.@n > 1) {
+		.@choice_menu$ = "";
+		for (.@i = 0; .@i < .@n; ++.@i)
+			.@choice_menu$ += .@found_label$[.@i] + " (100 CP):";
+		mes "[Harlan]";
+		if (.@n >= 10)
+			mes "Ten is enough. Be more particular.";
+		else
+			mes "These are the ones that fit.";
+		next;
+		.@s = select(.@choice_menu$) - 1;
+		.@found_id[0] = .@found_id[.@s];
+	}
+	set getvariableofnpc(.SearchId, "hat_seller_db"), .@found_id[0];
+	donpcevent "hat_seller_db::OnFillSearch";
+	close2;
+	callshop "hat_search", 1;
+	end;
+
+S_TryMatch:
+	if (.@n >= 10)
+		return;
+	.@id = getarg(0);
+	.@aegis$ = getarg(1);
+	.@disp$ = getarg(2, "");
+	.@alias_id = getarg(3, 0);
+	.@alias_aegis$ = getarg(4, "");
+	.@alias_name$ = getarg(5, "");
+	if (.@id < 1)
+		return;
+	for (.@j = 0; .@j < .@n; ++.@j) {
+		if (.@found_id[.@j] == .@id)
+			return;
+	}
+	.@name$ = getitemname(.@id);
+	if (.@disp$ == "")
+		.@disp$ = .@name$;
+	if (.@query_id > 0 && (.@id == .@query_id || (.@alias_id > 0 && .@alias_id == .@query_id))) {
+		.@found_id[.@n] = .@id;
+		.@found_label$[.@n] = .@disp$;
+		.@n += 1;
+		return;
+	}
+	if (compare(.@disp$, .@query$) || compare(.@name$, .@query$) || compare(.@aegis$, .@query$) || (.@alias_name$ != "" && compare(.@alias_name$, .@query$)) || (.@alias_aegis$ != "" && compare(.@alias_aegis$, .@query$))) {
+		.@found_id[.@n] = .@id;
+		.@found_label$[.@n] = .@disp$;
+		.@n += 1;
+	}
+	return;
+
+OnInit:
+	setunittitle(getnpcid(0), "<Milliner>");
+	end;
+}
+
+-	pointshop	hat_search	-1,#CASHPOINTS,501:100
+-	pointshop	hat0#A	-1,#CASHPOINTS,501:100
+-	pointshop	hat0#B	-1,#CASHPOINTS,501:100
+-	pointshop	hat0#C	-1,#CASHPOINTS,501:100
+-	pointshop	hat0#D	-1,#CASHPOINTS,501:100
+-	pointshop	hat0#E	-1,#CASHPOINTS,501:100
+-	pointshop	hat0#F	-1,#CASHPOINTS,501:100
+-	pointshop	hat0#G	-1,#CASHPOINTS,501:100
+-	pointshop	hat0#H	-1,#CASHPOINTS,501:100
+-	pointshop	hat0#I	-1,#CASHPOINTS,501:100
+-	pointshop	hat0#J	-1,#CASHPOINTS,501:100
+-	pointshop	hat0#K	-1,#CASHPOINTS,501:100
+-	pointshop	hat0#L	-1,#CASHPOINTS,501:100
+-	pointshop	hat0#M	-1,#CASHPOINTS,501:100
+-	pointshop	hat0#N	-1,#CASHPOINTS,501:100
+-	pointshop	hat0#O	-1,#CASHPOINTS,501:100
+-	pointshop	hat0#P	-1,#CASHPOINTS,501:100
+-	pointshop	hat0#Q	-1,#CASHPOINTS,501:100
+-	pointshop	hat0#R	-1,#CASHPOINTS,501:100
+-	pointshop	hat0#S	-1,#CASHPOINTS,501:100
+-	pointshop	hat0#T	-1,#CASHPOINTS,501:100
+-	pointshop	hat0#U	-1,#CASHPOINTS,501:100
+-	pointshop	hat0#V	-1,#CASHPOINTS,501:100
+-	pointshop	hat0#W	-1,#CASHPOINTS,501:100
+-	pointshop	hat0#X	-1,#CASHPOINTS,501:100
+-	pointshop	hat0#Y	-1,#CASHPOINTS,501:100
+-	pointshop	hat0#Z	-1,#CASHPOINTS,501:100
+-	pointshop	hat1#A	-1,#CASHPOINTS,501:100
+-	pointshop	hat1#B	-1,#CASHPOINTS,501:100
+-	pointshop	hat1#C	-1,#CASHPOINTS,501:100
+-	pointshop	hat1#D	-1,#CASHPOINTS,501:100
+-	pointshop	hat1#E	-1,#CASHPOINTS,501:100
+-	pointshop	hat1#F	-1,#CASHPOINTS,501:100
+-	pointshop	hat1#G	-1,#CASHPOINTS,501:100
+-	pointshop	hat1#H	-1,#CASHPOINTS,501:100
+-	pointshop	hat1#I	-1,#CASHPOINTS,501:100
+-	pointshop	hat1#J	-1,#CASHPOINTS,501:100
+-	pointshop	hat1#K	-1,#CASHPOINTS,501:100
+-	pointshop	hat1#L	-1,#CASHPOINTS,501:100
+-	pointshop	hat1#M	-1,#CASHPOINTS,501:100
+-	pointshop	hat1#N	-1,#CASHPOINTS,501:100
+-	pointshop	hat1#O	-1,#CASHPOINTS,501:100
+-	pointshop	hat1#P	-1,#CASHPOINTS,501:100
+-	pointshop	hat1#Q	-1,#CASHPOINTS,501:100
+-	pointshop	hat1#R	-1,#CASHPOINTS,501:100
+-	pointshop	hat1#S	-1,#CASHPOINTS,501:100
+-	pointshop	hat1#T	-1,#CASHPOINTS,501:100
+-	pointshop	hat1#U	-1,#CASHPOINTS,501:100
+-	pointshop	hat1#V	-1,#CASHPOINTS,501:100
+-	pointshop	hat1#W	-1,#CASHPOINTS,501:100
+-	pointshop	hat1#X	-1,#CASHPOINTS,501:100
+-	pointshop	hat1#Y	-1,#CASHPOINTS,501:100
+-	pointshop	hat1#Z	-1,#CASHPOINTS,501:100
+-	pointshop	hat2#A	-1,#CASHPOINTS,501:100
+-	pointshop	hat2#B	-1,#CASHPOINTS,501:100
+-	pointshop	hat2#C	-1,#CASHPOINTS,501:100
+-	pointshop	hat2#D	-1,#CASHPOINTS,501:100
+-	pointshop	hat2#E	-1,#CASHPOINTS,501:100
+-	pointshop	hat2#F	-1,#CASHPOINTS,501:100
+-	pointshop	hat2#G	-1,#CASHPOINTS,501:100
+-	pointshop	hat2#H	-1,#CASHPOINTS,501:100
+-	pointshop	hat2#I	-1,#CASHPOINTS,501:100
+-	pointshop	hat2#J	-1,#CASHPOINTS,501:100
+-	pointshop	hat2#K	-1,#CASHPOINTS,501:100
+-	pointshop	hat2#L	-1,#CASHPOINTS,501:100
+-	pointshop	hat2#M	-1,#CASHPOINTS,501:100
+-	pointshop	hat2#N	-1,#CASHPOINTS,501:100
+-	pointshop	hat2#O	-1,#CASHPOINTS,501:100
+-	pointshop	hat2#P	-1,#CASHPOINTS,501:100
+-	pointshop	hat2#Q	-1,#CASHPOINTS,501:100
+-	pointshop	hat2#R	-1,#CASHPOINTS,501:100
+-	pointshop	hat2#S	-1,#CASHPOINTS,501:100
+-	pointshop	hat2#T	-1,#CASHPOINTS,501:100
+-	pointshop	hat2#U	-1,#CASHPOINTS,501:100
+-	pointshop	hat2#V	-1,#CASHPOINTS,501:100
+-	pointshop	hat2#W	-1,#CASHPOINTS,501:100
+-	pointshop	hat2#X	-1,#CASHPOINTS,501:100
+-	pointshop	hat2#Y	-1,#CASHPOINTS,501:100
+-	pointshop	hat2#Z	-1,#CASHPOINTS,501:100
+-	pointshop	rent0#A	-1,#CASHPOINTS,501:100
+-	pointshop	rent0#B	-1,#CASHPOINTS,501:100
+-	pointshop	rent0#C	-1,#CASHPOINTS,501:100
+-	pointshop	rent0#D	-1,#CASHPOINTS,501:100
+-	pointshop	rent0#E	-1,#CASHPOINTS,501:100
+-	pointshop	rent0#F	-1,#CASHPOINTS,501:100
+-	pointshop	rent0#G	-1,#CASHPOINTS,501:100
+-	pointshop	rent0#H	-1,#CASHPOINTS,501:100
+-	pointshop	rent0#I	-1,#CASHPOINTS,501:100
+-	pointshop	rent0#J	-1,#CASHPOINTS,501:100
+-	pointshop	rent0#K	-1,#CASHPOINTS,501:100
+-	pointshop	rent0#L	-1,#CASHPOINTS,501:100
+-	pointshop	rent0#M	-1,#CASHPOINTS,501:100
+-	pointshop	rent0#N	-1,#CASHPOINTS,501:100
+-	pointshop	rent0#O	-1,#CASHPOINTS,501:100
+-	pointshop	rent0#P	-1,#CASHPOINTS,501:100
+-	pointshop	rent0#Q	-1,#CASHPOINTS,501:100
+-	pointshop	rent0#R	-1,#CASHPOINTS,501:100
+-	pointshop	rent0#S	-1,#CASHPOINTS,501:100
+-	pointshop	rent0#T	-1,#CASHPOINTS,501:100
+-	pointshop	rent0#U	-1,#CASHPOINTS,501:100
+-	pointshop	rent0#V	-1,#CASHPOINTS,501:100
+-	pointshop	rent0#W	-1,#CASHPOINTS,501:100
+-	pointshop	rent0#X	-1,#CASHPOINTS,501:100
+-	pointshop	rent0#Y	-1,#CASHPOINTS,501:100
+-	pointshop	rent0#Z	-1,#CASHPOINTS,501:100
+-	pointshop	rent1#A	-1,#CASHPOINTS,501:100
+-	pointshop	rent1#B	-1,#CASHPOINTS,501:100
+-	pointshop	rent1#C	-1,#CASHPOINTS,501:100
+-	pointshop	rent1#D	-1,#CASHPOINTS,501:100
+-	pointshop	rent1#E	-1,#CASHPOINTS,501:100
+-	pointshop	rent1#F	-1,#CASHPOINTS,501:100
+-	pointshop	rent1#G	-1,#CASHPOINTS,501:100
+-	pointshop	rent1#H	-1,#CASHPOINTS,501:100
+-	pointshop	rent1#I	-1,#CASHPOINTS,501:100
+-	pointshop	rent1#J	-1,#CASHPOINTS,501:100
+-	pointshop	rent1#K	-1,#CASHPOINTS,501:100
+-	pointshop	rent1#L	-1,#CASHPOINTS,501:100
+-	pointshop	rent1#M	-1,#CASHPOINTS,501:100
+-	pointshop	rent1#N	-1,#CASHPOINTS,501:100
+-	pointshop	rent1#O	-1,#CASHPOINTS,501:100
+-	pointshop	rent1#P	-1,#CASHPOINTS,501:100
+-	pointshop	rent1#Q	-1,#CASHPOINTS,501:100
+-	pointshop	rent1#R	-1,#CASHPOINTS,501:100
+-	pointshop	rent1#S	-1,#CASHPOINTS,501:100
+-	pointshop	rent1#T	-1,#CASHPOINTS,501:100
+-	pointshop	rent1#U	-1,#CASHPOINTS,501:100
+-	pointshop	rent1#V	-1,#CASHPOINTS,501:100
+-	pointshop	rent1#W	-1,#CASHPOINTS,501:100
+-	pointshop	rent1#X	-1,#CASHPOINTS,501:100
+-	pointshop	rent1#Y	-1,#CASHPOINTS,501:100
+-	pointshop	rent1#Z	-1,#CASHPOINTS,501:100
+-	pointshop	rent2#A	-1,#CASHPOINTS,501:100
+-	pointshop	rent2#B	-1,#CASHPOINTS,501:100
+-	pointshop	rent2#C	-1,#CASHPOINTS,501:100
+-	pointshop	rent2#D	-1,#CASHPOINTS,501:100
+-	pointshop	rent2#E	-1,#CASHPOINTS,501:100
+-	pointshop	rent2#F	-1,#CASHPOINTS,501:100
+-	pointshop	rent2#G	-1,#CASHPOINTS,501:100
+-	pointshop	rent2#H	-1,#CASHPOINTS,501:100
+-	pointshop	rent2#I	-1,#CASHPOINTS,501:100
+-	pointshop	rent2#J	-1,#CASHPOINTS,501:100
+-	pointshop	rent2#K	-1,#CASHPOINTS,501:100
+-	pointshop	rent2#L	-1,#CASHPOINTS,501:100
+-	pointshop	rent2#M	-1,#CASHPOINTS,501:100
+-	pointshop	rent2#N	-1,#CASHPOINTS,501:100
+-	pointshop	rent2#O	-1,#CASHPOINTS,501:100
+-	pointshop	rent2#P	-1,#CASHPOINTS,501:100
+-	pointshop	rent2#Q	-1,#CASHPOINTS,501:100
+-	pointshop	rent2#R	-1,#CASHPOINTS,501:100
+-	pointshop	rent2#S	-1,#CASHPOINTS,501:100
+-	pointshop	rent2#T	-1,#CASHPOINTS,501:100
+-	pointshop	rent2#U	-1,#CASHPOINTS,501:100
+-	pointshop	rent2#V	-1,#CASHPOINTS,501:100
+-	pointshop	rent2#W	-1,#CASHPOINTS,501:100
+-	pointshop	rent2#X	-1,#CASHPOINTS,501:100
+-	pointshop	rent2#Y	-1,#CASHPOINTS,501:100
+-	pointshop	rent2#Z	-1,#CASHPOINTS,501:100
+-	pointshop	spec0#A	-1,#CASHPOINTS,501:100
+-	pointshop	spec0#B	-1,#CASHPOINTS,501:100
+-	pointshop	spec0#C	-1,#CASHPOINTS,501:100
+-	pointshop	spec0#D	-1,#CASHPOINTS,501:100
+-	pointshop	spec0#E	-1,#CASHPOINTS,501:100
+-	pointshop	spec0#F	-1,#CASHPOINTS,501:100
+-	pointshop	spec0#G	-1,#CASHPOINTS,501:100
+-	pointshop	spec0#H	-1,#CASHPOINTS,501:100
+-	pointshop	spec0#I	-1,#CASHPOINTS,501:100
+-	pointshop	spec0#J	-1,#CASHPOINTS,501:100
+-	pointshop	spec0#K	-1,#CASHPOINTS,501:100
+-	pointshop	spec0#L	-1,#CASHPOINTS,501:100
+-	pointshop	spec0#M	-1,#CASHPOINTS,501:100
+-	pointshop	spec0#N	-1,#CASHPOINTS,501:100
+-	pointshop	spec0#O	-1,#CASHPOINTS,501:100
+-	pointshop	spec0#P	-1,#CASHPOINTS,501:100
+-	pointshop	spec0#Q	-1,#CASHPOINTS,501:100
+-	pointshop	spec0#R	-1,#CASHPOINTS,501:100
+-	pointshop	spec0#S	-1,#CASHPOINTS,501:100
+-	pointshop	spec0#T	-1,#CASHPOINTS,501:100
+-	pointshop	spec0#U	-1,#CASHPOINTS,501:100
+-	pointshop	spec0#V	-1,#CASHPOINTS,501:100
+-	pointshop	spec0#W	-1,#CASHPOINTS,501:100
+-	pointshop	spec0#X	-1,#CASHPOINTS,501:100
+-	pointshop	spec0#Y	-1,#CASHPOINTS,501:100
+-	pointshop	spec0#Z	-1,#CASHPOINTS,501:100
+-	pointshop	spec1#A	-1,#CASHPOINTS,501:100
+-	pointshop	spec1#B	-1,#CASHPOINTS,501:100
+-	pointshop	spec1#C	-1,#CASHPOINTS,501:100
+-	pointshop	spec1#D	-1,#CASHPOINTS,501:100
+-	pointshop	spec1#E	-1,#CASHPOINTS,501:100
+-	pointshop	spec1#F	-1,#CASHPOINTS,501:100
+-	pointshop	spec1#G	-1,#CASHPOINTS,501:100
+-	pointshop	spec1#H	-1,#CASHPOINTS,501:100
+-	pointshop	spec1#I	-1,#CASHPOINTS,501:100
+-	pointshop	spec1#J	-1,#CASHPOINTS,501:100
+-	pointshop	spec1#K	-1,#CASHPOINTS,501:100
+-	pointshop	spec1#L	-1,#CASHPOINTS,501:100
+-	pointshop	spec1#M	-1,#CASHPOINTS,501:100
+-	pointshop	spec1#N	-1,#CASHPOINTS,501:100
+-	pointshop	spec1#O	-1,#CASHPOINTS,501:100
+-	pointshop	spec1#P	-1,#CASHPOINTS,501:100
+-	pointshop	spec1#Q	-1,#CASHPOINTS,501:100
+-	pointshop	spec1#R	-1,#CASHPOINTS,501:100
+-	pointshop	spec1#S	-1,#CASHPOINTS,501:100
+-	pointshop	spec1#T	-1,#CASHPOINTS,501:100
+-	pointshop	spec1#U	-1,#CASHPOINTS,501:100
+-	pointshop	spec1#V	-1,#CASHPOINTS,501:100
+-	pointshop	spec1#W	-1,#CASHPOINTS,501:100
+-	pointshop	spec1#X	-1,#CASHPOINTS,501:100
+-	pointshop	spec1#Y	-1,#CASHPOINTS,501:100
+-	pointshop	spec1#Z	-1,#CASHPOINTS,501:100
+-	pointshop	spec2#A	-1,#CASHPOINTS,501:100
+-	pointshop	spec2#B	-1,#CASHPOINTS,501:100
+-	pointshop	spec2#C	-1,#CASHPOINTS,501:100
+-	pointshop	spec2#D	-1,#CASHPOINTS,501:100
+-	pointshop	spec2#E	-1,#CASHPOINTS,501:100
+-	pointshop	spec2#F	-1,#CASHPOINTS,501:100
+-	pointshop	spec2#G	-1,#CASHPOINTS,501:100
+-	pointshop	spec2#H	-1,#CASHPOINTS,501:100
+-	pointshop	spec2#I	-1,#CASHPOINTS,501:100
+-	pointshop	spec2#J	-1,#CASHPOINTS,501:100
+-	pointshop	spec2#K	-1,#CASHPOINTS,501:100
+-	pointshop	spec2#L	-1,#CASHPOINTS,501:100
+-	pointshop	spec2#M	-1,#CASHPOINTS,501:100
+-	pointshop	spec2#N	-1,#CASHPOINTS,501:100
+-	pointshop	spec2#O	-1,#CASHPOINTS,501:100
+-	pointshop	spec2#P	-1,#CASHPOINTS,501:100
+-	pointshop	spec2#Q	-1,#CASHPOINTS,501:100
+-	pointshop	spec2#R	-1,#CASHPOINTS,501:100
+-	pointshop	spec2#S	-1,#CASHPOINTS,501:100
+-	pointshop	spec2#T	-1,#CASHPOINTS,501:100
+-	pointshop	spec2#U	-1,#CASHPOINTS,501:100
+-	pointshop	spec2#V	-1,#CASHPOINTS,501:100
+-	pointshop	spec2#W	-1,#CASHPOINTS,501:100
+-	pointshop	spec2#X	-1,#CASHPOINTS,501:100
+-	pointshop	spec2#Y	-1,#CASHPOINTS,501:100
+-	pointshop	spec2#Z	-1,#CASHPOINTS,501:100
+-	pointshop	evt0#A	-1,#CASHPOINTS,501:100
+-	pointshop	evt0#B	-1,#CASHPOINTS,501:100
+-	pointshop	evt0#C	-1,#CASHPOINTS,501:100
+-	pointshop	evt0#D	-1,#CASHPOINTS,501:100
+-	pointshop	evt0#E	-1,#CASHPOINTS,501:100
+-	pointshop	evt0#F	-1,#CASHPOINTS,501:100
+-	pointshop	evt0#G	-1,#CASHPOINTS,501:100
+-	pointshop	evt0#H	-1,#CASHPOINTS,501:100
+-	pointshop	evt0#I	-1,#CASHPOINTS,501:100
+-	pointshop	evt0#J	-1,#CASHPOINTS,501:100
+-	pointshop	evt0#K	-1,#CASHPOINTS,501:100
+-	pointshop	evt0#L	-1,#CASHPOINTS,501:100
+-	pointshop	evt0#M	-1,#CASHPOINTS,501:100
+-	pointshop	evt0#N	-1,#CASHPOINTS,501:100
+-	pointshop	evt0#O	-1,#CASHPOINTS,501:100
+-	pointshop	evt0#P	-1,#CASHPOINTS,501:100
+-	pointshop	evt0#Q	-1,#CASHPOINTS,501:100
+-	pointshop	evt0#R	-1,#CASHPOINTS,501:100
+-	pointshop	evt0#S	-1,#CASHPOINTS,501:100
+-	pointshop	evt0#T	-1,#CASHPOINTS,501:100
+-	pointshop	evt0#U	-1,#CASHPOINTS,501:100
+-	pointshop	evt0#V	-1,#CASHPOINTS,501:100
+-	pointshop	evt0#W	-1,#CASHPOINTS,501:100
+-	pointshop	evt0#X	-1,#CASHPOINTS,501:100
+-	pointshop	evt0#Y	-1,#CASHPOINTS,501:100
+-	pointshop	evt0#Z	-1,#CASHPOINTS,501:100
+-	pointshop	evt1#A	-1,#CASHPOINTS,501:100
+-	pointshop	evt1#B	-1,#CASHPOINTS,501:100
+-	pointshop	evt1#C	-1,#CASHPOINTS,501:100
+-	pointshop	evt1#D	-1,#CASHPOINTS,501:100
+-	pointshop	evt1#E	-1,#CASHPOINTS,501:100
+-	pointshop	evt1#F	-1,#CASHPOINTS,501:100
+-	pointshop	evt1#G	-1,#CASHPOINTS,501:100
+-	pointshop	evt1#H	-1,#CASHPOINTS,501:100
+-	pointshop	evt1#I	-1,#CASHPOINTS,501:100
+-	pointshop	evt1#J	-1,#CASHPOINTS,501:100
+-	pointshop	evt1#K	-1,#CASHPOINTS,501:100
+-	pointshop	evt1#L	-1,#CASHPOINTS,501:100
+-	pointshop	evt1#M	-1,#CASHPOINTS,501:100
+-	pointshop	evt1#N	-1,#CASHPOINTS,501:100
+-	pointshop	evt1#O	-1,#CASHPOINTS,501:100
+-	pointshop	evt1#P	-1,#CASHPOINTS,501:100
+-	pointshop	evt1#Q	-1,#CASHPOINTS,501:100
+-	pointshop	evt1#R	-1,#CASHPOINTS,501:100
+-	pointshop	evt1#S	-1,#CASHPOINTS,501:100
+-	pointshop	evt1#T	-1,#CASHPOINTS,501:100
+-	pointshop	evt1#U	-1,#CASHPOINTS,501:100
+-	pointshop	evt1#V	-1,#CASHPOINTS,501:100
+-	pointshop	evt1#W	-1,#CASHPOINTS,501:100
+-	pointshop	evt1#X	-1,#CASHPOINTS,501:100
+-	pointshop	evt1#Y	-1,#CASHPOINTS,501:100
+-	pointshop	evt1#Z	-1,#CASHPOINTS,501:100
+-	pointshop	evt2#A	-1,#CASHPOINTS,501:100
+-	pointshop	evt2#B	-1,#CASHPOINTS,501:100
+-	pointshop	evt2#C	-1,#CASHPOINTS,501:100
+-	pointshop	evt2#D	-1,#CASHPOINTS,501:100
+-	pointshop	evt2#E	-1,#CASHPOINTS,501:100
+-	pointshop	evt2#F	-1,#CASHPOINTS,501:100
+-	pointshop	evt2#G	-1,#CASHPOINTS,501:100
+-	pointshop	evt2#H	-1,#CASHPOINTS,501:100
+-	pointshop	evt2#I	-1,#CASHPOINTS,501:100
+-	pointshop	evt2#J	-1,#CASHPOINTS,501:100
+-	pointshop	evt2#K	-1,#CASHPOINTS,501:100
+-	pointshop	evt2#L	-1,#CASHPOINTS,501:100
+-	pointshop	evt2#M	-1,#CASHPOINTS,501:100
+-	pointshop	evt2#N	-1,#CASHPOINTS,501:100
+-	pointshop	evt2#O	-1,#CASHPOINTS,501:100
+-	pointshop	evt2#P	-1,#CASHPOINTS,501:100
+-	pointshop	evt2#Q	-1,#CASHPOINTS,501:100
+-	pointshop	evt2#R	-1,#CASHPOINTS,501:100
+-	pointshop	evt2#S	-1,#CASHPOINTS,501:100
+-	pointshop	evt2#T	-1,#CASHPOINTS,501:100
+-	pointshop	evt2#U	-1,#CASHPOINTS,501:100
+-	pointshop	evt2#V	-1,#CASHPOINTS,501:100
+-	pointshop	evt2#W	-1,#CASHPOINTS,501:100
+-	pointshop	evt2#X	-1,#CASHPOINTS,501:100
+-	pointshop	evt2#Y	-1,#CASHPOINTS,501:100
+-	pointshop	evt2#Z	-1,#CASHPOINTS,501:100
+
+-	script	hat_seller_db	-1,{
+	end;
+
+OnFillSearch:
+	npcshopitem "hat_search", .SearchId, 100;
+	end;
+
+OnInit:
+	freeloop 1;
+	// iRO cash-shop real hats. Ordinary farmable and city hats are omitted even if they appeared in a Kafra package or lucky scroll. _C copies and rental SKUs are omitted. Dedicated getitem originals such as Robo Eye 5325 are included. Hats with no client itemInfo stay on the shelf.
+	setarray .IroId[0], 5038,5077,5098,5099,5101,5102,5105,5117,5133,5137,5138,5139,5140,5142,5163,5182,5184,5188,5193,5208,5210,5211,5214,5217,5218,5219,5220,5221,5222,5226,5228,5229,5233,5237,5242,5245,5255,5269,5276,5283,5284,5285,5287,5288,5289,5290,5291,5292,5293,5294,5307,5324,5325,5335,5340,5341,5342,5343,5344,5345,5359,5360,5361,5371,5372,5373,5374,5375,5376,5377,5378,5380,5381,5382,5384,5387,5389,5396,5397,5401,5403,5405,5411,5420,5421,5451,5454,5459,5464,5490,5497,5500,5501,5502,5505,5508,5509,5514,5515,5529;
+	setarray .IroId[100], 5531,5532,5537,5538,5539,5545,5546,5548,5549,5550,5564,5569,5570,5574,5581,5582,5585,5611,5662,5663,5676,5677,5683,5690,5738,5744,5745,5761,5762,5763,5775,5778,5783,5785,5801,5878,5916,5918,5921,5924,5933,5937,5938,5945,5963,5966,5967,5968,5969,5971,5972,5973,5975,5978,15165,15166,18507,18508,18518,18519,18522,18539,18543,18563,18564,18565,18580,18591,18599,18600,18601,18603,18611,18613,18616,18651,18653,18656,18657,18662,18666,18670,18673,18676,18678,18697,18720,18729,18746,18754,18787,18799,18813,18823,18842,18845,18858,18877,18878,18887;
+	setarray .IroId[200], 18909,18916,18917,18933,18937,18959,18968,19010,19020,19024,19079,19082,19083,19086,19087,19095,19102,19114,19116,19125,19129,19130,19135,19137,19138,19139,19141,19156,19162,19163,19170,19171,19172,19181,19244,19246,19249,19263,19264,19268,19269,19285,19296,19299,19300,19306,19308,19326,19327,19329,19337,19342,19343,19364,19379,19380,19381,19387,19391,19407,19409,19426,19437,19444,19446,19451,19469,19495,19498,19499,28502,400001,400002,400011,400022,400023,400049,400054,400059,400061,400078,400396,400408,400506,410012,410016,410071,410079,410120,410130,410215,410216,410333,410342,410345,420003,420093,420160,420182,420187;
+	setarray .IroId[300], 420199,420236,5736,19460,19468,19471,400006,400052,400077,400416,400421,400437,400438,400453,400454,400481,400505,400697,400710,410254;
+	setarray .IroId[320], 410348,410362,420068,420110,420223,420329;
+	.IroCount = 326;
+	setarray .IroDisp$[0], "Deviruchi Hat","Tulip Hairpin","Tiger Mask","Neko Mimi","Takius Blindfold","Blank Eyes","2nd Anniversary Hat","Mystic Rose","Sheep Hat","Alice Doll","Magic Eyes","Hibiscus","Charming Ribbon","Crescent Helm","Corsair","Puppy Hat","Captain's Hat","Wandering Minstrel Hat","Green Ribbon","Rideword Hat";
+	setarray .IroDisp$[20], "Flapping Angel Wings","Dress Hat","Moonlight Flower Hat","Evolved Majestic Goat","Evolved Bunny Band","Evolved Drooping Kitty","Evolved Pipe","Evolved Pair of Red Ribbon","Evolved Blue Fish","Mini Propeller","Gray Deviruchi Hat","Brown Deviruchi Hat","Blue Drooping Kitty","Pink Beanie","Yellow Magician Hat","Elven Sunglasses","Triple Poring Hat","Flapping Angel Wings","Fantastic Wig","Chick Hat";
+	setarray .IroDisp$[40], "Water Lily Crown","Vane Hairpin","Vacation Hat","Red Glasses","Vanilmirth Hat","Drooping Bunny","Kettle Hat","Dragon Skull","Ramen Hat","Whisper Mask","Tropical Fruit Hat","Little Angel Doll","Robo Eyes","Jumping Poring","Defolty Doll Hat","Glaris Doll Hat","Sorin Doll Hat","Telling Doll Hat","Bennit Doll Hat","W Doll Hat";
+	setarray .IroDisp$[60], "Captain's Hat","Wickebine's Black Cat Ears","Gangster Scarf","Judge Hat","Koneko Hat","Dark Randgris Helm","Gigantic Majestic Goat","Large Orc Hero Helm","Satanic Chain","Antique Smoking Pipe","Bunny Ears Hat","Fish Head Hat","Santa Poring Hat","Bell Ribbon","Twin Pom Santa Hat","Neko Mimi Kafra","Angel Spirit","Jasper Crest","Scuba Mask","Black Frame Glasses";
+	setarray .IroDisp$[80], "Fish in Mouth","Filir Hat","White Snake Hat","Mask of Ifrit","Ears of Ifrit","Gold Dragon Helm","Puppy Hat","Drooping Bunny","Bacsojin Doll Hat","Anubis Helm","Tiger King Doll Hat","Ice Cream Hat","Pirate's Pride","Necromancer's Hood","Ashura Fairy Hat","Shark Hat","Sting Hat","Pisces Diadem","Pisces Crown","Devil's Bone Helm";
+	setarray .IroDisp$[100], "Baby Dragon Hat","Pirate Dagger","Coati Hat","Tucan Hat","Jaguar Hat","Aries Diadem","Aries Crown","Crimson Rose","Taurus Diadem","Taurus Crown","Crown of Deceit","Gemini Diadem","Gemini Crown","Well-Chewed Pencil","Cancer Diadem","Cancer Crown","Rune Hairband","Turtle Hat","Libra Crown","Libra Diadem";
+	setarray .IroDisp$[120], "Scorpio Crown","Scorpio Diadem","Majestic Goat Model","Red Wing Hat","Snowman Hat","Capricorn Crown","Capricorn Diadem","Sloth Hat","Duneyrr Hat","Red Bunny Band","Chocolate Donut","Blue Arara Hat","Yellow Bunny Band","Green Bunny Band","Red Tailed Ribbon","Miracle Blue Rose","Demon's Glasses","Gambler's Seal","Fish Monster's Gill","Dragon Knight's Eyepatch";
+	setarray .IroDisp$[140], "Crow Tengu Mask","Flight Hat","Octopus Hat","Red Pencil in Mouth","Wing Headphone","Kardui Ears","Flying Galapago","Divine Angel Nurse Cap","Queen Anne's Revenge","Moon Eyepatch","Talking Parrot","Ancient Elven Ears","Stahl Von Kaiser 61 II","Toy Syringe","Pure White Marching Hat","Rosario Necklace","Elven Ears","Garuda Hat","Angel Wing Ears","Evil Wing Ears";
+	setarray .IroDisp$[160], "Evil Marching Hat","Skull Cap","Witch Hat","Heart Wings Hairband","Fragment of Love","St Patrick's Hat","Yggdrasil Crown","Mini Glasses","Black Devil's Mask","Cat Ear Beret","Red Pom Band","Black Devil's Mask","Black Frame Glasses","Black Musang Hat","Long Tongue","Ignis Cap","Deviruchi Headphones","Witch's Pumpkin Hat","Pegasus Wing Ears","Antler Fedora";
+	setarray .IroDisp$[180], "CD in Mouth","Handkerchief in Mouth","Drooping Pope","Hexagon Spectacles","Leek in Mouth","Syringe in Mouth","Magical Booster","MVP Basketball Hat","Chilly Breath","Blood Sucker","Goaltender Mask","Mask of Nero","New Wave Sunglasses","Imperial Feather","Hat of Girl","Banshee Master Kiss","Pink Angelring Bubble","Baron's Evil Eye","Palace Guard Cap","Aqua Bunny Band";
+	setarray .IroDisp$[200], "Piamette's Brown Ears","Bear Balloon","LoveLove Balloon","Mechanical Plant Hat","Memory of Lover","Pink Poo Poo Hat","Jinn Marin Balloon","Baby Dragon Hat","Circlet of Survival","Protect Feathers","Celestial Woman's Flower","Bio Protector","Mask of Hero","Robo Eyes","Angel Spirit","Happy Balloon","Night Sparrow Hat","Sting Silk Ribbon","Red Baby Dragon","Cylinder Hairband";
+	setarray .IroDisp$[220], "Chick Hat","Magic Eyes","Spirit of Green Maiden","Strawberry in Mouth","Seraphim Coronet","Orbs of Survival","Dolor Thanatos Mask","Lunar Rainbow","Scuba Mask","Catharina Von Brad 60th","Guardian Processor","Magician Knit Hat","Sitting Pope(Casual)","New Wave Sunglasses","Rosario Necklace","Royal Guard Necklace","Spell Circuit","General's Helm","Gold Fish Head Hat","Gigant Snake's Breath";
+	setarray .IroDisp$[240], "Happy Flapping Angel Wings","Siegfried's Helmet","Classical Feather Hat","Giant Tree's Young Leaves","Dog Officer","Heart Card in Mouth","Amistr Beret","Book of Soyga","Feather of Seraphim","Demon's Hand","Safety Glasses","Taurus Hat","Phoenix Crown","Engineer Cap","Striking Hat","Floating Tai-Chi Spheres","Protect Cloth","Experimental Goat Cap","Eyes of Illusion","Work Cap";
+	setarray .IroDisp$[260], "Black Feather","King Of Spirit Circlet","Little Garden","Star Eyepatch","Injured Soldier's Eyepatch","Heavenly Order","Crown of Saint","Diabolus Wing","Citrus Ribbon","Eight Trigrams Seal","Mob Scarf","Victory Wing Ears","Victory Wing Ears","Officer's Hat","Ignis Cap Type K","Drooping Thanatos's Dolor","Stripe Hat","Great Magician's Ceremonial Crown","Scorpio Celestial Coronet","Sagittarius Celestial Coronet";
+	setarray .IroDisp$[280], "Goral Crown","Ghost Whisper","Clockwise","Altair Hat","EXP Advisor","Battle Processor","Demon's Familiar","Deep Blue Sunglasses","Guardian Helm","Phantom Beast Ears","Ear of Spirit","Ears of Abyss","Crow Tengu Mask","Purified Pigeon","Smiling Eyes","Disk in Mouth","Einherjar's Mantle","Tyrant of Earth","Book of Sorcery","Sacred Lapel";
+	setarray .IroDisp$[300], "Ghost Fire","Loyal Servant of Morroc","Whisper Mask","Black Veil","Libra Diadem","Scorpio Crown","Orc Successor Helm","Duel Dragon Hat","Splash Cat Hat","Squirrel Ear Hat (White)","Two Tone Cap","Chic Peony","Wildcat Knit Cap (White)","Invincible Crest Hat","Khalitzburg Knight White Helm","Flash of Lightning","Striped Ribbon Hat","Full Faith Crown","Snake Queen Crown","Ancient Morocc Noble Jewelry";
+	setarray .IroDisp$[320], "Divine Protect Shield","Exiled Ninja's Eyes","Lord of Royals","Old Camouflage Scarf","Consecrate Fides Aureola","Twinhead Dragon Scale";
+	// Duration boxes for client-tagged rental hats. Slot follows the hat.
+	setarray .RentBoxId[0], 12564,12565,12567,12568,12569,12570,12571,13694,13722,13864,13865,13968,16212,16386,16390,16636,16637,16640,16762;
+	setarray .RentHatId[0],  5794, 5796, 5798, 5799,18500,18501,18502, 5306, 5286, 5314, 5315, 5394, 5540, 5596, 5597, 5462, 5463, 5793,18505;
+	.RentCount = 19;
+	setarray .RentDisp$[0], "3D Glasses Box","Cheering Scarf Box","Cheering Scarf Box","Cheering Scarf Box","Cheering Scarf Box","Cheering Scarf Box","Cheering Scarf Box","Freya's Crown Box","Pecopeco Hairband Box","Hockey Mask Box","Observer Box","Bubble Gum Box","Freya's Spiritual Circlet Box","Four Leaf Clover in Mouth R Box III","Chewing Bubble Gum R Box III","Spiked Scarf BoxIII","Rainbow Scarf BoxIII","Life Ribbon BoxIII","Umbala Spirit 7days Box";
+	// Temporal Circlets and Frontier Rune Crowns. Official late-game routes exist; the milliner stocks them because the grind is extreme for one player, and the Chapter 1 Frontier shop is not implemented locally. Time Dimensions Rune Crowns stay out.
+	setarray .SpecId[0], 19474,19475,19476,19477,19478,19479,19480,19481,19482,19483,19484,19485,19486,19487,19488,19489,19490,19491,19492,400975;
+	setarray .SpecId[20], 400976,400977,400978,400979,400980,400981,400982,400983,400984,400985,400986,400987,400988,400989,400990,400991,400992;
+	.SpecCount = 37;
+	setarray .SpecDisp$[0], "Temporal Circlet(Rune Knight)","Temporal Circlet(Royal Guard)","Temporal Circlet(Mechanic)","Temporal Circlet(Genetic)","Temporal Circlet(Guillotine Cross)","Temporal Circlet(Shadow Chaser)","Temporal Circlet(Archbishop)","Temporal Circlet(Sura)","Temporal Circlet(Warlock)","Temporal Circlet(Sorcerer)","Temporal Circlet(Ranger)","Temporal Circlet(Wanderer&Minstrel)","Temporal Circlet(Star Emperor)","Temporal Circlet(Soul Reaper)","Temporal Circlet(Rebellion)","Temporal Circlet(Oboro)","Temporal Circlet(Kagerou)","Temporal Circlet(Super Novice)","Temporal Circlet(Summoner)","Frontier Rune Crown(Dragon Knight)";
+	setarray .SpecDisp$[20], "Frontier Rune Crown(Imperial Guard)","Frontier Rune Crown(Meister)","Frontier Rune Crown(Biolo)","Frontier Rune Crown(Shadow Cross)","Frontier Rune Crown(Abyss Chaser)","Frontier Rune Crown(Arch Mage)","Frontier Rune Crown(Elemental Master)","Frontier Rune Crown(Cardinal)","Frontier Rune Crown(Inquisitor)","Frontier Rune Crown(Windhawk)","Frontier Rune Crown(Troubadour & Trouvere)","Frontier Rune Crown(Shinkiro & Shiranui)","Frontier Rune Crown(Night Watch)","Frontier Rune Crown(Sky Emperor)","Frontier Rune Crown(Soul Ascetic)","Frontier Rune Crown(Hyper Novice)","Frontier Rune Crown(Spirit Handler)";
+	// Racing Caps and RWC/RTC/RCC tournament hats. Missing client itemInfo is not a cut. Gold Dragon Helm 5451 stays on Equipment.
+	setarray .EvtId[0], 5428,5452,5453,5603,5604,5605,5892,5893,5894,5895,18779,18780,18781,18796,18828,18829,18830,19189,19190,19191;
+	setarray .EvtId[20], 19192,19193,19194,19195,19196,19197,19198,19199,19200,19201,19202,19203,19204,19205,19396,19397,400088,400089,400090;
+	.EvtCount = 39;
+	setarray .EvtDisp$[0], "RWC Anniversary Bread Envelope","Silver Dragon Helm","Copper Dragon Helm","RWC Statue(Winner)","RWC Statue(2nd)","RWC Statue(3rd)","RCC2013 1st Crown","RCC2013 2nd Crown","RCC2013 3rd Crown","RCC2013 Commemorative Hat","RWC Champ Crown(1st)","RWC Champ Crown(2nd)","RWC Champ Crown(3rd)","RWC Crown of Victory(8th)","RMSC2012 Champion Headgear","RMSC2012 1st Runner Headgear","RMSC2012 2nd Runner Headgear","Racing Cap(Mechanic)","Racing Cap(Genetic)","Racing Cap(Guillotine Cross)";
+	setarray .EvtDisp$[20], "Racing Cap(Shadow Chaser)","Racing Cap(Warlock)","Racing Cap(Sorcerer)","Racing Cap(Rune Knight)","Racing Cap(Royal Guard)","Racing Cap(Archbishop)","Racing Cap(Sura)","Racing Cap(Ranger)","Racing Cap(Minstrel)","Racing Cap(Wanderer)","Racing Cap(Gunslinger)","Racing Cap(Ninja)","Racing Cap(Super Novice)","Racing Cap(Summoner)","Racing Cap(Star Gladiator)","Racing Cap(Soul Linker)","2020RTC Gold Naughty Ghost","2020RTC Silver Naughty Ghost","2020RTC Bronze Naughty Ghost";
+	.Price = 100;
+	.@alphabet$ = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	.@costume = EQP_COSTUME_HEAD_TOP | EQP_COSTUME_HEAD_MID | EQP_COSTUME_HEAD_LOW;
+	.@eqp[0] = EQP_HEAD_TOP;
+	.@eqp[1] = EQP_HEAD_MID;
+	.@eqp[2] = EQP_HEAD_LOW;
+
+	deletearray .HatHas[0], 78;
+	deletearray .RentHas[0], 78;
+	deletearray .SpecHas[0], 78;
+	deletearray .EvtHas[0], 78;
+	deletearray .HatLetter$[0], 78;
+	deletearray .RentLetter$[0], 78;
+	deletearray .SpecLetter$[0], 78;
+	deletearray .EvtLetter$[0], 78;
+	deletearray .HatMenu$[0], 3;
+	deletearray .RentMenu$[0], 3;
+	deletearray .SpecMenu$[0], 3;
+	deletearray .EvtMenu$[0], 3;
+	deletearray .HatLetterCount[0], 3;
+	deletearray .RentLetterCount[0], 3;
+	deletearray .SpecLetterCount[0], 3;
+	deletearray .EvtLetterCount[0], 3;
+
+	npcshopdelitem "hat_search", 501;
+	for (.@slot = 0; .@slot < 3; ++.@slot) {
+		for (.@i = 0; .@i < 26; ++.@i) {
+			npcshopdelitem "hat" + .@slot + "#" + charat(.@alphabet$, .@i), 501;
+			npcshopdelitem "rent" + .@slot + "#" + charat(.@alphabet$, .@i), 501;
+			npcshopdelitem "spec" + .@slot + "#" + charat(.@alphabet$, .@i), 501;
+			npcshopdelitem "evt" + .@slot + "#" + charat(.@alphabet$, .@i), 501;
+		}
+	}
+
+	.@kept = 0;
+	for (.@i = 0; .@i < .IroCount; ++.@i) {
+		.@id = .IroId[.@i];
+		.@name$ = getitemname(.@id);
+		// Empty / "Unknown Item" here means the ID is missing from item_db, not that the client lacks itemInfo.lua.
+		if (.@name$ == "" || .@name$ == "Unknown Item") {
+			debugmes "Hat Seller: missing item " + .@id + ".";
+			continue;
+		}
+		if (getiteminfo(.@id, ITEMINFO_TYPE) != IT_ARMOR) {
+			debugmes "Hat Seller: rejected type for item " + .@id + " (" + .@name$ + ").";
+			continue;
+		}
+		.@loc = getiteminfo(.@id, ITEMINFO_LOCATIONS);
+		if (.@loc & .@costume) {
+			debugmes "Hat Seller: rejected costume slot for item " + .@id + " (" + .@name$ + ").";
+			continue;
+		}
+		.IroId[.@kept] = .@id;
+		.IroAegis$[.@kept] = getiteminfo(.@id, ITEMINFO_AEGISNAME);
+		.@disp$ = .IroDisp$[.@i];
+		if (.@disp$ == "")
+			.@disp$ = .@name$;
+		.IroDisp$[.@kept] = .@disp$;
+		.@hatname$[.@kept] = strtolower(.@disp$);
+		.@kept += 1;
+	}
+	.IroCount = .@kept;
+	for (.@i = 0; .@i < .IroCount; ++.@i) {
+		for (.@j = .@i + 1; .@j < .IroCount; ++.@j) {
+			.@cmp = strcmp(.@hatname$[.@j], .@hatname$[.@i]);
+			if (.@cmp < 0 || (.@cmp == 0 && .IroId[.@j] < .IroId[.@i])) {
+				.@tmp = .IroId[.@i];
+				.IroId[.@i] = .IroId[.@j];
+				.IroId[.@j] = .@tmp;
+				.@tmp$ = .IroAegis$[.@i];
+				.IroAegis$[.@i] = .IroAegis$[.@j];
+				.IroAegis$[.@j] = .@tmp$;
+				.@tmp$ = .IroDisp$[.@i];
+				.IroDisp$[.@i] = .IroDisp$[.@j];
+				.IroDisp$[.@j] = .@tmp$;
+				.@tmp$ = .@hatname$[.@i];
+				.@hatname$[.@i] = .@hatname$[.@j];
+				.@hatname$[.@j] = .@tmp$;
+			}
+		}
+	}
+	for (.@i = 0; .@i < .IroCount; ++.@i) {
+		.@id = .IroId[.@i];
+		.@name$ = .IroDisp$[.@i];
+		.@loc = getiteminfo(.@id, ITEMINFO_LOCATIONS);
+		.@letter$ = strtoupper(charat(.@name$, 0));
+		.@letter_index = strpos(.@alphabet$, .@letter$);
+		if (.@letter_index < 0) {
+			.@letter$ = "A";
+			.@letter_index = 0;
+		}
+		for (.@slot = 0; .@slot < 3; ++.@slot) {
+			if (.@loc & .@eqp[.@slot]) {
+				.HatHas[.@slot * 26 + .@letter_index] = true;
+				npcshopadditem "hat" + .@slot + "#" + .@letter$, .@id, .Price;
+			}
+		}
+	}
+
+	.@kept = 0;
+	for (.@i = 0; .@i < .RentCount; ++.@i) {
+		.@id = .RentBoxId[.@i];
+		.@hat = .RentHatId[.@i];
+		.@name$ = getitemname(.@id);
+		// Empty / "Unknown Item" here means the ID is missing from item_db, not that the client lacks itemInfo.lua.
+		if (.@name$ == "" || .@name$ == "Unknown Item") {
+			debugmes "Hat Seller: missing rental box " + .@id + ".";
+			continue;
+		}
+		.@type = getiteminfo(.@id, ITEMINFO_TYPE);
+		if (.@type != IT_USABLE && .@type != IT_CASH) {
+			debugmes "Hat Seller: rejected rental box type for item " + .@id + " (" + .@name$ + ").";
+			continue;
+		}
+		.@loc = getiteminfo(.@hat, ITEMINFO_LOCATIONS);
+		if (.@loc & .@costume) {
+			debugmes "Hat Seller: rejected rental costume hat " + .@hat + ".";
+			continue;
+		}
+		.RentBoxId[.@kept] = .@id;
+		.RentHatId[.@kept] = .@hat;
+		.RentAegis$[.@kept] = getiteminfo(.@id, ITEMINFO_AEGISNAME);
+		.@disp$ = .RentDisp$[.@i];
+		if (.@disp$ == "")
+			.@disp$ = .@name$;
+		.RentDisp$[.@kept] = .@disp$;
+		.@rentname$[.@kept] = strtolower(.@disp$);
+		.@kept += 1;
+	}
+	.RentCount = .@kept;
+	for (.@i = 0; .@i < .RentCount; ++.@i) {
+		for (.@j = .@i + 1; .@j < .RentCount; ++.@j) {
+			.@cmp = strcmp(.@rentname$[.@j], .@rentname$[.@i]);
+			if (.@cmp < 0 || (.@cmp == 0 && .RentBoxId[.@j] < .RentBoxId[.@i])) {
+				.@tmp = .RentBoxId[.@i];
+				.RentBoxId[.@i] = .RentBoxId[.@j];
+				.RentBoxId[.@j] = .@tmp;
+				.@tmp = .RentHatId[.@i];
+				.RentHatId[.@i] = .RentHatId[.@j];
+				.RentHatId[.@j] = .@tmp;
+				.@tmp$ = .RentAegis$[.@i];
+				.RentAegis$[.@i] = .RentAegis$[.@j];
+				.RentAegis$[.@j] = .@tmp$;
+				.@tmp$ = .RentDisp$[.@i];
+				.RentDisp$[.@i] = .RentDisp$[.@j];
+				.RentDisp$[.@j] = .@tmp$;
+				.@tmp$ = .@rentname$[.@i];
+				.@rentname$[.@i] = .@rentname$[.@j];
+				.@rentname$[.@j] = .@tmp$;
+			}
+		}
+	}
+	for (.@i = 0; .@i < .RentCount; ++.@i) {
+		.@id = .RentBoxId[.@i];
+		.@hat = .RentHatId[.@i];
+		.@name$ = .RentDisp$[.@i];
+		.@loc = getiteminfo(.@hat, ITEMINFO_LOCATIONS);
+		.@letter$ = strtoupper(charat(.@name$, 0));
+		.@letter_index = strpos(.@alphabet$, .@letter$);
+		if (.@letter_index < 0) {
+			.@letter$ = "A";
+			.@letter_index = 0;
+		}
+		for (.@slot = 0; .@slot < 3; ++.@slot) {
+			if (.@loc & .@eqp[.@slot]) {
+				.RentHas[.@slot * 26 + .@letter_index] = true;
+				npcshopadditem "rent" + .@slot + "#" + .@letter$, .@id, .Price;
+			}
+		}
+	}
+
+	.@kept = 0;
+	for (.@i = 0; .@i < .SpecCount; ++.@i) {
+		.@id = .SpecId[.@i];
+		.@name$ = getitemname(.@id);
+		// Empty / "Unknown Item" here means the ID is missing from item_db, not that the client lacks itemInfo.lua.
+		if (.@name$ == "" || .@name$ == "Unknown Item") {
+			debugmes "Hat Seller: missing specialty item " + .@id + ".";
+			continue;
+		}
+		if (getiteminfo(.@id, ITEMINFO_TYPE) != IT_ARMOR) {
+			debugmes "Hat Seller: rejected type for specialty item " + .@id + " (" + .@name$ + ").";
+			continue;
+		}
+		.@loc = getiteminfo(.@id, ITEMINFO_LOCATIONS);
+		if (.@loc & .@costume) {
+			debugmes "Hat Seller: rejected costume slot for specialty item " + .@id + " (" + .@name$ + ").";
+			continue;
+		}
+		.SpecId[.@kept] = .@id;
+		.SpecAegis$[.@kept] = getiteminfo(.@id, ITEMINFO_AEGISNAME);
+		.@disp$ = .SpecDisp$[.@i];
+		if (.@disp$ == "")
+			.@disp$ = .@name$;
+		.SpecDisp$[.@kept] = .@disp$;
+		.@specname$[.@kept] = strtolower(.@disp$);
+		.@kept += 1;
+	}
+	.SpecCount = .@kept;
+	for (.@i = 0; .@i < .SpecCount; ++.@i) {
+		for (.@j = .@i + 1; .@j < .SpecCount; ++.@j) {
+			.@cmp = strcmp(.@specname$[.@j], .@specname$[.@i]);
+			if (.@cmp < 0 || (.@cmp == 0 && .SpecId[.@j] < .SpecId[.@i])) {
+				.@tmp = .SpecId[.@i];
+				.SpecId[.@i] = .SpecId[.@j];
+				.SpecId[.@j] = .@tmp;
+				.@tmp$ = .SpecAegis$[.@i];
+				.SpecAegis$[.@i] = .SpecAegis$[.@j];
+				.SpecAegis$[.@j] = .@tmp$;
+				.@tmp$ = .SpecDisp$[.@i];
+				.SpecDisp$[.@i] = .SpecDisp$[.@j];
+				.SpecDisp$[.@j] = .@tmp$;
+				.@tmp$ = .@specname$[.@i];
+				.@specname$[.@i] = .@specname$[.@j];
+				.@specname$[.@j] = .@tmp$;
+			}
+		}
+	}
+	for (.@i = 0; .@i < .SpecCount; ++.@i) {
+		.@id = .SpecId[.@i];
+		.@name$ = .SpecDisp$[.@i];
+		.@loc = getiteminfo(.@id, ITEMINFO_LOCATIONS);
+		.@letter$ = strtoupper(charat(.@name$, 0));
+		.@letter_index = strpos(.@alphabet$, .@letter$);
+		if (.@letter_index < 0) {
+			.@letter$ = "A";
+			.@letter_index = 0;
+		}
+		for (.@slot = 0; .@slot < 3; ++.@slot) {
+			if (.@loc & .@eqp[.@slot]) {
+				.SpecHas[.@slot * 26 + .@letter_index] = true;
+				npcshopadditem "spec" + .@slot + "#" + .@letter$, .@id, .Price;
+			}
+		}
+	}
+
+	.@kept = 0;
+	for (.@i = 0; .@i < .EvtCount; ++.@i) {
+		.@id = .EvtId[.@i];
+		.@name$ = getitemname(.@id);
+		// Empty / "Unknown Item" here means the ID is missing from item_db, not that the client lacks itemInfo.lua.
+		if (.@name$ == "" || .@name$ == "Unknown Item") {
+			debugmes "Hat Seller: missing event item " + .@id + ".";
+			continue;
+		}
+		if (getiteminfo(.@id, ITEMINFO_TYPE) != IT_ARMOR) {
+			debugmes "Hat Seller: rejected type for event item " + .@id + " (" + .@name$ + ").";
+			continue;
+		}
+		.@loc = getiteminfo(.@id, ITEMINFO_LOCATIONS);
+		if (.@loc & .@costume) {
+			debugmes "Hat Seller: rejected costume slot for event item " + .@id + " (" + .@name$ + ").";
+			continue;
+		}
+		.EvtId[.@kept] = .@id;
+		.EvtAegis$[.@kept] = getiteminfo(.@id, ITEMINFO_AEGISNAME);
+		.@disp$ = .EvtDisp$[.@i];
+		if (.@disp$ == "")
+			.@disp$ = .@name$;
+		.EvtDisp$[.@kept] = .@disp$;
+		.@evtname$[.@kept] = strtolower(.@disp$);
+		.@kept += 1;
+	}
+	.EvtCount = .@kept;
+	for (.@i = 0; .@i < .EvtCount; ++.@i) {
+		for (.@j = .@i + 1; .@j < .EvtCount; ++.@j) {
+			.@cmp = strcmp(.@evtname$[.@j], .@evtname$[.@i]);
+			if (.@cmp < 0 || (.@cmp == 0 && .EvtId[.@j] < .EvtId[.@i])) {
+				.@tmp = .EvtId[.@i];
+				.EvtId[.@i] = .EvtId[.@j];
+				.EvtId[.@j] = .@tmp;
+				.@tmp$ = .EvtAegis$[.@i];
+				.EvtAegis$[.@i] = .EvtAegis$[.@j];
+				.EvtAegis$[.@j] = .@tmp$;
+				.@tmp$ = .EvtDisp$[.@i];
+				.EvtDisp$[.@i] = .EvtDisp$[.@j];
+				.EvtDisp$[.@j] = .@tmp$;
+				.@tmp$ = .@evtname$[.@i];
+				.@evtname$[.@i] = .@evtname$[.@j];
+				.@evtname$[.@j] = .@tmp$;
+			}
+		}
+	}
+	for (.@i = 0; .@i < .EvtCount; ++.@i) {
+		.@id = .EvtId[.@i];
+		.@name$ = .EvtDisp$[.@i];
+		.@loc = getiteminfo(.@id, ITEMINFO_LOCATIONS);
+		.@letter$ = strtoupper(charat(.@name$, 0));
+		.@letter_index = strpos(.@alphabet$, .@letter$);
+		if (.@letter_index < 0) {
+			.@letter$ = "A";
+			.@letter_index = 0;
+		}
+		for (.@slot = 0; .@slot < 3; ++.@slot) {
+			if (.@loc & .@eqp[.@slot]) {
+				.EvtHas[.@slot * 26 + .@letter_index] = true;
+				npcshopadditem "evt" + .@slot + "#" + .@letter$, .@id, .Price;
+			}
+		}
+	}
+
+	for (.@slot = 0; .@slot < 3; ++.@slot) {
+		.HatMenu$[.@slot] = "";
+		.RentMenu$[.@slot] = "";
+		.SpecMenu$[.@slot] = "";
+		.EvtMenu$[.@slot] = "";
+		.HatLetterCount[.@slot] = 0;
+		.RentLetterCount[.@slot] = 0;
+		.SpecLetterCount[.@slot] = 0;
+		.EvtLetterCount[.@slot] = 0;
+		for (.@i = 0; .@i < 26; ++.@i) {
+			if (.HatHas[.@slot * 26 + .@i]) {
+				.@letter$ = charat(.@alphabet$, .@i);
+				.@n = .HatLetterCount[.@slot];
+				.HatLetter$[.@slot * 26 + .@n] = .@letter$;
+				.HatMenu$[.@slot] += .@letter$ + ":";
+				.HatLetterCount[.@slot] = .@n + 1;
+			}
+			if (.RentHas[.@slot * 26 + .@i]) {
+				.@letter$ = charat(.@alphabet$, .@i);
+				.@n = .RentLetterCount[.@slot];
+				.RentLetter$[.@slot * 26 + .@n] = .@letter$;
+				.RentMenu$[.@slot] += .@letter$ + ":";
+				.RentLetterCount[.@slot] = .@n + 1;
+			}
+			if (.SpecHas[.@slot * 26 + .@i]) {
+				.@letter$ = charat(.@alphabet$, .@i);
+				.@n = .SpecLetterCount[.@slot];
+				.SpecLetter$[.@slot * 26 + .@n] = .@letter$;
+				.SpecMenu$[.@slot] += .@letter$ + ":";
+				.SpecLetterCount[.@slot] = .@n + 1;
+			}
+			if (.EvtHas[.@slot * 26 + .@i]) {
+				.@letter$ = charat(.@alphabet$, .@i);
+				.@n = .EvtLetterCount[.@slot];
+				.EvtLetter$[.@slot * 26 + .@n] = .@letter$;
+				.EvtMenu$[.@slot] += .@letter$ + ":";
+				.EvtLetterCount[.@slot] = .@n + 1;
+			}
+		}
+	}
+	freeloop 0;
+	end;
+}
