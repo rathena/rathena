@@ -12,20 +12,22 @@
 //= Random boxes are omitted.
 //= Farmable basic ores are sold here. Ether and Etel stones
 //= are not.
-//= Battle Manual 5; Limited 10; Advanced 7; HE 10; X3 10.
-//= Job Battle Manual 5. Thick Battle Manual 10. Field Manual 25% is not stocked.
+//= Battle Manual 5; Limited 6; Advanced 7; HE 10; X3 12.
+//= Job Battle Manual 5. Thick Battle Manual 12. Field Manual 25% is not stocked.
 //= Bubble Gum: 7 / 10 / 15. Combat: 3-day Infinite ASPD boxes 100;
 //= food 5; Blessing/AGI 10-packs 5; Aspersio 2;
 //= Assumptio/Wind Walk/Adrenaline 10-packs 8; Abrasive 1;
 //= Mega Resist Potion 10. Light ASPD 1/2/3. Concentration Scroll 5.
 //= Recovery: Small Life 3; Medium Life 5; Regeneration 2.
 //= Convenience: Kafra 1; Giant Fly Wing 10-pack 5; Insurance 3;
-//= Gym Pass 50; Token 10; Convex 2; Dungeon Teleport 5;
+//= Gym Pass 50; Token 10; Convex 2; Dungeon Teleport 10;
 //= Greed 30-pack 15; Infinite Flywing 1/3/5/7-day 30/45/60/150;
-//= New Insurance 15; Insurance60 5; city teleports and butterfly wings 2;
+//= New Insurance 15; Insurance60 5;
+//= Teleport Scrolls: Rune-Midgarts Central/South/Other, Lighthalzen, Rachel, Localizing
+//= 2/2/5, 3, 5, 8; butterfly Yellow/Green/Red/Blue 2/3/5/8;
 //= Infinite Giant Fly Wing 1-day 30; Halter 3/7/30-day 45/150/300.
 //= Style and Reset: dye coupons 20; Costume Change Ticket 100
-//= (100,000 Zeny); Premium Reset Stone 100; Neuralizer 1000 (1,000,000 Zeny).
+//= (100,000 Zeny); Premium Reset Stone 1000; Neuralizer 1000 (1,000,000 Zeny).
 //= Upgrade: basic ores 1-2; Oridecon/Elunium 5; Enriched 10; HD Ori/Elu 30;
 //= HD Bradium/Carnium 100; Blacksmith Blessing 13;
 //= Shadow Refine Hammer 100. Neuralizer 1000 (1,000,000 Zeny).
@@ -188,12 +190,14 @@ OnInit:
 	// Shelf order inside each category: product family, then family
 	// tier (price, strength, or duration), then A-Z by client
 	// identifiedDisplayName when the tier is tied. ASPD stays
-	// Concentration / Awakening / Berserk. Teleport Scrolls 1-6
-	// share one client name, so they stay numbered.
+	// Concentration / Awakening / Berserk. Teleport Scrolls follow
+	// region: Rune-Midgarts (Central, South, Other), Lighthalzen,
+	// Rachel, Localizing. Butterfly wings follow the same geography:
+	// Yellow, Green, Red, Blue.
 	// Category 0: EXP and Drop. Battle Manual ladder, Job Manual,
 	// Thick, then gum.
 	setarray .ItemId[0],     12208, 12872, 14533, 12411, 14545, 14592, 12312, 12210, 12562, 12412;
-	setarray .ItemPrice[0],      5,    10,     7,    10,    10,     5,    10,     7,    10,    15;
+	setarray .ItemPrice[0],      5,     6,     7,    10,    12,     5,    12,     7,    10,    15;
 	setarray .ItemCat[0],        0,     0,     0,     0,     0,     0,     0,     0,     0,     0;
 	// Category 1: Combat Buffs. Food A-Z; Light then Infinite ASPD;
 	// scrolls by pack price; Abrasive then Concentration Scroll.
@@ -208,17 +212,18 @@ OnInit:
 	setarray .ItemPrice[31],     3,     5,     2;
 	setarray .ItemCat[31],       2,     2,     2;
 	// Category 3: Convenience. Giant Fly, Infinite Fly 1/3/5/7,
-	// city teleports 1-6, butterfly A-Z, then insurance / utility / Halter.
-	setarray .ItemId[34],    12910, 17608, 17314, 17251, 17474, 17229, 12977, 12978, 12979, 12980, 12981, 12982;
-	setarray .ItemPrice[34],     5,    30,    30,    45,    60,   150,     2,     2,     2,     2,     2,     2;
+	// city teleports by region, butterfly by the same geography,
+	// then insurance / utility / Halter.
+	setarray .ItemId[34],    12910, 17608, 17314, 17251, 17474, 17229, 12977, 12978, 12980, 12981, 12982, 12979;
+	setarray .ItemPrice[34],     5,    30,    30,    45,    60,   150,     2,     2,     5,     3,     5,     8;
 	setarray .ItemCat[34],       3,     3,     3,     3,     3,     3,     3,     3,     3,     3,     3,     3;
-	setarray .ItemId[46],    14585, 14583, 14584, 14582, 14527, 12214, 12209, 14500,  6413,  7621, 13621, 12211,  7776, 17176, 17162, 16683;
-	setarray .ItemPrice[46],     2,     2,     2,     2,     5,     2,     3,     5,    15,    10,    15,     1,    50,    45,   150,   300;
+	setarray .ItemId[46],    14582, 14583, 14584, 14585, 14527, 12214, 12209, 14500,  6413,  7621, 13621, 12211,  7776, 17176, 17162, 16683;
+	setarray .ItemPrice[46],     2,     3,     5,     8,    10,     2,     3,     5,    15,    10,    15,     1,    50,    45,   150,   300;
 	setarray .ItemCat[46],       3,     3,     3,     3,     3,     3,     3,     3,     3,     3,     3,     3,     3,     3,     3,     3;
 	// Category 4: Style and Reset. Dye A-Z; Costume Ticket;
 	// Premium Reset Stone; Neuralizer.
 	setarray .ItemId[62],     6046,  6047,  6959,  6320, 12213;
-	setarray .ItemPrice[62],    20,    20,   100,   100,  1000;
+	setarray .ItemPrice[62],    20,    20,   100,  1000,  1000;
 	setarray .ItemCat[62],       4,     4,     4,     4,     4;
 	// Upgrade. Basic ores 1 CP A-Z then Emveretarcon; finished;
 	// Enriched; HD Ori/Elu then Bradium/Carnium; Blessing; Hammer.

@@ -98,6 +98,18 @@ Body:
       Container: true
     Script: |
       callfunc("F_OfflineMvpCardAlbum");
+  - Id: 12977
+    Name: Teleport Scroll (Rune-Midgarts - Central)
+  - Id: 12978
+    Name: Teleport Scroll (Rune-Midgarts - South)
+  - Id: 12980
+    Name: Teleport Scroll (Rune-Midgarts - Other)
+  - Id: 12981
+    Name: Teleport Scroll (Lighthalzen)
+  - Id: 12982
+    Name: Teleport Scroll (Rachel)
+  - Id: 12979
+    Name: Teleport Scroll (Localizing Region)
 
 #Body:
 # THQ Quest Items
