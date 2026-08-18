@@ -22,12 +22,12 @@ void SkillMidnightKick::calculateSkillRatio(const Damage* wd, const block_list* 
 	const status_change* sc = status_get_sc(src);
 	const status_data* sstatus = status_get_status_data(*src);
 
-	skillratio += -100 + 800 + 1500 * skill_lv;
+	skillratio += -100 + 850 + 1700 * skill_lv;
 	skillratio += pc_checkskill(sd, SKE_SKY_MASTERY) * 5 * skill_lv;
 	skillratio += 5 * sstatus->pow;
 
 	if (sc != nullptr && (sc->getSCE(SC_MIDNIGHT_MOON) != nullptr || sc->getSCE(SC_SKY_ENCHANT) != nullptr)) {
-		skillratio += 950 + 250 * skill_lv;
+		skillratio += 950 + 300 * skill_lv;
 	}
 
 	RE_LVL_DMOD(100);
