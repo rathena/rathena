@@ -21,7 +21,7 @@ void SkillTalismanOfBlueDragon::calculateSkillRatio(const Damage *wd, const bloc
 	skillratio += pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 15 * skill_lv;
 	skillratio += 5 * sstatus->spl;
 	if (sc != nullptr && sc->getSCE(SC_T_FIFTH_GOD) != nullptr)
-		skillratio += 100 + 850 * skill_lv;
+		skillratio += 850 * skill_lv;
 	RE_LVL_DMOD(100);
 }
 
