@@ -17,12 +17,12 @@ void SkillChulhoSonicClaw::calculateSkillRatio(const Damage *wd, const block_lis
 	const status_change *sc = status_get_sc(src);
 	const map_session_data* sd = BL_CAST(BL_PC, src);
 
-	skillratio += -100 + 1100 + 2200 * skill_lv;
+	skillratio += -100 + 1450 + 2650 * skill_lv;
 	skillratio += 50 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
 	skillratio += 5 * sstatus->pow;
 
 	if( pc_checkskill( sd, SH_COMMUNE_WITH_CHUL_HO ) > 0 || ( sc != nullptr && sc->getSCE( SC_TEMPORARY_COMMUNION ) != nullptr ) ){
-		skillratio += 400 * skill_lv;
+		skillratio += -50 + 350 * skill_lv;
 		skillratio += 50 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
 	}
 	RE_LVL_DMOD(100);
