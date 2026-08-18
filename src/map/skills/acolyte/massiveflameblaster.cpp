@@ -22,7 +22,8 @@ void SkillMassiveFlameBlaster::calculateSkillRatio(const Damage* wd, const block
 	const status_data* sstatus = status_get_status_data(*src);
 	const status_data* tstatus = status_get_status_data(*target);
 
-	skillratio += -100 + 2300 * skill_lv + 15 * sstatus->pow;
+	skillratio += -100 + 2500 * skill_lv;
+	skillratio += 15 * sstatus->pow;
 	if (tstatus->race == RC_BRUTE || tstatus->race == RC_DEMON)
 		skillratio += 150 * skill_lv;
 	RE_LVL_DMOD(100);

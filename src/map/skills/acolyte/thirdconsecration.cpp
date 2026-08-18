@@ -14,7 +14,7 @@ SkillThirdConsecration::SkillThirdConsecration() : SkillImplRecursiveDamageSplas
 void SkillThirdConsecration::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& skillratio, int32 mflag) const {
 	const status_data* sstatus = status_get_status_data(*src);
 
-	skillratio += -100 + 1200 * skill_lv;
+	skillratio += -100 + 1250 * skill_lv;
 	skillratio += 10 * sstatus->pow;
 
 	RE_LVL_DMOD(100);
