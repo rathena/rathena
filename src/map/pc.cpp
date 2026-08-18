@@ -6558,8 +6558,16 @@ int32 pc_useitem(map_session_data *sd,int32 n)
 	run_script( script, 0, sd->id, fake_nd->id );
 
 	if( sd->st != nullptr ){
-		script_free_state( sd->st );
-		sd->st = nullptr;
+		// Keep a suspended item script (select/input/next/sleep) so the client
+		// can resume it. Always freeing here cleared sd->npc_id while the menu
+		// stayed open, so Teleport Scrolls and other cash functions never warped
+		// and left the player unable to walk until Character Select.
+		// If an NPC script was already attached, discard the item dialog instead
+		// of nesting two script states.
+		if( sd->st->state == END || previous_st != nullptr ){
+			script_free_state( sd->st );
+			sd->st = nullptr;
+		}
 	}
 
 	// If an old script is present
