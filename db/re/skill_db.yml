@@ -44020,6 +44020,7 @@ Body:
     Range: 9
     Hit: Multi_Hit
     HitCount: -3
+    GiveAp: 1
     Element: Weapon
     SplashArea: 2
     ActiveInstance: 13
@@ -44112,6 +44113,7 @@ Body:
     Range: 1
     Hit: Multi_Hit
     HitCount: -3
+    GiveAp: 1
     Element: Weapon
     DamageFlags:
       IgnoreFlee: true
@@ -44162,6 +44164,7 @@ Body:
     Range: 1
     Hit: Single
     HitCount: 1
+    GiveAp: 1
     Element: Weapon
     DamageFlags:
       Splash: true
@@ -44215,6 +44218,7 @@ Body:
     Hit: Multi_Hit
     HitCount: -3
     ActiveInstance: 7
+    GiveAp: 1
     Element: Fire
     DamageFlags:
       Splash: true
@@ -44276,6 +44280,7 @@ Body:
     Range: 9
     Hit: Multi_Hit
     HitCount: -6
+    GiveAp: 1
     Element: Water
     DamageFlags:
       Splash: true
@@ -44338,6 +44343,7 @@ Body:
     Hit: Multi_Hit
     HitCount: -2
     ActiveInstance: 13
+    GiveAp: 1
     Element: Wind
     DamageFlags:
       Splash: true
@@ -44399,6 +44405,7 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
+    GiveAp: 1
     Element: Earth
     DamageFlags:
       Splash: true
