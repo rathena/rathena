@@ -14,7 +14,6 @@ SkillMoonSlasher::SkillMoonSlasher() : SkillImplRecursiveDamageSplash(LG_MOONSLA
 
 void SkillMoonSlasher::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	clif_skill_damage(*src, *target, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, getSkillId(), skill_lv, DMG_SINGLE);
-
 	SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
 }
 
