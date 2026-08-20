@@ -27,8 +27,8 @@ void SkillOverSlash::calculateSkillRatio(const Damage* wd, const block_list* src
 	const status_data* sstatus = status_get_status_data(*src);
 	int32 i;
 
-	skillratio += -100 + 220 * skill_lv;
-	skillratio += pc_checkskill(sd, IG_SPEAR_SWORD_M) * 50 * skill_lv;
+	skillratio += -100 + 260 * skill_lv;
+	skillratio += pc_checkskill(sd, IG_SPEAR_SWORD_M) * 60 * skill_lv;
 	skillratio += 7 * sstatus->pow;
 	RE_LVL_DMOD(100);
 	if ((i = pc_checkskill_imperial_guard(sd, 3)) > 0)
