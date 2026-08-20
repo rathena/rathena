@@ -66,3 +66,13 @@ function	script	F_queststatus	{
 	}
 	end;
 }	
+
+// Cat Hand Ticket
+function	script	F_CatStore	{
+	mes "[Cat's Hand Storage]";
+	mes "Cat's Hand Top Storage Call Service.";
+	mes "I will open the Storage as requested.";
+	close2;
+	callfunc "F_CallStorage", 3, 7;
+	return;
+}
