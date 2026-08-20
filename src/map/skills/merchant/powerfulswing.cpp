@@ -15,7 +15,7 @@ void SkillPowerfulSwing::calculateSkillRatio(const Damage* wd, const block_list*
 	const status_data* sstatus = status_get_status_data(*src);
 	const status_change* sc = status_get_sc(src);
 
-	skillratio += -100 + 300 + 850 * skill_lv;
+	skillratio += -100 + 300 + 880 * skill_lv;
 	skillratio += 5 * sstatus->pow; // !TODO: check POW ratio
 	if (sc && sc->getSCE(SC_AXE_STOMP))
 		skillratio += 100 + 100 * skill_lv;

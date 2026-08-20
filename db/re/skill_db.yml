@@ -36004,7 +36004,17 @@ Body:
         Time: 6000
       - Level: 5
         Time: 7000
-    Cooldown: 1500
+    Cooldown:
+      - Level: 1
+        Time: 1800
+      - Level: 2
+        Time: 1600
+      - Level: 3
+        Time: 1400
+      - Level: 4
+        Time: 1200
+      - Level: 5
+        Time: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -36070,7 +36080,7 @@ Body:
     SplashArea: 4
     AfterCastActDelay: 500
     Duration1: 150000
-    Cooldown: 5000
+    Cooldown: 3500
     Requires:
       SpCost: 100
       ApCost: 12
@@ -36959,7 +36969,7 @@ Body:
     HitCount: 2
     Element: Holy
     SplashArea: 4
-    GiveAp: 2
+    GiveAp: 3
     CastTime: 4000
     AfterCastActDelay: 500
     Duration1: 20000
@@ -37095,13 +37105,13 @@ Body:
         - Level: 1
           Amount: 200
         - Level: 2
-          Amount: 190
+          Amount: 185
         - Level: 3
-          Amount: 180
-        - Level: 4
           Amount: 170
+        - Level: 4
+          Amount: 155
         - Level: 5
-          Amount: 160
+          Amount: 140
     Status: Competentia
   - Id: 5279
     Name: CD_PNEUMATICUS_PROCELLA
@@ -37199,7 +37209,7 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    GiveAp: 1
+    GiveAp: 2
     AfterCastActDelay: 700
     Duration1:
       - Level: 1
@@ -37237,7 +37247,7 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    GiveAp: 1
+    GiveAp: 2
     AfterCastActDelay: 700
     Duration1:
       - Level: 1
@@ -37351,7 +37361,7 @@ Body:
         Area: 3
       - Level: 5
         Area: 3
-    GiveAp: 2
+    GiveAp: 3
     CastTime: 5000
     AfterCastActDelay: 500
     Cooldown: 300
@@ -37845,7 +37855,7 @@ Body:
         Time: 300000
     Requires:
       SpCost: 150
-      ApCost: 150
+      ApCost: 125
     Status: Rush_Quake2
   - Id: 5297
     Name: MT_M_MACHINE
@@ -40896,7 +40906,7 @@ Body:
     TargetType: Attack
     DamageFlags:
       Critical: true
-    Range: -11
+    Range: -9
     Hit: Multi_Hit
     HitCount: -2
     GiveAp: 1
@@ -41283,7 +41293,7 @@ Body:
     MaxLevel: 7
     Type: Magic
     TargetType: Attack
-    Range: -11
+    Range: -9
     GiveAp: 1
     Hit: Single
     HitCount: 1
@@ -41320,18 +41330,18 @@ Body:
     FixedCastTime: 1500
     Duration1:
       - Level: 1
-        Time: 30000
-      - Level: 2
         Time: 60000
-      - Level: 3
+      - Level: 2
         Time: 90000
+      - Level: 3
+        Time: 120000
       - Level: 4
-        Time: 12000
-      - Level: 5
         Time: 150000
+      - Level: 5
+        Time: 180000
     Requires:
       SpCost: 100
-      ApCost: 150
+      ApCost: 125
     Status: Temporary_Communion
   - Id: 5448
     Name: SH_BLESSING_OF_MYSTICAL_CREATURES
@@ -41775,7 +41785,7 @@ Body:
     FixedCastTime: 2000
     Requires:
       SpCost: 150
-      ApCost: 150
+      ApCost: 125
     Status: Hidden_Card
   - Id: 5415
     Name: NW_MISSION_BOMBARD
@@ -43264,7 +43274,7 @@ Body:
     FixedCastTime: 1000
     Requires:
       SpCost: 150
-      ApCost: 150
+      ApCost: 120
     Status: Breakinglimit
   - Id: 5462
     Name: HN_RULEBREAK
@@ -43279,7 +43289,7 @@ Body:
     FixedCastTime: 1000
     Requires:
       SpCost: 150
-      ApCost: 150
+      ApCost: 120
     Status: Rulebreak
   - Id: 5463
     Name: SKE_SKY_MASTERY
@@ -43679,7 +43689,7 @@ Body:
         Time: 900000
     Requires:
       SpCost: 100
-      ApCost: 150
+      ApCost: 120
     Status: Sky_Enchant
   - Id: 5476
     Name: SS_TOKEDASU
@@ -44010,6 +44020,7 @@ Body:
     Range: 9
     Hit: Multi_Hit
     HitCount: -3
+    GiveAp: 1
     Element: Weapon
     SplashArea: 2
     ActiveInstance: 13
@@ -44102,6 +44113,7 @@ Body:
     Range: 1
     Hit: Multi_Hit
     HitCount: -3
+    GiveAp: 1
     Element: Weapon
     DamageFlags:
       IgnoreFlee: true
@@ -44152,6 +44164,7 @@ Body:
     Range: 1
     Hit: Single
     HitCount: 1
+    GiveAp: 1
     Element: Weapon
     DamageFlags:
       Splash: true
@@ -44205,6 +44218,7 @@ Body:
     Hit: Multi_Hit
     HitCount: -3
     ActiveInstance: 7
+    GiveAp: 1
     Element: Fire
     DamageFlags:
       Splash: true
@@ -44266,6 +44280,7 @@ Body:
     Range: 9
     Hit: Multi_Hit
     HitCount: -6
+    GiveAp: 1
     Element: Water
     DamageFlags:
       Splash: true
@@ -44328,6 +44343,7 @@ Body:
     Hit: Multi_Hit
     HitCount: -2
     ActiveInstance: 13
+    GiveAp: 1
     Element: Wind
     DamageFlags:
       Splash: true
@@ -44389,6 +44405,7 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
+    GiveAp: 1
     Element: Earth
     DamageFlags:
       Splash: true
@@ -44615,7 +44632,7 @@ Body:
         Area: 3
       - Level: 5
         Area: 3
-    GiveAp: 2
+    GiveAp: 3
     AfterCastActDelay: 1000
     Cooldown: 750
     CastCancel: true
@@ -44662,7 +44679,7 @@ Body:
         Area: 3
       - Level: 5
         Area: 3
-    GiveAp: 2
+    GiveAp: 3
     AfterCastActDelay: 1000
     Cooldown: 700
     CastCancel: true
@@ -44818,7 +44835,7 @@ Body:
     TargetType: Attack
     DamageFlags:
       Critical: true
-    Range: 7
+    Range: 9
     Hit: Multi_Hit
     HitCount: 5
     GiveAp: 1
@@ -44839,7 +44856,7 @@ Body:
       - Level: 7
         Area: 3
     CastCancel: true
-    AfterCastActDelay: 1000
+    AfterCastActDelay: 700
     Cooldown: 700
     FixedCastTime: 1000
     Requires:
@@ -45311,7 +45328,7 @@ Body:
       - Level: 10
         Area: 3
     CastTime: 1000
-    AfterCastActDelay: 1200
+    AfterCastActDelay: 1000
     Cooldown: 700
     FixedCastTime: 1000
     Requires:
@@ -45434,15 +45451,15 @@ Body:
         Area: 3
     Cooldown:
       - Level: 1
-        Time: 2000
-      - Level: 2
         Time: 1750
-      - Level: 3
+      - Level: 2
         Time: 1500
-      - Level: 4
+      - Level: 3
         Time: 1250
-      - Level: 5
+      - Level: 4
         Time: 1000
+      - Level: 5
+        Time: 750
     Requires:
       SpCost:
         - Level: 1
@@ -45486,15 +45503,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 62
+          Amount: 57
         - Level: 2
-          Amount: 64
+          Amount: 59
         - Level: 3
-          Amount: 66
+          Amount: 61
         - Level: 4
-          Amount: 68
+          Amount: 63
         - Level: 5
-          Amount: 70
+          Amount: 65
       Weapon:
         2hAxe: true
   - Id: 6508

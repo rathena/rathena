@@ -20,7 +20,8 @@ void SkillShadowNightmare::calculateSkillRatio(const Damage *wd, const block_lis
 	const status_data* sstatus = status_get_status_data(*src);
 	const status_change *tsc = status_get_sc(target);
 
-	skillratio += -100 + 18000 + 5 * sstatus->pow;
+	skillratio += -100 + 22500;
+	skillratio += 5 * sstatus->pow;
 
 	if( tsc != nullptr && tsc->getSCE( SC_NIGHTMARE ) != nullptr ){
 		skillratio += skillratio / 2;
