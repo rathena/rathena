@@ -37855,7 +37855,7 @@ Body:
         Time: 300000
     Requires:
       SpCost: 150
-      ApCost: 150
+      ApCost: 125
     Status: Rush_Quake2
   - Id: 5297
     Name: MT_M_MACHINE
@@ -45451,15 +45451,15 @@ Body:
         Area: 3
     Cooldown:
       - Level: 1
-        Time: 2000
-      - Level: 2
         Time: 1750
-      - Level: 3
+      - Level: 2
         Time: 1500
-      - Level: 4
+      - Level: 3
         Time: 1250
-      - Level: 5
+      - Level: 4
         Time: 1000
+      - Level: 5
+        Time: 750
     Requires:
       SpCost:
         - Level: 1
@@ -45503,15 +45503,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 62
+          Amount: 57
         - Level: 2
-          Amount: 64
+          Amount: 59
         - Level: 3
-          Amount: 66
+          Amount: 61
         - Level: 4
-          Amount: 68
+          Amount: 63
         - Level: 5
-          Amount: 70
+          Amount: 65
       Weapon:
         2hAxe: true
   - Id: 6508
