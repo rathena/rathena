@@ -110,6 +110,7 @@
 1@lab	mapflag	partylock
 1@uns	mapflag	partylock
 1@mcd	mapflag	partylock
+1@ffp	mapflag	partylock
 
 //============================================================
 // Episode 16.1 - Banquet of Heroes

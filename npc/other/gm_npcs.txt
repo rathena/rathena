@@ -126,6 +126,8 @@ List of GM Management NPCs (incomplete)
 - #pa0829Reactor11
 - New Oz Image#1
 - Professor Aide#worm
+- Acceptance test#sdclan101
+- Clan Reset#conclan01
 --------------------------
 - Allied Manager#gm
 - #timer_alba01

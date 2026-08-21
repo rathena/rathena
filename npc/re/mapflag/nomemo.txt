@@ -188,6 +188,7 @@ moro_cav	mapflag	nomemo
 1@uns	mapflag	nomemo
 1@mcd	mapflag	nomemo
 un_myst	mapflag	nomemo
+1@ffp	mapflag	nomemo
 
 //============================================================
 // Nightmare Biolab
