@@ -1165,8 +1165,8 @@ enum sc_type : int16 {
 
 	// Meister
 	SC_AXE_STOMP,
-	SC_A_MACHINE,
-	SC_D_MACHINE,
+	// SC_A_MACHINE,	// SC_A_MACHINE not used anymore
+	SC_D_MACHINE = SC_AXE_STOMP + 2,
 	SC_ABR_BATTLE_WARIOR,
 	SC_ABR_DUAL_CANNON,
 	SC_ABR_MOTHER_NET,
