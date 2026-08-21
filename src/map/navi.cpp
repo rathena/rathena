@@ -333,9 +333,9 @@ int32 map_type(const struct map_data * m) {
 
 	if (segmented && has_mob) {
 		return 5005;
-	} else if (segmented) {
-		return 5003;
-	}
+	}/* else if (segmented) {
+		return 5003; // This is problematic, hides minimaps on maps that it shouldn't.
+	}*/
 
 	return 5001;
 }
@@ -360,7 +360,7 @@ void write_warp(std::ostream& os, const struct navi_link &nl) {
 	// 200 = warp , 201 = npc script, 202 = Kafra Dungeon Warp,
 	// 203 = Cool Event Dungeon Warp, 204 Kafra/Cool Event/Alberta warp,
 	// 205 = airport  (currently we only support warps)
-	os << ((nl.npc->subtype == NPCTYPE_WARP) ? 200 : 201) << ", ";
+	os << ((nl.npc->subtype == NPCTYPE_WARP || nl.name.empty()) ? 200 : 201) << ", ";
 	// sprite id, 99999 = warp portal
 	os << ((nl.npc->vd.look[LOOK_BASE] == JT_WARPNPC) ? 99999 : (int32)nl.npc->vd.look[LOOK_BASE]) << ", ";
 	if (nl.name.empty())
@@ -463,15 +463,28 @@ void write_object_lists() {
 				map[target].navi.warps_into.push_back(&nd->navi);
 				
 			} else { // Other NPCs
+				// Extract visible name for filtering decisions
+				std::string name = nd->name;
+				std::string visible_name = name.substr(0, name.find('#'));
+				
+				// Determine if this NPC should be written to navi_npc
+				bool should_write_npc = true;
 				if (nd->class_ == -1 || nd->class_ == JT_HIDDEN_NPC
 					|| nd->class_ == JT_HIDDEN_WARP_NPC || nd->class_ == JT_GUILD_FLAG
-					|| nd->navi.hidden)
-					continue;
+					|| nd->class_ == JT_WARPNPC  // Exclude warp sprite NPCs
+					|| nd->navi.hidden
+					|| visible_name.empty())    // Exclude NPCs with empty visible names
+					should_write_npc = false;
 				
-				nd->navi.id = 11984 + npc_count;
-				write_npc(npc_file, nd);
-				m->navi.npcs.push_back(nd);
-
+				// Write to NPC file only if it passes all filters
+				if (should_write_npc) {
+					nd->navi.id = 11984 + npc_count;
+					write_npc(npc_file, nd);
+					m->navi.npcs.push_back(nd);
+					npc_count++;
+				}
+			
+				// ALWAYS process naviregisterwarp links regardless of NPC filtering
 				for (auto &link : nd->links) {
 					int32 target = link.warp_dest.m;
 					if (target < 0)
@@ -482,8 +495,6 @@ void write_object_lists() {
 					m->navi.warps_outof.push_back(&link);
 					map[target].navi.warps_into.push_back(&link);
 				}
-
-				npc_count++;
 			}
 		}
 
