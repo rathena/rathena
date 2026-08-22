@@ -21352,7 +21352,7 @@ static std::string clif_hide_name(const char* original_name)
  * type: ITEMOBTAIN_TYPE_BOXITEM & ITEMOBTAIN_TYPE_MONSTER_ITEM "[playername] ... [sourcename] ... [itemname]" -> MsgStringTable[1629]
  * type: ITEMOBTAIN_TYPE_NPC "[playername] ... [itemname]" -> MsgStringTable[1870]
  **/
-void clif_broadcast_obtain_special_item( const char *char_name, t_itemid nameid, t_itemid container, enum BROADCASTING_SPECIAL_ITEM_OBTAIN type ){
+void clif_broadcast_obtain_special_item( const char *char_name, t_itemid nameid, t_itemid container, enum BROADCASTING_SPECIAL_ITEM_OBTAIN type, uint32 refine_level ){
 	char name[NAME_LENGTH];
 
 	if( battle_config.broadcast_hide_name ){
@@ -21368,7 +21368,7 @@ void clif_broadcast_obtain_special_item( const char *char_name, t_itemid nameid,
 			{
 				PACKET_ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN_item p = {};
 
-				p.PacketType = package_item_announceType;
+				p.PacketType = HEADER_ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN_item;
 				p.PacketLength = sizeof( p );
 				p.type = type;
 				p.ItemID = client_nameid( nameid );
@@ -21378,7 +21378,7 @@ void clif_broadcast_obtain_special_item( const char *char_name, t_itemid nameid,
 				p.BoxItemID = client_nameid( container );
 #if PACKETVER_MAIN_NUM >= 20220518 || PACKETVER_ZERO_NUM >= 20220518
 				p.refineLevel_len = (int8)sizeof( p.refineLevel );
-				p.refineLevel = 0; // TODO: implement
+				p.refineLevel = refine_level;
 #endif
 
 				clif_send( &p, p.PacketLength, nullptr, ALL_CLIENT );
