@@ -25,7 +25,7 @@ void SkillChasingShot::calculateSkillRatio(const Damage* wd, const block_list* s
 	const status_change* sc = status_get_sc(src);
 	const status_data* sstatus = status_get_status_data(*src);
 
-	skillratio += -100 + 1500 + 700 * skill_lv;
+	skillratio += -100 + 1750 + 850 * skill_lv;
 	skillratio += 5 * sstatus->con;
 	if (sc != nullptr && sc->hasSCE(SC_CHASING))
 		skillratio += 250 * skill_lv;

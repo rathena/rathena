@@ -3,6 +3,7 @@
 
 #include "lightningbolt.hpp"
 
+#include "map/clif.hpp"
 #include "map/status.hpp"
 
 SkillLightningBolt::SkillLightningBolt() : SkillImpl(MG_LIGHTNINGBOLT) {

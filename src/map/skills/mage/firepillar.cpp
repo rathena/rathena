@@ -3,6 +3,7 @@
 
 #include "firepillar.hpp"
 
+#include "map/pc.hpp"
 #include "map/unit.hpp"
 
 SkillFirePillar::SkillFirePillar() : SkillImpl(WZ_FIREPILLAR) {

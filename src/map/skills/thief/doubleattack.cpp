@@ -3,6 +3,8 @@
 
 #include "doubleattack.hpp"
 
+#include "map/clif.hpp"
+
 SkillDoubleAttack::SkillDoubleAttack() : WeaponSkillImpl(TF_DOUBLE) {
 }
 

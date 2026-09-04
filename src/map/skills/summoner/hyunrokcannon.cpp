@@ -17,12 +17,12 @@ void SkillHyunrokCannon::calculateSkillRatio(const Damage *wd, const block_list 
 	const status_change *sc = status_get_sc(src);
 	const map_session_data* sd = BL_CAST(BL_PC, src);
 
-	skillratio += -100 + 1100 + 2050 * skill_lv;
+	skillratio += -100 + 1450 + 2250 * skill_lv;
 	skillratio += 50 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
 	skillratio += 5 * sstatus->spl;
 
 	if( pc_checkskill( sd, SH_COMMUNE_WITH_HYUN_ROK ) > 0 || ( sc != nullptr && sc->getSCE( SC_TEMPORARY_COMMUNION ) != nullptr ) ){
-		skillratio += 400 * skill_lv;
+		skillratio += 450 * skill_lv;
 		skillratio += 25 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
 	}
 	RE_LVL_DMOD(100);

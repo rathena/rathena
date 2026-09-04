@@ -19,7 +19,7 @@ void SkillDarkDragonNightmare::applyAdditionalEffects(block_list *src, block_lis
 void SkillDarkDragonNightmare::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
 	const status_data* sstatus = status_get_status_data(*src);
 
-	skillratio += -100 + 15500 * skill_lv;
+	skillratio += -100 + 17500 * skill_lv;
 	skillratio += 5 * sstatus->spl;
 	RE_LVL_DMOD(100);
 }

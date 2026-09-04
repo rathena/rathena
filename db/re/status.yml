@@ -7949,12 +7949,6 @@ Body:
   - Status: Axe_Stomp
     Icon: EFST_AXE_STOMP
     DurationLookup: MT_AXE_STOMP
-  - Status: A_Machine
-    Icon: EFST_A_MACHINE
-    DurationLookup: MT_A_MACHINE
-    Flags:
-      BlEffect: true
-      DisplayPc: true
   - Status: D_Machine
     Icon: EFST_D_MACHINE
     DurationLookup: MT_D_MACHINE

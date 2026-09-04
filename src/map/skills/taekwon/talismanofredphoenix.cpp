@@ -17,11 +17,11 @@ void SkillTalismanOfRedPhoenix::calculateSkillRatio(const Damage *wd, const bloc
 	const status_change *sc = status_get_sc(src);
 	const map_session_data* sd = BL_CAST( BL_PC, src );
 
-	skillratio += -100 + 1400 + 1450 * skill_lv;
+	skillratio += -100 + 1650 + 2150 * skill_lv;
 	skillratio += pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 15 * skill_lv;
 	skillratio += 5 * sstatus->spl;
 	if (sc != nullptr && sc->getSCE(SC_T_FIFTH_GOD) != nullptr)
-		skillratio += 200 + 400 * skill_lv;
+		skillratio += 600 + 500 * skill_lv;
 	RE_LVL_DMOD(100);
 }
 

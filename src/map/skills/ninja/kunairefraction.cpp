@@ -17,7 +17,7 @@ void SkillKunaiRefraction::calculateSkillRatio(const Damage *wd, const block_lis
 	const status_data* sstatus = status_get_status_data(*src);
 	const map_session_data* sd = BL_CAST(BL_PC, src);
 
-	skillratio += -100 + 250 + 420 * skill_lv;
+	skillratio += -100 + 300 + 450 * skill_lv;
 	skillratio += pc_checkskill( sd, SS_KUNAIKAITEN ) * 10 * skill_lv;
 	skillratio += 5 * sstatus->pow;
 	RE_LVL_DMOD(100);

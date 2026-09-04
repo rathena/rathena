@@ -16,14 +16,14 @@ void SkillTerraDrive::applyAdditionalEffects(block_list *src, block_list *target
 
 void SkillTerraDrive::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
 	const status_data* sstatus = status_get_status_data(*src);
-	const status_change *sc = status_get_sc(src);
 
-	skillratio += -100 + 500 + 2400 * skill_lv;
-	skillratio += 5 * sstatus->spl;
-
-	if( sc != nullptr && sc->getSCE( SC_SUMMON_ELEMENTAL_TERREMOTUS ) ){
-		skillratio += 7300 + 200 * skill_lv;
-		skillratio += 5 * sstatus->spl;
+	if (const status_change *sc = status_get_sc(src); sc != nullptr && sc->hasSCE(SC_SUMMON_ELEMENTAL_TERREMOTUS)) {
+		skillratio += -100 + 8100 + 2700 * skill_lv;
+		skillratio += 10 * sstatus->spl;
+	}
+	else {
+		skillratio += -100 + 600 + 3000 * skill_lv;
+		skillratio += 7 * sstatus->spl;
 	}
 
 	RE_LVL_DMOD(100);

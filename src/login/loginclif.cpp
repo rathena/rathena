@@ -172,7 +172,7 @@ static void logclif_auth_failed( int32 fd, int32 result, const char* unblock_tim
 
 	p.packetType = HEADER_AC_REFUSE_LOGIN;
 	p.error = result;
-	safestrncpy( p.unblock_time, "", sizeof( p.unblock_time ) );
+	safestrncpy( p.unblock_time, unblock_time, sizeof( p.unblock_time ) );
 
 	socket_send( fd, p );
 }
