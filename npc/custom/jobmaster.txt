@@ -14,10 +14,15 @@
 //= 1.8 Added option to disable Baby Novice Only but Baby Class can be Enabled [mazvi]
 //= 1.9 Migrate/Integrate to Global Functions Platinum Skills. [mazvi]
 //= 2.0 Added 4th class [Lemongrass]
+//= 2.1 Fixed the fourth job change. Fourth classes are built on top of the
+//=     NON-transcendent third class, so JOBL_UPPER must be stripped before
+//=     JOBL_FOURTH is applied. Without this, roclass() returns -1 and the
+//=     menu shows "No more jobs are available" to eligible players.
 //============================================================
 
 prontera,153,193,6	script	Job Master	123,{
 function Get_Job_Equip;
+function Get_Fourth_Class;
 // Checks if the Player has the required level.
 // closes if not, returns if yes
 function	Require_Level	{
@@ -43,6 +48,23 @@ function Is_Baby	{
 	return ((getarg(0, eaclass())&EAJL_BABY)>0);
 }
 
+// Resolves the fourth class matching the player's current class.
+//
+// Fourth classes are declared in src/map/map.hpp on top of the
+// NON-transcendent third class:
+//   MAPID_RUNE_KNIGHT_T = JOBL_THIRD|MAPID_LORD_KNIGHT  = 0x101101
+//   MAPID_DRAGON_KNIGHT = JOBL_FOURTH|MAPID_RUNE_KNIGHT = 0x011101
+//
+// The original script used roclass(eaclass()|EAJL_FOURTH), which keeps
+// JOBL_UPPER set and builds 0x111101 - a value that does not exist in
+// the e_mapid enum, so roclass() returns -1 and the job change is
+// silently rejected. Stripping JOBL_UPPER first yields the correct id.
+//
+// Returns -1 when the current class has no fourth class counterpart.
+function	Get_Fourth_Class	{
+	return roclass((eaclass()&(~EAJL_UPPER))|EAJL_FOURTH);
+}
+
 // Checks if the player can change to fourth class.
 // Note: This does not include the level checks.
 function	Can_Change_Fourth	{
@@ -54,7 +76,7 @@ function	Can_Change_Fourth	{
 		return false; // Not Transcendent Third Class
 	if( eaclass()&EAJL_FOURTH )
 		return false; // Already Fourth Class
-	if( roclass(eaclass()|EAJL_FOURTH) < 0 )
+	if( Get_Fourth_Class() < 0 )
 		return false; // Job has no Fourth Class
 	return true;
 }
@@ -152,7 +174,7 @@ function	Job_Options	{
 	// Note: These are already set in pc.cpp
 	// BaseClass = roclass(.@eac&EAJ_BASEMASK) which is the players First Class
 	// BaseJob = roclass(.@eac&EAJ_UPPERMASK) which is the players Second Class
-	//dispbottom "Debug: eac ("+.@eac+"), third ("+.@third_possible+"), rebirth("+.@rebirth_possible+"), BaseClass ("+BaseClass+"), BaseJob ("+BaseJob+")";
+	//dispbottom "Debug: eac ("+.@eac+"), third ("+.@third_possible+"), fourth ("+.@fourth_possible+"), roclass4th ("+Get_Fourth_Class()+"), rebirth("+.@rebirth_possible+")";
 		
 	// From here on the jobmaster checks the current class
 	// and fills the array `.@job_opt` with possible
@@ -171,7 +193,7 @@ function	Job_Options	{
 	if( .@fourth_possible ) {
 		// Fourth Job change (displayed below rebirth)
 		Require_Level(.Req_Fourth[0], .Req_Fourth[1]);
-		Job_Options(.@job_opt, roclass(.@eac|EAJL_FOURTH));
+		Job_Options(.@job_opt, Get_Fourth_Class());
 	}
 	 
 	if (.SecondExpanded && 
@@ -540,4 +562,3 @@ OnInit:
 	}
 	end;
 }
-
