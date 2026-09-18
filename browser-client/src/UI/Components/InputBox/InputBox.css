@@ -1,0 +1,55 @@
+:host {
+	top: 0px;
+	left: 0px;
+	z-index: 1000;
+}
+
+#inputbox {
+	position: relative;
+	width: 274px;
+	height: 44px;
+	border-radius: 5px;
+	background-color: white;
+	padding: 2px;
+}
+#inputbox .border {
+	border-radius: 5px;
+	border: 1px solid #c1c6c2;
+	width: 262px;
+	height: 37px;
+	padding-top: 5px;
+	padding-left: 10px;
+}
+#inputbox .text {
+	border-radius: 5px;
+	width: 270px;
+	height: 13px;
+	overflow: hidden;
+}
+#inputbox input {
+	border: 0;
+	background-color: #efefef;
+	width: 203px;
+	height: 16px;
+	margin-top: 3px;
+}
+#inputbox ui-button {
+	width: 42px;
+	height: 20px;
+	position: absolute;
+	bottom: 13px;
+	right: 10px;
+}
+
+#inputbox.number {
+	width: 174px;
+}
+#inputbox.number .border {
+	width: 162px;
+}
+#inputbox.number .text {
+	width: 170px;
+}
+#inputbox.number input {
+	width: 103px;
+}

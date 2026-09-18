@@ -1,0 +1,68 @@
+:host {
+	width: 280px;
+	height: 120px;
+	top: 60%;
+	left: calc(50% - 140px);
+}
+
+#WinLogin {
+	position: absolute;
+	width: 280px;
+	height: 120px;
+}
+#WinLogin input {
+	position: absolute;
+	left: 91px;
+	height: 18px;
+	width: 127px;
+	border: none;
+	background-color: transparent;
+	padding-left: 2px;
+	outline: none;
+}
+#WinLogin input.user {
+	top: 29px;
+}
+#WinLogin input.pass {
+	top: 61px;
+}
+#WinLogin .save {
+	position: absolute;
+	top: 32px;
+	right: 10px;
+	display: block;
+	width: 38px;
+	height: 10px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}
+#WinLogin .btn {
+	position: absolute;
+	border: 0;
+	width: 42px;
+	height: 20px;
+	bottom: 4px;
+	background-color: transparent;
+}
+#WinLogin .btn.connect {
+	right: 50px;
+}
+#WinLogin .btn.signup {
+	left: 5px;
+}
+#WinLogin .btn.exit {
+	right: 5px;
+}
+
+/* Override browser autofill styles */
+#WinLogin input:-webkit-autofill,
+#WinLogin input:-webkit-autofill:hover,
+#WinLogin input:-webkit-autofill:focus,
+#WinLogin input:-webkit-autofill:active,
+#WinLogin input:-internal-autofill-selected,
+#WinLogin input:-internal-autofill-previewed {
+	-webkit-background-clip: text;
+	transition: background-color 5000sease-in-out 0s;
+	box-shadow: inset 0 0 20px 20px #ffffff00;
+}

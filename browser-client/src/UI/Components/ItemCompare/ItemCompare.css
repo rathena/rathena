@@ -1,0 +1,211 @@
+:host {
+	top: 0px;
+	left: 0px;
+}
+
+.ItemCompare {
+	position: relative;
+	width: 280px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+.ItemCompare .container {
+	height: 120px;
+	position: relative;
+	box-shadow:
+		white 0px 0px 0px 3px inset,
+		rgb(192, 192, 192) 0px 0px 0px 4px inset;
+	background-repeat: no-repeat;
+	background-color: #c5ddf6;
+	border-radius: 5px;
+}
+.ItemCompare .event_view {
+	position: absolute;
+}
+.ItemCompare .event_view .view {
+	position: absolute;
+	width: 42px;
+	height: 20px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	border: none;
+	top: 6px;
+	left: 6px;
+}
+.ItemCompare .collection {
+	position: absolute;
+	top: 11px;
+	left: 10px;
+	width: 75px;
+	height: 100px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+.ItemCompare .title {
+	position: absolute;
+	top: 3px;
+	left: 86px;
+	width: 185px;
+	height: 14px;
+	padding-left: 4px;
+	padding-top: 6px;
+	text-shadow: 1px 1px 0px white;
+	white-space: nowrap;
+	overflow: hidden;
+	font-size: 11px;
+	font-weight: bold;
+}
+.ItemCompare .close {
+	position: absolute;
+	top: 3px;
+	right: 3px;
+	width: 11px;
+	height: 11px;
+	display: block;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	border: none;
+}
+.ItemCompare .description {
+	position: absolute;
+	background-color: white;
+	top: 35px;
+	left: 100px;
+	line-height: 18px;
+	width: 170px;
+	height: 75px;
+	overflow-y: auto;
+}
+.ItemCompare .description .description-inner {
+	width: 150px;
+}
+.ItemCompare .extend {
+	position: absolute;
+	right: 4px;
+	bottom: 3px;
+	width: 13px;
+	height: 13px;
+	border: none;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+
+.ItemCompare .cardlist {
+	border-radius: 5px;
+	background-color: white;
+	padding: 2px;
+	margin-top: 3px;
+}
+.ItemCompare .cardlist .border {
+	border: 1px solid #c1c6c2;
+	background-color: #c5ddf6;
+	padding-top: 2px;
+	padding-left: 5px;
+	border-radius: 5px;
+}
+.ItemCompare .cardlist .item {
+	position: relative;
+	display: inline-block;
+}
+.ItemCompare .cardlist .item .icon {
+	width: 24px;
+	height: 24px;
+}
+.ItemCompare .cardlist .item .name {
+	position: absolute;
+	top: -20px;
+	left: -20px;
+	display: none;
+	white-space: nowrap;
+	z-index: 900;
+	height: 13px;
+	padding: 5px;
+	background: rgba(0, 0, 0, 0.7);
+	color: white;
+	text-shadow: 1px 1px black;
+}
+.ItemCompare .cardlist .item:hover .name {
+	display: block;
+}
+
+.ItemCompare .book_open {
+	margin-top: 6px;
+	margin-left: 7px;
+}
+.ItemCompare .book_read {
+	position: absolute;
+	margin-top: 7px;
+}
+
+.ItemCompare .overlay_open {
+	pointer-events: none;
+	position: absolute;
+	white-space: nowrap;
+	z-index: 900;
+	height: 13px;
+	background: rgba(0, 0, 0, 0.5);
+	color: white;
+	text-shadow: black 1px 1px;
+	top: -7px;
+	left: 7px;
+	text-align: center;
+	padding: 3px 4px 1px 4px;
+	display: none;
+}
+.ItemCompare .overlay_read {
+	pointer-events: none;
+	position: absolute;
+	white-space: nowrap;
+	z-index: 900;
+	height: 13px;
+	background: rgba(0, 0, 0, 0.5);
+	color: white;
+	text-shadow: black 1px 1px;
+	top: -7px;
+	left: 27px;
+	text-align: center;
+	padding: 3px 4px 1px 4px;
+	display: none;
+}
+
+.ItemCompare .optionlist {
+	border-radius: 5px;
+	background-color: white;
+	padding: 2px;
+	margin-top: 3px;
+}
+.ItemCompare .optionlist .border {
+	border: 1px solid #c1c6c2;
+	background-color: #c5ddf6;
+	padding-top: 2px;
+	padding-left: 5px;
+	border-radius: 5px;
+}
+.ItemCompare .optionlist .item {
+	position: relative;
+	display: inline-block;
+}
+.ItemCompare .optionlist .item .icon {
+	width: 24px;
+	height: 24px;
+}
+.ItemCompare .optionlist .item .name {
+	position: absolute;
+	top: -20px;
+	left: -20px;
+	display: none;
+	white-space: nowrap;
+	z-index: 900;
+	height: 13px;
+	padding: 5px;
+	background: rgba(0, 0, 0, 0.7);
+	color: white;
+	text-shadow: 1px 1px black;
+}
+.ItemCompare .optionlist .item:hover .name {
+	display: block;
+}
+
+.ItemCompare .title.damaged {
+	text-shadow: red 1px 1px 0px;
+}

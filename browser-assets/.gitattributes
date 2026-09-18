@@ -1,0 +1,3 @@
+# GRF archives are binary. Without this, a clone with core.autocrlf=true can rewrite
+# line endings inside them and silently corrupt the test fixtures.
+*.grf binary

@@ -1,0 +1,78 @@
+name: Cleanup GitHub Pages on branch delete
+
+concurrency:
+    group: ${{ github.repository }}-${{ github.workflow }}-${{ github.event.ref }}
+    cancel-in-progress: true
+
+on:
+    delete:
+
+permissions:
+    contents: write
+
+jobs:
+    cleanup:
+        if: github.event.ref_type == 'branch'
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repo (default branch)
+              uses: actions/checkout@v5
+              with:
+                  fetch-depth: 1
+                  path: repo
+
+            - name: Check gh-pages branch exists
+              id: ghpages_exists
+              run: |
+                  if git ls-remote --exit-code --heads "https://github.com/${GITHUB_REPOSITORY}.git" gh-pages >/dev/null 2>&1; then
+                    echo "exists=true" >> "$GITHUB_OUTPUT"
+                  else
+                    echo "exists=false" >> "$GITHUB_OUTPUT"
+                  fi
+
+            - name: Checkout gh-pages
+              if: steps.ghpages_exists.outputs.exists == 'true'
+              uses: actions/checkout@v5
+              with:
+                  ref: gh-pages
+                  fetch-depth: 0
+                  path: ghpages
+
+            - name: Remove branch folder + update index + push (retry)
+              if: steps.ghpages_exists.outputs.exists == 'true'
+              env:
+                  DELETED_REF: ${{ github.event.ref }}
+              run: |
+                  set -euo pipefail
+
+                  SAFE_BRANCH="$(printf '%s' "$DELETED_REF" | tr '/' '-' | sed -E 's/[^A-Za-z0-9._-]+/-/g')"
+                  if [ -z "$SAFE_BRANCH" ] || [ "$SAFE_BRANCH" = "." ] || [ "$SAFE_BRANCH" = ".." ]; then
+                    exit 0
+                  fi
+
+                  cd ghpages
+                  git config user.name "github-actions[bot]"
+                  git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+                  for i in 1 2 3 4 5; do
+                    git fetch origin gh-pages
+                    git reset --hard origin/gh-pages
+
+                    rm -rf -- "$SAFE_BRANCH"
+                    bash ../repo/.github/actions/generate-pages-index/generate-pages-index.sh .
+
+                    git add -A
+                    if git diff --cached --quiet; then
+                      exit 0
+                    fi
+
+                    git commit -m "Remove Pages for deleted branch $DELETED_REF"
+
+                    if git push origin gh-pages; then
+                      exit 0
+                    fi
+
+                    sleep $((i * 2))
+                  done
+
+                  exit 1

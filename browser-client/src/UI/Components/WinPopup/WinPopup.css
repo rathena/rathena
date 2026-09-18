@@ -1,0 +1,48 @@
+:host {
+	width: 280px;
+	height: 120px;
+	top: 0px;
+	left: 0px;
+}
+
+#win_popup {
+	position: absolute;
+	width: 280px;
+	height: 120px;
+	z-index: 999;
+}
+
+#win_popup .container {
+	position: absolute;
+	height: 70px;
+	width: 270px;
+	top: 20px;
+	overflow: auto;
+}
+
+#win_popup .text {
+	padding: 5px 10px 0px 10px;
+}
+
+#win_popup .buttonscontainer {
+	position: absolute;
+	height: 25px;
+	width: 280px;
+	top: 95px;
+}
+
+#win_popup .btns {
+	position: absolute;
+	bottom: 2px;
+	right: 3px;
+}
+
+#win_popup .btn {
+	border: 0;
+	width: 42px;
+	height: 20px;
+	bottom: 4px;
+	margin-left: 3px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}

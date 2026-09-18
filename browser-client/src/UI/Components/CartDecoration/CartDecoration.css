@@ -1,0 +1,60 @@
+:host {
+	width: 255px;
+	height: 117px;
+	top: 50%;
+	left: 50%;
+}
+
+#cartdecoration {
+	position: absolute;
+	width: 255px;
+	height: 117px;
+}
+#cartdecoration .titlebar {
+	width: 100%;
+	height: 17px;
+	background-color: white;
+	background-repeat: repeat-x;
+	border-radius: 3px 3px 0px 0px;
+}
+#cartdecoration .titlebar .base {
+	width: 11px;
+	height: 11px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+#cartdecoration .titlebar .text {
+	text-shadow: 1px 1px white;
+	vertical-align: -2px;
+	white-space: nowrap;
+	display: inline-block;
+	width: 110px;
+	height: 13px;
+	font-size: 11px;
+	font-weight: bold;
+}
+#cartdecoration .titlebar .left {
+	margin-left: 3px;
+	float: left;
+}
+#cartdecoration .titlebar .right {
+	float: right;
+	margin-right: 3px;
+}
+#cartdecoration .titlebar .clear {
+	clear: both;
+}
+#cartdecoration .carts {
+	border: 0;
+	width: 255px;
+	height: 100px;
+	background-color: white;
+	overflow-y: auto;
+}
+#cartdecoration .cart {
+	float: left;
+	border: 0;
+	cursor: pointer;
+}

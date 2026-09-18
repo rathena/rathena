@@ -1,0 +1,206 @@
+:host {
+	width: 488px;
+	height: 413px;
+}
+
+#CheckAttendance {
+	position: absolute;
+	width: 488px;
+	height: 413px;
+}
+
+#CheckAttendance .titlebar {
+	width: 100%;
+	height: 100%;
+}
+
+#CheckAttendance .titlebar .top-panel {
+	width: 100%;
+	height: 85px;
+	float: left;
+}
+
+#CheckAttendance .titlebar .top-panel .top-panel-reward {
+	width: 100%;
+	height: 70px;
+	position: relative;
+	display: flex;
+	justify-content: center;
+}
+
+#CheckAttendance .titlebar .top-panel .top-panel-reward .text {
+	font-weight: bolder;
+	color: #633921;
+	display: table;
+	position: absolute;
+	top: 55%;
+}
+
+#CheckAttendance .titlebar .top-panel .top-panel-period {
+	width: 100%;
+	height: 15px;
+	text-align: center;
+	font-weight: bold;
+	color: #a55239;
+}
+
+#CheckAttendance .titlebar .left-panel {
+	width: 335px;
+	height: 270px;
+	float: left;
+}
+
+#CheckAttendance .titlebar .left-panel .days-list {
+	list-style: none;
+	padding-left: 25px;
+	margin-top: 8px;
+}
+
+#CheckAttendance .titlebar .left-panel .days-list .attendance-item {
+	float: left;
+	width: 58px;
+	height: 60px;
+	margin: 2px;
+}
+
+#CheckAttendance .titlebar .left-panel .days-list .attendance-item .item {
+	width: 100%;
+	height: 40px;
+	position: relative;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+#CheckAttendance .titlebar .left-panel .days-list .attendance-item .item .item-quantity {
+	position: absolute;
+	bottom: 2px;
+	right: 15px;
+}
+
+#CheckAttendance .titlebar .left-panel .days-list .attendance-item .item .name {
+	position: relative;
+	display: none;
+	z-index: 1;
+	top: -10px;
+	left: 0px;
+	background-color: rgba(0, 0, 0, 0.6);
+	text-shadow: 1px 1px black;
+	color: white;
+	padding: 5px;
+	white-space: nowrap;
+	font-size: 0.6rem;
+}
+
+#CheckAttendance .titlebar .left-panel .days-list .attendance-item .item:hover .name {
+	display: table;
+}
+
+#CheckAttendance .titlebar .left-panel .days-list .attendance-item .item .name {
+	display: none;
+}
+
+#CheckAttendance .titlebar .left-panel .days-list .attendance-item .day {
+	width: 100%;
+	height: 20px;
+	text-align: center;
+	font-weight: bold;
+	color: #394aa5;
+}
+
+#CheckAttendance .titlebar .left-panel .days-list .attendance-item .checked,
+#CheckAttendance .titlebar .left-panel .days-list .attendance-item .checked-hidden,
+#CheckAttendance .titlebar .left-panel .days-list .attendance-item .completed {
+	position: absolute;
+	width: 58px;
+	height: 60px;
+	top: 0px;
+	left: 0px;
+}
+
+#CheckAttendance .titlebar .left-panel .days-list .attendance-item .checked-hidden {
+	display: none;
+}
+
+#CheckAttendance .titlebar .right-panel {
+	width: 152px;
+	height: 270px;
+	float: left;
+}
+
+#CheckAttendance .titlebar .right-panel .total-days {
+	width: 80%;
+	height: 85px;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	font-weight: bold;
+	color: #a53963;
+}
+
+#CheckAttendance .titlebar .right-panel .npc {
+	width: 100%;
+	height: 105px;
+}
+
+#CheckAttendance .titlebar .right-panel .remaining-days {
+	width: 100%;
+	height: 80px;
+	font-weight: bold;
+}
+
+#CheckAttendance .titlebar .right-panel .remaining-days .remaining-day {
+	height: 100%;
+	width: 85px;
+	float: left;
+	position: relative;
+}
+
+#CheckAttendance .titlebar .right-panel .remaining-days .remaining-day .remaining-day-text {
+	position: absolute;
+	right: 10px;
+	bottom: 20px;
+	font-weight: bolder;
+	font-size: 20px;
+	color: white;
+}
+
+#CheckAttendance .titlebar .right-panel .remaining-days .remaining-text {
+	height: 100%;
+	width: 35px;
+	float: left;
+	position: relative;
+	font-weight: bolder;
+}
+
+#CheckAttendance .titlebar .right-panel .remaining-days .remaining-text .remaining-text-div {
+	position: absolute;
+	left: 3px;
+	bottom: 20px;
+}
+
+#CheckAttendance .titlebar .bottom-panel {
+	width: 100%;
+	height: 58px;
+	float: left;
+}
+
+#CheckAttendance .titlebar .bottom-panel .close-container {
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+
+#CheckAttendance .titlebar .bottom-panel .close-container .close-container-btn {
+	width: 146px;
+	height: 30px;
+	border: 0;
+	font-weight: bold;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	position: absolute;
+	top: 35%;
+	left: 35%;
+	display: inline-block;
+	text-align: center;
+	line-height: 30px;
+}

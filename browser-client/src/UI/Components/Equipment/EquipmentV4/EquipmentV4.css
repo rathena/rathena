@@ -1,0 +1,388 @@
+:host {
+	top: 0px;
+	left: 0px;
+}
+
+#EquipmentV4 {
+	position: relative;
+	width: 280px;
+}
+
+#EquipmentV4 .clear {
+	clear: both;
+}
+
+#EquipmentV4 .titlebar {
+	width: 280px;
+	height: 17px;
+	background-color: white;
+	background-repeat: repeat-x;
+	border-radius: 3px 3px 0px 0px;
+}
+#EquipmentV4 .titlebar .base {
+	width: 11px;
+	height: 11px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+#EquipmentV4 .titlebar .text {
+	text-shadow: 1px 1px white;
+	vertical-align: -2px;
+	white-space: nowrap;
+	/* chrome bug */
+	display: inline-block;
+	width: 32px;
+	height: 13px;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+#EquipmentV4 .titlebar .left {
+	margin-left: 3px;
+	float: left;
+}
+#EquipmentV4 .titlebar .right {
+	float: right;
+	margin-right: 3px;
+}
+#EquipmentV4 .titlebar .clear {
+	clear: both;
+}
+
+#EquipmentV4 .tab-manager {
+	position: relative;
+	width: inherit;
+	background-color: white;
+	height: 15px;
+	display: flex;
+}
+
+#EquipmentV4 .tab a {
+	width: 60px;
+	height: 100%;
+	color: #42454a;
+	border: 1px solid #c9c3ba;
+	border-bottom: none;
+	text-decoration: none;
+	display: inline-block;
+	vertical-align: bottom;
+	border-radius: 3px 3px 0 0;
+	text-align: center;
+}
+#EquipmentV4 .tab a.selected {
+	color: #000;
+	font-weight: bold;
+	border-bottom: 1px solid white;
+	position: relative;
+	z-index: 100;
+	background-color: white;
+}
+#EquipmentV4 .tab a.selected:after {
+	content: '';
+	display: block;
+	height: 1px;
+	width: 1px;
+	position: absolute;
+	bottom: -1px;
+	left: -1px;
+}
+
+#EquipmentV4 .panel {
+	background-color: white;
+	border-top: 1px solid gray;
+	height: 150px;
+}
+#EquipmentV4 .equipmentV0 .panel {
+	background-color: inherit;
+}
+#EquipmentV4 table.content {
+	width: 280px;
+	height: 130px;
+	border-spacing: 0;
+}
+#EquipmentV4 table.content.hide {
+	display: none;
+}
+#EquipmentV4 .content {
+	display: inline-block;
+	width: 280px;
+	height: 130px;
+	border-spacing: 0;
+}
+#EquipmentV4 .col1,
+#EquipmentV4 .col3 {
+	width: 115px;
+	height: 24px;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}
+#EquipmentV4 .col1 {
+	background-position: 5% 50%;
+	min-width: 110px;
+}
+#EquipmentV4 .col3 {
+	background-position: 95% 50%;
+	min-width: 110px;
+}
+
+#EquipmentV4 .overlay {
+	position: absolute;
+	display: none;
+	white-space: nowrap;
+	z-index: 900;
+	height: 13px;
+	padding: 5px;
+	background: rgba(0, 0, 0, 0.7);
+	color: white;
+	text-shadow: 1px 1px black;
+}
+
+#EquipmentV4 .item button {
+	width: 24px;
+	height: 24px;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	border: none;
+}
+#EquipmentV4 .item span {
+	width: 80px;
+	height: 24px;
+	display: inline-block;
+	line-height: 12px;
+	word-break: break-all;
+	overflow: hidden;
+	text-shadow: 1px 1px white;
+}
+
+#EquipmentV4 .col3 .item button,
+#EquipmentV4 .col3 .item span {
+	float: right;
+}
+#EquipmentV4 .col1 .item button,
+#EquipmentV4 .col1 .item span {
+	float: left;
+}
+#EquipmentV4 .col1 .item {
+	padding-left: 4px;
+}
+#EquipmentV4 .col3 .item {
+	padding-right: 4px;
+}
+#EquipmentV4 .col1 .item .itemName {
+	display: flex;
+	align-items: center;
+}
+#EquipmentV4 .col3 .item .itemName {
+	display: flex;
+	align-items: center;
+}
+
+#EquipmentV4 .ammo_container {
+	position: relative;
+}
+#EquipmentV4 .ammo {
+	position: absolute;
+	top: 30px;
+}
+#EquipmentV4 .ammo .item {
+	text-align: center;
+}
+#EquipmentV4 .ammo .item span {
+	width: 45px;
+}
+#EquipmentV4 .cartitems {
+	position: absolute;
+	top: 65px;
+	left: 14px;
+	width: 36px;
+	height: 36px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	border: none;
+	display: none;
+}
+#EquipmentV4 .removeOption {
+	position: absolute;
+	top: 90px;
+	left: 12px;
+	width: 36px;
+	height: 36px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	border: none;
+	display: none;
+}
+
+#EquipmentV4 .footer {
+	height: 20px;
+	border-bottom: 1px solid #c0c0c0;
+	background-position: 0px -130px;
+	position: relative;
+	top: -3px;
+}
+#EquipmentV4 .footer .left {
+	float: left;
+	text-align: left;
+	margin-left: 5px;
+	margin-top: 3px;
+}
+#EquipmentV4 .footer .right {
+	float: right;
+	text-align: right;
+	margin-right: 5px;
+	margin-top: 3px;
+}
+#EquipmentV4 .footer .view_status {
+	width: 9px;
+	height: 14px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}
+#EquipmentV4 .footer .show_equip {
+	width: 10px;
+	height: 12px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}
+#EquipmentV4 .footer .show_costume {
+	width: 10px;
+	height: 12px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}
+
+#EquipmentV4 .footer .switch_equip {
+	width: 40px;
+	height: 20px;
+	border: none;
+	position: relative;
+	top: -3px;
+}
+#EquipmentV4 .footer .remove_equip {
+	width: 40px;
+	height: 20px;
+	border: none;
+	position: relative;
+	top: -3px;
+}
+
+#lvlup_base {
+	z-index: 51;
+	position: absolute;
+	left: 0px;
+	bottom: 0px;
+	width: 43px;
+	height: 43px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}
+
+#EquipmentV4 #damageskin .damageskin-selector {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 280px;
+	margin: 0 auto;
+}
+
+#EquipmentV4 #damageskin .skin-option {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	width: 64px;
+	height: 92px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	border: none;
+	margin-top: 3px;
+}
+
+#EquipmentV4 #damageskin .skin-option span {
+	position: relative;
+	top: -9px;
+	font-weight: bold;
+	text-align: center;
+}
+
+#EquipmentV4 #damageskin .skin-option .icon {
+	width: 36px;
+	height: 36px;
+}
+
+#EquipmentV4 #damageskin .skin-wrapper {
+	width: 64px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 0;
+	padding: 0;
+}
+
+#EquipmentV4 #damageskin .skin-wrapper > div:first-child {
+	margin-top: 8px;
+}
+
+#EquipmentV4 #damageskin .skin-wrapper .label {
+	margin-top: 6px;
+	text-align: center;
+}
+
+#EquipmentV4 .motion-check {
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+	cursor: pointer;
+	width: 10px;
+	height: 12px;
+	margin-right: 4px;
+}
+
+#EquipmentV4 .item .grade {
+	position: relative;
+	width: 12px;
+	height: 12px;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	pointer-events: none;
+	z-index: 2;
+	top: 5px;
+}
+
+#EquipmentV4 #title .title-list {
+	height: 125px;
+	width: 280px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding: 8px 8px;
+	border: 1px solid #c0c0c0;
+	background-color: #f8f8f8;
+}
+
+#EquipmentV4 .title-option {
+	padding: 1px;
+	margin: 1px 0;
+	cursor: pointer;
+	background-color: transparent;
+	border: 1px solid transparent;
+	white-space: nowrap;
+	width: 100%;
+}
+
+#EquipmentV4 .title-option.selected {
+	background-color: #e0e0e0;
+	font-weight: bold;
+}
+
+#EquipmentV4 .title-option:hover {
+	background-color: #e0e0e0;
+}

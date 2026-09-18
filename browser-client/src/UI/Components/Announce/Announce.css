@@ -1,0 +1,8 @@
+:host {
+	top: 40px;
+	left: 0px;
+}
+
+#Announce canvas {
+	display: block;
+}

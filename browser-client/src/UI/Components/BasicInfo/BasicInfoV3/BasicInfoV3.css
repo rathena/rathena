@@ -1,0 +1,233 @@
+:host {
+	width: 220px;
+	height: 135px;
+	top: 0px;
+	left: 0px;
+}
+
+#BasicInfoV3 {
+	position: absolute;
+	width: 220px;
+	height: 135px;
+	font-size: 11px;
+	font-weight: bold;
+}
+#BasicInfoV3.small .large {
+	display: none;
+}
+#BasicInfoV3.large .small {
+	display: none;
+	border-radius: 5px;
+}
+#BasicInfoV3.small {
+	height: 53px;
+}
+#BasicInfoV3.large .bt_menu {
+	top: 135px;
+}
+#BasicInfoV3.small .bt_menu {
+	top: 53px;
+}
+
+#BasicInfoV3.large .buttons {
+	top: 144px;
+}
+#BasicInfoV3.small .buttons {
+	top: 62px;
+}
+
+#BasicInfoV3 .topbar .left {
+	position: absolute;
+	top: 3px;
+	left: 4px;
+	width: 11px;
+	height: 11px;
+	border: none;
+	background: none;
+}
+#BasicInfoV3 .topbar .right {
+	position: absolute;
+	top: 3px;
+	right: 2px;
+	width: 11px;
+	height: 11px;
+	border: none;
+	background: none;
+}
+
+/* LARGE */
+#BasicInfoV3 .large .title {
+	position: absolute;
+	top: 2px;
+	left: 18px;
+	text-shadow: 1px 1px white;
+}
+#BasicInfoV3 .large .name {
+	position: absolute;
+	left: 10px;
+	top: 20px;
+}
+#BasicInfoV3 .large .job {
+	position: absolute;
+	left: 10px;
+	top: 33px;
+}
+#BasicInfoV3 .large .hp_title {
+	position: absolute;
+	top: 50px;
+	left: 15px;
+}
+#BasicInfoV3 .large .sp_title {
+	position: absolute;
+	top: 65px;
+	left: 15px;
+}
+#BasicInfoV3 .large .hp_bar,
+#BasicInfoV3 .large .sp_bar {
+	position: absolute;
+	top: 53px;
+	left: 35px;
+	width: 135px;
+	height: 9px;
+	font-weight: normal;
+}
+#BasicInfoV3 .large .sp_bar {
+	top: 68px;
+}
+#BasicInfoV3 .large .hp_bar div,
+#BasicInfoV3 .large .sp_bar div {
+	width: 4px;
+	height: 9px;
+	float: left;
+}
+#BasicInfoV3 .large div.hp_bar_perc,
+#BasicInfoV3 .large div.sp_bar_perc {
+	text-align: center;
+	width: 127px;
+	position: absolute;
+	top: -1px;
+}
+#BasicInfoV3 .large .hp_perc {
+	position: absolute;
+	top: 50px;
+	right: 20px;
+}
+#BasicInfoV3 .large .sp_perc {
+	position: absolute;
+	top: 65px;
+	right: 20px;
+}
+#BasicInfoV3 .large .blvl {
+	position: absolute;
+	top: 86px;
+	left: 15px;
+}
+#BasicInfoV3 .large .jlvl {
+	position: absolute;
+	top: 97px;
+	left: 15px;
+}
+#BasicInfoV3 .large .bexp,
+#BasicInfoV3 .large .jexp {
+	position: absolute;
+	top: 89px;
+	left: 84px;
+	width: 110px;
+	height: 4px;
+	border: 1px solid #afafaf;
+	background-color: white;
+}
+#BasicInfoV3 .large .bexp div,
+#BasicInfoV3 .large .jexp div {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 0%;
+	height: 4px;
+	background-color: #4262a5;
+}
+#BasicInfoV3 .large .jexp {
+	top: 101px;
+}
+#BasicInfoV3 .large .extra {
+	position: absolute;
+	top: 119px;
+	right: -15px;
+	width: 100%;
+	padding-right: 20px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-align: right;
+	white-space: nowrap;
+}
+#BasicInfoV3 .buttons {
+	position: absolute;
+	left: 0px;
+	top: 9px;
+	width: 220px;
+	height: 184px;
+}
+#BasicInfoV3 .bt_menu {
+	position: absolute;
+	left: 2px;
+	width: 216px;
+	height: 9px;
+}
+#BasicInfoV3 .buttons:hover {
+}
+#BasicInfoV3 .buttons div {
+	float: left;
+	width: 36px;
+	height: 36px;
+	border: none;
+	margin: 0px;
+}
+#BasicInfoV3 .buttons .clear {
+	clear: both;
+}
+
+/* REDUCED */
+#BasicInfoV3 .small .line1 {
+	position: absolute;
+	top: 2px;
+	left: 18px;
+	text-shadow: 1px 1px white;
+	white-space: nowrap;
+}
+#BasicInfoV3 .small .line2 {
+	position: absolute;
+	top: 20px;
+	left: 10px;
+	white-space: nowrap;
+}
+#BasicInfoV3 .small .line3 {
+	position: absolute;
+	top: 36px;
+	left: 10px;
+	white-space: nowrap;
+}
+#BasicInfoV3 .toggle_btns {
+	border: none;
+	background-repeat: no-repeat;
+	background-color: rgba(0, 0, 0, 0);
+}
+
+#BasicInfoV3 .buttons div .name {
+	position: relative;
+	display: none;
+	z-index: 1;
+	top: -20px;
+	left: 0px;
+	background-color: rgba(0, 0, 0, 0.6);
+	text-shadow: 1px 1px black;
+	color: white;
+	padding: 5px;
+	white-space: nowrap;
+	font-size: 0.6rem;
+}
+#BasicInfoV3 .buttons div:hover .name {
+	display: table;
+}
+#BasicInfoV3 .buttons div .name {
+	display: none;
+}

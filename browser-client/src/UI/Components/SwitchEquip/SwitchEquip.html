@@ -1,0 +1,78 @@
+<div id="SwitchEquip">
+	<div class="switchoverlay"></div>
+	<div class="panel">
+		<div class="titlebar" data-text="2986"></div>
+		<table class="swapcontent" id="swapgeneral" data-background="swap_equipment/equipwin_bg2_change.bmp">
+			<tr>
+				<td class="swap_head_top col1"></td>
+				<td rowspan="6">
+					<!-- avoid applying css on td directly-->
+					<div class="col2 ammo_container">
+						<canvas width="55" height="125"></canvas>
+					</div>
+				</td>
+				<td class="swap_head_mid col3"></td>
+			</tr>
+			<tr>
+				<td class="swap_head_bottom col1"></td>
+				<td class="swap_armor col3"></td>
+			</tr>
+			<tr>
+				<td class="swap_weapon col1"></td>
+				<td class="swap_shield col3"></td>
+			</tr>
+			<tr>
+				<td class="swap_garment col1"></td>
+				<td class="swap_shoes col3"></td>
+			</tr>
+			<tr>
+				<td class="swap_accessory1 col1"></td>
+				<td class="swap_accessory2 col3"></td>
+			</tr>
+		</table>
+		<table class="swapcontent hide" id="swapcostume" data-background="swap_equipment/equipwin_special_change.bmp">
+			<tr>
+				<td class="swap_costume_head_top col1"></td>
+				<td rowspan="6">
+					<!-- avoid applying css on td directly-->
+					<div class="col2 ammo_container">
+						<canvas width="55" height="125"></canvas>
+					</div>
+				</td>
+				<td class="swap_costume_head_mid col3"></td>
+			</tr>
+			<tr>
+				<td class="swap_costume_head_bottom col1"></td>
+				<td class="swap_shadow_armor col3"></td>
+			</tr>
+			<tr>
+				<td class="swap_shadow_weapon col1"></td>
+				<td class="swap_shadow_shield col3"></td>
+			</tr>
+			<tr>
+				<td class="swap_shadow_garment col1"></td>
+				<td class="swap_shadow_shoes col3"></td>
+			</tr>
+			<tr>
+				<td class="swap_shadow_accessory1 col1"></td>
+				<td class="swap_shadow_accessory2 col3"></td>
+			</tr>
+		</table>
+	</div>
+	<div class="footer" id="equipment_footer">
+		<button
+			id="swap-button"
+			class="onswap"
+			data-text="3111"
+			data-background="swap_equipment/btn_change2_normal.bmp"
+			data-hover="swap_equipment/btn_change2_over.bmp"
+			data-press="swap_equipment/btn_change2_press.bmp"
+		></button>
+		<button
+			class="closeswap"
+			data-background="btn_cancel.bmp"
+			data-hover="btn_cancel_a.bmp"
+			data-press="btn_cancel_b.bmp"
+		></button>
+	</div>
+</div>

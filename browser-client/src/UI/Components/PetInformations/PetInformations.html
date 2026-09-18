@@ -1,0 +1,47 @@
+<div id="PetInformations">
+	<div class="titlebar" data-background="basic_interface/titlebar_mid.bmp">
+		<div class="left">
+			<span class="text" data-text="584">Pet Info</span>
+		</div>
+		<div class="right">
+			<button
+				class="base close"
+				data-background="basic_interface/sys_close_off.bmp"
+				data-hover="basic_interface/sys_close_on.bmp"
+			></button>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="content">
+		<div class="title_name">Name</div>
+		<input type="text" class="name" value="" />
+		<div class="title_level">Level</div>
+		<div class="level"></div>
+		<button
+			class="modify"
+			data-background="btn_edit.bmp"
+			data-hover="btn_edit_a.bmp"
+			data-down="btn_edit_b.bmp"
+		></button>
+
+		<div class="title_hunger">Hunger</div>
+		<div class="hunger"></div>
+		<div class="title_intimacy">Intimacy</div>
+		<div class="intimacy"></div>
+
+		<div class="title_accessory">Accessory</div>
+		<div class="accessory">Equipped</div>
+		<div class="feeding">
+			<span data-text="2577">Auto Feeding</span
+			><button class="pet_auto_feed" data-background="checkbox_0.bmp" data-preload="checkbox_1.bmp"></button>
+		</div>
+
+		<select class="command">
+			<option value="default">&lt; Command &gt;</option>
+			<option value="feed" data-text="592">Feed Pet</option>
+			<option value="action" data-text="593">Performance</option>
+			<option value="release" data-text="594">Return to Egg Shell</option>
+			<option value="unequip" data-text="595">Unequip Accessory</option>
+		</select>
+	</div>
+</div>

@@ -1,0 +1,11 @@
+.git
+client-local
+browser-client
+browser-assets
+.vs
+build
+cbuild
+log
+*.exe
+*.dll
+*.pdb

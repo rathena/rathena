@@ -1,0 +1,54 @@
+:host {
+	width: 300px;
+	height: 417px;
+	top: 100px;
+	left: 100px;
+}
+
+#CardIllustration {
+	position: absolute;
+	width: 300px;
+	height: 417px;
+}
+#CardIllustration .titlebar {
+	width: 100%;
+	height: 17px;
+	background-color: white;
+	background-repeat: repeat-x;
+	border-radius: 3px 3px 0px 0px;
+}
+#CardIllustration .titlebar .close {
+	width: 11px;
+	height: 11px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+#CardIllustration .titlebar .text {
+	text-shadow: 1px 1px white;
+	vertical-align: -2px;
+	white-space: nowrap; /* chrome bug */
+	display: inline-block;
+	width: 32px;
+	height: 13px;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+#CardIllustration .titlebar .left {
+	margin-left: 3px;
+	float: left;
+}
+#CardIllustration .titlebar .right {
+	float: right;
+	margin-right: 3px;
+}
+#CardIllustration .titlebar .clear {
+	clear: both;
+}
+
+#CardIllustration .content {
+	width: 300px;
+	height: 400px;
+}

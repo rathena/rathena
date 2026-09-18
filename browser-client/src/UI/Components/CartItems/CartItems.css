@@ -1,0 +1,156 @@
+:host {
+	top: 100px;
+	left: 100px;
+}
+
+#cartitems {
+	position: relative;
+}
+#cartitems table {
+	border-spacing: 0px;
+	display: inline-block;
+}
+
+#cartitems .titlebar {
+	width: 100%;
+	height: 17px;
+	background-color: white;
+	background-repeat: repeat-x;
+	border-radius: 3px 3px 0px 0px;
+}
+#cartitems .titlebar .base {
+	width: 11px;
+	height: 11px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+#cartitems .titlebar .text {
+	text-shadow: 1px 1px white;
+	vertical-align: -2px;
+	white-space: nowrap;
+	/* chrome bug */
+	display: inline-block;
+	width: 32px;
+	height: 13px;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+#cartitems .titlebar .left {
+	margin-left: 3px;
+	float: left;
+}
+#cartitems .titlebar .right {
+	float: right;
+	margin-right: 3px;
+}
+#cartitems .titlebar .clear {
+	clear: both;
+}
+
+#cartitems .container {
+	padding-left: 40px;
+	border-right: 1px solid #ccc;
+	background: white;
+}
+#cartitems .ff_bugfix {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+#cartitems .hide {
+	height: 100%;
+	width: 13px;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	background-color: white;
+}
+#cartitems .content {
+	overflow: auto;
+	width: 100%;
+	height: 100%;
+	min-height: 65px;
+	background-color: transparent;
+	background-repeat: repeat;
+	background-attachment: local;
+}
+
+#cartitems .content .item {
+	display: block;
+	width: 24px;
+	height: 24px;
+	margin: 4px 4px 4px 4px;
+	position: relative;
+	float: left;
+}
+#cartitems .content .item .icon {
+	width: 24px;
+	height: 24px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}
+#cartitems .overlay {
+	position: absolute;
+	display: none;
+	white-space: nowrap;
+	z-index: 900;
+	height: 13px;
+	padding: 5px;
+	background: rgba(0, 0, 0, 0.7);
+	color: white;
+	text-shadow: 1px 1px black;
+}
+#cartitems .overlay.grey {
+	color: #aaa;
+}
+#cartitems .content .item .amount {
+	position: relative;
+	bottom: 9px;
+	right: 0px;
+	text-align: right;
+	text-shadow: -1px -1px white;
+}
+
+#cartitems .footer {
+	width: 100%;
+	height: 27px;
+	background-repeat: repeat-x;
+	background-color: transparent;
+	position: relative;
+	border-right: 1px solid #ccc;
+}
+#cartitems .footer button {
+	position: absolute;
+	right: 0px;
+	bottom: 1px;
+	width: 13px;
+	height: 13px;
+	border: none;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+#cartitems .footer .cnt {
+	position: absolute;
+	left: 10px;
+	bottom: 6px;
+}
+#cartitems .footer .wt {
+	position: absolute;
+	left: 80px;
+	bottom: 6px;
+}
+
+#cartitems .content .item .grade {
+	position: absolute;
+	width: 12px;
+	height: 12px;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	pointer-events: none;
+	z-index: 2;
+	top: 12px;
+}

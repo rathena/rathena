@@ -1,0 +1,89 @@
+:host {
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 10000;
+	display: none;
+}
+
+#shortcut-selection {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: rgba(0, 0, 0, 0.95);
+	border: 2px solid #fff;
+	padding: 20px;
+	color: white;
+	min-width: 780px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+	border-radius: 8px;
+}
+
+#shortcut-selection h3 {
+	margin-top: 0;
+	margin-bottom: 10px;
+	text-align: center;
+}
+
+#shortcut-selection .tab-buttons {
+	display: flex;
+	gap: 5px;
+	margin-bottom: 10px;
+}
+
+#shortcut-selection .tab-btn {
+	padding: 5px 10px;
+	border: 1px solid #fff;
+	color: white;
+	cursor: pointer;
+	background: #666;
+	flex: 1;
+}
+
+#shortcut-selection .tab-btn.active {
+	background: #ff6600;
+}
+
+#shortcut-selection .shortcut-grid {
+	display: grid;
+	grid-template-columns: repeat(9, 1fr);
+	gap: 8px;
+	justify-content: center;
+	padding: 10px;
+	background: rgba(255, 255, 255, 0.05);
+	border-radius: 5px;
+}
+
+#shortcut-selection .slot-btn {
+	width: 75px;
+	height: 60px;
+	border: 2px solid #555;
+	background: #555;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: bold;
+	cursor: pointer;
+	color: white;
+	transition: all 0.1s;
+	border-radius: 5px;
+	text-align: center;
+	line-height: 1.2;
+	padding: 5px;
+	box-sizing: border-box;
+}
+
+#shortcut-selection .slot-btn.empty {
+	background: #222;
+}
+
+#shortcut-selection .slot-btn.selected {
+	background: #ff6600;
+	border-color: #fff;
+}
+
+#shortcut-selection .footer-instructions {
+	margin-top: 15px;
+	text-align: center;
+	opacity: 0.8;
+}

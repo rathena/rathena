@@ -1,0 +1,228 @@
+:host {
+	position: absolute;
+}
+
+#ReadMail {
+	width: 250px;
+	height: 330px;
+}
+
+#ReadMail .body {
+	width: 300px;
+	height: 400px;
+	position: relative;
+	background-repeat: no-repeat;
+	background-color: white;
+	border-radius: 6px;
+}
+#ReadMail .body .base {
+	width: 9px;
+	height: 7px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+#ReadMail .titlebar {
+	display: block;
+	width: 300px;
+	height: 16px;
+}
+
+#ReadMail .container {
+	width: 298px;
+	height: 385px;
+}
+
+#ReadMail .flex {
+	display: flex;
+}
+
+#ReadMail .flex_grid {
+	display: grid;
+}
+
+#ReadMail .text_title {
+	color: #a5978c;
+	font-weight: 600;
+}
+#ReadMail .text_sender {
+	color: #d8b091;
+}
+#ReadMail .title {
+	flex: 1;
+	display: flex;
+	align-items: end;
+	justify-content: center;
+	grid-column-start: 1;
+	grid-column-end: span col4-start;
+	grid-row-end: span 2;
+}
+#ReadMail .name_sender {
+	flex: 1;
+	display: flex;
+	align-items: end;
+	justify-content: right;
+	grid-column-start: 1;
+	grid-column-end: span col4-start;
+}
+#ReadMail .name_sender div {
+	margin-right: 5%;
+}
+
+#ReadMail .mail_body {
+	flex: 1;
+}
+
+#ReadMail .textarea_mail {
+	resize: none;
+	background-color: #00800000;
+	border: none;
+	height: 205px;
+	padding: initial;
+	width: 264px;
+	overflow: hidden;
+	margin-top: 5%;
+	margin-left: 7%;
+	color: #a37162;
+}
+
+#ReadMail .zeny_item {
+	flex: 1;
+	grid-column-start: 1;
+	grid-column-end: span col4-start;
+	grid-row-end: span 4;
+	display: flex;
+}
+#ReadMail .btn_return_reply_remove {
+	flex: 1;
+	grid-column-start: 1;
+	grid-column-end: span col4-start;
+	grid-row-end: span 2;
+	display: flex;
+	justify-content: end;
+}
+#ReadMail .container_return_reply_remove {
+	flex: 1;
+	margin-right: 8%;
+	text-align: right;
+	position: absolute;
+}
+
+#ReadMail .zeny_item_container {
+	flex: 1;
+	position: relative;
+}
+#ReadMail .zeny_item_infor {
+	width: 48%;
+	height: 53%;
+	top: 9px;
+	left: 120px;
+	position: absolute;
+	flex: 1;
+	margin-left: 5%;
+	display: flex;
+}
+#ReadMail .zeny_item_infor_box {
+	border: 2px solid #f1e2cf;
+	width: 48%;
+	height: 53%;
+	top: 9px;
+	left: 130px;
+	position: absolute;
+	display: none;
+	pointer-events: none;
+}
+
+#ReadMail .read_mail_btn {
+	width: 43px;
+	height: 21px;
+	border: none;
+}
+#ReadMail .body .text {
+	/* text-shadow: 1px 1px white; */
+	vertical-align: -2px;
+	white-space: nowrap;
+	display: inline-block;
+	width: 32px;
+	height: 13px;
+}
+#ReadMail .body .left {
+	margin-left: 25px;
+	float: left;
+}
+#ReadMail .body .right {
+	float: right;
+	margin-right: 3px;
+}
+#ReadMail .body .clear {
+	clear: both;
+}
+#ReadMail .block_item {
+	margin-left: 30%;
+}
+#ReadMail .container_item {
+	float: left;
+	width: 24px;
+	height: 23px;
+	margin-top: 2px;
+	margin-left: 2px;
+	margin-bottom: 6px;
+}
+#ReadMail .container_item .overlay {
+	pointer-events: none;
+	position: absolute;
+	display: none;
+	white-space: nowrap;
+	z-index: 900;
+	height: 13px;
+	padding: 5px;
+	background: rgba(0, 0, 0, 0.7);
+	color: white;
+	text-shadow: 1px 1px black;
+}
+#ReadMail .container_item .overlay.grey {
+	pointer-events: none;
+	color: #aaa;
+}
+
+#ReadMail .container_item .item {
+	display: block;
+	width: 24px;
+	height: 24px;
+	position: relative;
+	float: left;
+}
+#ReadMail .container_item .item .icon {
+	width: 24px;
+	height: 24px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}
+#ReadMail .container_item .item .amount {
+	position: relative;
+	bottom: 9px;
+	right: 0px;
+	text-align: right;
+	text-shadow: -1px -1px white;
+}
+
+#ReadMail .block_zeny_item {
+	flex: 1;
+	margin-top: 4%;
+	margin-left: 5%;
+	display: flex;
+}
+
+#ReadMail .input_zeny_amt {
+	background-color: #00800000;
+	border: none;
+	height: 13px;
+	width: 64px;
+	margin-top: 21%;
+}
+#Mail .block_zeny {
+	margin-top: 4%;
+	margin-left: 1%;
+}

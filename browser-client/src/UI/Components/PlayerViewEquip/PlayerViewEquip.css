@@ -1,0 +1,256 @@
+:host {
+	width: 280px;
+	top: 200px;
+	left: 480px;
+}
+
+#PlayerViewEquip {
+	position: absolute;
+	width: 280px;
+}
+
+#PlayerViewEquip .clear {
+	clear: both;
+}
+
+#PlayerViewEquip .titlebar {
+	width: 280px;
+	height: 17px;
+	background-color: white;
+	background-repeat: repeat-x;
+	border-radius: 3px 3px 0px 0px;
+}
+#PlayerViewEquip .titlebar .base {
+	width: 11px;
+	height: 11px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+#PlayerViewEquip .titlebar .PlayerName {
+	text-shadow: 1px 1px white;
+	vertical-align: -2px;
+	white-space: nowrap;
+	display: inline-block;
+	width: 150px;
+	height: 13px;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+#PlayerViewEquip .titlebar .left {
+	margin-left: 3px;
+	float: left;
+}
+#PlayerViewEquip .titlebar .right {
+	float: right;
+	margin-right: 3px;
+}
+#PlayerViewEquip .titlebar .clear {
+	clear: both;
+}
+
+#PlayerViewEquip .vieweqtab-manager {
+	position: relative;
+	width: inherit;
+	background-color: white;
+	height: 15px;
+	display: flex;
+}
+
+#PlayerViewEquip .vieweqtab a {
+	width: 60px;
+	height: 100%;
+	color: #42454a;
+	border: 1px solid #c9c3ba;
+	border-bottom: none;
+	text-decoration: none;
+	display: inline-block;
+	vertical-align: bottom;
+	border-radius: 3px 3px 0 0;
+	text-align: center;
+}
+#PlayerViewEquip .vieweqtab a.selected {
+	color: #000;
+	font-weight: bold;
+	border-bottom: 1px solid white;
+	position: relative;
+	z-index: 100;
+	background-color: white;
+}
+#PlayerViewEquip .vieweqtab a.selected:after {
+	content: '';
+	display: block;
+	height: 1px;
+	width: 1px;
+	position: absolute;
+	bottom: -1px;
+	left: -1px;
+}
+
+#PlayerViewEquip .panel {
+	background-color: white;
+	border-top: 1px solid gray;
+	height: 130px;
+}
+#PlayerViewEquip table.vieweqcontent {
+	width: 280px;
+	height: 130px;
+	border-spacing: 0;
+}
+#PlayerViewEquip table.vieweqcontent.hide {
+	display: none;
+}
+#PlayerViewEquip .vieweqcontent {
+	display: inline-block;
+	width: 280px;
+	height: 130px;
+	border-spacing: 0;
+}
+#PlayerViewEquip .col1,
+#PlayerViewEquip .col3 {
+	width: 115px;
+	height: 24px;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}
+#PlayerViewEquip .col1 {
+	background-position: 5% 50%;
+	min-width: 110px;
+}
+#PlayerViewEquip .col3 {
+	background-position: 95% 50%;
+	min-width: 110px;
+}
+
+#PlayerViewEquip .overlay {
+	position: absolute;
+	display: none;
+	white-space: nowrap;
+	z-index: 900;
+	height: 13px;
+	padding: 5px;
+	background: rgba(0, 0, 0, 0.7);
+	color: white;
+	text-shadow: 1px 1px black;
+}
+
+#PlayerViewEquip .item button {
+	width: 24px;
+	height: 24px;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	border: none;
+}
+#PlayerViewEquip .item span {
+	width: 80px;
+	height: 24px;
+	display: inline-block;
+	line-height: 12px;
+	word-break: break-all;
+	overflow: hidden;
+	text-shadow: 1px 1px white;
+}
+
+#PlayerViewEquip .col3 .item button,
+#PlayerViewEquip .col3 .item span {
+	float: right;
+}
+#PlayerViewEquip .col1 .item button,
+#PlayerViewEquip .col1 .item span {
+	float: left;
+}
+#PlayerViewEquip .col1 .item {
+	padding-left: 4px;
+}
+#PlayerViewEquip .col3 .item {
+	padding-right: 4px;
+}
+#PlayerViewEquip .col1 .item .itemName {
+	display: flex;
+	align-items: center;
+}
+#PlayerViewEquip .col3 .item .itemName {
+	display: flex;
+	align-items: center;
+}
+
+#PlayerViewEquip .ammo_container {
+	position: relative;
+}
+#PlayerViewEquip .ammo {
+	position: absolute;
+	top: 30px;
+}
+#PlayerViewEquip .ammo .item {
+	text-align: center;
+}
+#PlayerViewEquip .ammo .item span {
+	width: 45px;
+}
+#PlayerViewEquip .cartitems {
+	position: absolute;
+	top: 65px;
+	left: 14px;
+	width: 36px;
+	height: 36px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	border: none;
+	display: none;
+}
+#PlayerViewEquip .removeOption {
+	position: absolute;
+	top: 90px;
+	left: 12px;
+	width: 36px;
+	height: 36px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	border: none;
+	display: none;
+}
+
+#PlayerViewEquip .footer {
+	height: 20px;
+	border-bottom: 1px solid #c0c0c0;
+}
+#PlayerViewEquip .footer .left {
+	float: left;
+	text-align: left;
+	margin-left: 5px;
+	margin-top: 3px;
+}
+#PlayerViewEquip .footer .right {
+	float: right;
+	text-align: right;
+	margin-right: 5px;
+	margin-top: 3px;
+}
+#PlayerViewEquip .footer .view_status {
+	width: 9px;
+	height: 14px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}
+#PlayerViewEquip .footer .show_equip {
+	width: 10px;
+	height: 12px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}
+
+#lvlup_base {
+	z-index: 51;
+	position: absolute;
+	left: 0px;
+	bottom: 0px;
+	width: 43px;
+	height: 43px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}

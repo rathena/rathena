@@ -1,0 +1,34 @@
+name: 'Custom CodeQL Config'
+version: 2.0.0
+
+queries:
+    - uses: security-extended
+
+query-filters:
+    - exclude:
+          id:
+              - js/redundant-assignment
+paths-ignore:
+    - src/Vendors/**
+    - applications/tools/**
+
+    # Docs
+    - docs/**
+    - '**/*.md'
+
+    # Editor/linter/config meta
+    - .vscode/**
+    - .gitattributes
+    - .editorconfig
+    - .eslintignore
+    - .eslintrc.js
+
+    # Binary asset files
+    - '**/*.bmp'
+    - '**/*.png'
+    - '**/*.jpg'
+    - '**/*.gif'
+    - '**/*.webp'
+    - '**/*.svg'
+    - '**/*.ico'
+    - '**/*.tga'

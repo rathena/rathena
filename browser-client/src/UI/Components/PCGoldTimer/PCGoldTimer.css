@@ -1,0 +1,36 @@
+:host {
+	right: 250px;
+	top: 10px;
+	width: 54px;
+	height: 49px;
+}
+
+#PCGoldTimer {
+	position: absolute;
+	width: 54px;
+	height: 49px;
+}
+
+#PCGoldTimer .container {
+	width: 54px;
+	height: 49px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	color: white;
+	font-weight: 1000;
+	-webkit-text-stroke: 0.5px;
+	-webkit-text-stroke-color: black;
+}
+
+#PCGoldTimer .timer-text-value {
+	position: absolute;
+	top: 12px;
+	left: 7px;
+}
+
+#PCGoldTimer .total-points-value {
+	position: absolute;
+	bottom: 1px;
+	right: 5px;
+}

@@ -1,0 +1,174 @@
+<div id="intro">
+	<div class="intro">
+		<!-- Loading overlay -->
+		<div class="overlay loading" style="display: none">
+			<div class="loading-content">
+				<div class="loading-spinner"></div>
+				<p class="loading-text">
+					<span style="--i: 0">L</span><span style="--i: 1">o</span><span style="--i: 2">a</span
+					><span style="--i: 3">d</span><span style="--i: 4">i</span><span style="--i: 5">n</span
+					><span style="--i: 6">g</span><span style="--i: 7">.</span><span style="--i: 8">.</span
+					><span style="--i: 9">.</span>
+				</p>
+			</div>
+		</div>
+
+		<!-- About overlay -->
+		<div class="overlay about" style="display: none">
+			<div class="about-content">
+				<div class="emblem small-emblem">
+					<div class="emblem-ring"></div>
+					<span class="emblem-icon">&#x2694;&#xFE0F;</span>
+				</div>
+				<h1 class="about-title">roBrowserLegacy</h1>
+				<h2 class="about-subtitle">Open Source Ragnarok Online Web Client</h2>
+				<div class="ornament">
+					<div class="ornament-line"></div>
+					<div class="ornament-dot"></div>
+					<div class="ornament-diamond"></div>
+					<div class="ornament-dot"></div>
+					<div class="ornament-line"></div>
+				</div>
+				<table class="info">
+					<tr>
+						<td>Author:</td>
+						<td>Vincent Thibault</td>
+					</tr>
+					<tr>
+						<td>Site:</td>
+						<td><a href="http://www.robrowser.com/" target="_blank">robrowser.com</a></td>
+					</tr>
+					<tr>
+						<td>Source:</td>
+						<td>
+							<a href="https://github.com/MrAntares/roBrowserLegacy" target="_blank"
+								>github.com/MrAntares/roBrowserLegacy</a
+							>
+						</td>
+					</tr>
+				</table>
+				<div class="concept">
+					<p>
+						roBrowser is an open source project based on the game Ragnarok Online.<br />It's not affiliated
+						in any way with Gravity.
+					</p>
+					<p>
+						The concept is to reproduce the game using web technologies (HTML5, Javascript, WebGL) to bring
+						it to Web Browsers.
+					</p>
+					<p>Cross-platform: runs on Windows, Linux, macOS, and any device with WebGL support.</p>
+				</div>
+				<p class="about-hint">Click anywhere to close</p>
+			</div>
+		</div>
+
+		<!-- Settings overlay -->
+		<div class="overlay settings" style="display: none">
+			<div class="settings-content">
+				<h1 class="settings-title">&#x2699; Settings</h1>
+
+				<div class="section-header"><span>Window</span></div>
+				<table class="screen">
+					<tr class="resolution">
+						<td>Screen Resolution</td>
+						<td colspan="2">
+							<select class="screensize">
+								<option value="640x480">640 x 480</option>
+								<option value="800x600">800 x 600</option>
+								<option value="1024x768">1024 x 768</option>
+								<option value="1280x800">1280 x 800</option>
+								<option value="1400x900">1400 x 900</option>
+								<option value="1680x1050">1680 x 1050</option>
+								<option value="full">Full Screen</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Resolution Details</td>
+						<td><input class="quality" type="range" value="100" max="100" min="25" step="25" /></td>
+						<td class="quality_result">100%</td>
+					</tr>
+					<tr>
+						<td>Cursor</td>
+						<td>
+							<label><input class="cursor" type="checkbox" /> Show official cursor</label>
+						</td>
+					</tr>
+				</table>
+
+				<div class="section-header"><span>Full Client</span></div>
+				<table class="screen">
+					<tr>
+						<td>
+							<label><input class="save" type="checkbox" /> Save Files</label>
+						</td>
+						<td><button class="clean">Clean cache</button> <span class="clean-status"></span></td>
+					</tr>
+				</table>
+
+				<div class="section-header"><span>Sound</span></div>
+				<table class="sound">
+					<tr>
+						<td>BGM</td>
+						<td><input class="bgmvol" type="range" value="50" max="100" min="0" step="25" /></td>
+						<td class="bgmvol_result">50%</td>
+					</tr>
+					<tr>
+						<td>Sound</td>
+						<td><input class="soundvol" type="range" value="50" max="100" min="0" step="25" /></td>
+						<td class="soundvol_result">50%</td>
+					</tr>
+				</table>
+
+				<div class="serveredit">
+					<div class="section-header"><span>Server List</span></div>
+					<dl>
+						<dt>
+							<input class="radio serverdef" type="radio" value="serverfile" name="server" />
+							<span>Using clientinfo.xml file stored in my FullClient</span>
+						</dt>
+						<dd>data / <input type="text" value="clientinfo.xml" class="clientinfo" /></dd>
+						<dt>
+							<input class="radio serverdef" type="radio" value="serverlist" name="server" />
+							<span>Using servers from the current list:</span>
+						</dt>
+						<dd>
+							<div class="servercontainer">
+								<table class="serverlist">
+									<thead>
+										<tr>
+											<td width="22%">Name</td>
+											<td width="25%">Address</td>
+											<td width="12%">Version</td>
+											<td width="15%">Langtype</td>
+											<td width="22%">Packet Ver</td>
+											<td width="10px"></td>
+										</tr>
+									</thead>
+									<tbody class="servers"></tbody>
+								</table>
+							</div>
+							<button class="btn_add">+ Add Server</button>
+							<div class="clear"></div>
+						</dd>
+					</dl>
+				</div>
+
+				<button class="btn_save">SAVE SETTINGS</button>
+			</div>
+		</div>
+
+		<!-- Main UI elements -->
+		<button class="btn_about">ℹ</button>
+		<div class="ribbon"><span>UNOFFICIAL</span></div>
+		<div class="drop-zone">
+			<div class="drop-zone-icon">📂</div>
+			<div class="drop-zone-text"><strong>Drop GRF / data files here</strong><br />or click to browse</div>
+		</div>
+		<div class="msg"></div>
+		<input type="file" multiple="multiple" directory="" webkitDirectory="" />
+		<button class="btn_play">START NOW</button>
+		<button class="btn_settings">⚙</button>
+		<canvas width="800" height="600"></canvas>
+	</div>
+</div>

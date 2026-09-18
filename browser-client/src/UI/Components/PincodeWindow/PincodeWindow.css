@@ -1,0 +1,239 @@
+:host {
+	width: 540px;
+	height: 365px;
+	top: 50%;
+	left: 50%;
+}
+
+#Pincodewindow {
+	position: absolute;
+	width: 540px;
+}
+
+#Pincodewindow .clear {
+	clear: both;
+}
+
+#Pincodewindow .titlebar {
+	width: 540px;
+	height: 17px;
+	background-color: white;
+	background-repeat: repeat-x;
+	border-radius: 3px 3px 0px 0px;
+}
+
+#Pincodewindow .titlebar .base {
+	width: 11px;
+	height: 11px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+
+#Pincodewindow .titlebar .text {
+	text-shadow: 1px 1px white;
+	vertical-align: -2px;
+	white-space: nowrap;
+	display: inline-block;
+	width: 32px;
+	height: 13px;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+#Pincodewindow .titlebar .left {
+	margin-left: 3px;
+	float: left;
+}
+
+#Pincodewindow .titlebar .clear {
+	clear: both;
+}
+
+#Pincodewindow .panel {
+	background-color: white;
+	width: 540px;
+	height: 320px;
+}
+
+#Pincodewindow .panel .txtlabel {
+	position: absolute;
+	text-shadow: 1px 1px white;
+	white-space: nowrap;
+	width: 32px;
+	height: 13px;
+}
+
+#Pincodewindow .panel .txtlabel.text1 {
+	top: 27px;
+	left: 200px;
+}
+
+#Pincodewindow .panel .txtlabel.text2 {
+	top: 45px;
+	left: 200px;
+}
+
+#Pincodewindow .panel .txtlabel.pwd {
+	top: 75px;
+	left: 412px;
+}
+
+#Pincodewindow .panel .txtlabel.newpwd {
+	top: 115px;
+	left: 412px;
+}
+
+#Pincodewindow .panel .txtlabel.checkpwd {
+	top: 155px;
+	left: 412px;
+}
+
+#Pincodewindow .panel .pass {
+	top: 90px;
+	left: 412px;
+	position: absolute;
+	width: 100px;
+}
+
+#Pincodewindow .panel .newpass {
+	top: 130px;
+	left: 412px;
+	position: absolute;
+	width: 100px;
+}
+
+#Pincodewindow .panel .checkpass {
+	top: 170px;
+	left: 412px;
+	position: absolute;
+	width: 100px;
+}
+
+#Pincodewindow .panel .btn {
+	width: 60px;
+	height: 60px;
+	border: 0;
+	position: absolute;
+	background: none;
+}
+
+#Pincodewindow .panel .btn2 {
+	width: 100px;
+	height: 20px;
+	border: 0;
+	position: absolute;
+	background: none;
+}
+
+#Pincodewindow .panel .numReset {
+	position: absolute;
+	width: 119px;
+	height: 60px;
+	top: 257px;
+	left: 280px;
+	border: 0;
+	background: none;
+}
+
+#Pincodewindow .panel .btn.num1 {
+	top: 77px;
+	left: 220px;
+}
+
+#Pincodewindow .panel .btn.num2 {
+	top: 77px;
+	left: 280px;
+}
+
+#Pincodewindow .panel .btn.num3 {
+	top: 77px;
+	left: 340px;
+}
+
+#Pincodewindow .panel .btn.num4 {
+	top: 137px;
+	left: 220px;
+}
+
+#Pincodewindow .panel .btn.num5 {
+	top: 137px;
+	left: 280px;
+}
+
+#Pincodewindow .panel .btn.num6 {
+	top: 137px;
+	left: 340px;
+}
+
+#Pincodewindow .panel .btn.num7 {
+	top: 197px;
+	left: 220px;
+}
+
+#Pincodewindow .panel .btn.num8 {
+	top: 197px;
+	left: 280px;
+}
+
+#Pincodewindow .panel .btn.num9 {
+	top: 197px;
+	left: 340px;
+}
+
+#Pincodewindow .panel .btn.num0 {
+	top: 257px;
+	left: 220px;
+}
+
+#Pincodewindow .panel .btn2.ok {
+	top: 200px;
+	left: 412px;
+}
+
+#Pincodewindow .panel .btn2.verify {
+	top: 200px;
+	left: 412px;
+}
+
+#Pincodewindow .panel .btn2.next {
+	top: 200px;
+	left: 412px;
+}
+
+#Pincodewindow .panel .btn2.change {
+	top: 225px;
+	left: 412px;
+}
+
+#Pincodewindow .panel .btn2.unused {
+	top: 250px;
+	left: 412px;
+}
+
+#Pincodewindow .panel .btn2.cancel {
+	top: 275px;
+	left: 412px;
+}
+
+#Pincodewindow .footer {
+	width: 100%;
+	height: 27px;
+	background-repeat: repeat-x;
+	background-color: transparent;
+	position: relative;
+}
+
+/* Fix: global white text inheritance */
+#Pincodewindow .titlebar .text {
+    color: #3f4d70;
+}
+
+#Pincodewindow .panel .txtlabel {
+    color: #3f4d70;
+}
+
+#Pincodewindow .panel input {
+    color: #222;
+}

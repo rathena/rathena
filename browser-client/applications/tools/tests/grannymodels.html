@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>roBrowser — Granny Model (.gr2) Tester</title>
+</head>
+<body>
+  <script src="../../shared/importmap.js" data-project-root-split="/applications/"></script>
+
+  <script type="module">
+    window.ROConfig = { servers: [{ packetver: 0 }], packetver: 0 };
+
+    import FileTester from './FileTester.js';
+    import GR2Loader from 'Loaders/GR2Loader.js';
+
+    const ft = new FileTester('gr2', async data => {
+      await GR2Loader.ready();
+      const model = new GR2Loader(data);
+      // Touch the decoded outputs so a decode regression surfaces as a tester failure.
+      void model.meshes.length;
+      void model.boneCount;
+    });
+
+    ft.start();
+  </script>
+</body>
+</html>

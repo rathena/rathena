@@ -1,0 +1,206 @@
+:host {
+	top: 200px;
+	left: 200px;
+}
+
+#Quest {
+	width: 381px;
+	height: 466px;
+}
+
+#Quest .titlebar {
+	width: 100%;
+	height: 100%;
+}
+
+#Quest .quest-top-panel {
+	float: left;
+	width: 381px;
+	height: 18px;
+	display: flex;
+}
+
+#Quest .quest-top-panel .quest-top-panel-text {
+	margin-left: 45px;
+	margin-top: 2px;
+}
+
+#Quest .quest-left-panel {
+	float: left;
+	width: 30px;
+	height: 420px;
+}
+
+#Quest .quest-left-panel .quest-menu {
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+#Quest .quest-left-panel .quest-menu .quest-menu-item {
+	height: 100px;
+	width: 30px;
+}
+
+#Quest .quest-right-panel {
+	float: left;
+	width: 341px;
+	height: 420px;
+	display: block;
+	overflow: auto;
+}
+
+#Quest .quest-right-panel .quest-list {
+	list-style: none;
+	margin: 10px;
+	padding: 0px;
+}
+
+#Quest .quest-right-panel .quest-list .quest-item {
+	list-style: none;
+	width: 330px;
+	height: 42px;
+	margin-top: 2px;
+}
+
+#Quest .quest-right-panel .quest-list .quest-item .quest-item-icon {
+	float: left;
+	width: 42px;
+	height: 42px;
+}
+
+#Quest .quest-right-panel .quest-list .quest-item .quest-item-icon .quest-item-icon-image {
+	width: 26px;
+	height: 29px;
+	margin: 5px;
+}
+
+#Quest .quest-right-panel .quest-list .quest-item .quest-item-icon .quest-item-icon-image .quest-item-icon-image-text {
+	visibility: hidden;
+}
+
+#Quest .quest-right-panel .quest-list .quest-item .quest-item-title {
+	float: left;
+	width: 254px;
+	height: 21px;
+	display: flex;
+}
+
+#Quest .quest-right-panel .quest-list .quest-item .quest-item-title .quest-item-title-text {
+	margin: 5px;
+	font-weight: bold;
+	color: rgb(0, 0, 145);
+}
+
+#Quest .quest-right-panel .quest-list .quest-item .quest-item-toggle {
+	float: left;
+	width: 30px;
+	height: 21px;
+}
+
+#Quest .quest-right-panel .quest-list .quest-item .quest-item-toggle .quest-item-toggle-image {
+	width: 20px;
+	height: 17px;
+	margin: 3px;
+	border: 0;
+}
+
+#Quest
+	.quest-right-panel
+	.quest-list
+	.quest-item
+	.quest-item-toggle
+	.quest-item-toggle-image
+	.quest-item-toggle-image-text {
+	visibility: hidden;
+}
+
+#Quest .quest-right-panel .quest-list .quest-item .quest-item-display {
+	float: left;
+	width: 30px;
+	height: 21px;
+}
+
+#Quest .quest-right-panel .quest-list .quest-item .quest-item-display .quest-item-display-image {
+	width: 14px;
+	height: 14px;
+	margin: 3px;
+	border: 0;
+}
+
+#Quest
+	.quest-right-panel
+	.quest-list
+	.quest-item
+	.quest-item-display
+	.quest-item-display-image
+	.quest-item-display-image-text {
+	visibility: hidden;
+}
+
+#Quest .quest-right-panel .quest-list .quest-item .quest-item-summary {
+	float: left;
+	width: 254px;
+	height: 21px;
+	display: flex;
+}
+
+#Quest .quest-right-panel .quest-list .quest-item .quest-item-summary .quest-item-summary-text {
+	margin: 5px;
+}
+
+#Quest .quest-bottom-panel {
+	float: left;
+	width: 381px;
+	height: 25px;
+}
+
+#Quest .quest-bottom-panel .toggle-quest-list {
+	float: left;
+	width: 50px;
+	height: 25px;
+}
+
+#Quest .quest-bottom-panel .toggle-quest-list .toggle-quest-image {
+	width: 10px;
+	height: 10px;
+	margin-left: 40px;
+	margin-top: 5px;
+	border: 0;
+}
+
+#Quest .quest-bottom-panel .toggle-quest-text {
+	width: 280px;
+	height: 25px;
+	float: left;
+	display: flex;
+}
+
+#Quest .quest-bottom-panel .toggle-quest-text span {
+	margin: 4px;
+}
+
+#Quest .quest-bottom-panel .close-quest-container {
+	float: left;
+	width: 51px;
+	height: 25px;
+}
+
+#Quest .quest-bottom-panel .close-quest-container .close-quest-container-btn {
+	margin-top: 5px;
+	width: 42px;
+	height: 20px;
+	bottom: 4px;
+}
+
+.quest-info-container {
+	width: 342px;
+	height: 412px;
+}
+
+#active-quest-list,
+#feature-quest-list,
+#inactive-quest-list,
+#cooldown-quest-list {
+	display: none;
+}

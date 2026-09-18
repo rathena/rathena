@@ -1,0 +1,267 @@
+<div id="WinStats">
+	<div class="titlebar" data-background="basic_interface/titlebar_mid.bmp">
+		<div class="left">
+			<button
+				class="base"
+				data-background="basic_interface/sys_base_off.bmp"
+				data-hover="basic_interface/sys_base_on.bmp"
+			></button>
+			<span class="text" data-text="105">Status</span>
+		</div>
+		<div class="right">
+			<button
+				class="base mini"
+				data-background="basic_interface/sys_mini_off.bmp"
+				data-hover="basic_interface/sys_mini_on.bmp"
+			></button>
+			<button
+				class="base close"
+				data-background="basic_interface/sys_close_off.bmp"
+				data-hover="basic_interface/sys_close_on.bmp"
+			></button>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="panel">
+		<div class="common_stats" data-background="statuswnd/w_statwin_bg.bmp">
+			<div class="status_panel_tooltip">
+				<div class="status desc"><span class="hover" data-text="3112"></span></div>
+				<div class="status desc"><span class="hover" data-text="3113"></span></div>
+				<div class="status desc"><span class="hover" data-text="3114"></span></div>
+				<div class="status desc"><span class="hover" data-text="3115"></span></div>
+				<div class="status desc"><span class="hover" data-text="3116"></span></div>
+				<div class="status desc"><span class="hover" data-text="3117"></span></div>
+			</div>
+			<div class="column1_tooltip">
+				<div class="column1 desc"><span class="hover" data-text="3118"></span></div>
+				<div class="column1 desc"><span class="hover" data-text="3124"></span></div>
+				<div class="column1 desc"><span class="hover" data-text="3120"></span></div>
+				<div class="column1 desc"><span class="hover" data-text="3121"></span></div>
+				<div class="column1 desc"><span class="hover" data-text="3123"></span></div>
+				<div class="column1 desc"><span class="hover" data-text="3122"></span></div>
+			</div>
+			<div class="column2_tooltip">
+				<div class="column2 desc"><span class="hover" data-text="3119"></span></div>
+				<div class="column2 desc"><span class="hover" data-text="3125"></span></div>
+				<div class="column2 desc"><span class="hover" data-text="3126"></span></div>
+				<div class="column2 desc"><span class="hover" data-text="3127"></span></div>
+			</div>
+			<div class="group stat_labels">
+				<div>STR</div>
+				<div>AGI</div>
+				<div>VIT</div>
+				<div>INT</div>
+				<div>DEX</div>
+				<div>LUK</div>
+			</div>
+
+			<div class="group column1_labels">
+				<div>ATK</div>
+				<div>MATK</div>
+				<div>HIT</div>
+				<div>CRIT</div>
+			</div>
+
+			<div class="group column2_labels">
+				<div>DEF</div>
+				<div>MDEF</div>
+				<div>FLEE</div>
+				<div>ASPD</div>
+				<div>POINT</div>
+				<div>GUILD</div>
+			</div>
+			<div class="group stats">
+				<div class="str">1</div>
+				<div class="agi">1</div>
+				<div class="vit">1</div>
+				<div class="int">1</div>
+				<div class="dex">1</div>
+				<div class="luk">1</div>
+			</div>
+			<div class="group bonus">
+				<div class="str"></div>
+				<div class="agi"></div>
+				<div class="vit"></div>
+				<div class="int"></div>
+				<div class="dex"></div>
+				<div class="luk"></div>
+			</div>
+			<div class="group up">
+				<button
+					class="str"
+					data-background="basic_interface/arw_right.bmp"
+					data-down="basic_interface/arw_right_on.bmp"
+				></button>
+				<button
+					class="agi"
+					data-background="basic_interface/arw_right.bmp"
+					data-down="basic_interface/arw_right_on.bmp"
+				></button>
+				<button
+					class="vit"
+					data-background="basic_interface/arw_right.bmp"
+					data-down="basic_interface/arw_right_on.bmp"
+				></button>
+				<button
+					class="int"
+					data-background="basic_interface/arw_right.bmp"
+					data-down="basic_interface/arw_right_on.bmp"
+				></button>
+				<button
+					class="dex"
+					data-background="basic_interface/arw_right.bmp"
+					data-down="basic_interface/arw_right_on.bmp"
+				></button>
+				<button
+					class="luk"
+					data-background="basic_interface/arw_right.bmp"
+					data-down="basic_interface/arw_right_on.bmp"
+				></button>
+			</div>
+			<div class="group requirements">
+				<div class="str">2</div>
+				<div class="agi">2</div>
+				<div class="vit">2</div>
+				<div class="int">2</div>
+				<div class="dex">2</div>
+				<div class="luk">2</div>
+			</div>
+			<div class="group column1">
+				<div><span class="atak">0</span> <span class="atak2">+ 0</span></div>
+				<div><span class="matak">0</span> <span class="matak2">+ 0</span></div>
+				<div class="hit">200</div>
+				<div class="critical">0</div>
+			</div>
+			<div class="group column2">
+				<div><span class="def">0</span> <span class="def2">+ 0</span></div>
+				<div><span class="mdef">0</span> <span class="mdef2">+ 0</span></div>
+				<div><span class="flee">0</span> <span class="flee2">+ 0</span></div>
+				<div class="aspd">160</div>
+				<div class="statuspoint">0</div>
+				<div class="guildname"></div>
+			</div>
+		</div>
+		<div class="footer" id="winstat_footer">
+			<div class="left">
+				<button
+					class="view_traits"
+					data-background="statuswnd/expand_on_normal.bmp"
+					data-preload="statuswnd/expand_on_press.bmp"
+				></button>
+				<span class="trait_text" data-text="3613"></span>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="traits_component">
+			<div class="traits_panel" data-background="statuswnd/w_ex_statwin_bg.bmp">
+				<div class="trait_panel_tooltip">
+					<div class="traits desc"><span class="hover" data-text="3614"></span></div>
+					<div class="traits desc"><span class="hover" data-text="3615"></span></div>
+					<div class="traits desc"><span class="hover" data-text="3616"></span></div>
+					<div class="traits desc"><span class="hover" data-text="3617"></span></div>
+					<div class="traits desc"><span class="hover" data-text="3618"></span></div>
+					<div class="traits desc"><span class="hover" data-text="3619"></span></div>
+				</div>
+				<div class="t_column1_tooltip">
+					<div class="t_column1 desc"><span class="hover" data-text="3620"></span></div>
+					<div class="t_column1 desc"><span class="hover" data-text="3621"></span></div>
+					<div class="t_column1 desc"><span class="hover" data-text="3624"></span></div>
+					<div class="t_column1 desc"><span class="hover" data-text="3625"></span></div>
+					<div class="t_column1 desc"><span class="hover" data-text="3626"></span></div>
+				</div>
+				<div class="t_column2_tooltip">
+					<div class="t_column2 desc"><span class="hover" data-text="3622"></span></div>
+					<div class="t_column2 desc"><span class="hover" data-text="3623"></span></div>
+				</div>
+				<div class="trait trait_labels">
+					<div>POW</div>
+					<div>STA</div>
+					<div>WIS</div>
+					<div>SPL</div>
+					<div>CON</div>
+					<div>CRT</div>
+				</div>
+
+				<div class="trait t_column1_labels">
+					<div>P.ATK</div>
+					<div>S.MATK</div>
+					<div>H.PLUS</div>
+					<div>C.RATE</div>
+					<div>POINT</div>
+				</div>
+
+				<div class="trait t_column2_labels">
+					<div>RES</div>
+					<div>MRES</div>
+				</div>
+				<div class="trait stats">
+					<div class="pow">0</div>
+					<div class="sta">0</div>
+					<div class="wis">0</div>
+					<div class="spl">0</div>
+					<div class="con">0</div>
+					<div class="crt">0</div>
+				</div>
+				<div class="trait bonus">
+					<div class="pow"></div>
+					<div class="sta"></div>
+					<div class="wis"></div>
+					<div class="spl"></div>
+					<div class="con"></div>
+					<div class="crt"></div>
+				</div>
+				<div class="trait t_up">
+					<button
+						class="pow"
+						data-background="basic_interface/arw_right.bmp"
+						data-down="basic_interface/arw_right_on.bmp"
+					></button>
+					<button
+						class="sta"
+						data-background="basic_interface/arw_right.bmp"
+						data-down="basic_interface/arw_right_on.bmp"
+					></button>
+					<button
+						class="wis"
+						data-background="basic_interface/arw_right.bmp"
+						data-down="basic_interface/arw_right_on.bmp"
+					></button>
+					<button
+						class="spl"
+						data-background="basic_interface/arw_right.bmp"
+						data-down="basic_interface/arw_right_on.bmp"
+					></button>
+					<button
+						class="con"
+						data-background="basic_interface/arw_right.bmp"
+						data-down="basic_interface/arw_right_on.bmp"
+					></button>
+					<button
+						class="crt"
+						data-background="basic_interface/arw_right.bmp"
+						data-down="basic_interface/arw_right_on.bmp"
+					></button>
+				</div>
+				<div class="trait t_requirements">
+					<div class="pow">0</div>
+					<div class="sta">0</div>
+					<div class="wis">0</div>
+					<div class="spl">0</div>
+					<div class="con">0</div>
+					<div class="crt">0</div>
+				</div>
+				<div class="group t_column1">
+					<div class="patk">0</div>
+					<div class="smatk">0</div>
+					<div class="hplus">200</div>
+					<div class="crate">0</div>
+					<div class="trait_point">0</div>
+				</div>
+				<div class="group t_column2">
+					<div class="res">0</div>
+					<div class="mres">0</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

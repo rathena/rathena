@@ -1,0 +1,176 @@
+/* Avoid input focus border */
+:focus {
+	outline: none;
+}
+::-moz-focus-inner {
+	border: 0;
+}
+
+* {
+	-moz-user-select: none;
+}
+
+html,
+body {
+	touch-action: manipulation;
+	margin: 0;
+}
+
+/* Reference for the viewport sized body below */
+html {
+	height: 100%;
+}
+
+/* Prevent mobile browser auto-zoom on input focus and double-tap */
+:host {
+	touch-action: manipulation;
+}
+
+input,
+textarea,
+select {
+	touch-action: manipulation;
+}
+
+canvas {
+	touch-action: none;
+}
+
+/* Page zoomed in (browser pinch / input focus zoom, tracked by Core/Mobile.js): hand the
+   touches back to the browser so the user can pan and pinch the page back out */
+body.ro-page-zoomed canvas {
+	touch-action: auto;
+}
+
+body {
+	background-color: black;
+	font-size: 12px;
+	/* 'SCDream' first: wins only when the server actually serves the client font (loaded via
+	   @font-face in DBManager). When it isn't served it resolves to Arial — the official client's
+	   window UI font for intl/america servicetype (Ragexe draws window text with CreateFontA on the
+	   Gulim/Arial face table). Liberation Sans / Arimo provide Arial metrics on Linux. */
+	font-family: 'SCDream', Arial, 'Liberation Sans', Arimo, sans-serif;
+	/* Normalize any resolved font's x-height to Arial's (sxHeight 1062 / unitsPerEm 2048 = 0.5186),
+	   so text keeps Arial's apparent size on every OS/font. It's inherited and crosses Shadow DOM
+	   hosts, so it also rescales elements that use a non-Arial face; those opt out with
+	   `font-size-adjust: none` on the selector declaring that font (Intro, GrfViewer, JoystickUI
+	   header). SCDream, when a server serves it, is normalized to Arial on purpose.
+	   Progressive enhancement: engines that don't support the numeric form ignore it
+	   and render at the resolved font's native x-height (no JS fallback needed — Arial
+	   / Liberation Sans already carry correct metrics, only annex fonts degrade). */
+	font-size-adjust: 0.5186;
+	overflow: hidden;
+	-webkit-user-select: none;
+	user-select: none;
+	min-width: 100vw;
+	min-height: 100vh;
+	letter-spacing: 0;
+	line-height: 1.2;
+}
+
+/* Apps owning the 3D viewport (set by Renderer.init) are a fixed viewport: size the body to it and
+   contain it. `overflow: hidden` alone doesn't clip the body box — it propagates to the viewport —
+   so content positioned off screen (entity overlays, signboards, dragged windows) still extends the
+   document's scrollable area, and the browser scrolls, or on mobile lays the page out at its
+   fallback width and scales it down, to reveal it. Paint containment clips the box for real. */
+body.ro-viewport {
+	width: 100%;
+	height: 100%;
+	min-width: 0;
+	min-height: 0;
+	contain: paint;
+}
+
+.title {
+	font-size: 12px;
+}
+
+button,
+ui-button {
+	padding: 0;
+}
+
+ui-button {
+	display: inline-block;
+}
+
+.ui-btn {
+	-webkit-appearance: none;
+	appearance: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+
+	height: 20px;
+	min-width: 52px;
+	padding: 0 10px;
+
+	font-size: 12px;
+	line-height: 1;
+	color: #3f3f3f;
+	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.85);
+
+	border-radius: 4px;
+	border: 1px solid;
+
+	/* 3D border: top right bottom left */
+	border-color: #cfcfcf #a9a9a9 #5f5f5f #bdbdbd;
+
+	/* glossy + subtle depth */
+	background: linear-gradient(to bottom, #ffffff 0%, #f2f2f2 35%, #dcdcdc 55%, #f9f9f9 100%);
+
+	box-shadow:
+		inset 0 1px 0 rgba(255, 255, 255, 0.95),
+		/* top highlight */ inset 0 -1px 0 rgba(0, 0, 0, 0.12),
+		/* bottom inner edge */ 0 1px 0 rgba(0, 0, 0, 0.12); /* outer bottom shadow */
+
+	cursor: pointer;
+}
+
+/* Hover: hơi xanh nhẹ giống button Reset */
+.ui-btn:hover {
+	border-color: #c9d1dd #8ea2c4 #4d5f86 #b1bfd5;
+	background: linear-gradient(to bottom, #f7fbff 0%, #dfe8f6 35%, #c0d0ee 55%, #f0f6ff 100%);
+
+	box-shadow:
+		inset 0 1px 0 rgba(255, 255, 255, 0.95),
+		inset 0 -1px 0 rgba(0, 0, 0, 0.12),
+		0 1px 0 rgba(0, 0, 0, 0.12);
+}
+
+/* Active: giống "ấn xuống" */
+.ui-btn:active {
+	border-color: #9fb0c9 #6f86a6 #3b4b67 #7f96b6;
+
+	background: linear-gradient(to bottom, #cdd8eb 0%, #b7c8e5 45%, #dfe9fb 100%);
+
+	box-shadow:
+		inset 0 2px 3px rgba(0, 0, 0, 0.18),
+		inset 0 1px 0 rgba(255, 255, 255, 0.35);
+
+	transform: translateY(1px); /* cảm giác bị nhấn */
+}
+
+/* Disabled */
+.ui-btn:disabled,
+.ui-btn.is-disabled {
+	cursor: default;
+	color: #8f8f8f;
+	text-shadow: none;
+
+	border-color: #d3d3d3 #bdbdbd #9b9b9b #c9c9c9;
+
+	background: linear-gradient(to bottom, #f6f6f6 0%, #e7e7e7 55%, #fafafa 100%);
+
+	box-shadow:
+		inset 0 1px 0 rgba(255, 255, 255, 0.9),
+		inset 0 -1px 0 rgba(0, 0, 0, 0.08),
+		0 1px 0 rgba(0, 0, 0, 0.08);
+
+	transform: none;
+}
+
+/* Hide native cursor inside Shadow DOM when custom cursor is active */
+:host-context(.custom-cursor) * {
+	cursor: none !important;
+}

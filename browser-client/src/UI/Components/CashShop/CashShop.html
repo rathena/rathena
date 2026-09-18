@@ -1,0 +1,195 @@
+<div id="CashShop" data-background="cashshop/img_shop_bg.bmp">
+	<div class="titlebar" data-background="basic_interface/titlebar_mid.bmp">
+		<div class="left">
+			<ui-button
+				class="base"
+				bg="basic_interface/sys_base_off.bmp"
+				hover="basic_interface/sys_base_on.bmp"
+			></ui-button>
+			<span class="text">Sell List</span>
+		</div>
+		<div class="right">
+			<ui-button
+				class="base close"
+				bg="basic_interface/sys_close_off.bmp"
+				hover="basic_interface/sys_close_on.bmp"
+			></ui-button>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="panel">
+		<div class="panel-content">
+			<div class="panel-banner">
+				<div class="banner-slides"></div>
+				<ul class="banner-dots"></ul>
+			</div>
+			<div id="panel-menu" class="panel-menu">
+				<button
+					class="tab"
+					data-index="0"
+					data-title="New"
+					data-background="cashshop/img_shop_tap0_off.bmp"
+					data-down="cashshop/img_shop_tap0_on.bmp"
+					data-active="cashshop/img_shop_tap0_on.bmp"
+				></button>
+				<button
+					class="tab"
+					data-index="1"
+					data-title="Popular"
+					data-background="cashshop/img_shop_tap1_off.bmp"
+					data-down="cashshop/img_shop_tap1_on.bmp"
+					data-active="cashshop/img_shop_tap1_on.bmp"
+				></button>
+				<button
+					class="tab"
+					data-index="2"
+					data-title="Limited Sale"
+					data-background="cashshop/img_shop_tap2_off.bmp"
+					data-down="cashshop/img_shop_tap2_on.bmp"
+					data-active="cashshop/img_shop_tap2_on.bmp"
+				></button>
+				<button
+					class="tab"
+					data-index="3"
+					data-title="Rental Equipment"
+					data-background="cashshop/img_shop_tap3_off.bmp"
+					data-down="cashshop/img_shop_tap3_on.bmp"
+					data-active="cashshop/img_shop_tap3_on.bmp"
+				></button>
+				<button
+					class="tab"
+					data-index="4"
+					data-title="Permanent Equipment"
+					data-background="cashshop/img_shop_tap4_off.bmp"
+					data-down="cashshop/img_shop_tap4_on.bmp"
+					data-active="cashshop/img_shop_tap4_on.bmp"
+				></button>
+				<button
+					class="tab"
+					data-index="5"
+					data-title="Scrolls"
+					data-background="cashshop/img_shop_tap5_off.bmp"
+					data-down="cashshop/img_shop_tap5_on.bmp"
+					data-active="cashshop/img_shop_tap5_on.bmp"
+				></button>
+				<button
+					class="tab"
+					data-index="6"
+					data-title="Consumables"
+					data-background="cashshop/img_shop_tap6_off.bmp"
+					data-down="cashshop/img_shop_tap6_on.bmp"
+					data-active="cashshop/img_shop_tap6_on.bmp"
+				></button>
+				<button
+					class="tab"
+					data-index="7"
+					data-title="Other"
+					data-background="cashshop/img_shop_tap7_off.bmp"
+					data-down="cashshop/img_shop_tap7_on.bmp"
+					data-active="cashshop/img_shop_tap7_on.bmp"
+				></button>
+				<button
+					class="tab"
+					data-index="8"
+					data-title="Account Limited"
+					data-background="cashshop/img_shop_tap8_off.bmp"
+					data-down="cashshop/img_shop_tap8_on.bmp"
+					data-active="cashshop/img_shop_tap8_on.bmp"
+				></button>
+			</div>
+			<div id="panel-items" class="panel-items"></div>
+			<div class="panel-pagination">
+				<button
+					class="go-first pagi-handler"
+					data-index="1"
+					data-background="cashshop/bt_arrowL2_on.bmp"
+				></button>
+				<button
+					class="go-prev pagi-handler"
+					data-index="2"
+					data-background="cashshop/bt_arrowL_on.bmp"
+				></button>
+				<span class="pagi-changepage">1</span><span>/</span><span class="pagi-countpage">1</span>
+				<button
+					class="go-next pagi-handler"
+					data-index="3"
+					data-background="cashshop/bt_arrowR_on.bmp"
+				></button>
+				<button
+					class="go-last pagi-handler"
+					data-index="4"
+					data-background="cashshop/bt_arrowR2_on.bmp"
+				></button>
+			</div>
+			<div class="panel-footer">
+				<input type="text" id="cashshop-search" class="cashshop-search" placeholder="Item Search" />
+				<button
+					id="cashshop-search-btn"
+					class="cashshop-search-btn"
+					data-background="cashshop/btn_searchbar_normal.bmp"
+					data-hover="cashshop/btn_searchbar_over.bmp"
+					data-down="cashshop/btn_searchbar_press.bmp"
+				></button>
+			</div>
+		</div>
+		<div class="panel-cart">
+			<div class="panel-cart-header">
+				<div class="panel-cart-header-title">Buy List</div>
+				<div class="panel-cart-charging-view">
+					<div id="cashpoint" class="view-cash-point"><span>0</span></div>
+					<div class="panel-cart-cash-points">
+						<button
+							class="panel-cart-charge-btn"
+							data-background="cashshop/btn_charge_normal.bmp"
+							data-down="cashshop/btn_charge_press.bmp"
+						>
+							Charging
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="panel-cart-body" data-background="cashshop/img_shop_cart_bg.bmp">
+				<div id="cart-list" class="cart-list">
+					<ul class="items"></ul>
+				</div>
+			</div>
+			<div class="panel-cart-footer">
+				<table>
+					<tr>
+						<td class="txt">Free Points</td>
+						<td class="value free-point">0 C</td>
+					</tr>
+					<tr>
+						<td class="txt">Use Free Points</td>
+						<td class="value">
+							<input
+								type="number"
+								id="use-free-points"
+								class="use-free-points"
+								placeholder="0"
+								value="0"
+							/>C
+						</td>
+					</tr>
+					<tr>
+						<td class="txt">Cash Point</td>
+						<td class="value cashpoint_footer">0 C</td>
+					</tr>
+				</table>
+				<div class="cart-footer-action">
+					<div class="total-price">
+						<span>0 C</span>
+					</div>
+					<button
+						id="purchase-btn"
+						data-background="cashshop/btn_buy_normal.bmp"
+						data-down="cashshop/btn_buy_press.bmp"
+					>
+						Purchase
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="overlay"></div>
+</div>

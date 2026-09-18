@@ -1,0 +1,271 @@
+:host {
+	width: 280px;
+	height: 190px;
+	top: 100px;
+	left: 100px;
+}
+
+#MercenaryInformations {
+	position: absolute;
+	width: 280px;
+	height: 190px;
+	font-size: 12px;
+	background-color: white;
+	border-radius: 5px;
+}
+
+#MercenaryInformations .content {
+	width: 100%;
+	height: 17px;
+	background-color: white;
+	background-repeat: repeat-x;
+	border-radius: 3px 3px 0px 0px;
+}
+#MercenaryInformations .content .base {
+	width: 11px;
+	height: 11px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+#MercenaryInformations .content .text {
+	text-shadow: 1px 1px white;
+	vertical-align: -2px;
+	white-space: nowrap;
+	/* chrome bug */
+	display: inline-block;
+	width: 50px;
+	height: 13px;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+#MercenaryInformations .content .left {
+	margin-left: 3px;
+	float: left;
+}
+#MercenaryInformations .content .right {
+	float: right;
+	margin-right: 3px;
+}
+#MercenaryInformations .content .clear {
+	clear: both;
+}
+
+#MercenaryInformations .content {
+	background-repeat: no-repeat;
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+#MercenaryInformations .title_name {
+	position: absolute;
+	top: 25px;
+	left: 100px;
+}
+#MercenaryInformations .name {
+	position: absolute;
+	top: 25px;
+	left: 140px;
+	border: none;
+	background-color: #eee;
+	margin: 0px;
+	width: 85px;
+	color: black;
+}
+
+#MercenaryInformations .title_level {
+	position: absolute;
+	top: 47px;
+	left: 100px;
+}
+#MercenaryInformations .level {
+	position: absolute;
+	top: 47px;
+	left: 140px;
+}
+
+#MercenaryInformations .skill {
+	position: absolute;
+	top: 45px;
+	right: 5px;
+	border: 0;
+	width: 42px;
+	height: 20px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+#MercenaryInformations .dismiss {
+	position: absolute;
+	top: 45px;
+	right: 50px;
+	border: 0;
+	width: 42px;
+	height: 20px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+
+#MercenaryInformations .stats {
+	position: absolute;
+	top: 20px;
+	width: 80px;
+	height: 160px;
+}
+#MercenaryInformations .stats .atk {
+	margin-top: 4px;
+	height: 14px;
+	text-align: right;
+}
+#MercenaryInformations .stats .Matk {
+	margin-top: 4px;
+	height: 14px;
+	text-align: right;
+}
+#MercenaryInformations .stats .hit {
+	margin-top: 4px;
+	height: 14px;
+	text-align: right;
+}
+#MercenaryInformations .stats .critical {
+	margin-top: 4px;
+	height: 14px;
+	text-align: right;
+}
+#MercenaryInformations .stats .def {
+	margin-top: 4px;
+	height: 14px;
+	text-align: right;
+}
+#MercenaryInformations .stats .Mdef {
+	margin-top: 4px;
+	height: 14px;
+	text-align: right;
+}
+#MercenaryInformations .stats .flee {
+	margin-top: 4px;
+	height: 14px;
+	text-align: right;
+}
+#MercenaryInformations .stats .aspd {
+	margin-top: 4px;
+	height: 14px;
+	text-align: right;
+}
+
+#MercenaryInformations .hp {
+	position: absolute;
+	top: 70px;
+	left: 140px;
+}
+#MercenaryInformations .sp {
+	position: absolute;
+	top: 85px;
+	left: 140px;
+}
+
+#MercenaryInformations .hp_bar {
+	position: absolute;
+	top: 73px;
+	left: 118px;
+	height: 8px;
+}
+#MercenaryInformations .hp_bar div {
+	width: 4px;
+	height: 8px;
+	float: left;
+}
+#MercenaryInformations div.hp_bar_perc {
+	text-align: center;
+	width: 80px;
+	position: absolute;
+	top: -2px;
+}
+#MercenaryInformations .hp_perc {
+	position: absolute;
+	top: 50px;
+	right: 20px;
+}
+
+#MercenaryInformations .hp2 {
+	position: absolute;
+	top: 70px;
+	left: 210px;
+}
+#MercenaryInformations .sp2 {
+	position: absolute;
+	top: 85px;
+	left: 210px;
+}
+
+#MercenaryInformations .sp_bar {
+	position: absolute;
+	top: 88px;
+	left: 118px;
+	height: 8px;
+}
+#MercenaryInformations .sp_bar div {
+	width: 4px;
+	height: 8px;
+	float: left;
+}
+#MercenaryInformations div.sp_bar_perc {
+	text-align: center;
+	width: 80px;
+	position: absolute;
+	top: -2px;
+}
+#MercenaryInformations .sp_perc {
+	position: absolute;
+	top: 50px;
+	right: 20px;
+}
+
+#MercenaryInformations .block2 {
+	position: absolute;
+	top: 105px;
+	left: 100px;
+	width: 170px;
+	height: 70px;
+}
+
+#MercenaryInformations .block2 .title_timeleft {
+	width: 100%;
+}
+#MercenaryInformations .block2 .timeleft {
+	width: 50px;
+	float: right;
+	text-align: right;
+}
+#MercenaryInformations canvas.life.title_timeleft {
+	position: relative;
+	top: -3px;
+}
+
+#MercenaryInformations .block2 .title_kills {
+	width: 100%;
+	position: absolute;
+	top: 27px;
+}
+#MercenaryInformations .block2 .kills {
+	width: 50px;
+	float: right;
+	text-align: right;
+}
+#MercenaryInformations canvas.life.title_kills {
+	position: relative;
+	top: 10px;
+}
+
+#MercenaryInformations .block2 .title_faith {
+	width: 100%;
+	position: absolute;
+	top: 55px;
+}
+#MercenaryInformations .block2 .faith {
+	width: 50px;
+	float: right;
+	text-align: right;
+}

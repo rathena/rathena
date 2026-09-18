@@ -1,0 +1,133 @@
+:host {
+	width: 280px;
+	height: 380px;
+	top: 200px;
+	left: 200px;
+}
+
+#PetEvolution {
+	position: absolute;
+	width: 280px;
+	height: 380px;
+	background-color: white;
+	border-radius: 5px;
+}
+
+#PetEvolution .titlebar {
+	width: 100%;
+	height: 17px;
+	background-color: white;
+	background-repeat: repeat-x;
+	border-radius: 3px 3px 0px 0px;
+}
+#PetEvolution .titlebar .base {
+	width: 11px;
+	height: 11px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+#PetEvolution .titlebar .text {
+	text-shadow: 1px 1px white;
+	vertical-align: -2px;
+	white-space: nowrap;
+	display: inline-block;
+	width: 80px;
+	height: 13px;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+#PetEvolution .titlebar .left {
+	margin-left: 3px;
+	float: left;
+}
+#PetEvolution .titlebar .right {
+	float: right;
+	margin-right: 3px;
+}
+#PetEvolution .titlebar .clear {
+	clear: both;
+}
+
+#PetEvolution .content {
+	background-repeat: no-repeat;
+	position: relative;
+	width: 100%;
+	height: calc(100% - 17px);
+}
+
+#PetEvolution .pet_illust_holder {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100px;
+	margin-top: 10px;
+}
+
+#PetEvolution .base_pet_illust,
+#PetEvolution .target_pet_illust {
+	width: 100px;
+	height: 100px;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+#PetEvolution .next {
+	font-size: 18px;
+	margin: 0 10px;
+	color: #333;
+}
+
+#PetEvolution .pet_eggID_holder {
+	display: flex;
+	justify-content: space-around;
+	width: 100%;
+	padding: 5px 0;
+	text-align: center;
+}
+
+#PetEvolution .base_petEggId,
+#PetEvolution .target_petEggId {
+	cursor: pointer;
+	color: blue;
+	text-decoration: underline;
+	font-size: 11px;
+}
+
+#PetEvolution .pet_eggID_holder > div:nth-child(2) {
+	margin-left: 20px;
+}
+
+#PetEvolution .evo_requirements {
+	padding: 5px 15px;
+	font-size: 11px;
+	overflow-y: auto;
+	max-height: 140px;
+}
+
+#PetEvolution .evo_item_name {
+	color: blue;
+	text-decoration: underline;
+}
+
+#PetEvolution .footer {
+	position: absolute;
+	bottom: 10px;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+}
+
+#PetEvolution .evolve,
+#PetEvolution .big_cancel {
+	width: 42px;
+	height: 20px;
+	border: 0;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}

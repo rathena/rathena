@@ -1,0 +1,79 @@
+<div id="HomunInformations">
+	<div class="content" data-background="basic_interface/homuninfo_bg.bmp">
+		<div class="left">
+			<span class="text">Homunculus Info</span>
+		</div>
+		<div class="right">
+			<ui-button
+				class="base close"
+				bg="basic_interface/sys_close_off.bmp"
+				hover="basic_interface/sys_close_on.bmp"
+			></ui-button>
+		</div>
+		<div class="clear"></div>
+
+		<div class="title_name">Name</div>
+		<input type="text" class="name" value="" />
+		<div class="title_level">Level</div>
+		<div class="level"></div>
+
+		<ui-button class="modify" bg="btn_rewrite.bmp" hover="btn_rewrite_a.bmp" down="btn_rewrite_b.bmp"></ui-button>
+		<ui-button class="skill" bg="btn_skill.bmp" hover="btn_skill_a.bmp" down="btn_skill_b.bmp"></ui-button>
+		<ui-button class="del" bg="btn_del.bmp" hover="btn_del_a.bmp" down="btn_del_b.bmp"></ui-button>
+
+		<div class="stats">
+			<div class="atk"></div>
+			<div class="Matk"></div>
+			<div class="hit"></div>
+			<div class="critical"></div>
+			<div class="def"></div>
+			<div class="Mdef"></div>
+			<div class="flee"></div>
+			<div class="aspd"></div>
+		</div>
+
+		<div class="hp_bar">
+			<div class="hp_bar_left"></div>
+			<div class="hp_bar_middle"></div>
+			<div class="hp_bar_right"></div>
+			<div class="hp_bar_perc"><span class="hp_value"></span> / <span class="hp_max_value"></span></div>
+		</div>
+		<div class="hp2"></div>
+
+		<div class="sp_bar">
+			<div class="sp_bar_left"></div>
+			<div class="sp_bar_middle"></div>
+			<div class="sp_bar_right"></div>
+			<div class="sp_bar_perc"><span class="sp_value"></span> / <span class="sp_max_value"></span></div>
+		</div>
+		<div class="sp2"></div>
+
+		<div class="block2">
+			<div class="title_exp">
+				EXP
+				<div class="exp"></div>
+			</div>
+			<canvas class="life title_exp" width="60" height="5"></canvas>
+
+			<div class="title_hunger">
+				Hunger
+				<div class="hunger"></div>
+			</div>
+			<canvas class="life title_hunger" width="60" height="5"></canvas>
+
+			<div class="title_intimacy">
+				Intimacy
+				<div class="intimacy"></div>
+			</div>
+		</div>
+
+		<ui-button class="feed" bg="btn_feed.bmp" hover="btn_feed_a.bmp" down="btn_feed_b.bmp"></ui-button>
+		<div class="feeding">
+			<button class="homun_auto_feed" data-background="checkbox_0.bmp" data-preload="checkbox_1.bmp"></button>
+			<ui-text msg="2577">Auto Feeding</ui-text>
+		</div>
+
+		<!--		<div class="title_accessory">Accessory</div>-->
+		<!--		<div class="accessory">Equipped</div>-->
+	</div>
+</div>

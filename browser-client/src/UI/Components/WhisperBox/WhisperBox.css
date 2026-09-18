@@ -1,0 +1,109 @@
+:host {
+	width: 280px;
+	height: 156px;
+	top: 100px;
+	left: 100px;
+}
+
+.whisper-container {
+	position: absolute;
+	width: 280px;
+	height: 156px;
+	border: 1px solid white;
+	border-radius: 5px;
+	background: rgba(0, 0, 0, 0.5);
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	color: #ffffff;
+	min-width: 150px;
+	min-height: 100px;
+}
+
+.whisper-header {
+	background: rgba(255, 255, 255, 0.2);
+	height: 18px;
+	padding: 0 5px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	color: #ffffff;
+	font-size: 11px;
+	font-weight: bold;
+	cursor: move;
+}
+
+.whisper-header .close {
+	width: 11px;
+	height: 11px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+
+.whisper-body {
+	flex: 1;
+	padding: 0 2px 2px 5px;
+	overflow: hidden;
+	border-bottom: 1px solid white;
+}
+
+.whisper-body .contentwrapper {
+	height: 100%;
+}
+
+.whisper-body .content {
+	height: 100%;
+	overflow-y: auto;
+	font-size: 12px;
+	text-shadow: 1px 1px 0px #000;
+	word-break: break-all;
+	line-height: 14px;
+}
+
+.whisper-footer {
+	height: 25px;
+	position: relative;
+	display: flex;
+	align-items: center;
+}
+
+.whisper-footer .input-wrapper {
+	display: flex;
+	align-items: center;
+	height: 23px;
+	width: calc(100% - 25px);
+	overflow: hidden;
+}
+
+.whisper-footer .message {
+	width: 100%;
+	padding-left: 2px;
+	line-height: 18px;
+	outline: none;
+	white-space: nowrap;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	color: #ffffff;
+	font-size: 12px;
+	display: inline-block;
+}
+
+.whisper-container img {
+	max-height: 1.25em;
+	width: auto;
+	vertical-align: middle;
+	background: transparent !important;
+}
+
+.whisper-footer .resizer {
+	position: absolute;
+	right: 0px;
+	bottom: 1px;
+	width: 13px;
+	height: 13px;
+	border: none;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}

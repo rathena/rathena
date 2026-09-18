@@ -1,0 +1,35 @@
+{
+	"name": "robrowser",
+	"version": "1.0.0",
+	"description": "roBrowser and Express server unified project",
+	"main": "index.js",
+	"scripts": {
+		"start": "node index.js",
+		"start:prod": "node start-prod.js",
+		"test": "node --test \"tests/**/*.test.js\"",
+		"setup": "node prepare.js",
+		"setup:quick": "node prepare.js --quick",
+		"doctor": "node doctor.js",
+		"doctor:deep": "node doctor.js --deep",
+		"debug-grf": "node debug-grf.js",
+		"validate:grf": "node tools/validate-grf.mjs",
+		"validate:all": "node tools/validate-all-grfs.mjs ./resources auto",
+		"validate:encoding": "node tools/validate-grf-iconv.mjs",
+		"test:mojibake": "node tools/test-mojibake.mjs",
+		"convert:encoding": "node tools/convert-encoding.mjs"
+	},
+	"author": "Vincent Thibault",
+	"license": "GNU GPL V3",
+	"dependencies": {
+		"@chicowall/grf-loader": "^1.1.0",
+		"compression": "^1.8.1",
+		"cors": "^2.8.5",
+		"dotenv": "^17.2.3",
+		"express": "^4.17.1",
+		"iconv-lite": "^0.7.1",
+		"ws": "^8.19.0"
+	},
+	"optionalDependencies": {
+		"@chicowall/robrowser-esrgan": "github:FranciscoWallison/robrowser-esrgan"
+	}
+}

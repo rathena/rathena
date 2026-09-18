@@ -1,0 +1,157 @@
+:host {
+	width: 560px;
+	height: 380px;
+	top: 0px;
+	left: 0px;
+}
+
+#Trade {
+	position: absolute;
+	width: 560px;
+	height: 380px;
+}
+
+#Trade .titlebar {
+	height: 14px;
+	background-color: white;
+	background-repeat: repeat-x;
+	border-radius: 5px 5px 0px 0px;
+	text-shadow: 1px 1px white;
+	white-space: nowrap;
+	position: relative;
+	padding-left: 15px;
+	padding-top: 3px;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+/** When mouse over items **/
+
+#Trade .overlay {
+	position: absolute;
+	display: none;
+	white-space: nowrap;
+	z-index: 900;
+	height: 13px;
+	padding: 5px;
+	background: rgba(0, 0, 0, 0.7);
+	color: white;
+	text-shadow: 1px 1px black;
+}
+
+#Trade .overlay.grey {
+	color: #aaa;
+}
+
+/** Content **/
+
+#Trade .content {
+	background-repeat: no-repeat;
+	position: relative;
+	width: 560px;
+	height: 360px;
+}
+
+#Trade .box {
+	position: absolute;
+	top: 3px;
+	width: 275px;
+	height: 305px;
+	background-repeat: repeat-y;
+	background-size: 32px 10%; /* 10% for 10 items */
+	background-position: 1px 0px;
+}
+
+#Trade .box.disabled {
+	background: #ccc !important;
+}
+
+#Trade .box.send {
+	left: 2px;
+}
+
+#Trade .box.recv {
+	right: 3px;
+}
+
+/** Items in box **/
+
+#Trade .box .item {
+	display: block;
+	width: 24px;
+	height: 26px;
+	margin: 4px 0px 0px 4px;
+	position: relative;
+}
+
+#Trade .box .item .icon {
+	width: 24px;
+	height: 24px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}
+
+#Trade .box .item .amount {
+	position: relative;
+	bottom: 9px;
+	right: 0px;
+	text-align: right;
+	text-shadow: -1px -1px white;
+}
+
+#Trade .box .name {
+	position: absolute;
+	top: 7px;
+	left: 30px;
+	width: 190px;
+}
+
+/** Zeny input **/
+
+#Trade .zeny {
+	position: absolute;
+	top: 311px;
+	background-color: #ddd;
+	border: none;
+	width: 70px;
+	height: 13px;
+	padding: 2px;
+}
+
+#Trade .zeny.send {
+	left: 160px;
+}
+
+#Trade .zeny.recv {
+	left: 440px;
+}
+
+#Trade .zeny.disabled {
+	background-color: transparent;
+}
+
+/** Buttons **/
+
+#Trade .btn {
+	position: absolute;
+	bottom: 4px;
+	border: 0;
+	width: 42px;
+	height: 20px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	display: inline-block;
+}
+#Trade .btn.disabled {
+	cursor: default;
+}
+#Trade .btn.ok {
+	left: 5px;
+}
+#Trade .btn.trade {
+	left: 260px;
+}
+#Trade .btn.cancel {
+	left: 510px;
+}

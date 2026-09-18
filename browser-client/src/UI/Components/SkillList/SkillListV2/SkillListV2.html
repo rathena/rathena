@@ -1,0 +1,412 @@
+<div id="SkillListV2">
+	<div class="border">
+		<div class="titlebar">
+			<ui-image src="basic_interface/btnbar_mid2.bmp"></ui-image>
+			<div class="left">
+				<ui-button
+					class="base"
+					bg="basic_interface/sys_base_off.bmp"
+					hover="basic_interface/sys_base_on.bmp"
+				></ui-button>
+				<ui-text class="text" msgid="283">Skill Tree</ui-text>
+			</div>
+			<div class="right">
+				<input type="checkbox" class="view_skill_info" />view skill info
+				<ui-button
+					class="base mini"
+					bg="basic_interface/sys_mini_off.bmp"
+					hover="basic_interface/sys_mini_on.bmp"
+				></ui-button>
+				<ui-button
+					class="base close"
+					bg="basic_interface/sys_close_off.bmp"
+					hover="basic_interface/sys_close_on.bmp"
+				></ui-button>
+			</div>
+			<div class="clear"></div>
+		</div>
+
+		<div class="panel">
+			<div class="content" style="display: block; width: 256px; height: 320px">
+				<!-- Just to get reference, will be removed -->
+				<ui-button
+					class="btn levelup"
+					bg="basic_interface/skill_up_a.bmp"
+					hover="basic_interface/skill_up_b.bmp"
+					down="basic_interface/skill_up_c.bmp"
+				></ui-button>
+				<div class="tabs-mini">
+					<div class="tab-mini">
+						<input type="radio" name="css-tabs" id="tab-1-mini" checked class="tab-switch-mini" />
+						<label for="tab-1-mini" class="tab-label-mini">1st</label>
+						<div class="tab-content-mini">
+							<table id="minitab1"></table>
+						</div>
+					</div>
+					<div class="tab-mini">
+						<input type="radio" name="css-tabs" id="tab-2-mini" class="tab-switch-mini" />
+						<label for="tab-2-mini" id="tabminil2" class="tab-label-mini">2nd</label>
+						<div class="tab-content-mini">
+							<table id="minitab2"></table>
+						</div>
+					</div>
+					<div class="tab-mini">
+						<input type="radio" name="css-tabs" id="tab-3-mini" class="tab-switch-mini" />
+						<label for="tab-3-mini" id="tabminil3" class="tab-label-mini">3rd</label>
+						<div class="tab-content-mini">
+							<table id="minitab3"></table>
+						</div>
+					</div>
+					<div class="tab-mini">
+						<input type="radio" name="css-tabs" id="tab-4-mini" class="tab-switch-mini" />
+						<label for="tab-4-mini" id="tabminil4" class="tab-label-mini">4th</label>
+						<div class="tab-content-mini">
+							<table id="minitab4"></table>
+						</div>
+					</div>
+					<div class="tab-mini">
+						<input type="radio" name="css-tabs" id="tab-5-mini" class="tab-switch-mini" />
+						<label for="tab-5-mini" class="tab-label-mini">Etc</label>
+						<div class="tab-content-mini">
+							<table id="minitab5"></table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="contentbig" style="width: 480px; height: 384px; display: block">
+				<div class="tabs">
+					<div class="tab">
+						<input type="radio" name="css-tabs" id="tab-1" checked class="tab-switch" />
+						<label for="tab-1" class="tab-label">1st</label>
+						<div class="tab-content">
+							<div id="positionSkills1">
+								<div class="skillRow" data-order="0">
+									<div class="skillCol s0"></div>
+									<div class="skillCol s1"></div>
+									<div class="skillCol s2"></div>
+									<div class="skillCol s3"></div>
+									<div class="skillCol s4"></div>
+									<div class="skillCol s5"></div>
+									<div class="skillCol s6"></div>
+								</div>
+								<div class="skillRow" data-order="1">
+									<div class="skillCol s7"></div>
+									<div class="skillCol s8"></div>
+									<div class="skillCol s9"></div>
+									<div class="skillCol s10"></div>
+									<div class="skillCol s11"></div>
+									<div class="skillCol s12"></div>
+									<div class="skillCol s13"></div>
+								</div>
+								<div class="skillRow" data-order="2">
+									<div class="skillCol s14"></div>
+									<div class="skillCol s15"></div>
+									<div class="skillCol s16"></div>
+									<div class="skillCol s17"></div>
+									<div class="skillCol s18"></div>
+									<div class="skillCol s19"></div>
+									<div class="skillCol s20"></div>
+								</div>
+								<div class="skillRow" data-order="3">
+									<div class="skillCol s21"></div>
+									<div class="skillCol s22"></div>
+									<div class="skillCol s23"></div>
+									<div class="skillCol s24"></div>
+									<div class="skillCol s25"></div>
+									<div class="skillCol s26"></div>
+									<div class="skillCol s27"></div>
+								</div>
+								<div class="skillRow" data-order="4">
+									<div class="skillCol s28"></div>
+									<div class="skillCol s29"></div>
+									<div class="skillCol s30"></div>
+									<div class="skillCol s31"></div>
+									<div class="skillCol s32"></div>
+									<div class="skillCol s33"></div>
+									<div class="skillCol s34"></div>
+								</div>
+								<div class="skillRow" data-order="5">
+									<div class="skillCol s35"></div>
+									<div class="skillCol s36"></div>
+									<div class="skillCol s37"></div>
+									<div class="skillCol s38"></div>
+									<div class="skillCol s39"></div>
+									<div class="skillCol s40"></div>
+									<div class="skillCol s41"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="tab">
+						<input type="radio" name="css-tabs" id="tab-2" class="tab-switch" />
+						<label for="tab-2" id="tabl2" class="tab-label">2nd</label>
+						<div class="tab-content">
+							<div id="positionSkills2">
+								<div class="skillRow" data-order="0">
+									<div class="skillCol s0"></div>
+									<div class="skillCol s1"></div>
+									<div class="skillCol s2"></div>
+									<div class="skillCol s3"></div>
+									<div class="skillCol s4"></div>
+									<div class="skillCol s5"></div>
+									<div class="skillCol s6"></div>
+								</div>
+								<div class="skillRow" data-order="1">
+									<div class="skillCol s7"></div>
+									<div class="skillCol s8"></div>
+									<div class="skillCol s9"></div>
+									<div class="skillCol s10"></div>
+									<div class="skillCol s11"></div>
+									<div class="skillCol s12"></div>
+									<div class="skillCol s13"></div>
+								</div>
+								<div class="skillRow" data-order="2">
+									<div class="skillCol s14"></div>
+									<div class="skillCol s15"></div>
+									<div class="skillCol s16"></div>
+									<div class="skillCol s17"></div>
+									<div class="skillCol s18"></div>
+									<div class="skillCol s19"></div>
+									<div class="skillCol s20"></div>
+								</div>
+								<div class="skillRow" data-order="3">
+									<div class="skillCol s21"></div>
+									<div class="skillCol s22"></div>
+									<div class="skillCol s23"></div>
+									<div class="skillCol s24"></div>
+									<div class="skillCol s25"></div>
+									<div class="skillCol s26"></div>
+									<div class="skillCol s27"></div>
+								</div>
+								<div class="skillRow" data-order="4">
+									<div class="skillCol s28"></div>
+									<div class="skillCol s29"></div>
+									<div class="skillCol s30"></div>
+									<div class="skillCol s31"></div>
+									<div class="skillCol s32"></div>
+									<div class="skillCol s33"></div>
+									<div class="skillCol s34"></div>
+								</div>
+								<div class="skillRow" data-order="5">
+									<div class="skillCol s35"></div>
+									<div class="skillCol s36"></div>
+									<div class="skillCol s37"></div>
+									<div class="skillCol s38"></div>
+									<div class="skillCol s39"></div>
+									<div class="skillCol s40"></div>
+									<div class="skillCol s41"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="tab">
+						<input type="radio" name="css-tabs" id="tab-3" class="tab-switch" />
+						<label for="tab-3" id="tabl3" class="tab-label">3rd</label>
+						<div class="tab-content">
+							<div id="positionSkills3">
+								<div class="skillRow" data-order="0">
+									<div class="skillCol s0"></div>
+									<div class="skillCol s1"></div>
+									<div class="skillCol s2"></div>
+									<div class="skillCol s3"></div>
+									<div class="skillCol s4"></div>
+									<div class="skillCol s5"></div>
+									<div class="skillCol s6"></div>
+								</div>
+								<div class="skillRow" data-order="1">
+									<div class="skillCol s7"></div>
+									<div class="skillCol s8"></div>
+									<div class="skillCol s9"></div>
+									<div class="skillCol s10"></div>
+									<div class="skillCol s11"></div>
+									<div class="skillCol s12"></div>
+									<div class="skillCol s13"></div>
+								</div>
+								<div class="skillRow" data-order="2">
+									<div class="skillCol s14"></div>
+									<div class="skillCol s15"></div>
+									<div class="skillCol s16"></div>
+									<div class="skillCol s17"></div>
+									<div class="skillCol s18"></div>
+									<div class="skillCol s19"></div>
+									<div class="skillCol s20"></div>
+								</div>
+								<div class="skillRow" data-order="3">
+									<div class="skillCol s21"></div>
+									<div class="skillCol s22"></div>
+									<div class="skillCol s23"></div>
+									<div class="skillCol s24"></div>
+									<div class="skillCol s25"></div>
+									<div class="skillCol s26"></div>
+									<div class="skillCol s27"></div>
+								</div>
+								<div class="skillRow" data-order="4">
+									<div class="skillCol s28"></div>
+									<div class="skillCol s29"></div>
+									<div class="skillCol s30"></div>
+									<div class="skillCol s31"></div>
+									<div class="skillCol s32"></div>
+									<div class="skillCol s33"></div>
+									<div class="skillCol s34"></div>
+								</div>
+								<div class="skillRow" data-order="5">
+									<div class="skillCol s35"></div>
+									<div class="skillCol s36"></div>
+									<div class="skillCol s37"></div>
+									<div class="skillCol s38"></div>
+									<div class="skillCol s39"></div>
+									<div class="skillCol s40"></div>
+									<div class="skillCol s41"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="tab">
+						<input type="radio" name="css-tabs" id="tab-4" class="tab-switch" />
+						<label for="tab-4" id="tabl4" class="tab-label">4th</label>
+						<div class="tab-content">
+							<div id="positionSkills4">
+								<div class="skillRow" data-order="0">
+									<div class="skillCol s0"></div>
+									<div class="skillCol s1"></div>
+									<div class="skillCol s2"></div>
+									<div class="skillCol s3"></div>
+									<div class="skillCol s4"></div>
+									<div class="skillCol s5"></div>
+									<div class="skillCol s6"></div>
+								</div>
+								<div class="skillRow" data-order="1">
+									<div class="skillCol s7"></div>
+									<div class="skillCol s8"></div>
+									<div class="skillCol s9"></div>
+									<div class="skillCol s10"></div>
+									<div class="skillCol s11"></div>
+									<div class="skillCol s12"></div>
+									<div class="skillCol s13"></div>
+								</div>
+								<div class="skillRow" data-order="2">
+									<div class="skillCol s14"></div>
+									<div class="skillCol s15"></div>
+									<div class="skillCol s16"></div>
+									<div class="skillCol s17"></div>
+									<div class="skillCol s18"></div>
+									<div class="skillCol s19"></div>
+									<div class="skillCol s20"></div>
+								</div>
+								<div class="skillRow" data-order="3">
+									<div class="skillCol s21"></div>
+									<div class="skillCol s22"></div>
+									<div class="skillCol s23"></div>
+									<div class="skillCol s24"></div>
+									<div class="skillCol s25"></div>
+									<div class="skillCol s26"></div>
+									<div class="skillCol s27"></div>
+								</div>
+								<div class="skillRow" data-order="4">
+									<div class="skillCol s28"></div>
+									<div class="skillCol s29"></div>
+									<div class="skillCol s30"></div>
+									<div class="skillCol s31"></div>
+									<div class="skillCol s32"></div>
+									<div class="skillCol s33"></div>
+									<div class="skillCol s34"></div>
+								</div>
+								<div class="skillRow" data-order="5">
+									<div class="skillCol s35"></div>
+									<div class="skillCol s36"></div>
+									<div class="skillCol s37"></div>
+									<div class="skillCol s38"></div>
+									<div class="skillCol s39"></div>
+									<div class="skillCol s40"></div>
+									<div class="skillCol s41"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="tab">
+						<input type="radio" name="css-tabs" id="tab-5" class="tab-switch" />
+						<label for="tab-5" class="tab-label">Etc</label>
+						<div class="tab-content">
+							<div id="etcBIG5">
+								<div class="skillRow" data-order="0">
+									<div class="skillCol s0"></div>
+									<div class="skillCol s1"></div>
+									<div class="skillCol s2"></div>
+									<div class="skillCol s3"></div>
+									<div class="skillCol s4"></div>
+									<div class="skillCol s5"></div>
+									<div class="skillCol s6"></div>
+								</div>
+								<div class="skillRow" data-order="1">
+									<div class="skillCol s7"></div>
+									<div class="skillCol s8"></div>
+									<div class="skillCol s9"></div>
+									<div class="skillCol s10"></div>
+									<div class="skillCol s11"></div>
+									<div class="skillCol s12"></div>
+									<div class="skillCol s13"></div>
+								</div>
+								<div class="skillRow" data-order="2">
+									<div class="skillCol s14"></div>
+									<div class="skillCol s15"></div>
+									<div class="skillCol s16"></div>
+									<div class="skillCol s17"></div>
+									<div class="skillCol s18"></div>
+									<div class="skillCol s19"></div>
+									<div class="skillCol s20"></div>
+								</div>
+								<div class="skillRow" data-order="3">
+									<div class="skillCol s21"></div>
+									<div class="skillCol s22"></div>
+									<div class="skillCol s23"></div>
+									<div class="skillCol s24"></div>
+									<div class="skillCol s25"></div>
+									<div class="skillCol s26"></div>
+									<div class="skillCol s27"></div>
+								</div>
+								<div class="skillRow" data-order="4">
+									<div class="skillCol s28"></div>
+									<div class="skillCol s29"></div>
+									<div class="skillCol s30"></div>
+									<div class="skillCol s31"></div>
+									<div class="skillCol s32"></div>
+									<div class="skillCol s33"></div>
+									<div class="skillCol s34"></div>
+								</div>
+								<div class="skillRow" data-order="5">
+									<div class="skillCol s35"></div>
+									<div class="skillCol s36"></div>
+									<div class="skillCol s37"></div>
+									<div class="skillCol s38"></div>
+									<div class="skillCol s39"></div>
+									<div class="skillCol s40"></div>
+									<div class="skillCol s41"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="footer">
+				<ui-image src="basic_interface/btnbar_mid2.bmp"></ui-image>
+				<div class="text">Skill Points: <span class="skpoints_count">0</span></div>
+				<ui-button
+					class="btn apply"
+					bg="btn_apply.bmp"
+					hover="btn_apply_a.bmp"
+					down="btn_apply_b.bmp"
+				></ui-button>
+				<ui-button
+					class="btn reset"
+					bg="btn_reset.bmp"
+					hover="btn_reset_a.bmp"
+					down="btn_reset_b.bmp"
+				></ui-button>
+				<ui-button class="extend" bg="btn_resize.bmp"></ui-button>
+			</div>
+		</div>
+	</div>
+
+	<ui-button id="lvlup_job" bg="basic_interface/lv_up_off.bmp" down="basic_interface/lv_up_on.bmp"></ui-button>
+</div>

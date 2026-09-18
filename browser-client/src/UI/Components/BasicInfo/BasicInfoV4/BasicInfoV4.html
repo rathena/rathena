@@ -1,0 +1,251 @@
+<div
+	id="BasicInfoV4"
+	class="large"
+	data-background="basic_interface/basewin_bg2.bmp"
+	data-preload="basic_interface/gzered_left.bmp;basic_interface/gzered_mid.bmp;basic_interface/gzered_right.bmp;basic_interface/gzeblue_left.bmp;basic_interface/gzeblue_mid.bmp;basic_interface/gzeblue_right.bmp"
+>
+	<div class="topbar">
+		<button
+			class="left"
+			data-background="basic_interface/sys_base_off.bmp"
+			data-hover="basic_interface/sys_base_on.bmp"
+		></button>
+		<button
+			class="right"
+			data-background="basic_interface/sys_mini_off.bmp"
+			data-hover="basic_interface/sys_mini_on.bmp"
+		></button>
+	</div>
+
+	<!-- LARGE INTERFACE -->
+	<div class="large">
+		<div class="title" data-text="238">Basic Information</div>
+		<div class="name"><span class="name_value"></span></div>
+		<div class="job"><span class="job_value"></span></div>
+
+		<div class="hp_title">HP</div>
+		<div class="hp_bar">
+			<div class="hp_bar_left"></div>
+			<div class="hp_bar_middle"></div>
+			<div class="hp_bar_right"></div>
+			<div class="hp_bar_perc"><span class="hp_value"></span> / <span class="hp_max_value"></span></div>
+		</div>
+		<div class="hp_perc"></div>
+
+		<div class="sp_title">SP</div>
+		<div class="sp_bar">
+			<div class="sp_bar_left"></div>
+			<div class="sp_bar_middle"></div>
+			<div class="sp_bar_right"></div>
+			<div class="sp_bar_perc"><span class="sp_value"></span> / <span class="sp_max_value"></span></div>
+		</div>
+		<div class="sp_perc"></div>
+
+		<div class="blvl">Base Lv. <span class="blvl_value"></span></div>
+		<div class="bexp">
+			<div></div>
+		</div>
+
+		<div class="jlvl">Job Lv. <span class="jlvl_value"></span></div>
+		<div class="jexp">
+			<div></div>
+		</div>
+
+		<div class="extra">
+			<span class="weight"
+				>Weight : <span class="weight_value">0</span> / <span class="weight_total">0</span></span
+			>
+			Zeny : <span class="zeny_value">0</span>
+		</div>
+	</div>
+
+	<!-- SMALL INTERFACE -->
+	<div class="small">
+		<div class="line1 name_value"></div>
+		<div class="line2">
+			Lv.<span class="blvl_value"></span> / <span class="job_value"></span> / Lv.<span class="jlvl_value"></span>
+			/ Exp. <span class="bexp_value"></span>
+		</div>
+		<div class="line3">
+			HP. <span class="hp_value"></span> / <span class="hp_max_value"></span> | SP.
+			<span class="sp_value"></span> / <span class="sp_max_value"></span>
+		</div>
+	</div>
+
+	<button
+		id="btn_open"
+		class="btn_open bt_menu toggle_btns"
+		data-background="menu_icon/bt_menu_normal.bmp"
+		data-hover="menu_icon/bt_menu_over.bmp"
+		data-down="menu_icon/bt_menu_press.bmp"
+	></button>
+	<button
+		id="btn_close"
+		class="btn_close bt_menu toggle_btns"
+		data-background="menu_icon/bt_menu_close_normal.bmp"
+		data-hover="menu_icon/bt_menu_close_over.bmp"
+		data-down="menu_icon/bt_menu_close_press.bmp"
+	></button>
+
+	<!-- BUTTONS -->
+	<div class="buttons" data-background="menu_icon/bg_menu.tga">
+		<button
+			id="info"
+			class="event_add_cursor"
+			data-background="menu_icon/bt_status.bmp"
+			data-down="menu_icon/bt_status_press.bmp"
+		>
+			<span class="name">Status (Alt + A)</span>
+		</button>
+		<button
+			id="equip"
+			class="event_add_cursor"
+			data-background="menu_icon/bt_equip.bmp"
+			data-down="menu_icon/bt_equip_press.bmp"
+		>
+			<span class="name">Equip (Alt + Q)</span>
+		</button>
+		<button
+			id="item"
+			class="event_add_cursor"
+			data-background="menu_icon/bt_item.bmp"
+			data-down="menu_icon/bt_item_press.bmp"
+		>
+			<div
+				class="btn_overlay"
+				data-background="menu_icon/bt_item_new.bmp"
+				data-down="menu_icon/bt_item_new_press.bmp"
+			></div>
+			<span class="name">Inventory (Alt + E)</span>
+		</button>
+		<button
+			id="skill"
+			class="event_add_cursor"
+			data-background="menu_icon/bt_skill.bmp"
+			data-down="menu_icon/bt_skill_press.bmp"
+		>
+			<span class="name">SkillTree (Alt + S)</span>
+		</button>
+		<button
+			id="party"
+			class="event_add_cursor"
+			data-background="menu_icon/bt_party.bmp"
+			data-down="menu_icon/bt_party_press.bmp"
+		>
+			<span class="name">Party (Alt + Z)</span>
+		</button>
+		<button
+			id="guild"
+			class="event_add_cursor"
+			data-background="menu_icon/bt_guild.bmp"
+			data-down="menu_icon/bt_guild_press.bmp"
+		>
+			<span class="name">Guild (Alt + G)</span>
+		</button>
+		<button
+			id="battle"
+			class="event_add_cursor"
+			data-background="menu_icon/bt_battle.bmp"
+			data-down="menu_icon/bt_battle_press.bmp"
+		>
+			<span class="name">Battleground</span>
+		</button>
+		<button
+			id="quest"
+			class="event_add_cursor"
+			data-background="menu_icon/bt_quest.bmp"
+			data-down="menu_icon/bt_quest_press.bmp"
+		>
+			<span class="name">Quest List (Alt + U)</span>
+		</button>
+		<button
+			id="map"
+			class="event_add_cursor"
+			data-background="menu_icon/bt_map.bmp"
+			data-down="menu_icon/bt_map_press.bmp"
+		>
+			<span class="name">World Map (Ctrl + ')</span>
+		</button>
+		<button
+			id="navigation"
+			class="event_add_cursor"
+			data-background="menu_icon/bt_navigation.bmp"
+			data-down="menu_icon/bt_navigation_press.bmp"
+		>
+			<span class="name">Navigation</span>
+		</button>
+		<button
+			id="option"
+			class="event_add_cursor"
+			data-background="menu_icon/bt_option.bmp"
+			data-down="menu_icon/bt_option_press.bmp"
+		>
+			<span class="name">Option (Esc)</span>
+		</button>
+		<button
+			id="bank"
+			class="event_add_cursor"
+			data-background="menu_icon/bt_bank.bmp"
+			data-down="menu_icon/bt_bank_press.bmp"
+		>
+			<span class="name">Bank (Ctrl + B)</span>
+		</button>
+		<button
+			id="replay"
+			class="event_add_cursor"
+			data-background="menu_icon/bt_rec.bmp"
+			data-down="menu_icon/bt_rec_press.bmp"
+		>
+			<span class="name">Replay</span>
+		</button>
+		<button
+			id="mail"
+			class="event_add_cursor"
+			data-background="menu_icon/bt_mail.bmp"
+			data-down="menu_icon/bt_mail_press.bmp"
+		>
+			<span class="name">Mail</span>
+		</button>
+		<button
+			id="achievment"
+			class="event_add_cursor"
+			data-background="menu_icon/bt_achievement.bmp"
+			data-down="menu_icon/bt_achievement_press.bmp"
+		>
+			<span class="name">Achievement</span>
+		</button>
+		<button
+			id="tipbox"
+			class="event_add_cursor"
+			data-background="menu_icon/bt_tip.bmp"
+			data-down="menu_icon/bt_tip_press.bmp"
+		>
+			<span class="name">Tipbox (Alt + D)</span>
+		</button>
+		<button
+			id="shortcut"
+			class="event_add_cursor"
+			data-background="menu_icon/bt_keyboard.bmp"
+			data-down="menu_icon/bt_keyboard_press.bmp"
+		>
+			<span class="name">ShortCut Description</span>
+		</button>
+		<button
+			id="attendance"
+			class="event_add_cursor"
+			data-background="menu_icon/bt_attendance.bmp"
+			data-down="menu_icon/bt_attendance_press.bmp"
+		>
+			<span class="name">Attendance Check</span>
+		</button>
+		<button
+			id="agency"
+			class="event_add_cursor"
+			data-background="menu_icon/bt_adventureragency.bmp"
+			data-down="menu_icon/bt_adventureragency_press.bmp"
+		>
+			<span class="name">Adventurer's Agency (Ctrl + Z)</span>
+		</button>
+		<!--<button class="reputation" data-background="menu_icon/" data-hover="menu_icon/" data-down="menu_icon/"></button> -->
+	</div>
+</div>

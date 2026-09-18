@@ -1,0 +1,343 @@
+<div id="GraphicsOption">
+	<div class="titlebar" data-background="basic_interface/titlebar_mid.bmp">
+		<div class="left">
+			<button
+				class="base"
+				data-background="basic_interface/sys_base_off.bmp"
+				data-hover="basic_interface/sys_base_on.bmp"
+			></button>
+			<span class="text" data-text="1484">Graphics Settings</span>
+		</div>
+		<div class="right">
+			<button
+				class="base close"
+				data-background="basic_interface/sys_close_off.bmp"
+				data-hover="basic_interface/sys_close_on.bmp"
+			></button>
+		</div>
+		<div class="clear"></div>
+	</div>
+
+	<div class="tabs-container">
+		<div class="tabs">
+			<button class="tab-button selected" data-tab="basic">Basic</button>
+			<button class="tab-button" data-tab="advanced">Advanced</button>
+		</div>
+	</div>
+
+	<div class="panel">
+		<div class="tab-content selected" id="basic">
+			<table>
+				<tr>
+					<td>Details</td>
+					<td style="display: inline-block; width: 260px">
+						<input
+							class="details"
+							type="range"
+							value="100"
+							max="100"
+							min="25"
+							step="5"
+							style="width: 90%"
+						/>
+					</td>
+				</tr>
+				<tr class="resolution">
+					<td>Resolution</td>
+					<td>
+						<select class="screensize">
+							<option value="650x480">640 x 480</option>
+							<option value="800x600">800 x 600</option>
+							<option value="1024x768">1024 x 768</option>
+							<option value="1280x800">1280 x 800</option>
+							<option value="1400x900">1400 x 900</option>
+							<option value="1680x1050">1680 x 1050</option>
+							<option value="full">Full Screen</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>Cursor</td>
+					<td>
+						<label>
+							<input class="cursor-option" type="checkbox" />
+							Show official cursor
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<td>FPS Limit</td>
+					<td>
+						<select class="fpslimit">
+							<option value="-1">Unlimited</option>
+							<option value="30">30</option>
+							<option value="60">60</option>
+							<option value="90">90</option>
+							<option value="120">120</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>FPS Display</td>
+					<td>
+						<label>
+							<input class="fps" type="checkbox" />
+						</label>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<div class="tab-content" id="advanced">
+			<table>
+				<tr>
+					<td title="Force nearest neighbor filtering for pixel-perfect sprite rendering">
+						Pixel Perfect Sprites
+					</td>
+					<td>
+						<label>
+							<input class="pixel-perfect" type="checkbox" />
+							Force nearest neighbor filtering
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<td title="Add a glowing bloom effect to bright areas">Bloom</td>
+					<td>
+						<label style="display: inline-block; margin-right: 20px">
+							<input class="bloom" type="checkbox" />
+						</label>
+						<label style="display: inline-block; width: 200px">
+							Intensity:
+							<input
+								class="bloom-intensity"
+								type="range"
+								value="0.5"
+								min="0.1"
+								max="3.0"
+								step="0.05"
+								style="width: 90%; vertical-align: middle"
+							/>
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<td title="Apply a blur effect to the screen">Blur</td>
+					<td>
+						<label style="display: inline-block; margin-right: 20px">
+							<input class="blur" type="checkbox" />
+						</label>
+						<label style="display: inline-block; width: 90px">
+							Intensity:
+							<input
+								class="blur-intensity"
+								type="range"
+								value="3.0"
+								min="2.0"
+								max="10.0"
+								step="0.1"
+								style="width: 90%; vertical-align: middle"
+							/>
+						</label>
+						<label style="display: inline-block; width: 90px">
+							Area:
+							<input
+								class="blur-area"
+								type="range"
+								value="14.0"
+								min="3.0"
+								max="20.0"
+								step="1.0"
+								style="width: 90%; vertical-align: middle"
+							/>
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<td title="Contrast Adaptive Sharpening for enhanced details">Contr. Adapt. Sharp. (CAS)</td>
+					<td>
+						<label style="display: inline-block; margin-right: 20px">
+							<input class="casEnabled" type="checkbox" />
+						</label>
+						<label style="display: inline-block; width: 90px">
+							Contrast:
+							<input
+								class="casContrast"
+								type="range"
+								value="0.0"
+								min="0.0"
+								max="1.0"
+								step="0.05"
+								style="width: 90%; vertical-align: middle"
+							/>
+						</label>
+						<label style="display: inline-block; width: 90px">
+							Sharpening:
+							<input
+								class="casSharpening"
+								type="range"
+								value="1.0"
+								min="0.0"
+								max="1.0"
+								step="0.05"
+								style="width: 90%; vertical-align: middle"
+							/>
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<td title="Fast Approximate Anti-Aliasing for smoother edges">FXAA</td>
+					<td>
+						<label style="display: inline-block; margin-right: 20px">
+							<input class="fxaaEnabled" type="checkbox" />
+						</label>
+						<label style="display: inline-block; width: 90px">
+							Subpix:
+							<input
+								class="fxaaSubpix"
+								type="range"
+								value="0.25"
+								min="0.0"
+								max="1.0"
+								step="0.05"
+								style="width: 90%; vertical-align: middle"
+							/>
+						</label>
+						<label style="display: inline-block; width: 90px">
+							Edge Threshold:
+							<input
+								class="fxaaEdgeThreshold"
+								type="range"
+								value="0.125"
+								min="0.063"
+								max="0.333"
+								step="0.03"
+								style="width: 90%; vertical-align: middle"
+							/>
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<td title="Cartoon rendering effect for stylized visuals">Cartoon</td>
+					<td>
+						<label style="display: inline-block; margin-right: 20px">
+							<input class="cartoonEnabled" type="checkbox" />
+						</label>
+						<label style="display: inline-block; width: 90px">
+							Power:
+							<input
+								class="cartoonPower"
+								type="range"
+								value="1.5"
+								min="0.1"
+								max="9.9"
+								step="0.1"
+								style="width: 90%; vertical-align: middle"
+							/>
+						</label>
+						<label style="display: inline-block; width: 90px">
+							Edge Slope:
+							<input
+								class="cartoonEdgeSlope"
+								type="range"
+								value="1.5"
+								min="1.5"
+								max="5.9"
+								step="0.1"
+								style="width: 90%; vertical-align: middle"
+							/>
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<td title="Increase color intensity and saturation">Vibrance</td>
+					<td>
+						<label style="display: inline-block; margin-right: 20px">
+							<input class="vibranceEnabled" type="checkbox" />
+						</label>
+						<label style="display: inline-block; width: 200px">
+							Intensity:
+							<input
+								class="vibrance"
+								type="range"
+								value="0.15"
+								min="-0.9"
+								max="0.9"
+								step="0.1"
+								style="width: 90%; vertical-align: middle"
+							/>
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<td
+						title="Hide objects outside the viewing area, enable downsampling rendering and others to improve performance"
+					>
+						Performance Mode
+					</td>
+					<td>
+						<label style="display: inline-block; margin-right: 20px">
+							<input class="performanceMode" type="checkbox" />
+						</label>
+						<label style="display: inline-block; width: 200px">
+							Culling Area:
+							<input
+								class="view-area"
+								type="range"
+								value="14.0"
+								min="4.0"
+								max="20.0"
+								step="1.0"
+								style="width: 90%; vertical-align: middle"
+							/>
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<td
+						title="Make buildings and trees blocking the view of your character see-through (not in first person). Dither is cheaper, Alpha looks smoother."
+					>
+						See-through Occluders
+					</td>
+					<td>
+						<label style="display: inline-block; margin-right: 20px">
+							<select class="occluderFade">
+								<option value="off">Off</option>
+								<option value="dither">Dither (fast)</option>
+								<option value="alpha">Alpha (smooth)</option>
+							</select>
+						</label>
+						<label style="display: inline-block; width: 120px">
+							Opacity:
+							<input
+								class="occluderFadeOpacity"
+								type="range"
+								value="0.25"
+								min="0.0"
+								max="0.8"
+								step="0.05"
+								style="width: 90%; vertical-align: middle"
+							/>
+						</label>
+						<label style="display: inline-block; width: 120px">
+							Area:
+							<input
+								class="occluderFadeRadius"
+								type="range"
+								value="5.0"
+								min="1.5"
+								max="12.5"
+								step="0.5"
+								style="width: 90%; vertical-align: middle"
+							/>
+						</label>
+					</td>
+				</tr>
+			</table>
+
+			<div class="reset-section">
+				<button class="reset-button">Reset to Default Values</button>
+			</div>
+		</div>
+	</div>
+</div>

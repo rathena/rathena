@@ -1,0 +1,106 @@
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<style type="text/css">
+			.tarea {
+				width: 400px;
+				height: 50px;
+			}
+		</style>
+		<script src="text-encoding-simple.js"></script>
+		<script type="text/javascript">
+			var raw;
+			var i_euckr;
+			var a_trans;
+			var i_latin1;
+			var i_hex;
+
+			function encode(text, charset) {
+				TextEncoding.setCharset(charset);
+				raw = TextEncoding.encode(text);
+			}
+
+			function decode(charset) {
+				TextEncoding.setCharset(charset);
+				return TextEncoding.decode(raw);
+			}
+
+			function formatEncoded() {
+				var hexText = '';
+				raw.forEach(function (elem) {
+					hexText += '\\x';
+					hexText += elem.toString(16);
+				});
+				return hexText;
+			}
+
+			function unformatEncoded(text) {
+				var hexArray = text.split('\\x');
+				hexArray.shift(); // remove the fist empty element
+				hexArray.forEach(function (elem, index) {
+					hexArray[index] = parseInt(elem, 16);
+				});
+				raw = Uint8Array.from(hexArray);
+			}
+
+			function updateTrans() {
+				a_trans.href =
+					'https://translate.google.com/?sl=ko&tl=en&text=' + encodeURI(i_euckr.value) + '&op=translate';
+				a_trans.innerHTML = i_euckr.value;
+			}
+
+			window.onload = function () {
+				i_euckr = document.getElementById('i_euckr');
+				a_trans = document.getElementById('a_trans');
+				i_latin1 = document.getElementById('i_latin1');
+				i_hex = document.getElementById('i_hex');
+
+				i_euckr.addEventListener('change', function () {
+					encode(i_euckr.value, 'euc-kr');
+					i_latin1.value = decode('iso-8859-1');
+					i_hex.value = formatEncoded();
+					updateTrans();
+				});
+
+				i_latin1.addEventListener('change', function () {
+					encode(i_latin1.value, 'iso-8859-1');
+					i_euckr.value = decode('euc-kr');
+					i_hex.value = formatEncoded();
+					updateTrans();
+				});
+
+				i_hex.addEventListener('change', function () {
+					unformatEncoded(i_hex.value);
+					i_euckr.value = decode('euc-kr');
+					i_latin1.value = decode('iso-8859-1');
+					updateTrans();
+				});
+			};
+		</script>
+	</head>
+
+	<body>
+		<table>
+			<tr>
+				<td>EUC-KR:</td>
+				<td><textarea id="i_euckr" class="tarea" type="text"></textarea></td>
+				<td>Example: 날라차기</td>
+			</tr>
+			<tr>
+				<td>Translate:</td>
+				<td><a id="a_trans" href="" target="_blank">Google translate</a></td>
+				<td>Example: fly kick</td>
+			</tr>
+			<tr>
+				<td>Latin-1:<br />(ISO-8859-1)</td>
+				<td><textarea id="i_latin1" class="tarea" type="text"></textarea></td>
+				<td>Example: ³¯¶óÂ÷±â</td>
+			</tr>
+			<tr>
+				<td>Escaped Hex:</td>
+				<td><textarea id="i_hex" class="tarea" type="text"></textarea></td>
+				<td>Example: \xb3\xaf\xb6\xf3\xc2\xf7\xb1\xe2</td>
+			</tr>
+		</table>
+	</body>
+</html>

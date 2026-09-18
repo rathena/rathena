@@ -1,0 +1,116 @@
+<div id="NpcStore">
+	<div class="InputWindow">
+		<div class="titlebar">
+			<ui-image src="basic_interface/titlebar_mid.bmp"></ui-image>
+			<div class="text">
+				<span class="WinSell"><ui-text msg="185">Available Items for selling</ui-text></span>
+				<span class="WinBuy"><ui-text msg="186">Shop Items</ui-text></span>
+				<span class="WinVendingStore">
+					<ui-text msg="227">Merchant Shop</ui-text> - <span class="seller"></span>
+				</span>
+				<span class="WinBuyingStore">
+					<ui-text msg="1737">Items wanted</ui-text> - <span class="seller"></span>
+				</span>
+			</div>
+		</div>
+		<div class="container">
+			<ui-image src="basic_interface/itemwin_left.bmp"></ui-image>
+			<div class="content"></div>
+		</div>
+		<div class="footer">
+			<ui-image src="basic_interface/btnbar_mid2.bmp"></ui-image>
+			<div class="cashuser WinCash">
+				[<span class="buyer"></span>]'s Points: <span class="cashpoints"></span>
+				<span class="unity">Point(s)</span>
+			</div>
+			<div class="WinBuyingStore limitZeny"><span class="priceLimit">Price limit: %s Zeny</span></div>
+			<div class="ask_quantity WinSell">
+				<button class="selectall"></button>
+				<ui-text msg="295">Don't ask the Quantity of Items</ui-text>
+			</div>
+			<ui-button class="resize" bg="btn_resize.bmp"></ui-button>
+		</div>
+	</div>
+
+	<div class="OutputWindow">
+		<div class="titlebar">
+			<ui-image src="basic_interface/titlebar_mid.bmp"></ui-image>
+			<div class="text">
+				<span class="WinSell WinBuyingStore"><ui-text msg="168">Selling Items</ui-text></span>
+				<span class="WinBuy WinVendingStore"><ui-text msg="166">Buying Items</ui-text></span>
+			</div>
+		</div>
+		<div class="container">
+			<ui-image src="basic_interface/itemwin_left.bmp"></ui-image>
+			<div class="content">
+				<ui-image src="basic_interface/itemwin_mid.bmp"></ui-image>
+			</div>
+		</div>
+		<div class="footer">
+			<ui-image src="basic_interface/btnbar_mid2.bmp"></ui-image>
+			<div class="total">Total : <span class="result"></span> <span class="unity">Zeny</span></div>
+			<div class="totalP WinCash">Total : <span class="resultP"></span> <span class="unity">Point</span></div>
+			<ui-button
+				class="btn sell WinSell WinBuyingStore"
+				bg="btn_sell.bmp"
+				hover="btn_sell_a.bmp"
+				down="btn_sell_b.bmp"
+			></ui-button>
+			<ui-button
+				class="btn buy WinBuy WinVendingStore"
+				bg="btn_buy.bmp"
+				hover="btn_buy_a.bmp"
+				down="btn_buy_b.bmp"
+			></ui-button>
+			<ui-button
+				class="btn cancel"
+				bg="btn_cancel.bmp"
+				hover="btn_cancel_a.bmp"
+				down="btn_cancel_b.bmp"
+			></ui-button>
+			<ui-button class="resize" bg="btn_resize.bmp"></ui-button>
+		</div>
+	</div>
+
+	<div class="AvailableItemsWindow">
+		<div class="titlebar">
+			<ui-image src="basic_interface/titlebar_mid.bmp"></ui-image>
+			<div class="text">
+				<span class="WinBuyingStore">
+					<ui-text msg="1733">Available Items</ui-text>
+				</span>
+			</div>
+		</div>
+		<div class="container">
+			<ui-image src="basic_interface/itemwin_left.bmp"></ui-image>
+			<div class="content contentAvailable">
+				<ui-image src="basic_interface/itemwin_mid.bmp"></ui-image>
+			</div>
+		</div>
+		<div class="footer">
+			<ui-image src="basic_interface/btnbar_mid2.bmp"></ui-image>
+			<ui-button class="resize" bg="btn_resize.bmp"></ui-button>
+		</div>
+	</div>
+
+	<div class="PurchaseResult">
+		<div class="titlebar">
+			<ui-image src="basic_interface/titlebar_mid.bmp"></ui-image>
+			<div class="text">
+				<span class="WinBuy"><ui-text msg="2530"></ui-text></span>
+			</div>
+		</div>
+		<div class="container">
+			<ui-image src="basic_interface/itemwin_left.bmp"></ui-image>
+			<div class="content">
+				<ui-image src="basic_interface/itemwin_mid.bmp"></ui-image>
+			</div>
+		</div>
+		<div class="footer">
+			<ui-image src="basic_interface/btnbar_mid2.bmp"></ui-image>
+			<div class="total">Total : <span class="result"></span> <span class="unity">Zeny</span></div>
+			<ui-button class="btn ok" bg="btn_ok.bmp" hover="btn_ok_a.bmp" down="btn_ok_b.bmp"></ui-button>
+			<ui-button class="resize" bg="btn_resize.bmp"></ui-button>
+		</div>
+	</div>
+</div>

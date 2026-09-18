@@ -1,0 +1,329 @@
+:host {
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+}
+
+#loader {
+	position: relative;
+	transform: translate(-10%, -50%);
+	top: 50%;
+	left: 50%;
+}
+
+#WorldMap {
+	position: fixed;
+	top: 0;
+	left: 0;
+	background: black;
+	height: 100%;
+	width: 100%;
+}
+
+#WorldMap .hidden {
+	display: none;
+}
+
+#WorldMap .titlebar {
+	height: 17px;
+	background-color: white;
+	background-repeat: repeat-x;
+}
+
+#WorldMap .titlebar .base {
+	width: 11px;
+	height: 11px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+
+#WorldMap .titlebar .text {
+	text-shadow: 1px 1px white;
+	vertical-align: -2px;
+	white-space: nowrap;
+	/* chrome bug */
+	display: inline-block;
+	width: 60px;
+	height: 13px;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+#WorldMap .titlebar .left {
+	margin-left: 3px;
+	float: left;
+	height: 17px;
+}
+
+#WorldMap .titlebar .right {
+	float: right;
+	margin-right: 3px;
+}
+
+#WorldMap .titlebar .clear {
+	clear: both;
+}
+
+#WorldMap select {
+	height: 17px;
+}
+
+/* V2 */
+#WorldMap .worldmap {
+	box-sizing: border-box;
+	display: grid;
+	justify-content: center;
+	overflow: auto;
+}
+
+#WorldMap .worldmap * {
+	box-sizing: border-box;
+}
+
+#WorldMap .border,
+#WorldMap .map,
+#WorldMap .content,
+#WorldMap .worldmap,
+#WorldMap .map-view {
+	height: 100%;
+}
+
+#WorldMap .worldmap .map-view {
+	position: relative;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+#WorldMap .worldmap .section {
+	position: absolute;
+	border: 0px;
+	border-radius: 4px;
+	background-color: rgba(0, 0, 0, 0);
+	cursor: pointer;
+	overflow: visible;
+}
+
+#WorldMap .worldmap .section:hover,
+#WorldMap .worldmap .section.allmapvisible,
+#WorldMap .worldmap .section.currentmap,
+#WorldMap .worldmap .section.membersonmap {
+	border: 1px solid #dddddd7a;
+}
+
+#WorldMap .worldmap .section:hover {
+	background-color: rgba(0, 128, 255, 0.5);
+}
+
+#WorldMap .worldmap .section.membersonmap:not(.currentmap) {
+	background-color: rgba(128, 255, 0, 0.5);
+}
+
+#WorldMap .worldmap .section.currentmap {
+	background-color: rgba(255, 128, 0, 0.5);
+}
+
+#WorldMap .worldmap .section .mapname {
+	display: none;
+}
+
+#WorldMap .worldmap .section.currentmap .mapname {
+	display: block;
+	position: absolute;
+	top: 3px;
+	left: 50%;
+	transform: translate(-50%, 0);
+	height: 11px;
+	color: white;
+	font-weight: bold;
+	text-shadow:
+		-1px -1px 0 #000,
+		1px -1px 0 #000,
+		-1px 1px 0 #000,
+		1px 1px 0 #000;
+	text-wrap: nowrap;
+	text-align: center;
+}
+
+#WorldMap .worldmap .section .mapid {
+	display: none;
+}
+
+#WorldMap .worldmap .section.allmapvisible .mapid {
+	display: block;
+	position: absolute;
+	bottom: 3px;
+	left: 50%;
+	transform: translate(-50%, 0);
+	height: 10px;
+	color: white;
+	text-shadow:
+		-1px -1px 0 #000,
+		1px -1px 0 #000,
+		-1px 1px 0 #000,
+		1px 1px 0 #000;
+	text-align: center;
+}
+
+#WorldMap .worldmap .airplane {
+	position: absolute;
+	width: 32px;
+	height: 32px;
+	top: 0px;
+	left: 0px;
+	transform: rotate(75deg);
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+#WorldMap .showlvl {
+	width: 10px;
+	height: 12px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}
+
+#WorldMap .worldmap .section .level-range-text {
+	display: none;
+	position: absolute;
+
+	top: 85%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+
+	width: 100%;
+	text-align: center;
+	font-weight: bold;
+	color: #ffffff;
+	text-shadow:
+		-1px -1px 0 #000,
+		1px -1px 0 #000,
+		-1px 1px 0 #000,
+		1px 1px 0 #000;
+}
+
+#WorldMap .worldmap.show-lvls .section .level-range-text {
+	display: block;
+}
+
+#WorldMap .worldmap .section .displayname {
+	display: none;
+}
+
+#WorldMap .worldmap .section.is-dungeon .displayname {
+	display: block;
+	position: absolute;
+	top: 3px;
+	left: 50%;
+	transform: translate(-50%, 0);
+	height: 11px;
+	color: white;
+	font-weight: bold;
+	text-shadow:
+		-1px -1px 0 #000,
+		1px -1px 0 #000,
+		-1px 1px 0 #000,
+		1px 1px 0 #000;
+	text-wrap: nowrap;
+	text-align: center;
+}
+
+#WorldMap .worldmap .section.currentmap .displayname {
+	display: block;
+	position: absolute;
+	top: 3px;
+	left: 50%;
+	transform: translate(-50%, 0);
+	height: 11px;
+	color: white;
+	font-weight: bold;
+	text-shadow:
+		-1px -1px 0 #000,
+		1px -1px 0 #000,
+		-1px 1px 0 #000,
+		1px 1px 0 #000;
+	text-wrap: nowrap;
+	text-align: center;
+}
+
+#WorldMap .worldmap.show-lvls .section:not(.is-dungeon):not(.is-dungeon-stacked) .mapname {
+	display: block;
+	position: absolute;
+	top: 3px;
+	left: 50%;
+	transform: translate(-50%, 0);
+	height: 11px;
+	color: white;
+	font-weight: bold;
+	text-shadow:
+		-1px -1px 0 #000,
+		1px -1px 0 #000,
+		-1px 1px 0 #000,
+		1px 1px 0 #000;
+	text-wrap: nowrap;
+	text-align: center;
+}
+
+#WorldMap .worldmap .section.is-dungeon {
+	background-color: rgba(255, 0, 0, 0.4) !important;
+	border: 1px solid rgba(255, 0, 0, 0.6) !important;
+}
+
+#WorldMap .worldmap .section.is-dungeon-stacked {
+	background-color: transparent !important;
+	border: 1px solid rgba(255, 0, 0, 0.6) !important;
+	display: block !important;
+}
+
+#WorldMap .worldmap .connector-line {
+	position: absolute;
+	height: 1px;
+	background-color: rgba(255, 0, 0, 0.5);
+	pointer-events: none;
+}
+
+#WorldMap #map-tooltip {
+	position: fixed;
+	z-index: 100;
+	pointer-events: none;
+	padding: 5px;
+	background-color: rgba(0, 0, 0, 0.85);
+	border: 1px solid #666;
+	border-radius: 4px;
+}
+
+#WorldMap #map-tooltip .tooltip-img {
+	width: 150px;
+	height: 150px;
+	background-color: #111;
+	background-size: cover;
+	background-position: center;
+}
+
+#WorldMap #map-tooltip .tooltip-mapname {
+	color: gold;
+	font-weight: bold;
+	text-align: center;
+	font-size: 12px;
+	padding: 3px 0 0;
+	text-shadow:
+		-1px -1px 0 #000,
+		1px -1px 0 #000,
+		-1px 1px 0 #000,
+		1px 1px 0 #000;
+}
+
+#WorldMap #map-tooltip .tooltip-mapid {
+	color: white;
+	text-align: center;
+	font-size: 11px;
+	padding: 2px 0;
+	text-shadow:
+		-1px -1px 0 #000,
+		1px -1px 0 #000,
+		-1px 1px 0 #000,
+		1px 1px 0 #000;
+}

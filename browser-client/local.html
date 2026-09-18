@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>rAthena Local — Ragnarok no navegador</title>
+<style>html,body,#game{width:100%;height:100%;margin:0;overflow:hidden;background:#161922;color:white}</style>
+<script src="/applications/api/api.js"></script>
+</head>
+<body><div id="game">Carregando Ragnarok…</div>
+<script>
+window.addEventListener('load', () => {
+ const game = new ROBrowser({
+  target: document.getElementById('game'), type: ROBrowser.TYPE.INLINE,
+  application: ROBrowser.APP.ONLINE, development: true,
+  remoteClient: 'http://127.0.0.1:3338/', skipIntro: true, skipServerList: true,
+  enableConsole: true, clientVersionMode: 'PacketVer',
+  servers: [{ display: 'rAthena-Local', address: '127.0.0.1', port: 6900,
+   version: 55, langtype: 1, packetver: 20211103, renewal: true,
+   packetKeys: false, socketProxy: 'ws://127.0.0.1:3338/ws/',
+   remoteClient: 'http://127.0.0.1:3338/', adminList: [] }]
+ });
+ game.start();
+});
+</script></body></html>

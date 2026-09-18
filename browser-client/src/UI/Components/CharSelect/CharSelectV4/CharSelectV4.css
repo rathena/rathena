@@ -1,0 +1,273 @@
+:host {
+	top: 0;
+	left: 0;
+	min-width: 100%;
+	min-height: 100%;
+}
+
+#CharSelectV4 {
+	position: absolute;
+	min-width: 100%;
+	min-height: 100%;
+	top: 0;
+	left: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+#CharSelectV4 .char_select_container {
+	position: absolute;
+	display: flex;
+	flex-direction: row;
+	background-color: rgba(0, 0, 0, 0.1);
+	border-radius: 5px;
+	padding-top: 20px;
+	padding-left: 5px;
+}
+
+/** Box **/
+#CharSelectV4 .char_list {
+	flex: 1;
+	max-width: 800px;
+	min-width: 157px;
+	height: 595px;
+	max-height: 80vh;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	overflow-y: auto;
+}
+
+#CharSelectV4 .box_select {
+	position: absolute;
+	width: 157px;
+	height: 159px;
+	top: 40px;
+	margin-left: -5px;
+}
+#CharSelectV4 .char_canvas {
+	width: 157px;
+	height: 195px;
+	position: relative;
+	z-index: 10;
+}
+#CharSelectV4 .char_canvas .name {
+	position: absolute;
+	bottom: 17px;
+	width: 100%;
+	text-align: center;
+	font-weight: bold;
+	color: #15154a;
+}
+
+#CharSelectV4 .char_canvas .job_icon {
+	position: absolute;
+	top: 15px;
+	right: 12px;
+	width: 25px;
+	height: 25px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+
+/** Slot info **/
+#CharSelectV4 .slotinfo {
+	position: absolute;
+	top: 195px;
+	right: 10px;
+	height: 20px;
+	display: block;
+	border: 1px solid #c6cee7;
+	border-radius: 4px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+#CharSelectV4 .slotinfo .number {
+	color: #58709e;
+	font-weight: bold;
+	margin-right: 10px;
+}
+#CharSelectV4 .slotinfo .content {
+	color: #555;
+	top: 6px;
+	right: 8px;
+}
+
+/** Page info **/
+#CharSelectV4 .pageinfo {
+	position: absolute;
+	left: 275px;
+	top: 185px;
+	font-weight: bold;
+	color: #646464;
+}
+#CharSelectV4 .pageinfo .current {
+	color: #fe3b7d;
+}
+
+/** Characters infos **/
+#CharSelectV4 .charinfo {
+	height: 585px;
+	max-height: 80vh;
+	width: 185px;
+	background-repeat: no-repeat;
+	margin-top: 10px;
+	margin-left: 10px;
+	position: relative;
+}
+#CharSelectV4 .charinfo div {
+	position: absolute;
+	width: 90px;
+	height: 13px;
+}
+#CharSelectV4 .charinfo .name {
+	left: 52px;
+	top: 2px;
+	white-space: nowrap;
+}
+#CharSelectV4 .charinfo .job {
+	left: 60px;
+	top: 105px;
+}
+#CharSelectV4 .charinfo .lvl {
+	left: 60px;
+	top: 123px;
+}
+#CharSelectV4 .charinfo .exp {
+	left: 60px;
+	top: 140px;
+}
+#CharSelectV4 .charinfo .hp {
+	left: 60px;
+	top: 157px;
+}
+#CharSelectV4 .charinfo .sp {
+	left: 60px;
+	top: 174px;
+}
+#CharSelectV4 .charinfo .map {
+	left: 60px;
+	top: 89px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+#CharSelectV4 .charinfo .str {
+	left: 60px;
+	top: 191px;
+}
+#CharSelectV4 .charinfo .agi {
+	left: 60px;
+	top: 208px;
+}
+#CharSelectV4 .charinfo .vit {
+	left: 60px;
+	top: 225px;
+}
+#CharSelectV4 .charinfo .int {
+	left: 60px;
+	top: 242px;
+}
+#CharSelectV4 .charinfo .dex {
+	left: 60px;
+	top: 259px;
+}
+#CharSelectV4 .charinfo .luk {
+	left: 60px;
+	top: 276px;
+}
+
+/** Buttons **/
+#CharSelectV4 .btn.delete {
+	position: absolute;
+	width: 131px;
+	height: 24px;
+}
+
+#CharSelectV4 .btn.canceldelete {
+	position: absolute;
+	width: 131px;
+	height: 24px;
+}
+
+#CharSelectV4 .btn.finaldelete {
+	position: absolute;
+	width: 131px;
+	height: 24px;
+}
+
+#CharSelectV4 .btn.delete,
+#CharSelectV4 .btn.canceldelete,
+#CharSelectV4 .btn.finaldelete {
+	background-repeat: no-repeat;
+	background-color: transparent;
+	border: 0;
+	text-align: center;
+	line-height: 24px;
+}
+
+#CharSelectV4 .btn.ok {
+	position: absolute;
+	width: 165px;
+	height: 110px;
+	color: white;
+	padding-top: 20px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	border: 0;
+	text-align: center;
+}
+
+#CharSelectV4 .btn.ok:hover {
+	text-shadow: #000 1px 1px;
+}
+
+#CharSelectV4 .ok,
+#CharSelectV4 .make {
+	right: 15px;
+	top: 380px;
+}
+#CharSelectV4 .cancel {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	width: 17px;
+	height: 18px;
+}
+#CharSelectV4 .delete {
+	right: 33px;
+	top: 300px;
+}
+
+#CharSelectV4 .canceldelete {
+	right: 33px;
+	top: 300px;
+}
+
+#CharSelectV4 .finaldelete {
+	right: 33px;
+	top: 330px;
+}
+
+#CharSelectV4 .timedelete {
+	position: relative;
+	height: 20px;
+	width: 100px;
+	top: -150px;
+	left: 55px;
+}
+
+#CharSelectV4 .hidden {
+	display: none;
+}
+
+/* Fix: global white text inheritance */
+#CharSelectV4 .charinfo {
+    color: #3f4d70;
+}
+
+#CharSelectV4 .charinfo div {
+    color: #3f4d70;
+}

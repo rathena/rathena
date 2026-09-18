@@ -1,0 +1,130 @@
+:host {
+	width: 400px;
+	height: 200px;
+	top: 150px;
+	left: 150px;
+}
+
+#win_sense {
+	position: absolute;
+	width: 400px;
+	height: 200px;
+}
+
+#win_sense .header {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 17px;
+	width: 100%;
+}
+#win_sense .header .titbar_left {
+	height: 100%;
+	width: 12px;
+	float: left;
+}
+#win_sense .header .titbar_mid {
+	height: 100%;
+	width: 376px;
+	float: left;
+	background-repeat: repeat-x;
+}
+#win_sense .header .titbar_right {
+	height: 100%;
+	width: 12px;
+	float: left;
+}
+#win_sense .header .title {
+	position: absolute;
+	top: 2px;
+	left: 12px;
+}
+
+#win_sense .content {
+	position: absolute;
+	top: 17px;
+	left: 0px;
+	height: 155px;
+	width: 100%;
+	background-color: white;
+}
+
+#win_sense .sprite {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 155px;
+	width: 120px;
+}
+
+#win_sense .stats {
+	position: absolute;
+	top: 5px;
+	left: 120px;
+	width: 280px;
+}
+#win_sense .stats tr td {
+	padding: 0px;
+	height: 14px;
+}
+
+#win_sense .elements {
+	position: absolute;
+	bottom: 5px;
+	left: 120px;
+	border: 0px;
+	border-spacing: 9px 2px;
+}
+#win_sense .elements tr td {
+	border: 1px solid blue;
+	text-align: center;
+	width: 75px;
+	padding: 1px;
+}
+
+#win_sense .element_good {
+	color: darkgreen;
+	font-weight: bold;
+}
+#win_sense .element_bad {
+	color: darkred;
+}
+
+#win_sense .footer {
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	height: 29px;
+	width: 100%;
+}
+#win_sense .footer .bg_left {
+	height: 100%;
+	width: 21px;
+	float: left;
+}
+#win_sense .footer .bg_mid {
+	height: 100%;
+	width: 357px;
+	float: left;
+	background-repeat: repeat-x;
+}
+#win_sense .footer .bg_right {
+	height: 100%;
+	width: 21px;
+	float: left;
+}
+
+#win_sense .footer .btns {
+	position: absolute;
+	bottom: 2px;
+	right: 3px;
+}
+#win_sense .footer .btn {
+	border: 0;
+	width: 42px;
+	height: 20px;
+	bottom: 4px;
+	margin-left: 3px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}

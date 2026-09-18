@@ -1,0 +1,37 @@
+<div id="CaptchaUpload">
+	<div class="titlebar">
+		<ui-image src="basic_interface/titlebar_mid.bmp"></ui-image>
+		<div class="left">
+			<ui-button
+				class="base"
+				bg="basic_interface/sys_base_off.bmp"
+				hover="basic_interface/sys_base_on.bmp"
+			></ui-button>
+		</div>
+		<div class="right">
+			<ui-button
+				class="base close"
+				bg="basic_interface/sys_close_off.bmp"
+				hover="basic_interface/sys_close_on.bmp"
+			></ui-button>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="container">
+		<div class="custom_file_input">
+			<input type="text" class="captcha_file_text" readonly placeholder="No file selected" />
+			<ui-button
+				class="btn_browse"
+				bg="basic_interface/txtbox_btn_a.bmp"
+				hover="basic_interface/txtbox_btn_b.bmp"
+				down="basic_interface/txtbox_btn_c.bmp"
+			></ui-button>
+			<input type="file" class="captcha_file_input" accept="image/bmp" style="display: none" />
+		</div>
+		<div class="preview_box"></div>
+		<div class="controls">
+			<input type="text" class="answer_input" placeholder="Captcha Answer" />
+			<ui-button class="btn ok" bg="btn_ok.bmp" hover="btn_ok_a.bmp" down="btn_ok_b.bmp"></ui-button>
+		</div>
+	</div>
+</div>

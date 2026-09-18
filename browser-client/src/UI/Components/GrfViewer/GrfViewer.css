@@ -1,0 +1,249 @@
+:host {
+	top: 0;
+	left: 0;
+	width: 100%;
+	font-size: 14px;
+}
+
+#grfviewer {
+	font-family: Times;
+	/* Opt out of Common.css's font-size-adjust: Times' x-height is smaller than Arial's, so
+	   normalizing would rescale this viewer's text (~+15%). Keep its native metrics. */
+	font-size-adjust: none;
+	margin-top: 60px;
+}
+
+/** CONTEXTMENU **/
+.overlay {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	display: none;
+	z-index: 99;
+}
+#contextmenu {
+	position: absolute;
+	min-width: 150px;
+	font-family: Arial;
+	font-size: 9pt;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	background-color: white;
+	border: 1px solid #bababa;
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+	display: none;
+	z-index: 100;
+}
+#contextmenu a {
+	text-decoration: none;
+	color: black;
+	display: block;
+}
+#contextmenu hr {
+	padding: 0px;
+	margin: 0px;
+	height: 1px;
+	border: none;
+	background-color: #ddd;
+}
+#contextmenu div,
+#contextmenu a {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 25px;
+	padding-right: 25px;
+}
+#contextmenu div:hover,
+#contextmenu a:hover {
+	background-color: #efefef;
+}
+#contextmenu .disable,
+#contextmenu a.disable {
+	color: #a1a192;
+	font-weight: bold;
+}
+#contextmenu .disable:hover {
+	background-color: white;
+}
+
+/** ICONS **/
+#grfviewer .icon {
+	display: inline-block;
+	text-align: center;
+	margin-bottom: 20px;
+	padding-top: 20px;
+	vertical-align: top;
+	width: 95px;
+	height: 95px;
+	border: 1px solid transparent;
+	word-wrap: break-word;
+	z-index: 10;
+}
+
+#grfviewer .icon:hover {
+	background-color: #dae9fc;
+	border: 1px solid #8c9fb0;
+	border-radius: 3px;
+}
+
+/** HEAD **/
+#head {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 40px;
+	background: #222;
+}
+#path,
+#search {
+	background: transparent;
+	border: 1px solid #333;
+	color: #ccc;
+	height: 20px;
+	position: absolute;
+	top: 8px;
+	padding-left: 5px;
+	outline: none;
+	width: 40%;
+}
+
+#search {
+	right: 10px;
+	text-align: right;
+	width: 20%;
+	font-style: italic;
+	padding-right: 10px;
+	color: #555;
+}
+
+#previous,
+#next {
+	width: 26px;
+	height: 25px;
+	background-repeat: no-repeat;
+	display: inline-block;
+	margin-top: 8px;
+	margin-left: 10px;
+	opacity: 0.5;
+}
+
+#next {
+	background-repeat: no-repeat;
+	margin-right: 10px;
+	margin-left: 0px;
+}
+
+#next.on,
+#previous.on {
+	opacity: 1;
+}
+
+/** PROGRESS BAR **/
+#progress {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin-left: -17px;
+	background-repeat: no-repeat;
+	width: 36px;
+	height: 36px;
+	display: none;
+}
+
+/** Preview Stuff **/
+#preview {
+	background: rgba(0, 0, 0, 0.8);
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	display: none;
+}
+#preview .box {
+	position: relative;
+}
+
+/** Drag drop Stuff **/
+#info {
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	width: 100%;
+	height: 200px;
+	text-align: center;
+	background-color: #eee;
+	border-top: 1px solid #ddd;
+}
+
+#info .input {
+	position: relative;
+	width: 147px;
+	height: 46px;
+	display: inline;
+}
+#info .input input {
+	position: absolute;
+	width: 147px;
+	height: 46px;
+	top: 0px;
+	left: 0px;
+	visibility: hidden;
+}
+
+#info h3 {
+	color: rgb(51, 51, 51);
+	display: block;
+	font-family: sans-serif;
+	font-size: 20px;
+	font-weight: 200;
+	height: 28px;
+	margin-bottom: 32px;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 50px;
+	text-align: center;
+}
+
+#msg {
+	color: rgb(51, 51, 51);
+	font-family: sans-serif;
+	font-size: 18px;
+	font-weight: 200;
+	margin-top: 80px;
+	margin-left: 20px;
+	display: none;
+}
+
+#info button {
+	background-color: rgb(243, 243, 243);
+	background-image: -webkit-linear-gradient(top, rgb(254, 254, 254), rgb(244, 244, 244));
+	background-image: -moz-linear-gradient(top, rgb(254, 254, 254), rgb(244, 244, 244));
+	border: 1px solid rgb(187, 187, 187);
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	color: rgb(51, 51, 51);
+	font-family: sans-serif;
+	font-size: 14px;
+	text-align: center;
+	text-decoration: none;
+	text-shadow: rgb(255, 255, 255) 0px 1px 0px;
+	height: 46px;
+	width: 147px;
+	z-index: 0;
+}
+
+#info button:hover {
+	border: 1px solid rgb(165, 165, 165);
+}
+#info button:active {
+	background-image: -webkit-linear-gradient(top, rgb(234, 234, 234), rgb(244, 244, 244));
+	background-image: -moz-linear-gradient(top, rgb(234, 234, 234), rgb(244, 244, 244));
+}

@@ -1,0 +1,481 @@
+:host {
+	width: 280px;
+	height: 130px;
+	top: 200px;
+	left: 200px;
+}
+
+#WinStats {
+	position: absolute;
+	width: 280px;
+	height: 140px;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}
+
+#WinStats .titlebar {
+	width: 280px;
+	height: 17px;
+	background-color: white;
+	background-repeat: repeat-x;
+	border-radius: 3px 3px 0px 0px;
+}
+#WinStats .titlebar .base {
+	width: 11px;
+	height: 11px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+#WinStats .titlebar .text {
+	text-shadow: 1px 1px white;
+	vertical-align: -2px;
+	white-space: nowrap;
+	/* chrome bug */
+	display: inline-block;
+	width: 32px;
+	height: 13px;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+#WinStats .titlebar .left {
+	margin-left: 3px;
+	float: left;
+}
+#WinStats .titlebar .right {
+	float: right;
+	margin-right: 3px;
+}
+#WinStats .titlebar .clear {
+	clear: both;
+}
+
+#WinStats .panel {
+	height: 235px;
+}
+#WinStats .common_stats {
+	height: 123px;
+}
+#WinStats .group {
+	position: absolute;
+	top: 23px;
+}
+#WinStats .group div {
+	height: 16px;
+	display: block;
+}
+#WinStats .stats {
+	left: 37px;
+}
+#WinStats .bonus {
+	left: 54px;
+}
+#WinStats .requirements,
+#WinStats .t_requirements {
+	left: 85px;
+	text-align: right;
+	width: 12px;
+}
+#WinStats .column1 {
+	top: 23px;
+	right: 88px;
+	text-align: right;
+}
+#WinStats .column2 {
+	top: 23px;
+	right: 5px;
+	text-align: right;
+}
+#WinStats .up {
+	left: 75px;
+	top: 19px;
+}
+#WinStats .up button {
+	display: block;
+	margin-top: 5px;
+	border: none;
+	width: 11px;
+	height: 11px;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}
+
+#WinStats .footer {
+	height: 23px;
+	position: absolute;
+	top: 117px;
+	width: 100px;
+}
+#WinStats .footer .left {
+	float: left;
+	text-align: left;
+	margin-top: 3px;
+}
+#WinStats .footer .view_traits {
+	width: 20px;
+	height: 20px;
+	border: none;
+}
+
+#WinStats .trait_text {
+	position: absolute;
+	top: 5px;
+	left: 20px;
+}
+
+#WinStats .traits_component {
+	position: absolute;
+	left: 0px;
+	display: block;
+	width: 280px;
+}
+
+#WinStats .traits_panel {
+	background-position: 0px -123px;
+	position: absolute;
+	height: 100px;
+	width: 280px;
+}
+#WinStats .trait {
+	position: absolute;
+	top: 4px;
+}
+#WinStats .trait div {
+	height: 16px;
+	display: block;
+}
+
+#WinStats .t_up {
+	left: 75px;
+	top: 0px;
+}
+#WinStats .t_up button {
+	display: block;
+	margin-top: 5px;
+	border: none;
+	width: 11px;
+	height: 11px;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}
+
+#WinStats .t_column1 {
+	top: 3px;
+	right: 92px;
+	text-align: right;
+}
+#WinStats .t_column2 {
+	top: 3px;
+	right: 5px;
+	text-align: right;
+}
+
+#WinStats .trait_point {
+	position: absolute;
+	left: 80px;
+}
+
+/* Tooltips */
+
+#WinStats .status_panel_tooltip {
+	position: relative;
+	width: 75px;
+	height: 100px;
+}
+
+#WinStats .status_panel_tooltip div {
+	display: inline-block;
+	position: relative;
+	width: 70px;
+	height: 16px;
+	left: 5px;
+	top: 4px;
+	z-index: 10;
+}
+
+#WinStats .status_panel_tooltip .desc {
+	display: block;
+	position: relative;
+}
+
+#WinStats .status_panel_tooltip .hover {
+	position: absolute;
+	display: none;
+	z-index: 1;
+	background-color: rgba(0, 0, 0, 0.6);
+	color: white;
+	padding: 5px;
+	white-space: nowrap;
+	font-size: 0.6rem;
+	pointer-events: none;
+}
+
+#WinStats .status_panel_tooltip div:hover .hover {
+	display: block;
+}
+
+#WinStats .column1_tooltip {
+	position: absolute;
+	width: 87px;
+	height: 100px;
+	top: 20px;
+	left: 105px;
+}
+
+#WinStats .column1_tooltip div {
+	display: inline-block;
+	position: relative;
+	width: 85px;
+	height: 16px;
+	left: 0px;
+	top: 0px;
+	z-index: 10;
+}
+
+#WinStats .column1_tooltip .desc {
+	display: block;
+	position: relative;
+}
+
+#WinStats .column1_tooltip .hover {
+	position: absolute;
+	display: none;
+	z-index: 1;
+	background-color: rgba(0, 0, 0, 0.6);
+	color: white;
+	padding: 5px;
+	white-space: nowrap;
+	font-size: 0.6rem;
+	pointer-events: none;
+}
+
+#WinStats .column1_tooltip div:hover .hover {
+	display: block;
+}
+
+#WinStats .column2_tooltip {
+	position: absolute;
+	width: 85px;
+	height: 65px;
+	top: 20px;
+	left: 195px;
+}
+
+#WinStats .column2_tooltip div {
+	display: inline-block;
+	position: relative;
+	width: 85px;
+	height: 16px;
+	left: 0px;
+	top: 0px;
+	z-index: 10;
+}
+
+#WinStats .column2_tooltip .desc {
+	display: block;
+	position: relative;
+}
+
+#WinStats .column2_tooltip .hover {
+	position: absolute;
+	display: none;
+	z-index: 1;
+	background-color: rgba(0, 0, 0, 0.6);
+	color: white;
+	padding: 5px;
+	white-space: nowrap;
+	font-size: 0.6rem;
+	pointer-events: none;
+}
+
+#WinStats .column2_tooltip div:hover .hover {
+	display: block;
+}
+
+#WinStats .trait_panel_tooltip {
+	position: relative;
+	width: 75px;
+	height: 100px;
+}
+
+#WinStats .trait_panel_tooltip div {
+	display: inline-block;
+	position: relative;
+	width: 70px;
+	height: 16px;
+	left: 5px;
+	top: 4px;
+	z-index: 10;
+}
+
+#WinStats .trait_panel_tooltip .desc {
+	display: block;
+	position: relative;
+}
+
+#WinStats .trait_panel_tooltip .hover {
+	position: absolute;
+	display: none;
+	z-index: 1;
+	background-color: rgba(0, 0, 0, 0.6);
+	color: white;
+	padding: 5px;
+	white-space: nowrap;
+	font-size: 0.6rem;
+	pointer-events: none;
+}
+
+#WinStats .trait_panel_tooltip div:hover .hover {
+	display: block;
+}
+
+#WinStats .t_column1_tooltip {
+	position: absolute;
+	width: 87px;
+	height: 100px;
+	top: 0px;
+	left: 105px;
+}
+
+#WinStats .t_column1_tooltip div {
+	display: inline-block;
+	position: relative;
+	width: 85px;
+	height: 16px;
+	left: 0px;
+	top: 0px;
+	z-index: 10;
+}
+
+#WinStats .t_column1_tooltip .desc {
+	display: block;
+	position: relative;
+}
+
+#WinStats .t_column1_tooltip .hover {
+	position: absolute;
+	display: none;
+	z-index: 1;
+	background-color: rgba(0, 0, 0, 0.6);
+	color: white;
+	padding: 5px;
+	white-space: nowrap;
+	font-size: 0.6rem;
+	pointer-events: none;
+}
+
+#WinStats .t_column1_tooltip div:hover .hover {
+	display: block;
+}
+
+#WinStats .t_column2_tooltip {
+	position: absolute;
+	width: 85px;
+	height: 65px;
+	top: 0px;
+	left: 195px;
+}
+
+#WinStats .t_column2_tooltip div {
+	display: inline-block;
+	position: relative;
+	width: 85px;
+	height: 16px;
+	left: 0px;
+	top: 0px;
+	z-index: 10;
+}
+
+#WinStats .t_column2_tooltip .desc {
+	display: block;
+	position: relative;
+}
+
+#WinStats .t_column2_tooltip .hover {
+	position: absolute;
+	display: none;
+	z-index: 1;
+	background-color: rgba(0, 0, 0, 0.6);
+	color: white;
+	padding: 5px;
+	white-space: nowrap;
+	font-size: 0.6rem;
+	pointer-events: none;
+}
+
+#WinStats .t_column2_tooltip div:hover .hover {
+	display: block;
+}
+
+/* =========================================================
+ * Status Window - labels e cores
+ * ========================================================= */
+
+/* Cor padrão dos valores */
+#WinStats .stats,
+#WinStats .bonus,
+#WinStats .requirements,
+#WinStats .column1,
+#WinStats .column2,
+#WinStats .trait,
+#WinStats .t_requirements,
+#WinStats .t_column1,
+#WinStats .t_column2,
+#WinStats .trait_point,
+#WinStats .trait_text {
+        color: #333333;
+}
+
+/* Base status labels */
+#WinStats .stat_labels {
+        left: 5px;
+        width: 28px;
+        color: #333333;
+        text-align: left;
+}
+
+/* Coluna ATK/MATK/HIT/CRITICAL */
+#WinStats .column1_labels {
+        left: 105px;
+        width: 50px;
+        color: #333333;
+        text-align: left;
+}
+
+/* Coluna DEF/MDEF/FLEE/ASPD/etc */
+#WinStats .column2_labels {
+        left: 195px;
+        width: 48px;
+        color: #333333;
+        text-align: left;
+}
+
+/* Trait labels */
+#WinStats .trait_labels {
+        left: 5px;
+        width: 28px;
+        color: #333333;
+        text-align: left;
+}
+
+#WinStats .t_column1_labels {
+        left: 105px;
+        width: 50px;
+        color: #333333;
+        text-align: left;
+}
+
+#WinStats .t_column2_labels {
+        left: 195px;
+        width: 45px;
+        color: #333333;
+        text-align: left;
+}
+
+/* Nome da aba Traits */
+#WinStats .trait_text {
+        color: #333333;
+        font-size: 11px;
+}

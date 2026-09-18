@@ -1,0 +1,321 @@
+:host {
+	width: 794px;
+	height: 422px;
+}
+
+#charcreate_v4 {
+	position: absolute;
+	width: 794px;
+	height: 422px;
+}
+
+#charcreate_v4 .title {
+	position: absolute;
+	left: 45px;
+	top: 15px;
+	height: 20px;
+	width: 200px;
+}
+
+#charcreate_v4 .human::before,
+#charcreate_v4 .doram::before,
+#charcreate_v4 .human::after,
+#charcreate_v4 .doram::after {
+	content: '';
+	display: table;
+}
+#charcreate_v4 .human::after,
+#charcreate_v4 .doram::after {
+	clear: both;
+}
+#charcreate_v4 .race {
+	display: none;
+}
+
+/** Human Race **/
+#charcreate_v4 .human_label {
+	position: absolute;
+	width: 370px;
+	height: 170px;
+	top: 35px;
+	left: 20px;
+	outline: none;
+	background-repeat: no-repeat;
+}
+#charcreate_v4 .human_title {
+	position: absolute;
+	color: white;
+	top: 22px;
+	left: 45px;
+	height: 20px;
+	width: 50px;
+}
+#charcreate_v4 .human_desc {
+	position: relative;
+	top: 22px;
+	left: 110px;
+	height: 60px;
+	width: 220px;
+}
+/** Human Chargen **/
+#charcreate_v4 .human .chargen canvas {
+	position: absolute;
+	top: 40px;
+	left: 25px;
+}
+
+/** Doram Race **/
+#charcreate_v4 .doram_label {
+	position: absolute;
+	width: 370px;
+	height: 170px;
+	top: 210px;
+	left: 20px;
+	outline: none;
+	background-repeat: no-repeat;
+}
+#charcreate_v4 .doram_title {
+	position: absolute;
+	color: white;
+	top: 22px;
+	left: 45px;
+	height: 20px;
+	width: 50px;
+}
+#charcreate_v4 .doram_desc {
+	position: relative;
+	top: 22px;
+	left: 110px;
+	height: 60px;
+	width: 220px;
+}
+/** Doram Chargen **/
+#charcreate_v4 .doram .chargen_doram canvas {
+	position: absolute;
+	top: 40px;
+	left: 25px;
+}
+
+/* Style */
+#charcreate_v4 #style {
+	position: relative;
+	left: 395px;
+	top: 30px;
+	width: 200px;
+	height: 270px;
+}
+#charcreate_v4 .gender_button {
+	display: none;
+}
+
+#charcreate_v4 #style .gender {
+	position: absolute;
+	top: 25px;
+	left: 40px;
+	height: 26px;
+	width: 130px;
+}
+#charcreate_v4 #male_container {
+	position: relative;
+	height: 25px;
+	width: 62px;
+	white-space: nowrap;
+}
+#charcreate_v4 #female_container {
+	position: relative;
+	left: 61px;
+	top: -25px;
+	height: 25px;
+	width: 62px;
+	white-space: nowrap;
+}
+
+#charcreate_v4 #style .male_button {
+	position: absolute;
+	height: 25px;
+	width: 62px;
+}
+#charcreate_v4 #style .female_button {
+	position: absolute;
+	height: 25px;
+	width: 62px;
+}
+
+/** Style Model **/
+#charcreate_v4 .model {
+	position: relative;
+	top: 115px;
+	left: 55px;
+	width: 100px;
+}
+#charcreate_v4 .model canvas {
+	position: relative;
+	top: -5px;
+	left: 17px;
+}
+
+/** Buttons **/
+#charcreate_v4 #style .rot_left {
+	position: relative;
+	top: 40px;
+	left: 30px;
+	height: 23px;
+	width: 22px;
+}
+#charcreate_v4 #style .rot_right {
+	position: relative;
+	top: 40px;
+	left: 130px;
+	height: 23px;
+	width: 22px;
+}
+
+/** Char Name **/
+#charcreate_v4 #char_name {
+	position: relative;
+	height: 20px;
+	width: 140px;
+	top: 115px;
+	left: -20px;
+	border-width: 0px;
+}
+
+/** Hair Settings **/
+#charcreate_v4 #hair_setting {
+	position: absolute;
+	top: 35px;
+	left: 600px;
+	height: 380px;
+	width: 185px;
+}
+
+#charcreate_v4 .hair_style_title {
+	position: relative;
+	height: 15px;
+	width: 60px;
+	top: 10px;
+	left: 10px;
+}
+
+#charcreate_v4 .hairstyle_row {
+	position: relative;
+	display: flex;
+	top: 10px;
+	left: 10px;
+}
+#charcreate_v4 .styleCol {
+	position: relative;
+	width: 36px;
+	height: 37px;
+	white-space: nowrap;
+}
+
+#charcreate_v4 .hstyle {
+	display: none;
+}
+#charcreate_v4 .hstyle_button {
+	position: absolute;
+	width: 36px;
+	height: 37px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+#charcreate_v4 .hair-styles {
+	position: relative;
+	width: 100px;
+	height: 100px;
+}
+#charcreate_v4 .hair-style {
+	position: absolute;
+	height: 225px;
+	top: 12px;
+	left: -2px;
+	display: none;
+}
+
+#charcreate_v4 .hair_color_title {
+	position: relative;
+	height: 20px;
+	width: 60px;
+	top: 230px;
+	left: 10px;
+}
+
+#charcreate_v4 .hair_colors {
+	position: absolute;
+	top: 265px;
+	left: 15px;
+}
+#charcreate_v4 .haircolor_row {
+	position: relative;
+	display: flex;
+}
+#charcreate_v4 .colorCol {
+	position: relative;
+	width: 22px;
+	height: 22px;
+	white-space: nowrap;
+	margin: 2px 2px;
+}
+#charcreate_v4 .hcolor {
+	display: none;
+}
+#charcreate_v4 .hcolor_button {
+	position: absolute;
+	width: 22px;
+	height: 22px;
+}
+
+#charcreate_v4 .btns {
+	position: absolute;
+	bottom: 4px;
+	width: 100%;
+	height: 20px;
+}
+#charcreate_v4 .btn {
+	position: absolute;
+	width: 42px;
+	height: 20px;
+}
+#charcreate_v4 .make {
+	right: 25px;
+	top: -20px;
+	height: 27px;
+	width: 152px;
+}
+#charcreate_v4 .cancel {
+	right: -15px;
+	top: -389px;
+}
+#charcreate_v4 .return {
+	width: 152px;
+	height: 27px;
+	top: -20px;
+	left: 25px;
+}
+
+#charcreate_v4 .btns ui-button {
+	background-repeat: no-repeat;
+	background-color: transparent;
+	border: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* Fix: global white text inheritance */
+#charcreate_v4 {
+    color: #3f4d70;
+}
+
+#charcreate_v4 .title,
+#charcreate_v4 .human_desc,
+#charcreate_v4 .doram_desc,
+#charcreate_v4 .hair_style_title,
+#charcreate_v4 .hair_color_title {
+    color: #3f4d70;
+}
+
+#charcreate_v4 #char_name {
+    color: #222;
+}

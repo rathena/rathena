@@ -1,0 +1,139 @@
+:host {
+	width: 555px;
+	height: 455px;
+	top: 0px;
+	left: 0px;
+}
+
+#MakeReadBook {
+	position: absolute;
+	width: 555px;
+}
+
+#MakeReadBook .titlebar {
+	width: 100%;
+	height: 17px;
+	background-color: white;
+	background-repeat: repeat-x;
+	border-radius: 3px 3px 0px 0px;
+}
+#MakeReadBook .titlebar .text {
+	text-shadow: 1px 1px white;
+	vertical-align: -2px;
+	white-space: nowrap;
+	display: inline-block;
+	height: 13px;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+#MakeReadBook .titlebar .title {
+	margin-left: 3px;
+	text-align: center;
+}
+
+#MakeReadBook #textBook {
+	margin: 0;
+	margin-top: -25px;
+	width: 500px;
+	white-space: break-spaces;
+}
+
+#MakeReadBook .panel {
+	height: 415px;
+	display: block;
+}
+#MakeReadBook .body {
+	flex: 1;
+	background-repeat: repeat-x;
+	border-radius: 0px 0px 0px 5px;
+	padding: 0px 0px 0px 30px;
+	white-space: pre-wrap;
+}
+#MakeReadBook .head {
+	display: flex;
+	text-align: center;
+	flex: 1;
+	background-repeat: repeat-x;
+	border-radius: 0px 0px 0px 5px;
+	width: 535px;
+	height: 25px;
+}
+#MakeReadBook .footer {
+	flex: 1;
+	background-repeat: repeat-x;
+	border-radius: 0px 0px 0px 5px;
+	position: absolute;
+	bottom: 4px;
+	width: 555px;
+	height: 25px;
+}
+#MakeReadBook .event_book {
+	flex: 1;
+}
+#MakeReadBook .clone_book {
+	position: absolute;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	border: none;
+	right: 4px;
+	top: 10%;
+}
+#MakeReadBook .highlighter {
+	margin-left: 10px;
+	margin-top: 5px;
+}
+#MakeReadBook #highlighter {
+	text-align: left;
+}
+#MakeReadBook #next_previous {
+	text-align: right;
+	margin-top: 5px;
+	margin-right: -10px;
+}
+
+#MakeReadBook .bookmark {
+	pointer-events: none;
+	position: absolute;
+	white-space: nowrap;
+	z-index: 900;
+	height: 13px;
+	background: rgba(0, 0, 0, 0.5);
+	color: white;
+	text-shadow: black 1px 1px;
+	top: 8px;
+	left: 11px;
+	text-align: center;
+	padding: 3px 4px 1px 4px;
+	display: none;
+}
+#MakeReadBook .previous {
+	pointer-events: none;
+	position: absolute;
+	white-space: nowrap;
+	z-index: 900;
+	height: 13px;
+	background: rgba(0, 0, 0, 0.5);
+	color: white;
+	text-shadow: black 1px 1px;
+	top: 6px;
+	right: 12px;
+	text-align: center;
+	padding: 3px 4px 1px 4px;
+	display: none;
+}
+#MakeReadBook .next {
+	pointer-events: none;
+	position: absolute;
+	white-space: nowrap;
+	z-index: 900;
+	height: 13px;
+	background: rgba(0, 0, 0, 0.5);
+	color: white;
+	text-shadow: black 1px 1px;
+	top: 6px;
+	right: -10px;
+	text-align: center;
+	padding: 3px 4px 1px 4px;
+	display: none;
+}

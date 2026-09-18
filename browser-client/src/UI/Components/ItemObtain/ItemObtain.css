@@ -1,0 +1,27 @@
+:host {
+	top: 50px;
+	left: 0px;
+	pointer-events: none;
+}
+
+#ItemObtain {
+	position: relative;
+	width: auto;
+	border-radius: 5px;
+	background: white;
+	padding: 2px;
+	letter-spacing: 0px;
+	pointer-events: auto;
+}
+#ItemObtain .content {
+	border: 1px solid #c1c6c2;
+	height: 25px;
+	padding-left: 10px;
+	padding-right: 15px;
+	border-radius: 5px;
+	white-space: nowrap;
+	line-height: 25px;
+}
+#ItemObtain img {
+	vertical-align: -6px;
+}

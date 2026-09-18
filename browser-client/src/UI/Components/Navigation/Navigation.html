@@ -1,0 +1,54 @@
+<div class="Navigation">
+	<div class="titlebar">
+		<div class="left" data-background="basic_interface/titlebar_left.bmp"></div>
+		<div class="center" data-background="basic_interface/titlebar_mid.bmp"></div>
+		<div class="right" data-background="basic_interface/titlebar_right.bmp"></div>
+		<div class="title">Navigation</div>
+		<ui-button
+			class="close"
+			bg="basic_interface/sys_close_off.bmp"
+			hover="basic_interface/sys_close_on.bmp"
+		></ui-button>
+	</div>
+	<div class="content">
+		<div class="search-container">
+			<select class="search-type">
+				<option value="ALL">ALL</option>
+				<option value="NPC">NPC</option>
+				<option value="MOB">MOB</option>
+			</select>
+			<div class="search-left" data-background="basic_interface/txtbox_l.bmp"></div>
+			<div class="search-middle" data-background="basic_interface/txtbox_m.bmp"></div>
+			<div class="search-right" data-background="basic_interface/txtbox_r.bmp"></div>
+			<input type="text" class="search-input" placeholder="Search..." />
+			<ui-button
+				class="search-button"
+				bg="navigation_interface/navisearch_a.bmp"
+				hover="navigation_interface/navisearch_b.bmp"
+				down="navigation_interface/navisearch_c.bmp"
+			></ui-button>
+		</div>
+		<div class="map-container">
+			<div class="services-toggle-container">
+				<label class="services-checkbox"> <input type="checkbox" class="services-toggle" /> Services </label>
+			</div>
+			<div class="location-title"></div>
+			<div class="map-display">
+				<!-- Map will be displayed here -->
+			</div>
+		</div>
+	</div>
+	<div class="footer">
+		<div class="coordinates-bar">
+			<div class="map-name"></div>
+			<div class="mouse-info">
+				<span class="mouse-label">Mouse:</span>
+				<span class="mouse-coordinates"></span>
+			</div>
+			<div class="target-info">
+				<span class="target-label">Target:</span>
+				<span class="target-coordinates"></span>
+			</div>
+		</div>
+	</div>
+</div>

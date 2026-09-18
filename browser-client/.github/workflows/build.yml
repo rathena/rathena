@@ -1,0 +1,40 @@
+name: 'Build roBrowserLegacy'
+
+concurrency:
+    group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
+
+on:
+    push:  
+        branches: ['master']
+    pull_request:
+        branches: ['master']
+
+permissions:
+    contents: read
+
+jobs:
+    build:
+        name: 'Build and validate'
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repo
+              uses: actions/checkout@v5
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v6
+              with:
+                  node-version: 24
+
+            - name: Install dependencies
+              run: npm install
+
+            - name: Run tests  
+              run: npm test  
+
+            - name: Build project
+              run: npm run build
+
+            - name: Validate dist/Web
+              run: test -d dist/Web

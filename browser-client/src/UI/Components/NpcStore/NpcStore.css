@@ -1,0 +1,326 @@
+:host {
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+}
+
+#NpcStore {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+}
+#NpcStore .titlebar {
+	width: 100%;
+	height: 17px;
+	background-color: white;
+	background-repeat: repeat-x;
+	border-radius: 3px 3px 0px 0px;
+	text-shadow: 1px 1px white;
+	font-size: 11px;
+	font-weight: bold;
+}
+#NpcStore .titlebar .text {
+	position: relative;
+	top: 2px;
+	left: 15px;
+	white-space: nowrap;
+}
+#NpcStore .footer {
+	width: 100%;
+	height: 27px;
+	background-repeat: repeat-x;
+	background-color: transparent;
+	position: relative;
+	border-radius: 0px 0px 3px 3px;
+}
+#NpcStore .resize {
+	position: absolute;
+	right: 1px;
+	bottom: 1px;
+	width: 13px;
+	height: 13px;
+}
+#NpcStore .btn {
+	width: 42px;
+	height: 20px;
+	margin: 0;
+}
+#NpcStore .selectall {
+	display: inline-block;
+	vertical-align: 2px;
+	width: 10px;
+	height: 10px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	cursor: pointer;
+}
+#NpcStore .ask_quantity {
+	padding-top: 7px;
+	padding-left: 20px;
+}
+
+#NpcStore .container {
+	padding-left: 16px;
+	border-right: 1px solid #ccc;
+	background: white;
+	background-repeat: repeat-y;
+	padding-right: 2px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+#NpcStore .content {
+	overflow-y: auto;
+	overflow-x: hidden;
+	width: 100%;
+	height: 100%;
+	min-height: 65px;
+	background-color: transparent;
+	background-repeat: repeat-y;
+	background-attachment: local;
+}
+#NpcStore .content.contentAvailable {
+	background-repeat: repeat;
+	overflow-y: unset;
+}
+#NpcStore .content .item {
+	display: block;
+	position: relative;
+	height: 28px;
+	padding-top: 4px;
+}
+
+#NpcStore .content .item.expanded-barter {
+	padding-bottom: 30px !important;
+}
+
+#NpcStore .content .item.selected {
+	background-color: #346ae180;
+}
+#NpcStore .content .item.itemAvailable {
+	display: block;
+	float: left;
+	width: 28px;
+	position: relative;
+	height: 28px;
+	padding-top: 4px;
+}
+#NpcStore .content .item.itemAvailable.selected {
+	background-color: transparent;
+}
+
+#NpcStore .content .item .icon {
+	position: absolute;
+	top: 6px;
+	left: 4px;
+	width: 24px;
+	height: 24px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}
+#NpcStore .content .item .amount {
+	position: absolute;
+	white-space: nowrap;
+	top: 18px;
+	left: 18px;
+	text-align: left;
+	text-shadow: -1px -1px white;
+}
+#NpcStore .content .item .amountBuying {
+	position: absolute;
+	white-space: nowrap;
+	top: 13px;
+	left: 160px;
+	text-align: left;
+	text-shadow: -1px -1px white;
+	color: red;
+}
+#NpcStore .content .item .name {
+	position: absolute;
+	top: 13px;
+	left: 32px;
+	width: 115px;
+	white-space: nowrap;
+}
+#NpcStore .content .item .price {
+	position: absolute;
+	top: 13px;
+	right: 16px;
+	white-space: nowrap;
+	text-align: right;
+}
+#NpcStore .content .item .unity {
+	position: absolute;
+	top: 13px;
+	right: 2px;
+	width: 10px;
+}
+
+#NpcStore .footer .total,
+#NpcStore .footer .totalP,
+#NpcStore .footer .cashuser {
+	padding-left: 10px;
+	padding-top: 8px;
+}
+#NpcStore .footer .total,
+#NpcStore .footer .totalP,
+#NpcStore .footer .limitZeny {
+	padding-left: 10px;
+	padding-top: 8px;
+}
+#NpcStore .InputWindow,
+#NpcStore .OutputWindow,
+#NpcStore .AvailableItemsWindow,
+#NpcStore .PurchaseResult {
+	width: 280px;
+	position: absolute;
+	z-index: 50;
+	pointer-events: auto;
+}
+#NpcStore .btn.buy,
+#NpcStore .btn.sell {
+	position: absolute;
+	top: 4px;
+	right: 62px;
+}
+#NpcStore .btn.ok {
+	position: absolute;
+	top: 4px;
+	right: 20px;
+}
+#NpcStore .btn.cancel {
+	position: absolute;
+	top: 4px;
+	right: 15px;
+}
+
+#NpcStore .content .item .nameOverlay {
+	position: relative;
+	display: none;
+	top: -17px;
+	left: 0px;
+	background-color: rgba(0, 0, 0, 0.6);
+	text-shadow: 1px 1px black;
+	color: white;
+	padding: 5px;
+	white-space: nowrap;
+	font-size: 0.6rem;
+}
+#NpcStore .content .item:hover .nameOverlay {
+	display: table;
+}
+#NpcStore .content .item .nameOverlay {
+	display: none;
+}
+
+#NpcStore .content .item .currency_icon {
+	position: absolute;
+	top: 6px;
+	left: 200px;
+	width: 24px;
+	height: 24px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}
+#NpcStore .content .item .currency_amount {
+	position: absolute;
+	white-space: nowrap;
+	top: 18px;
+	right: 13px;
+	text-align: left;
+	text-shadow: -1px -1px white;
+}
+#NpcStore .content .item .currency_nameOverlay {
+	position: relative;
+	display: none;
+	top: -17px;
+	left: 0px;
+	background-color: rgba(0, 0, 0, 0.6);
+	text-shadow: 1px 1px black;
+	color: white;
+	padding: 5px;
+	white-space: nowrap;
+	font-size: 0.6rem;
+}
+#NpcStore .content .item:hover .currency_nameOverlay {
+	display: table;
+}
+#NpcStore .content .item .currency_nameOverlay {
+	display: none;
+}
+
+#NpcStore .currency_section {
+	display: flex;
+	height: 25px;
+	position: relative;
+	left: 30px;
+	width: 200px;
+}
+#NpcStore .currency_slot {
+	width: 24px;
+	padding-right: 15px;
+}
+#NpcStore .expanded_currency_holder {
+	height: 27px;
+	width: 30px;
+	position: relative;
+}
+#NpcStore .expanded_currency_icon {
+	height: 24px;
+	width: 24px;
+	position: relative;
+	left: 5px;
+}
+#NpcStore .expanded_currency_amount {
+	position: relative;
+	white-space: nowrap;
+	top: -10px;
+	left: 15px;
+	text-align: left;
+	text-shadow: -1px -1px white;
+}
+#NpcStore .expanded_currency_refinelvl {
+	position: relative;
+	white-space: nowrap;
+	top: -43px;
+	left: 12px;
+	text-align: left;
+	color: white;
+	font-weight: 850;
+	-webkit-text-stroke: 1px red;
+}
+#NpcStore .expanded_price {
+	position: relative;
+	top: -10px;
+	left: 215px;
+	white-space: nowrap;
+	text-align: right;
+	width: 80px;
+}
+#NpcStore .content .item .expanded_currency_nameOverlay {
+	position: relative;
+	visibility: hidden;
+	opacity: 0;
+	top: -17px;
+	left: 0px;
+	background-color: rgba(0, 0, 0, 0.6);
+	text-shadow: 1px 1px black;
+	color: white;
+	padding: 5px;
+	white-space: nowrap;
+	font-size: 0.6rem;
+	transition:
+		opacity 0.2s ease-in-out,
+		visibility 0.2s ease-in-out;
+	pointer-events: none;
+	z-index: 10;
+}
+#NpcStore .content .item:hover .expanded_currency_nameOverlay {
+	visibility: visible;
+	opacity: 1;
+}

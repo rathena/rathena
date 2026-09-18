@@ -1,0 +1,230 @@
+:host {
+	width: 300px;
+	height: 400px;
+	position: absolute;
+}
+#WriteRodex {
+	width: 300px;
+	height: 400px;
+	position: absolute;
+}
+#WriteRodex .body {
+	width: 300px;
+	height: 400px;
+	position: absolute;
+}
+
+#WriteRodex .body .base {
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+
+#WriteRodex .body .titlebar {
+	display: block;
+	width: 300px;
+	height: 16px;
+}
+#WriteRodex .body .titlebar .right {
+	float: right;
+	margin-right: 3px;
+}
+#WriteRodex .body .titlebar .right .close {
+	width: 11px;
+	height: 11px;
+}
+
+#WriteRodex .body .sender {
+	float: left;
+	width: 100%;
+	height: 25px;
+	position: relative;
+	display: flex;
+	align-items: flex-end;
+}
+#WriteRodex .body .sender .name {
+	margin-left: 10px;
+	font-weight: bold;
+	color: darkblue;
+	width: 135px;
+	border: 1px solid gray;
+	padding: 3px;
+	border-radius: 0px;
+}
+#WriteRodex .body .sender .validate-name {
+	position: absolute;
+	top: 5px;
+	right: 70px;
+	color: gray;
+	width: 70px;
+	height: 18px;
+}
+#WriteRodex .body .sender .baloon {
+	position: absolute;
+	top: 5px;
+	right: 15px;
+	color: red;
+	width: 130px;
+	height: 42px;
+	display: none;
+}
+
+#WriteRodex .body .title {
+	float: left;
+	width: 100%;
+	height: 25px;
+	position: relative;
+	display: flex;
+	align-items: flex-end;
+}
+#WriteRodex .body .title .title-text {
+	margin-left: 10px;
+	width: 135px;
+	border: none;
+}
+
+#WriteRodex .body .content {
+	float: left;
+	width: 100%;
+	height: 230px;
+	position: relative;
+}
+#WriteRodex .body .content .content-text {
+	position: absolute;
+	top: 5px;
+	left: 10px;
+	width: 280px;
+	height: 220px;
+	background: transparent;
+	border: none;
+	resize: none;
+}
+
+#WriteRodex .body .items {
+	float: left;
+	width: 100%;
+	height: 45px;
+	position: relative;
+}
+#WriteRodex .body .items .item-list {
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+	display: table;
+	position: absolute;
+	top: 10px;
+	left: 27px;
+}
+#WriteRodex .body .items .item-list .item {
+	display: block;
+	width: 24px;
+	height: 24px;
+	margin: 4px 4px 4px 4px;
+	position: relative;
+	float: left;
+}
+#WriteRodex .body .items .item-list .item .icon {
+	width: 24px;
+	height: 24px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}
+#WriteRodex .body .items .item-list .item .amount {
+	position: relative;
+	bottom: 9px;
+	right: 0px;
+	text-align: right;
+	text-shadow: -1px -1px white;
+}
+#WriteRodex .overlay {
+	position: absolute;
+	display: none;
+	white-space: nowrap;
+	z-index: 900;
+	height: 13px;
+	padding: 5px;
+	background: rgba(0, 0, 0, 0.7);
+	color: white;
+	text-shadow: 1px 1px black;
+}
+#WriteRodex .overlay.grey {
+	color: #aaa;
+}
+#WriteRodex .body .items .weigth {
+	position: absolute;
+	width: 82px;
+	height: 32px;
+	top: 10px;
+	right: 10px;
+	border: none;
+}
+#WriteRodex .body .items .weigth-text {
+	position: absolute;
+	display: table;
+	top: 21px;
+	right: 19px;
+	border: none;
+	color: gray;
+}
+
+#WriteRodex .body .zeny {
+	float: left;
+	width: 100%;
+	height: 30px;
+	position: relative;
+}
+#WriteRodex .body .zeny .image {
+	position: absolute;
+	width: 28px;
+	height: 25px;
+	top: 1px;
+	left: 15px;
+	z-index: 100;
+}
+#WriteRodex .body .zeny .value {
+	position: absolute;
+	top: 4px;
+	left: 35px;
+	width: 100px;
+	border: 1px solid gray;
+	text-align: end;
+}
+#WriteRodex .body .zeny .character-zeny {
+	position: absolute;
+	top: 7px;
+	left: 150px;
+	color: gray;
+}
+
+#WriteRodex .body .footer {
+	float: left;
+	width: 100%;
+	height: 30px;
+	position: relative;
+}
+#WriteRodex .body .footer .tax {
+	position: absolute;
+	width: 112px;
+	height: 18px;
+	top: 5px;
+	left: 10px;
+}
+#WriteRodex .body .footer .tax-text {
+	position: absolute;
+	display: table;
+	top: 8px;
+	right: 197px;
+}
+#WriteRodex .body .footer .send {
+	position: absolute;
+	width: 70px;
+	height: 20px;
+	top: 5px;
+	right: 10px;
+}
+#WriteRodex .red {
+	font-weight: bold;
+	color: red;
+}

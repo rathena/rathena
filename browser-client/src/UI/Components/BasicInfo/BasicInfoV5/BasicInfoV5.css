@@ -1,0 +1,313 @@
+:host {
+	width: 220px;
+	height: 150px;
+	top: 0px;
+	left: 0px;
+}
+
+#BasicInfoV5 {
+	position: absolute;
+	width: 220px;
+	height: 150px;
+	font-size: 11px;
+	font-weight: bold;
+	color: #000000;
+}
+#BasicInfoV5.small .large {
+	display: none;
+}
+#BasicInfoV5.large .small {
+	display: none;
+	border-radius: 5px;
+}
+#BasicInfoV5.small {
+	height: 70px;
+}
+#BasicInfoV5.large .bt_menu {
+	top: 150px;
+}
+#BasicInfoV5.small .bt_menu {
+	top: 70px;
+}
+
+#BasicInfoV5.large .buttons {
+	top: 160px;
+}
+#BasicInfoV5.small .buttons {
+	top: 80px;
+}
+
+#BasicInfoV5 .topbar .left {
+	position: absolute;
+	top: 3px;
+	left: 4px;
+	width: 11px;
+	height: 11px;
+	border: none;
+	background: none;
+}
+#BasicInfoV5 .topbar .right {
+	position: absolute;
+	top: 3px;
+	right: 2px;
+	width: 11px;
+	height: 11px;
+	border: none;
+	background: none;
+}
+
+/* LARGE */
+#BasicInfoV5 .large .title {
+	position: absolute;
+	top: 2px;
+	left: 18px;
+	text-shadow: 1px 1px white;
+}
+#BasicInfoV5 .large .name {
+	position: absolute;
+	left: 10px;
+	top: 20px;
+}
+#BasicInfoV5 .large .job {
+	position: absolute;
+	left: 10px;
+	top: 33px;
+}
+#BasicInfoV5 .large .hp_title {
+	position: absolute;
+	top: 50px;
+	left: 15px;
+}
+#BasicInfoV5 .large .sp_title {
+	position: absolute;
+	top: 65px;
+	left: 15px;
+}
+#BasicInfoV5 .large .ap_title {
+	position: absolute;
+	top: 80px;
+	left: 15px;
+}
+#BasicInfoV5 .large .hp_bar,
+#BasicInfoV5 .large .sp_bar,
+#BasicInfoV5 .large .ap_bar {
+	position: absolute;
+	top: 53px;
+	left: 35px;
+	width: 135px;
+	height: 9px;
+	font-weight: normal;
+}
+#BasicInfoV5 .large .sp_bar {
+	top: 68px;
+}
+#BasicInfoV5 .large .ap_bar {
+	top: 83px;
+	background: linear-gradient(
+		to bottom,
+		#5a5a63 0%,
+		#a5a5ad 15%,
+		#bdc6ce 30%,
+		#ceced6 45%,
+		#d6dede 65%,
+		#e7e7ef 70%,
+		#f7f7f7 80%
+	);
+	border-radius: 15px;
+	border: 1px solid #b5b5b5;
+}
+#BasicInfoV5 .large .hp_bar div,
+#BasicInfoV5 .large .sp_bar div,
+#BasicInfoV5 .large .ap_bar div {
+	width: 4px;
+	height: 9px;
+	float: left;
+}
+#BasicInfoV5 .large div.hp_bar_perc,
+#BasicInfoV5 .large div.sp_bar_perc,
+#BasicInfoV5 .large div.ap_bar_perc {
+	text-align: center;
+	width: 127px;
+	position: absolute;
+	top: -1px;
+}
+#BasicInfoV5 .large .hp_perc {
+	position: absolute;
+	top: 50px;
+	right: 20px;
+}
+#BasicInfoV5 .large .sp_perc {
+	position: absolute;
+	top: 65px;
+	right: 20px;
+}
+#BasicInfoV5 .large .ap_perc {
+	position: absolute;
+	top: 80px;
+	right: 20px;
+}
+#BasicInfoV5 .large .blvl {
+	position: absolute;
+	top: 101px;
+	left: 15px;
+}
+#BasicInfoV5 .large .jlvl {
+	position: absolute;
+	top: 112px;
+	left: 15px;
+}
+#BasicInfoV5 .large .bexp,
+#BasicInfoV5 .large .jexp {
+	position: absolute;
+	top: 104px;
+	left: 84px;
+	width: 110px;
+	height: 4px;
+	border: 1px solid #afafaf;
+	background-color: white;
+}
+#BasicInfoV5 .large .bexp div,
+#BasicInfoV5 .large .jexp div {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 0%;
+	height: 4px;
+	background-color: #4262a5;
+}
+#BasicInfoV5 .large .jexp {
+	top: 116px;
+}
+#BasicInfoV5 .large .extra {
+	position: absolute;
+	top: 134px;
+	right: -15px;
+	width: 100%;
+	padding-right: 20px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-align: right;
+	white-space: nowrap;
+}
+#BasicInfoV5 .buttons {
+	position: absolute;
+	left: 0px;
+	top: 9px;
+	width: 220px;
+	height: 132px;
+	background-repeat: no-repeat;
+	background-position: bottom; /* alinha o fundo pela base */
+}
+#BasicInfoV5 .bt_menu {
+	position: absolute;
+	left: 0px;
+	width: 219px;
+	height: 9px;
+}
+#BasicInfoV5 .buttons:hover {
+}
+#BasicInfoV5 .buttons > div[id] {
+	float: left;
+	width: 32px;
+	height: 32px;
+	border: none;
+	margin: 6px;
+}
+#BasicInfoV5 .buttons .clear {
+	clear: both;
+}
+
+/* REDUCED */
+#BasicInfoV5 .small .line1 {
+	position: absolute;
+	top: 2px;
+	left: 18px;
+	text-shadow: 1px 1px white;
+	white-space: nowrap;
+}
+#BasicInfoV5 .small .info-container {
+	position: absolute;
+	top: 17px;
+	height: 60px;
+	width: 220px;
+	background-color: #ffffff;
+}
+#BasicInfoV5 .small .hpcontainer,
+#BasicInfoV5 .small .spcontainer {
+	position: absolute;
+	width: 130px;
+}
+#BasicInfoV5 .small .expcontainer,
+#BasicInfoV5 .small .apcontainer {
+	position: absolute;
+	width: 65px;
+	left: 140px;
+}
+#BasicInfoV5 .small .line2 {
+	position: absolute;
+	top: 3px;
+	left: 10px;
+	white-space: nowrap;
+}
+#BasicInfoV5 .small .line3 {
+	position: absolute;
+	top: 20px;
+	left: 10px;
+	white-space: nowrap;
+	font-weight: normal;
+}
+#BasicInfoV5 .small .line3 .hp_max_value {
+	display: inline-block;
+	width: 65px;
+	text-align: left;
+	font-weight: normal;
+}
+#BasicInfoV5 .small .line4 {
+	position: absolute;
+	top: 35px;
+	left: 10px;
+	white-space: nowrap;
+	font-weight: normal;
+}
+#BasicInfoV5 .small .line4 .sp_max_value {
+	display: inline-block;
+	width: 73px;
+	text-align: left;
+	font-weight: normal;
+}
+#BasicInfoV5 .toggle_btns {
+	border: none;
+	background-repeat: no-repeat;
+	background-color: rgba(0, 0, 0, 0);
+}
+
+#BasicInfoV5 .buttons div .name {
+	position: relative;
+	display: none;
+	z-index: 1;
+	top: -20px;
+	left: 0px;
+	background-color: rgba(0, 0, 0, 0.6);
+	text-shadow: 1px 1px black;
+	color: white;
+	padding: 5px;
+	white-space: nowrap;
+	font-size: 0.6rem;
+}
+#BasicInfoV5 .buttons div:hover .name {
+	display: table;
+}
+#BasicInfoV5 .buttons div .name {
+	display: none;
+}
+
+#BasicInfoV5 .buttons .btn_overlay {
+	width: 35px;
+	height: 40px;
+	border: none;
+	position: relative;
+	top: -13px;
+	left: -7px;
+	z-index: 10;
+	display: none;
+}

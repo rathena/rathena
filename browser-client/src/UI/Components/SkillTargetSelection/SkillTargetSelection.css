@@ -1,0 +1,36 @@
+:host {
+	top: 0;
+	left: 0;
+	overflow: visible;
+	pointer-events: none;
+}
+
+#SkillTargetSelection {
+	display: block;
+}
+
+.skill-name {
+	position: fixed;
+	top: 45px;
+	z-index: 100;
+	border-radius: 3px;
+	border: 1px solid #555;
+	pointer-events: auto;
+}
+
+.skill-description {
+	position: fixed;
+	bottom: 60px;
+	z-index: 100;
+	border-radius: 3px;
+	border: 1px solid #555;
+	pointer-events: auto;
+}
+
+.skill-level {
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 100;
+	pointer-events: auto;
+}

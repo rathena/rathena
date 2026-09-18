@@ -1,0 +1,48 @@
+:host {
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+#EffectViewer {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	font-family: Arial;
+}
+#EffectViewer .warning {
+	display: none;
+}
+#EffectViewer .info {
+	text-align: center;
+	width: 100%;
+	color: white;
+	margin-top: 50px;
+	position: absolute;
+}
+#EffectViewer canvas {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+#EffectViewer #run_msg {
+	position: absolute;
+	right: 10px;
+	top: 12px;
+	text-align: right;
+	color: #fa5;
+}
+#EffectViewer .head {
+	position: absolute;
+	width: 100%;
+	height: 40px;
+	background: #222;
+	z-index: 100;
+	display: none;
+}
+#EffectViewer .head div {
+	position: relative;
+	top: 8px;
+	left: 5px;
+}

@@ -1,0 +1,235 @@
+:host {
+	position: absolute;
+}
+
+#chatbox {
+	position: relative;
+	left: 5px;
+	width: 595px;
+}
+
+/** Tabs **/
+#chatbox .header {
+	margin-left: 3px;
+	height: 17px;
+
+	max-width: 100%;
+}
+
+#chatbox .header .tab {
+	width: 75px;
+	color: white;
+	text-align: center;
+}
+
+#chatbox .header input {
+	border: none;
+	background-color: transparent;
+	color: white;
+	width: 75px;
+	height: 15px;
+	text-align: center;
+}
+
+#chatbox .header .tab div {
+	padding-top: 2px;
+	border-radius: 2px 2px 0px 0px;
+	background: rgba(0, 0, 0, 0.75);
+	border: 1px solid #959595;
+	border-bottom: 1px solid white;
+}
+
+#chatbox .header .tab div.on {
+	background: rgba(0, 0, 0, 0.5);
+	border: 1px solid white;
+	border-bottom: none;
+	border-right: none;
+	height: 18px;
+}
+
+#chatbox .header .options {
+	border-bottom: 1px solid white;
+	height: 18px;
+	margin-right: 4px;
+}
+
+/** Content **/
+#chatbox .body {
+	background: rgba(0, 0, 0, 0.5);
+	border-left: 1px solid white;
+	border-right: 1px solid white;
+	border-radius: 0px 3px 0px 0px;
+	padding: 0px 5px 5px 5px;
+	margin-left: 3px;
+	margin-right: -2px;
+	max-width: 100%;
+}
+#chatbox .contentwrapper {
+	height: 42px;
+}
+#chatbox .content {
+	text-shadow: 1px 1px 0px black;
+	height: 100%;
+	overflow-y: auto;
+	line-height: 14px;
+	display: none;
+}
+#chatbox .content.active {
+	display: block;
+}
+#chatbox .content a {
+	color: inherit;
+	text-decoration: underline;
+}
+
+#chatbox .content a,
+#chatbox .content .item-link {
+	cursor: pointer;
+}
+
+#chatbox .event_add_cursor {
+	height: 14px;
+	cursor: ns-resize;
+}
+
+#chatbox .battlemode {
+	width: 592px;
+	height: 25px;
+	position: relative;
+	border-left: 1px solid white;
+	border-right: 1px solid white;
+	border-top: 1px solid grey;
+	background-color: rgba(0, 0, 0, 0.5);
+	margin-left: 3px;
+	display: none;
+	max-width: 100%;
+}
+
+/** Input **/
+#chatbox .input {
+	width: 600px;
+	height: 25px;
+	position: relative;
+	max-width: 100%;
+}
+
+#chatbox .input.fix {
+	margin-top: 29px;
+}
+
+#chatbox .input input {
+	position: absolute;
+	top: 3px;
+	height: 18px;
+	background-color: transparent;
+	border: none;
+}
+
+#chatbox .input .username {
+	left: 4px;
+	width: 90px;
+	padding-left: 5px;
+}
+
+#chatbox .input .list {
+	width: 8px;
+	height: 18px;
+	border: none;
+	position: absolute;
+	top: 3px;
+	left: 97px;
+	background-repeat: no-repeat;
+	padding: 0;
+}
+#chatbox .input .wrapper {
+	display: flex;
+	align-items: center;
+	margin-left: 108px;
+	height: 100%;
+	overflow: hidden;
+	width: calc(100% - 140px);
+}
+
+#chatbox .input .message {
+	width: 100%;
+	padding-left: 5px;
+
+	line-height: 18px;
+	outline: none;
+	white-space: nowrap;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	max-width: 100%;
+	vertical-align: middle;
+	display: inline-block;
+}
+#chatbox .input .message.party {
+	color: #840084;
+}
+#chatbox .input .message.guild {
+	color: #008484;
+}
+#chatbox .input .message.clan {
+	color: #ffa631;
+}
+
+#chatbox .input .filter,
+#chatbox .input .size {
+	width: 11px;
+	height: 11px;
+	border: none;
+	position: absolute;
+	right: 13px;
+	top: 8px;
+	background-color: transparent;
+}
+
+#chatbox .input .size {
+	right: 1px;
+}
+
+#chatbox .battlemode .bmtoggle {
+	height: 100%;
+}
+#chatbox .chat-function {
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	/* Expand the "no-walk" header zone around buttons (but don't move them visually). */
+	padding: 6px;
+	margin: -6px;
+}
+#chatbox .chat-function button {
+	background-size: auto;
+	border: 0;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+#chatbox .chat-function .chatmode {
+	width: 15px;
+	height: 9px;
+}
+#chatbox .chat-function .battleopt {
+	width: 10px;
+	height: 10px;
+	background-size: cover;
+}
+#chatbox .chat-function .stickfucn {
+	width: 14px;
+	height: 10px;
+	background-size: cover;
+}
+#chatbox .chat-function .battleopt2 {
+	width: 9px;
+	height: 9px;
+	background-size: cover;
+}
+#chatbox .chat-function .wndminib {
+	width: 9px;
+	height: 9px;
+	background-size: cover;
+}
+#chatbox .chat-function .lockdragwnd {
+	width: 15px;
+	height: 10px;
+}

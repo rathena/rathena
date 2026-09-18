@@ -1,0 +1,878 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>roBrowserLegacy — Developer Tools</title>
+		<meta name="description" content="Developer tools hub for roBrowserLegacy — Ragnarok Online web client" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			/* ── Design Tokens ─────────────────────────────────────────── */
+			:root {
+			  --gold:        #e8b84b;
+			  --gold-bright: #f5d47c;
+			  --gold-dark:   #9a7030;
+			  --gem-blue:    #4a9eff;
+			  --gem-purple:  #a855f7;
+			  --gem-red:     #ef4444;
+			  --gem-green:   #22c55e;
+			  --gem-orange:  #f97316;
+			  --bg-void:     #060810;
+			  --bg-deep:     #0b0f1e;
+			  --bg-panel:    #111827;
+			  --bg-card:     #151d2e;
+			  --border-dim:  rgba(232,184,75,0.15);
+			  --border-glow: rgba(232,184,75,0.5);
+			  --text-light:  #e2e8f0;
+			  --text-muted:  #64748b;
+			  --radius:      12px;
+			  --radius-sm:   8px;
+			}
+
+			/* ── Reset & Base ──────────────────────────────────────────── */
+			*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+			html { scroll-behavior: smooth; }
+
+			body {
+			  font-family: 'Inter', system-ui, sans-serif;
+			  background: var(--bg-void);
+			  color: var(--text-light);
+			  min-height: 100vh;
+			  overflow-x: hidden;
+			}
+
+			/* ── Animated starfield background ─────────────────────────── */
+			#starfield {
+			  position: fixed;
+			  inset: 0;
+			  pointer-events: none;
+			  z-index: 0;
+			  overflow: hidden;
+			}
+
+			.star {
+			  position: absolute;
+			  border-radius: 50%;
+			  background: #fff;
+			  animation: twinkle var(--dur, 3s) ease-in-out infinite alternate;
+			  opacity: var(--base-opacity, 0.4);
+			}
+
+			@keyframes twinkle {
+			  from { opacity: var(--base-opacity, 0.4); transform: scale(1); }
+			  to   { opacity: var(--peak-opacity, 0.9); transform: scale(1.5); }
+			}
+
+			/* ── Ambient glows ─────────────────────────────────────────── */
+			.ambient {
+			  position: fixed;
+			  border-radius: 50%;
+			  filter: blur(120px);
+			  pointer-events: none;
+			  z-index: 0;
+			}
+			.ambient-1 {
+			  width: 600px; height: 500px;
+			  background: radial-gradient(circle, rgba(232,184,75,0.08) 0%, transparent 70%);
+			  top: -200px; left: -100px;
+			  animation: drift1 18s ease-in-out infinite alternate;
+			}
+			.ambient-2 {
+			  width: 500px; height: 500px;
+			  background: radial-gradient(circle, rgba(74,158,255,0.07) 0%, transparent 70%);
+			  bottom: -100px; right: -100px;
+			  animation: drift2 22s ease-in-out infinite alternate;
+			}
+			.ambient-3 {
+			  width: 400px; height: 400px;
+			  background: radial-gradient(circle, rgba(168,85,247,0.06) 0%, transparent 70%);
+			  top: 50%; left: 50%; transform: translate(-50%, -50%);
+			  animation: drift3 15s ease-in-out infinite alternate;
+			}
+			@keyframes drift1 { to { transform: translate(60px, 40px); } }
+			@keyframes drift2 { to { transform: translate(-40px, -60px); } }
+			@keyframes drift3 { to { transform: translate(-50%, -50%) scale(1.3) rotate(10deg); } }
+
+			/* ── Layout wrapper ────────────────────────────────────────── */
+			.wrapper {
+			  position: relative;
+			  z-index: 1;
+			  max-width: 1200px;
+			  margin: 0 auto;
+			  padding: 0 24px 80px;
+			}
+
+			/* ── Header / Hero ─────────────────────────────────────────── */
+			header {
+			  text-align: center;
+			  padding: 60px 0 50px;
+			}
+
+			.emblem {
+			  display: inline-flex;
+			  align-items: center;
+			  justify-content: center;
+			  width: 90px;
+			  height: 90px;
+			  margin-bottom: 28px;
+			  position: relative;
+			}
+
+			.emblem-ring {
+			  position: absolute;
+			  inset: 0;
+			  border-radius: 50%;
+			  border: 2px solid var(--gold);
+			  box-shadow: 0 0 20px rgba(232,184,75,0.4), inset 0 0 20px rgba(232,184,75,0.1);
+			  animation: spin-slow 20s linear infinite;
+			}
+
+			.emblem-ring::before {
+			  content: '';
+			  position: absolute;
+			  inset: 6px;
+			  border-radius: 50%;
+			  border: 1px solid rgba(232,184,75,0.3);
+			}
+
+			@keyframes spin-slow { to { transform: rotate(360deg); } }
+
+			.emblem-icon {
+			  font-size: 36px;
+			  z-index: 1;
+			  filter: drop-shadow(0 0 12px rgba(232,184,75,0.8));
+			}
+
+			.site-title {
+			  font-family: 'Cinzel', serif;
+			  font-size: clamp(28px, 5vw, 46px);
+			  font-weight: 700;
+			  background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 50%, var(--gold-dark) 100%);
+			  -webkit-background-clip: text;
+			  -webkit-text-fill-color: transparent;
+			  background-clip: text;
+			  letter-spacing: 0.04em;
+			  text-shadow: none;
+			  line-height: 1.1;
+			  margin-bottom: 8px;
+			}
+
+			.site-subtitle {
+			  font-family: 'Cinzel', serif;
+			  font-size: clamp(12px, 2vw, 15px);
+			  color: var(--text-muted);
+			  letter-spacing: 0.2em;
+			  text-transform: uppercase;
+			  margin-bottom: 24px;
+			}
+
+			/* ornament divider */
+			.ornament {
+			  display: flex;
+			  align-items: center;
+			  justify-content: center;
+			  gap: 12px;
+			  margin: 0 auto 40px;
+			  max-width: 340px;
+			}
+			.ornament-line {
+			  flex: 1;
+			  height: 1px;
+			  background: linear-gradient(to right, transparent, var(--gold-dark));
+			}
+			.ornament-line:last-child {
+			  background: linear-gradient(to left, transparent, var(--gold-dark));
+			}
+			.ornament-diamond {
+			  width: 8px; height: 8px;
+			  background: var(--gold);
+			  transform: rotate(45deg);
+			  box-shadow: 0 0 8px var(--gold);
+			  flex-shrink: 0;
+			}
+			.ornament-dot {
+			  width: 4px; height: 4px;
+			  background: var(--gold-dark);
+			  border-radius: 50%;
+			  flex-shrink: 0;
+			}
+
+			/* search bar */
+			.search-wrap {
+			  position: relative;
+			  max-width: 400px;
+			  margin: 0 auto;
+			}
+			.search-icon {
+			  position: absolute;
+			  left: 16px;
+			  top: 50%;
+			  transform: translateY(-50%);
+			  color: var(--text-muted);
+			  font-size: 16px;
+			  pointer-events: none;
+			}
+			#search {
+			  width: 100%;
+			  padding: 12px 16px 12px 44px;
+			  background: rgba(21,29,46,0.8);
+			  border: 1px solid var(--border-dim);
+			  border-radius: 24px;
+			  color: var(--text-light);
+			  font-size: 14px;
+			  font-family: 'Inter', sans-serif;
+			  outline: none;
+			  transition: border-color 0.3s, box-shadow 0.3s;
+			  backdrop-filter: blur(10px);
+			}
+			#search::placeholder { color: var(--text-muted); }
+			#search:focus {
+			  border-color: var(--border-glow);
+			  box-shadow: 0 0 20px rgba(232,184,75,0.15);
+			}
+
+			/* ── Section header ────────────────────────────────────────── */
+			.section-header {
+			  display: flex;
+			  align-items: center;
+			  gap: 16px;
+			  margin-bottom: 20px;
+			}
+			.section-label {
+			  font-family: 'Cinzel', serif;
+			  font-size: 11px;
+			  font-weight: 600;
+			  color: var(--gold);
+			  letter-spacing: 0.25em;
+			  text-transform: uppercase;
+			  white-space: nowrap;
+			}
+			.section-line {
+			  flex: 1;
+			  height: 1px;
+			  background: var(--border-dim);
+			}
+
+			/* ── Category section ──────────────────────────────────────── */
+			.category { margin-bottom: 50px; }
+
+			/* ── Tool Cards ─────────────────────────────────────────────── */
+			.cards {
+			  display: grid;
+			  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+			  gap: 20px;
+			}
+
+			.card {
+			  position: relative;
+			  background: var(--bg-card);
+			  border: 1px solid var(--border-dim);
+			  border-radius: var(--radius);
+			  padding: 28px 24px;
+			  text-decoration: none;
+			  color: inherit;
+			  display: flex;
+			  flex-direction: column;
+			  gap: 14px;
+			  cursor: pointer;
+			  transition:
+			    border-color 0.3s,
+			    box-shadow 0.3s,
+			    transform 0.25s;
+			  overflow: hidden;
+			}
+
+			.card::before {
+			  content: '';
+			  position: absolute;
+			  inset: 0;
+			  border-radius: var(--radius);
+			  background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.03), transparent 60%);
+			  opacity: 0;
+			  transition: opacity 0.3s;
+			  pointer-events: none;
+			}
+
+			.card:hover::before { opacity: 1; }
+
+			.card:hover {
+			  transform: translateY(-4px);
+			}
+
+			/* Per-card accent colours */
+			.card[data-accent="gold"]:hover    { border-color: var(--gold);       box-shadow: 0 0 30px rgba(232,184,75,0.2),  0 8px 30px rgba(0,0,0,0.4); }
+			.card[data-accent="blue"]:hover    { border-color: var(--gem-blue);   box-shadow: 0 0 30px rgba(74,158,255,0.2),  0 8px 30px rgba(0,0,0,0.4); }
+			.card[data-accent="purple"]:hover  { border-color: var(--gem-purple); box-shadow: 0 0 30px rgba(168,85,247,0.2),  0 8px 30px rgba(0,0,0,0.4); }
+			.card[data-accent="red"]:hover     { border-color: var(--gem-red);    box-shadow: 0 0 30px rgba(239,68,68,0.2),   0 8px 30px rgba(0,0,0,0.4); }
+			.card[data-accent="green"]:hover   { border-color: var(--gem-green);  box-shadow: 0 0 30px rgba(34,197,94,0.2),   0 8px 30px rgba(0,0,0,0.4); }
+			.card[data-accent="orange"]:hover  { border-color: var(--gem-orange); box-shadow: 0 0 30px rgba(249,115,22,0.2),  0 8px 30px rgba(0,0,0,0.4); }
+
+			/* top corner ornament */
+			.card-corner {
+			  position: absolute;
+			  top: 0; right: 0;
+			  width: 60px; height: 60px;
+			  overflow: hidden;
+			  border-radius: 0 var(--radius) 0 0;
+			}
+			.card-corner::before {
+			  content: '';
+			  position: absolute;
+			  top: -30px; right: -30px;
+			  width: 60px; height: 60px;
+			  border-radius: 50%;
+			  background: var(--accent-color, var(--gold));
+			  opacity: 0.08;
+			  transition: opacity 0.3s;
+			}
+			.card:hover .card-corner::before { opacity: 0.18; }
+
+			.card-icon-wrap {
+			  display: flex;
+			  align-items: center;
+			  justify-content: center;
+			  width: 52px;
+			  height: 52px;
+			  border-radius: 12px;
+			  background: rgba(255,255,255,0.04);
+			  border: 1px solid rgba(255,255,255,0.06);
+			  flex-shrink: 0;
+			}
+
+			.card[data-accent="gold"]   .card-icon-wrap { background: rgba(232,184,75,0.08);  border-color: rgba(232,184,75,0.2); }
+			.card[data-accent="blue"]   .card-icon-wrap { background: rgba(74,158,255,0.08);  border-color: rgba(74,158,255,0.2); }
+			.card[data-accent="purple"] .card-icon-wrap { background: rgba(168,85,247,0.08);  border-color: rgba(168,85,247,0.2); }
+			.card[data-accent="red"]    .card-icon-wrap { background: rgba(239,68,68,0.08);   border-color: rgba(239,68,68,0.2); }
+			.card[data-accent="green"]  .card-icon-wrap { background: rgba(34,197,94,0.08);   border-color: rgba(34,197,94,0.2); }
+			.card[data-accent="orange"] .card-icon-wrap { background: rgba(249,115,22,0.08);  border-color: rgba(249,115,22,0.2); }
+
+			.card-icon { font-size: 24px; }
+
+			.card-header { display: flex; align-items: center; gap: 14px; }
+
+			.card-title {
+			  font-family: 'Cinzel', serif;
+			  font-size: 15px;
+			  font-weight: 600;
+			  color: var(--text-light);
+			  line-height: 1.2;
+			}
+
+			.card-desc {
+			  font-size: 13px;
+			  line-height: 1.6;
+			  color: var(--text-muted);
+			}
+
+			.card-tag-row {
+			  display: flex;
+			  flex-wrap: wrap;
+			  gap: 6px;
+			  margin-top: auto;
+			}
+
+			.tag {
+			  font-size: 10px;
+			  font-weight: 500;
+			  letter-spacing: 0.08em;
+			  padding: 3px 10px;
+			  border-radius: 20px;
+			  text-transform: uppercase;
+			}
+
+			.card[data-accent="gold"]   .tag { background: rgba(232,184,75,0.1);  color: var(--gold);       border: 1px solid rgba(232,184,75,0.2);  }
+			.card[data-accent="blue"]   .tag { background: rgba(74,158,255,0.1);  color: var(--gem-blue);   border: 1px solid rgba(74,158,255,0.2);  }
+			.card[data-accent="purple"] .tag { background: rgba(168,85,247,0.1);  color: var(--gem-purple); border: 1px solid rgba(168,85,247,0.2);  }
+			.card[data-accent="red"]    .tag { background: rgba(239,68,68,0.1);   color: var(--gem-red);    border: 1px solid rgba(239,68,68,0.2);   }
+			.card[data-accent="green"]  .tag { background: rgba(34,197,94,0.1);   color: var(--gem-green);  border: 1px solid rgba(34,197,94,0.2);   }
+			.card[data-accent="orange") .tag { background: rgba(249,115,22,0.1);  color: var(--gem-orange); border: 1px solid rgba(249,115,22,0.2);  }
+
+			.card-arrow {
+			  position: absolute;
+			  bottom: 22px; right: 22px;
+			  font-size: 16px;
+			  color: var(--text-muted);
+			  transition: color 0.3s, transform 0.3s;
+			}
+			.card:hover .card-arrow { transform: translate(3px, -3px); }
+
+			.card[data-accent="gold"]:hover   .card-arrow { color: var(--gold); }
+			.card[data-accent="blue"]:hover   .card-arrow { color: var(--gem-blue); }
+			.card[data-accent="purple"]:hover .card-arrow { color: var(--gem-purple); }
+			.card[data-accent="red"]:hover    .card-arrow { color: var(--gem-red); }
+			.card[data-accent="green"]:hover  .card-arrow { color: var(--gem-green); }
+			.card[data-accent="orange"]:hover .card-arrow { color: var(--gem-orange); }
+
+			/* hidden when filter removes them */
+			.card.hidden { display: none; }
+
+			/* ── No results state ──────────────────────────────────────── */
+			.no-results {
+			  text-align: center;
+			  padding: 60px 0;
+			  display: none;
+			}
+			.no-results.visible { display: block; }
+			.no-results-icon { font-size: 40px; margin-bottom: 16px; }
+			.no-results h3 {
+			  font-family: 'Cinzel', serif;
+			  color: var(--text-muted);
+			  font-size: 18px;
+			  margin-bottom: 8px;
+			}
+			.no-results p { color: var(--text-muted); font-size: 14px; }
+
+			/* ── Footer ─────────────────────────────────────────────────── */
+			footer {
+			  text-align: center;
+			  padding: 40px 24px;
+			  border-top: 1px solid var(--border-dim);
+			  position: relative;
+			  z-index: 1;
+			}
+			footer p {
+			  font-size: 12px;
+			  color: var(--text-muted);
+			  letter-spacing: 0.05em;
+			}
+			footer span { color: var(--gold); }
+
+			/* ── Scrollbar ──────────────────────────────────────────────── */
+			::-webkit-scrollbar { width: 8px; }
+			::-webkit-scrollbar-track { background: var(--bg-void); }
+			::-webkit-scrollbar-thumb { background: var(--border-dim); border-radius: 4px; }
+			::-webkit-scrollbar-thumb:hover { background: var(--gold-dark); }
+
+			/* ── Entrance animation ─────────────────────────────────────── */
+			@keyframes fadeUp {
+			  from { opacity: 0; transform: translateY(24px); }
+			  to   { opacity: 1; transform: translateY(0); }
+			}
+			header       { animation: fadeUp 0.7s ease both; }
+			.category:nth-child(1) { animation: fadeUp 0.7s 0.1s ease both; }
+			.category:nth-child(2) { animation: fadeUp 0.7s 0.2s ease both; }
+			.category:nth-child(3) { animation: fadeUp 0.7s 0.3s ease both; }
+
+			/* ── Responsive ─────────────────────────────────────────────── */
+			@media (max-width: 600px) {
+			  .cards { grid-template-columns: 1fr; }
+			  header { padding: 40px 0 32px; }
+			}
+		</style>
+	</head>
+	<body>
+		<!-- Starfield -->
+		<div id="starfield"></div>
+
+		<!-- Ambient glows -->
+		<div class="ambient ambient-1"></div>
+		<div class="ambient ambient-2"></div>
+		<div class="ambient ambient-3"></div>
+
+		<div class="wrapper">
+			<!-- ── Header ─────────────────────────────────────────────── -->
+			<header>
+				<div class="emblem">
+					<div class="emblem-ring"></div>
+					<span class="emblem-icon">⚔️</span>
+				</div>
+
+				<h1 class="site-title">roBrowserLegacy</h1>
+				<p class="site-subtitle">Developer Tools Compendium</p>
+
+				<div class="ornament">
+					<div class="ornament-line"></div>
+					<div class="ornament-dot"></div>
+					<div class="ornament-diamond"></div>
+					<div class="ornament-dot"></div>
+					<div class="ornament-line"></div>
+				</div>
+
+				<div class="search-wrap">
+					<span class="search-icon">🔍</span>
+					<input id="search" type="text" placeholder="Search tools…" autocomplete="off" />
+				</div>
+			</header>
+
+			<!-- ── Config Tools ───────────────────────────────────────── -->
+			<section class="category" id="cat-config">
+				<div class="section-header">
+					<span class="section-label">⚙️ &nbsp; Configuration</span>
+					<div class="section-line"></div>
+				</div>
+				<div class="cards">
+					<a
+						class="card"
+						href="./config/ConfigValidator.html"
+						data-accent="gold"
+						data-name="config validator"
+						data-tags="config validation json"
+					>
+						<div class="card-corner"></div>
+						<div class="card-header">
+							<div class="card-icon-wrap">
+								<span class="card-icon">🛡️</span>
+							</div>
+							<h2 class="card-title">Config Validator</h2>
+						</div>
+						<p class="card-desc">
+							Validate your roBrowser ROConf objects against the API. Paste your configuration to check
+							syntax and evaluate all fields against the live schema.
+						</p>
+						<div class="card-tag-row">
+							<span class="tag">Config</span>
+							<span class="tag">Validation</span>
+							<span class="tag">JSON</span>
+						</div>
+						<span class="card-arrow">↗</span>
+					</a>
+				</div>
+			</section>
+
+			<!-- ── Encoding Tools ─────────────────────────────────────── -->
+			<section class="category" id="cat-encode">
+				<div class="section-header">
+					<span class="section-label">🔤 &nbsp; Encoding</span>
+					<div class="section-line"></div>
+				</div>
+				<div class="cards">
+					<a
+						class="card"
+						href="./encode/Encoder.html"
+						data-accent="blue"
+						data-name="character encoder"
+						data-tags="encode euc-kr latin iso encoding text"
+					>
+						<div class="card-corner"></div>
+						<div class="card-header">
+							<div class="card-icon-wrap">
+								<span class="card-icon">🔤</span>
+							</div>
+							<h2 class="card-title">Character Encoder</h2>
+						</div>
+						<p class="card-desc">
+							Convert text between EUC-KR, Latin-1 (ISO-8859-1) and escaped hex byte sequences. Includes
+							direct Google Translate links for Korean text.
+						</p>
+						<div class="card-tag-row">
+							<span class="tag">EUC-KR</span>
+							<span class="tag">Latin-1</span>
+							<span class="tag">Hex</span>
+						</div>
+						<span class="card-arrow">↗</span>
+					</a>
+				</div>
+			</section>
+
+			<!-- ── File / Asset Tests ─────────────────────────────────── -->
+			<section class="category" id="cat-tests">
+				<div class="section-header">
+					<span class="section-label">🧪 &nbsp; Asset File Testers</span>
+					<div class="section-line"></div>
+				</div>
+				<div class="cards">
+					<a
+						class="card"
+						href="./tests/action.html"
+						data-accent="purple"
+						data-name="action sprite animation tester"
+						data-tags="act sprite animation action loader test"
+					>
+						<div class="card-corner"></div>
+						<div class="card-header">
+							<div class="card-icon-wrap"><span class="card-icon">🎭</span></div>
+							<h2 class="card-title">Action Tester</h2>
+						</div>
+						<p class="card-desc">
+							Test and inspect <code>.act</code> sprite animation files. Validates frame data, timing, and
+							direction sets parsed by the Action loader.
+						</p>
+						<div class="card-tag-row">
+							<span class="tag">.act</span>
+							<span class="tag">Animation</span>
+							<span class="tag">Sprite</span>
+						</div>
+						<span class="card-arrow">↗</span>
+					</a>
+
+					<a
+						class="card"
+						href="./tests/altitude.html"
+						data-accent="green"
+						data-name="altitude height map tester"
+						data-tags="gat altitude height collision map"
+					>
+						<div class="card-corner"></div>
+						<div class="card-header">
+							<div class="card-icon-wrap"><span class="card-icon">🏔️</span></div>
+							<h2 class="card-title">Altitude Tester</h2>
+						</div>
+						<p class="card-desc">
+							Load and verify <code>.gat</code> altitude files. Inspect height map tiles and collision
+							flags for map cells.
+						</p>
+						<div class="card-tag-row">
+							<span class="tag">.gat</span>
+							<span class="tag">Height Map</span>
+							<span class="tag">Collision</span>
+						</div>
+						<span class="card-arrow">↗</span>
+					</a>
+
+					<a
+						class="card"
+						href="./tests/ground.html"
+						data-accent="gold"
+						data-name="ground gnd map mesh tester"
+						data-tags="gnd ground mesh texture map tile"
+					>
+						<div class="card-corner"></div>
+						<div class="card-header">
+							<div class="card-icon-wrap"><span class="card-icon">🌍</span></div>
+							<h2 class="card-title">Ground Tester</h2>
+						</div>
+						<p class="card-desc">
+							Parse and validate <code>.gnd</code> ground files. Inspect tile geometry, texture UV data,
+							and lightmap surfaces.
+						</p>
+						<div class="card-tag-row">
+							<span class="tag">.gnd</span>
+							<span class="tag">Mesh</span>
+							<span class="tag">Textures</span>
+						</div>
+						<span class="card-arrow">↗</span>
+					</a>
+
+					<a
+						class="card"
+						href="./tests/models.html"
+						data-accent="orange"
+						data-name="model rsm 3d model tester"
+						data-tags="rsm model 3d mesh geometry"
+					>
+						<div class="card-corner"></div>
+						<div class="card-header">
+							<div class="card-icon-wrap"><span class="card-icon">🗿</span></div>
+							<h2 class="card-title">Model Tester</h2>
+						</div>
+						<p class="card-desc">
+							Test <code>.rsm</code> 3D model files. Validate mesh nodes, texture assignments, and
+							animation bounding boxes from RSM format.
+						</p>
+						<div class="card-tag-row">
+							<span class="tag">.rsm</span>
+							<span class="tag">3D Model</span>
+							<span class="tag">Mesh</span>
+						</div>
+						<span class="card-arrow">↗</span>
+					</a>
+
+					<a
+						class="card"
+						href="./tests/grannymodels.html"
+						data-accent="red"
+						data-name="granny model rsac skeletal tester"
+						data-tags="granny rsac skeletal animation 3d"
+					>
+						<div class="card-corner"></div>
+						<div class="card-header">
+							<div class="card-icon-wrap"><span class="card-icon">💀</span></div>
+							<h2 class="card-title">Granny Model Tester</h2>
+						</div>
+						<p class="card-desc">
+							Parse Granny RSAC skeletal model files. Inspect bone hierarchies, vertex weights, and
+							animation tracks for advanced 3D characters.
+						</p>
+						<div class="card-tag-row">
+							<span class="tag">RSAC</span>
+							<span class="tag">Skeletal</span>
+							<span class="tag">Granny</span>
+						</div>
+						<span class="card-arrow">↗</span>
+					</a>
+
+					<a
+						class="card"
+						href="./tests/sprites.html"
+						data-accent="blue"
+						data-name="sprite spr texture palette tester"
+						data-tags="spr sprite texture palette image"
+					>
+						<div class="card-corner"></div>
+						<div class="card-header">
+							<div class="card-icon-wrap"><span class="card-icon">🎨</span></div>
+							<h2 class="card-title">Sprite Tester</h2>
+						</div>
+						<p class="card-desc">
+							Inspect <code>.spr</code> sprite files. View palette data, indexed image frames, and RGBA
+							layers used by entity renderers.
+						</p>
+						<div class="card-tag-row">
+							<span class="tag">.spr</span>
+							<span class="tag">Palette</span>
+							<span class="tag">Texture</span>
+						</div>
+						<span class="card-arrow">↗</span>
+					</a>
+
+					<a
+						class="card"
+						href="./tests/str.html"
+						data-accent="purple"
+						data-name="str effect visual effect tester"
+						data-tags="str effect visual particle ezv"
+					>
+						<div class="card-corner"></div>
+						<div class="card-header">
+							<div class="card-icon-wrap"><span class="card-icon">✨</span></div>
+							<h2 class="card-title">STR Effect Tester</h2>
+						</div>
+						<p class="card-desc">
+							Test <code>.str</code> visual effect files. Examine compiled EZV effect layers, keyframes,
+							and sprite sheet references for skill effects.
+						</p>
+						<div class="card-tag-row">
+							<span class="tag">.str</span>
+							<span class="tag">Effect</span>
+							<span class="tag">Particle</span>
+						</div>
+						<span class="card-arrow">↗</span>
+					</a>
+
+					<a
+						class="card"
+						href="./tests/targa.html"
+						data-accent="green"
+						data-name="targa tga image texture tester"
+						data-tags="tga targa image texture rle"
+					>
+						<div class="card-corner"></div>
+						<div class="card-header">
+							<div class="card-icon-wrap"><span class="card-icon">🖼️</span></div>
+							<h2 class="card-title">Targa Image Tester</h2>
+						</div>
+						<p class="card-desc">
+							Parse <code>.tga</code> Targa image files. Validates bit-depth, RLE compression, alpha
+							channels, and pixel data used by RO textures.
+						</p>
+						<div class="card-tag-row">
+							<span class="tag">.tga</span>
+							<span class="tag">Image</span>
+							<span class="tag">Texture</span>
+						</div>
+						<span class="card-arrow">↗</span>
+					</a>
+
+					<a
+						class="card"
+						href="./tests/world.html"
+						data-accent="gold"
+						data-name="world rsw map resource world tester"
+						data-tags="rsw world map models lights sounds"
+					>
+						<div class="card-corner"></div>
+						<div class="card-header">
+							<div class="card-icon-wrap"><span class="card-icon">🌐</span></div>
+							<h2 class="card-title">World Tester</h2>
+						</div>
+						<p class="card-desc">
+							Test <code>.rsw</code> Resource World files. Inspect model placements, light nodes, sound
+							emitters, and effect definitions for full map scenes.
+						</p>
+						<div class="card-tag-row">
+							<span class="tag">.rsw</span>
+							<span class="tag">World</span>
+							<span class="tag">Maps</span>
+						</div>
+						<span class="card-arrow">↗</span>
+					</a>
+				</div>
+			</section>
+
+			<!-- no-results feedback -->
+			<div class="no-results" id="noResults">
+				<div class="no-results-icon">🔮</div>
+				<h3>No tools found</h3>
+				<p>Try different keywords — or the rune might be sealed…</p>
+			</div>
+		</div>
+		<!-- /wrapper -->
+
+		<!-- ── Footer ─────────────────────────────────────────────────── -->
+		<footer>
+			<p>roBrowserLegacy &nbsp;·&nbsp; Developer Tools &nbsp;·&nbsp; <span>⚔️</span> &nbsp; Built with Vite</p>
+		</footer>
+
+		<script>
+			/* ── Starfield generator ──────────────────────────────────── */
+			(function () {
+				const container = document.getElementById('starfield');
+				const count = 160;
+				for (let i = 0; i < count; i++) {
+					const s = document.createElement('div');
+					s.className = 'star';
+					const size = Math.random() * 2.2 + 0.4;
+					const dur = (Math.random() * 4 + 2).toFixed(1);
+					const base = (Math.random() * 0.4 + 0.15).toFixed(2);
+					const peak = (parseFloat(base) + Math.random() * 0.5 + 0.2).toFixed(2);
+					s.style.cssText = `
+          width: ${size}px; height: ${size}px;
+          left: ${Math.random() * 100}%;
+          top:  ${Math.random() * 100}%;
+          --dur: ${dur}s;
+          --base-opacity: ${base};
+          --peak-opacity: ${peak};
+          animation-delay: ${(Math.random() * 6).toFixed(1)}s;
+        `;
+					container.appendChild(s);
+				}
+			})();
+
+			/* ── Mouse-tracking card shimmer ──────────────────────────── */
+			document.querySelectorAll('.card').forEach(card => {
+				card.addEventListener('mousemove', e => {
+					const rect = card.getBoundingClientRect();
+					const x = (((e.clientX - rect.left) / rect.width) * 100).toFixed(1);
+					const y = (((e.clientY - rect.top) / rect.height) * 100).toFixed(1);
+					card.style.setProperty('--mx', x + '%');
+					card.style.setProperty('--my', y + '%');
+				});
+			});
+
+			/* ── Search / filter ──────────────────────────────────────── */
+			const searchInput = document.getElementById('search');
+			const cards = document.querySelectorAll('.card');
+			const noResults = document.getElementById('noResults');
+			const categories = document.querySelectorAll('.category');
+
+			searchInput.addEventListener('input', () => {
+				const q = searchInput.value.trim().toLowerCase();
+				let anyVisible = false;
+
+				cards.forEach(card => {
+					const name = card.dataset.name || '';
+					const tags = card.dataset.tags || '';
+					const title = card.querySelector('.card-title')?.textContent.toLowerCase() || '';
+					const desc = card.querySelector('.card-desc')?.textContent.toLowerCase() || '';
+					const match = !q || [name, tags, title, desc].some(t => t.includes(q));
+					card.classList.toggle('hidden', !match);
+					if (match) anyVisible = true;
+				});
+
+				// Hide/show category sections
+				categories.forEach(cat => {
+					const visibleCards = [...cat.querySelectorAll('.card')].some(c => !c.classList.contains('hidden'));
+					cat.style.display = visibleCards ? '' : 'none';
+				});
+
+				noResults.classList.toggle('visible', !anyVisible);
+			});
+		</script>
+	</body>
+</html>

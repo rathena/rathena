@@ -1,0 +1,31 @@
+name: Lint
+
+concurrency:
+    group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
+    
+on:
+    pull_request:
+
+permissions:
+    contents: write
+
+jobs:
+    eslint:
+        name: ESLint
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v5
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v6
+              with:
+                  node-version: '24'
+
+            - name: Install dependencies
+              run: npm i
+
+            - name: Run ESLint
+              run: npm run lint

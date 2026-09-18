@@ -1,0 +1,451 @@
+:host {
+	width: 261px;
+	height: 350px;
+}
+
+#Refine {
+	position: relative;
+	height: 100%;
+	width: 100%;
+}
+
+#Refine .titlebar {
+	width: 100%;
+	height: 17px;
+	background-color: white;
+	background-repeat: repeat-x;
+	border-radius: 3px 3px 0px 0px;
+}
+#Refine .titlebar .base {
+	width: 11px;
+	height: 11px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+#Refine .titlebar .text {
+	text-shadow: 1px 1px white;
+	vertical-align: -2px;
+	white-space: nowrap;
+	display: inline-block;
+	width: 32px;
+	height: 13px;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+#Refine .titlebar .left {
+	margin-left: 3px;
+	float: left;
+}
+#Refine .titlebar .right {
+	float: right;
+	margin-right: 3px;
+}
+#Refine .titlebar .clear {
+	clear: both;
+}
+
+#Refine .overlay {
+	position: absolute;
+	display: none;
+	white-space: nowrap;
+	z-index: 900;
+	height: 15px;
+	line-height: 15px;
+	border-radius: 3px;
+	padding: 4px;
+	background: rgba(0, 0, 0, 0.7);
+	color: white;
+	text-shadow: 1px 1px black;
+}
+
+#Refine .panel {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	position: absolute;
+}
+
+#Refine .image-container {
+	position: absolute;
+	top: 1px;
+	height: 301px;
+	width: 262px;
+}
+
+#Refine .success {
+	position: absolute;
+	height: 20px;
+	width: 261px;
+	text-align: center;
+	font-weight: bold;
+	top: 12px;
+}
+
+#Refine .success .number {
+	color: #2963de;
+}
+
+#Refine .item_to_refine {
+	position: absolute;
+	height: 45px;
+	width: 50px;
+	top: 185px;
+	left: 106px;
+}
+
+#Refine .item_to_refine .item .grade {
+	position: absolute;
+	width: 12px;
+	height: 12px;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	pointer-events: none;
+	z-index: 2;
+	top: 12px;
+}
+
+#Refine .item_to_refine_name {
+	position: absolute;
+	height: 18px;
+	width: 261px;
+	text-align: center;
+	top: 225px;
+	align-content: center;
+	font-weight: bold;
+	color: #102142;
+}
+
+#Refine .item {
+	position: relative;
+	float: left;
+	height: 24px;
+	width: 24px;
+	left: 13px;
+	top: 7px;
+}
+
+#Refine .item .icon {
+	position: absolute;
+	top: 0px;
+	width: 24px;
+	height: 24px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	z-index: 2;
+}
+
+#Refine .footer {
+	position: absolute;
+	height: 30px;
+	width: 261px;
+	bottom: 18px;
+}
+
+#Refine .some_notifs {
+	position: absolute;
+	height: 20px;
+	width: 180px;
+	left: 5px;
+	top: 4px;
+}
+
+#Refine .notif {
+	position: absolute;
+	height: 13px;
+	width: 14px;
+	top: 4px;
+}
+
+#Refine .info_msg {
+	position: absolute;
+	height: 20px;
+	width: 170px;
+	left: 15px;
+	font-size: 0.8em;
+	align-content: center;
+}
+
+#Refine .info_msg.red {
+	color: red;
+}
+
+#Refine .info_msg.blue {
+	color: blue;
+}
+
+#Refine .cancel {
+	position: absolute;
+	height: 21px;
+	width: 57px;
+	bottom: 4px;
+	right: 5px;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	border: 0;
+}
+
+#Refine .materials {
+	position: absolute;
+	height: 78px;
+	width: 100%;
+	top: 30px;
+}
+
+#Refine .mat_overlay,
+#Refine .bsb_overlay {
+	position: absolute;
+	height: 53px;
+	width: 46px;
+	background-size: 0px;
+}
+
+#Refine .mat_overlay.selected,
+#Refine .bsb_overlay.selected {
+	background-size: cover;
+}
+
+#Refine .mat_0 {
+	left: 10px;
+	top: 8px;
+}
+
+#Refine .mat_1 {
+	left: 59px;
+	top: 8px;
+}
+
+#Refine .mat_2 {
+	top: 8px;
+	left: 108px;
+}
+
+#Refine .mat_3 {
+	top: 8px;
+	left: 157px;
+}
+
+#Refine .bsb_overlay {
+	top: 8px;
+	left: 206px;
+}
+
+#Refine .material_0,
+#Refine .material_1,
+#Refine .material_2,
+#Refine .material_3 {
+	display: block;
+}
+
+#Refine .materials .item .icon {
+	position: absolute;
+	top: 7px;
+	left: -2px;
+	width: 24px;
+	height: 24px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	z-index: 2;
+}
+
+#Refine .mat_count {
+	height: 20px;
+	position: absolute;
+	width: 50px;
+	top: 46px;
+	text-align: center;
+	left: -15px;
+}
+
+#Refine .selected_materials {
+	position: absolute;
+	height: 50px;
+	top: 83px;
+	width: 100%;
+}
+
+#Refine .selected_mat {
+	position: relative;
+	height: 30px;
+	width: 30px;
+	left: 68px;
+	top: 6px;
+}
+
+#Refine .bsb_selected {
+	position: absolute;
+	height: 30px;
+	width: 30px;
+	left: 149px;
+	top: 6px;
+}
+
+#Refine .refine_button {
+	position: absolute;
+	height: 45px;
+	width: 92px;
+	bottom: 9px;
+	left: 85px;
+}
+
+#Refine .refine_disabled {
+	position: absolute;
+	height: 48px;
+	width: 96px;
+	top: -2px;
+	left: -2px;
+}
+
+#Refine .refine_enabled {
+	position: absolute;
+	height: 48px;
+	width: 96px;
+	top: -2px;
+	left: -2px;
+	cursor: pointer;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	border: 0;
+}
+
+#Refine .refine_text {
+	font-weight: bold;
+	position: relative;
+	height: 15px;
+	width: 92px;
+	text-align: center;
+	color: #101839;
+	top: 5px;
+	pointer-events: none;
+}
+
+#Refine .refine_zeny {
+	position: relative;
+	height: 15px;
+	width: 65px;
+	top: 9px;
+	left: 20px;
+	color: white;
+	text-align: right;
+	font-weight: bold;
+	pointer-events: none;
+}
+
+#Refine .back_button {
+	position: absolute;
+	height: 38px;
+	width: 101px;
+	bottom: 13px;
+	left: 19px;
+	text-align: center;
+	font-weight: bold;
+	align-content: center;
+	cursor: pointer;
+}
+
+#Refine .back_success,
+#Refine .back_fail {
+	position: relative;
+	height: 38px;
+	width: 101px;
+	top: 0px;
+	left: 0px;
+	text-align: center;
+	font-weight: bold;
+	align-content: center;
+	cursor: pointer;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	border: 0;
+}
+
+#Refine .refine_cont {
+	position: absolute;
+	height: 50px;
+	width: 101px;
+	bottom: 1px;
+	right: 20px;
+	text-align: center;
+	font-weight: bold;
+	align-content: center;
+	cursor: pointer;
+	z-index: 5;
+}
+
+#Refine .refine_cont.item {
+	position: absolute !important;
+	float: none !important;
+	height: 50px !important;
+	width: 101px !important;
+	left: auto !important;
+	top: auto !important;
+	bottom: 1px !important;
+	right: 20px !important;
+	text-align: center;
+	font-weight: bold;
+	align-content: center;
+	cursor: pointer;
+	z-index: 5;
+}
+
+#Refine .success_refine_cont_enabled,
+#Refine .success_refine_cont_disabled,
+#Refine .fail_refine_cont_enabled,
+#Refine .fail_refine_cont_disabled {
+	position: absolute;
+	height: 50px;
+	width: 101px;
+	top: 0px;
+	left: 0px;
+	text-align: center;
+	font-weight: bold;
+	align-content: center;
+	cursor: pointer;
+}
+
+#Refine .success_refine_cont_enabled,
+#Refine .fail_refine_cont_enabled {
+	background-color: transparent;
+	background-repeat: no-repeat;
+	border: 0;
+}
+
+#Refine .refine_text_cont {
+	position: absolute;
+	height: 15px;
+	width: 100px;
+	text-align: center;
+	align-content: center;
+	pointer-events: none;
+	font-weight: bold;
+	bottom: 27px;
+	left: 0px;
+}
+
+#Refine .chance_rate {
+	position: absolute;
+	height: 15px;
+	width: 100px;
+	bottom: 14px;
+	left: 0px;
+	text-align: center;
+	align-content: center;
+	pointer-events: none;
+}
+
+#Refine .refine_zeny_cont {
+	position: absolute;
+	height: 15px;
+	width: 100px;
+	bottom: 0px;
+	left: 0px;
+	text-align: center;
+	align-content: center;
+	color: white;
+	pointer-events: none;
+	font-weight: bold;
+}

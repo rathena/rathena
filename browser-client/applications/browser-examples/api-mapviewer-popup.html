@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta charset="UTF-8" />
+		<title>MapViewer - roBrowserLegacy</title>
+		<link rel="icon" type="./icon.png" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta name="HandheldFriendly" content="true" />
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta name="apple-mobile-web-app-title" content="roBrowser" />
+		<meta name="mobile-web-app-capable" content="yes" />
+
+		<meta name="description" content="roBrowser" />
+		<meta name="keywords" content="roBrowser" />
+		<meta name="author" content="roBrowser" />
+		<meta name="robots" content="index" />
+
+		<meta name="theme-color" content="#ff8cb5" />
+
+		<meta property="og:title" content="roBrowser" />
+		<meta property="og:description" content="roBrowser" />
+		<meta property="og:type" content="website" />
+		<meta property="og:locale" content="en_US" />
+
+		<link rel="apple-touch-icon" href="./icon.png" />
+
+		<script type="text/javascript" src="../api/api.js"></script>
+		<script type="text/javascript">
+			function initialize() {
+				document.getElementById('robrowser').addEventListener(
+					'click',
+					function () {
+						var ROConfig = {
+							type: ROBrowser.TYPE.POPUP,
+							application: ROBrowser.APP.MAPVIEWER,
+							remoteClient: 'https://grf.robrowser.com/',
+							width: 800,
+							height: 600,
+							development: true
+						};
+						var RO = new ROBrowser(ROConfig);
+						RO.start();
+					},
+					false
+				);
+			}
+			window.addEventListener('load', initialize, false);
+		</script>
+	</head>
+
+	<body>
+		<input type="button" value="Run MapViewer" id="robrowser" />
+	</body>
+</html>

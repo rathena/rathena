@@ -1,0 +1,60 @@
+/* Message Model */
+:host {
+	width: 270px;
+	top: 100px;
+	left: 100px;
+}
+
+#MakeModelMessage {
+	position: absolute;
+	width: 270px;
+}
+
+#MakeModelMessage .titlebar {
+	border-radius: 3px 3px 0px 0px;
+	height: 15px;
+	align-items: center;
+	padding: 1px;
+}
+#MakeModelMessage .titlebar .base {
+	width: 11px;
+	height: 11px;
+	vertical-align: middle;
+}
+#MakeModelMessage .container {
+	background: white;
+	width: 268px;
+	height: 114px;
+	border-radius: 0px 0px 3px 3px;
+	border: 1px solid #ccc;
+	display: grid;
+}
+
+#MakeModelMessage .text_message {
+	height: 73px;
+	padding: 11px;
+}
+
+/** Buttons **/
+#MakeModelMessage .btns {
+	position: absolute;
+	bottom: -3px;
+	width: 100%;
+	height: 28px;
+}
+#MakeModelMessage ui-button.btn {
+	position: absolute;
+	width: 42px;
+	height: 20px;
+}
+
+#MakeModelMessage .ok,
+#MakeModelMessage .make {
+	right: 50px;
+}
+#MakeModelMessage .cancel {
+	right: 4px;
+}
+#MakeModelMessage .delete {
+	left: 4px;
+}

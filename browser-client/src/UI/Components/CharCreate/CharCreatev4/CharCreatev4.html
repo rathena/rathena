@@ -1,0 +1,567 @@
+<div id="charcreate_v4">
+	<ui-image src="make_character_ver2/bg_makebg.bmp"></ui-image>
+	<div class="title"></div>
+	<div>
+		<div class="human">
+			<input type="radio" name="race" id="human_race" checked class="race" />
+			<label for="human_race" class="human_label">
+				<div class="human_title"></div>
+				<div class="human_desc"></div>
+				<div class="chargen">
+					<canvas id="human" width="65" height="110" style="pointer-events: none"></canvas>
+				</div>
+			</label>
+		</div>
+
+		<div class="doram">
+			<input type="radio" name="race" id="doram_race" class="race" />
+			<label for="doram_race" class="doram_label">
+				<div class="doram_title"></div>
+				<div class="doram_desc"></div>
+				<div class="chargen_doram">
+					<canvas id="doram" width="65" height="110" style="pointer-events: none"></canvas>
+				</div>
+			</label>
+		</div>
+	</div>
+	<div id="style">
+		<div class="gender">
+			<div id="male_container" data-background="make_character_ver2/bt_male_on.bmp">
+				<input type="radio" name="gender" id="male" checked class="gender_button" />
+				<label for="male" class="male_button"> </label>
+			</div>
+			<div id="female_container" data-background="make_character_ver2/bt_female_off.bmp">
+				<input type="radio" name="gender" id="female" class="gender_button" />
+				<label for="female" class="female_button"> </label>
+			</div>
+		</div>
+		<div class="model">
+			<canvas id="style_model" width="65" height="110" style="pointer-events: none"></canvas>
+		</div>
+		<ui-button
+			class="rot_left"
+			bg="make_character_ver2/bt_leftturn_normal.bmp"
+			hover="make_character_ver2/bt_leftturn_over.bmp"
+			down="make_character_ver2/bt_leftturn_press.bmp"
+		></ui-button>
+		<ui-button
+			class="rot_right"
+			bg="make_character_ver2/bt_rightturn_normal.bmp"
+			hover="make_character_ver2/bt_rightturn_over.bmp"
+			down="make_character_ver2/bt_rightturn_press.bmp"
+		></ui-button>
+		<input type="text" id="char_name" maxlength="24" />
+	</div>
+
+	<div id="hair_setting">
+		<div class="hair_style_title"></div>
+		<div class="hair_styles">
+			<div id="human_male" class="hair-style">
+				<div class="hairstyle_row">
+					<div class="styleCol style1">
+						<input type="radio" name="hstyle" id="1_human_male" checked class="hstyle" />
+						<label for="1_human_male" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle01.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style2">
+						<input type="radio" name="hstyle" id="2_human_male" class="hstyle" />
+						<label for="2_human_male" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle02.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style3">
+						<input type="radio" name="hstyle" id="3_human_male" class="hstyle" />
+						<label for="3_human_male" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle03.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style4">
+						<input type="radio" name="hstyle" id="4_human_male" class="hstyle" />
+						<label for="4_human_male" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle04.bmp"></ui-image>
+						</label>
+					</div>
+				</div>
+				<div class="hairstyle_row">
+					<div class="styleCol style5">
+						<input type="radio" name="hstyle" id="5_human_male" class="hstyle" />
+						<label for="5_human_male" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle05.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style6">
+						<input type="radio" name="hstyle" id="6_human_male" class="hstyle" />
+						<label for="6_human_male" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle06.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style7">
+						<input type="radio" name="hstyle" id="7_human_male" class="hstyle" />
+						<label for="7_human_male" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle07.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style8">
+						<input type="radio" name="hstyle" id="8_human_male" class="hstyle" />
+						<label for="8_human_male" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle08.bmp"></ui-image>
+						</label>
+					</div>
+				</div>
+				<div class="hairstyle_row">
+					<div class="styleCol style9">
+						<input type="radio" name="hstyle" id="9_human_male" class="hstyle" />
+						<label for="9_human_male" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle09.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style10">
+						<input type="radio" name="hstyle" id="10_human_male" class="hstyle" />
+						<label for="10_human_male" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle10.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style11">
+						<input type="radio" name="hstyle" id="11_human_male" class="hstyle" />
+						<label for="11_human_male" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle11.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style12">
+						<input type="radio" name="hstyle" id="12_human_male" class="hstyle" />
+						<label for="12_human_male" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle12.bmp"></ui-image>
+						</label>
+					</div>
+				</div>
+				<div class="hairstyle_row">
+					<div class="styleCol style13">
+						<input type="radio" name="hstyle" id="13_human_male" class="hstyle" />
+						<label for="13_human_male" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle13.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style14">
+						<input type="radio" name="hstyle" id="14_human_male" class="hstyle" />
+						<label for="14_human_male" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle14.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style15">
+						<input type="radio" name="hstyle" id="15_human_male" class="hstyle" />
+						<label for="15_human_male" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle15.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style16">
+						<input type="radio" name="hstyle" id="16_human_male" class="hstyle" />
+						<label for="16_human_male" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle16.bmp"></ui-image>
+						</label>
+					</div>
+				</div>
+				<div class="hairstyle_row">
+					<div class="styleCol style17">
+						<input type="radio" name="hstyle" id="17_human_male" class="hstyle" />
+						<label for="17_human_male" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle17.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style18">
+						<input type="radio" name="hstyle" id="18_human_male" class="hstyle" />
+						<label for="18_human_male" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle18.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style19">
+						<input type="radio" name="hstyle" id="19_human_male" class="hstyle" />
+						<label for="19_human_male" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle19.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style20">
+						<input type="radio" name="hstyle" id="20_human_male" class="hstyle" />
+						<label for="20_human_male" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle20.bmp"></ui-image>
+						</label>
+					</div>
+				</div>
+				<div class="hairstyle_row">
+					<div class="styleCol style21">
+						<input type="radio" name="hstyle" id="21_human_male" class="hstyle" />
+						<label for="21_human_male" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle21.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style22">
+						<input type="radio" name="hstyle" id="22_human_male" class="hstyle" />
+						<label for="22_human_male" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle22.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style23">
+						<input type="radio" name="hstyle" id="23_human_male" class="hstyle" />
+						<label for="23_human_male" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle23.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style24"></div>
+				</div>
+			</div>
+			<div id="human_female" class="hair-style">
+				<div class="hairstyle_row">
+					<div class="styleCol style1">
+						<input type="radio" name="hstyle" id="1_human_female" checked class="hstyle" />
+						<label for="1_human_female" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle_girl01.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style2">
+						<input type="radio" name="hstyle" id="2_human_female" class="hstyle" />
+						<label for="2_human_female" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle_girl02.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style3">
+						<input type="radio" name="hstyle" id="3_human_female" class="hstyle" />
+						<label for="3_human_female" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle_girl03.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style4">
+						<input type="radio" name="hstyle" id="4_human_female" class="hstyle" />
+						<label for="4_human_female" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle_girl04.bmp"></ui-image>
+						</label>
+					</div>
+				</div>
+				<div class="hairstyle_row">
+					<div class="styleCol style5">
+						<input type="radio" name="hstyle" id="5_human_female" class="hstyle" />
+						<label for="5_human_female" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle_girl05.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style6">
+						<input type="radio" name="hstyle" id="6_human_female" class="hstyle" />
+						<label for="6_human_female" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle_girl06.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style7">
+						<input type="radio" name="hstyle" id="7_human_female" class="hstyle" />
+						<label for="7_human_female" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle_girl07.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style8">
+						<input type="radio" name="hstyle" id="8_human_female" class="hstyle" />
+						<label for="8_human_female" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle_girl08.bmp"></ui-image>
+						</label>
+					</div>
+				</div>
+				<div class="hairstyle_row">
+					<div class="styleCol style9">
+						<input type="radio" name="hstyle" id="9_human_female" class="hstyle" />
+						<label for="9_human_female" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle_girl09.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style10">
+						<input type="radio" name="hstyle" id="10_human_female" class="hstyle" />
+						<label for="10_human_female" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle_girl10.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style11">
+						<input type="radio" name="hstyle" id="11_human_female" class="hstyle" />
+						<label for="11_human_female" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle_girl11.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style12">
+						<input type="radio" name="hstyle" id="12_human_female" class="hstyle" />
+						<label for="12_human_female" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle_girl12.bmp"></ui-image>
+						</label>
+					</div>
+				</div>
+				<div class="hairstyle_row">
+					<div class="styleCol style13">
+						<input type="radio" name="hstyle" id="13_human_female" class="hstyle" />
+						<label for="13_human_female" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle_girl13.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style14">
+						<input type="radio" name="hstyle" id="14_human_female" class="hstyle" />
+						<label for="14_human_female" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle_girl14.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style15">
+						<input type="radio" name="hstyle" id="15_human_female" class="hstyle" />
+						<label for="15_human_female" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle_girl15.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style16">
+						<input type="radio" name="hstyle" id="16_human_female" class="hstyle" />
+						<label for="16_human_female" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle_girl16.bmp"></ui-image>
+						</label>
+					</div>
+				</div>
+				<div class="hairstyle_row">
+					<div class="styleCol style17">
+						<input type="radio" name="hstyle" id="17_human_female" class="hstyle" />
+						<label for="17_human_female" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle_girl17.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style18">
+						<input type="radio" name="hstyle" id="18_human_female" class="hstyle" />
+						<label for="18_human_female" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle_girl18.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style19">
+						<input type="radio" name="hstyle" id="19_human_female" class="hstyle" />
+						<label for="19_human_female" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle_girl19.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style20">
+						<input type="radio" name="hstyle" id="20_human_female" class="hstyle" />
+						<label for="20_human_female" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle_girl20.bmp"></ui-image>
+						</label>
+					</div>
+				</div>
+				<div class="hairstyle_row">
+					<div class="styleCol style21">
+						<input type="radio" name="hstyle" id="21_human_female" class="hstyle" />
+						<label for="21_human_female" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle_girl21.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style22">
+						<input type="radio" name="hstyle" id="22_human_female" class="hstyle" />
+						<label for="22_human_female" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle_girl22.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style23">
+						<input type="radio" name="hstyle" id="23_human_female" class="hstyle" />
+						<label for="23_human_female" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle_girl23.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style24"></div>
+				</div>
+			</div>
+			<div id="doram_male" class="hair-style">
+				<div class="hairstyle_row">
+					<div class="styleCol style1">
+						<input type="radio" name="hstyle" id="1_doram_male" checked class="hstyle" />
+						<label for="1_doram_male" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle_doramboy01.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style2">
+						<input type="radio" name="hstyle" id="2_doram_male" class="hstyle" />
+						<label for="2_doram_male" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle_doramboy02.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style3">
+						<input type="radio" name="hstyle" id="3_doram_male" class="hstyle" />
+						<label for="3_doram_male" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle_doramboy03.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style4">
+						<input type="radio" name="hstyle" id="4_doram_male" class="hstyle" />
+						<label for="4_doram_male" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle_doramboy04.bmp"></ui-image>
+						</label>
+					</div>
+				</div>
+				<div class="hairstyle_row">
+					<div class="styleCol style5">
+						<input type="radio" name="hstyle" id="5_doram_male" class="hstyle" />
+						<label for="5_doram_male" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle_doramboy05.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style6">
+						<input type="radio" name="hstyle" id="6_doram_male" class="hstyle" />
+						<label for="6_doram_male" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle_doramboy06.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style7"></div>
+					<div class="styleCol style8"></div>
+				</div>
+				<div class="hairstyle_row">
+					<div class="styleCol style9"></div>
+					<div class="styleCol style10"></div>
+					<div class="styleCol style11"></div>
+					<div class="styleCol style12"></div>
+				</div>
+				<div class="hairstyle_row">
+					<div class="styleCol style13"></div>
+					<div class="styleCol style14"></div>
+					<div class="styleCol style15"></div>
+					<div class="styleCol style16"></div>
+				</div>
+				<div class="hairstyle_row">
+					<div class="styleCol style17"></div>
+					<div class="styleCol style18"></div>
+					<div class="styleCol style19"></div>
+					<div class="styleCol style20"></div>
+				</div>
+				<div class="hairstyle_row">
+					<div class="styleCol style21"></div>
+					<div class="styleCol style22"></div>
+					<div class="styleCol style23"></div>
+					<div class="styleCol style24"></div>
+				</div>
+			</div>
+			<div id="doram_female" class="hair-style">
+				<div class="hairstyle_row">
+					<div class="styleCol style1">
+						<input type="radio" name="hstyle" id="1_doram_female" checked class="hstyle" />
+						<label for="1_doram_female" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle_doramgirl01.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style2">
+						<input type="radio" name="hstyle" id="2_doram_female" class="hstyle" />
+						<label for="2_doram_female" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle_doramgirl02.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style3">
+						<input type="radio" name="hstyle" id="3_doram_female" class="hstyle" />
+						<label for="3_doram_female" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle_doramgirl03.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style4">
+						<input type="radio" name="hstyle" id="4_doram_female" class="hstyle" />
+						<label for="4_doram_female" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle_doramgirl04.bmp"></ui-image>
+						</label>
+					</div>
+				</div>
+				<div class="hairstyle_row">
+					<div class="styleCol style5">
+						<input type="radio" name="hstyle" id="5_doram_female" class="hstyle" />
+						<label for="5_doram_female" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle_doramgirl05.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style6">
+						<input type="radio" name="hstyle" id="6_doram_female" class="hstyle" />
+						<label for="6_doram_female" class="hstyle_button">
+							<ui-image src="make_character_ver2/img_hairstyle_doramgirl06.bmp"></ui-image>
+						</label>
+					</div>
+					<div class="styleCol style7"></div>
+					<div class="styleCol style8"></div>
+				</div>
+				<div class="hairstyle_row">
+					<div class="styleCol style9"></div>
+					<div class="styleCol style10"></div>
+					<div class="styleCol style11"></div>
+					<div class="styleCol style12"></div>
+				</div>
+				<div class="hairstyle_row">
+					<div class="styleCol style13"></div>
+					<div class="styleCol style14"></div>
+					<div class="styleCol style15"></div>
+					<div class="styleCol style16"></div>
+				</div>
+				<div class="hairstyle_row">
+					<div class="styleCol style17"></div>
+					<div class="styleCol style18"></div>
+					<div class="styleCol style19"></div>
+					<div class="styleCol style20"></div>
+				</div>
+				<div class="hairstyle_row">
+					<div class="styleCol style21"></div>
+					<div class="styleCol style22"></div>
+					<div class="styleCol style23"></div>
+					<div class="styleCol style24"></div>
+				</div>
+			</div>
+		</div>
+		<div class="hair_color_title"></div>
+		<div class="hair_colors">
+			<div class="haircolor_row">
+				<div class="colorCol cstyle00">
+					<input type="radio" name="hcolor" id="0_color" checked class="hcolor" />
+					<label for="0_color" class="hcolor_button"> </label>
+				</div>
+				<div class="colorCol cstyle01">
+					<input type="radio" name="hcolor" id="1_color" class="hcolor" />
+					<label for="1_color" class="hcolor_button"> </label>
+				</div>
+				<div class="colorCol cstyle02">
+					<input type="radio" name="hcolor" id="2_color" class="hcolor" />
+					<label for="2_color" class="hcolor_button"> </label>
+				</div>
+				<div class="colorCol cstyle03">
+					<input type="radio" name="hcolor" id="3_color" class="hcolor" />
+					<label for="3_color" class="hcolor_button"> </label>
+				</div>
+				<div class="colorCol cstyle04">
+					<input type="radio" name="hcolor" id="4_color" class="hcolor" />
+					<label for="4_color" class="hcolor_button"> </label>
+				</div>
+			</div>
+			<div class="haircolor_row">
+				<div class="colorCol cstyle05">
+					<input type="radio" name="hcolor" id="5_color" class="hcolor" />
+					<label for="5_color" class="hcolor_button"> </label>
+				</div>
+				<div class="colorCol cstyle06">
+					<input type="radio" name="hcolor" id="6_color" class="hcolor" />
+					<label for="6_color" class="hcolor_button"> </label>
+				</div>
+				<div class="colorCol cstyle07">
+					<input type="radio" name="hcolor" id="7_color" class="hcolor" />
+					<label for="7_color" class="hcolor_button"> </label>
+				</div>
+				<div class="colorCol cstyle08">
+					<input type="radio" name="hcolor" id="8_color" class="hcolor" />
+					<label for="8_color" class="hcolor_button"> </label>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="btns">
+		<ui-button
+			class="btn cancel"
+			bg="make_character_ver2/bt_close_normal.bmp"
+			hover="make_character_ver2/bt_close_over.bmp"
+			down="make_character_ver2/bt_close_press.bmp"
+		></ui-button>
+		<ui-button
+			class="btn make"
+			bg="make_character_ver2/bt_make_normal.bmp"
+			hover="make_character_ver2/bt_make_over.bmp"
+			down="make_character_ver2/bt_make_press.bmp"
+		></ui-button>
+		<ui-button
+			class="btn return"
+			bg="make_character_ver2/bt_make_normal.bmp"
+			hover="make_character_ver2/bt_make_over.bmp"
+			down="make_character_ver2/bt_make_press.bmp"
+		></ui-button>
+	</div>
+</div>

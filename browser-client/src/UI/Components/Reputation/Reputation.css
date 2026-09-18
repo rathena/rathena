@@ -1,0 +1,235 @@
+:host {
+	position: absolute;
+	top: 100px;
+	left: 100px;
+	width: 665px;
+	height: 450px;
+}
+
+#Reputation {
+	width: 100%;
+	height: 100%;
+	background-color: white;
+	border-radius: 5px;
+}
+
+#Reputation .titlebar {
+	width: 100%;
+	height: 17px;
+	background-color: white;
+	background-repeat: repeat-x;
+	border-radius: 3px 3px 0px 0px;
+}
+#Reputation .titlebar .base {
+	width: 11px;
+	height: 11px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+#Reputation .titlebar .text {
+	text-shadow: 1px 1px white;
+	vertical-align: -2px;
+	white-space: nowrap;
+	/* chrome bug */
+	display: inline-block;
+	width: 50px;
+	height: 13px;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+#Reputation .titlebar .left {
+	margin-left: 3px;
+	float: left;
+}
+#Reputation .titlebar .right {
+	float: right;
+	margin-right: 3px;
+}
+#Reputation .titlebar .clear {
+	clear: both;
+}
+
+#Reputation .overall_container {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+#Reputation .header {
+	display: flex;
+	gap: 6px;
+}
+
+#Reputation .select-wrapper {
+	position: relative;
+	display: inline-block;
+	margin-left: 10px;
+	margin-top: 5px;
+}
+
+#Reputation .rep_group_selector {
+	width: 140px;
+	padding-right: 36px;
+	height: 18px;
+	background-color: #eeeeef;
+}
+
+#Reputation .select-arrow {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	width: 18px;
+	height: 18px;
+	border: none;
+	cursor: pointer;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	pointer-events: none;
+}
+
+#Reputation .search_wrapper {
+	height: 18px;
+	width: 235px;
+	margin-top: 5px;
+	display: inline-block;
+	position: relative;
+}
+
+#Reputation .rep_group_searchbar {
+	height: 14px;
+	width: 196px;
+	border: 1px solid black;
+	background-color: #eeeeef;
+}
+
+#Reputation .search {
+	height: 18px;
+	width: 33px;
+	border: none;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+
+#Reputation .rep_group_total_points_wrapper {
+	width: 245px;
+	border: 1px solid black;
+	margin-top: 5px;
+	background-color: #eeeeef;
+	align-items: center;
+	display: flex;
+}
+
+#Reputation .rep_group_text {
+	width: 50px;
+}
+
+#Reputation .rep_indicator {
+	width: 40px;
+	height: 100%;
+	background: no-repeat center;
+}
+
+#Reputation .rep_group_total_points_value {
+	margin-left: 5px;
+	margin-right: 5px;
+	width: 100%;
+	text-align: right;
+}
+
+#Reputation .content {
+	min-height: 350px;
+	display: flex;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+	flex-basis: content;
+	align-content: flex-start;
+	overflow-y: auto;
+}
+
+#Reputation .rep_group_wrapper {
+	margin-top: 5px;
+	margin-left: 10px;
+	width: 313px;
+	height: 82px;
+	background-repeat: no-repeat;
+	position: relative;
+}
+
+#Reputation .rep_group_name {
+	margin-left: 5px;
+	margin-top: 5px;
+}
+
+#Reputation .rep_group_indicator_wrapper {
+	display: flex;
+	height: 17px;
+	gap: 2px;
+	margin-left: 5px;
+	margin-top: 3px;
+}
+
+#Reputation .rep_group_indicator {
+	height: 12px;
+	width: 12px;
+}
+
+#Reputation .rep_group_progess_bar {
+	height: 8px;
+	margin-top: 10px;
+	margin-left: 3px;
+	width: 97%;
+}
+
+#Reputation .rep_id_points {
+	width: 80px;
+	height: 20px;
+	margin-top: 5px;
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	text-align: center;
+}
+
+#Reputation .paginator {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 8px;
+	height: 30px;
+	margin-right: 25px;
+}
+
+#Reputation .paginator ui-button {
+	width: 7px;
+	height: 11px;
+	border: none;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+
+#Reputation .footer {
+	height: 28px;
+	background-color: white;
+	background-repeat: repeat-x;
+	border-radius: 0px 0px 3px 3px;
+	display: flex;
+	justify-content: flex-end;
+}
+
+#Reputation .big_btn_close {
+	height: 20px;
+	width: 42px;
+	border: none;
+	margin-top: 5px;
+	margin-right: 10px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>roBrowser — STR Effect (.str) Tester</title>
+</head>
+<body>
+  <script src="../../shared/importmap.js" data-project-root-split="/applications/"></script>
+
+  <script type="module">
+    window.ROConfig = { servers: [{ packetver: 0 }], packetver: 0 };
+
+    import FileTester from './FileTester.js';
+    import Str from 'Loaders/Str.js';
+
+    const ft = new FileTester('str', data => {
+      new Str(data);
+    });
+
+    ft.start();
+  </script>
+</body>
+</html>

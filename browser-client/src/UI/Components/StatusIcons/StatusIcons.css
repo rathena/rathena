@@ -1,0 +1,38 @@
+:host {
+	top: 166px;
+	right: 20px;
+	overflow: visible;
+}
+
+#StatusIcons {
+	display: block;
+}
+
+#StatusIcons .state {
+	position: absolute;
+}
+
+#StatusIcons .state .description {
+	display: none;
+	z-index: 51;
+	position: absolute;
+	right: 33px;
+	top: 0px;
+	padding: 0px 5px 0px 5px;
+	background-color: rgba(0, 0, 0, 0.5);
+	border: 1px solid #c6c6c6;
+	border-radius: 3px;
+	color: white;
+	text-shadow: 1px 1px black;
+	white-space: nowrap;
+	line-height: 16px;
+}
+
+#StatusIcons .state:hover .description {
+	display: block;
+}
+
+#StatusIcons .state canvas {
+	width: 32px;
+	height: 32px;
+}

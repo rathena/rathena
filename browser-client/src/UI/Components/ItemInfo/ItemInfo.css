@@ -1,0 +1,241 @@
+:host {
+	top: 0px;
+	left: 0px;
+}
+
+.ItemInfo {
+	position: relative;
+	width: 280px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+.ItemInfo .container {
+	height: 140px;
+	position: relative;
+	box-shadow:
+		white 0px 0px 0px 3px inset,
+		rgb(192, 192, 192) 0px 0px 0px 4px inset;
+	background-repeat: no-repeat;
+	background-color: white;
+	border-radius: 5px;
+}
+.ItemInfo .event_view {
+	position: absolute;
+}
+.ItemInfo .event_view .view {
+	position: absolute;
+	width: 42px;
+	height: 20px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	border: none;
+	top: 6px;
+	left: 6px;
+}
+.ItemInfo .collection {
+	position: absolute;
+	top: 11px;
+	left: 10px;
+	width: 75px;
+	height: 100px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+.ItemInfo .title {
+	position: absolute;
+	top: 3px;
+	left: 86px;
+	width: 185px;
+	height: 14px;
+	padding-left: 4px;
+	padding-top: 6px;
+	text-shadow: 1px 1px 0px white;
+	white-space: nowrap;
+	overflow: hidden;
+	font-size: 11px;
+	font-weight: bold;
+}
+.ItemInfo .close {
+	position: absolute;
+	top: 3px;
+	right: 3px;
+	width: 11px;
+	height: 11px;
+	display: block;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	border: none;
+}
+.ItemInfo .description {
+	position: absolute;
+	top: 35px;
+	left: 100px;
+	line-height: 18px;
+	width: 170px;
+	height: 75px;
+	overflow-y: auto;
+}
+.ItemInfo .description .description-inner {
+	width: 150px;
+	white-space: pre-wrap;
+}
+.ItemInfo .extend {
+	position: absolute;
+	right: 4px;
+	bottom: 3px;
+	width: 13px;
+	height: 13px;
+	border: none;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+
+.ItemInfo .cardlist {
+	border-radius: 5px;
+	background: white;
+	padding: 2px;
+	margin-top: 3px;
+}
+.ItemInfo .cardlist .border {
+	border: 1px solid #c1c6c2;
+	padding-top: 2px;
+	padding-left: 5px;
+	border-radius: 5px;
+}
+.ItemInfo .cardlist .item {
+	position: relative;
+	display: inline-block;
+}
+.ItemInfo .cardlist .item .icon {
+	width: 24px;
+	height: 24px;
+}
+.ItemInfo .cardlist .item .name {
+	position: absolute;
+	top: -20px;
+	left: -20px;
+	display: none;
+	white-space: nowrap;
+	z-index: 900;
+	height: 13px;
+	padding: 5px;
+	background: rgba(0, 0, 0, 0.7);
+	color: white;
+	text-shadow: 1px 1px black;
+}
+.ItemInfo .cardlist .item:hover .name {
+	display: block;
+}
+
+.ItemInfo .book_open {
+	margin-top: 6px;
+	margin-left: 7px;
+}
+.ItemInfo .book_read {
+	position: absolute;
+	margin-top: 7px;
+}
+
+.ItemInfo .overlay_open {
+	pointer-events: none;
+	position: absolute;
+	white-space: nowrap;
+	z-index: 900;
+	height: 13px;
+	background: rgba(0, 0, 0, 0.5);
+	color: white;
+	text-shadow: black 1px 1px;
+	top: -7px;
+	left: 7px;
+	text-align: center;
+	padding: 3px 4px 1px 4px;
+	display: none;
+}
+.ItemInfo .overlay_read {
+	pointer-events: none;
+	position: absolute;
+	white-space: nowrap;
+	z-index: 900;
+	height: 13px;
+	background: rgba(0, 0, 0, 0.5);
+	color: white;
+	text-shadow: black 1px 1px;
+	top: -7px;
+	left: 27px;
+	text-align: center;
+	padding: 3px 4px 1px 4px;
+	display: none;
+}
+
+.ItemInfo .optionlist {
+	border-radius: 5px;
+	background: white;
+	padding: 2px;
+	margin-top: 3px;
+}
+.ItemInfo .optionlist .border {
+	border: 1px solid #c1c6c2;
+	padding-top: 2px;
+	padding-left: 5px;
+	border-radius: 5px;
+}
+.ItemInfo .optionlist .item {
+	position: relative;
+	display: inline-block;
+}
+.ItemInfo .optionlist .item .icon {
+	width: 24px;
+	height: 24px;
+}
+.ItemInfo .optionlist .item .name {
+	position: absolute;
+	top: -20px;
+	left: -20px;
+	display: none;
+	white-space: nowrap;
+	z-index: 900;
+	height: 13px;
+	padding: 5px;
+	background: rgba(0, 0, 0, 0.7);
+	color: white;
+	text-shadow: 1px 1px black;
+}
+.ItemInfo .optionlist .item:hover .name {
+	display: block;
+}
+
+.ItemInfo .title.damaged {
+	text-shadow: red 1px 1px 0px;
+}
+
+.ItemInfo .preview-action {
+	padding-top: 115px;
+	padding-left: 9px;
+}
+
+.moveinfo-label {
+	color: #000000;
+	display: block;
+	text-decoration: underline;
+}
+
+#moveinfo-tooltip {
+	position: absolute;
+	display: none;
+	pointer-events: none;
+	z-index: 9999;
+	background: #e6e7ef;
+	border: 2px solid #bdbdee;
+	padding: 6px 8px;
+	color: #183984;
+	white-space: nowrap;
+	border-radius: 8px;
+}
+
+.ItemInfo .btn_mounting {
+	border: 0;
+	width: 80px;
+	height: 20px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}

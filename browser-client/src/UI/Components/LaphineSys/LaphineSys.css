@@ -1,0 +1,303 @@
+:host {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 400px;
+	height: 250px;
+}
+#LaphineSys .container {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	width: 100%;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	border-radius: 10px;
+}
+#LaphineSys .titlebar {
+	width: 100%;
+	height: 17px;
+}
+#LaphineSys .titlebar .base {
+	width: 11px;
+	height: 11px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+#LaphineSys .titlebar .item_text {
+	text-shadow: 1px 1px white;
+	vertical-align: -2px;
+	white-space: nowrap;
+	/* chrome bug */
+	display: inline-block;
+	width: 32px;
+	height: 13px;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+#LaphineSys .titlebar .left {
+	margin-left: 3px;
+	float: left;
+}
+#LaphineSys .titlebar .right {
+	float: right;
+	margin-right: 3px;
+}
+#LaphineSys .titlebar .clear {
+	clear: both;
+}
+
+#LaphineSys .overlay {
+	position: absolute;
+	display: none;
+	white-space: nowrap;
+	z-index: 900;
+	height: 15px;
+	line-height: 15px;
+	border-radius: 3px;
+	padding: 4px;
+	background: rgba(0, 0, 0, 0.7);
+	color: white;
+	text-shadow: 1px 1px black;
+}
+
+#LaphineSys .panel {
+	width: 100%;
+	position: absolute;
+	height: 233px;
+}
+
+#LaphineSys .left_panel {
+	position: absolute;
+	left: 0px;
+	height: 205px;
+	width: 225px;
+}
+
+#LaphineSys .mat_info_container {
+	position: absolute;
+	height: 55px;
+	width: 245px;
+	top: 22px;
+	text-overflow: clip;
+}
+
+#LaphineSys .info_title {
+	height: 15px;
+	width: 228px;
+	position: relative;
+	top: 9px;
+	text-align: center;
+	font-size: 0.9em;
+	color: #527bce;
+}
+
+#LaphineSys .mat_info_list {
+	position: relative;
+	height: 15px;
+	top: 8px;
+	color: #424a84;
+	text-align: center;
+	font-size: 0.9em;
+	width: 230px;
+}
+
+#LaphineSys .mat_count_submitted,
+#LaphineSys .mat_count_needed {
+	height: 15px;
+	width: 10px;
+	position: absolute;
+	color: white;
+	font-size: 0.9em;
+	text-align: center;
+	align-content: center;
+}
+
+#LaphineSys .mat_count_submitted {
+	top: 35px;
+	left: 99px;
+}
+
+#LaphineSys .mat_count_needed {
+	top: 35px;
+	left: 117px;
+}
+
+#LaphineSys .available_mat_list {
+	position: absolute;
+	height: 205px;
+	width: 146px;
+	left: 245px;
+	overflow: auto;
+}
+
+#LaphineSys .available_mat_list .item {
+	display: block;
+	width: 132px;
+	height: 26px;
+	margin: 4px 0px 0px 2px;
+	position: relative;
+}
+
+#LaphineSys .available_mat_list .item .icon {
+	width: 24px;
+	height: 24px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}
+
+#LaphineSys .available_mat_list .item.unselectable .icon {
+	filter: sepia(1) hue-rotate(300deg) saturate(2);
+}
+
+#LaphineSys .available_mat_list .item.unselectable .name {
+	color: gray;
+}
+
+#LaphineSys .available_mat_list .item .amount {
+	position: absolute;
+
+	top: 15px;
+	left: 12px;
+	text-align: right;
+	text-shadow: -1px -1px white;
+}
+
+#LaphineSys .available_mat_list .name {
+	position: absolute;
+	top: 0px;
+	left: 30px;
+	width: 104px;
+	align-content: center;
+	height: 30px;
+	background-size: 0px;
+}
+
+#LaphineSys .available_mat_list .name.selected {
+	background-size: cover;
+}
+
+#LaphineSys .submit_button_enabled,
+#LaphineSys .submit_button_disabled {
+	position: absolute;
+	height: 24px;
+	width: 24px;
+	top: 93px;
+	left: 213px;
+	background: no-repeat;
+}
+
+#LaphineSys .scroll_hider {
+	position: absolute;
+	height: 204px;
+	width: 8px;
+	background-color: #f7f7ff;
+	right: 8px;
+	top: 1px;
+}
+
+#LaphineSys .submitted_mat_list {
+	left: 36px;
+	position: absolute;
+	width: 160px;
+	height: auto;
+	top: 145px;
+	display: flex;
+	flex-wrap: wrap;
+	align-content: flex-start;
+}
+
+#LaphineSys .submitted_mat_list .item {
+	display: flex;
+	flex-direction: column;
+	width: 24px;
+	height: 24px;
+	margin: 4px;
+	position: relative;
+	flex: 0 0 auto; /* Ensure items do not shrink or grow */
+}
+
+#LaphineSys .submitted_mat_list .item .icon {
+	width: 24px;
+	height: 24px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	z-index: 2;
+}
+
+#LaphineSys .submitted_mat_list .item .amount {
+	position: absolute;
+
+	top: 15px;
+	left: 12px;
+	text-align: right;
+	text-shadow: -1px -1px white;
+	z-index: 2;
+}
+
+#LaphineSys .submitted_mat_list .item .shadow {
+	position: absolute;
+	height: 18px;
+	width: 32px;
+	top: 9px;
+	left: -2px;
+	background-repeat: no-repeat;
+}
+
+#LaphineSys .footer {
+	position: absolute;
+	height: 28px;
+	width: 100%;
+	bottom: 0px;
+}
+
+#LaphineSys .some_notifs {
+	position: absolute;
+	height: 20px;
+	width: 270px;
+	left: 5px;
+	top: 4px;
+}
+
+#LaphineSys .notif {
+	position: absolute;
+	height: 13px;
+	width: 14px;
+	top: 4px;
+}
+
+#LaphineSys .info_msg {
+	position: absolute;
+	height: 20px;
+	width: 100%;
+	left: 15px;
+	font-size: 1em;
+	align-content: center;
+	color: blue;
+}
+
+#LaphineSys .cancel,
+#LaphineSys .make_enabled,
+#LaphineSys .make_disabled {
+	height: 20px;
+	width: 56px;
+}
+
+#LaphineSys .cancel {
+	position: absolute;
+	bottom: 4px;
+	right: 68px;
+}
+
+#LaphineSys .make_enabled,
+#LaphineSys .make_disabled {
+	position: absolute;
+	bottom: 4px;
+	right: 5px;
+}

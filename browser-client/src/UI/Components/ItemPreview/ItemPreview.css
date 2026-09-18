@@ -1,0 +1,75 @@
+:host {
+	width: 170px;
+	height: 210px;
+	top: 200px;
+	left: 520px;
+}
+
+#ItemPreview {
+	position: absolute;
+	width: 170px;
+	height: 210px;
+	background-color: white;
+	border-radius: 5px;
+	box-shadow:
+		white 0px 0px 0px 3px inset,
+		rgb(192, 192, 192) 0px 0px 0px 4px inset;
+}
+#ItemPreview .titlebar {
+	position: relative;
+	height: 17px;
+	background-repeat: repeat-x;
+	border-radius: 4px 4px 0 0;
+}
+#ItemPreview .titlebar .title {
+	position: absolute;
+	left: 6px;
+	top: 2px;
+	text-shadow: 1px 1px 0px white;
+	white-space: nowrap;
+	max-width: 130px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-size: 11px;
+	font-weight: bold;
+}
+#ItemPreview .titlebar .close {
+	position: absolute;
+	right: 3px;
+	top: 3px;
+	width: 11px;
+	height: 11px;
+	border: none;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+#ItemPreview .content {
+	position: absolute;
+	top: 20px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	text-align: center;
+}
+#ItemPreview .controls {
+	margin-top: 6px;
+}
+#ItemPreview .controls ui-button {
+	border: none;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	vertical-align: middle;
+}
+#ItemPreview .controls .rot_left,
+#ItemPreview .controls .rot_right {
+	width: 20px;
+	height: 20px;
+}
+#ItemPreview .controls .reset {
+	border: 0;
+	width: 80px;
+	height: 20px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	margin: 0 2px;
+}

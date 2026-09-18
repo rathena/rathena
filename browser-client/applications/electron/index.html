@@ -1,0 +1,184 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Electron - roBrowserLegacy</title>
+		<link rel="icon" type="image/png" href="icon.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<style>
+			html,
+			body {
+				margin: 0;
+				padding: 0;
+				border: 0;
+				height: 100%;
+				width: 100%;
+				overflow: hidden;
+			}
+			/* Pre-loader — appears instantly, before any JS */
+			#ro-preloader {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				z-index: 99999;
+				background: rgba(6, 8, 16, 0.97);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				flex-direction: column;
+			}
+			#ro-preloader .pre-spinner {
+				width: 48px;
+				height: 48px;
+				margin: 0 auto 16px;
+				border: 4px solid rgba(232, 184, 75, 0.2);
+				border-top-color: #e8b84b;
+				border-radius: 50%;
+				animation: ro-pre-spin 0.8s linear infinite;
+			}
+			#ro-preloader .pre-text {
+				font-family: serif;
+				font-size: 16px;
+				letter-spacing: 3px;
+				text-transform: uppercase;
+				color: #e8b84b;
+			}
+			#ro-preloader .pre-text span {
+				display: inline-block;
+				animation: ro-pre-wave 1.2s ease-in-out infinite;
+				animation-delay: calc(var(--i) * 0.08s);
+			}
+			@keyframes ro-pre-spin {
+				to {
+					transform: rotate(360deg);
+				}
+			}
+			@keyframes ro-pre-wave {
+				0%,
+				60%,
+				100% {
+					transform: translateY(0);
+				}
+				30% {
+					transform: translateY(-8px);
+				}
+			}
+			#ro-preloader.fade-out {
+				opacity: 0;
+				transition: opacity 0.3s ease;
+			}
+		</style>
+		<script src="../shared/importmap.js"></script>
+	</head>
+	<body>
+		<!-- Pre-loader: appears BEFORE any JS loads -->
+		<div id="ro-preloader">
+			<div class="pre-spinner"></div>
+			<p class="pre-text">
+				<span style="--i: 0">L</span><span style="--i: 1">o</span><span style="--i: 2">a</span
+				><span style="--i: 3">d</span><span style="--i: 4">i</span><span style="--i: 5">n</span
+				><span style="--i: 6">g</span><span style="--i: 7">.</span><span style="--i: 8">.</span
+				><span style="--i: 9">.</span>
+			</p>
+		</div>
+
+		<div id="robrowser"></div>
+		<script>
+			var ROConfig = {
+				target: document.getElementById('robrowser'),
+				type: 2,
+				application: 1,
+				development: true,
+				remoteClient: 'https://grf.robrowser.com/',
+				servers: [
+					{
+						display: 'Your Local Server[PRE]',
+						desc: '2013 demo server',
+						address: '127.0.0.1',
+						port: 6900,
+						version: 25,
+						langtype: 12,
+						packetver: 20130618,
+						renewal: false,
+						worldMapSettings: { episode: 12 },
+						packetKeys: false,
+						socketProxy: 'ws://localhost:5999',
+						remoteClient: '/remote-client/',
+						adminList: []
+					},
+					{
+						display: 'Your Local Server[RE]',
+						desc: '2025 demo server',
+						address: '127.0.0.1',
+						port: 6900,
+						version: 55,
+						langtype: 12,
+						packetver: 20250618,
+						renewal: true,
+						worldMapSettings: { episode: 21 },
+						packetKeys: false,
+						socketProxy: 'ws://localhost:5999',
+						remoteClient: '/remote-client/',
+						adminList: []
+					},
+					{
+						display: 'NiktoutRO Chaos',
+						desc: 'NiktoutRO Chaos [100k/100k/10%]',
+						address: 'chaos.niktoutro.com',
+						port: 6905,
+						version: 55,
+						langtype: 1,
+						packetver: 20151104,
+						renewal: true,
+						socketProxy: 'wss://classicweb.niktoutro.com:5999',
+						remoteClient: 'https://classicweb.niktoutro.com/chaosclient/',
+						registrationweb: 'https://niktoutro.com/?module=account&action=create',
+						packetKeys: true,
+						adminList: [2000002]
+					}
+					// ADD PUBLIC TEST SERVERS HERE. IF YOU DON'T ALLOW _M _F REGISTRATION BE SURE TO ADD THE registrationweb CONFIG
+				],
+				webserverAddress: 'http://127.0.0.1:8888',
+				packetDump: false,
+				skipServerList: true,
+				skipIntro: false,
+				aura: {},
+				autoLogin: [],
+				BGMFileExtension: ['mp3'],
+				calculateHash: false,
+				CameraMaxZoomOut: 5,
+				charBlockSize: 0,
+				clientHash: null,
+				clientVersionMode: 'PacketVer',
+				disableConsole: false,
+				enableAchievements: true,
+				enableBank: true,
+				enableCashShop: true,
+				enableCheckAttendance: true,
+				enableDmgSuffix: true,
+				enableHomunAutoFeed: true,
+				enableMapName: true,
+				enableRoulette: true,
+				FirstPersonCamera: false,
+				grfList: null,
+				hashFiles: [],
+				loadLua: true,
+				customItemInfo: [],
+				onReady: null,
+				plugins: {},
+				registrationweb: '',
+				saveFiles: false,
+				ThirdPersonCamera: false,
+				transitionDuration: 500,
+				restoreChatFocus: false
+			};
+		</script>
+		<script type="module">
+			import('../../src/main.js').catch(err => {
+				console.error('Failed to load roBrowser engine:', err);
+			});
+		</script>
+	</body>
+</html>

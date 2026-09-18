@@ -1,0 +1,150 @@
+:host {
+	width: 280px;
+	height: 306px;
+	top: 100px;
+	left: 100px;
+}
+
+#Storage {
+	position: absolute;
+	width: 280px;
+}
+#Storage table {
+	border-spacing: 0px;
+	display: inline-block;
+	width: 100%;
+}
+
+#Storage .titlebar {
+	width: 100%;
+	height: 17px;
+	background-color: white;
+	background-repeat: repeat-x;
+	border-radius: 3px 3px 0px 0px;
+}
+#Storage .titlebar .text {
+	text-shadow: 1px 1px white;
+	vertical-align: -2px;
+	white-space: nowrap;
+	/* chrome bug */
+	display: inline-block;
+	width: 32px;
+	height: 13px;
+	margin-left: 15px;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+#Storage .titlebar .left {
+	margin-left: 3px;
+	float: left;
+}
+#Storage .titlebar .clear {
+	clear: both;
+}
+
+#Storage .tabs {
+	border-left: 1px solid #ccc;
+	width: 50px;
+	background-repeat: no-repeat;
+	background-color: white;
+	vertical-align: top;
+	background-position: -1px 0px;
+}
+#Storage .tabs button {
+	width: 20px;
+	height: 30px;
+	border: none;
+	background-color: transparent;
+	display: block;
+}
+#Storage .tabs .item {
+	height: 25px;
+}
+
+#Storage .container {
+	padding-left: 16px;
+	border-right: 1px solid #ccc;
+	background: white;
+}
+#Storage .content {
+	overflow-y: scroll;
+	overflow-x: hidden;
+	width: 100%;
+	height: 100%;
+	min-height: 240px;
+	background-color: transparent;
+	background-repeat: repeat-y;
+	background-attachment: local;
+}
+
+#Storage .content .item {
+	display: block;
+	width: 24px;
+	height: 28px;
+	margin: 4px 0px 0px 4px;
+	position: relative;
+}
+#Storage .content .item .icon {
+	width: 24px;
+	height: 24px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}
+#Storage .overlay {
+	position: absolute;
+	display: none;
+	white-space: nowrap;
+	z-index: 900;
+	height: 13px;
+	padding: 5px;
+	background: rgba(0, 0, 0, 0.7);
+	color: white;
+	text-shadow: 1px 1px black;
+}
+#Storage .overlay.grey {
+	color: #aaa;
+}
+#Storage .content .item .amount {
+	position: relative;
+	bottom: 9px;
+	right: 0px;
+	text-align: right;
+	text-shadow: -1px -1px white;
+}
+#Storage .content .name {
+	position: absolute;
+	top: 7px;
+	left: 30px;
+	width: 190px;
+}
+
+#Storage .footer {
+	width: 100%;
+	height: 27px;
+	background-repeat: repeat-x;
+	background-color: transparent;
+	position: relative;
+	border-right: 1px solid #ccc;
+}
+#Storage .footer .extend {
+	position: absolute;
+	right: 0px;
+	bottom: 1px;
+	width: 13px;
+	height: 13px;
+	border: none;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+#Storage .footer .close {
+	position: absolute;
+	border: none;
+	width: 42px;
+	height: 20px;
+	bottom: 4px;
+	right: 15px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}

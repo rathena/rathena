@@ -1,0 +1,573 @@
+:host {
+	position: absolute;
+	width: 723px;
+	height: 540px;
+}
+
+#CashShop {
+	display: flex;
+	flex-direction: column;
+	width: 723px;
+	height: 540px;
+	background: transparent;
+	border-radius: 3px;
+	font-weight: bold;
+}
+
+#CashShop .titlebar {
+	width: 100%;
+	height: 17px;
+	background-color: white;
+	background-repeat: repeat-x;
+	border-radius: 3px 3px 0px 0px;
+}
+
+#CashShop .titlebar .base {
+	width: 11px;
+	height: 11px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+
+#CashShop .titlebar .text {
+	text-shadow: 1px 1px white;
+	vertical-align: -2px;
+	white-space: nowrap;
+	/* chrome bug */
+	display: inline-block;
+	width: 32px;
+	height: 13px;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+#CashShop .titlebar .left {
+	margin-left: 3px;
+	float: left;
+}
+
+#CashShop .titlebar .right {
+	float: right;
+	margin-right: 3px;
+}
+
+#CashShop .titlebar .clear {
+	clear: both;
+}
+
+#CashShop .panel {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	height: 523px;
+	gap: 2px;
+}
+
+#CashShop .panel-content {
+	display: flex;
+	flex-direction: column;
+	width: 535px;
+	height: 100%;
+}
+
+#CashShop .panel-content .panel-banner {
+	width: 100%;
+	height: 55px;
+	position: relative;
+	overflow: hidden;
+}
+
+#CashShop .panel-content .panel-banner .banner-slides {
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+
+#CashShop .panel-content .panel-banner .banner-slides .banner-slide {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-size: cover;
+	background-position: center;
+	opacity: 0;
+	transition: opacity 0.5s ease-in-out;
+	cursor: pointer;
+}
+
+#CashShop .panel-content .panel-banner .banner-slides .banner-slide.active {
+	opacity: 1;
+	z-index: 1;
+}
+
+#CashShop .panel-content .panel-banner .banner-dots {
+	position: absolute;
+	bottom: 5px;
+	right: 20px;
+	display: flex;
+	gap: 5px;
+	z-index: 2;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+#CashShop .panel-content .panel-banner .banner-dots .banner-dot {
+	width: 8px;
+	height: 8px;
+}
+
+#CashShop .panel-content .panel-banner button {
+	width: 100%;
+	height: 100%;
+	border: none;
+	background-color: transparent;
+}
+
+#CashShop .panel-content .panel-menu {
+	width: 100%;
+	height: 31.5px;
+	display: flex;
+	justify-content: center;
+	align-items: end;
+	gap: 2px;
+	flex-direction: row;
+}
+
+#CashShop .panel-content .panel-menu button {
+	width: 56px;
+	height: 31px;
+	border: none;
+	background-color: transparent;
+}
+
+#CashShop .panel-content .panel-items {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-content: flex-start;
+	width: 100%;
+	height: 380px;
+}
+
+#CashShop .panel-content .panel-items .item {
+	display: flex;
+	flex-direction: column;
+	width: 172px;
+	height: 126px;
+	margin-left: 4px;
+	margin-top: 2px;
+}
+
+#CashShop .panel-content .panel-items .top-con,
+#CashShop .panel-content .panel-items .lower-con {
+	width: 100%;
+}
+
+#CashShop .panel-content .panel-items .top-con {
+	text-align: center;
+	padding-top: 5px;
+	font-weight: bold;
+	padding-bottom: 5px;
+	color: #3a4aa4;
+	font-size: 10px;
+}
+
+#CashShop .panel-content .panel-items .item .amount {
+	position: relative;
+	bottom: 9px;
+	right: 0px;
+	text-align: right;
+}
+
+#CashShop .panel-content .panel-items .item-left-img {
+	width: 75px;
+	height: 98px;
+	background-size: cover;
+}
+
+#CashShop .panel-content .panel-items .item-right-desc {
+	float: right;
+	margin-right: 8px;
+	margin-top: 17px;
+}
+
+#CashShop .panel-content .panel-items .item-right-desc .item-desc-price {
+	color: #ffffff;
+}
+
+#CashShop .panel-content .panel-items .item .item-left-img {
+	margin-left: 4px;
+	float: left;
+}
+
+#CashShop .panel-content .panel-items .item .lower-con .purchase-btn-container {
+	padding-top: 20px;
+}
+
+#CashShop .panel-content .panel-items .item .lower-con .purchase-btn-container .add-to-cart {
+	width: 81px;
+	height: 24px;
+	border: none;
+}
+
+#CashShop .panel-content .panel-items .item .lower-con .purchase-btn-container .purchase-btn {
+	width: 81px;
+	height: 24px;
+	border: none;
+}
+
+#CashShop #panel-items .item-desc-price {
+	width: 81px;
+	height: 17px;
+	margin-top: 7px;
+	text-align: right;
+}
+
+#CashShop .item-desc-price span {
+	line-height: 18px;
+	margin-right: 5px;
+	text-align: right;
+	font-size: 10px;
+}
+
+#CashShop .item-desc-price .icon-gold-coin {
+	margin-top: 2px;
+	margin-right: 3px;
+}
+
+#CashShop .panel-content .panel-pagination {
+	width: 100%;
+	height: 26px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#CashShop .panel-content .panel-pagination button {
+	width: 18px;
+	height: 14px;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	border: 0;
+	margin-top: 5px;
+}
+
+#CashShop .panel-content .panel-pagination span {
+	width: 15px;
+	height: 14px;
+	text-align: center;
+	margin-top: 7px;
+}
+
+#CashShop .panel-content .panel-footer {
+	width: 100%;
+	height: 30px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: row;
+}
+
+#CashShop .panel-content .panel-footer .cashshop-search {
+	border: none;
+	border-radius: 5px 0px 0px 5px;
+	width: 296px;
+	line-height: 14px;
+	margin-left: 2px;
+}
+
+#CashShop .panel-content .panel-footer .cashshop-search-btn {
+	border: 0px;
+	width: 54px;
+	height: 18px;
+	background-size: cover;
+	background-color: transparent;
+}
+
+#CashShop .panel-cart {
+	display: flex;
+	flex-direction: column;
+	width: 185px;
+	height: 100%;
+}
+
+#CashShop .panel-cart .panel-cart-header {
+	width: 100%;
+	height: 56px;
+}
+
+#CashShop .panel-cart .panel-cart-header-title {
+	padding-left: 65px;
+	color: white;
+	text-shadow: 2px 2px black;
+	height: 24px;
+	padding-top: 5px;
+}
+
+#CashShop .panel-cart .panel-cart-charging-view {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 30px;
+}
+
+#CashShop .panel-cart .panel-cart-charging-view .view-cash-point {
+	width: 70px;
+	color: #fff;
+	font-weight: bold;
+	text-align: end;
+}
+
+#CashShop .panel-cart .panel-cart-charging-view .panel-cart-cash-points {
+	width: 76px;
+	color: #fff;
+	font-weight: bold;
+	text-align: end;
+}
+
+#CashShop .panel-cart .panel-cart-charging-view .panel-cart-charge-btn {
+	width: 64px;
+	height: 20px;
+	border: none;
+}
+
+#CashShop .panel-cart .panel-cart-body {
+	width: 100%;
+	height: 360px;
+	background-size: cover;
+}
+
+#CashShop .panel-cart .panel-cart-footer {
+	width: 100%;
+	height: 107px;
+}
+
+#CashShop .overlay {
+	position: absolute;
+	display: none;
+	white-space: nowrap;
+	z-index: 900;
+	height: 15px;
+	line-height: 15px;
+	border-radius: 3px;
+	padding: 4px;
+	background: rgba(0, 0, 0, 0.7);
+	color: white;
+	text-shadow: 1px 1px black;
+}
+
+#CashShop .overlay.grey {
+	color: #aaa;
+}
+
+#CashShop .view-cash-point-2 {
+	background: #ffffff;
+	border: 1px solid #4d4d4d;
+	border-radius: 0px 4px 4px 0px;
+
+	padding: 4px;
+}
+
+#CashShop ul.items {
+	list-style: none;
+	list-style-type: none;
+	padding: 0px;
+	margin-top: 5px;
+}
+
+#CashShop ul.items .item {
+	width: 172px;
+	height: 54px;
+	margin-left: 6px;
+	margin-bottom: 4px;
+	border-radius: 4px;
+	position: relative;
+}
+
+#CashShop ul.items .inner-item-dt {
+	width: 100%;
+	height: 100%;
+	float: left;
+}
+
+#CashShop .inner-item-dt .item-dt-img {
+	float: left;
+	width: 40px;
+	height: 50px;
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+#CashShop .container-cart .container-cart-body {
+	height: 326px;
+}
+
+#CashShop .inner-item-dt .item-dt-desc {
+	float: left;
+	width: 115px;
+	margin-top: 5px;
+	margin-left: 10px;
+	font-size: 8px;
+}
+
+#CashShop .container-cart-footer {
+	width: 169px;
+	margin-left: 10px;
+	background: #cfdfef;
+	border-radius: 4px;
+	height: 108px;
+}
+
+#CashShop .container-cart-footer .item-desc-price {
+	width: 100%;
+	color: #fff;
+	height: 17px;
+	background: #4c7ba6;
+	margin-top: 4px;
+	border-radius: 4px 4px 0px 0px;
+	box-shadow: inset 1px 1px 3px #1c1c1c;
+	-webkit-box-shadow: inset 1px 1px 3px #1c1c1c;
+	-moz-box-shadow: inset 1px 1px 3px #1c1c1c;
+	font-weight: bold;
+	line-height: 20px;
+}
+
+#CashShop #cart-list .item-desc-price {
+	width: 50px;
+	height: 17px;
+	margin-top: 4px;
+	float: left;
+	text-align: center;
+}
+
+#CashShop #cart-list .item-counter {
+	width: 50px;
+	height: 17px;
+	float: left;
+	position: relative;
+	margin-top: 4px;
+}
+
+#CashShop #cart-list .item-counter .item-cnt,
+#CashShop #cart-list .item-counter .item-cnt-up,
+#CashShop #cart-list .item-counter .item-cnt-down {
+	position: absolute;
+	width: 7px;
+	height: 7px;
+}
+
+#CashShop #cart-list .item-counter .item-cnt-down {
+	bottom: 1px;
+	right: 1px;
+	width: 10px;
+	background-color: transparent;
+	border: 0px;
+}
+
+#CashShop #cart-list .item-counter .item-cnt-up {
+	top: 0px;
+	right: 1px;
+	width: 10px;
+	background-color: transparent;
+	border: 0px;
+}
+
+#CashShop #cart-list .item-counter .item-cnt {
+	top: 3px;
+	left: 12px;
+	color: #6e6d6d;
+}
+
+#CashShop .panel-cart .panel-cart-footer > table {
+	font-size: 9px;
+	padding: 0px 14px;
+	width: 100%;
+	border-spacing: 1px;
+}
+
+#CashShop #cart-list {
+	height: 350px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	scrollbar-width: thin;
+}
+
+#CashShop #cart-list::-webkit-scrollbar {
+	width: 4px;
+}
+
+#CashShop #cart-list::-webkit-scrollbar-thumb {
+	background-color: rgba(0, 0, 0, 0.2);
+	border-radius: 4px;
+}
+
+#CashShop .panel-cart .panel-cart-footer .use-free-points {
+	border: none;
+	background: transparent;
+	-moz-appearance: textfield;
+	appearance: textfield;
+	text-align: right;
+	font-size: 9px;
+	max-width: 45px;
+}
+
+#CashShop .panel-cart .panel-cart-footer .use-free-points::-webkit-outer-spin-button,
+#CashShop .panel-cart .panel-cart-footer .use-free-points::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+#CashShop .panel-cart .panel-cart-footer > table tr {
+	height: 15px;
+}
+
+#CashShop .panel-cart .panel-cart-footer > table tr td.txt {
+	width: 60%;
+	text-align: left;
+}
+
+#CashShop .panel-cart .panel-cart-footer > table tr td.value {
+	width: 40%;
+	text-align: right;
+}
+
+#CashShop .panel-cart .panel-cart-footer .cart-footer-action {
+	padding: 0px 10px;
+}
+
+#CashShop .panel-cart .panel-cart-footer .cart-footer-action button {
+	width: 154px;
+	height: 23px;
+	margin-left: 5px;
+	margin-top: 4px;
+	border: none;
+	background: transparent;
+}
+
+#CashShop .panel-cart .panel-cart-footer .cart-footer-action .total-price {
+	width: 100%;
+	color: #fff;
+	height: 18px;
+	margin-top: 4px;
+	font-weight: bold;
+	line-height: 25px;
+	text-align: center;
+}
+
+#CashShop #cart-list .items .item .delete-item {
+	position: absolute;
+	width: 7px;
+	height: 7px;
+	top: 3px;
+	right: 4px;
+	background-size: cover;
+}
+
+#CashShop .item-desc-top {
+	height: 20px;
+}

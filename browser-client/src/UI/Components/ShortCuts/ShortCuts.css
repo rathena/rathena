@@ -1,0 +1,150 @@
+:host {
+	top: 172px;
+	left: 0px;
+}
+
+#ShortCuts {
+	width: 380px;
+	height: 270px;
+	position: absolute;
+}
+
+#ShortCuts .titlebar {
+	width: 100%;
+	height: 17px;
+	background-color: white;
+	background-repeat: repeat-x;
+	border-radius: 3px 3px 0px 0px;
+}
+#ShortCuts .titlebar .base {
+	width: 11px;
+	height: 11px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+#ShortCuts .titlebar .text {
+	text-shadow: 1px 1px white;
+	vertical-align: -2px;
+	white-space: nowrap;
+	/* chrome bug */
+	display: inline-block;
+	width: 32px;
+	height: 13px;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+#ShortCuts .titlebar .left {
+	margin-left: 3px;
+	float: left;
+}
+#ShortCuts .titlebar .right {
+	float: right;
+	margin-right: 3px;
+}
+#ShortCuts .titlebar .clear {
+	clear: both;
+}
+
+#ShortCuts .tabs {
+	border-left: 1px solid #ccc;
+	width: 50px;
+	background-repeat: no-repeat;
+	background-color: white;
+	vertical-align: top;
+	background-position: -1px 0px;
+}
+#ShortCuts .tabs button {
+	width: 20px;
+	height: 27px;
+	border: none;
+	background-color: transparent;
+	display: block;
+}
+
+#ShortCuts .container {
+	padding-left: 16px;
+	border-right: 1px solid #ccc;
+	background: white;
+}
+#ShortCuts .ff_bugfix {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+#ShortCuts .hide {
+	height: 100%;
+	width: 16px;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	background-color: white;
+}
+#ShortCuts .content {
+	overflow: auto;
+	width: 100%;
+	height: 100%;
+	min-height: 65px;
+	background-color: transparent;
+	background-repeat: repeat;
+}
+
+#ShortCuts .content .item {
+	display: block;
+	width: 24px;
+	height: 24px;
+	margin: 4px 4px 4px 4px;
+	position: relative;
+	float: left;
+}
+#ShortCuts .content .item .icon {
+	width: 24px;
+	height: 24px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}
+#ShortCuts .panel {
+	height: 230px;
+	background-color: white;
+}
+#ShortCuts .footer {
+	background-repeat: repeat-x;
+	background-color: transparent;
+	border-right: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+	border-radius: 0px 0px 5px 5px;
+	position: absolute;
+	bottom: 4px;
+	width: 378px;
+	height: 25px;
+}
+#ShortCuts .emoticons {
+	position: absolute;
+	width: 42px;
+	height: 20px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	border: none;
+	right: 4px;
+	top: 10%;
+}
+#ShortCuts .macro {
+	text-align: center;
+}
+
+#ShortCuts .macro_ {
+	border: none;
+	background-color: #e7e7e7;
+	width: 75%;
+	height: 15px;
+	margin-left: 5%;
+	margin-top: 5px;
+	padding-left: 5px;
+}
+
+#ShortCuts .input_macro_focus {
+	background-color: rgb(205, 224, 255) !important;
+}

@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>roBrowser Remote Client</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    .container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    h1 { color: #333; }
+    h2 {
+      color: #555;
+      margin-top: 30px;
+    }
+    .status-card {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+      border: 2px solid #dee2e6;
+    }
+    .status-ok {
+      background-color: #d4edda;
+      border-color: #28a745;
+    }
+    .status-warning {
+      background-color: #fff3cd;
+      border-color: #ffc107;
+    }
+    .status-error {
+      background-color: #f8d7da;
+      border-color: #dc3545;
+    }
+    .status-header {
+      font-size: 1.2em;
+      font-weight: bold;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .status-icon { font-size: 1.5em; }
+    .info {
+      background-color: #e3f2fd;
+      padding: 15px;
+      border-left: 4px solid #2196F3;
+      margin: 20px 0;
+    }
+    .warning {
+      background-color: #fff3e0;
+      padding: 15px;
+      border-left: 4px solid #ff9800;
+      margin: 20px 0;
+    }
+    .error {
+      background-color: #ffebee;
+      padding: 15px;
+      border-left: 4px solid #f44336;
+      margin: 20px 0;
+    }
+    code {
+      background-color: #f5f5f5;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: monospace;
+    }
+    pre {
+      background-color: #f5f5f5;
+      padding: 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+    ul { line-height: 1.8; }
+    .detail-list {
+      margin-top: 10px;
+      padding-left: 20px;
+    }
+    .detail-item {
+      margin: 5px 0;
+      font-size: 0.9em;
+    }
+    .loading {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+    }
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 0.85em;
+      font-weight: bold;
+      margin-left: 10px;
+    }
+    .badge-success { background-color: #28a745; color: white; }
+    .badge-warning { background-color: #ffc107; color: #333; }
+    .badge-error { background-color: #dc3545; color: white; }
+    .grf-builder-guide {
+      background-color: #e8f5e9;
+      padding: 15px;
+      border-left: 4px solid #4caf50;
+      margin: 20px 0;
+    }
+    .encoding-card {
+      background-color: #f3e5f5;
+      padding: 15px;
+      border-left: 4px solid #9c27b0;
+      margin: 20px 0;
+      border-radius: 8px;
+    }
+    .encoding-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .encoding-stat {
+      background-color: #fff;
+      padding: 10px;
+      border-radius: 4px;
+      text-align: center;
+    }
+    .encoding-stat-value {
+      font-size: 1.3em;
+      font-weight: bold;
+      color: #333;
+    }
+    .encoding-stat-label {
+      font-size: 0.8em;
+      color: #666;
+    }
+    .health-bar {
+      height: 20px;
+      background-color: #e0e0e0;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 10px 0;
+    }
+    .health-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #4caf50, #8bc34a);
+      transition: width 0.3s ease;
+    }
+    .examples-list {
+      background-color: #f5f5f5;
+      padding: 10px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.8em;
+      max-height: 150px;
+      overflow-y: auto;
+      margin-top: 10px;
+    }
+    .example-item {
+      padding: 3px 0;
+      border-bottom: 1px solid #ddd;
+      word-break: break-all;
+    }
+    .example-item:last-child { border-bottom: none; }
+    .original { color: #d32f2f; }
+    .fixed { color: #388e3c; }
+    .btn-primary {
+      background-color: #9c27b0;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9em;
+      margin-top: 10px;
+    }
+    .btn-primary:hover { background-color: #7b1fa2; }
+    .btn-primary:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎮 roBrowser Remote Client</h1>
+
+    <!-- Validation Status -->
+    <div id="validation-status" class="status-card">
+      <div class="loading">⏳ Loading system status...</div>
+    </div>
+
+    <!-- Encoding Status -->
+    <div id="encoding-status" class="encoding-card" style="display: none;">
+      <div class="loading">⏳ Loading encoding status...</div>
+    </div>
+
+    <!-- Missing Files Status -->
+    <div id="missing-files-status" class="status-card" style="display: none; border-color: #ff9800;">
+      <div class="loading">⏳ Loading missing files...</div>
+    </div>
+
+    <h2>📋 Setup Instructions</h2>
+    <p>This is a remote client server for roBrowser. To get started:</p>
+
+    <ol>
+      <li>Install dependencies: <code>npm install</code></li>
+      <li>Configure environment variables in the <code>.env</code> file</li>
+      <li>Place your GRF files in the <code>resources/</code> directory</li>
+      <li>
+        Edit the <code>resources/DATA.INI</code> file to list your GRF files:
+        <pre><code>[Data]
+0=rdata.grf
+1=data.grf</code></pre>
+      </li>
+      <li>Copy your <code>BGM/</code>, <code>data/</code>, and <code>System/</code> folders to the project root</li>
+      <li>Run the diagnosis: <code>npm run doctor</code></li>
+      <li>Start the server: <code>npm start</code></li>
+    </ol>
+
+    <div class="grf-builder-guide">
+      <strong>⚠️ IMPORTANT: GRF Compatibility</strong>
+      <p>This project only works with GRF version <strong>0x200</strong> with no DES encryption.</p>
+      <p>To ensure compatibility, repack your GRFs using GRF Builder:</p>
+      <ol style="margin-top: 10px;">
+        <li>Download the <a href="https://github.com/Tokeiburu/GRFEditor" target="_blank">GRF Builder/Editor</a></li>
+        <li>Open GRF Builder</li>
+        <li>Go to: <strong>File → Options → Repack type → Decrypt</strong></li>
+        <li>Click: <strong>Tools → Repack</strong></li>
+        <li>Wait for completion and replace the original file</li>
+      </ol>
+      <p style="margin-top: 10px;">This ensures the GRFs are in the correct format (0x200 / no DES).</p>
+    </div>
+
+    <h2>🔌 API Endpoints</h2>
+    <ul>
+      <li><strong>GET /api/health</strong> - System validation status</li>
+      <li><strong>GET /list-files</strong> - List all available files</li>
+      <li><strong>POST /search</strong> - Search for files (if enabled)</li>
+      <li><strong>GET /*</strong> - Get any file from GRF or filesystem</li>
+    </ul>
+
+    <h2>🩺 Diagnosis</h2>
+    <p>Run <code>npm run doctor</code> to validate:</p>
+    <ul>
+      <li>✓ Dependencies installed (Node.js, npm, packages)</li>
+      <li>✓ Environment variables configured</li>
+      <li>✓ Required files and folders</li>
+      <li>✓ GRF compatibility (version 0x200, no DES)</li>
+    </ul>
+
+    <h2>📚 Documentation</h2>
+    <p>For more information, check the <a href="https://github.com/MrAntares/roBrowserLegacy" target="_blank">roBrowser documentation</a></p>
+  </div>
+
+  <script>
+    // Fetch and display validation status
+    async function loadValidationStatus() {
+      try {
+        const response = await fetch('/api/health');
+        const data = await response.json();
+
+        const statusDiv = document.getElementById('validation-status');
+        const encodingDiv = document.getElementById('encoding-status');
+
+        if (data.status === 'ok') {
+          statusDiv.className = 'status-card status-ok';
+          statusDiv.innerHTML = `
+            <div class="status-header">
+              <span class="status-icon">✅</span>
+              <span>System Validated</span>
+              ${data.hasWarnings ? '<span class="badge badge-warning">' + data.summary.warnings + ' warning(s)</span>' : ''}
+            </div>
+            <div class="detail-list">
+              <div class="detail-item">✓ Dependencies installed</div>
+              <div class="detail-item">✓ Environment variables configured</div>
+              <div class="detail-item">✓ Required files found</div>
+              <div class="detail-item">✓ Compatible GRFs (version 0x200, no DES)</div>
+            </div>
+            ${data.hasWarnings ? '<div style="margin-top: 10px; font-size: 0.9em; color: #856404;">⚠️ ' + data.summary.warnings + ' warning(s) found. Run <code>npm run doctor</code> for details.</div>' : ''}
+          `;
+        } else {
+          statusDiv.className = 'status-card status-error';
+          statusDiv.innerHTML = `
+            <div class="status-header">
+              <span class="status-icon">❌</span>
+              <span>Validation Errors</span>
+              <span class="badge badge-error">${data.summary.errors} error(s)</span>
+            </div>
+            <div style="margin-top: 15px;">
+              <strong>Errors found:</strong>
+              <div class="detail-list">
+                ${data.messages.errors.map(err => '<div class="detail-item">❌ ' + err.replace(/\\n/g, '<br>&nbsp;&nbsp;&nbsp;&nbsp;') + '</div>').join('')}
+              </div>
+            </div>
+            ${data.summary.warnings > 0 ? `
+            <div style="margin-top: 15px;">
+              <strong>Warnings:</strong>
+              <div class="detail-list">
+                ${data.messages.warnings.map(warn => '<div class="detail-item">⚠️ ' + warn + '</div>').join('')}
+              </div>
+            </div>
+            ` : ''}
+            <div style="margin-top: 15px; padding: 10px; background-color: #fff; border-radius: 4px;">
+              <strong>💡 Fix:</strong> Run <code>npm run doctor</code> for a full diagnosis and fix instructions.
+            </div>
+          `;
+        }
+
+        // Update timestamp
+        const timestamp = new Date(data.timestamp).toLocaleString('en-US');
+        statusDiv.innerHTML += `<div style="margin-top: 15px; font-size: 0.85em; color: #666; text-align: right;">Last checked: ${timestamp}</div>`;
+
+        // Show encoding info if available
+        if (data.details && data.details.encoding) {
+          displayEncodingStatus(data.details.encoding);
+        } else {
+          // Show button to run deep validation
+          encodingDiv.style.display = 'block';
+          encodingDiv.innerHTML = `
+            <div class="status-header">
+              <span class="status-icon">📊</span>
+              <span>Encoding Validation</span>
+            </div>
+            <p style="margin: 10px 0; font-size: 0.9em;">
+              Run deep encoding validation to detect files with encoding issues (mojibake, C1 controls, U+FFFD).
+            </p>
+            <p style="font-size: 0.85em; color: #666;">
+              <code>npm run doctor -- --deep</code>
+            </p>
+          `;
+        }
+
+        // Show missing files if any
+        if (data.missingFiles && data.missingFiles.total > 0) {
+          displayMissingFiles(data.missingFiles);
+        }
+
+      } catch (error) {
+        const statusDiv = document.getElementById('validation-status');
+        statusDiv.className = 'status-card status-warning';
+        statusDiv.innerHTML = `
+          <div class="status-header">
+            <span class="status-icon">⚠️</span>
+            <span>Could not load status</span>
+          </div>
+          <div style="margin-top: 10px; font-size: 0.9em;">
+            Error: ${error.message}
+          </div>
+        `;
+      }
+    }
+
+    // Display missing files status
+    function displayMissingFiles(missingInfo) {
+      const missingDiv = document.getElementById('missing-files-status');
+      missingDiv.style.display = 'block';
+      missingDiv.className = 'status-card status-warning';
+
+      const recentFiles = missingInfo.files.slice(-10);
+
+      missingDiv.innerHTML = `
+        <div class="status-header">
+          <span class="status-icon">⚠️</span>
+          <span>Missing Files</span>
+          <span class="badge badge-warning">${missingInfo.total} file(s)</span>
+        </div>
+        <p style="margin: 10px 0; font-size: 0.9em;">
+          Some files were requested but not found in GRFs or local folders.
+        </p>
+        ${recentFiles.length > 0 ? `
+          <div class="examples-list">
+            ${recentFiles.map(f => `
+              <div class="example-item">
+                <span class="original">${escapeHtml(f.requestedPath)}</span>
+                ${f.mappedPath ? `<br><small>Tried: ${escapeHtml(f.mappedPath)}</small>` : ''}
+              </div>
+            `).join('')}
+          </div>
+        ` : ''}
+        <div style="margin-top: 15px; padding: 10px; background-color: #fff; border-radius: 4px;">
+          <strong>💡 Solutions:</strong>
+          <ul style="margin: 10px 0; padding-left: 20px; font-size: 0.9em;">
+            <li>Run <code>npm run doctor:deep</code> to validate encoding</li>
+            <li>Run <code>npm run convert:encoding</code> to generate path mapping</li>
+            <li>Log file: <code>${escapeHtml(missingInfo.logFile || 'logs/missing-files.log')}</code></li>
+            <li><a href="https://github.com/FranciscoWallison/roBrowserLegacy-RemoteClient-JS/issues" target="_blank">Report issue on GitHub</a></li>
+          </ul>
+        </div>
+      `;
+    }
+
+    // Display encoding status
+    function displayEncodingStatus(encoding) {
+      const encodingDiv = document.getElementById('encoding-status');
+      encodingDiv.style.display = 'block';
+
+      const healthColor = encoding.summary.healthPercent >= 99 ? '#4caf50' :
+                         encoding.summary.healthPercent >= 95 ? '#ff9800' : '#f44336';
+
+      let examplesHtml = '';
+      if (encoding.filesToConvert && encoding.filesToConvert.length > 0) {
+        examplesHtml = `
+          <div style="margin-top: 15px;">
+            <strong>📝 Path Mapping (Korean request → GRF path):</strong>
+            <div class="examples-list">
+              ${encoding.filesToConvert.slice(0, 10).map(f => `
+                <div class="example-item">
+                  <span class="fixed">${escapeHtml(f.koreanPath || f.fixed || '')}</span><br>
+                  → <span class="original">${escapeHtml(f.grfPath || f.original || '')}</span>
+                </div>
+              `).join('')}
+              ${encoding.filesToConvert.length > 10 ? `<div style="padding: 5px; color: #666;">... and ${encoding.filesToConvert.length - 10} more</div>` : ''}
+            </div>
+          </div>
+        `;
+      }
+
+      encodingDiv.innerHTML = `
+        <div class="status-header">
+          <span class="status-icon">📊</span>
+          <span>Encoding Health</span>
+          <span class="badge" style="background-color: ${healthColor}; color: white;">
+            ${encoding.summary.healthPercent}%
+          </span>
+        </div>
+
+        <div class="health-bar">
+          <div class="health-fill" style="width: ${encoding.summary.healthPercent}%;"></div>
+        </div>
+
+        <div class="encoding-stats">
+          <div class="encoding-stat">
+            <div class="encoding-stat-value">${encoding.summary.totalFiles.toLocaleString()}</div>
+            <div class="encoding-stat-label">Total Files</div>
+          </div>
+          <div class="encoding-stat">
+            <div class="encoding-stat-value">${encoding.summary.badUfffd}</div>
+            <div class="encoding-stat-label">U+FFFD</div>
+          </div>
+          <div class="encoding-stat">
+            <div class="encoding-stat-value">${encoding.summary.badC1Control}</div>
+            <div class="encoding-stat-label">C1 Control</div>
+          </div>
+          <div class="encoding-stat">
+            <div class="encoding-stat-value">${encoding.summary.mojibakeDetected}</div>
+            <div class="encoding-stat-label">Mojibake</div>
+          </div>
+          <div class="encoding-stat">
+            <div class="encoding-stat-value">${encoding.summary.needsConversion}</div>
+            <div class="encoding-stat-label">Needs Fix</div>
+          </div>
+        </div>
+
+        ${examplesHtml}
+
+        ${encoding.summary.needsConversion > 0 ? `
+          <div style="margin-top: 15px; padding: 10px; background-color: #fff3e0; border-radius: 4px;">
+            <strong>💡 Fix:</strong> Run <code>npm run convert:encoding</code> to automatically fix encoding issues.
+          </div>
+        ` : ''}
+      `;
+    }
+
+    // Helper to escape HTML
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // Load status when opening the page
+    loadValidationStatus();
+
+    // Refresh status every 30 seconds
+    setInterval(loadValidationStatus, 30000);
+  </script>
+</body>
+</html>

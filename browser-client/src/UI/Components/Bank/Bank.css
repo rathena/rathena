@@ -1,0 +1,231 @@
+:host {
+	width: 280px;
+	height: 145px;
+	top: 50%;
+	left: 50%;
+}
+
+#Bank {
+	position: absolute;
+	width: 280px;
+}
+
+#Bank .clear {
+	clear: both;
+}
+
+#Bank .titlebar {
+	width: 280px;
+	height: 17px;
+	background-color: white;
+	background-repeat: repeat-x;
+	border-radius: 3px 3px 0px 0px;
+}
+#Bank .titlebar .base {
+	width: 11px;
+	height: 11px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+#Bank .titlebar .text {
+	text-shadow: 1px 1px white;
+	vertical-align: -2px;
+	white-space: nowrap;
+	/* chrome bug */
+	display: inline-block;
+	width: 32px;
+	height: 13px;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+#Bank .titlebar .left {
+	margin-left: 3px;
+	float: left;
+}
+#Bank .titlebar .right {
+	float: right;
+	margin-right: 3px;
+}
+#Bank .titlebar .clear {
+	clear: both;
+}
+
+#Bank .container {
+	display: inline-block;
+	width: 280px;
+	height: 130px;
+	border-spacing: 0;
+}
+
+#Bank .uppercontainer {
+	position: relative;
+	height: 53px;
+}
+
+#Bank .inbanktitle {
+	height: 15px;
+	position: relative;
+	width: 50px;
+	left: 30px;
+	top: 10px;
+}
+
+#Bank .onhandtitle {
+	position: relative;
+	height: 15px;
+	width: 55px;
+	left: 28px;
+}
+
+#Bank .inbank.currency {
+	position: relative;
+	left: 80px;
+	top: -5px;
+	width: 100px;
+	text-align: right;
+}
+
+#Bank .onhand.currency {
+	position: relative;
+	left: 80px;
+	top: -15px;
+	width: 100px;
+	text-align: right;
+}
+
+#Bank .midcontainer {
+	position: relative;
+	height: 58px;
+}
+
+#Bank input.depo.no-spinners {
+	position: relative;
+	left: 75px;
+	top: 20px;
+	width: 100px;
+	height: 10px;
+	background-color: #f7f7f7;
+	border-style: solid;
+	border: 1px;
+}
+
+#Bank .no-spinners::-webkit-inner-spin-button,
+#Bank .no-spinners::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+#Bank .plus {
+	position: relative;
+	height: 10px;
+	width: 18px;
+	border: 0px;
+	left: 70px;
+	top: 10px;
+}
+#Bank .minus {
+	position: relative;
+	height: 10px;
+	width: 18px;
+	border: 0px;
+	left: 49px;
+	top: 20px;
+}
+
+#Bank .deposit {
+	position: relative;
+	height: 20px;
+	width: 42px;
+	border: 0px;
+	left: 60px;
+	top: 5px;
+}
+
+#Bank .withdraw {
+	position: relative;
+	height: 20px;
+	width: 42px;
+	border: 0px;
+	left: 15px;
+	top: 30px;
+}
+
+#Bank .errorupdate {
+	position: absolute;
+	height: 15px;
+	width: 150px;
+	border: 0px;
+	left: 15px;
+	top: 42px;
+	text-align: center;
+	color: red;
+}
+
+#Bank .lowercontainer {
+	position: relative;
+	height: 19px;
+}
+
+#Bank .max {
+	position: relative;
+	width: 46px;
+	height: 16px;
+	border: 0px;
+	left: 40px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+
+#Bank .tenmil {
+	position: relative;
+	width: 46px;
+	height: 16px;
+	border: 0px;
+	left: 40px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+
+#Bank .onemil {
+	position: relative;
+	width: 46px;
+	height: 16px;
+	border: 0px;
+	left: 40px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+
+#Bank .hundtsn {
+	position: relative;
+	width: 46px;
+	height: 16px;
+	border: 0px;
+	left: 40px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+
+#Bank .buttons .name {
+	position: absolute;
+	top: -20px;
+	left: 0px;
+	visibility: hidden;
+	opacity: 0;
+	z-index: 1;
+	background-color: rgba(0, 0, 0, 0.6);
+	text-shadow: 1px 1px black;
+	color: white;
+	padding: 5px;
+	white-space: nowrap;
+	font-size: 0.6rem;
+	pointer-events: none; /* This will make the span not clickable */
+}
+
+#Bank .buttons:hover .name {
+	visibility: visible;
+	opacity: 1;
+}

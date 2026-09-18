@@ -1,0 +1,82 @@
+:host {
+	top: 90px;
+	left: 50%;
+	width: 500px;
+	height: 190px;
+	margin-left: -250px;
+	opacity: 0;
+	transition: opacity 1s ease-out;
+}
+#MapName {
+	position: absolute;
+	height: 190px;
+	width: 500px;
+}
+
+#MapName .container .mapbg {
+	height: 190px;
+	width: 500px;
+	position: relative;
+	background-size: contain;
+}
+
+#MapName .mapsubtitle {
+	height: 30px;
+	width: 500px;
+	position: relative;
+	color: white;
+	font-weight: bolder;
+	text-align: center;
+	top: 70px;
+	font-size: 16px;
+}
+
+#MapName .maptitle {
+	height: 80px;
+	width: 500px;
+	text-align: center;
+	font-size: 36px;
+	position: relative;
+	top: 70px;
+	color: white;
+	font-weight: bolder;
+}
+
+/*Half size for small screens, eg: mobile in landscape*/
+@media (max-width: 1000px) {
+	:host {
+		height: 95px;
+		width: 250px;
+		margin-left: -125px;
+	}
+	#MapName {
+		height: 95px;
+		width: 250px;
+	}
+	#MapName .container .mapbg {
+		height: 95px;
+		width: 250px;
+		position: relative;
+	}
+
+	#MapName .mapsubtitle {
+		height: 15px;
+		width: 250px;
+		position: relative;
+		color: white;
+		font-weight: bolder;
+		text-align: center;
+		top: 35px;
+	}
+
+	#MapName .maptitle {
+		height: 40px;
+		width: 250px;
+		text-align: center;
+		font-size: 18px;
+		position: relative;
+		top: 35px;
+		color: white;
+		font-weight: bolder;
+	}
+}

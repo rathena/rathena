@@ -1,0 +1,392 @@
+:host {
+	top: 100px;
+	left: 100px;
+}
+
+/* ─── Root ───────────────────────────────────────────────────── */
+#InventoryV1 {
+	position: relative;
+	height: 193px;
+	display: flex;
+	flex-direction: column;
+}
+
+/* ─── Titlebar ───────────────────────────────────────────────── */
+#InventoryV1 .titlebar {
+	width: 100%;
+	height: 17px;
+	background-color: white;
+	background-repeat: repeat-x;
+	border-radius: 3px 3px 0px 0px;
+}
+
+#InventoryV1 .titlebar .base {
+	width: 11px;
+	height: 11px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+
+#InventoryV1 .titlebar .text {
+	text-shadow: 1px 1px white;
+	vertical-align: -2px;
+	white-space: nowrap;
+	/* chrome bug */
+	display: inline-block;
+	width: 32px;
+	height: 13px;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+#InventoryV1 .titlebar .left {
+	margin-left: 3px;
+	float: left;
+}
+
+#InventoryV1 .titlebar .right {
+	float: right;
+	margin-right: 3px;
+}
+
+#InventoryV1 .titlebar .clear {
+	clear: both;
+}
+
+/* ─── Panel / layout ─────────────────────────────────────────── */
+#InventoryV1 .panel {
+	border-radius: 0px 0px 3px 3px;
+	padding: 0px;
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	overflow: hidden;
+	background-color: transparent;
+}
+
+#InventoryV1 .middle {
+	display: flex;
+	flex: 1;
+	overflow: hidden;
+}
+
+/* ─── Tabs ───────────────────────────────────────────────────── */
+#InventoryV1 .tabs {
+	width: 23px;
+	display: flex;
+	flex-direction: column;
+	background-repeat: round;
+	background-size: auto 10px;
+}
+
+#InventoryV1 .tabs button {
+	width: 20px;
+	font-size: 11px;
+	flex: 1;
+	border: 1px solid #ccc;
+	background-color: white;
+	display: block;
+	text-align: center;
+	position: relative;
+	left: 5px;
+	border-radius: 5px 0 0 5px;
+	cursor: pointer;
+	transition: all 0.3s;
+	border-right: none;
+	align-items: center;
+	justify-content: center;
+}
+
+#InventoryV1 .tabs .tab {
+	writing-mode: vertical-lr;
+	text-orientation: upright;
+}
+
+#InventoryV1 .tab:last-child {
+	background-color: #cedeff;
+}
+
+#InventoryV1 .tab.selected {
+	z-index: 25;
+	-webkit-transform-origin-x: left;
+	transform: scale(1.1, 1) translateX(-2px);
+}
+
+/* ─── Container / scroll area ────────────────────────────────── */
+#InventoryV1 .container {
+	flex: 1;
+	padding-left: 14px;
+	border-right: 1px solid #ccc;
+	background-clip: padding-box;
+	box-shadow: inset 40px 0px 0px 2px #ffffff;
+	position: relative;
+	border-left: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	background-color: white;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+#InventoryV1 .scroll-host {
+	overflow-y: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: block;
+
+	/* Hide native scrollbar but allow detection */
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+}
+
+#InventoryV1 .scroll-host::-webkit-scrollbar {
+	display: none;
+}
+
+#InventoryV1 .content {
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, 32px);
+	grid-auto-rows: 32px;
+	min-height: 100%;
+	background-color: white;
+	background-repeat: repeat;
+	background-origin: border-box;
+	background-clip: border-box;
+	box-sizing: border-box;
+	padding-top: 0px;
+	margin-left: 15px;
+}
+
+/* ─── Items ──────────────────────────────────────────────────── */
+#InventoryV1 .content .item {
+	display: block;
+	width: 32px;
+	height: 32px;
+	margin: 0;
+	position: relative;
+}
+
+#InventoryV1 .content .item .icon {
+	position: absolute;
+	top: 4px;
+	left: 4px;
+	width: 24px;
+	height: 24px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	z-index: 2;
+}
+
+#InventoryV1 .content .item .amount {
+	position: absolute;
+	top: 15px;
+	right: 0px;
+	text-align: right;
+	text-shadow: -1px -1px white;
+	z-index: 10;
+}
+
+#InventoryV1 .content .item .new_item {
+	position: absolute;
+	width: 32px;
+	height: 32px;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	pointer-events: none;
+}
+
+/* ─── Overlay (tooltip) ──────────────────────────────────────── */
+#InventoryV1 .overlay {
+	position: absolute;
+	display: none;
+	white-space: nowrap;
+	z-index: 900;
+	height: 15px;
+	line-height: 15px;
+	border-radius: 3px;
+	padding: 4px;
+	background: rgba(0, 0, 0, 0.7);
+	color: white;
+	text-shadow: 1px 1px black;
+}
+
+#InventoryV1 .overlay.grey {
+	color: #aaa;
+}
+
+/* ─── Footer ─────────────────────────────────────────────────── */
+#InventoryV1 .footer {
+	width: 100%;
+	height: 17px;
+	background-repeat: repeat-x;
+	background-color: transparent;
+	position: relative;
+	flex-shrink: 0;
+}
+
+#InventoryV1 .footer .cnt {
+	position: absolute;
+	left: 10px;
+	bottom: 6px;
+}
+
+#InventoryV1 .footer button {
+	border: none;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+
+#InventoryV1 .footer .extend {
+	position: absolute;
+	right: 0px;
+	bottom: 1px;
+	width: 13px;
+	height: 13px;
+	border: none;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+
+/* ─── Footer buttons (shared position: absolute) ─────────────── */
+#InventoryV1 .expand,
+#InventoryV1 .droplock,
+#InventoryV1 .compare,
+#InventoryV1 .deallock_on,
+#InventoryV1 .deallock_off,
+#InventoryV1 .sort {
+	position: absolute;
+}
+
+#InventoryV1 .expand {
+	left: 30px;
+	top: 3px;
+	width: 60px;
+	height: 14px;
+}
+
+#InventoryV1 .droplock {
+	left: 90px;
+	top: 4px;
+}
+
+#InventoryV1 .compare {
+	left: 110px;
+	top: 3px;
+}
+
+#InventoryV1 .deallock_on,
+#InventoryV1 .deallock_off {
+	left: 130px;
+	top: 1px;
+}
+
+#InventoryV1 .sort {
+	left: 163px;
+	top: 1px;
+}
+
+#InventoryV1 .item_drop_lock {
+	height: 14px;
+	width: 14px;
+}
+
+#InventoryV1 .item_compare {
+	height: 12px;
+	width: 12px;
+}
+
+#InventoryV1 button.item_deal_lock_on,
+#InventoryV1 button.item_deal_lock_off {
+	height: 17px;
+	width: 26px;
+}
+
+#InventoryV1 .item_sort {
+	height: 17px;
+	width: 25px;
+}
+
+/* ─── Counter labels ─────────────────────────────────────────── */
+#InventoryV1 span.ncnt {
+	left: 12px;
+	position: relative;
+}
+
+#InventoryV1 span.mcnt {
+	position: relative;
+	left: 10px;
+}
+
+/* ─── Tooltip names on hover ─────────────────────────────────── */
+#InventoryV1 .hidden {
+	display: none;
+}
+
+#InventoryV1 span.name {
+	display: none;
+	/* Hide the span by default */
+	position: absolute;
+	z-index: 1;
+	top: -20px;
+	left: 0px;
+	background-color: rgba(0, 0, 0, 0.6);
+	text-shadow: 1px 1px black;
+	color: white;
+	padding: 5px;
+	white-space: nowrap;
+	font-size: 0.6rem;
+}
+
+#InventoryV1 .footer div button:hover + .name {
+	display: table;
+}
+
+/* ─── NPC lock overlay ───────────────────────────────────────── */
+#InventoryV1 .lockoverlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	z-index: 1;
+	background-color: #dee7ff;
+	overflow: hidden;
+	opacity: 0.3;
+}
+
+#InventoryV1 .lockoverlaymsg {
+	position: absolute;
+	height: 26px;
+	width: 100%;
+	max-width: 242px;
+	z-index: 1;
+	color: white;
+	top: 192px;
+	left: 20px;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+#InventoryV1 .msg {
+	position: absolute;
+	height: 10px;
+	width: 100px;
+	left: 60px;
+	top: 2px;
+}
+
+#InventoryV1 .lockoverlayclose {
+	position: absolute;
+	height: 7px;
+	width: 7px;
+	left: 230px;
+	cursor: pointer;
+	top: 3px;
+}

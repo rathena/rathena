@@ -1,0 +1,155 @@
+<div id="PartyFriends">
+	<div class="titlebar">
+		<ui-image src="basic_interface/titlebar_mid.bmp"></ui-image>
+		<div class="left">
+			<ui-button
+				class="base"
+				bg="basic_interface/sys_base_off.bmp"
+				hover="basic_interface/sys_base_on.bmp"
+			></ui-button>
+			<span class="party">
+				<span class="text"><ui-text msg="103">Party</ui-text></span> <span class="partyname"></span>
+			</span>
+			<span class="friend">
+				<span class="text"><ui-text msg="102">Friends</ui-text></span> (<span class="friendcount">0</span>/<span
+					class="friendmax"
+					>127</span
+				>)
+			</span>
+		</div>
+		<div class="right">
+			<ui-button
+				class="base close"
+				bg="basic_interface/sys_close_off.bmp"
+				hover="basic_interface/sys_close_on.bmp"
+			></ui-button>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="content">
+		<div class="party info-v2"></div>
+		<div class="friend"></div>
+	</div>
+	<div class="navigation">
+		<ui-image src="basic_interface/mesbtn_mid.bmp"></ui-image>
+		<!-- Friend specific buttons -->
+		<ui-button
+			class="friend mail"
+			bg="basic_interface/mesbtn_01.bmp"
+			hover="basic_interface/mesbtn_01_a.bmp"
+			down="basic_interface/mesbtn_01_b.bmp"
+		>
+			<div class="overlay"><ui-text msg="98">Send Message</ui-text></div>
+		</ui-button>
+		<ui-button
+			class="friend privatemessage"
+			bg="basic_interface/mesbtn_02.bmp"
+			hover="basic_interface/mesbtn_02_a.bmp"
+			down="basic_interface/mesbtn_02_b.bmp"
+		>
+			<div class="overlay"><ui-text msg="99">1:1 Chat</ui-text></div>
+		</ui-button>
+
+		<!-- Party specific buttons -->
+		<ui-button
+			class="party agency"
+			bg="basic_interface/mesbtn_partymaster_01.bmp"
+			hover="basic_interface/mesbtn_partymaster_01_a.bmp"
+			down="basic_interface/mesbtn_partymaster_01_b.bmp"
+		>
+			<div class="overlay"><ui-text msg="3504">Adventurer's Agency</ui-text></div>
+		</ui-button>
+		<ui-button
+			class="info"
+			bg="basic_interface/mesbtn_04.bmp"
+			hover="basic_interface/mesbtn_04_a.bmp"
+			down="basic_interface/mesbtn_04_b.bmp"
+		>
+			<div class="overlay">
+				<span class="party"><ui-text msg="101">Party Setup</ui-text></span>
+				<span class="friend"><ui-text msg="355">Friend Setup</ui-text></span>
+			</div>
+		</ui-button>
+		<ui-button
+			class="friend remove"
+			bg="basic_interface/mesbtn_05.bmp"
+			hover="basic_interface/mesbtn_05_a.bmp"
+			down="basic_interface/mesbtn_05_b.bmp"
+		>
+			<div class="overlay"><ui-text msg="351">Delete</ui-text></div>
+		</ui-button>
+		<ui-button
+			class="lock on"
+			bg="basic_interface/mesbtn_06.bmp"
+			hover="basic_interface/mesbtn_06_a.bmp"
+			down="basic_interface/mesbtn_06_b.bmp"
+		>
+			<div class="overlay"><ui-text msg="1626">Activate lock function</ui-text></div>
+		</ui-button>
+		<ui-button
+			class="lock off"
+			bg="basic_interface/mesbtn_07.bmp"
+			hover="basic_interface/mesbtn_07_a.bmp"
+			down="basic_interface/mesbtn_07_b.bmp"
+		>
+			<div class="overlay"><ui-text msg="1627">Deactivate lock function</ui-text></div>
+		</ui-button>
+		<ui-button
+			class="party create"
+			bg="basic_interface/mesbtn_08.bmp"
+			hover="basic_interface/mesbtn_08_a.bmp"
+			down="basic_interface/mesbtn_08_b.bmp"
+		>
+			<div class="overlay"><ui-text msg="2054">Create Party</ui-text></div>
+		</ui-button>
+		<ui-button
+			class="party add"
+			bg="basic_interface/mesbtn_010.bmp"
+			hover="basic_interface/mesbtn_010_a.bmp"
+			down="basic_interface/mesbtn_010_b.bmp"
+		>
+			<div class="overlay"><ui-text msg="2056">Party Invitation</ui-text></div>
+		</ui-button>
+		<ui-button
+			class="party leave"
+			bg="basic_interface/mesbtn_09.bmp"
+			hover="basic_interface/mesbtn_09_a.bmp"
+			down="basic_interface/mesbtn_09_b.bmp"
+		>
+			<div class="overlay"><ui-text msg="96">Leave Party</ui-text></div>
+		</ui-button>
+		<ui-button
+			class="party sort"
+			bg="basic_interface/mesbtn_011.bmp"
+			hover="basic_interface/mesbtn_011_a.bmp"
+			down="basic_interface/mesbtn_011_b.bmp"
+		>
+			<div class="overlay"><ui-text msg="3983">Sort Mini Party Window</ui-text></div>
+		</ui-button>
+		<div class="clear"></div>
+	</div>
+	<div class="footer">
+		<ui-image src="basic_interface/btnbar_mid.bmp"></ui-image>
+		<div class="friend">
+			<button class="switchtab on">
+				<ui-image src="radiobtn_on.bmp"></ui-image><ui-text msg="102">Friends</ui-text>
+			</button>
+			<button class="switchtab off">
+				<ui-image src="radiobtn_off.bmp"></ui-image><ui-text msg="103">Party</ui-text>
+			</button>
+		</div>
+		<div class="party">
+			<button class="switchtab off">
+				<ui-image src="radiobtn_off.bmp"></ui-image><ui-text msg="102">Friends</ui-text>
+			</button>
+			<button class="switchtab on">
+				<ui-image src="radiobtn_on.bmp"></ui-image><ui-text msg="103">Party</ui-text>
+			</button>
+			<div class="member-count-container">
+				<div class="footer-label"><ui-text msg="3231">Cap</ui-text></div>
+				<span class="count-box"><span class="inner-count">0/12</span></span>
+			</div>
+		</div>
+		<button class="resize"><ui-image src="btn_resize.bmp"></ui-image></button>
+	</div>
+</div>

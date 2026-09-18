@@ -1,0 +1,238 @@
+networks:
+    ro-network:
+        driver: bridge
+
+volumes:
+    rathenadb:
+        driver: local
+
+services:
+    # --- DATABASE (rAthena Native) ---
+    db:
+        image: 'mariadb:noble'
+        healthcheck:
+            test: ['CMD-SHELL', "mariadb -h 127.0.0.1 -P 3306 -uroot -pragnarok -e 'SELECT 1;' >/dev/null 2>&1"]
+            interval: 10s
+            timeout: 10s
+            retries: 100
+        container_name: 'rathena-db'
+        networks:
+            - ro-network
+        ports:
+            - '3306:3306'
+        volumes:
+            - 'rathenadb:/var/lib/mysql'
+            - './rathena/sql-files/:/docker-entrypoint-initdb.d'
+        environment:
+            MYSQL_ROOT_PASSWORD: ragnarok
+            MYSQL_DATABASE: ragnarok
+            MYSQL_USER: ragnarok
+            MYSQL_PASSWORD: ragnarok
+
+    # --- RATHENA BUILDER (rAthena Native) ---
+    builder:
+        image: 'rathena:local'
+        container_name: 'rathena-builder'
+        command: '/rathena/tools/docker/builder.sh'
+        networks:
+            - ro-network
+        volumes:
+            - './rathena:/rathena'
+            - './rathena/tools/docker/asset/inter_conf.txt:/rathena/conf/import/inter_conf.txt'
+            - './rathena/tools/docker/asset/char_conf.txt:/rathena/conf/import/char_conf.txt'
+            - './rathena/tools/docker/asset/map_conf.txt:/rathena/conf/import/map_conf.txt'
+            - './rathena/tools/docker/asset/web_conf.txt:/rathena/conf/import/web_conf.txt'
+        init: true
+        tty: true
+        stdin_open: true
+        depends_on:
+            db:
+                condition: service_healthy
+        build:
+            context: ./rathena/tools/docker
+            dockerfile: Dockerfile
+        environment:
+            BUILDER_CONFIGURE: '--enable-packetver=20250618' # <- Configure your wanted packet version here
+            MAKEFLAGS: '-j2'
+
+    # --- RATHENA LOGIN SERVER (rAthena Native) ---
+    login:
+        image: 'rathena:local'
+        container_name: 'rathena-login'
+        command: >
+            sh -c "
+            until (true 2>/dev/null >> /rathena/login-server); do sleep 10; done &&
+            echo 'Arquivo livre! Aplicando permissões e iniciando...' &&
+            chmod +x /rathena/login-server &&
+            /rathena/login-server
+            "
+        ports:
+            - '6900:6900'
+        networks:
+            - ro-network
+        volumes:
+            - './rathena:/rathena'
+            - './rathena/tools/docker/asset/inter_conf.txt:/rathena/conf/import/inter_conf.txt'
+            - './rathena/tools/docker/asset/char_conf.txt:/rathena/conf/import/char_conf.txt'
+            - './rathena/tools/docker/asset/map_conf.txt:/rathena/conf/import/map_conf.txt'
+        init: true
+        tty: true
+        stdin_open: true
+        build:
+            context: ./rathena/tools/docker
+            dockerfile: Dockerfile
+        depends_on:
+            db:
+                condition: service_healthy
+            builder:
+                condition: service_completed_successfully
+            ro-browser-dev:
+                condition: service_started
+
+    # --- RATHENA CHAR SERVER (rAthena Native) ---
+    char:
+        image: 'rathena:local'
+        container_name: 'rathena-char'
+        command: >
+            sh -c "
+            until (true 2>/dev/null >> /rathena/char-server); do sleep 10; done && 
+            echo 'Arquivo livre! Aplicando permissões e iniciando...' &&
+            chmod +x /rathena/char-server &&  
+            /rathena/char-server
+            "
+        ports:
+            - '6121:6121'
+        networks:
+            - ro-network
+        volumes:
+            - './rathena:/rathena'
+            - './rathena/tools/docker/asset/inter_conf.txt:/rathena/conf/import/inter_conf.txt'
+            - './rathena/tools/docker/asset/char_conf.txt:/rathena/conf/import/char_conf.txt'
+            - './rathena/tools/docker/asset/map_conf.txt:/rathena/conf/import/map_conf.txt'
+        init: true
+        tty: true
+        stdin_open: true
+        build:
+            context: ./rathena/tools/docker
+            dockerfile: Dockerfile
+        depends_on:
+            db:
+                condition: service_healthy
+            login:
+                condition: service_started
+
+    # --- RATHENA MAP SERVER (rAthena Native) ---
+    map:
+        image: 'rathena:local'
+        container_name: 'rathena-map'
+        command: >
+            sh -c "
+            until (true 2>/dev/null >> /rathena/map-server); do sleep 10; done && 
+            echo 'Arquivo livre! Aplicando permissões e iniciando...' &&
+            chmod +x /rathena/map-server &&  
+            /rathena/map-server
+            "
+        ports:
+            - '5121:5121'
+        networks:
+            - ro-network
+        volumes:
+            - './rathena:/rathena'
+            - './rathena/tools/docker/asset/inter_conf.txt:/rathena/conf/import/inter_conf.txt'
+            - './rathena/tools/docker/asset/char_conf.txt:/rathena/conf/import/char_conf.txt'
+            - './rathena/tools/docker/asset/map_conf.txt:/rathena/conf/import/map_conf.txt'
+        init: true
+        tty: true
+        stdin_open: true
+        build:
+            context: ./rathena/tools/docker
+            dockerfile: Dockerfile
+        depends_on:
+            db:
+                condition: service_healthy
+            char:
+                condition: service_started
+
+    # --- RATHENA WEB SERVER (rAthena Native) ---
+    web:
+        image: 'rathena:local'
+        container_name: 'rathena-web'
+        command: >
+            sh -c "  
+            until (true 2>/dev/null >> /rathena/web-server); do sleep 10; done && 
+            echo 'Arquivo livre! Aplicando permissões e iniciando...' &&
+            chmod +x /rathena/web-server &&  
+            echo 'Iniciando Web Server...' &&  
+            /rathena/web-server  
+            "
+        ports:
+            - '8888:8888'
+        networks:
+            - ro-network
+        volumes:
+            - './rathena:/rathena'
+            - './rathena/tools/docker/asset/inter_conf.txt:/rathena/conf/import/inter_conf.txt'
+            - './rathena/tools/docker/asset/web_conf.txt:/rathena/conf/import/web_conf.txt'
+        init: true
+        tty: true
+        stdin_open: true
+        build:
+            context: ./rathena/tools/docker
+            dockerfile: Dockerfile
+        depends_on:
+            db:
+                condition: service_healthy
+            map:
+                condition: service_started
+
+    # --- ROBROWSER FRONTEND (Vite Dev Server) ---
+    ro-browser-dev:
+        build:
+            context: .
+            dockerfile: Dockerfile
+            target: dev
+        container_name: robrowser-vite-dev
+        networks:
+            - ro-network
+        ports:
+            - '3000:3000'
+            - '5999:5999' # WebSocket Proxy
+        volumes:
+            - ./:/app
+            - /app/node_modules/
+        environment:
+            - NODE_ENV=development
+            - RO_PROXY_TARGET=docker
+        tty: true
+        working_dir: /app
+        depends_on:
+            db:
+                condition: service_healthy
+            builder:
+                condition: service_completed_successfully
+        command: >
+            bash -c "set -e;
+            echo '=== Instalando dependências do projeto ===';
+            npm install;
+            echo '=== Inicializando Proxy em Background ===';
+            node wsproxy.js -r 127.0.0.1:6900=rathena-login:6900,127.0.0.1:6121=rathena-char:6121,127.0.0.1:5121=rathena-map:5121,localhost:6900=rathena-login:6900,localhost:6121=rathena-char:6121,localhost:5121=rathena-map:5121 &
+            echo '=== Subindo o Vite Dev Server ===' && sleep 5;
+            npx vite --host 0.0.0.0 --port 3000"
+
+    # --- REMOTE CLIENT PHP ---
+    remote-client-php:
+        build:
+            context: ./roBrowserLegacy-RemoteClient-PHP
+            dockerfile: docker/apache/Dockerfile
+        container_name: remote-client-php
+        depends_on:
+            map:
+                condition: service_started
+        networks:
+            - ro-network
+        ports:
+            - '8080:80'
+        environment:
+            - DEBUG=true
+            - CLIENT_RESPATH=/var/www/html/resources/
+            - CLIENT_DATAINI=DATA.INI

@@ -1,0 +1,423 @@
+:host {
+	position: absolute;
+}
+
+#PartyFriends .titlebar {
+	width: 100%;
+	height: 17px;
+	background-color: white;
+	background-repeat: repeat-x;
+	border-radius: 3px 3px 0px 0px;
+}
+
+#PartyFriends .titlebar .base {
+	width: 11px;
+	height: 11px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+
+#PartyFriends .titlebar .party,
+#PartyFriends .titlebar .friend {
+	text-shadow: 1px 1px white;
+	vertical-align: -2px;
+	white-space: nowrap;
+	/* chrome bug */
+	display: inline-block;
+	width: 32px;
+	height: 13px;
+}
+
+#PartyFriends .titlebar .left {
+	margin-left: 3px;
+	float: left;
+}
+
+#PartyFriends .titlebar .right {
+	float: right;
+	margin-right: 3px;
+}
+
+#PartyFriends .titlebar .clear {
+	clear: both;
+}
+
+#PartyFriends .content {
+	height: 120px;
+	width: 240px;
+	background-color: white;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+#PartyFriends .clear {
+	clear: both;
+}
+
+/* Friend list */
+#PartyFriends .node {
+	padding: 1px 1px 1px 18px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	cursor: pointer;
+}
+
+#PartyFriends .content .friend .node .name {
+	color: #102550;
+	white-space: nowrap;
+}
+
+#PartyFriends .content .friend .node .selection {
+	background-color: #739cef;
+}
+
+#PartyFriends .content .party,
+#PartyFriends .content .friend {
+	padding: 4px;
+}
+
+#PartyFriends .content .party .node {
+	white-space: nowrap;
+	color: #007b7b;
+	position: relative;
+	height: 30px;
+}
+
+#PartyFriends .content .party .node.leader {
+	font-weight: bold;
+	color: #08317b;
+}
+
+#PartyFriends .content .party .node.online .life,
+#PartyFriends .content .party .node.online .hp,
+#PartyFriends .content .party .node.online .map {
+	display: initial;
+}
+
+#PartyFriends .content .party .node .life,
+#PartyFriends .content .party .node .hp,
+#PartyFriends .content .party .node .map {
+	display: none;
+}
+
+#PartyFriends .content .party .life {
+	position: absolute;
+	left: 20px;
+	top: 22px;
+}
+
+#PartyFriends .content .party .hp {
+	position: absolute;
+	top: 19px;
+	left: 86px;
+	color: black;
+	font-weight: normal;
+	font-size: 10px;
+}
+
+#PartyFriends .content .party.info-v2 {
+	padding: 0;
+}
+
+#PartyFriends .content .party.info-v2 .node {
+	height: 38px;
+	padding: 3px 5px;
+	position: relative;
+	background: #ffffff;
+	display: flex;
+	align-items: center;
+	box-sizing: border-box;
+}
+
+#PartyFriends .content .party.info-v2 .node.detached {
+	background: #deefff;
+}
+
+#PartyFriends .content .party.info-v2 .node .row1,
+#PartyFriends .content .party.info-v2 .node .row2 {
+	display: flex;
+	align-items: center;
+	width: 100%;
+}
+
+#PartyFriends .content .party.info-v2 .node .row2 {
+	margin-top: 2px;
+}
+
+#PartyFriends .content .party.info-v2 .node .row1 span,
+#PartyFriends .content .party.info-v2 .node .row2 * {
+	position: static !important;
+	display: inline-block !important;
+	float: none !important;
+	font-weight: bold;
+}
+
+#PartyFriends .content .party.info-v2 .node .job-icon-container {
+	position: relative !important;
+	width: 24px;
+	height: 24px;
+	min-width: 24px;
+	margin-right: 8px;
+	background: #f8f8f8;
+	border: 1px solid #ccc;
+	display: flex;
+	/* Centering children */
+	justify-content: center;
+	align-items: center;
+}
+
+#PartyFriends .content .party.info-v2 .node .job-icon-container .job-icon {
+	width: 24px;
+	height: 24px;
+	background-repeat: no-repeat;
+	background-position: center;
+	position: absolute !important;
+	top: 0;
+	left: 0;
+	z-index: 5;
+}
+
+#PartyFriends .content .party.info-v2 .node .job-icon-container .job-icon-frame {
+	position: absolute !important;
+	top: -2px;
+	left: -2px;
+	width: 28px;
+	height: 28px;
+	background-repeat: no-repeat;
+	z-index: 10;
+	pointer-events: none;
+}
+
+#PartyFriends .content .party.info-v2 .node .job-icon-container .crown {
+	position: absolute !important;
+	top: -14px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 25px;
+	height: 25px;
+	background-repeat: no-repeat;
+	background-position: center;
+	display: none;
+	z-index: 20;
+	pointer-events: none;
+}
+
+.drag-ghost {
+	pointer-events: none;
+	overflow: hidden;
+}
+
+#PartyFriends .content .party.info-v2 .node:hover {
+	background: #739cef;
+}
+
+#PartyFriends .content .party.info-v2 .node .info-container {
+	flex: 1;
+}
+
+#PartyFriends .content .party.info-v2 .node .row1 {
+	height: 18px;
+	display: flex;
+	align-items: center;
+	width: 100%;
+}
+
+#PartyFriends .content .party.info-v2 .node .row2 {
+	height: 12px;
+	width: 100%;
+	gap: 5px;
+}
+
+#PartyFriends .content .party.info-v2 .node.leader .crown {
+	display: block;
+}
+
+#PartyFriends .content .party.info-v2 .node .level {
+	font-size: 11px;
+	color: #e37522;
+	font-weight: bold;
+	margin-right: 5px;
+	white-space: nowrap;
+}
+
+#PartyFriends .content .party.info-v2 .node .name {
+	font-weight: normal;
+	color: #333;
+	margin-right: 5px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 100px;
+}
+
+#PartyFriends .content .party.info-v2 .node .map {
+	font-size: 10px;
+	color: #777;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 80px;
+}
+
+#PartyFriends .content .party.info-v2 .node .hp-bar-container {
+	min-width: 75px;
+	width: 75px;
+	height: 5px;
+	/* Thinner */
+	background: #333;
+	border: 1px solid #111;
+	overflow: hidden;
+	margin-right: 5px;
+	position: relative !important;
+	display: inline-block !important;
+}
+
+#PartyFriends .content .party.info-v2 .node .life {
+	display: block !important;
+	height: 5px !important;
+	width: 75px !important;
+	position: static !important;
+}
+
+#PartyFriends .content .party.info-v2 .node .hp {
+	font-size: 10px;
+	color: #666;
+	display: inline-block !important;
+	vertical-align: middle;
+	margin-right: 5px;
+	white-space: nowrap;
+}
+
+#PartyFriends .content .party.info-v2 .node .status-icon {
+	width: 26px;
+	min-width: 26px;
+	height: 12px;
+	background-repeat: no-repeat;
+	display: block !important;
+	position: absolute !important;
+	right: 20px;
+}
+
+#PartyFriends .footer .member-count-container {
+	position: absolute;
+	right: 13px;
+	bottom: 1px;
+	height: 19px;
+	width: 156px;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	pointer-events: none;
+	z-index: 100;
+}
+
+#PartyFriends .footer .member-count-container .footer-label {
+	color: #333;
+	font-size: 10px;
+	white-space: nowrap;
+	margin-right: 10px;
+}
+
+#PartyFriends .footer .member-count-container .count-box {
+	position: relative;
+	width: 48px;
+	height: 19px;
+	display: block !important;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+#PartyFriends .footer .member-count-container .count-box .inner-count {
+	position: absolute !important;
+	left: 0 !important;
+	top: 0 !important;
+	width: 44px !important;
+	/* Centered in the gold box part */
+	height: 19px !important;
+	line-height: 20px !important;
+	text-align: center !important;
+	color: #ffffff !important;
+	/* Pure White */
+	font-weight: bold !important;
+	font-size: 10px !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	display: block !important;
+}
+
+#PartyFriends .content .node .selection {
+	background-color: #739cef;
+}
+
+#PartyFriends .navigation {
+	width: 100%;
+	height: 20px;
+	background-repeat: repeat-x;
+	background-color: transparent;
+}
+
+#PartyFriends .navigation button,
+#PartyFriends .navigation ui-button {
+	float: left;
+	border: none;
+	background: none;
+	width: 26px;
+	height: 20px;
+	position: relative;
+}
+
+#PartyFriends .navigation button .overlay,
+#PartyFriends .navigation ui-button .overlay {
+	position: absolute;
+	display: none;
+	top: -20px;
+	white-space: nowrap;
+	z-index: 900;
+	height: 13px;
+	padding: 5px;
+	background: rgba(0, 0, 0, 0.7);
+	color: white;
+	text-shadow: 1px 1px black;
+}
+
+#PartyFriends .navigation button:hover .overlay,
+#PartyFriends .navigation ui-button:hover .overlay {
+	display: block;
+}
+
+#PartyFriends .footer {
+	border-radius: 0px 0px 3px 3px;
+	width: 100%;
+	height: 21px;
+	background-repeat: repeat-x;
+	background-color: transparent;
+	position: relative;
+}
+
+#PartyFriends .footer .party,
+#PartyFriends .footer .friend {
+	padding-left: 5px;
+	padding-top: 3px;
+}
+
+#PartyFriends .footer .switchtab {
+	height: 15px;
+	border: none;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	background-position: 0px 0px;
+	padding-left: 15px;
+}
+
+#PartyFriends .footer .resize {
+	position: absolute;
+	right: 0px;
+	bottom: 1px;
+	width: 13px;
+	height: 13px;
+	border: none;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}

@@ -1,0 +1,99 @@
+<div id="InventoryV1">
+	<div class="titlebar" data-background="basic_interface/titlebar_mid.bmp">
+		<div class="left">
+			<button
+				class="base"
+				data-background="basic_interface/sys_base_off.bmp"
+				data-hover="basic_interface/sys_base_on.bmp"
+			></button>
+			<span class="text" data-text="106">Inventory</span>
+		</div>
+		<div class="right">
+			<button
+				class="base mini"
+				data-background="basic_interface/sys_mini_off.bmp"
+				data-hover="basic_interface/sys_mini_on.bmp"
+			></button>
+			<button
+				class="base close"
+				data-background="basic_interface/sys_close_off.bmp"
+				data-hover="basic_interface/sys_close_on.bmp"
+			></button>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="overlay"></div>
+	<div class="panel">
+		<div class="middle">
+			<div class="tabs" data-background="basic_interface/btnbar_mid2.bmp">
+				<button class="item tab" data-tab="item" data-text="1465"></button>
+				<button class="equip tab" data-tab="equip" data-text="2050"></button>
+				<button class="etc tab" data-tab="etc" data-text="1471"></button>
+				<button class="fav tab" data-tab="fav" data-text="2051"></button>
+			</div>
+			<div class="container">
+				<div class="scroll-host">
+					<div class="content" data-background="basic_interface/itemwin_mid.bmp"></div>
+				</div>
+				<div class="lockoverlay hidden"></div>
+				<div class="lockoverlaymsg hidden" data-background="inventory/popup_itemdeal_lock.bmp">
+					<span class="msg" data-text="2951"></span>
+					<div class="lockoverlayclose" data-background="inventory/bt_close.bmp"></div>
+				</div>
+			</div>
+		</div>
+		<div class="footer" data-background="basic_interface/btnbar_mid2.bmp">
+			<div class="expand">
+				<span class="name" data-text="3560"></span>
+				<span class="ncnt"></span><span class="mcnt"></span>
+			</div>
+			<div class="droplock">
+				<button
+					class="item_drop_lock"
+					data-background="inventory/item_drop_lock_off.bmp"
+					data-text="Drop Lock"
+				></button>
+				<span class="name" data-text="2843"></span>
+			</div>
+			<div class="compare">
+				<button
+					class="item_compare"
+					data-background="inventory/item_compare_off.bmp"
+					data-text="Compare Items"
+				></button>
+				<span class="name" data-text="2842"></span>
+			</div>
+			<div class="deallock_on hidden">
+				<button
+					class="deal_lock item_deal_lock_on"
+					data-background="inventory/bt_itemdeal_lock_on.bmp"
+					data-hover="inventory/bt_itemdeal_lock_on_over.bmp"
+					data-down="inventory/bt_itemdeal_lock_on_press.bmp"
+					data-text="Deal Lock On"
+				></button>
+				<span class="name" data-text="2952"></span>
+			</div>
+			<div class="deallock_off hidden">
+				<button
+					class="deal_lock item_deal_lock_off"
+					data-background="inventory/bt_itemdeal_lock_off.bmp"
+					data-hover="inventory/bt_itemdeal_lock_over.bmp"
+					data-down="inventory/bt_itemdeal_lock_press.bmp"
+					data-text="Deal Lock Off"
+				></button>
+				<span class="name" data-text="2952"></span>
+			</div>
+			<div class="sort hidden">
+				<button
+					class="item_sort"
+					data-background="inventory/bt_sort.bmp"
+					data-hover="inventory/bt_sort_over.bmp"
+					data-down="inventory/bt_sort_press.bmp"
+					data-text="Sort Items"
+				></button>
+				<span class="name" data-text="3007"></span>
+			</div>
+			<button class="extend" data-background="btn_resize.bmp" data-text="Extend"></button>
+		</div>
+	</div>
+</div>

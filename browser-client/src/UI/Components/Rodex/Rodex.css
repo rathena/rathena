@@ -1,0 +1,317 @@
+:host {
+	width: 309px;
+	height: 416px;
+	position: absolute;
+}
+#Rodex {
+	width: 309px;
+	height: 416px;
+	position: absolute;
+}
+#Rodex .body {
+	width: 309px;
+	height: 416px;
+	position: absolute;
+}
+#Rodex .body .base {
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+#Rodex .body .titlebar {
+	display: block;
+	width: 309px;
+	height: 16px;
+}
+#Rodex .body .titlebar .right {
+	float: right;
+	margin-right: 3px;
+}
+#Rodex .body .titlebar .right .close {
+	width: 11px;
+	height: 11px;
+}
+
+#Rodex .body .iconbar {
+	float: left;
+	width: 100%;
+	height: 40px;
+	position: relative;
+}
+#Rodex .body .iconbar .refresh {
+	position: absolute;
+	width: 24px;
+	height: 26px;
+	top: 4px;
+	right: 37px;
+}
+#Rodex .body .iconbar .refresh span {
+	position: relative;
+	display: none;
+	z-index: 1;
+	top: -20px;
+	left: 0px;
+	background-color: rgba(0, 0, 0, 0.6);
+	text-shadow: 1px 1px black;
+	color: white;
+	padding: 5px;
+	white-space: nowrap;
+	font-size: 0.6rem;
+}
+#Rodex .body .iconbar .refresh:hover span {
+	display: table;
+}
+#Rodex .body .iconbar .write {
+	position: absolute;
+	width: 24px;
+	height: 26px;
+	top: 4px;
+	right: 10px;
+}
+#Rodex .body .iconbar .write span {
+	position: relative;
+	display: none;
+	z-index: 1;
+	top: -20px;
+	left: 0px;
+	background-color: rgba(0, 0, 0, 0.6);
+	text-shadow: 1px 1px black;
+	color: white;
+	padding: 5px;
+	white-space: nowrap;
+	font-size: 0.6rem;
+}
+#Rodex .body .iconbar .write:hover span {
+	display: table;
+}
+
+#Rodex .body .searchbar {
+	float: left;
+	width: 100%;
+	height: 30px;
+	position: relative;
+}
+#Rodex .body .searchbar .search-title {
+	position: absolute;
+	width: 10px;
+	height: 10px;
+	top: 13px;
+	left: 23px;
+}
+#Rodex .body .searchbar .search-title-text {
+	position: absolute;
+	width: 10px;
+	height: 10px;
+	top: 13px;
+	left: 35px;
+}
+#Rodex .body .searchbar .search-sender {
+	position: absolute;
+	width: 10px;
+	height: 10px;
+	top: 13px;
+	left: 75px;
+}
+#Rodex .body .searchbar .search-sender-text {
+	position: absolute;
+	width: 10px;
+	height: 10px;
+	top: 13px;
+	left: 87px;
+}
+#Rodex .body .searchbar .search-text {
+	color: #212163;
+}
+#Rodex .body .searchbar .search {
+	position: absolute;
+	width: 125px;
+	height: 14px;
+	top: 10px;
+	left: 135px;
+	border: none;
+}
+#Rodex .body .searchbar .search-btn {
+	position: absolute;
+	width: 32px;
+	height: 18px;
+	top: 9px;
+	right: 13px;
+}
+
+#Rodex .body .navbar {
+	float: left;
+	width: 100%;
+	height: 27px;
+	position: relative;
+}
+#Rodex .body .navbar .nav {
+	height: 100%;
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+	letter-spacing: 1px;
+	color: #c6cee7;
+}
+#Rodex .body .navbar .nav .nav-item {
+	float: left;
+	width: 25%;
+	height: 90%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+#Rodex .body .navbar .nav .nav-item.active {
+	border-bottom: 4px solid;
+	font-weight: bolder;
+	color: #506dc4;
+}
+#Rodex .body .navbar .nav .nav-item:hover {
+	border-bottom: 4px solid;
+	font-weight: bolder;
+	color: #506dc4;
+}
+
+#Rodex .body .rodex-list {
+	float: left;
+	width: 100%;
+	height: 275px;
+	position: relative;
+}
+#Rodex .body .rodex-list .mail-list {
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+}
+#Rodex .body .rodex-list .mail-list .mail-item {
+	float: left;
+	width: 100%;
+	height: 45px;
+}
+#Rodex .body .rodex-list .mail-list .mail-item .mail-checkbox {
+	float: left;
+	width: 10%;
+	height: 100%;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+#Rodex .body .rodex-list .mail-list .mail-item .mail-image {
+	float: left;
+	width: 10%;
+	height: 100%;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+#Rodex .body .rodex-list .mail-list .mail-item .mail-text {
+	float: left;
+	width: 51%;
+	height: 100%;
+}
+#Rodex .body .rodex-list .mail-list .mail-item .mail-text .title {
+	float: left;
+	width: 100%;
+	height: 50%;
+	display: flex;
+	align-items: flex-end;
+	color: #0c0c23;
+	position: relative;
+}
+#Rodex .body .rodex-list .mail-list .mail-item .mail-text .title .text span {
+	position: absolute;
+	display: none;
+	z-index: 1;
+	top: -20px;
+	left: 0px;
+	background-color: rgba(0, 0, 0, 0.6);
+	text-shadow: 1px 1px black;
+	color: white;
+	padding: 5px;
+	white-space: nowrap;
+	font-size: 0.6rem;
+}
+#Rodex .body .rodex-list .mail-list .mail-item .mail-text .title .text.deleted {
+	color: lightgray;
+}
+#Rodex .body .rodex-list .mail-list .mail-item .mail-text .title .text:hover span {
+	display: block;
+}
+#Rodex .body .rodex-list .mail-list .mail-item .mail-text .sender {
+	float: left;
+	width: 100%;
+	height: 50%;
+	display: flex;
+	align-items: center;
+	color: darkblue;
+	font-weight: bold;
+	position: relative;
+}
+#Rodex .body .rodex-list .mail-list .mail-item .mail-text .sender .text span {
+	position: absolute;
+	display: none;
+	z-index: 1;
+	top: -20px;
+	left: 0px;
+	background-color: rgba(0, 0, 0, 0.6);
+	text-shadow: 1px 1px black;
+	color: white;
+	padding: 5px;
+	white-space: nowrap;
+	font-size: 0.6rem;
+}
+#Rodex .body .rodex-list .mail-list .mail-item .mail-text .sender .text:hover span {
+	display: block;
+}
+#Rodex .body .rodex-list .mail-list .mail-item .mail-content {
+	float: left;
+	width: 10%;
+	height: 100%;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+#Rodex .body .rodex-list .mail-list .mail-item .expire-days {
+	float: left;
+	width: 19%;
+	height: 100%;
+	color: red;
+	font-weight: bold;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#Rodex .body .footer {
+	float: left;
+	width: 100%;
+	height: 25px;
+	position: relative;
+}
+#Rodex .body .footer .delete-all {
+	position: absolute;
+	width: 80px;
+	height: 20px;
+	top: 5px;
+	left: 10px;
+	background-size: 100% 100%;
+}
+#Rodex .body .footer .retrieve-all {
+	position: absolute;
+	width: 80px;
+	height: 20px;
+	top: 5px;
+	left: 100px;
+	background-size: 100% 100%;
+}
+#Rodex .body .footer .previous-page {
+	position: absolute;
+	width: 24px;
+	height: 24px;
+	top: 3px;
+	right: 30px;
+}
+#Rodex .body .footer .next-page {
+	position: absolute;
+	width: 24px;
+	height: 24px;
+	top: 3px;
+	right: 5px;
+}

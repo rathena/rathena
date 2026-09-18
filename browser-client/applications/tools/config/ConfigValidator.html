@@ -1,0 +1,209 @@
+<!doctype html>
+<html>
+	<head>
+		<title>roBrowser Config Validator</title>
+		<style type="text/css">
+			pre {
+				outline: 1px solid #ccc;
+				padding: 5px;
+				margin: 5px;
+			}
+
+			.string {
+				color: green;
+			}
+
+			.number {
+				color: darkorange;
+			}
+
+			.boolean {
+				color: blue;
+			}
+
+			.null {
+				color: magenta;
+			}
+
+			.key {
+				color: red;
+			}
+		</style>
+		<script id="roapi" type="text/javascript" src=""></script>
+		<script type="text/javascript">
+			function init() {
+				fixtab();
+				document.getElementById('validate').addEventListener('click', loadroapi);
+			}
+
+			function validate() {
+				let result = 'No result';
+
+				if (ROBrowser) {
+					let input = document.getElementById('input').value;
+
+					if (input) {
+						try {
+							let obj;
+							eval('obj = ' + input);
+							result = syntaxHighlight(JSON.stringify(obj, undefined, 4));
+							result = '[SUCCESS!] Evaluated conf object result:\n\n' + result;
+						} catch (e) {
+							result = '[ERROR] ' + e.name + ': ' + e.message;
+						}
+					} else {
+						result = 'Empty input';
+					}
+				} else {
+					result = 'api.js not loaded. Please update the url.';
+				}
+
+				output(result);
+			}
+
+			function syntaxHighlight(json) {
+				json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+				return json.replace(
+					/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+					function (match) {
+						var cls = 'number';
+						if (/^"/.test(match)) {
+							if (/:$/.test(match)) {
+								cls = 'key';
+								//match = match.replaceAll('"', ''); //Replace json key quotes for cleaner look (might confuze ppl and use output as conf, which won't work...)
+							} else {
+								cls = 'string';
+							}
+						} else if (/true|false/.test(match)) {
+							cls = 'boolean';
+						} else if (/null/.test(match)) {
+							cls = 'null';
+						}
+						return '<span class="' + cls + '">' + match + '</span>';
+					}
+				);
+			}
+
+			function fixtab() {
+				document.getElementById('input').addEventListener('keydown', function (e) {
+					if (e.key == 'Tab') {
+						e.preventDefault();
+						var start = this.selectionStart;
+						var end = this.selectionEnd;
+
+						// set textarea value to: text before caret + tab + text after caret
+						this.value = this.value.substring(0, start) + '\t' + this.value.substring(end);
+
+						// put caret at right position again
+						this.selectionStart = this.selectionEnd = start + 1;
+					}
+				});
+			}
+
+			function loadroapi() {
+				document.getElementById('roapi')?.remove();
+				let script = document.createElement('script');
+				script.id = 'roapi';
+				script.src = document.getElementById('roapiurl').value;
+				script.addEventListener('load', validate);
+				script.addEventListener('error', function () {
+					output("[ERROR] Can't load api.js");
+				});
+				document.getElementsByTagName('head')[0].appendChild(script);
+			}
+
+			function output(text) {
+				document.getElementById('output').innerHTML = text;
+			}
+
+			window.addEventListener('load', init);
+		</script>
+	</head>
+
+	<body>
+		<table>
+			<tr>
+				<td>Api.js url:</td>
+				<td>
+					<input id="roapiurl" type="text" value="../../api/api.js" />
+				</td>
+			</tr>
+			<tr>
+				<td>RoConf:</td>
+				<td>
+					<textarea id="input" rows="36" cols="75">
+{
+	target: document.getElementById("robrowser"),
+	type: ROBrowser.TYPE.FRAME,
+	application: ROBrowser.APP.ONLINE,
+	development: true,
+	remoteClient: 'https://grf.robrowser.com/',
+	servers: [
+		{
+			display: 'roBrowser Demo Server',
+			desc: 'demo server',
+			address: '127.0.0.1',
+			address: '127.0.0.1',
+			port: 6900,
+			version: 25,
+			langtype: 12,
+			packetver: 20130618,
+			renewal: false,
+			worldMapSettings: { episode: 12 },
+			packetKeys: false,
+			socketProxy: 'wss://connect.robrowser.com',
+			adminList: [2000000]
+		},
+		// ADD PUBLIC TEST SERVERS HERE WITH _M _F REGISTRATION
+	],
+	packetDump: false,
+	skipServerList: true,
+	skipIntro: false,
+	aura: {},
+	autoLogin: [],
+	BGMFileExtension: ['mp3'],
+	calculateHash: false,
+	CameraMaxZoomOut: 5,
+	charBlockSize: 0,
+	clientHash: null,
+	clientVersionMode: "PacketVer",
+	disableConsole: false,
+	enableAchievements: false,
+	enableBank: false,
+	enableCashShop: false,
+	enableCheckAttendance: false,
+	enableDmgSuffix: false,
+	enableHomunAutoFeed: false,
+	enableMapName: false,
+	FirstPersonCamera: false,
+	grfList: null,
+	hashFiles: [],
+	loadLua: false,
+	onReady: null,
+	plugins: {},
+	registrationweb: '',
+	saveFiles: true,
+	ThirdPersonCamera: false,
+	transitionDuration: 500
+};
+                                                                                     
+					</textarea>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<button id="validate">Validate</button>
+				</td>
+			</tr>
+
+			<tr>
+				<td>Output:</td>
+				<td>
+					<pre id="output"></pre>
+				</td>
+			</tr>
+		</table>
+		<br />
+		<div id="robrowser">TestTagetDiv</div>
+	</body>
+</html>

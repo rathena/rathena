@@ -1,0 +1,110 @@
+<div id="Mail">
+	<div class="body">
+		<ui-image src="basic_interface/maillist1_bg.bmp"></ui-image>
+		<div class="titlebar">
+			<div class="left">
+				<span class="text" id="title"><ui-text msg="1025">Mail List</ui-text></span>
+			</div>
+			<div class="right">
+				<ui-button
+					class="base close"
+					bg="basic_interface/close2.bmp"
+					hover="basic_interface/close2_a.bmp"
+				></ui-button>
+			</div>
+		</div>
+
+		<div class="clear">
+			<section class="container flex_block">
+				<div class="flex container">
+					<div style="flex: 1">
+						<div class="flex_block btn_iw">
+							<div class="inbox" id="inbox" style="flex: 1"></div>
+							<div class="write" id="write" style="flex: 1"></div>
+						</div>
+					</div>
+
+					<div class="list_mail flex_block">
+						<!-- list mail -->
+						<div class="block_mail">
+							<div class="list_item_mail"></div>
+							<div class="flex prev_next">
+								<div class="prev">
+									<div class="overlay_prev"></div>
+									<span class="text_pagination"><ui-text msg="1053">Prev</ui-text></span>
+								</div>
+								<div class="pagination">
+									<span class="text" id="infor_page">1/1</span>
+								</div>
+								<div class="next">
+									<div class="overlay_next margin_next"></div>
+									<span class="text_pagination margin_next"><ui-text msg="1054">Next</ui-text></span>
+								</div>
+							</div>
+						</div>
+						<!-- create mail -->
+						<div class="block_create_mail">
+							<div class="to_create_mail">
+								<span class="text text_to_title">
+									<span><ui-text msg="1099">To</ui-text></span> :</span
+								>
+								<div style="flex: 4">
+									<input class="text_to" type="text" value="" maxlength="50" />
+								</div>
+							</div>
+							<div class="title_create_mail">
+								<span class="text text_title_create_mail">
+									<span><ui-text msg="1100">Title</ui-text></span> :</span
+								>
+								<div style="flex: 4">
+									<input class="input_title" type="text" value="" maxlength="50" />
+								</div>
+							</div>
+							<div class="email_body">
+								<textarea class="textarea_mail" maxlength="198"></textarea>
+							</div>
+							<div class="block_zeny_item">
+								<ui-button
+									class="add_zeny"
+									id="zeny_amt"
+									bg="basic_interface/inputzeny.bmp"
+									hover="basic_interface/inputzeny_a.bmp"
+								></ui-button>
+								<ui-button
+									class="add_zeny"
+									id="zeny_ok"
+									bg="basic_interface/setzeny.bmp"
+									hover="basic_interface/setzeny_a.bmp"
+								></ui-button>
+								<div class="block_zeny">
+									<input class="input_zeny_amt" type="text" value="0" maxlength="9" disabled />
+								</div>
+
+								<div class="block_item">
+									<div class="container_item">
+										<div class="overlay"></div>
+									</div>
+								</div>
+							</div>
+
+							<div class="block_send_cancel">
+								<ui-button
+									class="create_mail_btn"
+									id="create_mail_send"
+									bg="basic_interface/send.bmp"
+									hover="basic_interface/send_a.bmp"
+								></ui-button>
+								<ui-button
+									class="create_mail_btn"
+									id="create_mail_cancel"
+									bg="basic_interface/cancel2.bmp"
+									hover="basic_interface/cancel2_a.bmp"
+								></ui-button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+</div>

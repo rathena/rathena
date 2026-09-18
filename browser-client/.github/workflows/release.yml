@@ -1,0 +1,73 @@
+name: 'Generate multiple releases'
+
+concurrency:
+    group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
+
+on:
+    push:
+        branches: ['master']
+        tags:
+            - 'v*'
+    schedule:
+        - cron: '0 2 * * *'
+
+permissions:
+    security-events: write
+    contents: write
+
+jobs:
+    build:
+        name: 'Builds the package'
+        runs-on: ubuntu-latest
+        steps:
+            - name: 'Checkout the repository'
+              uses: actions/checkout@v5
+              with:
+                  ref: 'master'
+
+            - name: 'Setup NodeJS version'
+              uses: actions/setup-node@v6
+              with:
+                  node-version: 24
+
+            - name: 'Generate a package-lock.json file'
+              run: npm install --package-lock-only
+
+            - name: 'Install dependencies'
+              run: npm ci
+
+            - name: 'Compile the project'
+              run: npm run build
+
+            - name: 'Create npm package tarball'
+              run: |
+                  npm pack --silent --pack-destination "${{ github.workspace }}"
+
+            - name: 'Compact the dist/Web directory contents'
+              run: |
+                  test -d dist/Web
+                  cd dist/Web
+                  zip -r "${{ github.workspace }}/release-dist-web.zip" .
+
+            - name: 'Create release'
+              uses: softprops/action-gh-release@a06a81a03ee405af7f2048a818ed3f03bbf83c7b
+              if: github.ref_type == 'tag' && github.event_name == 'push'
+              with:
+                  prerelease: false
+                  tag_name: ${{ github.ref_name }}
+                  files: |
+                      *.tgz
+                      release-dist-web.zip
+                  generate_release_notes: true
+
+            - name: 'Create nightly release'
+              uses: softprops/action-gh-release@a06a81a03ee405af7f2048a818ed3f03bbf83c7b
+              if: github.event_name == 'schedule'
+              with:
+                  prerelease: true
+                  tag_name: nightly
+                  files: |
+                      *.tgz
+                      release-dist-web.zip
+

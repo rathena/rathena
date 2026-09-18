@@ -1,0 +1,162 @@
+:host {
+	width: 280px;
+	height: 180px;
+	top: 100px;
+	left: 100px;
+}
+
+#PetInformations {
+	position: absolute;
+	width: 280px;
+	height: 180px;
+	background-color: white;
+	border-radius: 5px;
+}
+
+#PetInformations .titlebar {
+	width: 100%;
+	height: 17px;
+	background-color: white;
+	background-repeat: repeat-x;
+	border-radius: 3px 3px 0px 0px;
+}
+#PetInformations .titlebar .base {
+	width: 11px;
+	height: 11px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+#PetInformations .titlebar .text {
+	text-shadow: 1px 1px white;
+	vertical-align: -2px;
+	white-space: nowrap;
+	display: inline-block;
+	width: 50px;
+	height: 13px;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+#PetInformations .titlebar .left {
+	margin-left: 3px;
+	float: left;
+}
+#PetInformations .titlebar .right {
+	float: right;
+	margin-right: 3px;
+}
+#PetInformations .titlebar .clear {
+	clear: both;
+}
+
+#PetInformations .content {
+	background-repeat: no-repeat;
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+#PetInformations .title_name {
+	position: absolute;
+	top: 5px;
+	left: 100px;
+}
+#PetInformations .name {
+	position: absolute;
+	top: 5px;
+	left: 150px;
+	border: none;
+	background-color: #eee;
+	margin: 0px;
+	width: 70px;
+	color: black;
+}
+
+#PetInformations .modify {
+	position: absolute;
+	background-color: grey;
+	top: 5px;
+	right: 5px;
+	border: 0;
+	width: 42px;
+	height: 20px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+
+#PetInformations .name.disabled {
+	color: black;
+	text-shadow: 1px 1px 0px #00ff00;
+	background-color: transparent;
+}
+#PetInformations .modify.disabled {
+	display: none;
+}
+
+#PetInformations .title_level {
+	position: absolute;
+	top: 30px;
+	left: 100px;
+}
+#PetInformations .level {
+	position: absolute;
+	top: 30px;
+	left: 150px;
+}
+
+#PetInformations .title_hunger {
+	position: absolute;
+	top: 55px;
+	left: 100px;
+}
+#PetInformations .hunger {
+	position: absolute;
+	top: 55px;
+	left: 150px;
+}
+
+#PetInformations .title_intimacy {
+	position: absolute;
+	top: 75px;
+	left: 100px;
+}
+#PetInformations .intimacy {
+	position: absolute;
+	top: 75px;
+	left: 150px;
+}
+
+#PetInformations .title_accessory {
+	position: absolute;
+	top: 100px;
+	left: 100px;
+}
+#PetInformations .accessory {
+	position: absolute;
+	top: 120px;
+	left: 100px;
+}
+#PetInformations .feeding {
+	position: absolute;
+	top: 140px;
+	left: 100px;
+	display: flex;
+	align-items: center;
+}
+#PetInformations .feeding .pet_auto_feed {
+	width: 10px;
+	height: 12px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	margin-left: 5px;
+}
+
+#PetInformations .command {
+	position: absolute;
+	top: 27px;
+	right: 5px;
+	width: 105px;
+}

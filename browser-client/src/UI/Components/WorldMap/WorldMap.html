@@ -1,0 +1,32 @@
+<div id="WorldMap">
+	<div class="border">
+		<div class="titlebar" data-background="basic_interface/titlebar_mid.bmp">
+			<div class="left">
+				<select name="mapList" id="WorldMaps"></select>
+			</div>
+			<div class="right">
+				<button class="base showlvl" data-background="checkbox_0.bmp" data-preload="checkbox_1.bmp"></button>
+				<span data-text="2209">Show Monsters</span>
+				<button
+					class="base togglemaps"
+					data-background="minimap/i_object_3.bmp"
+					data-hover="minimap/i_object_2.bmp"
+				></button>
+				<button
+					class="base close"
+					data-background="basic_interface/sys_close_off.bmp"
+					data-hover="basic_interface/sys_close_on.bmp"
+				></button>
+			</div>
+		</div>
+
+		<div class="map">
+			<div class="content"></div>
+		</div>
+	</div>
+	<div id="map-tooltip" style="display: none">
+		<div class="tooltip-img"></div>
+		<div class="tooltip-mapname"></div>
+		<div class="tooltip-mapid"></div>
+	</div>
+</div>

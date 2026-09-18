@@ -1,0 +1,224 @@
+:host {
+	width: 576px;
+	height: 358px;
+}
+
+#CharSelectV3 {
+	position: absolute;
+	width: 576px;
+	height: 358px;
+}
+
+/** Box **/
+#CharSelectV3 .box_select {
+	position: absolute;
+	width: 134px;
+	height: 144px;
+	top: 30px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+#CharSelectV3 canvas {
+	position: absolute;
+	top: 35px;
+}
+#CharSelectV3 .slot1 {
+	left: 57px;
+}
+#CharSelectV3 .slot2 {
+	left: 220px;
+}
+#CharSelectV3 .slot3 {
+	left: 386px;
+}
+
+#CharSelectV3 .make1 {
+	position: absolute;
+	top: 84px;
+	left: 107px;
+	width: 32px;
+	height: 32px;
+}
+#CharSelectV3 .make2 {
+	position: absolute;
+	top: 84px;
+	left: 270px;
+	width: 32px;
+	height: 32px;
+}
+#CharSelectV3 .make3 {
+	position: absolute;
+	top: 84px;
+	left: 436px;
+	width: 32px;
+	height: 32px;
+}
+
+/** Arrow **/
+#CharSelectV3 .arrow {
+	position: absolute;
+	top: 95px;
+	width: 14px;
+	height: 20px;
+}
+#CharSelectV3 .arrow.left {
+	left: 40px;
+}
+#CharSelectV3 .arrow.right {
+	right: 40px;
+}
+
+/** Slot info **/
+#CharSelectV3 .slotinfo {
+	position: absolute;
+	top: 180px;
+	right: 40px;
+	height: 20px;
+	display: block;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+#CharSelectV3 .slotinfo .number {
+	/*color: #58709e;
+    font-weight: bold;*/
+	margin-right: 10px;
+}
+#CharSelectV3 .slotinfo .content {
+	color: #555;
+	top: 6px;
+	right: 8px;
+}
+
+/** Page info **/
+#CharSelectV3 .pageinfo {
+	position: absolute;
+	top: 180px;
+}
+
+#CharSelectV3 .pageinfo .pagebtn .btn_pageinfo {
+	border: 0;
+	width: 8px;
+	height: 8px;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}
+
+/** Characters infos **/
+#CharSelectV3 .charinfo {
+	position: absolute;
+	width: 285px;
+	top: 204px;
+	left: 16px;
+}
+#CharSelectV3 .charinfo div {
+	position: absolute;
+	width: 90px;
+	height: 13px;
+}
+#CharSelectV3 .charinfo .name {
+	left: 95px;
+	top: -4px;
+	white-space: nowrap;
+}
+#CharSelectV3 .charinfo .job {
+	left: 95px;
+	top: 12px;
+}
+#CharSelectV3 .charinfo .lvl {
+	left: 95px;
+	top: 30px;
+}
+#CharSelectV3 .charinfo .exp {
+	left: 95px;
+	top: 47px;
+}
+#CharSelectV3 .charinfo .hp {
+	left: 95px;
+	top: 64px;
+}
+#CharSelectV3 .charinfo .sp {
+	left: 95px;
+	top: 81px;
+}
+#CharSelectV3 .charinfo .map {
+	left: 95px;
+	top: 104px;
+	width: 238px;
+}
+#CharSelectV3 .charinfo .str {
+	left: 250px;
+	top: -4px;
+}
+#CharSelectV3 .charinfo .agi {
+	left: 250px;
+	top: 12px;
+}
+#CharSelectV3 .charinfo .vit {
+	left: 250px;
+	top: 30px;
+}
+#CharSelectV3 .charinfo .int {
+	left: 250px;
+	top: 47px;
+}
+#CharSelectV3 .charinfo .dex {
+	left: 250px;
+	top: 64px;
+}
+#CharSelectV3 .charinfo .luk {
+	left: 250px;
+	top: 81px;
+}
+
+/** Buttons **/
+#CharSelectV3 .btns {
+	position: absolute;
+	bottom: 4px;
+	width: 100%;
+	height: 20px;
+}
+#CharSelectV3 .btn {
+	position: absolute;
+	width: 42px;
+	height: 20px;
+}
+
+#CharSelectV3 .ok,
+#CharSelectV3 .make {
+	right: 50px;
+}
+#CharSelectV3 .cancel {
+	right: 4px;
+}
+#CharSelectV3 .delete {
+	left: 4px;
+	width: 67px;
+}
+#CharSelectV3 .canceldelete {
+	left: 50px;
+	width: 67px;
+}
+#CharSelectV3 .finaldelete {
+	left: 4px;
+}
+#CharSelectV3 .timedelete {
+	position: absolute;
+	height: 20px;
+	width: 120px;
+	top: 75px;
+}
+#CharSelectV3 .timedelete.waitdelete {
+	color: blue;
+}
+#CharSelectV3 .timedelete.candelete {
+	color: red;
+}
+#CharSelectV3 .timedelete.slot1 {
+	left: 63px;
+}
+#CharSelectV3 .timedelete.slot2 {
+	left: 227px;
+}
+#CharSelectV3 .timedelete.slot3 {
+	left: 389px;
+}

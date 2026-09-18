@@ -1,0 +1,38 @@
+<div id="SoundOption">
+	<div class="titlebar" data-background="basic_interface/titlebar_mid.bmp">
+		<div class="left">
+			<button
+				class="base"
+				data-background="basic_interface/sys_base_off.bmp"
+				data-hover="basic_interface/sys_base_on.bmp"
+			></button>
+			<span class="text" data-text="1485">Sound Settings</span>
+		</div>
+		<div class="right">
+			<button
+				class="base close"
+				data-background="basic_interface/sys_close_off.bmp"
+				data-hover="basic_interface/sys_close_on.bmp"
+			></button>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="panel">
+		<table>
+			<tr>
+				<td data-text="1495">BGM</td>
+				<td>
+					<input class="bgm" type="range" value="50" max="100" min="0" step="1" />
+					<input type="checkbox" class="bgm_state" />on
+				</td>
+			</tr>
+			<tr>
+				<td data-text="1496">Effect</td>
+				<td>
+					<input class="sound" type="range" value="50" max="100" min="0" step="1" />
+					<input type="checkbox" class="sound_state" />on
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>

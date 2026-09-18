@@ -1,0 +1,16 @@
+:host {
+	width: 270px;
+	height: 260px;
+}
+
+#SlotMachine {
+	position: absolute;
+	width: 270px;
+	height: 260px;
+}
+
+#SlotMachine canvas {
+	display: block;
+	width: 270px;
+	height: 260px;
+}

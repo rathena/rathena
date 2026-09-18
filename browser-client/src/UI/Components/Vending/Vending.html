@@ -1,0 +1,57 @@
+<div id="vending">
+	<div class="InputWindow">
+		<div class="titlebar">
+			<ui-image src="basic_interface/titlebar_mid.bmp"></ui-image>
+			<div class="text">
+				<span class="WinSell"><ui-text msg="232">Available Items for Vending</ui-text></span>
+				<span class="WinBuy"><ui-text msg="1733">Available Items for Buying</ui-text></span>
+			</div>
+		</div>
+		<div class="container">
+			<div class="overlay"></div>
+			<div class="content available">
+				<ui-image src="basic_interface/itemwin_mid.bmp"></ui-image>
+			</div>
+		</div>
+		<div class="footer">
+			<ui-image src="basic_interface/btnbar_mid2.bmp"></ui-image>
+			<ui-button class="extend" bg="btn_resize.bmp"></ui-button>
+		</div>
+	</div>
+	<div class="OutputWindow">
+		<div class="titlebar">
+			<ui-image src="basic_interface/titlebar_mid.bmp"></ui-image>
+			<div class="text">
+				<span class="WinSell"><ui-text msg="224">Vending</ui-text></span>
+				<span class="WinBuy"><ui-text msg="1720">Buying</ui-text></span>
+			</div>
+		</div>
+		<div class="container">
+			<div class="nstore"><ui-text msg="407">Name</ui-text></div>
+			<input class="shopname" type="text" value="" maxlength="36" /><br />
+			<div class="content add_shop">
+				<ui-image src="basic_interface/itemwin_mid.bmp"></ui-image>
+			</div>
+		</div>
+		<div class="footer WinBuy">
+			<ui-image src="basic_interface/btnbar_mid2.bmp"></ui-image>
+			<span class="WinBuy zenyLabel"><ui-text msg="2464">Zeny</ui-text></span>
+			<span class="WinBuy zenySpan">0</span>
+			<span class="WinBuy weightLabel">Weigth:</span>
+			<span class="WinBuy weightSpan">0/0</span>
+		</div>
+		<div class="footer">
+			<ui-image src="basic_interface/btnbar_mid2.bmp"></ui-image>
+			<div class="limit WinBuy"><ui-text msg="1723">Purchase Zeny Limit</ui-text></div>
+			<input class="limitZeny WinBuy" type="text" value="" maxlength="36" /><br />
+			<div class="zeny WinBuy"><ui-text msg="2464">Zeny</ui-text></div>
+			<ui-button class="btn sell" bg="btn_ok.bmp" hover="btn_ok_a.bmp" down="btn_ok_b.bmp"></ui-button>
+			<ui-button
+				class="btn cancel"
+				bg="btn_cancel.bmp"
+				hover="btn_cancel_a.bmp"
+				down="btn_cancel_b.bmp"
+			></ui-button>
+		</div>
+	</div>
+</div>

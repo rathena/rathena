@@ -1,0 +1,31 @@
+name: test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # Not `npm ci`: package-lock.json is gitignored, so there is no lockfile to install from.
+      # The ESRGAN plugin is an optionalDependency fetched from GitHub and is not needed here.
+      - name: Install dependencies
+        run: npm install --omit=optional
+
+      - name: Syntax check every source file
+        run: |
+          set -e
+          for f in $(git ls-files '*.js' '*.mjs'); do node --check "$f"; done
+
+      # The suite needs no Ragnarok client: the GRF fixtures under tests/fixtures total under 2 KB.
+      - name: Run tests
+        run: npm test

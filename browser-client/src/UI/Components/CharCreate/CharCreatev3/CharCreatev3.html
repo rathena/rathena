@@ -1,0 +1,134 @@
+<div id="charcreate_v3">
+	<ui-image src="make_character/bg_create_character.bmp"></ui-image>
+	<ui-button
+		class="button close"
+		bg="basic_interface/sys_close_off.bmp"
+		hover="basic_interface/sys_close_on.bmp"
+	></ui-button>
+
+	<div class="race_select">
+		<div class="race human">
+			<input type="radio" name="race" id="human" checked class="radio" />
+			<label
+				for="human"
+				class="label"
+				data-background="make_character/img_human_off.bmp"
+				data-hover="make_character/img_human_on.bmp"
+				data-down="make_character/img_human_on.bmp"
+			>
+				<div class="title"></div>
+				<div class="desc"></div>
+				<div class="jobs"></div>
+				<div class="chargen">
+					<canvas id="canvas_human" width="65" height="110" style="pointer-events: none"></canvas>
+				</div>
+			</label>
+		</div>
+
+		<div class="race doram">
+			<input type="radio" name="race" id="doram" class="radio" />
+			<label
+				for="doram"
+				class="label"
+				data-background="make_character/img_doram_off.bmp"
+				data-hover="make_character/img_doram_on.bmp"
+				data-down="make_character/img_doram_on.bmp"
+			>
+				<div class="title"></div>
+				<div class="desc"></div>
+				<div class="jobs"></div>
+				<div class="chargen">
+					<canvas id="canvas_doram" width="65" height="110" style="pointer-events: none"></canvas>
+				</div>
+			</label>
+		</div>
+	</div>
+	<div id="style">
+		<div class="model">
+			<canvas id="canvas_model" width="65" height="110" style="pointer-events: none"></canvas>
+		</div>
+
+		<ui-button
+			class="rot_left"
+			bg="make_character/chr_arrow_rotate_l_out.bmp"
+			hover="make_character/chr_arrow_rotate_l_over.bmp"
+			down="make_character/chr_arrow_rotate_l_press.bmp"
+		></ui-button>
+		<ui-button
+			class="rot_right"
+			bg="make_character/chr_arrow_rotate_r_out.bmp"
+			hover="make_character/chr_arrow_rotate_r_over.bmp"
+			down="make_character/chr_arrow_rotate_r_press.bmp"
+		></ui-button>
+
+		<input type="text" id="char_name" maxlength="24" />
+
+		<div class="category gender">
+			<div
+				id="male_container"
+				class="button container left"
+				data-background="make_character/btn_gender_m_press.bmp"
+			>
+				<input type="radio" name="gender" id="male" checked class="gender_button radio" />
+				<label
+					for="male"
+					class="button male"
+					data-hover="make_character/btn_gender_m_over.bmp"
+					data-down="make_character/btn_gender_m_press.bmp"
+				>
+				</label>
+			</div>
+			<div
+				id="female_container"
+				class="button container right"
+				data-background="make_character/btn_gender_f_out.bmp"
+			>
+				<input type="radio" name="gender" id="female" class="gender_button radio" />
+				<label
+					for="female"
+					class="button female"
+					data-hover="make_character/btn_gender_f_over.bmp"
+					data-down="make_character/btn_gender_f_press.bmp"
+				>
+				</label>
+			</div>
+		</div>
+
+		<div class="category hairstyle">
+			<ui-button
+				class="button left"
+				bg="make_character/arrow_box_l_out.bmp"
+				hover="make_character/arrow_box_l_over.bmp"
+				down="make_character/arrow_box_l_press.bmp"
+			></ui-button>
+			<ui-button
+				class="button right"
+				bg="make_character/arrow_box_r_out.bmp"
+				hover="make_character/arrow_box_r_over.bmp"
+				down="make_character/arrow_box_r_press.bmp"
+			></ui-button>
+		</div>
+
+		<div class="category haircolor">
+			<ui-button
+				class="button left"
+				bg="make_character/arrow_box_l_out.bmp"
+				hover="make_character/arrow_box_l_over.bmp"
+				down="make_character/arrow_box_l_press.bmp"
+			></ui-button>
+			<ui-button
+				class="button right"
+				bg="make_character/arrow_box_r_out.bmp"
+				hover="make_character/arrow_box_r_over.bmp"
+				down="make_character/arrow_box_r_press.bmp"
+			></ui-button>
+		</div>
+	</div>
+
+	<ui-button
+		class="button make"
+		bg="make_character/btn_create_out.bmp"
+		hover="make_character/btn_create_over.bmp"
+		down="make_character/btn_create_press.bmp"
+	></ui-button>
+</div>

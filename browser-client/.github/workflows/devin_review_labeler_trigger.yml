@@ -1,0 +1,18 @@
+name: Devin Review Labeler Trigger
+# Review events on PRs from forks run with a read-only GITHUB_TOKEN, so this
+# workflow does nothing itself; its completion fires the `workflow_run` trigger
+# of devin_review_labeler.yml, which runs with write access in the base repo.
+on:
+    pull_request_review:
+        types: [submitted, edited, dismissed]
+    pull_request_review_comment:
+        types: [created, edited, deleted]
+permissions: {}
+concurrency:
+    group: devin-label-trigger-${{ github.event.pull_request.number }}
+    cancel-in-progress: true
+jobs:
+    trigger:
+        runs-on: ubuntu-latest
+        steps:
+            - run: echo "relabel PR ${{ github.event.pull_request.number }}"

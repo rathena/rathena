@@ -1,0 +1,39 @@
+:host {
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+#ContextMenu {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+#ContextMenu .menu {
+	position: absolute;
+	background-color: white;
+	border-radius: 5px;
+	padding: 2px;
+}
+
+#ContextMenu .menu hr {
+	background-color: #cecece;
+	height: 1px;
+	border: none;
+	margin: 2px;
+}
+
+#ContextMenu .menu div {
+	color: black;
+	white-space: nowrap;
+	padding: 1px;
+	height: 14px;
+}
+
+#ContextMenu .menu div:hover {
+	background-color: #739cef;
+}

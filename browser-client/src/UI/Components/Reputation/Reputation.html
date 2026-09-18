@@ -1,0 +1,65 @@
+<div id="Reputation">
+	<div class="titlebar">
+		<ui-image src="basic_interface/titlebar_mid.bmp"></ui-image>
+		<div class="left">
+			<ui-button
+				class="base"
+				bg="basic_interface/sys_base_off.bmp"
+				hover="basic_interface/sys_base_on.bmp"
+			></ui-button>
+			<ui-text class="text" msg="3827"></ui-text>
+		</div>
+		<div class="right">
+			<ui-button
+				class="base close"
+				bg="basic_interface/sys_close_off.bmp"
+				hover="basic_interface/sys_close_on.bmp"
+			></ui-button>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="overall_container">
+		<div class="header">
+			<div class="select-wrapper">
+				<select id="repute_groups" class="rep_group_selector">
+					<option value="all" data-text="3829"></option>
+				</select>
+				<ui-button
+					class="select-arrow"
+					bg="basic_interface/txtbox_btn_a.bmp"
+					hover="basic_interface/txtbox_btn_b.bmp"
+					down="basic_interface/txtbox_btn_c.bmp"
+				></ui-button>
+			</div>
+			<div class="search_wrapper">
+				<input class="rep_group_searchbar" type="text" />
+				<ui-button
+					class="search"
+					bg="reputation/btn_search.bmp"
+					hover="reputation/btn_search_over.bmp"
+					down="reputation/btn_search_press.bmp"
+				></ui-button>
+			</div>
+			<div class="rep_group_total_points_wrapper">
+				<div class="rep_group_text">GROUP:</div>
+				<div class="rep_indicator"></div>
+				<div class="rep_group_total_points_value"></div>
+			</div>
+		</div>
+		<div class="content"></div>
+		<div class="paginator">
+			<ui-button class="page_prev" bg="reputation/arrow_prev.bmp"></ui-button>
+			<span class="page_text">1 / 1</span>
+			<ui-button class="page_next" bg="reputation/arrow_next.bmp"></ui-button>
+		</div>
+		<div class="footer">
+			<ui-image src="basic_interface/btnbar_mid2.bmp"></ui-image>
+			<ui-button
+				class="big_btn_close"
+				bg="basic_interface/btn_close.bmp"
+				hover="basic_interface/btn_close_a.bmp"
+				down="basic_interface/btn_close_b.bmp"
+			></ui-button>
+		</div>
+	</div>
+</div>

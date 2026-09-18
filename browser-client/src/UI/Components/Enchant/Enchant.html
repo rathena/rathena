@@ -1,0 +1,109 @@
+<div id="Enchant">
+	<div class="container" data-background="enchantui/bg_enchantui.bmp">
+		<div class="titlebar">
+			<div class="left">
+				<span class="text">Enchant</span>
+			</div>
+			<div class="right">
+				<button
+					class="base close"
+					data-background="basic_interface/sys_close_off.bmp"
+					data-hover="basic_interface/sys_close_on.bmp"
+				></button>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="overlay"></div>
+		<div class="panel">
+			<div class="left_panel">
+				<div class="item_list"></div>
+			</div>
+			<div class="main_panel">
+				<div class="subpage" data-background="enchantui/bg_subpage.bmp"></div>
+				<div class="action_tabs">
+					<button class="tab" data-action="random">Normal</button>
+					<button class="tab" data-action="perfect">Perfect</button>
+					<button class="tab" data-action="upgrade">Upgrade</button>
+					<button class="tab" data-action="reset">Reset</button>
+				</div>
+				<div class="action_content">
+					<div class="action_section random_section">
+						<div class="action_hint">Uses the next available slot.</div>
+					</div>
+					<div class="action_section perfect_section">
+						<select class="perfect_select"></select>
+					</div>
+					<div class="action_section upgrade_section">
+						<select class="upgrade_select"></select>
+						<div class="upgrade_result"></div>
+					</div>
+					<div class="action_section reset_section">
+						<div class="action_hint">Resets all enchant slots.</div>
+					</div>
+				</div>
+				<div class="slot_board">
+					<div class="preview_item"></div>
+					<div class="slot_list">
+						<div
+							class="slot_entry empty"
+							data-slot="0"
+							data-background="enchantui/btn_socket_out.bmp"
+							data-hover="enchantui/btn_socket_over.bmp"
+							data-active="enchantui/btn_socket_select.bmp"
+						>
+							<div class="slot_icon"></div>
+						</div>
+						<div
+							class="slot_entry empty"
+							data-slot="1"
+							data-background="enchantui/btn_socket_out.bmp"
+							data-hover="enchantui/btn_socket_over.bmp"
+							data-active="enchantui/btn_socket_select.bmp"
+						>
+							<div class="slot_icon"></div>
+						</div>
+						<div
+							class="slot_entry empty"
+							data-slot="2"
+							data-background="enchantui/btn_socket_out.bmp"
+							data-hover="enchantui/btn_socket_over.bmp"
+							data-active="enchantui/btn_socket_select.bmp"
+						>
+							<div class="slot_icon"></div>
+						</div>
+						<div
+							class="slot_entry empty"
+							data-slot="3"
+							data-background="enchantui/btn_socket_out.bmp"
+							data-hover="enchantui/btn_socket_over.bmp"
+							data-active="enchantui/btn_socket_select.bmp"
+						>
+							<div class="slot_icon"></div>
+						</div>
+					</div>
+					<div class="slot_markers">
+						<span class="marker tl"></span>
+						<span class="marker tr"></span>
+						<span class="marker bl"></span>
+						<span class="marker br"></span>
+					</div>
+				</div>
+				<div class="enchant_list"></div>
+				<div class="materials_panel">
+					<div class="material_list"></div>
+				</div>
+				<div class="tax_panel">
+					<div class="cost_panel">
+						<div class="zeny_label">TAX</div>
+						<div class="zeny_cost"></div>
+					</div>
+					<button class="action_btn"></button>
+				</div>
+			</div>
+			<div class="log_panel">
+				<div class="caution"></div>
+				<div class="status"></div>
+			</div>
+		</div>
+	</div>
+</div>

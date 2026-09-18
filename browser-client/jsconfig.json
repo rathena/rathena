@@ -1,0 +1,22 @@
+{
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"App/*": ["src/App/*"],
+			"Audio/*": ["src/Audio/*"],
+			"Controls/*": ["src/Controls/*"],
+			"Core/*": ["src/Core/*"],
+			"DB/*": ["src/DB/*"],
+			"Engine/*": ["src/Engine/*"],
+			"Loaders/*": ["src/Loaders/*"],
+			"Network/*": ["src/Network/*"],
+			"Plugins/*": ["src/Plugins/*"],
+			"Preferences/*": ["src/Preferences/*"],
+			"Renderer/*": ["src/Renderer/*"],
+			"UI/*": ["src/UI/*"],
+			"Utils/*": ["src/Utils/*"],
+			"Vendors/*": ["src/Vendors/*"]
+		}
+	},
+	"include": ["src/**/*", "tests/**/*"]
+}

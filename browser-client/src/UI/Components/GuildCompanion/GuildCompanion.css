@@ -1,0 +1,95 @@
+:host {
+	top: 160px;
+	left: 260px;
+	z-index: 100;
+}
+
+#GuildCompanion {
+	position: relative;
+	font-family: Arial, sans-serif;
+	font-size: 12px;
+	white-space: nowrap;
+}
+
+#GuildCompanion .win {
+	display: inline-block;
+	vertical-align: top;
+	background-color: white;
+	border: 1px solid #a5a5a5;
+	border-radius: 3px;
+	margin-right: 6px;
+}
+
+#GuildCompanion .win.namebox {
+	display: none;
+}
+#GuildCompanion .win.namebox.visible {
+	display: inline-block;
+}
+
+#GuildCompanion .win.companion.hidden {
+	display: none;
+}
+
+#GuildCompanion .titlebar {
+	height: 17px;
+	line-height: 17px;
+	background-color: white;
+	background-repeat: repeat-x;
+	border-radius: 3px 3px 0 0;
+	font-size: 11px;
+	font-weight: bold;
+	padding-left: 6px;
+}
+#GuildCompanion .titlebar .title {
+	vertical-align: middle;
+}
+#GuildCompanion .titlebar .base {
+	width: 11px;
+	height: 11px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+#GuildCompanion .titlebar .right {
+	float: right;
+	margin-right: 3px;
+}
+#GuildCompanion .titlebar .clear {
+	clear: both;
+}
+
+#GuildCompanion .body {
+	padding: 10px 12px 8px 12px;
+}
+
+#GuildCompanion .companion .msg {
+	margin-bottom: 12px;
+}
+
+#GuildCompanion .namebox .label {
+	margin-bottom: 4px;
+}
+#GuildCompanion .namebox input {
+	border: 1px solid #c1c6c2;
+	background-color: #efefef;
+	width: 150px;
+	height: 16px;
+	margin-bottom: 12px;
+}
+
+#GuildCompanion .btns {
+	text-align: center;
+}
+#GuildCompanion .namebox .btns {
+	text-align: right;
+}
+
+#GuildCompanion .btn {
+	font-family: Arial, sans-serif;
+	font-size: 11px;
+	padding: 2px 10px;
+	margin: 0 3px;
+	cursor: pointer;
+}

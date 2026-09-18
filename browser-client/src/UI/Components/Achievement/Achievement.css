@@ -1,0 +1,612 @@
+:host {
+	width: 750px;
+	height: 468px;
+	top: 100px;
+	left: 100px;
+	position: absolute;
+	color: #666;
+	font-family: inherit;
+	font-size: 11px;
+}
+
+/* Background layers */
+.bg-summary {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 649px;
+	height: 405px;
+	pointer-events: none;
+	background-size: 100% 100%;
+}
+
+.bg-list {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 649px;
+	height: 405px;
+	background-size: 100% 100%;
+	pointer-events: none;
+	display: none;
+}
+
+/* Titlebar */
+.titlebar {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 18px;
+}
+
+.titlebar .title {
+	position: absolute;
+	top: 3px;
+	left: 20px;
+	color: #000;
+	font-weight: bold;
+}
+
+.titlebar {
+	width: 750px;
+	height: 17px;
+}
+.titlebar .corner {
+	position: absolute;
+	width: 12px;
+	height: 17px;
+}
+.titlebar .corner.left {
+	top: 0px;
+	left: 0px;
+}
+.titlebar .corner.right {
+	top: 0px;
+	right: 0px;
+}
+.titlebar .center {
+	position: absolute;
+	top: 0px;
+	left: 12px;
+	width: 726px;
+	height: 17px;
+}
+.titlebar .title {
+	position: absolute;
+	top: 2px;
+	left: 16px;
+	font-size: 13px;
+}
+.titlebar .btn-left {
+	position: absolute;
+	top: 3px;
+	left: 4px;
+	width: 11px;
+	height: 11px;
+	border: none;
+	background: none;
+}
+.titlebar .btn-right {
+	position: absolute;
+	top: 3px;
+	right: 2px;
+	width: 11px;
+	height: 11px;
+	border: none;
+	background: none;
+}
+
+/* Header Area */
+.header {
+	position: absolute;
+	top: 17px;
+	left: 0;
+	width: 750px;
+	height: 46px;
+}
+
+.header .rank-badge {
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	width: 35px;
+	height: 35px;
+	text-align: center;
+	line-height: 40px;
+	font-weight: bold;
+	color: #7b4f2c;
+}
+
+.header .overall-points {
+	position: absolute;
+	top: 10px;
+	left: 325px;
+	width: 100px;
+	text-align: center;
+	font-weight: bold;
+	color: #000;
+}
+
+.header .rank-progress {
+	position: absolute;
+	top: 15px;
+	left: 45px;
+	width: 80px;
+}
+
+.header .rank-progress .progress-text {
+	text-align: right;
+	font-size: 10px;
+	margin-bottom: 1px;
+	color: #000;
+}
+
+.header .rank-progress .bar-bg {
+	width: 100%;
+	height: 7px;
+	background: #fff;
+	border: 1px solid #97b2dd;
+}
+
+.header .rank-progress .bar-fill {
+	height: 100%;
+	background: #5b85d9;
+}
+
+.header .cat-progress .cat-image {
+	position: absolute;
+	top: -13px;
+	left: -40px;
+	width: 39px;
+	height: 40px;
+}
+
+.js-cat-name {
+	color: #3030a4;
+}
+
+.header .cat-progress {
+	position: absolute;
+	top: 15px;
+	right: 15px;
+	width: 140px;
+}
+
+.header .cat-progress .cat-text {
+	display: flex;
+	justify-content: space-between;
+	font-weight: bold;
+	font-size: 9px;
+	color: #000;
+	margin-bottom: 2px;
+}
+
+.header .cat-progress .bar-bg {
+	width: 100%;
+	height: 7px;
+	background: #fff;
+	border: 1px solid #97b2dd;
+}
+
+.header .cat-progress .bar-fill {
+	height: 100%;
+	background: #5b85d9;
+}
+
+.header .filter-group {
+	position: absolute;
+	top: 10px;
+	left: 160px;
+}
+
+.header .filter-group > div {
+	margin-bottom: 3px;
+	cursor: pointer;
+}
+
+.header .filter-group ui-image {
+	vertical-align: middle;
+	margin-right: 5px;
+}
+
+.header .filter-group .radio-container {
+	display: flex;
+	align-items: center;
+	gap: 2px;
+}
+
+.header .filter-group .radio-container .radio {
+	width: 12px;
+	height: 12px;
+}
+
+.header .filter-group .radio-container ui-image {
+	width: 12px;
+	height: 12px;
+}
+
+/* Tabs Sidebar */
+.sidebar {
+	position: absolute;
+	top: 60px;
+	left: 0;
+	width: 100px;
+	height: 405px;
+}
+
+.sidebar .major-tab {
+	position: relative;
+	height: 34px;
+	line-height: 40px;
+	text-align: left;
+	padding-left: 15px;
+	color: #6268b0;
+	border-bottom: 1px solid #aaa;
+}
+
+.sidebar .major-tab.active {
+	color: #3030a4;
+	font-weight: bold;
+}
+
+/* Background for specific tabs using the tab bg */
+.sidebar .tab-bg {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100px;
+	height: 40px;
+	z-index: -1;
+}
+
+.sidebar .minor-tabs {
+	background: #f9f9f9;
+	padding-bottom: 5px;
+	max-height: 75px; /* approx 3 tabs (25px each) */
+	overflow-y: auto;
+}
+
+.sidebar .minor-tab {
+	padding: 5px 0 5px 25px;
+	cursor: pointer;
+	color: #6d74be;
+	border-bottom: 1px dashed #bebebe;
+	font-size: 9px;
+}
+
+.sidebar .minor-tab:hover,
+.sidebar .minor-tab.active {
+	color: #3030a4;
+	background: #eef3fb;
+}
+
+/* Main Area - Overview Pane */
+.pane-overview {
+	position: absolute;
+	top: 60px;
+	left: 100px;
+	width: 648px;
+	height: 405px;
+	background-color: #fff;
+}
+
+.pane-overview .category-total {
+	position: absolute;
+	top: 37px;
+	left: 45px;
+	width: 555px;
+}
+
+.pane-overview .category-total .category-total-text .name {
+	margin-left: 35px;
+	margin-top: -10px;
+	margin-bottom: 12px;
+}
+
+.pane-overview .category-general {
+	position: absolute;
+	top: 110px;
+	left: 44px;
+	width: 252px;
+}
+
+.pane-overview .category-adventure {
+	position: absolute;
+	top: 110px;
+	left: 349px;
+	width: 252px;
+}
+
+.pane-overview .category-battle {
+	position: absolute;
+	top: 160px;
+	left: 44px;
+	width: 252px;
+}
+
+.pane-overview .category-quest {
+	position: absolute;
+	top: 160px;
+	left: 349px;
+	width: 252px;
+}
+
+.pane-overview .category-memorial {
+	position: absolute;
+	top: 210px;
+	left: 44px;
+	width: 252px;
+}
+
+.pane-overview .category-feat {
+	position: absolute;
+	top: 210px;
+	left: 349px;
+	width: 252px;
+}
+
+.pane-overview .category-gauge .name {
+	font-weight: bold;
+	margin-bottom: 2px;
+	float: left;
+}
+
+.name {
+	margin-left: 35px;
+}
+
+.pane-overview .category-gauge .progress-text {
+	float: right;
+	color: #912c2c;
+	font-size: 10px;
+}
+
+.pane-overview .category-gauge .bar-bg {
+	clear: both;
+	width: 100%;
+	height: 9px;
+	background: #fff;
+	border: 1px solid #97b2dd;
+}
+
+.pane-overview .category-gauge .bar-fill {
+	height: 100%;
+	background: #8aaaff;
+}
+
+/* Recent completed achievements in Overview */
+.pane-overview .recent-achievements {
+	position: absolute;
+	top: 295px;
+	left: 10px;
+	width: 625px;
+}
+
+.pane-overview .recent-title {
+	color: #2e519c;
+	margin-bottom: 5px;
+}
+
+.pane-overview .recent-items {
+	display: flex;
+	flex-direction: row;
+	gap: 5px;
+}
+
+/* Main Area - List/Detail Pane */
+.pane-listd {
+	position: absolute;
+	top: 60px;
+	left: 100px;
+	width: 648px;
+	height: 403px;
+	display: none;
+	background-color: #fff;
+}
+
+.ach-list-container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 319px;
+	height: 403px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+.ach-list {
+	width: 309px;
+}
+
+.ach-item {
+	height: 81px;
+	position: relative;
+	cursor: pointer;
+	width: 309px;
+}
+
+.ach-item-overview {
+	border: 1px solid #dae0ef;
+}
+
+.ach-item.selected {
+	background: rgba(200, 220, 255, 0.4);
+}
+
+.ach-item .icon {
+	position: absolute;
+	top: 4px;
+	left: 10px;
+	width: 38px;
+	height: 32px;
+}
+
+.ach-item .title {
+	position: absolute;
+	top: 15px;
+	left: 60px;
+	color: #2e519c;
+	width: 150px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.ach-item .desc {
+	position: absolute;
+	top: 55px;
+	left: 10px;
+	color: #002d8d;
+	font-size: 9px;
+	width: 140px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.ach-item .reward-icon {
+	position: absolute;
+	top: 10px;
+	right: 40px;
+	width: 20px;
+	height: 30px;
+	text-align: center;
+}
+
+.ach-item .reward-pts {
+	position: absolute;
+	top: 7px;
+	right: 15px;
+	width: 30px;
+	height: 23px;
+	font-weight: bold;
+	color: #555;
+	font-size: 10px;
+	text-align: center;
+	line-height: 23px;
+}
+
+.ach-item .date-completed {
+	position: absolute;
+	top: 50px;
+	right: 10px;
+	color: #8b3737;
+	font-size: 7px;
+	width: 30px;
+	height: 23px;
+	text-align: center;
+	line-height: 23px;
+}
+
+/* Overlay */
+.overlay {
+	position: absolute;
+	display: none;
+	white-space: nowrap;
+	z-index: 900;
+	height: 13px;
+	padding: 5px;
+	background: rgba(0, 0, 0, 0.7);
+	color: white;
+	text-shadow: 1px 1px black;
+}
+
+/* Detail view (right side) */
+.detail-view {
+	position: absolute;
+	top: 0;
+	right: 0px;
+	width: 328px;
+	height: 405px;
+	overflow-y: auto;
+	background-size: 100% 100%;
+	padding-left: 12px;
+	font-size: 10px;
+}
+
+.detail-view .d-title {
+	font-weight: bold;
+	color: #2e519c;
+	height: 35px;
+	line-height: 35px;
+	align-items: center;
+	display: flex;
+}
+
+.detail-view .d-stamp {
+	position: absolute;
+	top: 5px;
+	right: 10px;
+	width: 64px;
+	height: 54px;
+}
+
+.detail-view .d-desc {
+	color: #6699ff;
+	height: 57px;
+	width: 200px;
+}
+
+.detail-view .d-goals {
+	padding-left: 10px;
+	padding-top: 10px;
+	height: 190px;
+	color: #2e519c;
+}
+
+.detail-view .d-goal-item {
+	margin-bottom: 4px;
+}
+
+.detail-view .d-goal-item::before {
+	content: '◆';
+	color: #2e519c;
+	margin-right: 5px;
+}
+
+/* Reward Area */
+.d-reward {
+	display: flex;
+	flex-direction: row;
+	gap: 5px;
+	width: 100%;
+	height: 80px;
+	margin-left: -10px;
+	justify-content: center;
+	align-items: center;
+}
+
+.d-rewards-slot {
+	width: 62px;
+	height: 62px;
+	position: relative;
+}
+
+.d-reward-item {
+	position: absolute;
+	top: 19px;
+	left: 19px;
+	width: 24px;
+	height: 24px;
+	background-repeat: no-repeat;
+	pointer-events: none;
+}
+
+.detail-view .d-claim-btn {
+	position: absolute;
+	bottom: 10px;
+	left: 90px;
+	width: 148px;
+	height: 20px;
+	text-align: center;
+}
+
+/* Scrollbar area */
+.scrollbar {
+	position: absolute;
+	top: 0;
+	right: 2px;
+	width: 15px;
+	height: 320px;
+}

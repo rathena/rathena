@@ -1,0 +1,211 @@
+# syntax=docker/dockerfile:1
+# Supports linux/amd64 and linux/arm64 via multi-platform builds.
+#
+# roBrowserLegacy - two image targets:
+#
+#   slim  - roBrowserLegacy + remote-client server only (~400MB)
+#           Game assets must be mounted at runtime.
+#           docker run -d --network host \
+#             -v /path/to/kRO/data.grf:/app/resources/data.grf:ro \
+#             -v /path/to/kRO/rdata.grf:/app/resources/rdata.grf:ro \
+#             -v /path/to/kRO/DATA.INI:/app/resources/DATA.INI:ro \
+#             -v /path/to/kRO/BGM:/app/BGM:ro \
+#             -v /path/to/Config.local.js:/robrowser/Config.local.js:ro \
+#             ghcr.io/<your-github-user>/robrowserlegacy:<version>-slim
+#
+#   full  - slim + GRF assets baked in (~5GB)
+#           Requires GRF_BASE_URL + S3 credentials as BuildKit secrets at build time.
+#           docker run -d --network host \
+#             -v /path/to/Config.local.js:/robrowser/Config.local.js:ro \
+#             ghcr.io/<your-github-user>/robrowserlegacy:<version>
+#
+# Build args:
+#   BUILD_VERSION            - image version string e.g. 1.0.0 (default: dev)
+#   REMOTE_CLIENT_COMMIT     - pinned git commit of roBrowserLegacy-RemoteClient-JS
+#                              Update this to pick up upstream changes.
+#
+# BuildKit secrets (never written to any image layer or visible in docker history):
+#   s3_access_key_id     - S3/MinIO access key ID
+#   s3_secret_access_key - S3/MinIO secret access key
+#   grf_base_url         - base HTTPS URL for GRF asset download (full target only)
+#                          e.g. https://your-host/bucket/prefix
+#
+# GRF asset tarballs expected at grf_base_url:
+#   ragnarok-grfs.tar.gz  (~4GB) - data.grf + rdata.grf + DATA.INI  [required]
+#   ragnarok-bgm.tar.gz   (~350MB) - BGM/ directory                  [optional]
+#
+# Prepare tarballs from your kRO client directory:
+#   KRO="/path/to/kRO client"
+#   tar -czf ragnarok-grfs.tar.gz -C "$KRO" data.grf rdata.grf DATA.INI
+#   tar -czf ragnarok-bgm.tar.gz  -C "$KRO" BGM
+#
+# Config.local.js (mount at runtime for both targets):
+#   Set packetver, renewal, server address, socketProxy to match your rAthena server.
+#   See applications/pwa/Config.local.js.example for all options.
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Stage 1: build roBrowserLegacy JS bundles
+# Runs on the build machine platform for speed.
+# ─────────────────────────────────────────────────────────────────────────────
+FROM --platform=$BUILDPLATFORM node:20.10.0 AS robrowser-builder
+
+ARG BUILD_VERSION=dev
+
+RUN apt-get update -y -qq && apt-get install -y -qq build-essential && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+RUN npm run build:all
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Stage 2: download GRF assets (no-op if grf_base_url secret not provided)
+# Always runs on the build machine platform - only downloads files.
+# ─────────────────────────────────────────────────────────────────────────────
+FROM --platform=$BUILDPLATFORM alpine AS grf-downloader
+
+RUN apk add --no-cache aws-cli
+
+WORKDIR /grffiles
+
+# All credentials and the asset URL are injected via BuildKit secret mounts.
+# They are never written to any image layer or visible in docker history.
+# If grf_base_url secret is absent or empty, this stage is a no-op.
+# ragnarok-grfs.tar.gz is required; ragnarok-bgm.tar.gz is optional.
+RUN --mount=type=secret,id=s3_access_key_id \
+    --mount=type=secret,id=s3_secret_access_key \
+    --mount=type=secret,id=grf_base_url \
+    GRF_BASE_URL="$(cat /run/secrets/grf_base_url 2>/dev/null || true)"; \
+    if [ -n "${GRF_BASE_URL}" ]; then \
+      KEY_ID="$(cat /run/secrets/s3_access_key_id 2>/dev/null || true)"; \
+      SECRET="$(cat /run/secrets/s3_secret_access_key 2>/dev/null || true)"; \
+      if [ -z "${KEY_ID}" ] || [ -z "${SECRET}" ]; then \
+        echo "ERROR: S3 credentials not provided."; exit 1; \
+      fi; \
+      S3_HOST=$(echo "${GRF_BASE_URL}" | sed 's|https\?://||' | cut -d/ -f1); \
+      S3_PATH=$(echo "${GRF_BASE_URL}" | sed 's|https\?://[^/]*/||'); \
+      S3_BUCKET=$(echo "${S3_PATH}" | cut -d/ -f1); \
+      S3_PREFIX=$(echo "${S3_PATH}" | cut -d/ -f2-); \
+      echo "Downloading GRF assets from s3://${S3_BUCKET}/${S3_PREFIX}/ ..."; \
+      AWS_ACCESS_KEY_ID="${KEY_ID}" AWS_SECRET_ACCESS_KEY="${SECRET}" \
+      AWS_DEFAULT_REGION="us-east-1" \
+      AWS_REQUEST_CHECKSUM_CALCULATION="when_required" \
+      AWS_RESPONSE_CHECKSUM_VALIDATION="when_required" \
+        aws s3 cp "s3://${S3_BUCKET}/${S3_PREFIX}/ragnarok-grfs.tar.gz" ragnarok-grfs.tar.gz \
+          --endpoint-url "https://${S3_HOST}" && \
+      tar -xzf ragnarok-grfs.tar.gz && rm ragnarok-grfs.tar.gz && \
+      echo "GRF core assets extracted." && \
+      ( AWS_ACCESS_KEY_ID="${KEY_ID}" AWS_SECRET_ACCESS_KEY="${SECRET}" \
+        AWS_DEFAULT_REGION="us-east-1" \
+        AWS_REQUEST_CHECKSUM_CALCULATION="when_required" \
+        AWS_RESPONSE_CHECKSUM_VALIDATION="when_required" \
+          aws s3 cp "s3://${S3_BUCKET}/${S3_PREFIX}/ragnarok-bgm.tar.gz" ragnarok-bgm.tar.gz \
+            --endpoint-url "https://${S3_HOST}" && \
+        tar -xzf ragnarok-bgm.tar.gz && rm ragnarok-bgm.tar.gz && \
+        echo "BGM extracted." \
+      ) || echo "BGM not available - skipping."; \
+      echo "Download complete:" && ls -lh; \
+    else \
+      echo "grf_base_url secret not set - skipping GRF download."; \
+    fi
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Stage 3: slim - remote-client + roBrowserLegacy dist, no GRFs
+# This is the slim image target and the base layer for the full image.
+# ─────────────────────────────────────────────────────────────────────────────
+FROM node:20.10.0-slim AS slim
+
+ARG BUILD_VERSION=dev
+
+LABEL org.opencontainers.image.title="roBrowserLegacy"
+LABEL org.opencontainers.image.description="roBrowserLegacy: WebSocket proxy and static file server. Mount GRF assets and Config.local.js at runtime."
+LABEL org.opencontainers.image.version="${BUILD_VERSION}"
+LABEL org.opencontainers.image.source="https://github.com/MrAntares/roBrowserLegacy"
+LABEL ro.image.variant="slim"
+
+RUN apt-get update -y -qq && \
+    apt-get install -y -qq git && \
+    rm -rf /var/lib/apt/lists/*
+
+# Create a non-root user to run the server process
+RUN groupadd -r robrowser && useradd -r -g robrowser -d /app robrowser
+
+WORKDIR /app
+
+# Pin to a specific commit for reproducible builds.
+# To update: change REMOTE_CLIENT_COMMIT to a newer commit SHA.
+ARG REMOTE_CLIENT_COMMIT=b61971d119ebc55c66d5fa3c923e5286b5dbc893
+RUN git clone https://github.com/FranciscoWallison/roBrowserLegacy-RemoteClient-JS.git . && \
+    git checkout "${REMOTE_CLIENT_COMMIT}" && \
+    npm install --ignore-scripts && \
+    # Remove git history to reduce image size
+    rm -rf .git
+
+COPY --from=robrowser-builder /app/dist/Web /robrowser
+
+# Transfer ownership to non-root user
+RUN chown -R robrowser:robrowser /app /robrowser
+
+EXPOSE 3338
+
+ENV PORT=3338
+ENV NODE_ENV=production
+ENV ENABLE_WSPROXY=true
+ENV ENABLE_STATIC_SERVE=true
+ENV ROBROWSER_PATH=/robrowser
+# CLIENT_PUBLIC_URL: update to your public URL if not running locally
+ENV CLIENT_PUBLIC_URL=http://localhost:3338
+# WS_ALLOWED_TARGETS: comma-separated host:port list the WS proxy may forward to.
+# Defaults to localhost only (127.0.0.1:6900,127.0.0.1:6121,127.0.0.1:5121).
+# Override for non-host-network deployments, e.g.:
+#   -e WS_ALLOWED_TARGETS="10.0.0.5:6900,10.0.0.5:6121,10.0.0.5:5121"
+ENV WS_ALLOWED_TARGETS=""
+# Cache tuning: adjust based on available memory
+ENV CACHE_MAX_FILES=10000
+ENV CACHE_MAX_MEMORY_MB=2048
+ENV CACHE_WARM_UP=true
+ENV CACHE_WARM_UP_LIMIT=500
+
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD node -e "require('http').get('http://localhost:${PORT}/', r => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"
+
+USER robrowser
+
+CMD ["npm", "run", "start:prod"]
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Stage 4: full - slim + baked-in GRF assets
+# Fails the build explicitly if GRF assets were not downloaded.
+# ─────────────────────────────────────────────────────────────────────────────
+FROM slim AS full
+
+ARG BUILD_VERSION=dev
+
+LABEL org.opencontainers.image.description="roBrowserLegacy: WebSocket proxy, static file server, and baked-in GRF game assets. Mount Config.local.js at runtime."
+LABEL ro.image.variant="full"
+
+# Switch to root temporarily to install GRF assets, then drop back to robrowser
+USER root
+
+COPY --from=grf-downloader /grffiles/ /app/resources-baked/
+
+RUN if [ -f /app/resources-baked/data.grf ]; then \
+      echo "Installing baked GRF assets..."; \
+      mkdir -p /app/resources; \
+      mv /app/resources-baked/data.grf  /app/resources/data.grf  2>/dev/null || true; \
+      mv /app/resources-baked/rdata.grf /app/resources/rdata.grf 2>/dev/null || true; \
+      mv /app/resources-baked/DATA.INI  /app/resources/DATA.INI  2>/dev/null || true; \
+      mv /app/resources-baked/BGM       /app/BGM                 2>/dev/null || true; \
+      chown -R robrowser:robrowser /app/resources /app/BGM 2>/dev/null || true; \
+      echo "GRF assets installed."; \
+    else \
+      echo "ERROR: No GRF assets found. Was grf_base_url secret set and credentials provided?"; \
+      exit 1; \
+    fi && \
+    rm -rf /app/resources-baked
+
+USER robrowser

@@ -1,0 +1,56 @@
+:host {
+	top: 100px;
+	left: 100px;
+	width: 250px;
+	height: 65px;
+}
+
+#SoundOption {
+	position: absolute;
+	background: white;
+	border-radius: 2px;
+}
+
+#SoundOption .titlebar {
+	width: 100%;
+	height: 17px;
+	background-color: white;
+	background-repeat: repeat-x;
+	border-radius: 3px 3px 0px 0px;
+}
+#SoundOption .titlebar .base {
+	width: 11px;
+	height: 11px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+#SoundOption .titlebar .text {
+	text-shadow: 1px 1px white;
+	vertical-align: -2px;
+	white-space: nowrap;
+	/* chrome bug */
+	display: inline-block;
+	white-space: nowrap;
+	height: 13px;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+#SoundOption .titlebar .left {
+	margin-left: 3px;
+	float: left;
+}
+#SoundOption .titlebar .right {
+	float: right;
+	margin-right: 3px;
+}
+#SoundOption .titlebar .clear {
+	clear: both;
+}
+
+#SoundOption .panel {
+	padding-left: 5px;
+	padding-right: 5px;
+}

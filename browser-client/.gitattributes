@@ -1,0 +1,60 @@
+# Macros for LFS
+[attr]lfs filter=lfs diff=lfs merge=lfs -text
+[attr]lfslock lockable
+
+# Auto detect text files and perform LF normalization
+* text=auto eol=crlf
+
+# Source code
+*.bash				text eol=lf
+*.bat				text eol=crlf
+*.cmd				text eol=crlf
+*.css				text diff=css
+*.html				text diff=html
+*.php				text diff=php
+*.ps1				text eol=crlf
+*.scss				text diff=css
+*.sh				text eol=lf
+
+# Documentation
+*.md				text diff=markdown
+
+# Configs
+*.lock				text -diff
+package.json		text eol=crlf
+package-lock.json	text eol=crlf -diff
+
+# Graphics
+*.bmp				binary
+*.gif				binary
+*.png				binary
+*.tga				binary
+
+# Video
+*.bik				binary
+
+# Audio
+*.mp3				binary
+*.wav				binary
+
+# RO files
+*.act				binary
+*.ebm				binary
+*.ezv				binary
+*.gat				binary
+*.gnd				binary
+*.gr2				binary
+*.grf				binary
+*.gpf				binary
+*.pal				binary
+*.rgz				binary
+*.rsm				binary
+*.rsw				binary
+*.spr				binary
+*.str				binary
+
+*.lub				binary
+
+# intermediate and build files
+node_modules/*		binary
+dist/*				binary

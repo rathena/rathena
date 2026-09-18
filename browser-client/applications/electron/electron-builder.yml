@@ -1,0 +1,35 @@
+appId: com.robrowser.legacy
+productName: roBrowserLegacy
+copyright: Copyright © roBrowserLegacy
+
+directories:
+    output: dist/Desktop
+    buildResources: applications/electron
+
+files:
+    - applications/electron/**/*
+    - applications/shared/**/*
+    - src/**/*
+    - node_modules/lodash-es/**/*
+    - node_modules/bson/**/*
+    - package.json
+
+extraMetadata:
+    main: applications/electron/main.js
+
+asar: false
+
+win:
+    target:
+        - dir
+    icon: applications/electron/icon.png
+
+linux:
+    target:
+        - dir
+    icon: applications/electron/icon.png
+
+mac:
+    target:
+        - dir
+    icon: applications/electron/icon.png

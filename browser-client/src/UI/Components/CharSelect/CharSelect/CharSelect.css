@@ -1,0 +1,174 @@
+:host {
+	width: 576px;
+	height: 342px;
+}
+
+#charselect {
+	position: absolute;
+	width: 576px;
+	height: 342px;
+}
+
+/** Box **/
+#charselect .box_select {
+	position: absolute;
+	width: 139px;
+	height: 144px;
+	top: 40px;
+	margin-left: -5px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+#charselect canvas {
+	position: absolute;
+	top: 44px;
+}
+#charselect .slot1 {
+	left: 60px;
+}
+#charselect .slot2 {
+	left: 224px;
+}
+#charselect .slot3 {
+	left: 386px;
+}
+
+/** Arrow **/
+#charselect .arrow {
+	position: absolute;
+	top: 105px;
+	width: 13px;
+	height: 13px;
+}
+#charselect .arrow.left {
+	left: 40px;
+}
+#charselect .arrow.right {
+	right: 40px;
+}
+
+/** Slot info **/
+#charselect .slotinfo {
+	position: absolute;
+	top: 195px;
+	right: 10px;
+	height: 20px;
+	display: block;
+	border: 1px solid #c6cee7;
+	border-radius: 4px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+#charselect .slotinfo .number {
+	color: #58709e;
+	font-weight: bold;
+	margin-right: 10px;
+}
+#charselect .slotinfo .content {
+	color: #555;
+	top: 6px;
+	right: 8px;
+}
+
+/** Page info **/
+#charselect .pageinfo {
+	position: absolute;
+	left: 275px;
+	top: 185px;
+	font-weight: bold;
+	color: #646464;
+}
+#charselect .pageinfo .current {
+	color: #fe3b7d;
+}
+
+/** Characters infos **/
+#charselect .charinfo {
+	position: absolute;
+	width: 285px;
+	top: 204px;
+	left: 16px;
+}
+#charselect .charinfo div {
+	position: absolute;
+	width: 90px;
+	height: 13px;
+}
+#charselect .charinfo .name {
+	left: 52px;
+	top: 2px;
+	white-space: nowrap;
+}
+#charselect .charinfo .job {
+	left: 52px;
+	top: 18px;
+}
+#charselect .charinfo .lvl {
+	left: 52px;
+	top: 34px;
+}
+#charselect .charinfo .exp {
+	left: 52px;
+	top: 50px;
+}
+#charselect .charinfo .hp {
+	left: 52px;
+	top: 66px;
+}
+#charselect .charinfo .sp {
+	left: 52px;
+	top: 82px;
+}
+#charselect .charinfo .map {
+	left: 52px;
+	top: 98px;
+	width: 238px;
+}
+#charselect .charinfo .str {
+	left: 200px;
+	top: 2px;
+}
+#charselect .charinfo .agi {
+	left: 200px;
+	top: 18px;
+}
+#charselect .charinfo .vit {
+	left: 200px;
+	top: 34px;
+}
+#charselect .charinfo .int {
+	left: 200px;
+	top: 50px;
+}
+#charselect .charinfo .dex {
+	left: 200px;
+	top: 66px;
+}
+#charselect .charinfo .luk {
+	left: 200px;
+	top: 82px;
+}
+
+/** Buttons **/
+#charselect .btns {
+	position: absolute;
+	bottom: 4px;
+	width: 100%;
+	height: 20px;
+}
+#charselect .btn {
+	position: absolute;
+	width: 42px;
+	height: 20px;
+}
+
+#charselect .ok,
+#charselect .make {
+	right: 50px;
+}
+#charselect .cancel {
+	right: 4px;
+}
+#charselect .delete {
+	left: 4px;
+}

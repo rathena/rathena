@@ -1,0 +1,164 @@
+:host {
+	top: 100px;
+	left: 100px;
+}
+
+.SkillList {
+	position: absolute;
+	border-radius: 5px;
+	background: white;
+	line-height: 18px;
+	letter-spacing: 0px;
+	border: 1px solid #c1c6c2;
+}
+.SkillList .border {
+	border: 1px solid #c1c6c2;
+	margin: 1px;
+	border-radius: 5px;
+}
+
+.SkillList .titlebar {
+	width: 100%;
+	height: 17px;
+	background-color: white;
+	background-repeat: repeat-x;
+	border-radius: 3px 3px 0px 0px;
+}
+.SkillList .titlebar .base {
+	width: 11px;
+	height: 11px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+.SkillList .titlebar .text {
+	text-shadow: 1px 1px white;
+	vertical-align: -2px;
+	white-space: nowrap;
+	/* chrome bug */
+	display: inline-block;
+	width: 120px;
+	height: 13px;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+.SkillList .titlebar .left {
+	margin-left: 3px;
+	float: left;
+}
+.SkillList .titlebar .right {
+	float: right;
+	margin-right: 3px;
+}
+.SkillList .titlebar .clear {
+	clear: both;
+}
+
+.SkillList .content {
+	overflow-y: auto;
+	padding: 5px;
+	width: 270px;
+	height: 200px;
+}
+.SkillList .content table {
+	border: none;
+	border-spacing: 0px;
+	padding-top: 5px;
+}
+.SkillList .content td,
+.SkillList .content .name {
+	padding: 0px;
+}
+
+.SkillList .levelup {
+	border: 0;
+	width: 24px;
+	height: 24px;
+	padding: 0;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+.SkillList td.type {
+	vertical-align: bottom;
+}
+
+.SkillList .content .icon {
+	padding-left: 15px;
+}
+.SkillList .content .levelupcontainer {
+	padding-left: 5px;
+	padding-right: 5px;
+	width: 24px;
+}
+.SkillList .content div.name {
+	line-height: 12px;
+	white-space: nowrap;
+	padding-left: 5px;
+	white-space: nowrap;
+	width: 120px;
+	padding-top: 4px;
+	height: 28px;
+}
+.SkillList .disabled .icon,
+.SkillList .disabled .name {
+	opacity: 0.5;
+}
+.SkillList .disabled .consume,
+.SkillList .disabled .level {
+	display: none;
+}
+.SkillList .currentDown,
+.SkillList .currentUp {
+	width: 11px;
+	height: 11px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+
+.SkillList .selected.disabled .selectable {
+	background-color: #b5b5b5;
+}
+.SkillList .selected.passive .selectable {
+	background-color: #73d5ee;
+}
+.SkillList .selected.active .selectable {
+	background-color: #739cee;
+}
+
+.SkillList .footer {
+	width: 100%;
+	height: 27px;
+	background-repeat: repeat-x;
+	background-color: transparent;
+	position: relative;
+}
+.SkillList .footer .text {
+	padding-top: 7px;
+	margin-left: 10px;
+}
+.SkillList .footer .extend {
+	position: absolute;
+	right: 0px;
+	bottom: 1px;
+	width: 13px;
+	height: 13px;
+	border: none;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+
+#lvlup_job {
+	z-index: 51;
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
+	width: 43px;
+	height: 43px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}

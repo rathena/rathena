@@ -1,0 +1,20 @@
+:host {
+	width: 43px;
+	height: 45px;
+	right: 145px;
+	top: 17px;
+}
+
+#CashShopIcon {
+	position: absolute;
+	width: 43px;
+	height: 45px;
+}
+
+#CashShopIcon .cashshop-icon {
+	width: 43px;
+	height: 45px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}

@@ -152,3 +152,30 @@ Thumbs.db
 
 # generated files
 generated
+
+# Local game client assets
+/client-local/
+
+# Local Ragnarok client / extracted assets
+/client-local/
+/grf-status/
+/grf-status2/
+/grf-test/
+
+# Ragnarok client binaries/assets
+*.grf
+*.rgz
+
+# Node dependencies/build/cache
+**/node_modules/
+**/dist/
+**/.vite/
+
+# Environment / local configuration
+**/.env
+**/.env.local
+**/.env.*.local
+
+# Logs
+*.log
+/browser-client-git-backup/

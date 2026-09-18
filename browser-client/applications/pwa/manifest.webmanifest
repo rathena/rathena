@@ -1,0 +1,42 @@
+{
+	"name": "roBrowser Progressive Web App",
+	"short_name": "roBrowser",
+	"start_url": "./",
+	"description": "roBrowser Progressive Web App.",
+	"display": "fullscreen",
+	"theme_color": "#4169e1",
+	"background_color": "#000000",
+	"icons": [
+		{
+			"src": "./icon.png",
+			"sizes": "144x144",
+			"type": "image/png",
+			"purpose": "any"
+		}
+	],
+	"screenshots": [
+		{
+			"src": "./screenshotwide.png",
+			"sizes": "1920x1080",
+			"type": "image/png",
+			"purpose": "any",
+			"form_factor": "wide",
+			"description": "roBrowser Progressive Web App."
+		},
+		{
+			"src": "./screenshotnarrow.png",
+			"sizes": "390x844",
+			"type": "image/png",
+			"purpose": "any",
+			"form_factor": "narrow",
+			"description": "roBrowser Progressive Web App."
+		}
+	],
+	"protocol_handlers": [
+		{
+			"protocol": "http",
+			"url": "./"
+		}
+	],
+	"display_override": ["window-controls-overlay"]
+}

@@ -1,0 +1,55 @@
+{
+  "meta": {
+    "folder": "C:\\Users\\Bruno\\Documents\\rathena\\browser-assets\\resources",
+    "encodingRequested": "auto",
+    "startedAt": "2026-09-18T19:46:10.880Z",
+    "finishedAt": "2026-09-18T19:46:10.883Z",
+    "grfCount": 1
+  },
+  "summary": {
+    "totalGrfs": 1,
+    "successfulLoads": 0,
+    "failedLoads": 1,
+    "totalFiles": 0,
+    "totalBadUfffd": 0,
+    "totalBadC1Control": 0,
+    "totalRoundTripFailRaw": 0,
+    "totalRoundTripRepairable": 0,
+    "totalRoundTripFailFinal": 0,
+    "totalReadTestsPassed": 0,
+    "totalReadTestsFailed": 0
+  },
+  "grfs": [
+    {
+      "path": "resources\\data.grf",
+      "filename": "data.grf",
+      "size": 4617349175,
+      "sizeFormatted": "4.30 GB",
+      "encodingRequested": "auto",
+      "detectedEncoding": null,
+      "encodingValidate": null,
+      "loadTimeMs": 0,
+      "success": false,
+      "error": "Not a GRF file (invalid signature)",
+      "stats": null,
+      "validation": {
+        "totalFiles": 0,
+        "badUfffd": 0,
+        "badC1Control": 0,
+        "roundTripFailRaw": 0,
+        "roundTripRepairable": 0,
+        "roundTripFailFinal": 0,
+        "readTestsPassed": 0,
+        "readTestsFailed": 0
+      },
+      "examples": {
+        "badUfffd": [],
+        "badC1Control": [],
+        "roundTripFailRaw": [],
+        "roundTripRepairable": [],
+        "roundTripFailFinal": [],
+        "readFailed": []
+      }
+    }
+  ]
+}

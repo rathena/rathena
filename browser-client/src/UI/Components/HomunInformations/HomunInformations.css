@@ -1,0 +1,314 @@
+:host {
+	width: 280px;
+	height: 190px;
+	top: 100px;
+	left: 100px;
+}
+
+#HomunInformations {
+	position: absolute;
+	width: 280px;
+	height: 190px;
+	background-color: white;
+	border-radius: 5px;
+}
+
+#HomunInformations .content {
+	width: 100%;
+	height: 17px;
+	background-color: white;
+	background-repeat: repeat-x;
+	border-radius: 3px 3px 0px 0px;
+}
+#HomunInformations .content .base {
+	width: 11px;
+	height: 11px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+#HomunInformations .content .text {
+	text-shadow: 1px 1px white;
+	vertical-align: -2px;
+	white-space: nowrap;
+	/* chrome bug */
+	display: inline-block;
+	width: 50px;
+	height: 13px;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+#HomunInformations .content .left {
+	margin-left: 3px;
+	float: left;
+}
+#HomunInformations .content .right {
+	float: right;
+	margin-right: 3px;
+}
+#HomunInformations .content .clear {
+	clear: both;
+}
+
+#HomunInformations .content {
+	background-repeat: no-repeat;
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+#HomunInformations .title_name {
+	position: absolute;
+	top: 25px;
+	left: 100px;
+}
+#HomunInformations .name {
+	position: absolute;
+	top: 25px;
+	left: 140px;
+	border: none;
+	background-color: #eee;
+	margin: 0px;
+	width: 85px;
+	color: black;
+}
+
+#HomunInformations .modify {
+	position: absolute;
+	top: 22px;
+	right: 5px;
+	border: 0;
+	width: 42px;
+	height: 20px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+#HomunInformations .skill {
+	position: absolute;
+	top: 45px;
+	right: 5px;
+	border: 0;
+	width: 42px;
+	height: 20px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+#HomunInformations .del {
+	position: absolute;
+	top: 45px;
+	right: 50px;
+	border: 0;
+	width: 42px;
+	height: 20px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+
+#HomunInformations .name.disabled {
+	color: black;
+	text-shadow: 1px 1px 0px #00ff00;
+	background-color: transparent;
+}
+#HomunInformations .modify.disabled {
+	display: none;
+}
+
+#HomunInformations .title_level {
+	position: absolute;
+	top: 47px;
+	left: 100px;
+}
+#HomunInformations .level {
+	position: absolute;
+	top: 47px;
+	left: 140px;
+}
+
+#HomunInformations .stats {
+	position: absolute;
+	top: 20px;
+	width: 80px;
+	height: 160px;
+}
+#HomunInformations .stats .atk {
+	margin-top: 4px;
+	height: 14px;
+	text-align: right;
+}
+#HomunInformations .stats .Matk {
+	margin-top: 4px;
+	height: 14px;
+	text-align: right;
+}
+#HomunInformations .stats .hit {
+	margin-top: 4px;
+	height: 14px;
+	text-align: right;
+}
+#HomunInformations .stats .critical {
+	margin-top: 4px;
+	height: 14px;
+	text-align: right;
+}
+#HomunInformations .stats .def {
+	margin-top: 4px;
+	height: 14px;
+	text-align: right;
+}
+#HomunInformations .stats .Mdef {
+	margin-top: 4px;
+	height: 14px;
+	text-align: right;
+}
+#HomunInformations .stats .flee {
+	margin-top: 4px;
+	height: 14px;
+	text-align: right;
+}
+#HomunInformations .stats .aspd {
+	margin-top: 4px;
+	height: 14px;
+	text-align: right;
+}
+
+#HomunInformations .hp {
+	position: absolute;
+	top: 70px;
+	left: 150px;
+}
+#HomunInformations .sp {
+	position: absolute;
+	top: 85px;
+	left: 150px;
+}
+
+#HomunInformations .hp_bar {
+	position: absolute;
+	top: 73px;
+	left: 118px;
+	height: 8px;
+}
+#HomunInformations .hp_bar div {
+	width: 4px;
+	height: 8px;
+	float: left;
+}
+#HomunInformations div.hp_bar_perc {
+	text-align: center;
+	width: 80px;
+	position: absolute;
+	top: -2px;
+}
+#HomunInformations .hp_perc {
+	position: absolute;
+	top: 50px;
+	right: 20px;
+}
+
+#HomunInformations .hp2 {
+	position: absolute;
+	top: 70px;
+	left: 220px;
+}
+#HomunInformations .sp2 {
+	position: absolute;
+	top: 85px;
+	left: 220px;
+}
+
+#HomunInformations .sp_bar {
+	position: absolute;
+	top: 88px;
+	left: 118px;
+	height: 8px;
+}
+#HomunInformations .sp_bar div {
+	width: 4px;
+	height: 8px;
+	float: left;
+}
+#HomunInformations div.sp_bar_perc {
+	text-align: center;
+	width: 80px;
+	position: absolute;
+	top: -2px;
+}
+#HomunInformations .sp_perc {
+	position: absolute;
+	top: 50px;
+	right: 20px;
+}
+
+#HomunInformations .block2 {
+	position: absolute;
+	top: 105px;
+	left: 100px;
+	width: 100px;
+	height: 70px;
+}
+
+#HomunInformations .block2 .title_exp {
+	width: 100%;
+}
+#HomunInformations .block2 .exp {
+	width: 50px;
+	float: right;
+	text-align: right;
+}
+#HomunInformations canvas.life.title_exp {
+	position: relative;
+	top: -3px;
+}
+
+#HomunInformations .block2 .title_hunger {
+	width: 100%;
+	position: absolute;
+	top: 27px;
+}
+#HomunInformations .block2 .hunger {
+	width: 50px;
+	float: right;
+	text-align: right;
+}
+#HomunInformations canvas.life.title_hunger {
+	position: relative;
+	top: 10px;
+}
+
+#HomunInformations .block2 .title_intimacy {
+	width: 100%;
+	position: absolute;
+	top: 55px;
+}
+#HomunInformations .block2 .intimacy {
+	width: 50px;
+	float: right;
+	text-align: right;
+}
+
+#HomunInformations .feed {
+	position: absolute;
+	top: 155px;
+	right: 5px;
+	border: 0;
+	width: 65px;
+	height: 20px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+#HomunInformations .feeding {
+	position: absolute;
+	top: 110px;
+	right: 0px;
+	width: 75px;
+}
+#HomunInformations .feeding .homun_auto_feed {
+	width: 10px;
+	height: 12px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	margin-left: 5px;
+}

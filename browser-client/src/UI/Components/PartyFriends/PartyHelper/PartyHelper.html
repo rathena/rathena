@@ -1,0 +1,89 @@
+<div id="PartyHelper">
+	<div class="titlebar">
+		<ui-image src="basic_interface/titlebar_mid.bmp"></ui-image>
+		<div class="left">
+			<ui-button
+				class="base"
+				bg="basic_interface/sys_base_off.bmp"
+				hover="basic_interface/sys_base_on.bmp"
+			></ui-button>
+			<span class="text setup"><ui-text msg="291">Party Setup</ui-text></span>
+			<span class="text friend-setup"><ui-text msg="355">Friend Setup</ui-text></span>
+			<span class="text create"><ui-text msg="2054">Create Party</ui-text></span>
+			<span class="text invite"><ui-text msg="2056">Create Party</ui-text></span>
+		</div>
+		<div class="right">
+			<ui-button
+				class="base close"
+				bg="basic_interface/sys_close_off.bmp"
+				hover="basic_interface/sys_close_on.bmp"
+			></ui-button>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="content party-content">
+		<div class="create invite">
+			<p>
+				<span class="create"><ui-text msg="2057">Party Name:</ui-text></span>
+				<span class="invite"><ui-text msg="2058">Player Name:</ui-text></span>
+			</p>
+			<input type="text" class="name" value="" />
+		</div>
+		<div class="exp_share setup">
+			<p><ui-text msg="292">How to share EXP</ui-text></p>
+			<button class="on" data-value="0">
+				<ui-image src="radiobtn_on.bmp"></ui-image><ui-text msg="287">Each Take</ui-text>
+			</button>
+			<button class="off" data-value="1">
+				<ui-image src="radiobtn_off.bmp"></ui-image><ui-text msg="288">Even Share</ui-text>
+			</button>
+		</div>
+		<div class="item_share setup create">
+			<p><ui-text msg="293">How to share Items</ui-text></p>
+			<button class="on" data-value="0">
+				<ui-image src="radiobtn_on.bmp"></ui-image><ui-text msg="289">Each Take</ui-text>
+			</button>
+			<button class="off" data-value="1">
+				<ui-image src="radiobtn_off.bmp"></ui-image><ui-text msg="290">Party Share</ui-text>
+			</button>
+		</div>
+		<div class="item_sharing_type setup create">
+			<p><ui-text msg="738">Item Sharing type</ui-text></p>
+			<button class="on" data-value="0">
+				<ui-image src="radiobtn_on.bmp"></ui-image><ui-text msg="739">Individual</ui-text>
+			</button>
+			<button class="off" data-value="1">
+				<ui-image src="radiobtn_off.bmp"></ui-image><ui-text msg="740">Shared</ui-text>
+			</button>
+		</div>
+	</div>
+	<div class="content friend-content">
+		<div class="friend-setup">
+			<div class="open1to1Stranger setting-row">
+				<button class="on" data-value="1"><ui-image src="checkbox_1.bmp"></ui-image></button>
+				<button class="off" data-value="0"><ui-image src="checkbox_0.bmp"></ui-image></button>
+				<span><ui-text msg="361">Open 1:1 Chat between Strangers</ui-text></span>
+			</div>
+			<div class="open1to1Friend setting-row">
+				<button class="on" data-value="1"><ui-image src="checkbox_1.bmp"></ui-image></button>
+				<button class="off" data-value="0"><ui-image src="checkbox_0.bmp"></ui-image></button>
+				<span><ui-text msg="359">Open 1:1 Chat between Friends</ui-text></span>
+			</div>
+			<div class="alarm1to1 setting-row">
+				<button class="on" data-value="1"><ui-image src="checkbox_1.bmp"></ui-image></button>
+				<button class="off" data-value="0"><ui-image src="checkbox_0.bmp"></ui-image></button>
+				<span><ui-text msg="362">Alarm when receive a 1:1 Chat</ui-text></span>
+			</div>
+		</div>
+	</div>
+	<div class="footer">
+		<ui-image src="basic_interface/btnbar_mid2.bmp"></ui-image>
+		<ui-button
+			class="btn ok"
+			bg="basic_interface/btn_ok.bmp"
+			hover="basic_interface/btn_ok_a.bmp"
+			down="basic_interface/btn_ok_b.bmp"
+		></ui-button>
+		<ui-button class="btn cancel" bg="btn_cancel.bmp" hover="btn_cancel_a.bmp" down="btn_cancel_b.bmp"></ui-button>
+	</div>
+</div>

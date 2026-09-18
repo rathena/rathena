@@ -1,0 +1,210 @@
+name: Deploy to GitHub Pages
+
+concurrency:
+  group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref_name }}
+  cancel-in-progress: true
+
+on:
+  push:
+    branches: ["**"]
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build -- --all -H
+
+      - name: Create demo Config.local.js
+        run: |
+          cat > dist/Web/Config.local.js << 'EOF'  
+          window.ROConfigLocal = {  
+              development: true,  
+              remoteClient: 'https://grf.robrowser.com/',  
+              servers: [  
+                  {
+                      display: 'Your Local Server[PRE]',
+                      desc: '2013 demo server',
+                      address: '127.0.0.1',
+                      port: 6900,
+                      version: 25,
+                      langtype: 12,
+                      packetver: 20130618,
+                      renewal: false,
+                      worldMapSettings: { episode: 12 },
+                      packetKeys: false,
+                      socketProxy: 'ws://localhost:5999',
+                      remoteClient: '/remote-client/',
+                      adminList: []
+                  },
+                  {
+                      display: 'Your Local Server[RE]',
+                      desc: '2025 demo server',
+                      address: '127.0.0.1',
+                      port: 6900,
+                      version: 55,
+                      langtype: 12,
+                      packetver: 20250618,
+                      renewal: true,
+                      worldMapSettings: { episode: 21 },
+                      packetKeys: false,
+                      socketProxy: 'ws://localhost:5999',
+                      remoteClient: '/remote-client/',
+                      adminList: []
+                  }, 
+                  {  
+                      display: 'NiktoutRO Chaos',  
+                      desc: 'NiktoutRO Chaos [100k/100k/10%]',  
+                      address: 'chaos.niktoutro.com',  
+                      port: 6905,  
+                      version: 55,  
+                      langtype: 1,  
+                      packetver: 20151104,  
+                      renewal: true,  
+                      socketProxy: 'wss://classicweb.niktoutro.com:5999',  
+                      remoteClient: 'https://classicweb.niktoutro.com/chaosclient/',  
+                      registrationweb: 'https://niktoutro.com/?module=account&action=create',  
+                      packetKeys: true,  
+                      adminList: [2000002]  
+                  }  
+              ],  
+              packetDump: false,  
+              skipServerList: true,  
+              skipIntro: false,  
+              aura: {},  
+              autoLogin: [],  
+              BGMFileExtension: ['mp3'],  
+              calculateHash: false,  
+              CameraMaxZoomOut: 5,  
+              charBlockSize: 0,  
+              clientHash: null,  
+              clientVersionMode: 'PacketVer',  
+              disableConsole: false,  
+              enableAchievements: false,
+              enableBank: false,  
+              enableCashShop: false,  
+              enableCheckAttendance: false,  
+              enableDmgSuffix: false,  
+              enableHomunAutoFeed: false,  
+              enableMapName: false,  
+              FirstPersonCamera: false,  
+              grfList: null,  
+              hashFiles: [],  
+              loadLua: false,  
+              onReady: null,  
+              plugins: {},  
+              registrationweb: '',  
+              saveFiles: true,  
+              ThirdPersonCamera: false,  
+              transitionDuration: 500
+          };
+          EOF
+
+      - name: Prepare branch subfolder
+        run: |
+          SAFE_BRANCH="$(printf '%s' "$GITHUB_REF_NAME" | tr '/' '-' | sed -E 's/[^A-Za-z0-9._-]+/-/g')"
+          if [ -z "$SAFE_BRANCH" ] || [ "$SAFE_BRANCH" = "." ] || [ "$SAFE_BRANCH" = ".." ]; then
+            exit 1
+          fi
+          mkdir -p site/"$SAFE_BRANCH"
+          rsync -a dist/Web/ site/"$SAFE_BRANCH"/
+
+      - name: Prepare gh-pages workdir
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          SAFE_BRANCH="$(printf '%s' "$GITHUB_REF_NAME" | tr '/' '-' | sed -E 's/[^A-Za-z0-9._-]+/-/g')"
+          if [ -z "$SAFE_BRANCH" ] || [ "$SAFE_BRANCH" = "." ] || [ "$SAFE_BRANCH" = ".." ]; then
+            exit 1
+          fi
+          REMOTE="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          if git ls-remote --exit-code --heads "$REMOTE" gh-pages >/dev/null 2>&1; then
+            git clone --depth 1 --branch gh-pages "$REMOTE" ghpages
+          else
+            mkdir -p ghpages
+            cd ghpages
+            git init
+            git checkout -b gh-pages
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            mkdir -p "$SAFE_BRANCH"
+            rsync -a ../site/"$SAFE_BRANCH"/ "$SAFE_BRANCH"/
+            touch .nojekyll
+            bash ../.github/actions/generate-pages-index/generate-pages-index.sh .
+            git add -A
+            git commit -m "Initialize gh-pages with ${GITHUB_REF_NAME}"
+            git remote add origin "$REMOTE"
+            git push -u origin gh-pages
+            cd ..
+            rm -rf ghpages
+            git clone --depth 1 --branch gh-pages "$REMOTE" ghpages
+          fi
+
+      - name: Sync to gh-pages
+        run: |
+          SAFE_BRANCH="$(printf '%s' "$GITHUB_REF_NAME" | tr '/' '-' | sed -E 's/[^A-Za-z0-9._-]+/-/g')"
+          if [ -z "$SAFE_BRANCH" ] || [ "$SAFE_BRANCH" = "." ] || [ "$SAFE_BRANCH" = ".." ]; then
+            exit 1
+          fi
+          rm -rf ghpages/"$SAFE_BRANCH"
+          mkdir -p ghpages/"$SAFE_BRANCH"
+          rsync -a site/"$SAFE_BRANCH"/ ghpages/"$SAFE_BRANCH"/
+          touch ghpages/.nojekyll
+
+      - name: Generate branch index
+        uses: ./.github/actions/generate-pages-index
+        with:
+          pages-dir: ghpages
+
+      - name: Commit and push (retry, no rebase)
+        run: |
+          set -euo pipefail
+          SAFE_BRANCH="$(printf '%s' "$GITHUB_REF_NAME" | tr '/' '-' | sed -E 's/[^A-Za-z0-9._-]+/-/g')"
+          if [ -z "$SAFE_BRANCH" ] || [ "$SAFE_BRANCH" = "." ] || [ "$SAFE_BRANCH" = ".." ]; then
+            exit 1
+          fi
+
+          cd ghpages
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          for i in 1 2 3 4 5; do
+            git fetch origin gh-pages
+            git reset --hard origin/gh-pages
+
+            rm -rf -- "$SAFE_BRANCH"
+            mkdir -p "$SAFE_BRANCH"
+            rsync -a ../site/"$SAFE_BRANCH"/ "$SAFE_BRANCH"/
+            touch .nojekyll
+            bash ../.github/actions/generate-pages-index/generate-pages-index.sh .
+
+            git add -A
+            if git diff --cached --quiet; then
+              exit 0
+            fi
+
+            git commit -m "Deploy ${GITHUB_REF_NAME}"
+
+            if git push origin gh-pages; then
+              exit 0
+            fi
+
+            sleep $((i * 2))
+          done
+
+          exit 1

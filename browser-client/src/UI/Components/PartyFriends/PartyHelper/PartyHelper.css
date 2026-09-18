@@ -1,0 +1,158 @@
+:host {
+	position: absolute;
+}
+
+#PartyHelper {
+	width: 130px;
+}
+
+#PartyHelper .titlebar {
+	width: 100%;
+	height: 17px;
+	background-color: white;
+	background-repeat: repeat-x;
+	border-radius: 3px 3px 0px 0px;
+}
+
+#PartyHelper .titlebar .base {
+	width: 11px;
+	height: 11px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+
+#PartyHelper .titlebar .text {
+	text-shadow: 1px 1px white;
+	vertical-align: -2px;
+	white-space: nowrap;
+	/* chrome bug */
+	display: inline-block;
+	width: 32px;
+	height: 13px;
+}
+
+#PartyHelper .titlebar .left {
+	margin-left: 3px;
+	float: left;
+}
+
+#PartyHelper .titlebar .right {
+	float: right;
+	margin-right: 3px;
+}
+
+#PartyHelper .titlebar .clear {
+	clear: both;
+}
+
+#PartyHelper .content {
+	background-color: white;
+	padding-bottom: 5px;
+}
+
+#PartyHelper .party-content {
+	min-height: 100px;
+}
+
+#PartyHelper .friend-content {
+	padding: 5px;
+}
+
+#PartyHelper .disabled,
+#PartyHelper .disabled button {
+	color: #888;
+}
+
+#PartyHelper .on,
+#PartyHelper .off {
+	border: none;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	background-position: 0px 3px;
+	padding-left: 15px;
+}
+
+#PartyHelper .content p {
+	padding: 0;
+	margin: 0;
+	padding-top: 10px;
+}
+
+#PartyHelper .content div {
+	margin-left: 10px;
+}
+
+#PartyHelper .content button {
+	margin-left: 10px;
+	padding-left: 15px;
+}
+
+#PartyHelper .name {
+	border: none;
+	background-color: #e7e7e7;
+	width: 95px;
+	height: 20px;
+	margin-left: 10px;
+	margin-top: 5px;
+	padding-left: 5px;
+}
+
+#PartyHelper .footer {
+	border-radius: 0px 0px 3px 3px;
+	width: 100%;
+	height: 27px;
+	background-repeat: repeat-x;
+	background-color: transparent;
+	position: relative;
+}
+
+#PartyHelper .btn {
+	position: absolute;
+	bottom: 3px;
+	border: 0;
+	width: 42px;
+	height: 20px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+
+#PartyHelper .ok {
+	right: 46px;
+}
+
+#PartyHelper .cancel {
+	right: 2px;
+}
+
+#PartyHelper .friend-setup .setting-row {
+	margin-left: 0px;
+	margin-bottom: 3px;
+	cursor: pointer;
+	white-space: nowrap;
+}
+
+#PartyHelper .friend-setup .off {
+	display: none;
+}
+
+#PartyHelper .friend-setup .on {
+	display: inline-block;
+}
+
+#PartyHelper .friend-setup span {
+	margin-left: 5px;
+	font-size: 11px;
+	vertical-align: middle;
+}
+
+#PartyHelper .friend-setup button {
+	display: inline-block;
+	width: 15px;
+	height: 18px;
+	background-position: 0px 3px;
+	padding: 0;
+	cursor: pointer;
+	vertical-align: middle;
+}

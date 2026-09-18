@@ -1,0 +1,66 @@
+:host {
+	width: 280px;
+	height: 200px;
+	top: 0px;
+	left: 0px;
+}
+
+#serverlist {
+	position: absolute;
+	width: 280px;
+	height: 200px;
+}
+#serverlist .head {
+	position: absolute;
+	width: 280px;
+	height: 22px;
+	top: 0px;
+	left: 0px;
+}
+#serverlist .bottom {
+	position: relative;
+	width: 280px;
+	height: 120px;
+	top: 80px;
+	left: 0px;
+}
+
+#serverlist .content {
+	position: absolute;
+	width: 258px;
+	height: 145px;
+	top: 22px;
+	left: 0px;
+	padding-left: 10px;
+	padding-right: 10px;
+	background-color: white;
+	border-left: 1px solid #c7c7c7;
+	border-right: 1px solid #c7c7c7;
+}
+#serverlist .list {
+	background-color: #f7f7f7;
+	height: 145px;
+	width: 260px;
+}
+#serverlist .menu_node {
+	width: 255px;
+	height: 15px;
+	display: block;
+	padding-top: 2px;
+	padding-left: 5px;
+}
+
+#serverlist .btn {
+	position: absolute;
+	bottom: 4px;
+	border: 0;
+	width: 42px;
+	height: 20px;
+	background-color: transparent;
+}
+#serverlist .ok {
+	right: 50px;
+}
+#serverlist .cancel {
+	right: 5px;
+}

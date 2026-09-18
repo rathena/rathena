@@ -1,0 +1,322 @@
+:host {
+	top: 100px;
+	left: 100px;
+}
+
+#SkillListV2 {
+	position: absolute;
+	border-radius: 5px;
+	background: white;
+	line-height: 18px;
+	letter-spacing: 0px;
+	border: 1px solid #c1c6c2;
+}
+#SkillListV2 .border {
+	border: 1px solid #c1c6c2;
+	margin: 1px;
+	border-radius: 5px;
+}
+
+#SkillListV2 .titlebar {
+	height: 18px;
+	background-color: white;
+	background-repeat: repeat-x;
+	background-position: 0 -1px;
+	border-radius: 3px 3px 0px 0px;
+}
+#SkillListV2 .titlebar .base {
+	width: 11px;
+	height: 11px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+#SkillListV2 .titlebar .text {
+	text-shadow: 1px 1px white;
+	vertical-align: -2px;
+	white-space: nowrap;
+	/* chrome bug */
+	display: inline-block;
+	width: 60px;
+	height: 13px;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+#SkillListV2 .titlebar .left {
+	margin-left: 3px;
+	float: left;
+	height: 18px;
+}
+#SkillListV2 .titlebar .right {
+	float: right;
+	margin-right: 3px;
+}
+#SkillListV2 .titlebar .clear {
+	clear: both;
+}
+
+#SkillListV2 .content {
+	position: relative;
+	padding: 5px;
+	border-top: 1px solid #c6c6c6;
+	width: 270px;
+	height: 200px;
+}
+#SkillListV2 .content table {
+	border: none;
+	border-spacing: 0px;
+	padding-top: 5px;
+}
+#SkillListV2 .content td,
+#SkillListV2 .content .name {
+	padding: 0px;
+}
+
+/* Mini Tab*/
+#SkillListV2 .tabs-mini {
+	position: relative;
+}
+#SkillListV2 .tabs-mini::before,
+#SkillListV2 .tabs-mini::after {
+	content: '';
+	display: table;
+}
+#SkillListV2 .tabs-mini::after {
+	clear: both;
+}
+#SkillListV2 .tab-switch-mini {
+	display: none;
+}
+#SkillListV2 .tab-label-mini {
+	writing-mode: vertical-lr;
+	text-orientation: upright;
+	left: -23px;
+	width: 18px;
+	position: relative;
+	margin: -3px 0;
+	border: 1px solid #c1c6c2;
+	background: #fff;
+	border-radius: 5px 0 0 5px;
+	cursor: pointer;
+}
+#SkillListV2 .tab-content-mini {
+	overflow-y: auto;
+	overflow-x: hidden;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	opacity: 0;
+}
+#SkillListV2 .tab-switch-mini:checked + .tab-label-mini {
+	width: 20px;
+	left: -25px;
+	z-index: 1;
+}
+#SkillListV2 .tab-switch-mini:checked + label + .tab-content-mini {
+	z-index: 2;
+	opacity: 1;
+}
+
+#SkillListV2 .levelup {
+	border: 0;
+	width: 24px;
+	height: 24px;
+	padding: 0;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+#SkillListV2 td.type {
+	vertical-align: bottom;
+}
+
+#SkillListV2 .content .icon {
+	padding-left: 15px;
+}
+#SkillListV2 .content .levelupcontainer {
+	padding-left: 5px;
+	padding-right: 5px;
+	width: 24px;
+}
+#SkillListV2 .content div.name {
+	line-height: 12px;
+	white-space: nowrap;
+	padding-left: 5px;
+	white-space: nowrap;
+	width: 120px;
+	padding-top: 4px;
+	height: 28px;
+}
+#SkillListV2 .disabled .icon,
+#SkillListV2 .disabled .name {
+	opacity: 0.5;
+}
+#SkillListV2 .disabled .consume,
+#SkillListV2 .disabled .level {
+	display: none;
+}
+#SkillListV2 .currentDown,
+#SkillListV2 .currentUp {
+	width: 11px;
+	height: 11px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+
+#SkillListV2 .selected.disabled .selectable {
+	background-color: #b5b5b5;
+}
+#SkillListV2 .selected.passive .selectable {
+	background-color: #73d5ee;
+}
+/*#SkillListV2 .selected.active .selectable { background-color:#739cee;}*/
+
+#SkillListV2 .footer {
+	width: 100%;
+	height: 27px;
+	background-repeat: repeat-x;
+	background-color: transparent;
+	position: relative;
+}
+#SkillListV2 .footer .text {
+	padding-top: 7px;
+	margin-left: 10px;
+}
+#SkillListV2 .footer .btn {
+	position: absolute;
+	top: 5px;
+	border: 0;
+	width: 42px;
+	height: 20px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	display: none;
+}
+#SkillListV2 .footer .apply {
+	right: 70px;
+}
+#SkillListV2 .footer .reset {
+	right: 20px;
+}
+#SkillListV2 .footer .extend {
+	position: absolute;
+	right: 0px;
+	bottom: 1px;
+	width: 13px;
+	height: 13px;
+	border: none;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+
+#lvlup_job {
+	z-index: 51;
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
+	width: 43px;
+	height: 43px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}
+
+#SkillListV2 .tab-content {
+	overflow-y: auto;
+	padding: 5px;
+	border-top: 1px solid #c6c6c6;
+	width: calc(100% - 12px);
+	height: 375px;
+}
+
+/* skill tree with tabs */
+#SkillListV2 .skillCol .name,
+#SkillListV2 .skillCol .selectable {
+	position: relative;
+	text-align: center;
+	display: block;
+	width: 70px;
+	left: -23px;
+}
+#SkillListV2 .skillCol .skill {
+	position: relative;
+	top: -16px;
+}
+#SkillListV2 .skillRow {
+	display: flex;
+	padding-left: 40px;
+}
+#SkillListV2 .skillCol {
+	position: relative;
+	margin: 15px 17px;
+	border: 1px dashed #c0c0c0ff;
+	border-radius: 5px;
+	width: 28px;
+	height: 28px;
+	text-align: center;
+	white-space: nowrap;
+}
+#SkillListV2 .tabs {
+	position: relative;
+}
+#SkillListV2 .tabs::before,
+#SkillListV2 .tabs::after {
+	content: '';
+	display: table;
+}
+#SkillListV2 .tabs::after {
+	clear: both;
+}
+#SkillListV2 .tab-switch {
+	display: none;
+}
+#SkillListV2 .tab-label {
+	writing-mode: vertical-lr;
+	text-orientation: upright;
+	left: -23px;
+	width: 18px;
+	position: relative;
+	margin: -3px 0;
+	border: 1px solid #c1c6c2;
+	background: #fff;
+	border-radius: 5px 0 0 5px;
+	cursor: pointer;
+}
+#SkillListV2 .tab-content {
+	position: absolute;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	opacity: 0;
+}
+#SkillListV2 .tab-switch:checked + .tab-label {
+	width: 20px;
+	left: -25px;
+	z-index: 1;
+}
+#SkillListV2 .tab-switch:checked + label + .tab-content {
+	z-index: 2;
+	opacity: 1;
+}
+#SkillListV2 .needleSkill {
+	background: pink !important;
+}
+#SkillListV2 .upgradable {
+	background: #c0cdff;
+}
+#SkillListV2 .counterSkill {
+	position: absolute;
+	left: 28px;
+	top: 18px;
+	color: #fff;
+	-webkit-text-stroke: 0.6px #2f2f2f;
+	font-weight: 1000;
+}

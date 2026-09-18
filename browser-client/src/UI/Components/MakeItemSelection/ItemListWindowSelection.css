@@ -1,0 +1,159 @@
+:host {
+	width: 280px;
+	top: 100px;
+	left: 100px;
+}
+
+#ItemListWindowSelection {
+	position: absolute;
+	width: 280px;
+}
+#ItemListWindowSelection .body {
+	border-spacing: 0px;
+	display: inline-block;
+	width: 100%;
+}
+
+#ItemListWindowSelection .titlebar {
+	width: 100%;
+	height: 17px;
+	background-color: white;
+	background-repeat: repeat-x;
+	border-radius: 3px 3px 0px 0px;
+}
+#ItemListWindowSelection .titlebar .text {
+	text-shadow: 1px 1px white;
+	vertical-align: -2px;
+	white-space: nowrap;
+	/* chrome bug */
+	display: inline-block;
+	width: 32px;
+	height: 13px;
+	margin-left: 15px;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+#ItemListWindowSelection .titlebar .left {
+	margin-left: 3px;
+	float: left;
+}
+#ItemListWindowSelection .titlebar .clear {
+	clear: both;
+}
+
+#ItemListWindowSelection .infor_nventory {
+	display: flex;
+}
+
+#ItemListWindowSelection .tabs {
+	border-left: 1px solid #ccc;
+	width: 25px;
+	background-color: white;
+	vertical-align: top;
+	background-position: -1px 0px;
+}
+#ItemListWindowSelection .tabs ui-button {
+	width: 20px;
+	height: 30px;
+	display: block;
+}
+#ItemListWindowSelection .tabs .item {
+	height: 25px;
+}
+
+#ItemListWindowSelection .container {
+	padding-left: 15px;
+	border-right: 1px solid #ccc;
+	background: white;
+	width: 100%;
+}
+#ItemListWindowSelection .content {
+	overflow-y: scroll;
+	overflow-x: hidden;
+	width: 100%;
+	height: 100%;
+	min-height: 262px;
+	background-color: transparent;
+	background-repeat: repeat-y;
+}
+
+#ItemListWindowSelection .content .item {
+	display: block;
+	width: 24px;
+	height: 28px;
+	margin: 4px 0px 0px 4px;
+	position: relative;
+}
+#ItemListWindowSelection .content .item .icon {
+	width: 24px;
+	height: 24px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}
+#ItemListWindowSelection .overlay {
+	pointer-events: none;
+	position: absolute;
+	display: none;
+	white-space: nowrap;
+	z-index: 900;
+	height: 13px;
+	padding: 5px;
+	background: rgba(0, 0, 0, 0.7);
+	color: white;
+	text-shadow: 1px 1px black;
+}
+#ItemListWindowSelection .overlay.grey {
+	color: #aaa;
+}
+#ItemListWindowSelection .content .item .amount {
+	position: relative;
+	bottom: 9px;
+	right: 0px;
+	text-align: right;
+	text-shadow: -1px -1px white;
+}
+#ItemListWindowSelection .content .name {
+	position: absolute;
+	top: 7px;
+	left: 30px;
+	width: 190px;
+}
+
+#ItemListWindowSelection .footer {
+	border-radius: 0px 0px 3px 3px;
+	width: 100%;
+	height: 27px;
+	background-repeat: repeat-x;
+	background-color: transparent;
+	position: relative;
+	border-right: 1px solid #ccc;
+}
+#ItemListWindowSelection .footer .extend {
+	position: absolute;
+	right: 0px;
+	bottom: 1px;
+	width: 13px;
+	height: 13px;
+	background-repeat: no-repeat;
+}
+#ItemListWindowSelection .footer .close {
+	position: absolute;
+	width: 42px;
+	height: 20px;
+	bottom: 4px;
+	right: 15px;
+	background-repeat: no-repeat;
+}
+
+#ItemListWindowSelection .ask_quantity {
+	padding-top: 7px;
+	padding-left: 20px;
+}
+#ItemListWindowSelection .selectall {
+	vertical-align: 2px;
+	width: 10px;
+	height: 10px;
+	background-repeat: no-repeat;
+}

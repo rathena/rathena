@@ -1,0 +1,11 @@
+name: Generate Pages Index
+description: Generates gh-pages root index.html listing deployed branch folders (main/master featured)
+inputs:
+    pages-dir:
+        description: Directory containing the gh-pages working tree
+        required: true
+runs:
+    using: composite
+    steps:
+        - shell: bash
+          run: bash "${{ github.action_path }}/generate-pages-index.sh" "${{ inputs.pages-dir }}"

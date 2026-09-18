@@ -1,0 +1,5 @@
+userid: localserver
+passwd: localinter2026
+server_name: rAthena-Local
+login_ip: login
+char_ip: 127.0.0.1

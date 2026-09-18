@@ -1,0 +1,12 @@
+login_server_ip: db
+ipban_db_ip: db
+char_server_ip: db
+map_server_ip: db
+log_db_ip: db
+  
+// MySQL Web Server  
+web_server_ip: db
+web_server_port: 3306
+web_server_id: ragnarok
+web_server_pw: ragnarok
+web_server_db: ragnarok

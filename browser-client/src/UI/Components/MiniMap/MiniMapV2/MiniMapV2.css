@@ -1,0 +1,42 @@
+:host {
+	top: 16px;
+	right: 16px;
+}
+
+#MiniMapV2 .info_container {
+	display: flex;
+	justify-content: space-between;
+}
+#MiniMapV2 .info_container .object {
+	width: 12px;
+	height: 12px;
+}
+#MiniMapV2 .info_container .plus {
+	width: 12px;
+	height: 12px;
+}
+#MiniMapV2 .info_container .minus {
+	width: 12px;
+	height: 12px;
+}
+#MiniMapV2 .info_container .mini {
+	width: 12px;
+	height: 12px;
+}
+#MiniMapV2 .info_container .viewon {
+	width: 12px;
+	height: 12px;
+}
+#MiniMapV2 .info_container .coordinates {
+	color: #fff;
+	text-shadow: 1px 1px 1px #000;
+	left: 14px;
+}
+
+#MiniMapV2 ui-button.cashshopIcon {
+	position: absolute;
+	height: 43px;
+	width: 43px;
+	top: 0px;
+	left: -45px;
+}

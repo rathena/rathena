@@ -1,0 +1,128 @@
+<div id="Storage">
+	<div class="titlebar">
+		<ui-image src="basic_interface/titlebar_mid.bmp"></ui-image>
+		<div class="left">
+			<span class="text"><ui-text msg="169">Storage</ui-text></span>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="overlay"></div>
+	<div class="panel">
+		<table>
+			<tbody>
+				<tr>
+					<td
+						colspan="2"
+						class="tabs"
+						data-background="basic_interface/tab_itm_ex_01.bmp"
+						data-preload="basic_interface/tab_itm_ex_02.bmp;basic_interface/tab_itm_ex_03.bmp;basic_interface/tab_itm_ex_04.bmp;basic_interface/tab_itm_ex_05.bmp;basic_interface/tab_itm_ex_06.bmp;basic_interface/tab_itm_ex_07.bmp"
+					>
+						<button class="item"></button>
+						<button class="kafra"></button>
+						<button class="armor"></button>
+						<button class="arms"></button>
+						<button class="ammo"></button>
+						<button class="card"></button>
+						<button class="etc"></button>
+					</td>
+					<td class="container">
+						<div class="content" data-background="basic_interface/itemwin_mid.bmp"></div>
+					</td>
+				</tr>
+			</tbody>
+			<tfoot class="footer" data-background="basic_interface/btnbar_mid3.bmp">
+				<tr>
+					<td colspan="3" class="filter-buttons">
+						<button
+							class="filter-use"
+							data-tab-id="0"
+							data-title="Use"
+							data-background="basic_interface/¼Òºñ-2.bmp"
+							data-down="basic_interface/¼Òºñ-1.bmp"
+							data-active="basic_interface/¼Òºñ-1.bmp"
+						></button>
+						<button
+							class="filter-kafra"
+							data-tab-id="1"
+							data-title="Cash"
+							data-background="basic_interface/Ä³½Ã-2.bmp"
+							data-down="basic_interface/Ä³½Ã-1.bmp"
+							data-active="basic_interface/Ä³½Ã-1.bmp"
+						></button>
+						<button
+							class="filter-armor"
+							data-tab-id="2"
+							data-title="Armor"
+							data-background="basic_interface/ÀÇ»ó-2.bmp"
+							data-down="basic_interface/ÀÇ»ó-1.bmp"
+							data-active="basic_interface/ÀÇ»ó-1.bmp"
+						></button>
+						<button
+							class="filter-arms"
+							data-tab-id="3"
+							data-title="Weapon"
+							data-background="basic_interface/¹«±â-2.bmp"
+							data-down="basic_interface/¹«±â-1.bmp"
+							data-active="basic_interface/¹«±â-1.bmp"
+						></button>
+						<button
+							class="filter-ammo"
+							data-tab-id="4"
+							data-title="Ammo"
+							data-background="basic_interface/Åõ»çÃ¼-2.bmp"
+							data-down="basic_interface/Åõ»çÃ¼-1.bmp"
+							data-active="basic_interface/Åõ»çÃ¼-1.bmp"
+						></button>
+						<button
+							class="filter-card"
+							data-tab-id="5"
+							data-title="Card"
+							data-background="basic_interface/Ä«µå-2.bmp"
+							data-down="basic_interface/Ä«µå-1.bmp"
+							data-active="basic_interface/Ä«µå-1.bmp"
+						></button>
+						<button
+							class="filter-etc"
+							data-tab-id="6"
+							data-title="Etc"
+							data-background="basic_interface/±âÅ¸-2.bmp"
+							data-down="basic_interface/±âÅ¸-1.bmp"
+							data-active="basic_interface/±âÅ¸-1.bmp"
+						></button>
+						<select class="storage-order-by">
+							<option value="BASE">Base</option>
+							<option value="UPGRADE">Upgrade</option>
+							<option value="DOWNGRADE">Downgrade</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<div class="item_num_display">
+							<button class="item_num" data-background="inventory/icon_num.bmp"></button>
+							<span class="current">0</span><span class="divider">/</span><span class="limit">0</span>
+						</div>
+					</td>
+					<td>
+						<div class="search-container">
+							<input id="storage-search-input" type="text" class="search-input" />
+							<ui-button
+								class="search-button"
+								bg="bt_search_normal.bmp"
+								hover="bt_search_over.bmp"
+								down="bt_search_press.bmp"
+							></ui-button>
+						</div>
+						<ui-button
+							class="close"
+							bg="btn_close.bmp"
+							hover="btn_close_a.bmp"
+							down="btn_close_b.bmp"
+						></ui-button>
+						<button class="extend" data-background="btn_resize.bmp"></button>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+</div>

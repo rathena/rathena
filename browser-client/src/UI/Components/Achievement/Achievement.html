@@ -1,0 +1,117 @@
+<!-- Titlebar -->
+<div class="titlebar" data-draggable="true">
+	<div class="corner left">
+		<ui-image src="basic_interface/titlebar_left.bmp"></ui-image>
+	</div>
+	<div class="center">
+		<ui-image src="basic_interface/titlebar_mid.bmp"></ui-image>
+	</div>
+	<div class="corner right">
+		<ui-image src="basic_interface/titlebar_right.bmp"></ui-image>
+	</div>
+	<ui-text class="title" msg="2646">Achievement Challenges</ui-text>
+	<ui-button
+		class="btn-left"
+		bg="basic_interface/sys_base_off.bmp"
+		hover="basic_interface/sys_base_on.bmp"
+	></ui-button>
+	<ui-button
+		class="btn-right close"
+		bg="basic_interface/sys_close_off.bmp"
+		hover="basic_interface/sys_close_on.bmp"
+	></ui-button>
+</div>
+
+<!-- Header -->
+<div class="header">
+	<ui-image src="achievement_re/bg_upper.bmp"></ui-image>
+	<div class="rank-badge js-rank">0</div>
+	<div class="overall-points js-points">0</div>
+	<div class="rank-progress js-rank-progress">
+		<div class="progress-text js-rank-progress-text">0/0</div>
+		<div class="bar-bg">
+			<div class="bar-fill js-rank-progress-fill" style="width: 0%"></div>
+		</div>
+	</div>
+	<div class="cat-progress js-cat-progress" style="display: none">
+		<div class="cat-image">
+			<ui-image src="achievement_re/upper_trophy.bmp"></ui-image>
+		</div>
+		<div class="cat-text">
+			<ui-text class="js-cat-name" msg="2657">General</ui-text>
+			<span class="progress-text js-cat-progress-text">(0/0)</span>
+		</div>
+		<div class="bar-bg">
+			<div class="bar-fill js-cat-progress-fill" style="width: 0%"></div>
+		</div>
+	</div>
+
+	<!-- Shown only in list view, but kept here for toggle ease -->
+	<div class="filter-group js-filters" style="display: none">
+		<div class="radio-container">
+			<div class="radio" data-filter="complete">
+				<ui-image src="achievement_re/btn_radio_off.bmp" class="js-radio-req"></ui-image>
+			</div>
+			<ui-text msg="3106">Complete</ui-text>
+		</div>
+		<div class="radio-container">
+			<div class="radio" data-filter="incomplete">
+				<ui-image src="achievement_re/btn_radio_off.bmp" class="js-radio-req"></ui-image>
+			</div>
+			<ui-text msg="3107">Incomplete</ui-text>
+		</div>
+	</div>
+</div>
+
+<!-- Overlay for tooltips -->
+<div class="overlay js-overlay" style="display: none"></div>
+
+<!-- Sidebar -->
+<div class="sidebar js-sidebar">
+	<ui-image src="achievement_re/bg_tab.bmp"></ui-image>
+	<!-- Dynamically filled -->
+</div>
+
+<!-- Overview Pane -->
+<div class="pane-overview js-pane-overview">
+	<div class="bg-summary">
+		<ui-image src="achievement_re/bg_summary.bmp"></ui-image>
+	</div>
+	<div class="js-overview-container"></div>
+</div>
+
+<!-- List & Detail Pane -->
+<div class="pane-listd js-pane-listd">
+	<div class="bg-list">
+		<ui-image src="achievement_re/bg_list.bmp"></ui-image>
+	</div>
+	<div class="ach-list-container js-list-container">
+		<div class="ach-list js-list"></div>
+	</div>
+	<div class="scrollbar js-scrollbar"></div>
+	<div class="detail-view js-detail" data-background="achievement_re/bg_detail.bmp">
+		<div class="d-title js-d-title"></div>
+		<div class="d-stamp" data-background="achievement_re/detail_stamp.bmp"></div>
+		<div class="d-desc js-d-desc"></div>
+		<div class="d-goals js-d-goals"></div>
+		<div class="d-reward js-d-rewards">
+			<div class="d-rewards-slot reward-title">
+				<ui-image src="achievement_re/reward_title.bmp"></ui-image>
+			</div>
+			<div class="d-rewards-slot reward-buff">
+				<ui-image src="achievement_re/reward_buff.bmp"></ui-image>
+			</div>
+			<div class="d-rewards-slot reward-item">
+				<ui-image src="achievement_re/reward_item.bmp"></ui-image>
+				<div class="d-reward-item"></div>
+			</div>
+		</div>
+		<ui-button
+			class="d-claim-btn js-d-claim"
+			style="display: none"
+			bg="achievement_re/btn_receive_out.bmp"
+			hover="achievement_re/btn_receive_over.bmp"
+			down="achievement_re/btn_receive_press.bmp"
+		></ui-button>
+	</div>
+</div>

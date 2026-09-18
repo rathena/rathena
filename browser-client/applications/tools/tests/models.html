@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>roBrowser — Model (.rsm) Tester</title>
+</head>
+<body>
+  <script src="../../shared/importmap.js" data-project-root-split="/applications/"></script>
+
+  <script type="module">
+    window.ROConfig = { servers: [{ packetver: 0 }], packetver: 0 };
+
+    import FileTester from './FileTester.js';
+    import Model from 'Loaders/Model.js';
+
+    const param = {
+      position: new Float32Array(3),
+      scale:    new Float32Array([1, 1, 1]),
+      rotation: new Float32Array(3)
+    };
+
+    const ft = new FileTester('rsm', data => {
+      const model = new Model(data);
+      model.createInstance(param, 0, 0);
+      model.compile();
+    });
+
+    ft.start();
+  </script>
+</body>
+</html>

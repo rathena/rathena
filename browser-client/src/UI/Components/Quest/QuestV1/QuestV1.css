@@ -1,0 +1,168 @@
+:host {
+	top: 200px;
+	left: 200px;
+}
+
+#QuestV1 {
+	width: 350px;
+	height: 250px;
+}
+
+#QuestV1 .titlebar {
+	width: 100%;
+	height: 100%;
+}
+
+/** Header **/
+#QuestV1 .titlebar .header {
+	width: 250px;
+	height: 17px;
+}
+#QuestV1 .titlebar .header .corner {
+	position: absolute;
+	width: 12px;
+	height: 17px;
+}
+#QuestV1 .titlebar .header .corner.left {
+	top: 0px;
+	left: 0px;
+}
+#QuestV1 .titlebar .header .corner.right {
+	top: 0px;
+	right: 0px;
+}
+#QuestV1 .titlebar .header .center {
+	position: absolute;
+	top: 0px;
+	left: 12px;
+	width: 326px;
+	height: 17px;
+}
+#QuestV1 .titlebar .header .title {
+	position: absolute;
+	top: 2px;
+	left: 16px;
+	font-size: 13px;
+}
+#QuestV1 .titlebar .header .btn-left {
+	position: absolute;
+	top: 3px;
+	left: 4px;
+	width: 11px;
+	height: 11px;
+}
+#QuestV1 .titlebar .header .btn-right {
+	position: absolute;
+	top: 3px;
+	right: 2px;
+	width: 11px;
+	height: 11px;
+}
+
+/** Content **/
+#QuestV1 .titlebar .content {
+	width: 350px;
+	height: 204px;
+	background-color: white;
+}
+
+/** Select Buttons **/
+#QuestV1 .titlebar .quest-left-panel {
+	float: left;
+	width: 20px;
+	height: 204px;
+}
+#QuestV1 .titlebar .content .quest-left-panel .quest-menu {
+	height: 94px;
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+}
+#QuestV1 .titlebar .content .quest-left-panel .quest-menu .quest-menu-item {
+	height: 31px;
+	width: 30px;
+}
+
+/** QuestV1 List **/
+#QuestV1 .titlebar .content .quest-right-panel {
+	float: left;
+	width: 330px;
+	height: 204px;
+	display: block;
+	overflow: auto;
+}
+#QuestV1 .titlebar .content .quest-right-panel .quest-list {
+	list-style: none;
+	margin: 10px;
+	padding: 0px;
+}
+#QuestV1 .titlebar .content .quest-right-panel .quest-list .quest-item {
+	float: left;
+	list-style: none;
+	height: 42px;
+	width: 100%;
+	margin-top: 2px;
+}
+#QuestV1 .titlebar .content .quest-right-panel .quest-list .quest-item .quest-item-icon {
+	float: left;
+	min-height: 100%;
+	min-width: 15%;
+	position: relative;
+}
+#QuestV1 .titlebar .content .quest-right-panel .quest-list .quest-item .quest-item-icon .quest-item-icon-image {
+	position: absolute;
+	width: 24px;
+	height: 24px;
+	top: 6px;
+	left: 5px;
+}
+#QuestV1 .titlebar .content .quest-right-panel .quest-list .quest-item .quest-item-title {
+	float: left;
+	min-height: 100%;
+	min-width: 85%;
+}
+
+/** Footer **/
+#QuestV1 .titlebar .footer {
+	width: 350px;
+	height: 29px;
+}
+#QuestV1 .titlebar .footer .corner {
+	position: absolute;
+	width: 21px;
+	height: 29px;
+}
+#QuestV1 .titlebar .footer .corner.left {
+	bottom: 0px;
+	left: 0px;
+}
+#QuestV1 .titlebar .footer .corner.right {
+	bottom: 0px;
+	right: 0px;
+}
+#QuestV1 .titlebar .footer .center {
+	position: absolute;
+	bottom: 0px;
+	left: 21px;
+	width: 326px;
+	height: 29px;
+}
+
+/** Buttons **/
+#QuestV1 .titlebar .footer .btns {
+	position: absolute;
+	bottom: 4px;
+	width: 100%;
+	height: 20px;
+}
+#QuestV1 .titlebar .footer .btn {
+	position: absolute;
+	width: 42px;
+	height: 20px;
+}
+#QuestV1 .titlebar .footer .close {
+	right: 50px;
+}
+#QuestV1 .titlebar .footer .view {
+	right: 4px;
+}

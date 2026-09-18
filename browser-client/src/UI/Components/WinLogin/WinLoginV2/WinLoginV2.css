@@ -1,0 +1,85 @@
+:host {
+	top: 60%;
+	left: calc(50% - 140px);
+	width: 301px;
+	height: 132px;
+}
+
+#WinLogin {
+	position: absolute;
+	width: 301px;
+	height: 132px;
+}
+#WinLogin .win_login {
+	width: 100%;
+	height: 100%;
+}
+#WinLogin .win_login input {
+	position: absolute;
+	left: 17px;
+	height: 18px;
+	width: 127px;
+	border: none;
+	background-color: transparent;
+	padding-left: 2px;
+	outline: none;
+	text-align: center;
+}
+#WinLogin .win_login input.user {
+	top: 39px;
+}
+#WinLogin .win_login input.pass {
+	top: 61px;
+}
+#WinLogin .win_login .save {
+	position: absolute;
+	top: 85px;
+	left: 57px;
+	display: block;
+	width: 38px;
+	height: 10px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}
+#WinLogin .win_login .btn {
+	position: absolute;
+	border: 0;
+	background-color: transparent;
+}
+#WinLogin .win_login .btn.connect {
+	width: 84px;
+	height: 84px;
+	right: 25px;
+	bottom: 15px;
+}
+#WinLogin .win_login .btn.signup {
+	width: 84px;
+	height: 21px;
+	right: 120px;
+	bottom: 10px;
+}
+#WinLogin .btn.replay {
+	width: 84px;
+	height: 21px;
+	right: 210px;
+	bottom: 10px;
+}
+#WinLogin .win_login .btn.exit {
+	width: 24px;
+	height: 23px;
+	right: 7px;
+	bottom: 96px;
+}
+
+/* Override browser autofill styles */
+#WinLogin .win_login input:-webkit-autofill,
+#WinLogin .win_login input:-webkit-autofill:hover,
+#WinLogin .win_login input:-webkit-autofill:focus,
+#WinLogin .win_login input:-webkit-autofill:active,
+#WinLogin .win_login input:-internal-autofill-selected,
+#WinLogin .win_login input:-internal-autofill-previewed {
+	-webkit-background-clip: text;
+	transition: background-color 5000sease-in-out 0s;
+	box-shadow: inset 0 0 20px 20px #ffffff00;
+}

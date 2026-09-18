@@ -1,0 +1,147 @@
+:host {
+	width: 150px;
+	height: 286px;
+}
+
+#charcreate_v2 {
+	position: absolute;
+	width: 150px;
+	height: 286px;
+}
+
+#charcreate_v2 .header {
+	width: 150px;
+	height: 17px;
+}
+#charcreate_v2 .header .corner {
+	position: absolute;
+	width: 12px;
+	height: 17px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+#charcreate_v2 .header .corner.left {
+	top: 0px;
+	left: 0px;
+}
+#charcreate_v2 .header .corner.right {
+	top: 0px;
+	right: 0px;
+}
+#charcreate_v2 .header .center {
+	position: absolute;
+	top: 0px;
+	left: 12px;
+	width: 128px;
+	height: 17px;
+}
+#charcreate_v2 .header .title {
+	position: absolute;
+	top: 2px;
+	left: 12px;
+	font-size: 13px;
+}
+
+#charcreate_v2 .content {
+	width: 150px;
+	height: 240px;
+}
+
+#charcreate_v2 .footer {
+	width: 150px;
+	height: 29px;
+}
+#charcreate_v2 .footer .corner {
+	position: absolute;
+	width: 21px;
+	height: 29px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+#charcreate_v2 .footer .corner.left {
+	bottom: 0px;
+	left: 0px;
+}
+#charcreate_v2 .footer .corner.right {
+	bottom: 0px;
+	right: 0px;
+}
+#charcreate_v2 .footer .center {
+	position: absolute;
+	bottom: 0px;
+	left: 21px;
+	width: 118px;
+	height: 29px;
+}
+
+/** Name **/
+#charcreate_v2 .content input {
+	position: absolute;
+	top: 142px;
+	left: 40px;
+	width: 96px;
+	height: 18px;
+	padding-top: 2px;
+	padding-left: 3px;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	border: 0;
+}
+
+/** Chargen **/
+#charcreate_v2 .content ui-button {
+	position: absolute;
+	width: 13px;
+	height: 13px;
+}
+
+#charcreate_v2 .content .styleleft {
+	top: 190px;
+	left: 15px;
+}
+#charcreate_v2 .content .styleright {
+	top: 190px;
+	left: 125px;
+}
+#charcreate_v2 .content .colorleft {
+	top: 230px;
+	left: 15px;
+}
+#charcreate_v2 .content .colorright {
+	top: 230px;
+	left: 125px;
+}
+
+#charcreate_v2 .content canvas {
+	position: absolute;
+	top: 25px;
+	left: 40px;
+}
+
+/** Buttons **/
+#charcreate_v2 .footer .btns {
+	position: absolute;
+	bottom: 4px;
+	width: 100%;
+	height: 20px;
+}
+#charcreate_v2 .footer .btn {
+	position: absolute;
+	width: 42px;
+	height: 20px;
+}
+#charcreate_v2 .footer .make {
+	right: 50px;
+}
+#charcreate_v2 .footer .cancel {
+	right: 4px;
+}
+
+#charcreate_v2 .btns ui-button {
+	background-repeat: no-repeat;
+	background-color: transparent;
+	border: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

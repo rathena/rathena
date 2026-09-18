@@ -1,0 +1,69 @@
+name: rathena-local
+
+x-server: &server
+  image: rathena-local:latest
+  build:
+    context: ../..
+    dockerfile: tools/local/Dockerfile
+    args:
+      PACKETVER: ${PACKETVER:-20211103}
+      BUILD_JOBS: ${BUILD_JOBS:-2}
+  init: true
+  restart: unless-stopped
+
+services:
+  db:
+    image: mariadb:11.4
+    environment:
+      MARIADB_ROOT_PASSWORD: local-root-rathena
+      MARIADB_DATABASE: ragnarok
+      MARIADB_USER: ragnarok
+      MARIADB_PASSWORD: ragnarok
+    volumes:
+      - database:/var/lib/mysql
+      - ../../sql-files/main.sql:/docker-entrypoint-initdb.d/01-main.sql:ro
+      - ../../sql-files/logs.sql:/docker-entrypoint-initdb.d/02-logs.sql:ro
+      - ../../sql-files/web.sql:/docker-entrypoint-initdb.d/03-web.sql:ro
+      - ../../sql-files/roulette_default_data.sql:/docker-entrypoint-initdb.d/04-roulette.sql:ro
+      - ./init.sql:/docker-entrypoint-initdb.d/05-local.sql:ro
+    healthcheck:
+      test: [CMD, healthcheck.sh, --connect, --innodb_initialized]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+    restart: unless-stopped
+
+  login:
+    <<: *server
+    command: [./login-server]
+    ports:
+      - "127.0.0.1:6900:6900"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  char:
+    <<: *server
+    command: [./char-server]
+    ports:
+      - "127.0.0.1:6121:6121"
+    depends_on:
+      db:
+        condition: service_healthy
+      login:
+        condition: service_started
+
+  map:
+    <<: *server
+    command: [./map-server]
+    ports:
+      - "127.0.0.1:5121:5121"
+    depends_on:
+      db:
+        condition: service_healthy
+      char:
+        condition: service_started
+
+volumes:
+  database:

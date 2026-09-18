@@ -1,0 +1,74 @@
+:host {
+	width: 276px;
+	height: 116px;
+	top: 285px;
+	left: 100px;
+}
+
+#NpcMenu {
+	position: absolute;
+	border-radius: 5px;
+	width: 276px;
+	height: 116px;
+	background-color: white;
+	padding: 2px;
+}
+
+#NpcMenu .title {
+	white-space: nowrap;
+	overflow: hidden;
+	display: block;
+	width: 260px;
+	padding-left: 3px;
+	padding-top: 3px;
+}
+
+#NpcMenu .container {
+	border-radius: 5px;
+	border: 1px solid #c1c6c2;
+	width: 269px;
+	height: 109px;
+	padding-left: 5px;
+	padding-top: 5px;
+}
+
+#NpcMenu .middle {
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+
+#NpcMenu .content {
+	white-space: pre-wrap;
+	background-color: #f9f9f9;
+	width: 260px;
+	height: 80px;
+	padding-left: 3px;
+	margin-top: 5px;
+}
+
+#NpcMenu .content div {
+	width: auto;
+	height: 17px;
+	display: block;
+	padding-top: 3px;
+	padding-left: 5px;
+}
+
+#NpcMenu .content div.selected {
+	background-color: #cde0ff;
+}
+
+#NpcMenu .btn {
+	position: absolute;
+	width: 42px;
+	height: 20px;
+	bottom: 5px;
+}
+
+#NpcMenu .cancel {
+	right: 4px;
+}
+
+#NpcMenu .ok {
+	right: 50px;
+}

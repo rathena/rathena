@@ -1,0 +1,10 @@
+node_modules
+dist
+.git
+.github
+doc
+*.md
+# Exclude all .env files at any depth
+**/.env*
+# Prevent accidentally baking Config.local.js into the image — must be mounted at runtime
+applications/pwa/Config.local.js

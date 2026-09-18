@@ -1,0 +1,59 @@
+<div id="CaptchaSelector">
+	<div class="titlebar">
+		<ui-image src="basic_interface/titlebar_mid.bmp"></ui-image>
+		<div class="left">
+			<ui-button
+				class="base"
+				bg="basic_interface/sys_base_off.bmp"
+				hover="basic_interface/sys_base_on.bmp"
+			></ui-button>
+		</div>
+		<div class="right">
+			<ui-button
+				class="base close"
+				bg="basic_interface/sys_close_off.bmp"
+				hover="basic_interface/sys_close_on.bmp"
+			></ui-button>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="container">
+		<div class="options">
+			<input id="target_type_character" type="radio" name="target_type" value="character" checked />
+			<label for="target_type_character"><ui-text msg="2887"></ui-text></label>
+			<input id="target_type_range" type="radio" name="target_type" value="range" />
+			<label for="target_type_range"><ui-text msg="2888"></ui-text></label>
+			<input type="number" class="range_val" value="1" min="1" max="9" />
+			<ui-button
+				class="btn btn_active"
+				bg="btn_q_active.bmp"
+				hover="btn_q_active_a.bmp"
+				down="btn_q_active_b.bmp"
+			></ui-button>
+		</div>
+		<ul class="player_list">
+			<li class="player"></li>
+			<li class="player"></li>
+			<li class="player"></li>
+			<li class="player"></li>
+			<li class="player"></li>
+			<li class="player"></li>
+			<li class="player"></li>
+			<li class="player"></li>
+			<li class="player"></li>
+		</ul>
+		<div class="footer">
+			<ui-image src="basic_interface/btnbar_mid2.bmp"></ui-image>
+			<ui-button class="btn ok" bg="btn_ok.bmp" hover="btn_ok_a.bmp" down="btn_ok_b.bmp"></ui-button>
+		</div>
+	</div>
+	<div class="character_info">
+		<ui-button
+			class="base close-character"
+			bg="basic_interface/sys_close_off.bmp"
+			hover="basic_interface/sys_close_on.bmp"
+		></ui-button>
+		<span class="character-name"></span><br />
+		<span class="character-job"></span>
+	</div>
+</div>

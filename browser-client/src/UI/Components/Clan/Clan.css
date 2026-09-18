@@ -1,0 +1,236 @@
+:host {
+	top: 150px;
+	left: 150px;
+	width: 400px;
+	height: 317px;
+}
+
+#Clan {
+	position: absolute;
+	width: 400px;
+	height: 317px;
+}
+
+#Clan .titlebar {
+	width: 100%;
+	height: 17px;
+	background-color: white;
+	background-repeat: repeat-x;
+	border-radius: 3px 3px 0px 0px;
+}
+
+#Clan .titlebar .base {
+	width: 11px;
+	height: 11px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+
+#Clan .titlebar .right {
+	float: right;
+	margin-right: 3px;
+}
+
+#Clan .titlebar .clear {
+	clear: both;
+}
+
+#Clan .panel {
+	background-color: white;
+	padding-right: 2px;
+}
+
+#Clan .content {
+	position: relative;
+	box-sizing: border-box;
+	overflow-y: auto;
+	padding: 2px;
+	border-top: 1px solid #c6c6c6;
+	height: 250px;
+}
+
+#Clan .tabs {
+	height: 23px;
+	background-color: #b5b6b5;
+	white-space: nowrap;
+}
+
+#Clan .tabs button.active {
+	background-color: #fff;
+}
+
+#Clan .tabs button {
+	width: 64px;
+	height: 23px;
+	margin-left: 1px;
+	margin-right: 1px;
+	margin-top: 1px;
+	padding: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	background-color: #cecece;
+	border: 0px;
+	padding: 3px;
+}
+
+#Clan .footer {
+	width: 100%;
+	height: 27px;
+	background-repeat: repeat-x;
+	background-color: transparent;
+	position: relative;
+	border-radius: 0px 0px 3px 3px;
+}
+
+#Clan .footer .btn_ok {
+	display: none;
+	position: absolute;
+	bottom: 4px;
+	right: 4px;
+	width: 42px;
+	height: 20px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	border: none;
+}
+
+/*
+ * Clan Info CSS
+ */
+#Clan .content.info .exp,
+#Clan .content.info .emblem,
+#Clan .content.info .tax,
+#Clan .content.info .ally,
+#Clan .content.info .ally_list,
+#Clan .content.info .hostile,
+#Clan .content.info .hostile_list {
+	position: absolute;
+	left: 201px;
+}
+
+#Clan .content.info .name {
+	position: absolute;
+	left: 9px;
+	top: 13px;
+}
+
+#Clan .content.info .level {
+	position: absolute;
+	left: 9px;
+	top: 28px;
+}
+
+#Clan .content.info .master {
+	position: absolute;
+	left: 9px;
+	top: 45px;
+}
+
+#Clan .content.info .members {
+	position: absolute;
+	left: 9px;
+	top: 61px;
+}
+
+#Clan .content.info .territory {
+	position: absolute;
+	left: 9px;
+	top: 77px;
+}
+
+#Clan .content.info .clan_illust {
+	position: absolute;
+	left: 9px;
+	top: 99px;
+	width: 180px;
+	height: 134px;
+	background-repeat: no-repeat;
+}
+
+#Clan .content.info .members ui-button {
+	margin-left: 5px;
+	vertical-align: -4px;
+	border: none;
+	width: 15px;
+	height: 15px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+
+#Clan .content.info .emblem {
+	position: absolute;
+	left: 201px;
+	top: 37px;
+}
+
+#Clan .content.info .ally {
+	position: absolute;
+	left: 201px;
+	top: 99px;
+}
+
+#Clan .content.info .ally_list {
+	position: absolute;
+	left: 201px;
+	top: 114px;
+	white-space: pre;
+	width: 168px;
+	height: 48px;
+	background: #cecece;
+}
+
+#Clan .content.info .hostile {
+	position: absolute;
+	left: 201px;
+	top: 173px;
+}
+
+#Clan .content.info .hostile_list {
+	position: absolute;
+	left: 201px;
+	top: 188px;
+	white-space: pre;
+	width: 168px;
+	height: 48px;
+	background: #cecece;
+}
+
+#Clan .content.info .ally_list div,
+#Clan .content.info .hostile_list div {
+	padding: 2px;
+}
+
+#Clan .content.info .ally_list div.active,
+#Clan .content.info .hostile_list div.active {
+	background-color: #739eef;
+	padding: 2px;
+}
+
+#Clan .content.info .emblem_container {
+	width: 24px;
+	height: 24px;
+	position: absolute;
+	top: 29px;
+	left: 300px;
+	background-color: #709ce7;
+	background-repeat: no-repeat;
+}
+
+#Clan .content.info .emblem_edit {
+	position: absolute;
+	top: 34px;
+	left: 330px;
+	width: 42px;
+	height: 20px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	overflow: hidden;
+}
+
+#Clan .content.info .emblem_edit input {
+	opacity: 0;
+}

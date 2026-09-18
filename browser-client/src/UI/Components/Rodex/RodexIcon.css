@@ -1,0 +1,18 @@
+:host {
+	width: 43px;
+	height: 43px;
+	position: absolute;
+	right: 200px;
+	top: 20px;
+}
+#RodexIcon {
+	width: 43px;
+	height: 43px;
+}
+.rodex-icon {
+	width: 43px;
+	height: 43px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}

@@ -1,0 +1,69 @@
+<div id="LaphineSys">
+	<div class="container">
+		<ui-image src="lapine/bg_lapine.bmp"></ui-image>
+		<div class="titlebar">
+			<div class="left">
+				<ui-button
+					class="base"
+					bg="basic_interface/sys_base_off.bmp"
+					hover="basic_interface/sys_base_on.bmp"
+				></ui-button>
+				<span class="item_text"></span>
+			</div>
+			<div class="right">
+				<ui-button
+					class="base close"
+					bg="basic_interface/sys_close_off.bmp"
+					hover="basic_interface/sys_close_on.bmp"
+				></ui-button>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="overlay"></div>
+		<div class="panel">
+			<div class="scroll_hider"></div>
+			<div class="left_panel">
+				<div class="mat_info_container">
+					<div class="info_title"><ui-text msg="2896"></ui-text></div>
+					<div class="mat_info_list"></div>
+					<div class="mat_count_submitted"></div>
+					<div class="mat_count_needed"></div>
+				</div>
+				<div class="submitted_mat_list"></div>
+			</div>
+			<div class="submit_button_disabled">
+				<ui-image src="lapine/btn_moveitem_dis.bmp"></ui-image>
+			</div>
+			<ui-button
+				class="submit_button_enabled"
+				bg="lapine/btn_moveitem_out.bmp"
+				hover="lapine/btn_moveitem_over.bmp"
+				down="lapine/btn_moveitem_press.bmp"
+			></ui-button>
+			<div class="available_mat_list"></div>
+			<div class="footer">
+				<div class="some_notifs">
+					<div class="notif">
+						<ui-image src="lapine/icon_notify.bmp"></ui-image>
+					</div>
+					<span class="info_msg"></span>
+				</div>
+				<ui-button
+					class="cancel"
+					bg="lapine/btn_cancel_out.bmp"
+					hover="lapine/btn_cancel_over.bmp"
+					down="lapine/btn_cancel_press.bmp"
+				></ui-button>
+				<ui-button
+					class="make_enabled"
+					bg="lapine/btn_make_out.bmp"
+					hover="lapine/btn_make_over.bmp"
+					down="lapine/btn_make_press.bmp"
+				></ui-button>
+				<div class="make_disabled">
+					<ui-image src="lapine/btn_make_dis.bmp"></ui-image>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

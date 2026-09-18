@@ -1,0 +1,49 @@
+:host {
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+#StrViewer {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	font-family: Arial;
+	font-size: 12px;
+}
+#StrViewer .warning {
+	display: none;
+}
+#StrViewer .info {
+	text-align: center;
+	width: 100%;
+	color: white;
+	margin-top: 50px;
+	position: absolute;
+}
+#StrViewer canvas {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+#StrViewer #run_msg {
+	position: absolute;
+	right: 10px;
+	top: 12px;
+	text-align: right;
+	color: #fa5;
+}
+#StrViewer .head {
+	position: absolute;
+	width: 100%;
+	height: 40px;
+	background: #222;
+	z-index: 100;
+	display: none;
+}
+#StrViewer .head select {
+	position: relative;
+	top: 8px;
+	left: 5px;
+}

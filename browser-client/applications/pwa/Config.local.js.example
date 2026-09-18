@@ -1,0 +1,41 @@
+/**
+ * ROBrowser Local Configuration Overrides
+ *
+ * Copy this file to Config.local.js and customize as needed.
+ * Values here will override those in Config.js.
+ * Config.local.js is optional and will be silently ignored if not present.
+ *
+ * Docker / containerised deployments: mount this file at runtime:
+ *   docker run -v /path/to/Config.local.js:/robrowser/Config.local.js:ro ...
+ * See DOCKER.md for a complete deployment guide.
+ */
+window.ROConfigLocal = {
+	// Example: Override server settings
+	servers: [
+		{
+			display: 'My Private Server',
+			desc: 'custom server',
+			address: '127.0.0.1',
+			port: 6900,
+			version: 25,
+			langtype: 12,
+			packetver: 20130618,
+			renewal: false,
+			worldMapSettings: { episode: 12 },
+			packetKeys: false,
+			socketProxy: 'wss://connect.robrowser.com',
+			adminList: [2000000],
+
+			// forceUseAddress: true,  // Uncomment for any containerised or NAT deployment.
+			//                         // Prevents the client from using internal IPs returned
+			//                         // by char/map server packets, which are unreachable
+			//                         // outside the server's local network.
+		}
+	],
+
+	// Example: Skip intro screen
+	// skipIntro: true,
+
+	// Example: Custom remote client URL
+	// remoteClient: 'https://my-grf-server.com/',
+};

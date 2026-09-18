@@ -1,0 +1,75 @@
+:host {
+	width: 140px;
+	height: 26px;
+}
+
+.EntityRoom {
+	box-sizing: border-box;
+	position: absolute;
+	z-index: 45;
+	width: 140px;
+	max-height: 26px;
+	border-radius: 5px;
+	background-color: white;
+	padding: 2px;
+	letter-spacing: 0px;
+}
+
+.EntityRoom button {
+	width: 100%;
+	text-align: left;
+	padding: 0px;
+	border-radius: 5px;
+	border: 1px solid #c1c6c2;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-position: left center;
+	white-space: nowrap;
+	display: flex;
+	align-items: center;
+}
+
+.EntityRoom button::after {
+	content: '';
+	position: absolute;
+	bottom: -12px;
+	left: 50%;
+	margin-left: -10px;
+	z-index: -1;
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 0 10.5px 26px 10.5px;
+	border-color: transparent transparent #fff transparent;
+	transform: rotate(220deg);
+}
+
+.EntityRoom .image {
+	width: 24px;
+	height: 24px;
+	margin-right: 5px;
+	margin-top: -1px;
+	margin-bottom: -3px;
+}
+
+.EntityRoom .title {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	min-width: 0;
+	flex: 1;
+}
+
+.EntityRoom .overlay {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 26px;
+	z-index: 900;
+	padding: 5px;
+	background-color: rgba(0, 0, 0, 0.6);
+	color: white;
+	text-shadow: 1px 1px black;
+	border: 1px solid #5a5a5a;
+	white-space: nowrap;
+}

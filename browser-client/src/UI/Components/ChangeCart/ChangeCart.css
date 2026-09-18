@@ -1,0 +1,65 @@
+:host {
+	width: 400px;
+	height: 117px;
+	top: 50%;
+	left: 50%;
+}
+
+#changecart {
+	position: absolute;
+	width: 400px;
+	height: 117px;
+}
+#changecart .titlebar {
+	width: 100%;
+	height: 17px;
+	background-color: white;
+	background-repeat: repeat-x;
+	border-radius: 3px 3px 0px 0px;
+}
+#changecart .titlebar .base {
+	width: 11px;
+	height: 11px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+#changecart .titlebar .text {
+	text-shadow: 1px 1px white;
+	vertical-align: -2px;
+	white-space: nowrap;
+	/* chrome bug */
+	display: inline-block;
+	width: 32px;
+	height: 13px;
+	font-size: 11px;
+	font-weight: bold;
+}
+#changecart .titlebar .left {
+	margin-left: 3px;
+	float: left;
+}
+#changecart .titlebar .right {
+	float: right;
+	margin-right: 3px;
+}
+#changecart .titlebar .clear {
+	clear: both;
+}
+#changecart .titlebar .left {
+	margin-left: 3px;
+	float: left;
+}
+#changecart .carts {
+	border: 0;
+	width: 400px;
+	height: 100px;
+	background-color: white;
+	overflow-y: auto;
+}
+#changecart .cart {
+	display: inline-block;
+	float: left;
+	border: 0;
+}

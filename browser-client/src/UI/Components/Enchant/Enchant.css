@@ -1,0 +1,586 @@
+:host {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 690px;
+	height: 470px;
+}
+
+#Enchant {
+	position: relative;
+	width: 100%;
+	height: 100%;
+
+	color: #2d3a55;
+	box-sizing: border-box;
+	--enchant-scroll-up: none;
+	--enchant-scroll-down: none;
+	--enchant-scroll-track: none;
+	--enchant-scroll-thumb: none;
+}
+
+#Enchant .container {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+#Enchant .titlebar {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 17px;
+	background-image: none !important;
+	z-index: 5;
+}
+
+#Enchant .titlebar .base {
+	width: 11px;
+	height: 11px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+
+#Enchant .titlebar .base.close {
+	width: 13px;
+	height: 13px;
+}
+
+#Enchant .titlebar .text {
+	display: none;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+#Enchant .titlebar .left {
+	margin-left: 3px;
+	float: left;
+}
+
+#Enchant .titlebar .right {
+	position: absolute;
+	right: 6px;
+	top: 2px;
+}
+
+#Enchant .titlebar .clear {
+	clear: both;
+}
+
+#Enchant .overlay {
+	position: absolute;
+	display: none;
+	white-space: nowrap;
+	z-index: 900;
+	height: 15px;
+	line-height: 15px;
+	border-radius: 3px;
+	padding: 4px;
+	background: rgba(0, 0, 0, 0.7);
+	color: #ffffff;
+	text-shadow: 1px 1px #000000;
+}
+
+#Enchant .overlay.grey {
+	color: #aaaaaa;
+}
+
+#Enchant .panel {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+}
+
+#Enchant .left_panel {
+	position: absolute;
+	left: 0;
+	top: 10px;
+	width: 220px;
+	height: 405px;
+}
+
+#Enchant .item_list {
+	position: absolute;
+	left: 10px;
+	top: 8px;
+	width: 200px;
+	height: 389px;
+	overflow-y: auto;
+}
+
+#Enchant .enchant_list::-webkit-scrollbar,
+#Enchant .item_list::-webkit-scrollbar {
+	width: 16px;
+	height: 0;
+}
+
+#Enchant .enchant_list::-webkit-scrollbar-corner,
+#Enchant .item_list::-webkit-scrollbar-corner {
+	display: none;
+}
+
+#Enchant .enchant_list::-webkit-scrollbar-button:vertical:increment,
+#Enchant .item_list::-webkit-scrollbar-button:vertical:increment {
+	background: var(--enchant-scroll-down) center center no-repeat;
+	height: 16px;
+	width: 16px;
+	background-color: transparent;
+}
+
+#Enchant .enchant_list::-webkit-scrollbar-button:vertical:decrement,
+#Enchant .item_list::-webkit-scrollbar-button:vertical:decrement {
+	background: var(--enchant-scroll-up) center center no-repeat;
+	height: 16px;
+	width: 16px;
+	background-color: transparent;
+}
+
+#Enchant .enchant_list::-webkit-scrollbar-track-piece:vertical,
+#Enchant .item_list::-webkit-scrollbar-track-piece:vertical {
+	background: var(--enchant-scroll-track) center repeat-y;
+}
+
+#Enchant .enchant_list::-webkit-scrollbar-thumb:vertical,
+#Enchant .item_list::-webkit-scrollbar-thumb:vertical {
+	background: var(--enchant-scroll-thumb) center no-repeat;
+}
+
+#Enchant .enchant_list::-webkit-scrollbar-thumb:vertical:hover,
+#Enchant .item_list::-webkit-scrollbar-thumb:vertical:hover {
+	background: var(--enchant-scroll-thumb) center no-repeat;
+}
+
+#Enchant .enchant_list::-webkit-scrollbar-thumb:vertical:active,
+#Enchant .item_list::-webkit-scrollbar-thumb:vertical:active {
+	background: var(--enchant-scroll-thumb) center no-repeat;
+}
+
+#Enchant .enchant_list::-webkit-scrollbar-thumb:vertical,
+#Enchant .item_list::-webkit-scrollbar-thumb:vertical {
+	-webkit-border-image: none;
+}
+
+#Enchant .item_list_empty {
+	padding: 10px;
+
+	color: #6b7893;
+	text-align: center;
+}
+
+#Enchant .item_entry {
+	position: relative;
+	width: 200px;
+	height: 50px;
+	border: none;
+	padding: 0;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-size: contain;
+	cursor: pointer;
+}
+
+#Enchant .item_entry + .item_entry {
+	margin-top: 4px;
+}
+
+#Enchant .item_entry:focus {
+	outline: none;
+}
+
+#Enchant .item_entry.active {
+	filter: brightness(1.02);
+}
+
+#Enchant .item_entry .item_slot {
+	position: absolute;
+	left: 6px;
+	top: 13px;
+	width: 24px;
+	height: 24px;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+#Enchant .item_entry .item_grade {
+	position: absolute;
+	top: -13px;
+	left: 130px;
+	width: 12px;
+	height: 12px;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-size: contain;
+	pointer-events: none;
+}
+
+#Enchant .item_entry .item_info {
+	position: absolute;
+	left: 36px;
+	top: 20px;
+}
+
+#Enchant .item_entry .item_name {
+	font-weight: bold;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: #2d3a55;
+}
+
+#Enchant .main_panel {
+	position: absolute;
+	left: 220px;
+	top: 40px;
+	width: 470px;
+	height: 377px;
+}
+
+#Enchant .subpage {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 470px;
+	height: 377px;
+	background-repeat: no-repeat;
+	background-size: contain;
+	pointer-events: none;
+}
+
+#Enchant .action_tabs {
+	position: absolute;
+	left: 20px;
+	top: -23px;
+	width: 260px;
+	height: 23px;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+#Enchant .action_tabs .tab {
+	position: absolute;
+	top: 2px;
+	width: 65px;
+	height: 23px;
+	border: none;
+	background-color: transparent;
+	padding: 0;
+	cursor: pointer;
+	font-weight: bold;
+	color: #aeaeae;
+}
+
+#Enchant .action_tabs .tab.active {
+	color: #375d9d;
+}
+
+#Enchant .action_tabs .tab[data-action='reset'] {
+	left: 192px;
+}
+
+#Enchant .action_tabs .tab[data-action='upgrade'] {
+	left: 131px;
+}
+
+#Enchant .action_tabs .tab[data-action='perfect'] {
+	left: 68px;
+}
+
+#Enchant .action_tabs .tab[data-action='random'] {
+	left: 0;
+}
+
+#Enchant .action_tabs .tab[data-action='perfect'] {
+	left: 65px;
+}
+
+#Enchant .action_tabs .tab[data-action='upgrade'] {
+	left: 130px;
+}
+
+#Enchant .action_tabs .tab[data-action='reset'] {
+	left: 195px;
+}
+
+#Enchant .action_tabs .tab.disabled {
+	opacity: 0.55;
+	pointer-events: none;
+}
+
+#Enchant .action_content {
+	display: none;
+}
+
+#Enchant .slot_board {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 300px;
+	height: 190px;
+}
+
+#Enchant .preview_item {
+	position: absolute;
+	left: 116px;
+	top: 9px;
+	width: 70px;
+	height: 94px;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+}
+
+#Enchant .slot_list {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 300px;
+	height: 190px;
+}
+
+#Enchant .slot_empty {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	color: #6b7893;
+	pointer-events: none;
+}
+
+#Enchant .slot_list .slot_entry {
+	position: absolute;
+	width: 44px;
+	height: 44px;
+	background-repeat: no-repeat;
+	background-size: contain;
+	cursor: pointer;
+}
+
+#Enchant .slot_entry.empty {
+	background-image: none !important;
+}
+
+#Enchant .slot_list .slot_entry[data-slot='3'] {
+	top: 25px;
+	left: 190px;
+}
+
+#Enchant .slot_list .slot_entry[data-slot='2'] {
+	top: 110px;
+	left: 168px;
+}
+
+#Enchant .slot_list .slot_entry[data-slot='1'] {
+	top: 110px;
+	left: 88px;
+}
+
+#Enchant .slot_list .slot_entry[data-slot='0'] {
+	top: 24px;
+	left: 66px;
+}
+
+#Enchant .slot_entry.locked {
+	opacity: 0.55;
+	pointer-events: none;
+}
+
+#Enchant .slot_entry .slot_ring,
+#Enchant .slot_entry .slot_label,
+#Enchant .slot_markers {
+	display: none;
+}
+
+#Enchant .slot_entry .slot_icon {
+	position: absolute;
+	left: 12px;
+	top: 12px;
+	width: 20px;
+	height: 20px;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+#Enchant .enchant_list {
+	position: absolute;
+	left: 305px;
+	top: 0;
+	width: 165px;
+	height: 373px;
+	overflow: hidden auto;
+}
+
+#Enchant .enchant_entry {
+	width: 150px;
+	height: 30px;
+	display: flex;
+	align-items: center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	cursor: pointer;
+}
+
+#Enchant .enchant_entry + .enchant_entry {
+	margin-top: 4px;
+}
+
+#Enchant .enchant_entry.active {
+	filter: brightness(1.02);
+}
+
+#Enchant .enchant_entry.disabled {
+	opacity: 0.6;
+}
+
+#Enchant .enchant_entry .entry_icon {
+	width: 22px;
+	height: 22px;
+	margin-left: 2px;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+}
+
+#Enchant .enchant_entry .entry_text {
+	margin-left: 6px;
+	width: 110px;
+	display: flex;
+	flex-direction: column;
+	line-height: 1.1;
+}
+
+#Enchant .enchant_entry .entry_name {
+	font-weight: bold;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: #2d3a55;
+}
+
+#Enchant .enchant_entry .entry_sub {
+	color: #6b7893;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+#Enchant .materials_panel {
+	position: absolute;
+	left: 20px;
+	top: 200px;
+	width: 260px;
+	height: 60px;
+}
+
+#Enchant .material_list {
+	display: flex;
+	gap: 6px;
+	flex-wrap: wrap;
+}
+
+#Enchant .material {
+	position: relative;
+	width: 70px;
+	height: 50px;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+#Enchant .material .icon {
+	position: absolute;
+	left: 6px;
+	top: 6px;
+	width: 24px;
+	height: 24px;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+#Enchant .material .name {
+	display: none;
+}
+
+#Enchant .material .count {
+	position: absolute;
+	right: 6px;
+	bottom: 6px;
+
+	color: #2d3a55;
+	text-shadow: 1px 1px 0 #ffffff;
+}
+
+#Enchant .tax_panel {
+	position: absolute;
+	left: 0;
+	top: 305px;
+	width: 300px;
+	height: 70px;
+}
+
+#Enchant .cost_panel {
+	position: absolute;
+	left: 108px;
+	top: 4px;
+	width: 144px;
+	height: 16px;
+}
+
+#Enchant .zeny_label {
+	display: none;
+}
+
+#Enchant .zeny_cost {
+	width: 100%;
+	text-align: right;
+
+	font-weight: bold;
+	color: #2d3a55;
+}
+
+#Enchant .action_btn {
+	position: absolute;
+	left: 80px;
+	top: 26px;
+	width: 140px;
+	height: 40px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-size: contain;
+	cursor: pointer;
+}
+
+#Enchant .action_btn:focus {
+	outline: none;
+}
+
+#Enchant .action_btn.disabled {
+	cursor: default;
+}
+
+#Enchant .log_panel {
+	position: absolute;
+	left: 0;
+	top: 417px;
+	width: 690px;
+	height: 53px;
+	padding: 6px 10px;
+	box-sizing: border-box;
+	overflow: hidden auto;
+}
+
+#Enchant .caution,
+#Enchant .status {
+	color: #b13b3b;
+	line-height: 1.2;
+}
+
+#Enchant .status.error {
+	color: #b13b3b;
+}

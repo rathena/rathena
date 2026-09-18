@@ -1,0 +1,67 @@
+:host {
+	width: 161px;
+	height: 30px;
+	top: 0;
+	left: 0;
+}
+
+.EntitySignboard {
+	position: absolute;
+	z-index: 45;
+	width: 161px;
+	background-repeat: no-repeat;
+	padding: 3px;
+	letter-spacing: 0px;
+	height: 30px;
+	cursor: inherit;
+}
+
+.EntitySignboard button {
+	position: relative;
+	height: 24px;
+	width: 100%;
+	text-align: left;
+	padding: 0px;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	white-space: nowrap;
+	border: none;
+	left: 2px;
+	top: 2px;
+}
+
+.EntitySignboard button:hover {
+	cursor: inherit;
+}
+
+.EntitySignboard button.icon-only {
+	pointer-events: none;
+}
+
+.EntitySignboard button .title {
+	position: relative;
+	left: 30px;
+	width: 122px;
+	color: white;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	display: inline-block;
+	max-width: 100%;
+	vertical-align: middle;
+	font-size: 0.9em;
+}
+
+.EntitySignboard .overlay {
+	display: none;
+	position: absolute;
+	top: 0px;
+	left: 26px;
+	white-space: nowrap;
+	z-index: 900;
+	height: 13px;
+	padding: 5px;
+	background-color: rgba(0, 0, 0, 0.6);
+	color: white;
+	text-shadow: 1px 1px black;
+}

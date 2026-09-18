@@ -1,0 +1,26 @@
+:host {
+	right: 0px;
+	bottom: 0px;
+	width: 240px;
+	height: 96px;
+	pointer-events: none;
+	z-index: 1000 !important;
+}
+
+#PvPCount {
+	position: absolute;
+	width: 240px;
+	height: 96px;
+}
+
+#PvPCount .pvp-rank-canvas {
+	display: block;
+	width: 240px;
+	height: 96px;
+}
+
+/* Pixel accuracy */
+#PvPCount canvas {
+	background: transparent;
+	image-rendering: pixelated;
+}

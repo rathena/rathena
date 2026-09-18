@@ -1,0 +1,35 @@
+:host {
+	top: 0px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 360px;
+	height: 250px;
+	pointer-events: none;
+	z-index: 1000 !important;
+}
+
+#PvPTimer {
+	position: absolute;
+	text-align: center;
+	width: 360px;
+	height: 250px;
+}
+
+#PvPTimer .pvp-timer-canvas {
+	display: block;
+	width: 300px;
+	height: 110px;
+	margin: 0 auto;
+}
+
+#PvPTimer .pvp-timeattack-canvas {
+	display: block;
+	width: 360px;
+	height: 128px;
+	margin-top: -12px;
+}
+
+#PvPTimer canvas {
+	background: transparent;
+	image-rendering: pixelated;
+}

@@ -1,0 +1,140 @@
+:host {
+	width: 576px;
+	height: 342px;
+}
+
+#charcreate {
+	position: absolute;
+	width: 576px;
+	height: 342px;
+}
+
+/** Name **/
+#charcreate input {
+	position: absolute;
+	top: 244px;
+	left: 62px;
+	width: 97px;
+	height: 14px;
+	padding-top: 2px;
+	padding-left: 3px;
+	background-color: transparent;
+	border: 0;
+}
+
+/** Chargen **/
+#charcreate .chargen ui-button {
+	position: absolute;
+	width: 13px;
+	height: 13px;
+}
+#charcreate .chargen .left {
+	top: 135px;
+	left: 47px;
+}
+#charcreate .chargen .up {
+	top: 105px;
+	left: 87px;
+}
+#charcreate .chargen .right {
+	top: 135px;
+	left: 127px;
+}
+#charcreate .chargen canvas {
+	position: absolute;
+	top: 120px;
+	left: 62px;
+}
+
+/** Graph buttons **/
+#charcreate .graph ui-button {
+	position: absolute;
+	width: 36px;
+	height: 36px;
+}
+#charcreate .graph .str {
+	top: 50px;
+	left: 270px;
+}
+#charcreate .graph .int {
+	top: 243px;
+	left: 270px;
+}
+#charcreate .graph .vit {
+	top: 104px;
+	left: 348px;
+}
+#charcreate .graph .dex {
+	top: 190px;
+	left: 191px;
+}
+#charcreate .graph .agi {
+	top: 103px;
+	left: 191px;
+}
+#charcreate .graph .luk {
+	top: 190px;
+	left: 348px;
+}
+#charcreate .graph canvas {
+	position: absolute;
+	left: 209px;
+	top: 86px;
+}
+
+/** Stats infos **/
+#charcreate .info {
+	position: absolute;
+	top: 40px;
+	left: 480px;
+}
+#charcreate .info div {
+	position: absolute;
+	left: 0px;
+}
+#charcreate .info .str {
+	top: 0px;
+}
+#charcreate .info .agi {
+	top: 16px;
+}
+#charcreate .info .vit {
+	top: 32px;
+}
+#charcreate .info .int {
+	top: 48px;
+}
+#charcreate .info .dex {
+	top: 64px;
+}
+#charcreate .info .luk {
+	top: 80px;
+}
+
+/** Buttons **/
+#charcreate .btns {
+	position: absolute;
+	bottom: 4px;
+	width: 100%;
+	height: 20px;
+}
+#charcreate .btn {
+	position: absolute;
+	width: 42px;
+	height: 20px;
+}
+#charcreate .make {
+	right: 50px;
+}
+#charcreate .cancel {
+	right: 4px;
+}
+
+#charcreate .btns ui-button {
+	background-repeat: no-repeat;
+	background-color: transparent;
+	border: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

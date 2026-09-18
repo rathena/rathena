@@ -1,0 +1,25 @@
+:host {
+	top: 100px;
+	left: 100px;
+	width: 80px;
+	height: 20px;
+}
+
+#FPS {
+	position: absolute;
+	background: white;
+	border-radius: 2px;
+	font-size: 11px;
+	font-weight: bold;
+}
+#FPS .titlebar {
+	width: 100%;
+	height: 17px;
+	background-color: white;
+	background-repeat: repeat-x;
+	border-radius: 3px 3px 0px 0px;
+}
+#FPS .titlebar .left {
+	margin-left: 3px;
+	float: left;
+}

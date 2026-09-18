@@ -1,0 +1,59 @@
+/* Message Model */
+:host {
+	position: absolute;
+	top: 100px;
+	left: 100px;
+	width: 270px;
+}
+
+.titlebar {
+	border-radius: 3px 3px 0px 0px;
+	height: 15px;
+	align-items: center;
+	padding: 1px;
+}
+.titlebar .base {
+	width: 11px;
+	height: 11px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+.container {
+	background: white;
+	width: 268px;
+	height: 114px;
+	border-radius: 0px 0px 3px 3px;
+	border: 1px solid #ccc;
+	display: grid;
+}
+
+.text_message {
+	height: 73px;
+	padding: 11px;
+}
+
+/** Buttons **/
+.btns {
+	position: absolute;
+	bottom: -3px;
+	width: 100%;
+	height: 28px;
+}
+.btn {
+	position: absolute;
+	border: 0;
+	width: 42px;
+	height: 20px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+
+.ok,
+.make {
+	right: 6px;
+}
+.delete {
+	left: 4px;
+}

@@ -1,0 +1,88 @@
+<div id="EquipmentV0" data-repload="basic_interface/item_invert.bmp">
+	<div class="titlebar" data-background="basic_interface/titlebar_mid.bmp">
+		<div class="left">
+			<button
+				class="base"
+				data-background="basic_interface/sys_base_off.bmp"
+				data-hover="basic_interface/sys_base_on.bmp"
+			></button>
+			<span class="text" data-text="104">Equipment</span>
+		</div>
+		<div class="right">
+			<button
+				class="base mini"
+				data-background="basic_interface/sys_mini_off.bmp"
+				data-hover="basic_interface/sys_mini_on.bmp"
+			></button>
+			<button
+				class="base close"
+				data-background="basic_interface/sys_close_off.bmp"
+				data-hover="basic_interface/sys_close_on.bmp"
+			></button>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="overlay"></div>
+
+	<div class="panel">
+		<table class="content" data-background="basic_interface/equipwin_bg.bmp">
+			<tr>
+				<td class="head_top col1"></td>
+				<td rowspan="6">
+					<!-- avoid applying css on td directly-->
+					<div class="col2 ammo_container">
+						<div class="ammo"></div>
+						<button
+							class="cartitems"
+							data-background="basic_interface/btn_items_off.bmp"
+							data-hover="basic_interface/btn_items_on.bmp"
+						></button>
+						<button class="removeOption" data-background="basic_interface/btn_off.bmp"></button>
+						<canvas width="55" height="125"></canvas>
+					</div>
+				</td>
+				<td class="head_mid col3"></td>
+			</tr>
+			<tr>
+				<td class="head_bottom col1"></td>
+				<td class="armor col3"></td>
+			</tr>
+			<tr>
+				<td class="weapon col1"></td>
+				<td class="shield col3"></td>
+			</tr>
+			<tr>
+				<td class="garment col1"></td>
+				<td class="shoes col3"></td>
+			</tr>
+			<tr>
+				<td class="accessory1 col1"></td>
+				<td class="accessory2 col3"></td>
+			</tr>
+		</table>
+
+		<div class="footer" id="equipment_footer">
+			<div class="left">
+				<button
+					class="view_status"
+					data-background="basic_interface/viewoff.bmp"
+					data-preload="basic_interface/viewon.bmp"
+				></button>
+				<span data-text="105">Status</span>
+			</div>
+			<div class="right">
+				<button class="show_equip" data-background="checkbox_0.bmp" data-preload="checkbox_1.bmp"></button>
+				<span data-text="1362">Show Equip</span>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="status_component">
+			<!-- Import status component -->
+		</div>
+	</div>
+	<button
+		id="lvlup_base"
+		data-background="basic_interface/lv_up_off.bmp"
+		data-sown="basic_interface/lv_up_on.bmp"
+	></button>
+</div>

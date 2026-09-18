@@ -1,0 +1,48 @@
+:host {
+	width: 280px;
+	height: auto;
+	top: 200px;
+	left: 200px;
+}
+
+#Escape {
+	width: 280px;
+	height: auto;
+	border-radius: 5px;
+	background-color: white;
+	background-repeat: no-repeat;
+}
+
+#Escape .top .node {
+	width: 11px;
+	height: 11px;
+	position: absolute;
+	top: 3px;
+	left: 4px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}
+
+#Escape .top .title {
+	position: absolute;
+	top: 2px;
+	left: 18px;
+	text-shadow: 1px 1px white;
+	white-space: nowrap;
+}
+
+#Escape .container {
+	width: 220px;
+	height: auto;
+	padding: 20px 30px 6px 30px;
+}
+
+#Escape .container button {
+	width: 221px;
+	height: 20px;
+	margin-top: 3px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}

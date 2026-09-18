@@ -1,0 +1,400 @@
+:host {
+	position: absolute;
+}
+
+#Mail {
+	width: 250px;
+	height: 330px;
+}
+
+#Mail .body {
+	width: 300px;
+	height: 400px;
+	position: relative;
+	background-repeat: no-repeat;
+	background-color: white;
+	border-radius: 6px;
+}
+#Mail .body .base {
+	width: 9px;
+	height: 7px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+#Mail .titlebar {
+	display: block;
+	width: 300px;
+	height: 16px;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+#Mail .container {
+	width: 298px;
+	height: 385px;
+}
+
+#Mail .flex {
+	display: flex;
+}
+
+#Mail .list_item_mail {
+	width: 279px;
+	height: 358px;
+}
+
+#Mail .flex_block {
+	display: block;
+}
+
+#Mail .list_mail {
+	flex: 14;
+}
+
+#Mail .prev_next {
+	color: #e4baa8;
+}
+
+#Mail .prev {
+	flex: 1;
+	align-items: flex-end;
+	justify-content: flex-end;
+	display: flex;
+}
+
+#Mail .next {
+	flex: 1;
+	align-items: flex-end;
+	justify-content: flex-start;
+	display: flex;
+}
+
+#Mail .pagination {
+	text-align: end;
+}
+
+#Mail .btn_iw {
+	height: 371px;
+	margin-left: 4px;
+}
+
+#Mail .inbox {
+	height: 16%;
+}
+
+#Mail .write {
+	height: 16%;
+}
+
+#Mail .block_mail {
+	margin: 2% 1% 0% 2%;
+}
+
+#Mail .item_mail {
+	width: 268px;
+	height: 51px;
+	display: flex;
+}
+
+#Mail .btn_envelop {
+	width: 16px;
+	height: 11px;
+	background-repeat: no-repeat;
+	border: none;
+	background-color: transparent;
+	margin-top: 24%;
+	margin-left: 18%;
+}
+
+#Mail .to_title {
+	width: 100%;
+	height: 52px;
+	background-repeat: repeat-x;
+	background-color: transparent;
+	display: grid;
+}
+#Mail .to_title button {
+	float: left;
+	border: none;
+	background: none;
+	width: 26px;
+	height: 20px;
+	position: relative;
+	flex: 1;
+}
+
+#Mail .block_create_mail {
+	display: block;
+	margin: 2% 1% 0% 2%;
+}
+#Mail .add_zeny {
+	width: 51px;
+	height: 21px;
+	border: none;
+	margin-left: 16%;
+	margin-top: 3%;
+}
+#zeny_ok {
+	display: none;
+	width: 43px !important;
+	margin-left: 19% !important;
+}
+#Mail .create_mail_btn {
+	width: 43px;
+	height: 21px;
+	border: none;
+}
+#Mail .to_create_mail {
+	flex: 1;
+	margin-top: 8%;
+	margin-left: 7%;
+	display: flex;
+}
+#Mail .title_create_mail {
+	flex: 1;
+	margin-top: 6%;
+	margin-left: 7%;
+	display: flex;
+}
+#Mail .text_to_title {
+	flex: 1;
+	color: #cd9b77;
+	text-align: center;
+}
+#Mail .text_to {
+	background-color: #00800000;
+	border: none;
+	height: 14px;
+	padding: initial;
+	width: 105px;
+}
+#Mail .text_title_create_mail {
+	flex: 1;
+	color: #cd9b77;
+	text-align: center;
+}
+#Mail .input_title {
+	background-color: #00800000;
+	border: none;
+	height: 14px;
+	padding: initial;
+	width: 164px;
+}
+#Mail .email_body {
+	flex: 1;
+	margin-top: 5%;
+	margin-left: 5%;
+	display: flex;
+}
+#Mail .textarea_mail {
+	resize: none;
+	background-color: #00800000;
+	border: none;
+	height: 226px;
+	padding: initial;
+	width: 243px;
+	overflow: hidden;
+}
+
+#Mail .block_zeny_item {
+	flex: 1;
+	margin-top: 4%;
+	margin-left: 5%;
+	display: flex;
+}
+#Mail .block_zeny {
+	margin-top: 4%;
+	margin-left: 1%;
+}
+#Mail .block_item {
+	margin-left: 18%;
+}
+#Mail .input_zeny_amt {
+	background-color: #00800000;
+	border: none;
+	height: 13px;
+	width: 64px;
+}
+#Mail .input_add_item {
+	background-color: #00800000;
+	border: none;
+	height: 24px;
+	width: 24px;
+}
+
+#Mail .container_item {
+	float: left;
+	width: 24px;
+	height: 23px;
+	margin-top: 2px;
+	margin-left: 2px;
+	margin-bottom: 6px;
+}
+
+#Mail .block_send_cancel {
+	flex: 1;
+	margin-top: 4%;
+	margin-right: 8%;
+	text-align: right;
+}
+
+#Mail .to_title button .overlay {
+	position: absolute;
+	display: none;
+	top: -20px;
+	white-space: nowrap;
+	z-index: 900;
+	height: 13px;
+	padding: 5px;
+	background: rgba(0, 0, 0, 0.7);
+	color: white;
+	text-shadow: 1px 1px black;
+}
+#Mail .to_title button:hover .overlay {
+	display: block;
+}
+
+#Mail .tooltip {
+	position: relative;
+	display: inline-block;
+	color: #a37162;
+}
+
+#Mail .name_data {
+	color: #cd9b77;
+	margin-top: 15%;
+	position: relative;
+	display: inline-block;
+}
+
+#Mail .tooltip .tooltiptext {
+	visibility: hidden;
+	position: absolute;
+	bottom: 100%;
+	white-space: nowrap;
+	z-index: 900;
+	height: 13px;
+	padding: 5px;
+	background: rgba(0, 0, 0, 0.7);
+	color: white;
+	text-shadow: 1px 1px black;
+	position: absolute;
+	float: left;
+	left: 0px;
+	pointer-events: none;
+}
+
+#Mail .tooltip .to {
+}
+
+#Mail .tooltip .title {
+}
+
+#Mail .tooltip:hover .tooltiptext {
+	visibility: visible;
+}
+
+#Mail .date_mail {
+	background-repeat: repeat-x;
+	background-color: transparent;
+	display: grid;
+	align-items: center;
+}
+
+#Mail .container_item .item {
+	display: block;
+	width: 24px;
+	height: 24px;
+	position: relative;
+	float: left;
+}
+#Mail .container_item .item .icon {
+	width: 24px;
+	height: 24px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}
+#Mail .container_item .item .amount {
+	position: relative;
+	bottom: 9px;
+	right: 0px;
+	text-align: right;
+	text-shadow: -1px -1px white;
+}
+#Mail .container_item .overlay {
+	pointer-events: none;
+	position: absolute;
+	display: none;
+	white-space: nowrap;
+	z-index: 900;
+	height: 13px;
+	padding: 5px;
+	background: rgba(0, 0, 0, 0.7);
+	color: white;
+	text-shadow: 1px 1px black;
+}
+#Mail .container_item .overlay.grey {
+	pointer-events: none;
+	color: #aaa;
+}
+
+#Mail .overlay_prev {
+	position: absolute;
+	display: none;
+	white-space: nowrap;
+	z-index: 900;
+	height: 13px;
+	padding: 5px;
+	background: rgba(0, 0, 0, 0.7);
+	color: white;
+	text-shadow: 1px 1px black;
+	margin-bottom: 4%;
+	margin-right: -3%;
+}
+
+#Mail .overlay_next {
+	position: absolute;
+	display: none;
+	white-space: nowrap;
+	z-index: 900;
+	height: 13px;
+	padding: 5px;
+	background: rgba(0, 0, 0, 0.7);
+	color: white;
+	text-shadow: 1px 1px black;
+	margin-bottom: 4%;
+}
+#Mail .margin_next {
+	margin-left: 5%;
+}
+
+#Mail .prev_next .text_pagination {
+	vertical-align: -2px;
+	white-space: nowrap;
+	display: inline-block;
+	position: absolute;
+}
+
+#Mail .body .text {
+	/* text-shadow: 1px 1px white; */
+	vertical-align: -2px;
+	white-space: nowrap;
+	display: inline-block;
+	width: 32px;
+	height: 13px;
+}
+
+#Mail .body .left {
+	margin-left: 25px;
+	float: left;
+}
+#Mail .body .right {
+	float: right;
+	margin-right: 3px;
+}
+#Mail .body .clear {
+	clear: both;
+}

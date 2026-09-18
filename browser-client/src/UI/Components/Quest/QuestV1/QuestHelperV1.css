@@ -1,0 +1,84 @@
+:host {
+	top: 200px;
+	left: 582px;
+}
+
+#QuestInfoV1 {
+	width: 350px;
+	height: 375px;
+	overflow: hidden;
+}
+
+#QuestInfoV1 .titlebar {
+	width: 350px;
+	height: 375px;
+}
+
+#QuestInfoV1 .titlebar .content {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+#QuestInfoV1 .titlebar .content .quest-info-close-btn {
+	position: absolute;
+	top: 3px;
+	right: 2px;
+	width: 11px;
+	height: 11px;
+}
+#QuestInfoV1 .titlebar .content .title {
+	position: absolute;
+	top: 60px;
+	left: 120px;
+}
+#QuestInfoV1 .titlebar .content .summary {
+	position: absolute;
+	top: 135px;
+	left: 25px;
+}
+#QuestInfoV1 .titlebar .content .objective {
+	position: absolute;
+	top: 283px;
+	left: 25px;
+	max-width: 300px;
+}
+#QuestInfoV1 .titlebar .content .monster {
+	position: absolute;
+	top: 341px;
+	left: 50px;
+}
+#QuestInfoV1 .titlebar .content .monster .monster-select {
+	border: none;
+	min-width: 110px;
+	max-width: 160px;
+}
+#QuestInfoV1 .titlebar .content .killed {
+	position: absolute;
+	top: 343px;
+	left: 215px;
+}
+#QuestInfoV1 .titlebar .content .limited {
+	position: absolute;
+	top: 343px;
+	left: 290px;
+}
+
+.item-link {
+	color: #0070c0;
+	cursor: pointer;
+}
+
+.item-link:hover {
+	color: #00a0ff;
+}
+
+.navi-link {
+	color: #c00000;
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+.navi-link:hover {
+	color: #ff0000;
+}

@@ -1,0 +1,49 @@
+services:
+    # ─────────────────────────────────────────────────────────────────────────────
+    # roBrowserLegacy - production deployment using the remote-client image
+    #
+    # This compose file is for self-hosting roBrowserLegacy as a container.
+    # For local development, use docker-compose.yaml instead.
+    #
+    # BEFORE STARTING:
+    #   1. cp applications/pwa/Config.local.js.example Config.local.js
+    #   2. Edit Config.local.js: set address, packetver, renewal, socketProxy
+    #
+    # FULL image (GRFs baked in, ~5GB):
+    #   ROBROWSER_TAG=1.0.0 docker compose -f docker-compose.remoteclient.yaml up -d
+    #
+    # SLIM image (GRFs mounted at runtime, ~400MB):
+    #   Uncomment the GRF volume mounts below, set GRF_PATH, then:
+    #   ROBROWSER_TAG=1.0.0-slim GRF_PATH=/path/to/kRO \
+    #     docker compose -f docker-compose.remoteclient.yaml up -d
+    #
+    # Game URL: http://localhost:3338/
+    #
+    # See DOCKER.md for full documentation including Kubernetes and
+    # non-host-network deployments (macOS/Windows Docker Desktop).
+    # ─────────────────────────────────────────────────────────────────────────────
+    robrowser:
+        image: ghcr.io/<your-github-user>/robrowserlegacy:${ROBROWSER_TAG:?Set ROBROWSER_TAG to a version e.g. 1.0.0}
+        container_name: robrowserlegacy
+        restart: unless-stopped
+        network_mode: host
+        # Override CLIENT_PUBLIC_URL if accessing from another machine:
+        #   CLIENT_PUBLIC_URL=http://<your-server-ip>:3338
+        environment:
+            CLIENT_PUBLIC_URL: 'http://localhost:3338'
+            # Non-host-network deployments (Kubernetes, macOS/Windows Docker Desktop):
+            # uncomment and set to your rAthena server's host:port list.
+            # WS_ALLOWED_TARGETS: "10.0.0.5:6900,10.0.0.5:6121,10.0.0.5:5121"
+        volumes:
+            # Config.local.js MUST exist as a file before starting.
+            # If this file is absent, Docker creates it as a directory and
+            # the container will fail to serve the game configuration.
+            - ./Config.local.js:/robrowser/Config.local.js:ro
+
+            # ── Slim image only: uncomment and set GRF_PATH ─────────────────────
+            # GRF_PATH can be set in a .env file or exported before running compose.
+            #
+            # - ${GRF_PATH}/data.grf:/app/resources/data.grf:ro     # required
+            # - ${GRF_PATH}/rdata.grf:/app/resources/rdata.grf:ro   # required
+            # - ${GRF_PATH}/DATA.INI:/app/resources/DATA.INI:ro     # required
+            # - ${GRF_PATH}/BGM:/app/BGM:ro                         # optional (music)

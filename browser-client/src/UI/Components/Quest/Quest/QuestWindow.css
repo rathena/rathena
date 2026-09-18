@@ -1,0 +1,39 @@
+:host {
+	right: 50px;
+	top: 250px;
+}
+
+#QuestWindow {
+	width: 230px;
+	display: table;
+	font-size: 0.75rem;
+}
+
+#QuestWindow .quest-window-ul {
+	list-style: none;
+	margin: 5px;
+	text-shadow: 1px 1px 1px black;
+}
+
+#QuestWindow .quest-window-ul .quest-window-li {
+	list-style: none;
+	margin-top: 10px;
+}
+
+#QuestWindow .quest-window-ul .quest-window-li .quest-window-li-title {
+	color: yellow;
+}
+
+#QuestWindow .quest-window-ul .quest-window-li .quest-window-li-summary {
+	color: white;
+}
+
+#QuestWindow .quest-window-ul .quest-window-li .quest-window-li-monster {
+	font-size: 0.65rem;
+	color: white;
+}
+
+#QuestWindow .quest-window-ul .quest-window-li .quest-window-li-monster ul {
+	list-style: none;
+	padding-left: 20px;
+}

@@ -1,0 +1,37 @@
+<div id="CaptchaAnswer">
+	<div class="titlebar">
+		<ui-image src="basic_interface/titlebar_mid.bmp"></ui-image>
+		<div class="left">
+			<ui-button
+				class="base"
+				bg="basic_interface/sys_base_off.bmp"
+				hover="basic_interface/sys_base_on.bmp"
+			></ui-button>
+		</div>
+		<div class="right"></div>
+		<div class="clear"></div>
+	</div>
+	<div class="container">
+		<div class="information">
+			<div class="message">
+				<ui-text msg="2883">Hello, illegal software is being monitored.</ui-text><br />
+				<ui-text msg="2884">Please enter the text below within the specified time.</ui-text><br />
+				<ui-text msg="2885">If you enter the text wrong three times, you will get banned</ui-text><br />
+				<span class="error_text"></span>
+			</div>
+			<div class="timer_bar_bg">
+				<div class="timer_bar_fill"></div>
+			</div>
+
+			<div class="status">
+				<span class="retry_count">Remaining chance: 3</span>
+				<span class="timer_text">00:59</span>
+			</div>
+		</div>
+		<div class="preview_box"></div>
+		<div class="controls">
+			<input type="text" class="answer_input" placeholder="Captcha Answer" />
+			<ui-button class="btn ok" bg="btn_ok.bmp" hover="btn_ok_a.bmp" down="btn_ok_b.bmp"></ui-button>
+		</div>
+	</div>
+</div>

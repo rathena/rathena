@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+bower_components/
+
+# Build output
+dist/
+build/
+*.min.js
+
+# Vendor libraries
+src/Vendors/
+src/Libs/
+src/lib/
+
+# Third-party
+src/Utils/three.js
+src/Utils/gl-matrix.js
+
+# Test files
+test/
+tests/
+*.test.js
+*.spec.js
+
+# Cache
+.cache/
+.eslintcache
+
+# Documentation
+docs/
+
+# Config files
+*.config.js
+webpack.config.js
+rollup.config.js

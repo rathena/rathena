@@ -1,0 +1,214 @@
+<div
+	id="BasicInfoV3"
+	class="large"
+	data-background="basic_interface/basewin_bg2.bmp"
+	data-preload="basic_interface/gzered_left.bmp;basic_interface/gzered_mid.bmp;basic_interface/gzered_right.bmp;basic_interface/gzeblue_left.bmp;basic_interface/gzeblue_mid.bmp;basic_interface/gzeblue_right.bmp"
+>
+	<div class="topbar">
+		<button
+			class="left"
+			data-background="basic_interface/sys_base_off.bmp"
+			data-hover="basic_interface/sys_base_on.bmp"
+		></button>
+		<button
+			class="right"
+			data-background="basic_interface/sys_mini_off.bmp"
+			data-hover="basic_interface/sys_mini_on.bmp"
+		></button>
+	</div>
+
+	<!-- LARGE INTERFACE -->
+	<div class="large">
+		<div class="title" data-text="238">Basic Information</div>
+		<div class="name"><span class="name_value"></span></div>
+		<div class="job"><span class="job_value"></span></div>
+
+		<div class="hp_title">HP</div>
+		<div class="hp_bar">
+			<div class="hp_bar_left"></div>
+			<div class="hp_bar_middle"></div>
+			<div class="hp_bar_right"></div>
+			<div class="hp_bar_perc"><span class="hp_value"></span> / <span class="hp_max_value"></span></div>
+		</div>
+		<div class="hp_perc"></div>
+
+		<div class="sp_title">SP</div>
+		<div class="sp_bar">
+			<div class="sp_bar_left"></div>
+			<div class="sp_bar_middle"></div>
+			<div class="sp_bar_right"></div>
+			<div class="sp_bar_perc"><span class="sp_value"></span> / <span class="sp_max_value"></span></div>
+		</div>
+		<div class="sp_perc"></div>
+
+		<div class="blvl">Base Lv. <span class="blvl_value"></span></div>
+		<div class="bexp">
+			<div></div>
+		</div>
+
+		<div class="jlvl">Job Lv. <span class="jlvl_value"></span></div>
+		<div class="jexp">
+			<div></div>
+		</div>
+
+		<div class="extra">
+			<span class="weight"
+				>Weight : <span class="weight_value">0</span> / <span class="weight_total">0</span></span
+			>
+			Zeny : <span class="zeny_value">0</span>
+		</div>
+	</div>
+
+	<!-- SMALL INTERFACE -->
+	<div class="small">
+		<div class="line1 name_value"></div>
+		<div class="line2">
+			Lv.<span class="blvl_value"></span> / <span class="job_value"></span> / Lv.<span class="jlvl_value"></span>
+			/ Exp. <span class="bexp_value"></span>
+		</div>
+		<div class="line3">
+			HP. <span class="hp_value"></span> / <span class="hp_max_value"></span> | SP.
+			<span class="sp_value"></span> / <span class="sp_max_value"></span>
+		</div>
+	</div>
+
+	<button
+		id="btn_open"
+		class="btn_open bt_menu toggle_btns"
+		data-background="ro_menu_icon/btn_show1.bmp"
+		data-hover="ro_menu_icon/btn_show2.bmp"
+		data-down="ro_menu_icon/btn_show3.bmp"
+	></button>
+	<button
+		id="btn_close"
+		class="btn_close bt_menu toggle_btns"
+		data-background="ro_menu_icon/btn_hide1.bmp"
+		data-hover="ro_menu_icon/btn_hide2.bmp"
+		data-down="ro_menu_icon/btn_hide3.bmp"
+	></button>
+
+	<!-- BUTTONS -->
+	<div class="buttons">
+		<div
+			id="info"
+			class="event_add_cursor"
+			data-background="ro_menu_icon/status_1.bmp"
+			data-down="ro_menu_icon/status_1.bmp"
+		>
+			<span class="name">Status (Alt + A)</span>
+		</div>
+		<div
+			id="equip"
+			class="event_add_cursor"
+			data-background="ro_menu_icon/equip_1.bmp"
+			data-down="ro_menu_icon/equip_2.bmp"
+		>
+			<span class="name">Equip (Alt + Q)</span>
+		</div>
+		<div
+			id="skill"
+			class="event_add_cursor"
+			data-background="ro_menu_icon/skill_1.bmp"
+			data-down="ro_menu_icon/skill_2.bmp"
+		>
+			<span class="name">SkillTree (Alt + S)</span>
+		</div>
+		<div
+			id="item"
+			class="event_add_cursor"
+			data-background="ro_menu_icon/item_1.bmp"
+			data-down="ro_menu_icon/item_2.bmp"
+		>
+			<span class="name">Inventory (Alt + E)</span>
+		</div>
+		<div
+			id="party"
+			class="event_add_cursor"
+			data-background="ro_menu_icon/party_1.bmp"
+			data-down="ro_menu_icon/party_2.bmp"
+		>
+			<span class="name">Party (Alt + Z)</span>
+		</div>
+		<div
+			id="guild"
+			class="event_add_cursor"
+			data-background="ro_menu_icon/guild_1.bmp"
+			data-down="ro_menu_icon/guild_2.bmp"
+		>
+			<span class="name">Guild (Alt + G)</span>
+		</div>
+		<div
+			id="battle"
+			class="event_add_cursor"
+			data-background="ro_menu_icon/battle_1.bmp"
+			data-down="ro_menu_icon/battle_2.bmp"
+		>
+			<span class="name">Battleground</span>
+		</div>
+		<div
+			id="quest"
+			class="event_add_cursor"
+			data-background="ro_menu_icon/quest_1.bmp"
+			data-down="ro_menu_icon/quest_2.bmp"
+		>
+			<span class="name">Quest List (Alt + U)</span>
+		</div>
+		<div
+			id="map"
+			class="event_add_cursor"
+			data-background="ro_menu_icon/map_1.bmp"
+			data-down="ro_menu_icon/map_2.bmp"
+		>
+			<span class="name">World Map (Ctrl + ')</span>
+		</div>
+		<div
+			id="navigation"
+			class="event_add_cursor"
+			data-background="ro_menu_icon/navigation_1.bmp"
+			data-down="ro_menu_icon/navigation_2.bmp"
+		>
+			<span class="name">Navigation</span>
+		</div>
+		<div
+			id="option"
+			class="event_add_cursor"
+			data-background="ro_menu_icon/option_1.bmp"
+			data-down="ro_menu_icon/option_2.bmp"
+		>
+			<span class="name">Option (Esc)</span>
+		</div>
+		<div
+			id="bank"
+			class="event_add_cursor"
+			data-background="ro_menu_icon/bank_1.bmp"
+			data-down="ro_menu_icon/bank_2.bmp"
+		>
+			<span class="name">Bank (Ctrl + B)</span>
+		</div>
+		<div
+			id="replay"
+			class="event_add_cursor"
+			data-background="ro_menu_icon/rec_1.bmp"
+			data-down="ro_menu_icon/rec_2.bmp"
+		>
+			<span class="name">Replay</span>
+		</div>
+		<div
+			id="mail"
+			class="event_add_cursor"
+			data-background="ro_menu_icon/mail_1.bmp"
+			data-down="ro_menu_icon/mail_2.bmp"
+		>
+			<span class="name">Mail</span>
+		</div>
+		<div
+			id="achievment"
+			class="event_add_cursor"
+			data-background="ro_menu_icon/achievement_1.bmp"
+			data-down="ro_menu_icon/achievement_2.bmp"
+		>
+			<span class="name">Achievement</span>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>

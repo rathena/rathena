@@ -1,0 +1,42 @@
+<div class="SkillList">
+	<div class="titlebar">
+		<ui-image src="basic_interface/titlebar_mid.bmp"></ui-image>
+		<div class="left">
+			<ui-button
+				class="base"
+				bg="basic_interface/sys_base_off.bmp"
+				hover="basic_interface/sys_base_on.bmp"
+			></ui-button>
+			<span class="text">Skill List</span>
+		</div>
+		<div class="right">
+			<ui-button
+				class="base close"
+				bg="basic_interface/sys_close_off.bmp"
+				hover="basic_interface/sys_close_on.bmp"
+			></ui-button>
+		</div>
+		<div class="clear"></div>
+	</div>
+
+	<div class="panel">
+		<div class="content">
+			<table>
+				<!-- Just to get reference, will be removed -->
+				<ui-button
+					class="btn levelup"
+					bg="basic_interface/skill_up_a.bmp"
+					hover="basic_interface/skill_up_b.bmp"
+					down="basic_interface/skill_up_c.bmp"
+				></ui-button>
+			</table>
+		</div>
+
+		<div class="footer">
+			<ui-image src="basic_interface/btnbar_mid2.bmp"></ui-image>
+			<div class="text">Skill Points: <span class="skpoints_count">0</span></div>
+			<ui-button class="extend" bg="btn_resize.bmp"></ui-button>
+		</div>
+	</div>
+	<ui-button id="lvlup_job" bg="basic_interface/lv_up_off.bmp" down="basic_interface/lv_up_on.bmp"></ui-button>
+</div>

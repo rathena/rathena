@@ -1,0 +1,120 @@
+:host {
+	width: 280px;
+	top: 0px;
+	left: 480px;
+	overflow: hidden;
+}
+
+#ShortCut {
+	position: absolute;
+	width: 280px;
+	height: 100%;
+	background-repeat: repeat-y;
+}
+#ShortCut .close {
+	position: absolute;
+	top: 2px;
+	right: 2px;
+	border: none;
+	background-color: transparent;
+	width: 11px;
+	height: 11px;
+}
+#ShortCut .resize {
+	position: absolute;
+	bottom: 1px;
+	right: 1px;
+	border: none;
+	background-color: transparent;
+	width: 13px;
+	height: 13px;
+}
+
+#ShortCut .row {
+	position: relative;
+}
+#ShortCut .row .container {
+	float: left;
+	width: 24px;
+	height: 23px;
+	margin-top: 5px;
+	margin-left: 5px;
+	margin-bottom: 6px;
+}
+#ShortCut .row .container:hover {
+	background-color: #b5ffb5;
+}
+#ShortCut .row .index {
+	float: left;
+	position: relative;
+	top: 13px;
+	left: 5px;
+}
+#ShortCut .row .clear {
+}
+
+#ShortCut .icon {
+	position: relative;
+}
+#ShortCut .icon .img {
+	width: 24px;
+	height: 24px;
+	background-repeat: no-repeat;
+	border: none;
+	background-color: transparent;
+}
+#ShortCut .icon .name {
+	display: none;
+	z-index: 1;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	background-color: rgba(0, 0, 0, 0.6);
+	text-shadow: 1px 1px black;
+	color: white;
+	padding: 5px;
+	white-space: nowrap;
+}
+#ShortCut .icon:hover .name {
+	display: block;
+}
+#ShortCut .icon.hide .name {
+	display: none;
+}
+#ShortCut .icon .amount {
+	position: absolute;
+	right: 1px;
+	top: 20px;
+	text-shadow: 1px 1px 0px white;
+	text-align: right;
+	font-weight: bold;
+}
+
+.shortcut-tooltip {
+	display: none;
+	position: fixed;
+	background-color: rgba(0, 0, 0, 0.8);
+	text-shadow: 1px 1px black;
+	color: white;
+	padding: 2px 6px;
+	white-space: nowrap;
+	z-index: 10000;
+	border-radius: 2px;
+	pointer-events: none;
+	line-height: 1.2;
+}
+.shortcut-tooltip.show {
+	display: block;
+}
+
+#ShortCut .cooldown-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 24px;
+	height: 24px;
+	pointer-events: none;
+	border-radius: 2px;
+	z-index: 999;
+	background: conic-gradient(rgba(0, 0, 0, 0.75) 0deg, transparent 0deg);
+}

@@ -1,0 +1,42 @@
+# Client files (large, user-specific)
+/BGM/*
+/data/*
+/resources/*
+/System/*
+/AI/*
+
+# Dependencies
+/node_modules/
+/dist/
+/.yarn
+
+# Lock files
+package-lock.json
+yarn.lock
+
+# Environment
+.env
+
+# Generated files
+grf-path-encoding-report.json
+path-mapping.json
+
+# Logs
+/logs/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ESRGAN upscaled cache (served by plugin, not source)
+/upscaled_cache/
+
+# GRF backup data (large, user-specific)
+/data_grf_backup/

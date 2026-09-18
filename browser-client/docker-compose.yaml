@@ -1,0 +1,23 @@
+services:
+    ro-browser:
+        build:
+            context: .
+            dockerfile: Dockerfile
+            target: dev
+        ports:
+            - '8000:8000'
+            # You can use to serve wsproxy.
+            #- "5999:5999"
+        volumes:
+            - ./:/app
+        tty: true
+
+    serve-dist:
+        build:
+            context: .
+            dockerfile: Dockerfile
+            target: dist-server
+        ports:
+            - '8080:8080'
+        volumes:
+            - ./dist/Web:/var/www/html

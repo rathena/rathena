@@ -1,0 +1,84 @@
+<div id="ReadMail">
+	<div class="body">
+		<ui-image src="basic_interface/maillist3_bg.bmp"></ui-image>
+		<div class="titlebar">
+			<div class="left">
+				<span class="text" id="title"><ui-text msg="1027">Read Mail</ui-text></span>
+			</div>
+			<div class="right">
+				<ui-button
+					class="base close"
+					bg="basic_interface/close2.bmp"
+					hover="basic_interface/close2_a.bmp"
+				></ui-button>
+			</div>
+		</div>
+
+		<div class="clear">
+			<section class="container flex_grid">
+				<div class="title">
+					<div>
+						<span class="text_title"> </span>
+					</div>
+				</div>
+
+				<div class="name_sender">
+					<div>
+						<span class="text_sender"> </span>
+					</div>
+				</div>
+
+				<div class="mail_body">
+					<div>
+						<textarea class="textarea_mail" maxlength="198" disabled></textarea>
+					</div>
+				</div>
+
+				<div class="zeny_item">
+					<div class="zeny_item_container">
+						<div class="zeny_item_infor_box"></div>
+						<div class="zeny_item_infor event_add_cursor">
+							<div class="block_zeny">
+								<input
+									class="input_zeny_amt event_add_cursor"
+									type="text"
+									value=""
+									maxlength="9"
+									disabled
+								/>
+							</div>
+							<!-- item -->
+							<div class="block_item">
+								<div class="container_item">
+									<div class="overlay"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="btn_return_reply_remove">
+					<div class="container_return_reply_remove">
+						<ui-button
+							class="read_mail_btn"
+							id="read_mail_return"
+							bg="basic_interface/return.bmp"
+							hover="basic_interface/return_a.bmp"
+						></ui-button>
+						<ui-button
+							class="read_mail_btn"
+							id="read_mail_remail"
+							bg="basic_interface/remail.bmp"
+							hover="basic_interface/remail_a.bmp"
+						></ui-button>
+						<ui-button
+							class="read_mail_btn"
+							id="read_mail_del"
+							bg="basic_interface/del.bmp"
+							hover="basic_interface/del_a.bmp"
+						></ui-button>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,119 @@
+:host {
+	width: 280px;
+	height: 120px;
+	top: 50%;
+	left: 50%;
+}
+
+#ChatRoomCreate {
+	position: absolute;
+	width: 280px;
+	height: 120px;
+}
+#ChatRoomCreate table {
+	border-spacing: 0px 2px;
+	display: inline-block;
+}
+
+#ChatRoomCreate .titlebar {
+	width: 100%;
+	height: 17px;
+	background-color: white;
+	background-repeat: repeat-x;
+	border-radius: 3px 3px 0px 0px;
+}
+#ChatRoomCreate .titlebar .base {
+	width: 11px;
+	height: 11px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+#ChatRoomCreate .titlebar .text {
+	text-shadow: 1px 1px white;
+	vertical-align: -2px;
+	white-space: nowrap;
+	/* chrome bug */
+	display: inline-block;
+	height: 13px;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+#ChatRoomCreate .titlebar .left {
+	margin-left: 8px;
+	float: left;
+}
+#ChatRoomCreate .titlebar .right {
+	float: right;
+	margin-right: 3px;
+}
+#ChatRoomCreate .titlebar .clear {
+	clear: both;
+}
+
+#ChatRoomCreate .panel {
+	background: white;
+}
+
+#ChatRoomCreate select {
+	height: 20px;
+	border: 1px solid #ccc;
+}
+#ChatRoomCreate input {
+	height: 14px;
+	border: 1px solid #ccc;
+	background-color: #f5f5f5;
+}
+#ChatRoomCreate .container {
+	padding-left: 7px;
+	padding-top: 5px;
+	width: 266px;
+}
+#ChatRoomCreate .container .title {
+	height: 16px;
+	width: 198px;
+	padding-left: 5px;
+}
+#ChatRoomCreate .container .limit,
+#ChatRoomCreate .container .password {
+	width: 58px;
+	padding-left: 5px;
+}
+#ChatRoomCreate .container .type {
+	width: 110px;
+}
+#ChatRoomCreate .head {
+	color: #0f4b8c;
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+	text-align: right;
+	width: 40px;
+	white-space: nowrap;
+}
+#ChatRoomCreate .mode {
+	white-space: nowrap;
+}
+#ChatRoomCreate .mode span {
+	overflow: hidden;
+	display: inline-block;
+	white-space: nowrap;
+}
+
+#ChatRoomCreate .footer {
+	height: 27px;
+	background-repeat: repeat-x;
+	background-color: transparent;
+	text-align: right;
+	padding-top: 5px;
+	padding-right: 3px;
+	border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 8px;
+}
+#ChatRoomCreate .footer button {
+	width: 42px;
+	height: 20px;
+	border: none;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}

@@ -1,0 +1,170 @@
+:host {
+	width: 300px;
+	height: 400px;
+	position: absolute;
+}
+#ReadRodex {
+	width: 300px;
+	height: 400px;
+	position: absolute;
+}
+#ReadRodex .body {
+	width: 300px;
+	height: 400px;
+	position: absolute;
+}
+
+#ReadRodex .body .base {
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+
+#ReadRodex .body .titlebar {
+	display: block;
+	width: 300px;
+	height: 16px;
+}
+#ReadRodex .body .titlebar .right {
+	float: right;
+	margin-right: 3px;
+}
+#ReadRodex .body .titlebar .right .close {
+	width: 11px;
+	height: 11px;
+}
+
+#ReadRodex .body .sender {
+	float: left;
+	width: 100%;
+	height: 25px;
+	position: relative;
+	display: flex;
+	align-items: flex-end;
+}
+#ReadRodex .body .sender .name {
+	margin-left: 10px;
+	font-weight: bold;
+	color: darkblue;
+}
+
+#ReadRodex .body .title {
+	float: left;
+	width: 100%;
+	height: 25px;
+	position: relative;
+	display: flex;
+	align-items: flex-end;
+}
+#ReadRodex .body .title .title-text {
+	margin-left: 10px;
+}
+
+#ReadRodex .body .content {
+	float: left;
+	width: 100%;
+	height: 230px;
+	position: relative;
+}
+#ReadRodex .body .content .content-text {
+	position: absolute;
+	top: 5px;
+	left: 10px;
+	width: 280px;
+	height: 220px;
+}
+
+#ReadRodex .body .items {
+	float: left;
+	width: 100%;
+	height: 45px;
+	position: relative;
+}
+#ReadRodex .body .items .item-list {
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+	display: table;
+	position: absolute;
+	top: 10px;
+	left: 22px;
+}
+#ReadRodex .body .items .item-list .item {
+	display: block;
+	width: 24px;
+	height: 24px;
+	position: relative;
+	float: left;
+	margin: 4px 5px 4px 5px;
+}
+#ReadRodex .body .items .item-list .item .icon {
+	width: 24px;
+	height: 24px;
+	border: none;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}
+#ReadRodex .body .items .item-list .item .amount {
+	position: relative;
+	bottom: 9px;
+	right: 0px;
+	text-align: right;
+	text-shadow: -1px -1px white;
+}
+#ReadRodex .body .items .get-content {
+	position: absolute;
+	width: 26px;
+	height: 20px;
+	top: 10px;
+	right: 10px;
+	border: none;
+}
+
+#ReadRodex .body .zeny {
+	float: left;
+	width: 100%;
+	height: 30px;
+	position: relative;
+}
+#ReadRodex .body .zeny .image {
+	position: absolute;
+	width: 28px;
+	height: 25px;
+	top: 1px;
+	left: 15px;
+}
+#ReadRodex .body .zeny .value {
+	position: absolute;
+	top: 10px;
+	left: 50px;
+}
+#ReadRodex .body .zeny .get-zeny {
+	position: absolute;
+	width: 26px;
+	height: 20px;
+	top: 3px;
+	right: 10px;
+	border: none;
+}
+
+#ReadRodex .body .footer {
+	float: left;
+	width: 100%;
+	height: 30px;
+	position: relative;
+}
+#ReadRodex .body .footer .delete {
+	position: absolute;
+	width: 70px;
+	height: 20px;
+	top: 5px;
+	left: 10px;
+}
+#ReadRodex .body .footer .reply {
+	position: absolute;
+	width: 70px;
+	height: 20px;
+	top: 5px;
+	right: 10px;
+}

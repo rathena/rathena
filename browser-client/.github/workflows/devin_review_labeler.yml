@@ -1,0 +1,124 @@
+name: Devin Review Labeler
+on:
+    # Review events on fork PRs only get a read-only GITHUB_TOKEN, so they are
+    # observed by devin_review_labeler_trigger.yml and relayed here via workflow_run,
+    # which always runs in the base repo context with write access.
+    workflow_run:
+        workflows: [Devin Review Labeler Trigger]
+        types: [completed]
+    pull_request_target:
+        types: [opened, synchronize, reopened, ready_for_review]
+    # Resolving/unresolving a review thread is a webhook event but NOT an Actions
+    # trigger, so the only way to notice it is to re-scan open PRs periodically.
+    schedule:
+        - cron: '*/15 * * * *'
+    workflow_dispatch:
+        inputs:
+            pr:
+                description: PR number to re-label (empty = every open PR)
+                required: false
+permissions:
+    pull-requests: write
+concurrency:
+    group: devin-label-${{ github.event.pull_request.number || inputs.pr || (github.event.workflow_run && format('{0}:{1}', github.event.workflow_run.head_repository.full_name, github.event.workflow_run.head_branch)) || github.event_name }}
+    cancel-in-progress: true
+jobs:
+    label:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/github-script@v7
+              with:
+                  script: |
+                      const { owner, repo } = context.repo;
+
+                      const THREADS = `query($owner:String!,$repo:String!,$num:Int!,$cursor:String) {
+                        repository(owner:$owner,name:$repo) { pullRequest(number:$num) {
+                          labels(first:100) { nodes { name } }
+                          reviewThreads(first:100, after:$cursor) {
+                            pageInfo { hasNextPage endCursor }
+                            nodes { isResolved isOutdated comments(first:1) { nodes { author { login } body } } }
+                          } } } }`;
+
+                      const MANAGED = ['Devin Check Passed', 'Devin Check - FIXED', 'Devin Check Failed - TOFIX',
+                                       'Devin Check - CRITICAL', 'Devin Check - INVESTIGATE', 'Devin Check - NOTES',
+                                       'Devin Check - FLAG']; // legacy name, cleaned up on the first run
+
+                      const kind = (body) => {
+                        if (body.includes('🔴')) { return 'severe'; }
+                        if (body.includes('🟡')) { return 'bug'; }
+                        if (body.includes('🔍') || body.includes('🚩')) { return 'investigate'; }
+                        if (/📝|\*\*Info:/.test(body)) { return 'info'; }
+                        return /"id":\s*"BUG_/.test(body) ? 'bug' : 'investigate'; // unknown glyph, fall back on the id prefix
+                      };
+
+                      async function relabel(num) {
+                        let cursor = null, threads = [], labels = [];
+                        do {
+                          const res = await github.graphql(THREADS, { owner, repo, num, cursor });
+                          const pr = res.repository.pullRequest;
+                          labels = pr.labels.nodes.map(l => l.name);
+                          threads.push(...pr.reviewThreads.nodes);
+                          cursor = pr.reviewThreads.pageInfo.hasNextPage ? pr.reviewThreads.pageInfo.endCursor : null;
+                        } while (cursor);
+
+                        // only threads opened by a Devin Review finding (the hidden marker is authoritative)
+                        const findings = threads
+                          .map(t => ({ ...t, body: t.comments.nodes[0]?.body || '', login: t.comments.nodes[0]?.author?.login || '' }))
+                          .filter(t => t.login.startsWith('devin-ai-integration') && t.body.includes('devin-review-comment'));
+
+                        const open = findings.filter(t => !t.isResolved);
+                        const fresh = open.filter(t => !t.isOutdated).map(t => kind(t.body));
+                        // unresolved bug on lines a later commit touched: demote, never drop
+                        const stale = open.filter(t => t.isOutdated).map(t => kind(t.body))
+                          .filter(k => k === 'severe' || k === 'bug');
+                        const n = (k) => fresh.filter(x => x === k).length;
+
+                        let want;
+                        if (n('severe')) { want = ['Devin Check Failed - TOFIX', 'Devin Check - CRITICAL']; }
+                        else if (n('bug')) { want = ['Devin Check Failed - TOFIX']; }
+                        else if (n('investigate') || stale.length) { want = ['Devin Check - INVESTIGATE']; }
+                        else if (n('info')) { want = ['Devin Check - NOTES']; }
+                        else if (findings.length) { want = ['Devin Check - FIXED']; }
+                        else { want = ['Devin Check Passed']; }
+
+                        for (const label of MANAGED.filter(l => !want.includes(l) && labels.includes(l))) {
+                          await github.rest.issues.removeLabel({ owner, repo, issue_number: num, name: label }).catch(() => {});
+                        }
+                        const add = want.filter(l => !labels.includes(l));
+                        if (add.length) {
+                          await github.rest.issues.addLabels({ owner, repo, issue_number: num, labels: add });
+                        }
+
+                        const summary = `<!-- devin-review-label -->\n**Devin Review:** 🔴 ${n('severe')} · 🟡 ${n('bug')} · 🔍/🚩 ${n('investigate')} · 📝 ${n('info')} unresolved` +
+                          (stale.length ? ` (+${stale.length} on outdated lines)` : '') +
+                          ` — ${findings.length - open.length}/${findings.length} resolved → \`${want.join('`, `')}\``;
+                        core.info(`#${num}: ${want.join(', ')}`);
+
+                        if (!findings.length) { return; } // nothing reviewed yet, don't open a summary thread
+                        const existing = (await github.paginate(github.rest.issues.listComments, { owner, repo, issue_number: num, per_page: 100 }))
+                          .find(c => c.body.includes('<!-- devin-review-label -->'));
+                        if (!existing) {
+                          await github.rest.issues.createComment({ owner, repo, issue_number: num, body: summary });
+                        } else if (existing.body.trim() !== summary.trim()) {
+                          await github.rest.issues.updateComment({ owner, repo, comment_id: existing.id, body: summary });
+                        }
+                      }
+
+                      const single = Number(context.payload.pull_request?.number ?? context.payload.inputs?.pr ?? 0);
+                      const run = context.payload.workflow_run;
+                      let numbers;
+                      if (single) {
+                        numbers = [single];
+                      } else if (run) {
+                        // workflow_run.pull_requests is empty for fork PRs; relabel every open PR from that head ref
+                        // (one branch may target several bases), falling back to a full rescan if none is found
+                        const head = `${run.head_repository?.owner?.login ?? owner}:${run.head_branch}`;
+                        numbers = (await github.paginate(github.rest.pulls.list, { owner, repo, state: 'open', head, per_page: 100 })).map(pr => pr.number);
+                        if (!numbers.length) { core.info(`no open PR for ${head}, rescanning all`); }
+                      }
+                      if (!numbers?.length) {
+                        numbers = (await github.paginate(github.rest.pulls.list, { owner, repo, state: 'open', per_page: 100 })).map(pr => pr.number);
+                      }
+                      for (const num of numbers) {
+                        await relabel(num);
+                      }

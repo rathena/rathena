@@ -1,0 +1,2 @@
+// Local-only registration: append _M or _F on the first login.
+new_account: yes
