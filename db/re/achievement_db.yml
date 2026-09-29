@@ -1788,7 +1788,7 @@ Body:
     Group: Chatting
     Name: Who made the king
     Rewards:
-      TitleID: 1046
+      TitleId: 1046
     Score: 10
   - Id: 170000
     Group: Chatting

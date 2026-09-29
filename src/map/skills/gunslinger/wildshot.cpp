@@ -34,12 +34,12 @@ void SkillWildShot::calculateSkillRatio(const Damage* wd, const block_list* src,
 	const status_change* sc = status_get_sc(src);
 	const status_data* sstatus = status_get_status_data(*src);
 
-	skillratio += -100 + 870 + 180 * skill_lv;
+	skillratio += -100 + 850 + 230 * skill_lv;
 	if (sd != nullptr && sc != nullptr && sc->hasSCE(SC_HIDDEN_CARD)) {
 		if (sd->weapontype1 == W_REVOLVER)
-			skillratio += 60 * skill_lv;
-		else if (sd->weapontype1 == W_RIFLE)
 			skillratio += 100 * skill_lv;
+		else if (sd->weapontype1 == W_RIFLE)
+			skillratio += 150 * skill_lv;
 	}
 	skillratio += 5 * sstatus->con; //!TODO: check con ratio
 	RE_LVL_DMOD(100);

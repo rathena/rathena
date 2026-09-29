@@ -1791,10 +1791,17 @@ int32 char_mmo_char_tobuf( CHARACTER_INFO& info, mmo_charstatus& p ){
 	info.virtue = p.karma;
 	info.honor = p.manner;
 	info.jobpoint = umin( p.status_point, INT16_MAX );
+#if PACKETVER >= 20081217
 	info.hp = p.hp;
 	info.maxhp = p.max_hp;
 	info.sp = min( p.sp, INT16_MAX );
 	info.maxsp = min( p.max_sp, INT16_MAX );
+#else
+	info.hp = u32min( p.hp, INT16_MAX );
+	info.maxhp = u32min( p.max_hp, INT16_MAX );
+	info.sp = u32min( p.sp, INT16_MAX );
+	info.maxsp = u32min( p.max_sp, INT16_MAX );
+#endif
 	info.speed = DEFAULT_WALK_SPEED; // p.speed;
 	info.job = p.class_;
 	info.head = p.hair;
@@ -1825,8 +1832,12 @@ int32 char_mmo_char_tobuf( CHARACTER_INFO& info, mmo_charstatus& p ){
 	info.Dex = (uint8)u16min( p.dex, UINT8_MAX );
 	info.Luk = (uint8)u16min( p.luk, UINT8_MAX );
 	info.CharNum = p.slot;
+#if PACKETVER >= 20081217
 	info.hairColor = (uint8)u16min( p.hair_color, UINT8_MAX );
+#endif
+#if PACKETVER >= 20061023
 	info.bIsChangedCharName = ( p.rename > 0 ) ? 0 : 1;
+#endif
 #if (PACKETVER >= 20100720 && PACKETVER <= 20100727) || PACKETVER >= 20100803
 	mapindex_getmapname_ext( p.last_point.map, info.mapName );
 #endif

@@ -16,7 +16,7 @@ void SkillImperialPressure::calculateSkillRatio(const Damage* wd, const block_li
 	const map_session_data* sd = BL_CAST(BL_PC, src);
 	const status_data* sstatus = status_get_status_data(*src);
 
-	skillratio += -100 + 5600 + 1850 * skill_lv;
+	skillratio += -100 + 3750 + 2650 * skill_lv;
 	skillratio += 7 * sstatus->spl;
 	skillratio += 50 * pc_checkskill(sd, IG_SPEAR_SWORD_M);
 	RE_LVL_DMOD(100);

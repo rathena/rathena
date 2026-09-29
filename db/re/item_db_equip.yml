@@ -173438,7 +173438,7 @@ Body:
     Weight: 300
     Defense: 20
     Slots: 1
-    Job:
+    Jobs:
       Crusader: true
       Knight: true
       Swordman: true
@@ -173471,7 +173471,7 @@ Body:
     Weight: 300
     Defense: 20
     Slots: 1
-    Job:
+    Jobs:
       Crusader: true
       Knight: true
       Swordman: true
@@ -185083,7 +185083,7 @@ Body:
     Type: Armor
     Locations:
       Costume_Head_Mid: true
-    Trage:
+    Trade:
       NoMail: true
       NoAuction: true
       NoGuildStorage: true
@@ -185139,7 +185139,7 @@ Body:
     Type: Armor
     Locations:
       Costume_Head_Mid: true
-    Trage:
+    Trade:
       NoDrop: true
       NoSell: true
       NoMail: true

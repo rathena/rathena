@@ -15,7 +15,7 @@ void SkillKunaiRotation::calculateSkillRatio(const Damage *wd, const block_list 
 	const status_data* sstatus = status_get_status_data(*src);
 	const map_session_data* sd = BL_CAST(BL_PC, src);
 
-	skillratio += -100 + 950 + 1050 * skill_lv;
+	skillratio += -100 + 1000 + 1350 * skill_lv;
 	skillratio += pc_checkskill( sd, SS_KUNAIWAIKYOKU ) * 100 * skill_lv;
 	skillratio += 5 * sstatus->pow;
 	RE_LVL_DMOD(100);

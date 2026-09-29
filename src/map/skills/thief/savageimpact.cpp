@@ -21,11 +21,11 @@ void SkillSavageImpact::calculateSkillRatio(const Damage *wd, const block_list *
 	const status_data* sstatus = status_get_status_data(*src);
 	const status_change *sc = status_get_sc(src);
 
-	skillratio += -100 + 105 * skill_lv;
+	skillratio += -100 + 130 * skill_lv;
 	skillratio += 5 * sstatus->pow;
 
 	if( sc != nullptr && sc->hasSCE( SC_SHADOW_EXCEED ) ){
-		skillratio += 20 * skill_lv;
+		skillratio += 30 * skill_lv;
 		skillratio += 2 * sstatus->pow;
 	}
 

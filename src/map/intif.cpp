@@ -1308,7 +1308,7 @@ int32 intif_parse_WisMessage(int32 fd)
 		return 0;
 	}
 	//Success to send whisper.
-	clif_wis_message(sd, wisp_source, RFIFOCP(fd,12+2*NAME_LENGTH),RFIFOW(fd,2)-12+2*NAME_LENGTH, gmlvl);
+	clif_wis_message(sd, wisp_source, RFIFOCP(fd,12+2*NAME_LENGTH),RFIFOW(fd,2)-(12+2*NAME_LENGTH), gmlvl);
 	intif_wis_reply(id,0);   // success
 	return 1;
 }
@@ -1371,7 +1371,7 @@ int32 mapif_parse_WisToGM(int32 fd)
 	char Wisp_name[NAME_LENGTH];
 	char *message;
 
-	mes_len =  RFIFOW(fd,2) - 8+NAME_LENGTH;
+	mes_len =  RFIFOW(fd,2) - (8+NAME_LENGTH);
 	message = (char *) aMalloc(mes_len+1);
 
 	safestrncpy(Wisp_name, RFIFOCP(fd,4), NAME_LENGTH);
