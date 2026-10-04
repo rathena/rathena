@@ -169359,8 +169359,6 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     View: 548
-    Trade:
-      NoDrop: true
     Script: |
       if (getrefine()>6) {
          bonus bCritical,10;
