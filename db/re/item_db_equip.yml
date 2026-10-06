@@ -36,7 +36,7 @@
 #   Range                   Weapon's attack range. (Default: 0)
 #   Slots                   Available slots in item. (Default: 0)
 #   Jobs                    Jobs that can equip the item. (Map default is 'All: true')
-#   Classes                 Upper class types that can equip the item. (Map default is 'All: true')
+#   Classes                 Minimal class type required to equip the item. (Map default is 'All: true')
 #   Gender                  Gender that can equip the item. (Default: Both)
 #   Locations               Equipment's placement. (Default: None)
 #   WeaponLevel             Weapon level. (Default: 1 for Weapons)
@@ -123,7 +123,7 @@ Body:
       bonus2 bAddItemHealRate,502,100;
       bonus2 bAddItemHealRate,503,100;
       bonus2 bAddItemHealRate,504,100;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Alchemist) {
+      if (BaseThird == Job_Genetic) {
          bonus bHit,20;
          bonus bAspdRate,10;
          bonus bAtkRate,50;
@@ -1398,7 +1398,7 @@ Body:
       bonus bUnbreakableWeapon;
       bonus bAspdRate,10;
       bonus bBaseAtk,70+BaseLevel;
-      if (BaseJob == Job_Rune_Knight) {
+      if (BaseThird == Job_Rune_Knight) {
          bonus bDelayrate,-10;
          bonus bAtkRate,50;
          bonus bLongAtkRate,25;
@@ -2204,8 +2204,6 @@ Body:
       Swordman: true
     Classes:
       Upper: true
-      All_Third: true
-      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -7282,7 +7280,7 @@ Body:
     Script: |
       bonus bCritical,20+getrefine();
       bonus bAspdRate,5;
-      if (Class == Job_Whitesmith || Class == Job_Creator || Class == Job_Mechanic || Class == Job_Mechanic_T || Class == Job_Genetic || Class == Job_Genetic_T)
+      if (Class == Job_Whitesmith || Class == Job_Creator || BaseThird == Job_Mechanic || BaseThird == Job_Genetic)
          bonus3 bAutoSpell,"BS_HAMMERFALL",3,30;
   - Id: 1377
     AegisName: Hurricane_Fury
@@ -11680,8 +11678,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
-      All_Third: true
-      Fourth: true
+      Renewal_Job: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -117352,8 +117349,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
-      All_Third: true
-      Fourth: true
+      Renewal_Job: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -117620,9 +117616,6 @@ Body:
     Slots: 2
     Jobs:
       Knight: true
-    Classes:
-      All_Third: true
-      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -117656,8 +117649,6 @@ Body:
     Slots: 2
     Jobs:
       Knight: true
-    Classes:
-      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 5
@@ -135639,7 +135630,7 @@ Body:
       Spirit_Handler: true
       Wizard: true
     Classes:
-      Fourth: true
+      Trait_Job: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 200
@@ -135685,7 +135676,7 @@ Body:
       Spirit_Handler: true
       Wizard: true
     Classes:
-      Fourth: true
+      Trait_Job: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 200
@@ -255385,7 +255376,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
-      Fourth: true
+      Trait_Job: true
     Locations:
       Both_Hand: true
     WeaponLevel: 5
