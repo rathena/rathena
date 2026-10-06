@@ -6527,16 +6527,15 @@ int32 pc_useitem(map_session_data *sd,int32 n)
 	script = id->script;
 	//Check if the item is to be consumed immediately [Skotlex]
 	if (id->flag.delay_consume > 0)
-		clif_useitemack(sd, n, amount, true);
+	    clif_useitemack(sd, n, amount, true);
 	else
 	{
-		if( item.expire_time == 0 && nameid != ITEMID_REINS_OF_MOUNT )
-		{
-			clif_useitemack(sd, n, amount - 1, true);
-			pc_delitem(sd, n, 1, 1, 0, LOG_TYPE_CONSUME); // Rental Usable Items are not deleted until expiration
-		}
-		else
-			clif_useitemack(sd, n, 0, false);
+	    if( item.expire_time == 0 && nameid != ITEMID_REINS_OF_MOUNT )
+	    {
+	        clif_useitemack(sd, n, amount - 1, true);
+	    }
+	    else
+	        clif_useitemack(sd, n, 0, false);
 	}
 	if (item.card[0]==CARD0_CREATE && pc_famerank(MakeDWord(item.card[2],item.card[3]), MAPID_ALCHEMIST))
 	    potion_flag = 2; // Famous player's potions have 50% more efficiency
@@ -6557,9 +6556,16 @@ int32 pc_useitem(map_session_data *sd,int32 n)
 
 	run_script( script, 0, sd->id, fake_nd->id );
 
-	if( sd->st != nullptr ){
-		script_free_state( sd->st );
-		sd->st = nullptr;
+	if( sd->st != nullptr ) {
+	    if (sd->st->state != RERUNLINE && sd->st->state != STOP) {
+	        script_free_state( sd->st );
+	        sd->st = nullptr;
+	        // Now it's safe to delete the item since the script is done.
+	        pc_delitem(sd, n, 1, 1, 0, LOG_TYPE_CONSUME);
+	    }
+	} else {
+	    // If there was no script (sd->st is nullptr), delete the item.
+	    pc_delitem(sd, n, 1, 1, 0, LOG_TYPE_CONSUME);
 	}
 
 	// If an old script is present
