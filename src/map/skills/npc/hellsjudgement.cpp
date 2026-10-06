@@ -17,5 +17,5 @@ void SkillHellsJudgement::calculateSkillRatio(const Damage *wd, const block_list
 }
 
 void SkillHellsJudgement::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	skill_castend_damage_id(src, src, getSkillId(), skill_lv, tick, flag);
+	SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
 }

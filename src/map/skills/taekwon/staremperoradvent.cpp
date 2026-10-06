@@ -33,5 +33,5 @@ void SkillStarEmperorAdvent::castendNoDamageId(block_list *src, block_list *targ
 	}
 
 	clif_skill_nodamage(src,*target,getSkillId(),skill_lv);
-	skill_castend_damage_id(src, target, getSkillId(), skill_lv, tick, flag);
+	SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
 }
