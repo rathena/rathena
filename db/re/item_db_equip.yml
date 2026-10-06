@@ -188687,7 +188687,7 @@ Body:
     Name: Costume Pool
     Type: Armor
     Locations:
-      Costume_Garment: true
+      Costume_Head_Low: true
     ArmorLevel: 1
     View: 2566
   - Id: 420353
