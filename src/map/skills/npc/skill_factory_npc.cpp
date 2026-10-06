@@ -72,6 +72,7 @@
 #include "leash.cpp"
 #include "lexaeterna2.cpp"
 #include "lick.cpp"
+#include "lockonlaser.cpp"
 #include "metamorphosis.cpp"
 #include "milleniumshield2.cpp"
 #include "monstersummons.cpp"
@@ -338,6 +339,10 @@ std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id)
 			return std::make_unique<SkillLexAeterna2>();
 		case NPC_LICK:
 			return std::make_unique<SkillLick>();
+		case NPC_LOCKON_LASER:
+			return std::make_unique<SkillLockonLaser>();
+		case NPC_LOCKON_LASER_ATK:
+			return std::make_unique<SkillLockonLaserAttack>();
 		case NPC_MAGICALATTACK:
 			return std::make_unique<SkillDemonShockAttack>();
 		case NPC_MAGICMIRROR:

@@ -59,6 +59,8 @@ IgnoreDefCard	- Skill ignores target's defense cards.
 IgnoreLongCard	- Skill ignores caster's long range damage cards.
 Critical		- Skill can critical.
 SimpleDefense	- (Renewal-only) Physical damage is flatly reduced by DEF+DEF2. RES is ignored.
+IgnoreRes		- (Renewal-only) Skill ignores target's RES
+IgnoreMres		- (Renewal-only) Skill ignores target's MRES
 
 ---------------------------------------
 
