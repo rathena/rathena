@@ -5068,6 +5068,7 @@ void MapServer::finalize(){
 	do_final_duel();
 	do_final_elemental();
 	do_final_cashshop();
+	do_final_emotion_pack();
 	do_final_channel(); //should be called after final guild
 	do_final_vending();
 	do_final_buyingstore();
@@ -5427,6 +5428,7 @@ bool MapServer::initialize( int32 argc, char *argv[] ){
 	do_init_itemdb();
 	do_init_channel();
 	do_init_cashshop();
+	do_init_emotion_pack();
 	do_init_skill();
 	do_init_mob();
 	do_init_pc();

@@ -40,11 +40,13 @@ jobs:
         # Macos runners already have most of the packages rAthena requires to build.
         # https://github.com/actions/runner-images/blob/main/images/macos/macos-14-Readme.md
         # https://github.com/actions/runner-images/blob/main/images/macos/macos-15-Readme.md
+
+      - name: Install packages
         run: |
-          brew update
-          brew install pcre
-          brew install mysql
-          brew install mysql-client
+          export HOMEBREW_NO_AUTO_UPDATE=1
+          export PATH="/opt/homebrew/bin:$PATH"
+          export PKG_CONFIG_PATH="/opt/homebrew/opt/mysql-client/lib/pkgconfig:$PKG_CONFIG_PATH"
+          brew install pcre mysql mysql-client
 
       # Install latest CMake.
       - uses: lukka/get-cmake@latest

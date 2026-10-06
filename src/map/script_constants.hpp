@@ -3716,6 +3716,32 @@
 	export_constant(ET_YUT5);
 	export_constant(ET_YUT6);
 	export_constant(ET_YUT7);
+	export_constant(ET_CLICK_ME);
+	export_constant(ET_DAILY_QUEST);
+	export_constant(ET_EVENT);
+	export_constant(ET_JOB_QUEST);
+	export_constant(ET_TRAFFIC_LINE_QUEST);
+	export_constant(ET_CUSTOM_1);
+	export_constant(ET_CUSTOM_2);
+	export_constant(ET_CUSTOM_3);
+	export_constant(ET_CUSTOM_4);
+	export_constant(ET_CUSTOM_5);
+	export_constant(ET_CUSTOM_6);
+	export_constant(ET_CUSTOM_7);
+	export_constant(ET_CUSTOM_8);
+	export_constant(ET_CUSTOM_9);
+	export_constant(ET_CUSTOM_10);
+	export_constant(ET_CUSTOM_11);
+	export_constant(ET_CUSTOM_12);
+	export_constant(ET_CUSTOM_13);
+	export_constant(ET_CUSTOM_14);
+	export_constant(ET_CUSTOM_15);
+
+	/* emotion pack types (cash emotions) */
+	export_constant(EPT_BASIC);
+	export_constant(EPT_21ST_ANNIVERSARY);
+	export_constant(EPT_2023CHUSEOK);
+	export_constant(EPT_2023THXGIVING);
 
 	/* send targets */
 	export_constant(ALL_CLIENT);

@@ -1,0 +1,77 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2026 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Emotion Pack Database (Pre-Renewal)
+###########################################################################
+#
+# Emotion Pack Settings
+#
+###########################################################################
+# - Id                      Unique pack identifier matching client LUA definitions
+#                           (cashemotionlistdefine.lub: EMOTION_PACK_TYPE).
+#                           Default IDs:
+#                             1: 21st Anniversary (EPT_21ST_ANNIVERSARY)
+#                             2: 2023 Chuseok (EPT_2023CHUSEOK)
+#                             3: 2023 Thanksgiving (EPT_2023THXGIVING)
+#   AegisName               Internal constant / identifier name for reference.
+#   Name                    Display name of the emotion pack.
+#   Price                   Cost amount required to purchase the pack from the UI.
+#                           Set to 0 for free acquisition. (Default: 0)
+#   Item                    Currency item used to purchase the pack.
+#                           Accepts AegisName (e.g. Nyangvine_Fruit) or numeric Item ID.
+#                           (Default: Nyangvine_Fruit / ID 6909)
+#   StartDate               Date when the pack becomes available for purchase (YYYYMMDD).
+#                           If the current date is before StartDate, purchase is rejected.
+#                           (Optional. Default: 0 / available immediately)
+#   EndDate                 Date when the pack sale period ends (YYYYMMDD).
+#                           If the current date exceeds EndDate, purchase is rejected.
+#                           (Optional. Default: 0 / never ends)
+#   IsExpire                Whether the purchased pack is temporary/rental (true/false).
+#                           If true, the UI displays a remaining time countdown and rental icon.
+#                           (Optional. Default: false / permanent)
+#   Duration                Usage duration in seconds after purchase if IsExpire is true.
+#                           Example: 2592000 for 30 days, 604800 for 7 days.
+#                           (Optional. Default: 0)
+###########################################################################
+
+Header:
+  Type: EMOTION_PACK_DB
+  Version: 1
+
+Body:
+  - Id: 1
+    AegisName: EPT_21ST_ANNIVERSARY
+    Name: 21st Anniversary
+    Price: 0
+
+# Note: The official 2023 Chuseok and Thanksgiving packs are commented out in Pre-Renewal
+# because Nyangvine_Fruit is a Renewal-exclusive item. Server administrators can uncomment
+# and specify an existing item or configure them to use Cash Points in db/import/emotion_pack.yml.
+#  - Id: 2
+#    AegisName: EPT_2023CHUSEOK
+#    Name: 2023 Chuseok
+#    Price: 10
+#    Item: Nyangvine_Fruit
+#    StartDate: 20230829
+#
+#  - Id: 3
+#    AegisName: EPT_2023THXGIVING
+#    Name: 2023 Thanksgiving
+#    Price: 10
+#    Item: Nyangvine_Fruit
+#    StartDate: 20231101

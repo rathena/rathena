@@ -234,6 +234,7 @@ struct Battle_Config
 	int32 quest_skill_learn;
 	int32 quest_skill_reset;
 	int32 basic_skill_check;
+	int32 emotion_cash_check;
 	int32 guild_emperium_check;
 	int32 guild_exp_limit;
 	int32 guild_max_castles;

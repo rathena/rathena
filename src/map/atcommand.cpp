@@ -4351,6 +4351,7 @@ ACMD_FUNC(reloadcashdb){
 	nullpo_retr(-1, sd);
 
 	cashshop_reloaddb();
+	emotion_pack_db.reload();
 	clif_displaymessage( fd, msg_txt( sd, 832 ) ); // Cash shop database has been reloaded.
 
 	return 0;

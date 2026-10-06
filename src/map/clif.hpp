@@ -8,6 +8,7 @@
 #include <vector>
 
 #include <common/cbasetypes.hpp>
+#include <common/database.hpp>
 #include <common/db.hpp> //dbmap
 #include <common/mmo.hpp>
 #include <common/timer.hpp> // t_tick
@@ -349,8 +350,36 @@ enum emotion_type {
 	ET_YUT5,
 	ET_YUT6,
 	ET_YUT7,
+	ET_CLICK_ME,
+	ET_DAILY_QUEST,
+	ET_EVENT,
+	ET_JOB_QUEST,
+	ET_TRAFFIC_LINE_QUEST,
+	ET_CUSTOM_1,
+	ET_CUSTOM_2,
+	ET_CUSTOM_3,
+	ET_CUSTOM_4,
+	ET_CUSTOM_5,
+	ET_CUSTOM_6,
+	ET_CUSTOM_7,
+	ET_CUSTOM_8,
+	ET_CUSTOM_9,
+	ET_CUSTOM_10,
+	ET_CUSTOM_11,
+	ET_CUSTOM_12,
+	ET_CUSTOM_13,
+	ET_CUSTOM_14,
+	ET_CUSTOM_15,
 	//
 	ET_MAX
+};
+
+enum emotion_pack_type {
+	EPT_BASIC = 0,
+	EPT_21ST_ANNIVERSARY = 1,
+	EPT_2023CHUSEOK = 2,
+	EPT_2023THXGIVING = 3,
+	EPT_MAX
 };
 
 enum clr_type : uint8_t 
@@ -940,7 +969,36 @@ void clif_changechatstatus( const chat_data& cd);
 void clif_refresh_storagewindow(map_session_data *sd);
 void clif_refresh(map_session_data *sd);	// self
 
-void clif_emotion( const block_list& bl, emotion_type type );
+struct s_emotion_pack {
+	int16 id;
+	std::string aegis_name;
+	std::string name;
+	uint32 price;
+	t_itemid item_id;
+	uint32 start_date;
+	uint32 end_date;
+	uint8 is_expire;
+	uint32 duration;
+};
+
+class EmotionPackDatabase : public TypesafeYamlDatabase<int16, s_emotion_pack> {
+public:
+	EmotionPackDatabase() : TypesafeYamlDatabase("EMOTION_PACK_DB", 1) {
+	}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
+};
+
+extern EmotionPackDatabase emotion_pack_db;
+void do_init_emotion_pack(void);
+void do_final_emotion_pack(void);
+
+void clif_emotion( const block_list& bl, emotion_type type, int16 group_id = 0 );
+void clif_emotion_expansion_list( map_session_data* sd );
+void clif_emotion_expansion_buy_ack( map_session_data* sd, int16 pack_id, uint8 type, uint32 expire_time );
+void clif_emotion_expansion_buy_fail( map_session_data* sd, int16 pack_id, uint8 result );
+void clif_parse_BuyEmotionExpansion( int32 fd, map_session_data* sd );
 void clif_talkiebox( const block_list* bl, const char* talkie );
 void clif_wedding_effect( const block_list& bl );
 void clif_divorced( const map_session_data& sd, const char* name );

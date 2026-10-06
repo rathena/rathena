@@ -2026,8 +2026,9 @@
 	parseable_packet( HEADER_CZ_ALLY_CHAT, -1, clif_parse_dull, 0 );
 #endif
 
-#if PACKETVER_MAIN_NUM >= 20230705
-	parseable_packet( HEADER_CZ_REQ_EMOTION_EXPANSION, sizeof( struct PACKET_CZ_REQ_EMOTION_EXPANSION ), clif_parse_dull, 0 );
+#if PACKETVER_MAIN_NUM >= 20230705 || PACKETVER_RE_NUM >= 20230705
+	parseable_packet( HEADER_CZ_REQ_EMOTION_EXPANSION, sizeof( struct PACKET_CZ_REQ_EMOTION_EXPANSION ), clif_parse_EmotionExpansion, 0 );
+	parseable_packet( HEADER_CZ_REQ_BUY_EMOTION_EXPANSION, sizeof( struct PACKET_CZ_REQ_BUY_EMOTION_EXPANSION ), clif_parse_BuyEmotionExpansion, 0 );
 #endif
 
 #if PACKETVER_MAIN_NUM >= 20230802

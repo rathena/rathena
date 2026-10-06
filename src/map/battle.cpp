@@ -8346,6 +8346,7 @@ static const struct _battle_data {
 	{ "quest_skill_learn",                  &battle_config.quest_skill_learn,               0,      0,      1,              },
 	{ "quest_skill_reset",                  &battle_config.quest_skill_reset,               0,      0,      1,              },
 	{ "basic_skill_check",                  &battle_config.basic_skill_check,               1,      0,      1,              },
+	{ "emotion_cash_check",                 &battle_config.emotion_cash_check,              1,      0,      1,              },
 	{ "guild_emperium_check",               &battle_config.guild_emperium_check,            1,      0,      1,              },
 	{ "guild_exp_limit",                    &battle_config.guild_exp_limit,                 50,     0,      99,             },
 	{ "player_invincible_time",             &battle_config.pc_invincible_time,              3000,   0,      INT_MAX,        },
@@ -8885,6 +8886,8 @@ static const struct _battle_data {
 
 	{ "feature.stylist",                    &battle_config.feature_stylist,                 1,      0,      1,              },
 	{ "feature.banking_state_enforce",      &battle_config.feature_banking_state_enforce,   0,      0,      1,              },
+	{ "feature.emotion_cash_check",         &battle_config.emotion_cash_check,              1,      0,      1,              },
+	{ "feature.emotion_cash",               &battle_config.emotion_cash_check,              1,      0,      1,              },
 #ifdef RENEWAL
 	{ "feature.instance_allow_reconnect",   &battle_config.instance_allow_reconnect,        1,      0,      1,              },
 #else
@@ -9139,6 +9142,15 @@ void battle_adjust_conf()
 		ShowWarning( "conf/battle/feature.conf:mesitemicon is enabled but it requires PACKETVER 2023-03-02 or newer, disabling...\n" );
 #endif
 		battle_config.feature_mesitemicon = 0;
+	}
+#endif
+
+#if PACKETVER < 20230705
+	if (battle_config.emotion_cash_check) {
+#if !defined(BUILDBOT)
+		ShowWarning("conf/battle/feature.conf: emotion_cash_check is enabled but it requires PACKETVER 2023-07-05 or newer, disabling...\n");
+#endif
+		battle_config.emotion_cash_check = 0;
 	}
 #endif
 

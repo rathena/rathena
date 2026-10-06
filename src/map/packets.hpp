@@ -22,7 +22,7 @@
 #endif
 #define MAX_ACHIEVEMENT_DB MAX_ACHIEVEMENT_OBJECTIVES
 
-#define DEFINE_PACKET_HEADER(name, id) const int16 HEADER_##name = id;
+#define DEFINE_PACKET_HEADER(name, id) [[maybe_unused]] inline constexpr int16 HEADER_##name = id;
 #define DEFINE_PACKET_ID(name, id) DEFINE_PACKET_HEADER(name, id)
 
 #include "packets_struct.hpp"
@@ -2032,9 +2032,56 @@ DEFINE_PACKET_HEADER(ZC_SKILLMSG, 0x215);
 
 struct PACKET_CZ_REQ_EMOTION_EXPANSION{
 	int16 packetType;
-	uint8 unknown[4];
+	int16 group_id;
+	int16 emotion_id;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_REQ_EMOTION_EXPANSION, 0xbe9);
+
+struct PACKET_ZC_EMOTION_EXPANSION{
+	int16 packetType;
+	uint32 GID;
+	int16 group_id;
+	int16 emotion_id;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_EMOTION_EXPANSION, 0xbea);
+
+struct PACKET_CZ_REQ_BUY_EMOTION_EXPANSION{
+	int16 packetType;
+	int16 pack_id;
+	int16 count;
+	uint8 type;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_BUY_EMOTION_EXPANSION, 0xbec);
+
+struct PACKET_ZC_ACK_BUY_EMOTION_EXPANSION{
+	int16 packetType;
+	int16 pack_id;
+	uint8 type;
+	uint32 expire_time;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_BUY_EMOTION_EXPANSION, 0xbed);
+
+struct PACKET_ZC_FAILED_BUY_EMOTION_EXPANSION{
+	int16 packetType;
+	int16 pack_id;
+	uint8 result;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_FAILED_BUY_EMOTION_EXPANSION, 0xbee);
+
+struct PACKET_ZC_EMOTION_EXPANSION_LIST_SUB{
+	int16 pack_id;
+	uint8 type;
+	uint32 expire_time;
+} __attribute__((packed));
+
+struct PACKET_ZC_EMOTION_EXPANSION_LIST{
+	int16 packetType;
+	int16 packetLength;
+	uint32 server_time;
+	int16 count;
+	struct PACKET_ZC_EMOTION_EXPANSION_LIST_SUB packs[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_EMOTION_EXPANSION_LIST, 0xbf6);
 
 struct PACKET_ZC_DISAPPEAR_ENTRY{
 	int16 packetType;
