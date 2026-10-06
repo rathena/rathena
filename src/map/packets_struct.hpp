@@ -1012,6 +1012,19 @@ struct packet_script_clear {
 	uint32 NpcID;
 } __attribute__((packed));
 
+#if PACKETVER_MAIN_NUM >= 20260520
+struct PACKET_ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN_BOX_ITEMLINK {
+	int16 PacketType;
+	int16 PacketLength;
+	uint32 ItemID;
+	char Name[NAME_LENGTH];
+	uint32 BoxItemID;
+	uint32 refineLevel;
+	uint8 enchantGrade;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN_BOX_ITEMLINK, 0x0c3a)
+#endif
+
 #if PACKETVER_MAIN_NUM >= 20220518 || PACKETVER_ZERO_NUM >= 20220518
 struct PACKET_ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN_item {
 	int16 PacketType;
