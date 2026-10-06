@@ -2757,7 +2757,7 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 
 ac_config_files="$ac_config_files Makefile src/common/Makefile"
 
-ac_config_files="$ac_config_files 3rdparty/libconfig/Makefile 3rdparty/yaml-cpp/Makefile 3rdparty/rapidyaml/Makefile 3rdparty/httplib/Makefile"
+# Embedded 3rdparty Makefiles were removed in favor of external dependencies (vcpkg/CMake).
 
 ac_config_files="$ac_config_files src/char/Makefile src/login/Makefile"
 
@@ -8304,4 +8304,3 @@ if test -n "$ac_unrecognized_opts" && test "$enable_option_checking" != no; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: unrecognized options: $ac_unrecognized_opts" >&5
 $as_echo "$as_me: WARNING: unrecognized options: $ac_unrecognized_opts" >&2;}
 fi
-
