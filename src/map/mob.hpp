@@ -332,6 +332,10 @@ struct s_dmglog{
 	int64 dmg;
 	int64 dmg_tanked; //Damage tanked from normal attacks of the monster, MVP is the player with highest dmg+dmg_tanked
 	uint32 flag : 2; //0: Normal. 1: Homunc exp. 2: Pet exp
+	// Source types that contributed to a MDLF_NORMAL entry - mercenary damage is
+	// logged under the master's char_id and is indistinguishable by flag alone
+	uint32 pc_dmg : 1; // any non-mercenary contribution (master, master's summons)
+	uint32 mer_dmg : 1; // mercenary contribution
 };
 
 struct mob_data : public block_list {
