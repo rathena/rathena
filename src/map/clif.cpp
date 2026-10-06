@@ -16275,7 +16275,7 @@ void clif_parse_Mail_refreshinbox(int32 fd, map_session_data *sd){
 	else
 		clif_Mail_refreshinbox(sd, MAIL_INBOX_NORMAL,0);
 
-	mail_removeitem(sd, 0, sd->mail.item[0].index, sd->mail.item[0].amount);
+	mail_removeitem(sd, 0, sd->mail.item[0].index + 2, sd->mail.item[0].amount);
 	mail_removezeny(sd, false);
 #else
 	int32 cmd = RFIFOW(fd, 0);
@@ -16801,7 +16801,7 @@ void clif_parse_Mail_winopen(int32 fd, map_session_data *sd)
 	int32 type = RFIFOW(fd,packet_db[RFIFOW(fd,0)].pos[0]);
 
 	if (type == 0 || type == 1)
-		mail_removeitem(sd, 0, sd->mail.item[0].index, sd->mail.item[0].amount);
+		mail_removeitem(sd, 0, sd->mail.item[0].index + 2, sd->mail.item[0].amount);
 	if (type == 0 || type == 2)
 		mail_removezeny(sd, false);
 #else
