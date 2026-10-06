@@ -114799,8 +114799,6 @@ Body:
             Item: Gaebolg_Muffler
             RefineMinimum: 11
             RefineMaximum: 11
-            RefineMinimum: 11
-            RefineMaximum: 11
             Rate: 20
           - Index: 23
             Item: Gaebolg_Glove
