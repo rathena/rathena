@@ -5,6 +5,7 @@
 
 #include <cstdlib>
 #include <csignal>
+#include <chrono>
 
 #include <config/core.hpp>
 
@@ -25,6 +26,7 @@
 
 #include "cbasetypes.hpp"
 #include "malloc.hpp"
+#include "metrics.hpp"
 #include "mmo.hpp"
 #include "showmsg.hpp"
 #include "strlib.hpp"
@@ -386,9 +388,21 @@ int32 Core::start( int32 argc, char **argv ){
 		if( !this->m_run_once ){
 			// Main runtime cycle
 			while( this->get_status() == e_core_status::RUNNING ){
+				const auto main_cycle_start = std::chrono::steady_clock::now();
+				const auto timer_start = std::chrono::steady_clock::now();
 				t_tick next = do_timer( gettick_nocache() );
+				const auto timer_elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>( std::chrono::steady_clock::now() - timer_start );
+				rathena::metrics::counter_inc( "server_main_loop_cycles" );
+				rathena::metrics::observe_duration_ns( "server_timer_loop", static_cast<uint64_t>( timer_elapsed.count() ) );
 
+				const auto main_handle_start = std::chrono::steady_clock::now();
 				this->handle_main( next );
+				const auto main_handle_elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>( std::chrono::steady_clock::now() - main_handle_start );
+				rathena::metrics::observe_duration_ns( "server_main_io_loop", static_cast<uint64_t>( main_handle_elapsed.count() ) );
+				const auto main_cycle_elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>( std::chrono::steady_clock::now() - main_cycle_start );
+				rathena::metrics::observe_duration_ns( "server_main_loop", static_cast<uint64_t>( main_cycle_elapsed.count() ) );
+				rathena::metrics::counter_inc( "server_cycle_time_ns", static_cast<uint64_t>( main_cycle_elapsed.count() ) );
+				rathena::metrics::gauge_set( "server_cycle_time_last_ms", static_cast<double>( main_cycle_elapsed.count() ) / 1000000.0 );
 			}
 		}
 #endif

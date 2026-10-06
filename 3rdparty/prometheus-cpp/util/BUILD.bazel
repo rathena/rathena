@@ -1,0 +1,6 @@
+cc_library(
+    name = "util",
+    hdrs = glob(["include/**/*.h"]),
+    strip_include_prefix = "include",
+    visibility = ["//:__subpackages__"],
+)

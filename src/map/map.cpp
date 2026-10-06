@@ -14,6 +14,7 @@
 #include <common/ers.hpp>
 #include <common/grfio.hpp>
 #include <common/malloc.hpp>
+#include <common/metrics.hpp>
 #include <common/nullpo.hpp>
 #include <common/random.hpp>
 #include <common/showmsg.hpp>
@@ -185,6 +186,9 @@ char wisp_server_name[NAME_LENGTH] = "Server"; // can be modified in char-server
 int32 console = 0;
 int32 enable_spy = 0; //To enable/disable @spy commands, which consume too much cpu time when sending packets. [Skotlex]
 int32 enable_grf = 0;	//To enable/disable reading maps from GRF files, bypassing mapcache [blackhole89]
+static int32 metrics_enabled = 1;
+static int32 metrics_export_interval_ms = 5000;
+static char metrics_export_path[256] = "./log/map_metrics.prom";
 
 #ifdef MAP_GENERATOR
 struct s_generator_options {
@@ -218,6 +222,25 @@ void map_setusers(int32 users)
 int32 map_getusers(void)
 {
 	return map_users;
+}
+
+static TIMER_FUNC(map_metrics_export_timer){
+	static bool warned = false;
+
+	if( !metrics_enabled ){
+		return 0;
+	}
+
+	if( !metrics::write_prometheus_to_file( metrics_export_path ) ){
+		if( !warned ){
+			ShowWarning( "Metrics export failed for '%s'.\n", metrics_export_path );
+			warned = true;
+		}
+		return 0;
+	}
+
+	warned = false;
+	return 0;
 }
 
 /*==========================================
@@ -4094,6 +4117,15 @@ int32 parse_console(const char* buf){
 			global_core->signal_shutdown();
 		}
 	}
+	else if( n == 2 && strcmpi("metrics", type) == 0 ){
+		if( strcmpi("write", command) == 0 ){
+			if( metrics::write_prometheus_to_file( metrics_export_path ) ){
+				ShowInfo( "Metrics written to '%s'.\n", metrics_export_path );
+			}else{
+				ShowWarning( "Failed to write metrics to '%s'.\n", metrics_export_path );
+			}
+		}
+	}
 	else if( strcmpi("ers_report", type) == 0 ){
 		ers_report();
 	}
@@ -4102,6 +4134,7 @@ int32 parse_console(const char* buf){
 		ShowInfo("\t admin:@<atcommand> => Uses an atcommand. Do NOT use commands requiring an attached player.\n");
 		ShowInfo("\t admin:map:<map> <x> <y> => Changes the map from which console commands are executed.\n");
 		ShowInfo("\t server:shutdown => Stops the server.\n");
+		ShowInfo("\t metrics:write => Writes Prometheus metrics to the configured metrics file.\n");
 		ShowInfo("\t ers_report => Displays database usage.\n");
 	}
 
@@ -4203,6 +4236,12 @@ int32 map_config_read(const char *cfgName)
 			console_msg_log = atoi(w2);//[Ind]
 		else if (strcmpi(w1, "console_log_filepath") == 0)
 			safestrncpy(console_log_filepath, w2, sizeof(console_log_filepath));
+		else if (strcmpi(w1, "metrics_enable") == 0)
+			metrics_enabled = config_switch(w2);
+		else if (strcmpi(w1, "metrics_export_interval_ms") == 0)
+			metrics_export_interval_ms = max(1000, atoi(w2));
+		else if (strcmpi(w1, "metrics_export_path") == 0)
+			safestrncpy(metrics_export_path, w2, sizeof(metrics_export_path));
 		else if (strcmpi(w1, "import") == 0)
 			map_config_read(w2);
 		else
@@ -5412,6 +5451,7 @@ bool MapServer::initialize( int32 argc, char *argv[] ){
 
 	add_timer_func_list(map_clearflooritem_timer, "map_clearflooritem_timer");
 	add_timer_func_list(map_removemobs_timer, "map_removemobs_timer");
+	add_timer_func_list(map_metrics_export_timer, "map_metrics_export_timer");
 	
 	map_do_init_msg();
 	do_init_path();
@@ -5448,6 +5488,13 @@ bool MapServer::initialize( int32 argc, char *argv[] ){
 	do_init_buyingstore();
 
 	npc_event_do_oninit();	// Init npcs (OnInit)
+
+	if( metrics_enabled && metrics_export_interval_ms > 0 ){
+		add_timer_interval( gettick() + metrics_export_interval_ms, map_metrics_export_timer, 0, 0, metrics_export_interval_ms );
+		ShowStatus( "Metrics exporter is '" CL_GREEN "enabled" CL_RESET "' (interval: " CL_WHITE "%dms" CL_RESET ", path: '" CL_WHITE "%s" CL_RESET "').\n", metrics_export_interval_ms, metrics_export_path );
+	}else{
+		ShowStatus( "Metrics exporter is '" CL_RED "disabled" CL_RESET "'.\n" );
+	}
 
 	if (battle_config.pk_mode)
 		ShowNotice("Server is running on '" CL_WHITE "PK Mode" CL_RESET "'.\n");

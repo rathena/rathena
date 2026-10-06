@@ -1,2 +1,5 @@
 char_ip: char
 map_ip: 127.0.0.1
+metrics_enable: yes
+metrics_export_interval_ms: 5000
+metrics_export_path: ./log/map_metrics.prom
