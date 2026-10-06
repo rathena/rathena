@@ -457,14 +457,15 @@ void* grfio_reads(const char* fname, size_t* size)
 }
 
 int32 grfio_read_rsw_water_level( const char* fname ){
-	unsigned char* rsw = (unsigned char *)grfio_reads( fname );
+	size_t size;
+	unsigned char* rsw = (unsigned char *)grfio_reads( fname, &size );
 
 	if( rsw == nullptr ){
 		// Error already reported in grfio_read
 		return RSW_NO_WATER;
 	}
 
-	if( strncmp( (char*)rsw, "GRSW", strlen( "GRSW" ) ) ){
+	if( size < 6 || strncmp( (char*)rsw, "GRSW", strlen( "GRSW" ) ) ){
 		ShowError( "grfio_read_rsw_water_level: Invalid RSW signature in file %s\n", fname );
 		aFree( rsw );
 		return RSW_NO_WATER;
@@ -478,15 +479,25 @@ int32 grfio_read_rsw_water_level( const char* fname ){
 		return RSW_NO_WATER;
 	}
 
-	int32 level;
+	size_t offset;
 
 	if( version >= 0x205 ){
-		level = (int32)*(float*)( rsw + 171 );
+		offset = 171;
 	} else if( version >= 0x202 ){
-		level = (int32)*(float*)( rsw + 167 );
+		offset = 167;
 	}else{
-		level = (int32)*(float*)( rsw + 166 );
+		offset = 166;
 	}
+
+	if( size < offset + sizeof( float ) ){
+		ShowError( "grfio_read_rsw_water_level: RSW file %s is too small\n", fname );
+		aFree( rsw );
+		return RSW_NO_WATER;
+	}
+
+	float water_level;
+	memcpy( &water_level, rsw + offset, sizeof( water_level ) );
+	int32 level = (int32)water_level;
 
 	aFree( rsw );
 
@@ -616,7 +627,12 @@ static int32 grfio_entryread(const char* grfname, int32 gentry)
 		grf_filelist = (unsigned char *)aMalloc(eSize);	// Get a Extend Size
 		if(fread(rBuf,1,rSize,fp) != rSize) ShowError("An error occurred in fread \n");
 		fclose(fp);
-		decode_zip(grf_filelist, &eSize, rBuf, rSize);	// Decode function
+		if( decode_zip(grf_filelist, &eSize, rBuf, rSize) != Z_OK ) {
+			ShowError("GRF %s failed to decode file list\n", grfname);
+			aFree(rBuf);
+			aFree(grf_filelist);
+			return 4;
+		}
 		aFree(rBuf);
 
 		entrys = getlong(grf_header+0x26) - 7;
@@ -625,15 +641,30 @@ static int32 grfio_entryread(const char* grfname, int32 gentry)
 		for( entry = 0, ofs = 0; entry < entrys; ++entry ) {
 			FILELIST aentry;
 
-			char* fname = (char*)(grf_filelist+ofs);
-			int32 ofs2 = ofs + (int32)strlen(fname)+1;
-			int32 type = grf_filelist[ofs2+12];
+			if( ofs < 0 || (uLongf)ofs >= eSize ) {
+				ShowError("GRF %s file list is truncated\n", grfname);
+				break;
+			}
 
-			if( strlen(fname) > sizeof(aentry.fn)-1 ) {
+			char* fname = (char*)(grf_filelist+ofs);
+			size_t fname_len = strnlen(fname, eSize - ofs);
+			if( fname_len == eSize - ofs ) {
+				ShowError("GRF %s file name is not terminated\n", grfname);
+				break;
+			}
+			if( fname_len > sizeof(aentry.fn)-1 ) {
 				ShowFatalError("GRF file name %s is too long\n", fname);
 				aFree(grf_filelist);
 				exit(EXIT_FAILURE);
 			}
+
+			int32 ofs2 = ofs + (int32)fname_len + 1;
+			if( ofs2 < 0 || (uLongf)ofs2 + 17 > eSize ) {
+				ShowError("GRF %s file list is truncated\n", grfname);
+				break;
+			}
+
+			int32 type = grf_filelist[ofs2+12];
 
 			if( type & FILELIST_TYPE_FILE ) {// file
 				aentry.srclen         = getlong(grf_filelist+ofs2+0);
