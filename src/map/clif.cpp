@@ -21341,8 +21341,9 @@ static std::string clif_hide_name(const char* original_name)
  * 07fd <size>.W <type>.B <itemid>.W <charname_len>.B <charname>.24B <source_len>.B <srcname>.24B (ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN)
  * type: ITEMOBTAIN_TYPE_BOXITEM & ITEMOBTAIN_TYPE_MONSTER_ITEM "[playername] ... [sourcename] ... [itemname]" -> MsgStringTable[1629]
  * type: ITEMOBTAIN_TYPE_NPC "[playername] ... [itemname]" -> MsgStringTable[1870]
+ * 0c3a <size>.W <itemid>.L <charname>.24B <boxitemid>.L <refine>.L <grade>.B (ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN_BOX_ITEMLINK)
  **/
-void clif_broadcast_obtain_special_item( const char *char_name, t_itemid nameid, t_itemid container, enum BROADCASTING_SPECIAL_ITEM_OBTAIN type, uint32 refine_level ){
+void clif_broadcast_obtain_special_item( const char *char_name, t_itemid nameid, t_itemid container, enum BROADCASTING_SPECIAL_ITEM_OBTAIN type, uint32 refine_level, uint8 enchant_grade ){
 	char name[NAME_LENGTH];
 
 	if( battle_config.broadcast_hide_name ){
@@ -21354,7 +21355,21 @@ void clif_broadcast_obtain_special_item( const char *char_name, t_itemid nameid,
 
 	switch( type ){
 		case ITEMOBTAIN_TYPE_BOXITEM:
-#if PACKETVER >= 20091201
+#if PACKETVER_MAIN_NUM >= 20260520
+			{
+				PACKET_ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN_BOX_ITEMLINK p = {};
+
+				p.PacketType = HEADER_ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN_BOX_ITEMLINK;
+				p.PacketLength = sizeof( p );
+				p.ItemID = client_nameid( nameid );
+				safestrncpy( p.Name, name, sizeof( p.Name ) );
+				p.BoxItemID = client_nameid( container );
+				p.refineLevel = refine_level;
+				p.enchantGrade = enchant_grade;
+
+				clif_send( &p, p.PacketLength, nullptr, ALL_CLIENT );
+			}
+#elif PACKETVER >= 20091201
 			{
 				PACKET_ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN_item p = {};
 
