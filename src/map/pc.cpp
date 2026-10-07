@@ -6557,14 +6557,14 @@ int32 pc_useitem(map_session_data *sd,int32 n)
 	run_script( script, 0, sd->id, fake_nd->id );
 
 	if( sd->st != nullptr ) {
-	    if (sd->st->state != RERUNLINE && sd->st->state != STOP) {
+	    if( sd->st->state == END ){
 	        script_free_state( sd->st );
 	        sd->st = nullptr;
-	        // Now it's safe to delete the item since the script is done.
-	        pc_delitem(sd, n, 1, 1, 0, LOG_TYPE_CONSUME);
+	        // Delete the item only after the script has fully ended
+	        pc_delitem(sd, n, 1, 1, 0, LOG_TYPE_CONSUME );
 	    }
 	} else {
-	    // If there was no script (sd->st is nullptr), delete the item.
+	    // If sd->st is nullptr (no script), delete the item immediately
 	    pc_delitem(sd, n, 1, 1, 0, LOG_TYPE_CONSUME);
 	}
 
