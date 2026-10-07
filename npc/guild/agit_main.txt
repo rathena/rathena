@@ -1269,7 +1269,8 @@ OnClock0001:
 		set .@boxid, .@treasurebox + (.@i+2) % 2;
 		set .@box,1 << .@i;
 		// Spawn or do not spawn chests if one already exists.
-		if ((getd("$@"+strnpcinfo(2)+"_treasure") & .@box) == 0) {
+		// A flagged spot can be empty when OnTreasureDied never ran (e.g. killmonsterall).
+		if ((getd("$@"+strnpcinfo(2)+"_treasure") & .@box) == 0 || !mobcount(strnpcinfo(2),"Treasure#"+strnpcinfo(2)+"::OnTreasureDied"+.@i)) {
 			monster strnpcinfo(2),.@treasurex[.@i],.@treasurey[.@i],"Treasure Chest",.@boxid,1,"Treasure#"+strnpcinfo(2)+"::OnTreasureDied"+.@i;
 			setd "$@"+strnpcinfo(2)+"_treasure",getd("$@"+strnpcinfo(2)+"_treasure") | .@box;
 		}
