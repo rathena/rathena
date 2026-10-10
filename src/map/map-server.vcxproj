@@ -5186,7 +5186,9 @@
     <ClCompile Include="skills/thief/sightlessmind.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/thief/phantomdagger.cpp" />
+    <ClCompile Include="skills/thief/phantomdagger.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/thief/skill_factory_thief.cpp" />
     <ClCompile Include="skills/thief/snatch.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
