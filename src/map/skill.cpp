@@ -8960,7 +8960,7 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 				return false;
 			break;
 		case SOA_FIELD_OF_KIRIN:
-			if (sc == nullptr || !(sc->getSCE(SC_T_FOURTH_GOD) || sc->getSCE(SC_T_FIFTH_GOD))) {
+			if (sc == nullptr || !(sc->hasSCE(SC_T_FOURTH_GOD) || sc->hasSCE(SC_T_FIFTH_GOD))) {
 				clif_skill_fail(sd, skill_id, USESKILL_FAIL_CONDITION);
 				return false;
 			}
