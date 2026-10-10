@@ -3022,7 +3022,7 @@ static bool is_attack_critical(struct Damage* wd, block_list *src, const block_l
 	if (skill_id == MT_OVERDRIVE_PROTOCAL) {
 		const status_change* sc = status_get_sc(src);
 
-		if (sc == nullptr || sc->getSCE(SC_ABR_INFINITY) == nullptr)
+		if (sc == nullptr || !sc->hasSCE(SC_ABR_INFINITY))
 			return false;
 	}
 
