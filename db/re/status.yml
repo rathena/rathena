@@ -9952,3 +9952,14 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+  - Status: Noboru
+    Icon: EFST_NOBORU
+    DurationLookup: SS_NOBORU
+    CalcFlags:
+      All: true
+    Flags:
+      SendVal1: true
+      DisplayPc: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true

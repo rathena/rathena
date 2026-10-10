@@ -4858,6 +4858,12 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 			sd->indexed_bonus.subele[ELE_EARTH] += i;
 			sd->indexed_bonus.subele[ELE_FIRE] -= i;
 		}
+		if (sc->hasSCE(SC_NOBORU)) {
+			sd->bonus.non_crit_atk_rate += 10 * sc->getSCE(SC_NOBORU)->val1;
+			sd->bonus.crit_atk_rate += 10 * sc->getSCE(SC_NOBORU)->val1;
+			sd->bonus.short_attack_atk_rate += 30 * sc->getSCE(SC_NOBORU)->val1;
+			sd->bonus.long_attack_atk_rate += 30 * sc->getSCE(SC_NOBORU)->val1;
+		}
 		if (sc->getSCE(SC_LAUDARAMUS))
 			sd->bonus.crit_atk_rate += 5 * sc->getSCE(SC_LAUDARAMUS)->val1;
 #ifdef RENEWAL

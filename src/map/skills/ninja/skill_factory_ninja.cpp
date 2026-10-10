@@ -72,6 +72,8 @@
 #include "vanishingslash.cpp"
 #include "windblade.cpp"
 #include "windcharm.cpp"
+#include "kagegekiryuu.cpp"
+#include "mirageswarm.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryNinja::create(const e_skill skill_id) const {
 	switch( skill_id ){
@@ -187,6 +189,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryNinja::create(const e_skill skill_i
 			return std::make_unique<SkillShadowNightmare>();
 		case SS_KAGEGARI:
 			return std::make_unique<SkillShadowHunting>();
+		case SS_KAGEGEKIRYU:
+			return std::make_unique<SkillKagegekiryuu>();
 		case SS_KAGEGISSEN:
 			return std::make_unique<SkillShadowFlash>();
 		case SS_KAGENOMAI:
@@ -199,6 +203,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryNinja::create(const e_skill skill_i
 			return std::make_unique<SkillKunaiRefraction>();
 		case SS_KUNAIWAIKYOKU:
 			return std::make_unique<SkillKunaiDistortion>();
+		case SS_NOBORU:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SS_RAIDENPOU:
 			return std::make_unique<SkillThunderingCannon>();
 		case SS_REIKETSUHOU:
@@ -209,6 +215,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryNinja::create(const e_skill skill_i
 			return std::make_unique<SkillInfiltrate>();
 		case SS_SHINKIROU:
 			return std::make_unique<SkillMirage>();
+		case SS_SHINKIROU_GUNSHU:
+			return std::make_unique<SkillMirageSwarm>();
 		case SS_TOKEDASU:
 			return std::make_unique<SkillMeltAway>();
 
