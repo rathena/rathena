@@ -9956,7 +9956,7 @@ Body:
     Icon: EFST_NOBORU
     DurationLookup: SS_NOBORU
     CalcFlags:
-      Pcbonus: true
+      All: true
     Flags:
       SendVal1: true
       DisplayPc: true
