@@ -3739,9 +3739,13 @@
     <ClCompile Include="skills/novice/shieldchainrush.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/novice/highmagnumbreak.cpp" />
+    <ClCompile Include="skills/novice/highmagnumbreak.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/novice/skill_factory_novice.cpp" />
-    <ClCompile Include="skills/novice/windcutterturbo.cpp" />
+    <ClCompile Include="skills/novice/windcutterturbo.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/novice/spiralpiercemax.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
