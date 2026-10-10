@@ -3669,8 +3669,12 @@
     <ClCompile Include="skills/ninja/shadowwarrior.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/ninja/kagegekiryuu.cpp" />
-    <ClCompile Include="skills/ninja/mirageswarm.cpp" />
+    <ClCompile Include="skills/ninja/kagegekiryuu.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/ninja/mirageswarm.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/ninja/skill_factory_ninja.cpp" />
     <ClCompile Include="skills/ninja/soulcutter.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
