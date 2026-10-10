@@ -21,7 +21,7 @@ void SkillHyunrokSpiritPower::calculateSkillRatio(const Damage *wd, const block_
 	skillratio += 5 * sstatus->spl;
 	RE_LVL_DMOD(100);
 
-	if (const status_change* sc = status_get_sc(src); sc != nullptr && sc->getSCE(SC_KI_SUL_AND_HYUN_ROK) != nullptr)
+	if (const status_change* sc = status_get_sc(src); sc != nullptr && sc->hasSCE(SC_KI_SUL_AND_HYUN_ROK))
 		skillratio += skillratio * 60 / 100;
 }
 

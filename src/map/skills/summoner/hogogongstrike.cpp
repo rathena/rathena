@@ -27,7 +27,7 @@ void SkillHogogongStrike::calculateSkillRatio(const Damage *wd, const block_list
 	}
 	RE_LVL_DMOD(100);
 
-	if (sc != nullptr && sc->getSCE(SC_KI_SUL_AND_CHUL_HO) != nullptr)
+	if (sc != nullptr && sc->hasSCE(SC_KI_SUL_AND_CHUL_HO))
 		skillratio += skillratio * 60 / 100;
 }
 

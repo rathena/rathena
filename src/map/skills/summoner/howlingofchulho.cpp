@@ -31,7 +31,7 @@ void SkillHowlingofChulho::calculateSkillRatio(const Damage *wd, const block_lis
 	}
 	RE_LVL_DMOD(100);
 
-	if (sc != nullptr && sc->getSCE(SC_KI_SUL_AND_CHUL_HO) != nullptr)
+	if (sc != nullptr && sc->hasSCE(SC_KI_SUL_AND_CHUL_HO))
 		skillratio += skillratio * 30 / 100;
 }
 

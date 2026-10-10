@@ -26,7 +26,7 @@ void SkillHyunrokBreeze::calculateSkillRatio(const Damage *wd, const block_list 
 	}
 	RE_LVL_DMOD(100);
 
-	if (sc != nullptr && sc->getSCE(SC_KI_SUL_AND_HYUN_ROK) != nullptr)
+	if (sc != nullptr && sc->hasSCE(SC_KI_SUL_AND_HYUN_ROK))
 		skillratio += skillratio * 50 / 100;
 }
 

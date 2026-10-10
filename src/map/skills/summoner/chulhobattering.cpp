@@ -21,7 +21,7 @@ void SkillChulhoBattering::calculateSkillRatio(const Damage *wd, const block_lis
 	skillratio += 5 * sstatus->pow;
 	RE_LVL_DMOD(100);
 
-	if (const status_change* sc = status_get_sc(src); sc != nullptr && sc->getSCE(SC_KI_SUL_AND_CHUL_HO) != nullptr)
+	if (const status_change* sc = status_get_sc(src); sc != nullptr && sc->hasSCE(SC_KI_SUL_AND_CHUL_HO))
 		skillratio += skillratio * 50 / 100;
 }
 
