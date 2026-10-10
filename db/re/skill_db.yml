@@ -46090,6 +46090,49 @@ Body:
         Area: 3
       - Level: 5
         Area: 3
+  - Id: 6637
+    Name: SOA_FIELD_OF_KIRIN
+    Description: "Field of the Yellow Dragon"
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Attack
+    Range: 9
+    DamageFlags:
+      Splash: true
+    Hit: Multi_Hit
+    HitCount: 3
+    Element: Neutral
+    SplashArea:
+      - Level: 1
+        Area: 3
+      - Level: 2
+        Area: 3
+      - Level: 3
+        Area: 3
+      - Level: 4
+        Area: 4
+      - Level: 5
+        Area: 4
+    CastTime: 1000
+    AfterCastActDelay: 500
+    Cooldown: 1000
+    FixedCastTime: 500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 94
+        - Level: 2
+          Amount: 98
+        - Level: 3
+          Amount: 102
+        - Level: 4
+          Amount: 106
+        - Level: 5
+          Amount: 110
+      ApCost: 10
+      ItemCost:
+        - Item: Soa_Charm
+          Amount: 1
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch

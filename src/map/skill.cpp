@@ -8959,6 +8959,12 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 			if (!(sc && sc->getSCE(SC_USE_SKILL_SP_SPA)))
 				return false;
 			break;
+		case SOA_FIELD_OF_KIRIN:
+			if (sc == nullptr || !(sc->getSCE(SC_T_FOURTH_GOD) || sc->getSCE(SC_T_FIFTH_GOD))) {
+				clif_skill_fail(sd, skill_id, USESKILL_FAIL_CONDITION);
+				return false;
+			}
+			break;
 		case DK_SERVANT_W_PHANTOM:
 		case DK_SERVANT_W_DEMOL:
 			if (sd.servantball > 0 && sd.servantball < require.spiritball)
