@@ -55,6 +55,7 @@
 #include "tripleaction.cpp"
 #include "wildfire.cpp"
 #include "wildshot.cpp"
+#include "tacticalrepositioning.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryGunslinger::create(const e_skill skill_id) const {
 	switch (skill_id) {
@@ -126,6 +127,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryGunslinger::create(const e_skill sk
 			return std::make_unique<SkillOnlyOneBullet>();
 		case NW_SPIRAL_SHOOTING:
 			return std::make_unique<SkillSpiralShooting>();
+		case NW_TACTICAL_REPOSITIONING:
+			return std::make_unique<SkillTacticalRepositioning>();
 		case NW_THE_VIGILANTE_AT_NIGHT:
 			return std::make_unique<SkillTheVigilanteAtNight>();
 		case NW_WILD_FIRE:
