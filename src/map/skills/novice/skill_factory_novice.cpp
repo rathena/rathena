@@ -20,6 +20,8 @@
 #include "overcomingcrisis.cpp"
 #include "shieldchainrush.cpp"
 #include "spiralpiercemax.cpp"
+#include "windcutterturbo.cpp"
+#include "highmagnumbreak.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryNovice::create(const e_skill skill_id) const {
 	switch( skill_id ){
@@ -31,6 +33,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryNovice::create(const e_skill skill_
 			return std::make_unique<SkillGroundGravitation>();
 		case HN_HELLS_DRIVE:
 			return std::make_unique<SkillHellsDrive>();
+		case HN_HIGH_MAGNUM_BREAK:
+			return std::make_unique<SkillHighMagnumBreak>();
 		case HN_JACK_FROST_NOVA:
 			return std::make_unique<SkillJackFrostNova>();
 		case HN_JUPITEL_THUNDER_STORM:
@@ -49,6 +53,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryNovice::create(const e_skill skill_
 			return std::make_unique<SkillShieldChainRush>();
 		case HN_SPIRAL_PIERCE_MAX:
 			return std::make_unique<SkillSpiralPierceMax>();
+		case HN_WIND_CUTTER_TURBO:
+			return std::make_unique<SkillWindCutterTurbo>();
 		case NV_FIRSTAID:
 			return std::make_unique<SkillFirstAid>();
 		case NV_HELPANGEL:
