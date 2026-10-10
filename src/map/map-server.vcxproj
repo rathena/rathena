@@ -1794,8 +1794,12 @@
     <ClCompile Include="skills/acolyte/silentium.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/acolyte/lexexpiatrix.cpp" />
-    <ClCompile Include="skills/acolyte/punitio.cpp" />
+    <ClCompile Include="skills/acolyte/lexexpiatrix.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/punitio.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/skill_factory_acolyte.cpp" />
     <ClCompile Include="skills/acolyte/skynetblow.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
