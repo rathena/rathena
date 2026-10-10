@@ -133,6 +133,7 @@
 #include "windmillrushattack.cpp"
 #include "windwalker.cpp"
 #include "winkofcharm.cpp"
+#include "fuguedesfleches.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_id) const {
 	switch( skill_id ){
@@ -300,6 +301,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<SkillWindWalker>();
 		case TR_AIN_RHAPSODY:
 			return std::make_unique<SkillAinRhapsody>();
+		case TR_FUGUE_DES_FLECHES:
+			return std::make_unique<SkillFugueDesFleches>();
 		case TR_GEF_NOCTURN:
 			return std::make_unique<SkillGeffeniaNocturn>();
 		case TR_JAWAII_SERENADE:
