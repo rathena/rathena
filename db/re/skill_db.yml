@@ -46090,6 +46090,19 @@ Body:
         Area: 3
       - Level: 5
         Area: 3
+  - Id: 6634
+    Name: NW_TACTICAL_REPOSITIONING
+    Description: "Tactical Repositioning"
+    MaxLevel: 1
+    Type: Weapon
+    TargetType: Ground
+    DamageFlags:
+      NoDamage: true
+    Range: 9
+    AfterCastActDelay: 1200
+    Cooldown: 300
+    Requires:
+      SpCost: 30
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch
