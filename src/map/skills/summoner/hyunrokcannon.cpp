@@ -26,6 +26,9 @@ void SkillHyunrokCannon::calculateSkillRatio(const Damage *wd, const block_list 
 		skillratio += 25 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
 	}
 	RE_LVL_DMOD(100);
+
+	if (sc != nullptr && sc->hasSCE(SC_KI_SUL_AND_HYUN_ROK))
+		skillratio += skillratio * 30 / 100;
 }
 
 void SkillHyunrokCannon::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {

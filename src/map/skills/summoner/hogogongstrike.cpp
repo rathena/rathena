@@ -26,6 +26,9 @@ void SkillHogogongStrike::calculateSkillRatio(const Damage *wd, const block_list
 		skillratio += 10 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
 	}
 	RE_LVL_DMOD(100);
+
+	if (sc != nullptr && sc->hasSCE(SC_KI_SUL_AND_CHUL_HO))
+		skillratio += skillratio * 60 / 100;
 }
 
 void SkillHogogongStrike::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {

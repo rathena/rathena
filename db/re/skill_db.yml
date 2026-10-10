@@ -46090,6 +46090,36 @@ Body:
         Area: 3
       - Level: 5
         Area: 3
+  - Id: 6640
+    Name: SH_KI_SUL_AND_CHUL_HO
+    Description: "Kisul Resonance - Chulho"
+    MaxLevel: 1
+    Type: Weapon
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    CastTime: 1000
+    Cooldown: 5000
+    FixedCastTime: 1000
+    Duration1: 180000
+    Requires:
+      SpCost: 50
+    Status: Ki_Sul_And_Chul_Ho
+  - Id: 6641
+    Name: SH_KI_SUL_AND_HYUN_ROK
+    Description: "Kisul Resonance - Hyunrok"
+    MaxLevel: 1
+    Type: Weapon
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    CastTime: 1000
+    Cooldown: 5000
+    FixedCastTime: 1000
+    Duration1: 180000
+    Requires:
+      SpCost: 50
+    Status: Ki_Sul_And_Hyun_Rok
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch
