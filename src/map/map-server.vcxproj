@@ -878,6 +878,7 @@
     <ClInclude Include="skills/merchant/powerswing.hpp" />
     <ClInclude Include="skills/merchant/powerthrust.hpp" />
     <ClInclude Include="skills/merchant/preparepotion.hpp" />
+    <ClInclude Include="skills/merchant/rampantvine.hpp" />
     <ClInclude Include="skills/merchant/repair.hpp" />
     <ClInclude Include="skills/merchant/rushquake.hpp" />
     <ClInclude Include="skills/merchant/rushstrike.hpp" />
@@ -3432,6 +3433,7 @@
     <ClCompile Include="skills/merchant/selfdestruction.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/merchant/rampantvine.cpp" />
     <ClCompile Include="skills/merchant/skill_factory_merchant.cpp" />
     <ClCompile Include="skills/merchant/skill_vending.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>

@@ -46090,6 +46090,35 @@ Body:
         Area: 3
       - Level: 5
         Area: 3
+  - Id: 6611
+    Name: BO_RAMPANT_VINE
+    Description: "Rampant Vine"
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Critical: true
+    Range: 7
+    Hit: Multi_Hit
+    HitCount: 2
+    Element: Weapon
+    GiveAp: 2
+    CastTime: 1000
+    AfterCastActDelay: 350
+    Cooldown: 500
+    FixedCastTime: 500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 74
+        - Level: 2
+          Amount: 78
+        - Level: 3
+          Amount: 82
+        - Level: 4
+          Amount: 86
+        - Level: 5
+          Amount: 90
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch
