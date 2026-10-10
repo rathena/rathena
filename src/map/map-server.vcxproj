@@ -370,6 +370,7 @@
     <ClInclude Include="skills/archer/dancewithawarg.hpp" />
     <ClInclude Include="skills/archer/dazzler.hpp" />
     <ClInclude Include="skills/archer/deepblindtrap.hpp" />
+    <ClInclude Include="skills/archer/deepblindtrapattack.hpp" />
     <ClInclude Include="skills/archer/deepsleeplullaby.hpp" />
     <ClInclude Include="skills/archer/detect.hpp" />
     <ClInclude Include="skills/archer/detonator.hpp" />
@@ -383,9 +384,11 @@
     <ClInclude Include="skills/archer/fearbreeze.hpp" />
     <ClInclude Include="skills/archer/firingtrap.hpp" />
     <ClInclude Include="skills/archer/flametrap.hpp" />
+    <ClInclude Include="skills/archer/flametrapattack.hpp" />
     <ClInclude Include="skills/archer/flasher.hpp" />
     <ClInclude Include="skills/archer/focusballet.hpp" />
     <ClInclude Include="skills/archer/focusedarrowstrike.hpp" />
+    <ClInclude Include="skills/archer/fragmentbolt.hpp" />
     <ClInclude Include="skills/archer/freezingtrap.hpp" />
     <ClInclude Include="skills/archer/friggssong.hpp" />
     <ClInclude Include="skills/archer/galestorm.hpp" />
@@ -446,12 +449,14 @@
     <ClInclude Include="skills/archer/slingingarrow.hpp" />
     <ClInclude Include="skills/archer/slowgrace.hpp" />
     <ClInclude Include="skills/archer/solidtrap.hpp" />
+    <ClInclude Include="skills/archer/solidtrapattack.hpp" />
     <ClInclude Include="skills/archer/songoflutie.hpp" />
     <ClInclude Include="skills/archer/songofmana.hpp" />
     <ClInclude Include="skills/archer/soundblend.hpp" />
     <ClInclude Include="skills/archer/soundofdestruction.hpp" />
     <ClInclude Include="skills/archer/springtrap.hpp" />
     <ClInclude Include="skills/archer/swifttrap.hpp" />
+    <ClInclude Include="skills/archer/swifttrapattack.hpp" />
     <ClInclude Include="skills/archer/swingdance.hpp" />
     <ClInclude Include="skills/archer/symphonyoflovers.hpp" />
     <ClInclude Include="skills/archer/talkiebox.hpp" />
@@ -2123,7 +2128,22 @@
     <ClCompile Include="skills/archer/skidtrap.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/archer/deepblindtrapattack.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/flametrapattack.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/fragmentbolt.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/archer/skill_factory_archer.cpp" />
+    <ClCompile Include="skills/archer/solidtrapattack.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/swifttrapattack.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/archer/skilledspecialsinger.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>

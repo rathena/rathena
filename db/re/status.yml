@@ -9952,3 +9952,12 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+  - Status: Primed_Trap
+    Icon: EFST_PRIMED_TRAP
+    DurationLookup: WH_PRIMED_TRAP
+    Flags:
+      SendVal1: true
+      DisplayPc: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
