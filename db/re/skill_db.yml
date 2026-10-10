@@ -46090,6 +46090,36 @@ Body:
         Area: 3
       - Level: 5
         Area: 3
+  - Id: 6614
+    Name: AG_WRAITH_DASH
+    Description: "Wraith Dash"
+    MaxLevel: 3
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+    Hit: Single
+    HitCount: 1
+    Element: Ghost
+    SplashArea: 4
+    CastTime: 1000
+    AfterCastActDelay: 1000
+    Cooldown:
+      - Level: 1
+        Time: 5000
+      - Level: 2
+        Time: 3500
+      - Level: 3
+        Time: 2000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 117
+        - Level: 2
+          Amount: 121
+        - Level: 3
+          Amount: 125
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch
