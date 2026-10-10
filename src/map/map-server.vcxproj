@@ -1287,6 +1287,7 @@
     <ClInclude Include="skills/swordman/shieldpress.hpp" />
     <ClInclude Include="skills/swordman/shieldreflect.hpp" />
     <ClInclude Include="skills/swordman/shieldshooting.hpp" />
+    <ClInclude Include="skills/swordman/shieldslam.hpp" />
     <ClInclude Include="skills/swordman/shieldspell.hpp" />
     <ClInclude Include="skills/swordman/skill_factory_swordman.hpp" />
     <ClInclude Include="skills/swordman/smite.hpp" />
@@ -4634,6 +4635,7 @@
     <ClCompile Include="skills/swordman/shieldspell.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/swordman/shieldslam.cpp" />
     <ClCompile Include="skills/swordman/skill_factory_swordman.cpp" />
     <ClCompile Include="skills/swordman/smite.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
