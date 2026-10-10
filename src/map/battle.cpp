@@ -7486,6 +7486,21 @@ enum damage_lv battle_weapon_attack(block_list* src, block_list* target, t_tick 
 			}
 		}
 	}
+	if (sd != nullptr && sc != nullptr && sc->getSCE(SC_ELEMENTAL_INTEGRATION) != nullptr && rnd_chance(25, 100)) {
+		static constexpr uint16 spells[] = { EM_BURNING_FLAME, EM_FROZEN_HAIL, EM_STORM_RISE, EM_TERRA_BURST, EM_VENOM_BOMBARD };
+		int32 element = std::clamp(sc->getSCE(SC_ELEMENTAL_INTEGRATION)->val1, 1, 5);
+		uint16 skill_id = spells[element - 1];
+		uint16 skill_lv = pc_checkskill(sd, EM_ELEMENTAL_INTEGRATION);
+
+		if (skill_lv > 0) {
+			bool autocast = sd->state.autocast;
+
+			sd->state.autocast = true;
+			skill_castend_damage_id(src, target, skill_id, skill_lv, tick, flag);
+			battle_autocast_aftercast(src, skill_id, skill_lv, tick);
+			sd->state.autocast = autocast;
+		}
+	}
 	if (sc && sc->getSCE(SC_AUTOSPELL) && rnd()%100 < sc->getSCE(SC_AUTOSPELL)->val4) {
 		int32 sp = 0;
 		uint16 skill_id = sc->getSCE(SC_AUTOSPELL)->val2;

@@ -46090,6 +46090,168 @@ Body:
         Area: 3
       - Level: 5
         Area: 3
+  - Id: 6615
+    Name: EM_ELEMENTAL_INTEGRATION
+    Description: "Elemental Integration"
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    CastTime: 5000
+    AfterCastActDelay: 1000
+    Cooldown: 3000
+    FixedCastTime: 1000
+    Duration1: 240000
+    Requires:
+      SpCost: 200
+      ApCost: 20
+    Status: Elemental_Integration
+  - Id: 6616
+    Name: EM_BURNING_FLAME
+    Description: "Burning Flame"
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: 3
+    Element: Fire
+    SplashArea: 3
+    CastTime: 3000
+    AfterCastActDelay: 1000
+    Cooldown: 400
+    FixedCastTime: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 80
+        - Level: 2
+          Amount: 84
+        - Level: 3
+          Amount: 88
+        - Level: 4
+          Amount: 92
+        - Level: 5
+          Amount: 96
+  - Id: 6617
+    Name: EM_FROZEN_HAIL
+    Description: "Frozen Hail"
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: 3
+    Element: Water
+    SplashArea: 3
+    CastTime: 3000
+    AfterCastActDelay: 1000
+    Cooldown: 400
+    FixedCastTime: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 80
+        - Level: 2
+          Amount: 84
+        - Level: 3
+          Amount: 88
+        - Level: 4
+          Amount: 92
+        - Level: 5
+          Amount: 96
+  - Id: 6618
+    Name: EM_STORM_RISE
+    Description: "Storm Rise"
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: 3
+    Element: Wind
+    SplashArea: 3
+    CastTime: 3000
+    AfterCastActDelay: 1000
+    Cooldown: 400
+    FixedCastTime: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 80
+        - Level: 2
+          Amount: 84
+        - Level: 3
+          Amount: 88
+        - Level: 4
+          Amount: 92
+        - Level: 5
+          Amount: 96
+  - Id: 6619
+    Name: EM_TERRA_BURST
+    Description: "Terra Burst"
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: 3
+    Element: Earth
+    SplashArea: 3
+    CastTime: 3000
+    AfterCastActDelay: 1000
+    Cooldown: 400
+    FixedCastTime: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 80
+        - Level: 2
+          Amount: 84
+        - Level: 3
+          Amount: 88
+        - Level: 4
+          Amount: 92
+        - Level: 5
+          Amount: 96
+  - Id: 6620
+    Name: EM_VENOM_BOMBARD
+    Description: "Venom Bombard"
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: 3
+    Element: Poison
+    SplashArea: 3
+    CastTime: 3000
+    AfterCastActDelay: 1000
+    Cooldown: 400
+    FixedCastTime: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 80
+        - Level: 2
+          Amount: 84
+        - Level: 3
+          Amount: 88
+        - Level: 4
+          Amount: 92
+        - Level: 5
+          Amount: 96
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch
