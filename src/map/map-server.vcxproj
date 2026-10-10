@@ -872,6 +872,7 @@
     <ClInclude Include="skills/merchant/mixcooking.hpp" />
     <ClInclude Include="skills/merchant/mysterypowder.hpp" />
     <ClInclude Include="skills/merchant/neutralbarrier.hpp" />
+    <ClInclude Include="skills/merchant/overdriveprotocol.hpp" />
     <ClInclude Include="skills/merchant/pilebunker.hpp" />
     <ClInclude Include="skills/merchant/plantcultivation.hpp" />
     <ClInclude Include="skills/merchant/powerfulswing.hpp" />
@@ -3430,6 +3431,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/selfdestruction.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/overdriveprotocol.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/skill_factory_merchant.cpp" />
