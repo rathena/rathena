@@ -20,6 +20,9 @@ void SkillChulhoBattering::calculateSkillRatio(const Damage *wd, const block_lis
 	skillratio += 70 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
 	skillratio += 5 * sstatus->pow;
 	RE_LVL_DMOD(100);
+
+	if (const status_change* sc = status_get_sc(src); sc != nullptr && sc->getSCE(SC_KI_SUL_AND_CHUL_HO) != nullptr)
+		skillratio += skillratio * 50 / 100;
 }
 
 void SkillChulhoBattering::splashSearch(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {

@@ -25,6 +25,9 @@ void SkillHyunrokBreeze::calculateSkillRatio(const Damage *wd, const block_list 
 		skillratio += 20 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
 	}
 	RE_LVL_DMOD(100);
+
+	if (const status_change* sc = status_get_sc(src); sc != nullptr && sc->getSCE(SC_KI_SUL_AND_HYUN_ROK) != nullptr)
+		skillratio += skillratio * 50 / 100;
 }
 
 void SkillHyunrokBreeze::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {
