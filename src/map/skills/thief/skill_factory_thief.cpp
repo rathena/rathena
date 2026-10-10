@@ -97,6 +97,7 @@
 #include "venompressure.cpp"
 #include "venomsplasher.cpp"
 #include "weaponcrush.cpp"
+#include "phantomdagger.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryThief::create(const e_skill skill_id) const {
 	switch (skill_id) {
@@ -130,6 +131,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryThief::create(const e_skill skill_i
 			return std::make_unique<SkillFromTheAbyssAttack>();
 		case ABC_HIT_AND_SLIDING:
 			return std::make_unique<SkillHitAndSliding>();
+		case ABC_PHANTOM_DAGGER:
+			return std::make_unique<SkillPhantomDagger>();
 		case ABC_STRIP_SHADOW:
 			return std::make_unique<SkillStripShadow>();
 		case ABC_UNLUCKY_RUSH:
