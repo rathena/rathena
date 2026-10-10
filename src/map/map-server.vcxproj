@@ -4814,8 +4814,12 @@
     <ClCompile Include="skills/taekwon/shadowssoul.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/taekwon/seventhheavenkick.cpp" />
-    <ClCompile Include="skills/taekwon/seventhkick.cpp" />
+    <ClCompile Include="skills/taekwon/seventhheavenkick.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/seventhkick.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/taekwon/skill_factory_taekwon.cpp" />
     <ClCompile Include="skills/taekwon/skymoon.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
