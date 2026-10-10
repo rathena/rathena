@@ -46090,6 +46090,60 @@ Body:
         Area: 3
       - Level: 5
         Area: 3
+  - Id: 6621
+    Name: CD_PUNITIO
+    Description: "Punitio"
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Critical: true
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: 4
+    Element: Weapon
+    GiveAp: 2
+    AfterCastActDelay: 700
+    Cooldown: 500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 45
+        - Level: 2
+          Amount: 48
+        - Level: 3
+          Amount: 51
+        - Level: 4
+          Amount: 54
+        - Level: 5
+          Amount: 57
+  - Id: 6622
+    Name: CD_LEX_EXPIATRIX
+    Description: "Lex Expiatrix"
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Attack
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: 3
+    Element: Holy
+    GiveAp: 2
+    CastTime: 3000
+    AfterCastActDelay: 350
+    Cooldown: 500
+    FixedCastTime: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 81
+        - Level: 2
+          Amount: 87
+        - Level: 3
+          Amount: 93
+        - Level: 4
+          Amount: 99
+        - Level: 5
+          Amount: 105
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch

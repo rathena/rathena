@@ -301,6 +301,7 @@
     <ClInclude Include="skills/acolyte/laudaagnus.hpp" />
     <ClInclude Include="skills/acolyte/laudaramus.hpp" />
     <ClInclude Include="skills/acolyte/lexdivina.hpp" />
+    <ClInclude Include="skills/acolyte/lexexpiatrix.hpp" />
     <ClInclude Include="skills/acolyte/magnificat.hpp" />
     <ClInclude Include="skills/acolyte/magnusexorcismus.hpp" />
     <ClInclude Include="skills/acolyte/massiveflameblaster.hpp" />
@@ -313,6 +314,7 @@
     <ClInclude Include="skills/acolyte/pneumaticusprocella.hpp" />
     <ClInclude Include="skills/acolyte/powervelocity.hpp" />
     <ClInclude Include="skills/acolyte/praefatio.hpp" />
+    <ClInclude Include="skills/acolyte/punitio.hpp" />
     <ClInclude Include="skills/acolyte/ragingpalmstrike.hpp" />
     <ClInclude Include="skills/acolyte/ragingquadrupleblow.hpp" />
     <ClInclude Include="skills/acolyte/ragingthrust.hpp" />
@@ -1790,6 +1792,12 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/silentium.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/lexexpiatrix.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/punitio.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/skill_factory_acolyte.cpp" />

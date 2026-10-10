@@ -2675,6 +2675,11 @@ static int32 battle_range_type(const block_list* src, const block_list* target, 
 		return BF_SHORT;
 
 	switch (skill_id) {
+		case CD_PUNITIO: {
+			const map_session_data* sd = BL_CAST(BL_PC, src);
+
+			return sd != nullptr && (sd->status.weapon == W_MACE || sd->status.weapon == W_2HMACE) ? BF_LONG : BF_SHORT;
+		}
 		case AC_SHOWER:
 		case AM_DEMONSTRATION:
 			// When monsters use Arrow Shower or Bomb, it is always short range
