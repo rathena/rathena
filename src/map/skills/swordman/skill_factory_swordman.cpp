@@ -88,6 +88,7 @@
 #include "vitalityactivation.cpp"
 #include "vitalstrike.cpp"
 #include "windcutter.cpp"
+#include "shieldslam.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skill_id) const {
 	switch( skill_id ){
@@ -167,6 +168,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case IG_SHIELD_SHOOTING:
 			return std::make_unique<SkillShieldShooting>();
+		case IG_SHIELD_SLAM:
+			return std::make_unique<SkillShieldSlam>();
 		case IG_ULTIMATE_SACRIFICE:
 			return std::make_unique<SkillUltimateSacrifice>();
 		case KN_AUTOCOUNTER:
