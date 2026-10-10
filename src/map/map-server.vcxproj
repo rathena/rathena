@@ -2955,12 +2955,22 @@
     <ClCompile Include="skills/mage/sightrasher.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/mage/burningflame.cpp" />
-    <ClCompile Include="skills/mage/frozenhail.cpp" />
+    <ClCompile Include="skills/mage/burningflame.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mage/frozenhail.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/mage/skill_factory_mage.cpp" />
-    <ClCompile Include="skills/mage/stormrise.cpp" />
-    <ClCompile Include="skills/mage/terraburst.cpp" />
-    <ClCompile Include="skills/mage/venombombard.cpp" />
+    <ClCompile Include="skills/mage/stormrise.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mage/terraburst.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mage/venombombard.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/mage/soulexhale.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
