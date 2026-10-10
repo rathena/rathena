@@ -2128,12 +2128,22 @@
     <ClCompile Include="skills/archer/skidtrap.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/archer/deepblindtrapattack.cpp" />
-    <ClCompile Include="skills/archer/flametrapattack.cpp" />
-    <ClCompile Include="skills/archer/fragmentbolt.cpp" />
+    <ClCompile Include="skills/archer/deepblindtrapattack.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/flametrapattack.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/fragmentbolt.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/archer/skill_factory_archer.cpp" />
-    <ClCompile Include="skills/archer/solidtrapattack.cpp" />
-    <ClCompile Include="skills/archer/swifttrapattack.cpp" />
+    <ClCompile Include="skills/archer/solidtrapattack.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/swifttrapattack.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/archer/skilledspecialsinger.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
