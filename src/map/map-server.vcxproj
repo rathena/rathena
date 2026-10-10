@@ -2124,7 +2124,9 @@
     <ClCompile Include="skills/archer/skidtrap.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/archer/fuguedesfleches.cpp" />
+    <ClCompile Include="skills/archer/fuguedesfleches.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/archer/skill_factory_archer.cpp" />
     <ClCompile Include="skills/archer/skilledspecialsinger.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
