@@ -1279,6 +1279,7 @@
     <ClInclude Include="skills/swordman/sacrifice.hpp" />
     <ClInclude Include="skills/swordman/selfprovoke.hpp" />
     <ClInclude Include="skills/swordman/servantweapon.hpp" />
+    <ClInclude Include="skills/swordman/servantweaponcleave.hpp" />
     <ClInclude Include="skills/swordman/servantweapondemolition.hpp" />
     <ClInclude Include="skills/swordman/servantweaponphantom.hpp" />
     <ClInclude Include="skills/swordman/servantweaponsign.hpp" />
@@ -4632,6 +4633,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/swordman/shieldspell.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/servantweaponcleave.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/swordman/skill_factory_swordman.cpp" />

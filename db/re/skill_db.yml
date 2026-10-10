@@ -46090,6 +46090,33 @@ Body:
         Area: 3
       - Level: 5
         Area: 3
+  - Id: 6608
+    Name: DK_SERVANT_W_CLEAVE
+    Description: "Servant Weapon - Cleave"
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Critical: true
+    Range: 7
+    Hit: Multi_Hit
+    HitCount: 3
+    Element: Weapon
+    GiveAp: 2
+    AfterCastActDelay: 300
+    Cooldown: 700
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 42
+        - Level: 2
+          Amount: 44
+        - Level: 3
+          Amount: 46
+        - Level: 4
+          Amount: 48
+        - Level: 5
+          Amount: 50
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch

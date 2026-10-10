@@ -88,6 +88,7 @@
 #include "vitalityactivation.cpp"
 #include "vitalstrike.cpp"
 #include "windcutter.cpp"
+#include "servantweaponcleave.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skill_id) const {
 	switch( skill_id ){
@@ -131,6 +132,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<SkillServantWeapon>();
 		case DK_SERVANTWEAPON_ATK:
 			return std::make_unique<SkillServantWeaponAttack>();
+		case DK_SERVANT_W_CLEAVE:
+			return std::make_unique<SkillServantWeaponCleave>();
 		case DK_SERVANT_W_DEMOL:
 			return std::make_unique<SkillServantWeaponDemolition>();
 		case DK_SERVANT_W_PHANTOM:
