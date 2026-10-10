@@ -8959,6 +8959,12 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 			if (!(sc && sc->getSCE(SC_USE_SKILL_SP_SPA)))
 				return false;
 			break;
+		case IQ_BROKENHEAVEN:
+			if (sc == nullptr || !(sc->hasSCE(SC_FIRST_FAITH_POWER) || sc->hasSCE(SC_SECOND_JUDGE) || sc->hasSCE(SC_THIRD_EXOR_FLAME))) {
+				clif_skill_fail(sd, skill_id, USESKILL_FAIL_CONDITION);
+				return false;
+			}
+			break;
 		case DK_SERVANT_W_PHANTOM:
 		case DK_SERVANT_W_DEMOL:
 			if (sd.servantball > 0 && sd.servantball < require.spiritball)

@@ -110,6 +110,7 @@
 #include "warpportal.cpp"
 #include "windmill.cpp"
 #include "zen.cpp"
+#include "brokenheaven.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill_id) const {
 	switch( skill_id ){
@@ -233,6 +234,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillBasilica>();
 		case IQ_BLAZING_FLAME_BLAST:
 			return std::make_unique<SkillBlazingFlameBlast>();
+		case IQ_BROKENHEAVEN:
+			return std::make_unique<SkillBrokenHeaven>();
 		case IQ_EXPOSION_BLASTER:
 			return std::make_unique<SkillExplosionBlaster>();
 		case IQ_FIRM_FAITH:
