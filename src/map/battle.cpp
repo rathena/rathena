@@ -3019,6 +3019,13 @@ static bool is_attack_critical(struct Damage* wd, block_list *src, const block_l
 	if (!first_call)
 		return (wd->type == DMG_CRITICAL || wd->type == DMG_MULTI_HIT_CRITICAL);
 
+	if (skill_id == IQ_BROKENHEAVEN) {
+		const status_change* sc = status_get_sc(src);
+
+		if (sc == nullptr || sc->getSCE(SC_FIRST_FAITH_POWER) == nullptr || sc->getSCE(SC_SECOND_JUDGE) != nullptr || sc->getSCE(SC_THIRD_EXOR_FLAME) != nullptr)
+			return false;
+	}
+
 	if (skill_id == NPC_CRITICALSLASH || skill_id == LG_PINPOINTATTACK) //Always critical skills
 		return true;
 
