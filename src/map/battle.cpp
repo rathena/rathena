@@ -3022,7 +3022,7 @@ static bool is_attack_critical(struct Damage* wd, block_list *src, const block_l
 	if (skill_id == IQ_BROKENHEAVEN) {
 		const status_change* sc = status_get_sc(src);
 
-		if (sc == nullptr || sc->getSCE(SC_FIRST_FAITH_POWER) == nullptr || sc->getSCE(SC_SECOND_JUDGE) != nullptr || sc->getSCE(SC_THIRD_EXOR_FLAME) != nullptr)
+		if (sc == nullptr || !sc->hasSCE(SC_FIRST_FAITH_POWER) || sc->hasSCE(SC_SECOND_JUDGE) || sc->hasSCE(SC_THIRD_EXOR_FLAME))
 			return false;
 	}
 

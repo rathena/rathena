@@ -13,11 +13,11 @@ int64 broken_heaven_drain_total = 0;
 int32 broken_heaven_chapter(const status_change* sc) {
 	if (sc == nullptr)
 		return 0;
-	if (sc->getSCE(SC_THIRD_EXOR_FLAME))
+	if (sc->hasSCE(SC_THIRD_EXOR_FLAME))
 		return 3;
-	if (sc->getSCE(SC_SECOND_JUDGE))
+	if (sc->hasSCE(SC_SECOND_JUDGE))
 		return 2;
-	return sc->getSCE(SC_FIRST_FAITH_POWER) != nullptr ? 1 : 0;
+	return sc->hasSCE(SC_FIRST_FAITH_POWER) ? 1 : 0;
 }
 }
 
