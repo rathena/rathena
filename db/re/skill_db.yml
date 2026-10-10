@@ -46090,6 +46090,52 @@ Body:
         Area: 3
       - Level: 5
         Area: 3
+  - Id: 6612
+    Name: SHC_VENOMIGNITION
+    Description: "Venom Ignition"
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    AfterCastActDelay: 1000
+    Cooldown: 5000
+    FixedCastTime: 1000
+    Duration1:
+      - Level: 1
+        Time: 60000
+      - Level: 2
+        Time: 120000
+      - Level: 3
+        Time: 180000
+      - Level: 4
+        Time: 240000
+      - Level: 5
+        Time: 300000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 40
+        - Level: 2
+          Amount: 50
+        - Level: 3
+          Amount: 60
+        - Level: 4
+          Amount: 70
+        - Level: 5
+          Amount: 80
+      ApCost:
+        - Level: 1
+          Amount: 90
+        - Level: 2
+          Amount: 80
+        - Level: 3
+          Amount: 70
+        - Level: 4
+          Amount: 60
+        - Level: 5
+          Amount: 50
+    Status: Venomignition
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch

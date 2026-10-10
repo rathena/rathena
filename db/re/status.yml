@@ -9952,3 +9952,15 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+  - Status: Venomignition
+    Icon: EFST_VENOMIGNITION
+    DurationLookup: SHC_VENOMIGNITION
+    CalcFlags:
+      Hit: true
+      Pcbonus: true
+    Flags:
+      SendVal1: true
+      DisplayPc: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
