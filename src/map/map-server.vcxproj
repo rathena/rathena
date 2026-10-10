@@ -2952,7 +2952,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/skill_factory_mage.cpp" />
-    <ClCompile Include="skills/mage/wraithdash.cpp" />
+    <ClCompile Include="skills/mage/wraithdash.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/mage/soulexhale.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
