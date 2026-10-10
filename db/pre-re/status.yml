@@ -305,7 +305,6 @@ Body:
     Flags:
       RequireWeapon: true
       RemoveOnHermode: true
-      DisplayPc: true
     Fail:
       Decreaseagi: true
   - Status: Concentrate
@@ -593,7 +592,6 @@ Body:
     Flags:
       MadoCancel: true
       RemoveOnHermode: true
-      DisplayPc: true
     Fail:
       Maxoverthrust: true
   - Status: Maximizepower
@@ -641,7 +639,6 @@ Body:
       EnergyCoat: true
     Flags:
       RemoveOnHermode: true
-      DisplayPc: true
   - Status: Brokenarmor
     Icon: EFST_BROKENARMOR
     DurationLookup: NPC_ARMORBRAKE
@@ -957,7 +954,6 @@ Body:
       FailedMado: true
       RequireWeapon: true
       RemoveOnHermode: true
-      DisplayPc: true
     Fail:
       Quagmire: true
   - Status: Autocounter
@@ -1009,11 +1005,11 @@ Body:
     Opt3:
       ExplosionSpirits: true
     Flags:
+      DisplayPc: true
       Debuff: true
       NoClearance: true
       NoSave: true
       RemoveOnHermode: true
-      DisplayPc: true
   - Status: Combo
     Flags:
       NoClearbuff: true
@@ -1045,7 +1041,6 @@ Body:
       NoClearance: true
       RemoveOnChangeMap: true
       RemoveOnHermode: true
-      DisplayPc: true
   - Status: Fireweapon
     Icon: EFST_PROPERTYFIRE
     DurationLookup: SA_FLAMELAUNCHER
@@ -1178,11 +1173,11 @@ Body:
     Opt3:
       AuraBlade: true
     Flags:
+      DisplayPc: true
       NoSave: true
       RequireWeapon: true
       RemoveOnUnequipWeapon: true
       RemoveOnHermode: true
-      DisplayPc: true
   - Status: Parrying
     Icon: EFST_PARRYING
     DurationLookup: LK_PARRYING
@@ -1203,10 +1198,10 @@ Body:
     Opt3:
       Quicken: true
     Flags:
+      DisplayPc: true
       NoSave: true
       RemoveOnUnequip: true
       RemoveOnHermode: true
-      DisplayPc: true
   - Status: Tensionrelax
     Icon: EFST_TENSIONRELAX
     DurationLookup: LK_TENSIONRELAX
@@ -1230,8 +1225,8 @@ Body:
     Opt3:
       Berserk: true
     Flags:
-      NoSave: true
       DisplayPc: true
+      NoSave: true
     Fail:
       Saturdaynightfever: true
       _Bloodylust: true
@@ -1258,8 +1253,8 @@ Body:
       Kyrie: true
       Kaite: true
     Flags:
-      RemoveOnHermode: true
       DisplayPc: true
+      RemoveOnHermode: true
   - Status: Basilica
     DurationLookup: HP_BASILICA
     States:
@@ -1384,8 +1379,8 @@ Body:
     Opt3:
       Marionette: true
     Flags:
-      RemoveOnChangeMap: true
       DisplayPc: true
+      RemoveOnChangeMap: true
     Fail:
       Marionette: true
   - Status: Marionette2
@@ -1401,8 +1396,8 @@ Body:
     Opt3:
       Marionette: true
     Flags:
-      RemoveOnChangeMap: true
       DisplayPc: true
+      RemoveOnChangeMap: true
     Fail:
       Marionette2: true
   - Status: Changeundead
@@ -1413,11 +1408,11 @@ Body:
     Opt3:
       Undead: true
     Flags:
+      DisplayPc: true
       Debuff: true
       NoClearance: true
       NoSave: true
       RemoveOnHermode: true
-      DisplayPc: true
     EndOnStart:
       Blessing: true
       Increaseagi: true
@@ -1504,6 +1499,7 @@ Body:
       Aspd: true
       Speed: true
     Flags:
+      DisplayPc: true
       NoSave: true
       RemoveOnHermode: true
     Opt3:
@@ -1513,7 +1509,6 @@ Body:
     Flags:
       Debuff: true
       SendOption: true
-      DisplayPc: true
     Options:
       Orcish: true
   - Status: Readystorm
@@ -1650,7 +1645,6 @@ Body:
       NoClearance: true
       RequireWeapon: true
       RemoveOnHermode: true
-      DisplayPc: true
     Fail:
       Decreaseagi: true
     EndOnStart:
@@ -1710,7 +1704,6 @@ Body:
       MadoCancel: true
       NoSave: true
       RemoveOnHermode: true
-      DisplayPc: true
     EndOnStart:
       Overthrust: true
   - Status: Longing
@@ -1992,11 +1985,11 @@ Body:
     Opt3:
       SoulLink: true
     Flags:
+      DisplayPc: true
       NoClearance: true
       NoSave: true
       NoBanishingBuster: true
       RemoveOnHermode: true
-      DisplayPc: true
   - Status: Coma
     DurationLookup: NPC_DARKBLESSING
     Flags:
@@ -2140,7 +2133,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      DisplayPc: true
   - Status: Incmatkrate
     CalcFlags:
       All: true
@@ -2287,12 +2279,12 @@ Body:
     Opt3:
       Warm: true
     Flags:
+      DisplayPc: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
       RemoveOnChangeMap: true
       RemoveOnMapWarp: true
-      DisplayPc: true
   - Status: Sun_Comfort
     Icon: EFST_SUN_COMFORT
     DurationLookup: SG_SUN_COMFORT
@@ -2342,10 +2334,10 @@ Body:
     Opt3:
       Kaite: true
     Flags:
+      DisplayPc: true
       NoSave: true
       NoClearance: true
       RemoveOnHermode: true
-      DisplayPc: true
     EndOnStart:
       Assumptio: true
   - Status: Swoo
@@ -2357,7 +2349,6 @@ Body:
       OverThrust: true
     Flags:
       NonPlayer: true
-      DisplayPc: true
   - Status: Ska
     DurationLookup: SL_SKA
     CalcFlags:
@@ -2367,7 +2358,6 @@ Body:
       SteelBody: true
     Flags:
       NonPlayer: true
-      DisplayPc: true
   - Status: Earthscroll
     Icon: EFST_EARTHSCROLL
     DurationLookup: TK_SPTIME
@@ -2453,10 +2443,10 @@ Body:
     Opt3:
       Bunsin: true
     Flags:
+      DisplayPc: true
       NoSave: true
       NoClearance: true
       RemoveOnHermode: true
-      DisplayPc: true
   - Status: Kaensin
     Flags:
       NoWarning: true
@@ -2823,7 +2813,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      DisplayPc: true
     Fail:
       Decreaseagi: true
   - Status: Rebirth

@@ -5081,6 +5081,20 @@ void clif_getareachar_unit( map_session_data* sd,block_list *bl ){
 			if( tsd->bg_id && map_getmapflag(tsd->m, MF_BATTLEGROUND) )
 				clif_sendbgemblem_single(sd->fd,tsd);
 			clif_efst_status_change_sub(sd, bl, SELF);
+
+			// These opt3 effects have a client chat message tied to their EFST, so they cannot be DisplayPc.
+			// Restore their visual with ZC_NPC_SHOWEFST_UPDATE instead, which the client applies without a message.
+			if( int32 opt3 = tsd->sc.opt3 & ( OPT3_QUICKEN | OPT3_OVERTHRUST | OPT3_ENERGYCOAT ); opt3 != 0 ){
+				PACKET_ZC_NPC_SHOWEFST_UPDATE packet{};
+
+				packet.packetType = HEADER_ZC_NPC_SHOWEFST_UPDATE;
+				packet.gid = tsd->id;
+				packet.effectState = tsd->sc.option;
+				packet.level = clif_setlevel( tsd );
+				packet.showEFST = opt3;
+
+				clif_send( &packet, sizeof( packet ), sd, SELF );
+			}
 		}
 		break;
 	case BL_MER: // Devotion Effects
