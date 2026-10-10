@@ -46090,6 +46090,117 @@ Body:
         Area: 3
       - Level: 5
         Area: 3
+  - Id: 6631
+    Name: SS_SHINKIROU_GUNSHU
+    Description: "Mirage - Swarm"
+    MaxLevel: 1
+    Type: Weapon
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    CastTime: 500
+    AfterCastActDelay: 1000
+    Cooldown: 5000
+    FixedCastTime: 1000
+    Requires:
+      SpCost: 100
+      ApCost: 30
+  - Id: 6632
+    Name: SS_NOBORU
+    Description: "Rising Tide"
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    CastTime: 1000
+    AfterCastActDelay: 1000
+    Cooldown: 60000
+    FixedCastTime: 500
+    Duration1:
+      - Level: 1
+        Time: 60000
+      - Level: 2
+        Time: 120000
+      - Level: 3
+        Time: 180000
+      - Level: 4
+        Time: 240000
+      - Level: 5
+        Time: 300000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 50
+        - Level: 2
+          Amount: 55
+        - Level: 3
+          Amount: 60
+        - Level: 4
+          Amount: 65
+        - Level: 5
+          Amount: 70
+      ApCost: 50
+    Status: Noboru
+  - Id: 6633
+    Name: SS_KAGEGEKIRYU
+    Description: "Shadow Torrent"
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+      Critical: true
+    Range: 2
+    Hit: Multi_Hit
+    HitCount: 4
+    Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 2
+      - Level: 6
+        Area: 3
+      - Level: 7
+        Area: 3
+      - Level: 8
+        Area: 3
+      - Level: 9
+        Area: 3
+      - Level: 10
+        Area: 3
+    GiveAp: 2
+    AfterCastActDelay: 300
+    Cooldown: 700
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 52
+        - Level: 2
+          Amount: 55
+        - Level: 3
+          Amount: 58
+        - Level: 4
+          Amount: 61
+        - Level: 5
+          Amount: 64
+        - Level: 6
+          Amount: 67
+        - Level: 7
+          Amount: 70
+        - Level: 8
+          Amount: 73
+        - Level: 9
+          Amount: 76
+        - Level: 10
+          Amount: 79
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch
