@@ -8531,6 +8531,11 @@ Body:
             Level: 3
           - Name: SKE_ENCHANTING_SKY
             Level: 7
+      - Name: SKE_SEVENTH_KICK
+        MaxLevel: 5
+        Requires:
+          - Name: SKE_ENCHANTING_SKY
+            Level: 7
   - Job: Sky_Emperor2
     Inherit:
       Novice: true

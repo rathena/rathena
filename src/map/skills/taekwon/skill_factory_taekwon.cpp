@@ -101,6 +101,8 @@
 #include "warmthofthemoon.cpp"
 #include "warmthofthestars.cpp"
 #include "warmthofthesun.cpp"
+#include "seventhkick.cpp"
+#include "seventhheavenkick.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryTaekwon::create(const e_skill skill_id) const {
 	switch (skill_id) {
@@ -178,6 +180,10 @@ std::unique_ptr<const SkillImpl> SkillFactoryTaekwon::create(const e_skill skill
 			return std::make_unique<SkillRisingMoon>();
 		case SKE_RISING_SUN:
 			return std::make_unique<SkillRisingSun>();
+		case SKE_SEVENTH_KICK:
+			return std::make_unique<SkillSeventhKick>();
+		case SKE_SEVENTH_KICK_S:
+			return std::make_unique<SkillSeventhHeavenKick>();
 		case SKE_SKY_MOON:
 			return std::make_unique<SkillSkyMoon>();
 		case SKE_SKY_SUN:
