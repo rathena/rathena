@@ -9955,10 +9955,12 @@ Body:
   - Status: Venomignition
     Icon: EFST_VENOMIGNITION
     DurationLookup: SHC_VENOMIGNITION
-    CalcFlags:
-      All: true
     Flags:
       DisplayPc: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_VENOMIGNITION, 1);
+      bonus bNonCritAtkRate, 25 + 15 * .@val1;
+      bonus bHit, 50 + 20 * .@val1;
