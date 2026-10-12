@@ -46094,7 +46094,6 @@ Body:
     Name: NW_TACTICAL_REPOSITIONING
     Description: "Tactical Repositioning"
     MaxLevel: 1
-    Type: Weapon
     TargetType: Ground
     DamageFlags:
       NoDamage: true
