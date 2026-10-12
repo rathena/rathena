@@ -17,6 +17,7 @@ void SkillStormRise::calculateSkillRatio(const Damage* wd, const block_list* src
 	bool superior_spirit = sd != nullptr && sd->ed != nullptr && sd->ed->elemental.class_ == ELEMENTALID_PROCELLA;
 
 	skillratio += -100 + 400 * skill_lv + (superior_spirit ? 5100 : 4400);
+	// TODO: Confirm official SPL scaling; the coefficient 5 is provisional.
 	skillratio += 5 * sstatus->spl;
 	RE_LVL_DMOD(100);
 }
