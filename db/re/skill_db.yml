@@ -46130,7 +46130,6 @@ Body:
     Name: WH_PRIMED_TRAP
     Description: "Primed Trap"
     MaxLevel: 1
-    Type: Weapon
     TargetType: Self
     DamageFlags:
       NoDamage: true
