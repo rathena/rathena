@@ -46094,7 +46094,6 @@ Body:
     Name: SH_KI_SUL_AND_CHUL_HO
     Description: "Kisul Resonance - Chulho"
     MaxLevel: 1
-    Type: Weapon
     TargetType: Self
     DamageFlags:
       NoDamage: true
@@ -46109,7 +46108,6 @@ Body:
     Name: SH_KI_SUL_AND_HYUN_ROK
     Description: "Kisul Resonance - Hyunrok"
     MaxLevel: 1
-    Type: Weapon
     TargetType: Self
     DamageFlags:
       NoDamage: true
