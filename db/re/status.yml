@@ -9958,7 +9958,6 @@ Body:
     CalcFlags:
       All: true
     Flags:
-      SendVal1: true
       DisplayPc: true
       NoDispell: true
       NoBanishingBuster: true
