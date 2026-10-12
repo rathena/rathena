@@ -46094,7 +46094,6 @@ Body:
     Name: SHC_VENOMIGNITION
     Description: "Venom Ignition"
     MaxLevel: 5
-    Type: Weapon
     TargetType: Self
     DamageFlags:
       NoDamage: true
