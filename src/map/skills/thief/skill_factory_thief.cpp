@@ -278,6 +278,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryThief::create(const e_skill skill_i
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SHC_SHADOW_STAB:
 			return std::make_unique<SkillShadowStab>();
+		case SHC_VENOMIGNITION:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case ST_CHASEWALK:
 			return std::make_unique<SkillStealth>();
 		case ST_FULLSTRIP:

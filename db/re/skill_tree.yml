@@ -6918,6 +6918,11 @@ Body:
             Level: 3
           - Name: SHC_DANCING_KNIFE
             Level: 3
+      - Name: SHC_VENOMIGNITION
+        MaxLevel: 5
+        Requires:
+          - Name: SHC_SHADOW_SENSE
+            Level: 3
   - Job: Arch_Mage
     Inherit:
       Novice: true
