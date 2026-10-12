@@ -16,6 +16,7 @@ void SkillRampantVine::calculateSkillRatio(const Damage* wd, const block_list* s
 	const map_session_data* sd = BL_CAST(BL_PC, src);
 
 	skillratio += -100 + 700 * skill_lv + 1000 + 40 * pc_checkskill(sd, BO_BIONICS_M);
+	// TODO: Confirm official POW scaling; the coefficient 5 is provisional.
 	skillratio += 5 * sstatus->pow;
 	RE_LVL_DMOD(100);
 }
