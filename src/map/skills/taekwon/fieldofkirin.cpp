@@ -17,6 +17,7 @@ void SkillFieldOfKirin::calculateSkillRatio(const Damage* wd, const block_list* 
 	const map_session_data* sd = BL_CAST(BL_PC, src);
 
 	skillratio += -100 + ((sc != nullptr && sc->hasSCE(SC_T_FIFTH_GOD)) ? 1950 : 1550) * skill_lv + 850 + 100 * pc_checkskill(sd, SOA_TALISMAN_MASTERY);
+	// TODO: Confirm official SPL scaling; the coefficient 5 is provisional.
 	skillratio += 5 * sstatus->spl;
 	RE_LVL_DMOD(100);
 }
