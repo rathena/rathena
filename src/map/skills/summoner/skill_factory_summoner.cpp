@@ -63,6 +63,10 @@ std::unique_ptr<const SkillImpl> SkillFactorySummoner::create(const e_skill skil
 			return std::make_unique<SkillHyunrokCannon>();
 		case SH_HYUN_ROK_SPIRIT_POWER:
 			return std::make_unique<SkillHyunrokSpiritPower>();
+		case SH_KI_SUL_AND_CHUL_HO:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SH_KI_SUL_AND_HYUN_ROK:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SH_KI_SUL_RAMPAGE:
 			return std::make_unique<SkillKisulRampage>();
 		case SH_KI_SUL_WATER_SPRAYING:
