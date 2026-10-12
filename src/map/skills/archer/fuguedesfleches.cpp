@@ -21,6 +21,7 @@ void SkillFugueDesFleches::calculateSkillRatio(const Damage* wd, const block_lis
 	else
 		skillratio += -100 + 250 * skill_lv + 300;
 	if (pc_checkskill(sd, TR_STAGE_MANNER) > 0)
+		// TODO: Confirm official CON scaling; the coefficient 5 is provisional.
 		skillratio += 5 * sstatus->con;
 	RE_LVL_DMOD(100);
 }
