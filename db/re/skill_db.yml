@@ -46094,7 +46094,6 @@ Body:
     Name: EM_ELEMENTAL_INTEGRATION
     Description: "Elemental Integration"
     MaxLevel: 5
-    Type: Magic
     TargetType: Self
     DamageFlags:
       NoDamage: true
