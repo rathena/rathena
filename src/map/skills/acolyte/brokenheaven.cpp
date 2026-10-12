@@ -28,6 +28,7 @@ void SkillBrokenHeaven::calculateSkillRatio(const Damage* wd, const block_list* 
 	const status_data* sstatus = status_get_status_data(*src);
 
 	skillratio += -100 + 1100 * skill_lv + 2450;
+	// TODO: Confirm official POW scaling; the coefficient 5 is provisional.
 	skillratio += 5 * sstatus->pow;
 	RE_LVL_DMOD(100);
 }
