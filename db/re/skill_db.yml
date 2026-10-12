@@ -46094,7 +46094,6 @@ Body:
     Name: SS_SHINKIROU_GUNSHU
     Description: "Mirage - Swarm"
     MaxLevel: 1
-    Type: Weapon
     TargetType: Self
     DamageFlags:
       NoDamage: true
@@ -46109,7 +46108,6 @@ Body:
     Name: SS_NOBORU
     Description: "Rising Tide"
     MaxLevel: 5
-    Type: Weapon
     TargetType: Self
     DamageFlags:
       NoDamage: true
