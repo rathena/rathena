@@ -16,6 +16,7 @@ void SkillOverdriveProtocol::calculateSkillRatio(const Damage* wd, const block_l
 	const map_session_data* sd = BL_CAST(BL_PC, src);
 
 	skillratio += -100 + 1050 * skill_lv + 2600 + 50 * pc_checkskill(sd, MT_ABR_M);
+	// TODO: Confirm official POW scaling; the coefficient 5 is provisional.
 	skillratio += 5 * sstatus->pow;
 	RE_LVL_DMOD(100);
 }
