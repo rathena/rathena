@@ -19,6 +19,7 @@ void SkillShieldSlam::calculateSkillRatio(const Damage* wd, const block_list* sr
 	const map_session_data* sd = BL_CAST(BL_PC, src);
 
 	skillratio += -100 + 4000 * skill_lv + 1000 + 300 * pc_checkskill(sd, IG_SHIELD_MASTERY);
+	// TODO: Confirm official POW scaling; the coefficient 5 is provisional.
 	skillratio += 5 * sstatus->pow;
 	RE_LVL_DMOD(100);
 }
