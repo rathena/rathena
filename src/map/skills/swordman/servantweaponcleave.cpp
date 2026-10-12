@@ -19,6 +19,7 @@ void SkillServantWeaponCleave::calculateSkillRatio(const Damage* wd, const block
 		skillratio += -100 + 1050 * skill_lv + 150;
 	else
 		skillratio += -100 + 750 * skill_lv + 300;
+	// TODO: Confirm official POW scaling; the coefficient 5 is provisional.
 	skillratio += 5 * sstatus->pow;
 	RE_LVL_DMOD(100);
 }
