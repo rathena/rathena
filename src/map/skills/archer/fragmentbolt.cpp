@@ -13,6 +13,7 @@ void SkillFragmentBolt::calculateSkillRatio(const Damage* wd, const block_list* 
 	const status_data* sstatus = status_get_status_data(*src);
 
 	skillratio += -100 + 800 * skill_lv + 3000;
+	// TODO: Confirm official CON scaling; the coefficient 5 is provisional.
 	skillratio += 5 * sstatus->con;
 	RE_LVL_DMOD(100);
 }

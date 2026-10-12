@@ -16,6 +16,7 @@ void SkillDeepBlindTrapAttack::calculateSkillRatio(const Damage* wd, const block
 	const map_session_data* sd = BL_CAST(BL_PC, src);
 
 	skillratio += -100 + 3950 * skill_lv + 50 * pc_checkskill(sd, WH_ADVANCED_TRAP);
+	// TODO: Confirm official CON scaling; the coefficient 5 is provisional.
 	skillratio += 5 * sstatus->con;
 	RE_LVL_DMOD(100);
 }
