@@ -17,6 +17,7 @@ void SkillLexExpiatrix::calculateSkillRatio(const Damage* wd, const block_list* 
 	const map_session_data* sd = BL_CAST(BL_PC, src);
 
 	skillratio += -100 + ((sc != nullptr && sc->hasSCE(SC_COMPETENTIA)) ? 1350 : 1000) * skill_lv + 1500 + 50 * pc_checkskill(sd, CD_FIDUS_ANIMUS);
+	// TODO: Confirm official SPL scaling; the coefficient 5 is provisional.
 	skillratio += 5 * sstatus->spl;
 	RE_LVL_DMOD(100);
 }
