@@ -14,6 +14,7 @@ void SkillSeventhKick::calculateSkillRatio(const Damage* wd, const block_list* s
 	const status_data* sstatus = status_get_status_data(*src);
 
 	skillratio += -100 + 7000 * skill_lv;
+	// TODO: Confirm official POW scaling; the coefficient 5 is provisional.
 	skillratio += 5 * sstatus->pow;
 	RE_LVL_DMOD(100);
 }
