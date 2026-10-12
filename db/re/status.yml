@@ -9964,7 +9964,6 @@ Body:
   - Status: Seventh_Kick_Max
     Icon: EFST_SEVENTH_KICK_MAX
     Flags:
-      SendVal1: true
       DisplayPc: true
       NoDispell: true
       NoBanishingBuster: true
