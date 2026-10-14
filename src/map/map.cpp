@@ -2884,6 +2884,16 @@ int32 map_addinstancemap(int32 src_m, int32 instance_id, bool no_mapflag)
 
 	if(!no_mapflag)
 		map_data_copy(dst_map, src_map);
+	else {
+		union u_mapflag_args args = {};
+
+		// The mapflags of a new instance map slot are not initialized yet
+		dst_map->initMapFlags();
+		dst_map->zone = 0; // restricted mapflag zone
+		args.flag_val = 100;
+		map_setmapflag_sub(dst_m, MF_BEXP, true, &args); // per map base exp multiplicator
+		map_setmapflag_sub(dst_m, MF_JEXP, true, &args); // per map job exp multiplicator
+	}
 
 	ShowInfo("[Instance] Created map '%s' (%d) from '%s' (%d).\n", dst_map->name, dst_map->m, name, src_map->m);
 
@@ -5283,9 +5293,9 @@ int32 mapgenerator_get_options(int32 argc, char** argv) {
 
 int32 map_data::getMapFlag(int32 flag) const {
 #ifdef DEBUG
-	if (flag < 0 || flag > flags.size()) {
+	if (flag < 0 || flag >= flags.size()) {
 		// This is debugged because we didn't previously check for out-of-bounds
-		ShowError("map_data::getMapFlag: flag %d out of bounds (0-%d)\n", flag, flags.size() - 1);
+		ShowError("map_data::getMapFlag: flag %d out of bounds (size %" PRIuPTR ")\n", flag, flags.size());
 		return 0;
 	}
 #endif
@@ -5294,9 +5304,9 @@ int32 map_data::getMapFlag(int32 flag) const {
 
 void map_data::setMapFlag(int32 flag, int32 value) {
 #ifdef DEBUG
-	if (flag < 0 || flag > flags.size()) {
+	if (flag < 0 || flag >= flags.size()) {
 		// This is debugged because we didn't previously check for out-of-bounds
-		ShowError("map_data::getMapFlag: flag %d out of bounds (0-%d)\n", flag, flags.size() - 1);
+		ShowError("map_data::setMapFlag: flag %d out of bounds (size %" PRIuPTR ")\n", flag, flags.size());
 		return;
 	}
 #endif
