@@ -46100,9 +46100,9 @@ Body:
       Splash: true
     Hit: Single
     HitCount: 1
-    Knockback: 7
     Element: Ghost
     SplashArea: 4
+    Knockback: 7
     CastTime: 1000
     AfterCastActDelay: 1000
     Cooldown:
