@@ -46100,6 +46100,7 @@ Body:
       Splash: true
     Hit: Single
     HitCount: 1
+    Knockback: 7
     Element: Ghost
     SplashArea: 4
     CastTime: 1000
