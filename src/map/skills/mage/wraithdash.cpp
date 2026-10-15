@@ -17,6 +17,11 @@ void SkillWraithDash::calculateSkillRatio(const Damage* wd, const block_list* sr
 	skillratio += -100 + 4000 * skill_lv + 3000;
 }
 
+void SkillWraithDash::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
+	// The database knockback distance controls the caster's dash only.
+	dmg.blewcount = 0;
+}
+
 void SkillWraithDash::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	clif_skill_nodamage(src, *src, getSkillId(), skill_lv);
 	SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
