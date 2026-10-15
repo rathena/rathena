@@ -7031,6 +7031,11 @@ Body:
             Level: 2
           - Name: AG_CLIMAX
             Level: 1
+      - Name: AG_WRAITH_DASH
+        MaxLevel: 3
+        Requires:
+          - Name: AG_ENERGY_CONVERSION
+            Level: 5
   - Job: Cardinal
     Inherit:
       Novice: true
