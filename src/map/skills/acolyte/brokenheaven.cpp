@@ -39,7 +39,6 @@ void SkillBrokenHeaven::modifyDamageData(Damage& dmg, const block_list& src, con
 	switch (broken_heaven_chapter(sc)) {
 		case 3: dmg.div_ = 2; break;
 		case 2: dmg.div_ = 4; break;
-		default: dmg.div_ = 3; break;
 	}
 }
 
