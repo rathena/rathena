@@ -4632,10 +4632,10 @@
     <ClCompile Include="skills/swordman/shieldshooting.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/swordman/shieldspell.cpp">
+    <ClCompile Include="skills/swordman/shieldslam.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/swordman/shieldslam.cpp">
+    <ClCompile Include="skills/swordman/shieldspell.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/swordman/skill_factory_swordman.cpp" />
