@@ -20,5 +20,6 @@ void SkillPhantomDagger::calculateSkillRatio(const Damage* wd, const block_list*
 }
 
 void SkillPhantomDagger::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
-	dmg.div_ = rnd_chance(15 * skill_lv, 100) ? 4 : 3;
+	if (rnd_chance(15 * skill_lv, 100))
+		dmg.div_ = 4;
 }
