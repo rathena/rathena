@@ -24,5 +24,6 @@ void SkillRampantVine::calculateSkillRatio(const Damage* wd, const block_list* s
 void SkillRampantVine::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
 	const status_change* sc = status_get_sc(&src);
 
-	dmg.div_ = (sc != nullptr && sc->hasSCE(SC_BIONIC_CREEPER)) ? 5 : 2;
+	if (sc != nullptr && sc->hasSCE(SC_BIONIC_CREEPER))
+		dmg.div_ = 5;
 }
