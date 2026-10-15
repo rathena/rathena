@@ -27,7 +27,8 @@ void SkillServantWeaponCleave::calculateSkillRatio(const Damage* wd, const block
 void SkillServantWeaponCleave::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
 	const status_change* sc = status_get_sc(&src);
 
-	dmg.div_ = (sc != nullptr && sc->hasSCE(SC_VIGOR)) ? 4 : 3;
+	if (sc != nullptr && sc->hasSCE(SC_VIGOR))
+		dmg.div_ = 4;
 }
 
 void SkillServantWeaponCleave::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
