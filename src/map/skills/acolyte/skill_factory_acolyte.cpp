@@ -65,6 +65,7 @@
 #include "laudaagnus.cpp"
 #include "laudaramus.cpp"
 #include "lexdivina.cpp"
+#include "lexexpiatrix.cpp"
 #include "magnificat.cpp"
 #include "magnusexorcismus.cpp"
 #include "massiveflameblaster.cpp"
@@ -77,6 +78,7 @@
 #include "pneumaticusprocella.cpp"
 #include "powervelocity.cpp"
 #include "praefatio.cpp"
+#include "punitio.cpp"
 #include "ragingpalmstrike.cpp"
 #include "ragingquadrupleblow.cpp"
 #include "ragingthrust.cpp"
@@ -110,8 +112,6 @@
 #include "warpportal.cpp"
 #include "windmill.cpp"
 #include "zen.cpp"
-#include "punitio.cpp"
-#include "lexexpiatrix.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill_id) const {
 	switch( skill_id ){
