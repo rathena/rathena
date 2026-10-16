@@ -46090,6 +46090,60 @@ Body:
         Area: 3
       - Level: 5
         Area: 3
+  - Id: 6635
+    Name: SKE_SEVENTH_KICK
+    Description: "Seventh Kick"
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    Range: 2
+    Hit: Single
+    HitCount: 1
+    Element: Weapon
+    AfterCastActDelay: 500
+    Cooldown: 700
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 45
+        - Level: 2
+          Amount: 55
+        - Level: 3
+          Amount: 65
+        - Level: 4
+          Amount: 75
+        - Level: 5
+          Amount: 85
+      ApCost: 10
+      Status:
+        Sky_Enchant: true
+  - Id: 6636
+    Name: SKE_SEVENTH_KICK_S
+    Description: "Seventh Heaven Kick"
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    Range: 2
+    Hit: Single
+    HitCount: 1
+    Element: Weapon
+    AfterCastActDelay: 500
+    Cooldown: 700
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 45
+        - Level: 2
+          Amount: 55
+        - Level: 3
+          Amount: 65
+        - Level: 4
+          Amount: 75
+        - Level: 5
+          Amount: 85
+      ApCost: 10
+      Status:
+        Sky_Enchant: true
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch
