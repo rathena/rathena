@@ -70,6 +70,7 @@
 #include "meteorassault.cpp"
 #include "mug.cpp"
 #include "omegaabyssstrike.cpp"
+#include "phantomdagger.cpp"
 #include "phantommenace.cpp"
 #include "poisoningweapon.cpp"
 #include "poisonsmoke.cpp"
@@ -97,7 +98,6 @@
 #include "venompressure.cpp"
 #include "venomsplasher.cpp"
 #include "weaponcrush.cpp"
-#include "phantomdagger.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryThief::create(const e_skill skill_id) const {
 	switch (skill_id) {
