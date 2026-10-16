@@ -65,6 +65,7 @@
 #include "sacrifice.cpp"
 #include "selfprovoke.cpp"
 #include "servantweapon.cpp"
+#include "servantweaponcleave.cpp"
 #include "servantweapondemolition.cpp"
 #include "servantweaponphantom.cpp"
 #include "servantweaponsign.cpp"
@@ -88,7 +89,6 @@
 #include "vitalityactivation.cpp"
 #include "vitalstrike.cpp"
 #include "windcutter.cpp"
-#include "servantweaponcleave.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skill_id) const {
 	switch( skill_id ){
