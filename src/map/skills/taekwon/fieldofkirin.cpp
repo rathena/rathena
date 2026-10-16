@@ -21,7 +21,6 @@ void SkillFieldOfKirin::calculateSkillRatio(const Damage* wd, const block_list* 
 	else
 		skillratio += -100 + 850 + 1550 * skill_lv;
 	skillratio += 100 * pc_checkskill(sd, SOA_TALISMAN_MASTERY);
-	// TODO: Confirm official SPL scaling; the reviewer-suggested coefficient 7 is provisional.
 	skillratio += 7 * sstatus->spl;
 	RE_LVL_DMOD(100);
 }
