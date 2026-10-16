@@ -388,6 +388,7 @@
     <ClInclude Include="skills/archer/focusedarrowstrike.hpp" />
     <ClInclude Include="skills/archer/freezingtrap.hpp" />
     <ClInclude Include="skills/archer/friggssong.hpp" />
+    <ClInclude Include="skills/archer/fuguedesfleches.hpp" />
     <ClInclude Include="skills/archer/galestorm.hpp" />
     <ClInclude Include="skills/archer/geffenianocturn.hpp" />
     <ClInclude Include="skills/archer/gloomyday.hpp" />
@@ -1962,6 +1963,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/friggssong.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/fuguedesfleches.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/galestorm.cpp">
