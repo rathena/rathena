@@ -73,6 +73,7 @@
 #include "shieldpress.cpp"
 #include "shieldreflect.cpp"
 #include "shieldshooting.cpp"
+#include "shieldslam.cpp"
 #include "shieldspell.cpp"
 #include "smite.cpp"
 #include "sonicwave.cpp"
@@ -88,7 +89,6 @@
 #include "vitalityactivation.cpp"
 #include "vitalstrike.cpp"
 #include "windcutter.cpp"
-#include "shieldslam.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skill_id) const {
 	switch( skill_id ){
