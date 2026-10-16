@@ -46090,6 +46090,35 @@ Body:
         Area: 3
       - Level: 5
         Area: 3
+  - Id: 6610
+    Name: MT_OVERDRIVE_PROTOCAL
+    Description: "Overdrive Protocol"
+    MaxLevel: 4
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+      Critical: true
+    Range: 7
+    Hit: Multi_Hit
+    HitCount: 2
+    Element: Weapon
+    SplashArea: 4
+    GiveAp: 3
+    CastTime: 1000
+    AfterCastActDelay: 700
+    Cooldown: 1000
+    FixedCastTime: 500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 65
+        - Level: 2
+          Amount: 70
+        - Level: 3
+          Amount: 75
+        - Level: 4
+          Amount: 80
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch
