@@ -7227,6 +7227,42 @@ Body:
             Level: 3
           - Name: WH_HAWKRUSH
             Level: 3
+      - Name: WH_FRAGMENT_BOLT
+        MaxLevel: 5
+        Requires:
+          - Name: WH_CRESCIVE_BOLT
+            Level: 3
+      - Name: WH_PRIMED_TRAP
+        MaxLevel: 1
+        Requires:
+          - Name: WH_DEEPBLINDTRAP
+            Level: 3
+          - Name: WH_SWIFTTRAP
+            Level: 3
+          - Name: WH_SOLIDTRAP
+            Level: 3
+          - Name: WH_FLAMETRAP
+            Level: 3
+      - Name: WH_SOLIDTRAP_ATK
+        MaxLevel: 5
+        Requires:
+          - Name: WH_PRIMED_TRAP
+            Level: 1
+      - Name: WH_DEEPBLINDTRAP_ATK
+        MaxLevel: 5
+        Requires:
+          - Name: WH_PRIMED_TRAP
+            Level: 1
+      - Name: WH_SWIFTTRAP_ATK
+        MaxLevel: 5
+        Requires:
+          - Name: WH_PRIMED_TRAP
+            Level: 1
+      - Name: WH_FLAMETRAP_ATK
+        MaxLevel: 5
+        Requires:
+          - Name: WH_PRIMED_TRAP
+            Level: 1
   - Job: Imperial_Guard
     Inherit:
       Novice: true
