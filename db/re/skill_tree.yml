@@ -8103,6 +8103,17 @@ Body:
             Level: 5
           - Name: SOA_TALISMAN_OF_FIVE_ELEMENTS
             Level: 5
+      - Name: SOA_FIELD_OF_KIRIN
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_TALISMAN_OF_BLUE_DRAGON
+            Level: 1
+          - Name: SOA_TALISMAN_OF_WHITE_TIGER
+            Level: 1
+          - Name: SOA_TALISMAN_OF_RED_PHOENIX
+            Level: 1
+          - Name: SOA_TALISMAN_OF_BLACK_TORTOISE
+            Level: 1
   - Job: Night_Watch
     Inherit:
       Novice: true
