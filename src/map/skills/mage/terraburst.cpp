@@ -16,7 +16,10 @@ void SkillTerraBurst::calculateSkillRatio(const Damage* wd, const block_list* sr
 	const map_session_data* sd = BL_CAST(BL_PC, src);
 	bool superior_spirit = sd != nullptr && sd->ed != nullptr && sd->ed->elemental.class_ == ELEMENTALID_TERREMOTUS;
 
-	skillratio += -100 + 400 * skill_lv + (superior_spirit ? 5100 : 4400);
+	if (superior_spirit)
+		skillratio += -100 + 5100 + 400 * skill_lv;
+	else
+		skillratio += -100 + 4400 + 400 * skill_lv;
 	// TODO: Confirm official SPL scaling; the coefficient 5 is provisional.
 	skillratio += 5 * sstatus->spl;
 	RE_LVL_DMOD(100);
