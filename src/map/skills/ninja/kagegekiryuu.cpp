@@ -15,5 +15,9 @@ void SkillKagegekiryuu::calculateSkillRatio(const Damage* wd, const block_list* 
 	const status_change* sc = status_get_sc(src);
 	const map_session_data* sd = BL_CAST(BL_PC, src);
 
-	skillratio += -100 + ((sc != nullptr && sc->hasSCE(SC_NOBORU)) ? 850 : 650) * skill_lv + 120 * pc_checkskill(sd, SS_KAGENOMAI);
+	if (sc != nullptr && sc->hasSCE(SC_NOBORU))
+		skillratio += -100 + 850 * skill_lv;
+	else
+		skillratio += -100 + 650 * skill_lv;
+	skillratio += 120 * pc_checkskill(sd, SS_KAGENOMAI);
 }

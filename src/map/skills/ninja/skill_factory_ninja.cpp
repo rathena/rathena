@@ -32,6 +32,7 @@
 #include "illusionshock.cpp"
 #include "improviseddefense.cpp"
 #include "infiltrate.cpp"
+#include "kagegekiryuu.cpp"
 #include "kamaitachi.cpp"
 #include "kocrossslash.cpp"
 #include "kunaidistortion.cpp"
@@ -44,6 +45,7 @@
 #include "makibishi.cpp"
 #include "meltaway.cpp"
 #include "mirage.cpp"
+#include "mirageswarm.cpp"
 #include "mirrorimage.cpp"
 #include "moonlightfantasy.cpp"
 #include "nightmareerasion.cpp"
@@ -72,8 +74,6 @@
 #include "vanishingslash.cpp"
 #include "windblade.cpp"
 #include "windcharm.cpp"
-#include "kagegekiryuu.cpp"
-#include "mirageswarm.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryNinja::create(const e_skill skill_id) const {
 	switch( skill_id ){
