@@ -21,6 +21,7 @@
 #include "basilica.cpp"
 #include "blazingflameblast.cpp"
 #include "blessing.cpp"
+#include "brokenheaven.cpp"
 #include "bssacramenti.cpp"
 #include "cantocandidus.cpp"
 #include "chaincrushcombo.cpp"
@@ -110,7 +111,6 @@
 #include "warpportal.cpp"
 #include "windmill.cpp"
 #include "zen.cpp"
-#include "brokenheaven.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill_id) const {
 	switch( skill_id ){
