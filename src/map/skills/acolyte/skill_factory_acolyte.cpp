@@ -65,6 +65,7 @@
 #include "laudaagnus.cpp"
 #include "laudaramus.cpp"
 #include "lexdivina.cpp"
+#include "lexexpiatrix.cpp"
 #include "magnificat.cpp"
 #include "magnusexorcismus.cpp"
 #include "massiveflameblaster.cpp"
@@ -77,6 +78,7 @@
 #include "pneumaticusprocella.cpp"
 #include "powervelocity.cpp"
 #include "praefatio.cpp"
+#include "punitio.cpp"
 #include "ragingpalmstrike.cpp"
 #include "ragingquadrupleblow.cpp"
 #include "ragingthrust.cpp"
@@ -207,6 +209,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillEffligo>();
 		case CD_FRAMEN:
 			return std::make_unique<SkillFramen>();
+		case CD_LEX_EXPIATRIX:
+			return std::make_unique<SkillLexExpiatrix>();
 		case CD_MEDIALE_VOTUM:
 			return std::make_unique<SkillMedialeVotum>();
 		case CD_PETITIO:
@@ -215,6 +219,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillPneumaticusProcella>();
 		case CD_PRESENS_ACIES:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case CD_PUNITIO:
+			return std::make_unique<SkillPunitio>();
 		case CD_RELIGIO:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case CD_REPARATIO:
