@@ -7675,6 +7675,19 @@ Body:
             Level: 3
           - Name: EM_VENOM_SWAMP
             Level: 3
+      - Name: EM_ELEMENTAL_INTEGRATION
+        MaxLevel: 5
+        Requires:
+          - Name: EM_SUMMON_ELEMENTAL_SERPENS
+            Level: 1
+          - Name: EM_SUMMON_ELEMENTAL_TERREMOTUS
+            Level: 1
+          - Name: EM_SUMMON_ELEMENTAL_PROCELLA
+            Level: 1
+          - Name: EM_SUMMON_ELEMENTAL_DILUVIO
+            Level: 1
+          - Name: EM_SUMMON_ELEMENTAL_ARDOR
+            Level: 1
   - Job: Inquisitor
     Inherit:
       Novice: true

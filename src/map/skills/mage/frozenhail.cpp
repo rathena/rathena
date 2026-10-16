@@ -1,0 +1,26 @@
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
+#include "frozenhail.hpp"
+
+#include "map/elemental.hpp"
+#include "map/pc.hpp"
+#include "map/skill.hpp"
+#include "map/status.hpp"
+
+SkillFrozenHail::SkillFrozenHail() : SkillImplRecursiveDamageSplash(EM_FROZEN_HAIL) {
+}
+
+void SkillFrozenHail::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& skillratio, int32 mflag) const {
+	const status_data* sstatus = status_get_status_data(*src);
+	const map_session_data* sd = BL_CAST(BL_PC, src);
+	bool superior_spirit = sd != nullptr && sd->ed != nullptr && sd->ed->elemental.class_ == ELEMENTALID_DILUVIO;
+
+	if (superior_spirit)
+		skillratio += -100 + 5100 + 400 * skill_lv;
+	else
+		skillratio += -100 + 4400 + 400 * skill_lv;
+	// TODO: Confirm official SPL scaling; the coefficient 5 is provisional.
+	skillratio += 5 * sstatus->spl;
+	RE_LVL_DMOD(100);
+}
