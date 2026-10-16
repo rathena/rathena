@@ -48,6 +48,7 @@
 #include "focusedarrowstrike.cpp"
 #include "freezingtrap.cpp"
 #include "friggssong.cpp"
+#include "fuguedesfleches.cpp"
 #include "galestorm.cpp"
 #include "geffenianocturn.cpp"
 #include "gloomyday.cpp"
@@ -133,7 +134,6 @@
 #include "windmillrushattack.cpp"
 #include "windwalker.cpp"
 #include "winkofcharm.cpp"
-#include "fuguedesfleches.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_id) const {
 	switch( skill_id ){
