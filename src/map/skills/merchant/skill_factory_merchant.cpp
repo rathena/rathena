@@ -80,6 +80,7 @@
 #include "mixcooking.cpp"
 #include "mysterypowder.cpp"
 #include "neutralbarrier.cpp"
+#include "overdriveprotocol.cpp"
 #include "pilebunker.cpp"
 #include "plantcultivation.cpp"
 #include "powerfulswing.cpp"
@@ -114,7 +115,6 @@
 #include "weaponrepair.cpp"
 #include "woodenfairy.cpp"
 #include "woodenwarrior.cpp"
-#include "overdriveprotocol.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skill_id) const {
 	switch (skill_id) {
