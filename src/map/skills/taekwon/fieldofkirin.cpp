@@ -16,9 +16,13 @@ void SkillFieldOfKirin::calculateSkillRatio(const Damage* wd, const block_list* 
 	const status_change* sc = status_get_sc(src);
 	const map_session_data* sd = BL_CAST(BL_PC, src);
 
-	skillratio += -100 + ((sc != nullptr && sc->hasSCE(SC_T_FIFTH_GOD)) ? 1950 : 1550) * skill_lv + 850 + 100 * pc_checkskill(sd, SOA_TALISMAN_MASTERY);
-	// TODO: Confirm official SPL scaling; the coefficient 5 is provisional.
-	skillratio += 5 * sstatus->spl;
+	if (sc != nullptr && sc->hasSCE(SC_T_FIFTH_GOD))
+		skillratio += -100 + 850 + 1950 * skill_lv;
+	else
+		skillratio += -100 + 850 + 1550 * skill_lv;
+	skillratio += 100 * pc_checkskill(sd, SOA_TALISMAN_MASTERY);
+	// TODO: Confirm official SPL scaling; the reviewer-suggested coefficient 7 is provisional.
+	skillratio += 7 * sstatus->spl;
 	RE_LVL_DMOD(100);
 }
 
@@ -27,9 +31,4 @@ void SkillFieldOfKirin::modifyElement(const Damage& dmg, const block_list& src, 
 	const status_change* sc = status_get_sc(&src);
 	if (sc != nullptr && sc->hasSCE(SC_SEVENWIND))
 		element = sc->getSCE(SC_SEVENWIND)->val1;
-}
-
-void SkillFieldOfKirin::splashSearch(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
-	// The client selects a target within 9 cells, but damage is centered on the caster.
-	SkillImplRecursiveDamageSplash::splashSearch(src, src, skill_lv, tick, flag);
 }

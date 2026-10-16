@@ -29,6 +29,7 @@
 #include "falconssoul.cpp"
 #include "fallingstar.cpp"
 #include "feelingthesunmoonandstars.cpp"
+#include "fieldofkirin.cpp"
 #include "flashkick.cpp"
 #include "fullmoonkick.cpp"
 #include "golemssoul.cpp"
@@ -101,7 +102,6 @@
 #include "warmthofthemoon.cpp"
 #include "warmthofthestars.cpp"
 #include "warmthofthesun.cpp"
-#include "fieldofkirin.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryTaekwon::create(const e_skill skill_id) const {
 	switch (skill_id) {
