@@ -50,12 +50,12 @@
 #include "slugshot.cpp"
 #include "spiralshooting.cpp"
 #include "spreadattack.cpp"
+#include "tacticalrepositioning.cpp"
 #include "thevigilanteatnight.cpp"
 #include "tracking.cpp"
 #include "tripleaction.cpp"
 #include "wildfire.cpp"
 #include "wildshot.cpp"
-#include "tacticalrepositioning.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryGunslinger::create(const e_skill skill_id) const {
 	switch (skill_id) {
