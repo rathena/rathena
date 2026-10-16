@@ -50,6 +50,8 @@
 #include "risingmoon.cpp"
 #include "risingsun.cpp"
 #include "run.cpp"
+#include "seventhheavenkick.cpp"
+#include "seventhkick.cpp"
 #include "sevenwind.cpp"
 #include "shadowssoul.cpp"
 #include "skymoon.cpp"
@@ -101,8 +103,6 @@
 #include "warmthofthemoon.cpp"
 #include "warmthofthestars.cpp"
 #include "warmthofthesun.cpp"
-#include "seventhkick.cpp"
-#include "seventhheavenkick.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryTaekwon::create(const e_skill skill_id) const {
 	switch (skill_id) {
