@@ -12,6 +12,7 @@
 #include "groundgravitation.cpp"
 #include "hellsdrive.cpp"
 #include "helpangel.cpp"
+#include "highmagnumbreak.cpp"
 #include "jackfrostnova.cpp"
 #include "jupitelthunderstorm.cpp"
 #include "megasonicblow.cpp"
@@ -21,7 +22,6 @@
 #include "shieldchainrush.cpp"
 #include "spiralpiercemax.cpp"
 #include "windcutterturbo.cpp"
-#include "highmagnumbreak.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryNovice::create(const e_skill skill_id) const {
 	switch( skill_id ){
