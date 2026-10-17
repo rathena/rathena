@@ -39305,7 +39305,7 @@ Body:
           Amount: 63
       ItemCost:
         - Item: Icicle_Acid_Bottle
-          Amount: 2
+          Amount: 1
     Unit:
       Id: Acidified_Zone_Water
       Interval: 500
@@ -39376,7 +39376,7 @@ Body:
           Amount: 63
       ItemCost:
         - Item: Earth_Acid_Bottle
-          Amount: 2
+          Amount: 1
     Unit:
       Id: Acidified_Zone_Ground
       Interval: 500
@@ -39447,7 +39447,7 @@ Body:
           Amount: 63
       ItemCost:
         - Item: Gale_Acid_Bottle
-          Amount: 2
+          Amount: 1
     Unit:
       Id: Acidified_Zone_Wind
       Interval: 500
@@ -39518,7 +39518,7 @@ Body:
           Amount: 63
       ItemCost:
         - Item: Flame_Acid_Bottle
-          Amount: 2
+          Amount: 1
     Unit:
       Id: Acidified_Zone_Fire
       Interval: 500
