@@ -1962,7 +1962,7 @@ int64 battle_calc_damage(block_list *src,block_list *bl,struct Damage *d,int64 d
 	status_change* sc = status_get_sc(src);
 
 	if (sc != nullptr && !sc->empty()) {
-		if (sc->getSCE(SC_BREAKINGLIMIT)) {
+		if (sc->hasSCE(SC_BREAKINGLIMIT)) {
 			switch (skill_id) {
 				case HN_WIND_CUTTER_TURBO:
 				case HN_SHIELD_CHAIN_RUSH:
