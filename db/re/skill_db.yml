@@ -34646,12 +34646,14 @@ Body:
     Name: DK_SERVANT_W_SIGN
     Description: Servant Weapon Sign
     MaxLevel: 5
+    Type: Weapon
     TargetType: Attack
     DamageFlags:
-      NoDamage: true
+      Critical: true
     Range: 9
     Hit: Single
     HitCount: 1
+    Element: Weapon
     Duration1:
       - Level: 1
         Time: 2000

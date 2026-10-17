@@ -2676,6 +2676,7 @@ static int32 battle_range_type(const block_list* src, const block_list* target, 
 
 	switch (skill_id) {
 		case DK_SERVANT_W_CLEAVE:
+		case DK_SERVANT_W_SIGN:
 			return BF_SHORT;
 		case AC_SHOWER:
 		case AM_DEMONSTRATION:

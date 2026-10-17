@@ -10,10 +10,19 @@
 #include "map/pc.hpp"
 #include "map/status.hpp"
 
-SkillServantWeaponSign::SkillServantWeaponSign() : SkillImpl(DK_SERVANT_W_SIGN) {
+SkillServantWeaponSign::SkillServantWeaponSign() : WeaponSkillImpl(DK_SERVANT_W_SIGN) {
 }
 
-void SkillServantWeaponSign::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
+void SkillServantWeaponSign::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& skillratio, int32 mflag) const {
+	const status_data* sstatus = status_get_status_data(*src);
+
+	skillratio += -100 + 1300 + 2200 * skill_lv;
+	// TODO: Confirm official POW scaling; the coefficient 5 is provisional.
+	skillratio += 5 * sstatus->pow;
+	RE_LVL_DMOD(100);
+}
+
+void SkillServantWeaponSign::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	map_session_data* sd = BL_CAST(BL_PC, src);
 	mob_data* md = BL_CAST(BL_MOB, src);
 	map_session_data* dstsd = BL_CAST(BL_PC, target);
@@ -24,7 +33,7 @@ void SkillServantWeaponSign::castendNoDamageId(block_list* src, block_list* targ
 	// Max allowed targets to be marked.
 	// Only players and monsters can be marked....I think??? [Rytech]
 	// Lets only allow players and monsters to use this skill for safety reasons.
-	if ((!dstsd && !dstmd) || !sd && !md) {
+	if ((!dstsd && !dstmd) || (!sd && !md)) {
 		if (sd)
 			clif_skill_fail( *sd, getSkillId(), USESKILL_FAIL );
 		return;
@@ -38,7 +47,6 @@ void SkillServantWeaponSign::castendNoDamageId(block_list* src, block_list* targ
 		return;
 	}
 
-		
 	// Mark the target.
 	if( sd ){
 		int8 i;
@@ -57,8 +65,10 @@ void SkillServantWeaponSign::castendNoDamageId(block_list* src, block_list* targ
 			sd->servant_sign[i] = target->id;
 		}
 
-		clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
 		sc_start4(src, target, type, 100, src->id, i, skill_lv, 0, skill_get_time(getSkillId(), skill_lv));
-	} else if (md) // Monster's cant track with this skill. Just give the status.
-		clif_skill_nodamage(src, *target, getSkillId(), skill_lv, sc_start4(src, target, type, 100, 0, 0, skill_lv, 0, skill_get_time(getSkillId(), skill_lv)));
+	} else if (md) // Monsters cannot track targets with this skill. Just give the status.
+		sc_start4(src, target, type, 100, 0, 0, skill_lv, 0, skill_get_time(getSkillId(), skill_lv));
+
+	// Apply the mark first so a lethal hit also clears the servant sign slot.
+	WeaponSkillImpl::castendDamageId(src, target, skill_lv, tick, flag);
 }
