@@ -1,0 +1,51 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2026 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Rune Tablet Decomposition Database
+###########################################################################
+#
+# Rune Tablet Decomposition Settings
+#
+###########################################################################
+# - Item                    Card item ID that can be decomposed.
+#   Modes:                  Both request modes, once each.
+#     - Mode                1 = single card, 2 = batch.
+#       Consume             Cards taken from the selected stack. (1-MAX_AMOUNT)
+#       Outputs:            Results, one to eight entries.
+#         - Item            Result item ID.
+#           Minimum         Minimum amount; 0 may yield nothing. (0-32767)
+#           Maximum         Maximum amount. (Minimum-32767)
+#           Chance          Chance of the result. (100000 = 100%)
+###########################################################################
+#
+# The quantity distribution inside Minimum..Maximum is not officially
+# verified. Only the fixed sealed-stone conversion is always enabled; the
+# other rows need rune_tablet_decomposition_uniform in conf/battle/feature.conf.
+###########################################################################
+
+Header:
+  Type: RUNE_TABLET_DECOMPOSITION_DB
+  Version: 1
+
+Footer:
+  Imports:
+    - Path: db/pre-re/rune_tablet_decomposition.yml
+      Mode: Prerenewal
+    - Path: db/re/rune_tablet_decomposition.yml
+      Mode: Renewal
+    - Path: db/import/rune_tablet_decomposition.yml

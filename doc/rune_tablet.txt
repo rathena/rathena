@@ -1,0 +1,400 @@
+//===== rAthena Documentation ================================
+//= Rune Tablet
+//===== By: ==================================================
+//= Scanty (original Rune Tablet source)
+//= Louis T Steinhil (multiple equipped Rune Sets)
+//===== Last Updated: ========================================
+//= 20261009
+//===== Description: =========================================
+//= Native Rune Tablet window: fragment and Rune Set
+//= activation, equipping, upgrades, collection rewards and
+//= card decomposition. Several Rune Sets can be equipped at
+//= once (rune_tablet_max_equipped) on clients that show them.
+//============================================================
+
+The map-server is authoritative for every cost, roll and effect. The client
+only displays the lists it receives and sends requests; each request is
+validated again (window open, access level, ownership, materials, capacity).
+Progress of the legacy custom rune system (the `runes`/`runes_book` tables)
+can be migrated, see 2.1.
+
+---------------------------------------
+1. Files
+---------------------------------------
+
+src/map/rune_tablet.hpp, rune_tablet.cpp - Databases, rules, protocol, hooks
+db/rune_tablet_db.yml                     - Fragments and Rune Sets (root, imports
+                                            db/pre-re/, db/re/ and db/import/)
+db/rune_tablet_decomposition.yml          - Decomposable cards (root, imports
+                                            db/pre-re/, db/re/ and db/import/)
+db/import-tmpl/rune_tablet_*.yml          - Import templates (copied to db/import/)
+db/pre-re/rune_tablet_*.yml               - Pre-renewal data, TWRoZ Rune Monument (10.)
+db/re/rune_tablet_*.yml                   - kRO renewal data
+db/pre-re/item_db_rune_tablet.yml         - Pre-renewal runes, Goblin Coin Fragment, boxes, cards
+db/re/item_db_rune_tablet.yml             - Collection reward boxes 106408-106414
+db/re/item_db_rune_cards.yml              - Decomposable cards 27266 and 300483
+db/re/mob_db_rune_ch1.yml                 - Chapter 1 monsters (renewal stats)
+db/re/mob_db_rune_ep19_20.yml             - Episode 19/20 monsters and race groups
+db/re/mob_db_rune_episodes.yml            - Rune_Ep18 race group of the EP18 monsters
+db/{pre-re,re}/status.yml                 - Rune_Tablet_Regen (SC_RUNE_TABLET_REGEN)
+doc/yaml/db/rune_tablet_db.yml            - Field reference
+doc/yaml/db/rune_tablet_decomposition.yml - Field reference
+npc/custom/rune_tablet/rune_stone.txt     - Rune Stone NPCs (tablet, reform, exchange)
+npc/custom/rune_tablet/ch1_mobs.txt       - Chapter 1 spawns (renewal only)
+npc/custom/rune_tablet/ep19_20_mobs.txt   - Episode 19/20 spawns (renewal only)
+npc/custom/warper.txt                     - Dungeons: "Chapter 1 Dungeons" and
+                                            "Episode 18-20 Areas" (renewal only)
+sql-files/rune_tablet/rune_tablet.sql     - SQL monster columns and legacy migration
+tools/rune_tablet/lub51.py                - Lua 5.1 bytecode reader for System/Rune lubs
+tools/rune_tablet/export_db.py            - System/Rune -> databases and English client text
+tools/rune_tablet/grf_dump.ps1            - Lists/extracts GRF entries via GRF Editor's GRF.dll
+client/rune_tablet/System/Rune            - kRO renewal client tables (source of db/re/)
+client/rune_tablet/pre-re/System/Rune     - TWRoZ pre-renewal client tables (source of db/pre-re/)
+client/rune_tablet/SystemEN               - English iteminfo entries for the renewal items
+
+---------------------------------------
+2. Installation
+---------------------------------------
+
+1. Stop all servers and back up the database.
+2. Import sql-files/rune_tablet/rune_tablet.sql into the main database. It
+   adds the four `racegroup_rune_ep*` columns to existing SQL monster tables
+   (needed only with use_sql_db) and migrates the legacy rune system (2.1).
+   It is safe to re-run and does nothing on a fresh install.
+3. Build with PACKETVER 2023-08-02 or newer, e.g. "#define PACKETVER 20250716"
+   in src/custom/defines_pre.hpp for the 2025-07-16 client; older packet
+   versions compile the tablet out. Rebuild and deploy all servers.
+4. Review the settings in conf/battle/feature.conf (3.). The tablet stays
+   GM-only (rune_tablet_min_group_level: 99). The shipped feature.conf allows
+   four equipped sets, which needs a patched client (6.); set
+   rune_tablet_max_equipped: 1 for unpatched clients. On a pre-renewal server
+   (PRERE) the tablet only offers what db/pre-re/rune_tablet_*.yml defines,
+   see 10.
+5. Test with a group 99 character: talk to a Rune Stone NPC or use
+   @runetablet, then open the tablet to everyone with
+   rune_tablet_min_group_level: 0.
+
+2.1. Upgrading from the legacy custom rune system
+
+The legacy tag IDs are the client categories and the legacy book IDs the
+fragment IDs, so rune_tablet.sql copies the progress into character
+registries with INSERT IGNORE (existing Rune Tablet values win):
+
+	runes_book.book_id            -> RuneTabletFragment[book_id] = 1
+	runes.set_id, upgrade/failcount -> RuneTabletSet[set_id] = progress
+	runes.reward                  -> RuneTabletReward[set_id]
+	runes.selected                -> RuneTabletEquipSet[set_id] = 1
+
+Afterwards the tables are renamed to `runes_legacy` and `runes_book_legacy`
+so a second import cannot re-equip a set. Drop them once the result is
+verified in game. Equipped sets that do not fit the equip settings (3.) are
+pruned at the next login, keeping the lowest category and set ID.
+
+Legacy content that has no Rune Tablet equivalent: the per-set bonus scripts
+of db/rune_db.yml (effects are now data, see 4.) and the item DB
+"Decomposition" node (replaced by db/rune_tablet_decomposition.yml).
+
+---------------------------------------
+3. Settings (conf/battle/feature.conf)
+---------------------------------------
+
+rune_tablet_min_group_level: <0-99>
+	Minimum group level that can open and use the tablet. 99 is GM-only.
+	The level is also checked by every request, by equipped bonuses and by
+	the login sync, so raising it hides the feature from lower groups.
+
+rune_tablet_decomposition_uniform: <yes/no>
+	Local policy, NOT a verified official quantity algorithm. yes: every
+	output rolls its Chance independently, then a uniform amount inside
+	Minimum..Maximum. no: only the fixed sealed-stone conversion (1001595 to
+	1001283) works. The policy never changes batch sizes or rates.
+
+rune_tablet_max_equipped: <1-255>
+	Rune Sets equipped at the same time (see 6.). 1 is the official single
+	slot and works with any client. Values at or above the number of loaded
+	sets (32 pre-renewal, 65 renewal) mean "every set". Effects add up, so
+	this is a balance setting; 4 with rune_tablet_equip_per_category gives
+	one set per tier on the pre-renewal data.
+
+rune_tablet_equip_per_category: <yes/no>
+	yes: at most one equipped set per category; equipping replaces the set
+	of its category. no: any sets up to rune_tablet_max_equipped.
+
+3.1. Script command
+
+*runetablet;
+
+Opens the native Rune Tablet window (2023-08-02 or newer clients) for the
+attached player. It is meant for the Rune Stone NPCs: the calling NPC's own
+dialog does not block it, every other busy state does (trading, vending,
+storage, chat rooms, other UI windows). Access is gated by
+rune_tablet_min_group_level.
+
+Returns 1 when the window was opened and 0 otherwise; the reason is shown to
+the player. Call it after close2.
+
+Example:
+
+	mes "[Rune Stone]";
+	mes "I will help you use the Rune Tablet.";
+	close2;
+	runetablet;
+	end;
+
+GM command: @runetablet {close|info {<char name>}}, see doc/atcommands.txt.
+
+---------------------------------------
+4. Data
+---------------------------------------
+
+Fields are listed in doc/yaml/db/rune_tablet_db.yml and
+doc/yaml/db/rune_tablet_decomposition.yml. db/re/ data was generated from the
+kRO 2026-03-04 System/Rune lubs (the hashes are kept in the file comments);
+tools/rune_tablet/export_db.py reproduces it (10.).
+
+- A fragment or set is activated once by paying its Materials. Only plain,
+  unequipped, unfavorited, permanent, unrefined, uncarded and unenchanted
+  stacks are consumed, and the whole cost is planned before anything is
+  deleted.
+- A set grants its Effects while it is equipped:
+	value = Base + (upgrade level / LevelStep) * PerStep
+  once the set has at least Fragments active fragments and MinLevel
+  upgrades. Bonuses are applied in status_calc_pc, before bonus scripts.
+  Specials:
+	TargetedMagicKillRecoveryHP/SP - heal on a kill by a targeted magic skill
+	                                 (not ground or self skills)
+	OnHitSPRegenChance             - 2% when hit: 200 SP every second, four
+	                                 times (SC_RUNE_TABLET_REGEN, no icon)
+  Stat bonuses show in the status window; resistances (bResEff) do not.
+  "@runetablet info [<char name>]" (group 99) lists the equipped sets, their
+  active effects and the resulting resistance totals.
+- Sets without Effects and without EffectFree are not reviewed yet and
+  cannot be equipped.
+- Upgrades: one attempt costs the Materials of the target level and succeeds
+  with Chance + failures * FailureIncrement (100000 = 100%). A failure keeps
+  the level and raises the next chance; a success resets the failures.
+  Attempts are limited to one per second per session.
+- Rewards: slots are claimed strictly in order. Slot 1 needs the activated
+  set, slots 2-6 at least that many active fragments, slot 7 only the
+  previous claim. A reward that does not fit is not given.
+- Decomposition: mode 1 takes one card, mode 2 thirty (renewal) or ten
+  (pre-renewal), as each mode's Consume says. Results must fit the
+  inventory and weight limit at their maximum amounts before anything is
+  consumed; a failed delivery restores the inventory exactly.
+
+---------------------------------------
+5. Player state
+---------------------------------------
+
+Permanent character registries (char_reg_num):
+
+	RuneTabletFragment[<fragment id>]  progress, 1 = active
+	RuneTabletSet[<set id>]            progress: 1-16 = level + 1 without
+	                                   failures, otherwise
+	                                   2^32 + (failures << 8) + level + 1
+	RuneTabletReward[<set id>]         last claimed reward slot (0-7)
+	RuneTabletEquipSet[<set id>]       1 while the set is equipped
+
+The former per-category storage RuneTabletEquipped[<category>] = <set id> is
+converted to RuneTabletEquipSet at the next login.
+
+Session only: state.rune_tablet_open, state.rune_tablet_activation and
+rune_tablet_upgrade_after (upgrade burst guard).
+
+---------------------------------------
+6. Multiple equipped Rune Sets
+---------------------------------------
+
+rune_tablet_max_equipped sets how many Rune Sets may be equipped at once:
+
+- 1 (official): the newly equipped set replaces the equipped one, whatever
+  its category.
+- Above 1: a set takes a free slot; when all slots are used the request is
+  refused with a chat message and the window closes. With
+  rune_tablet_equip_per_category a set instead replaces the equipped set of
+  its own category.
+- Effects of all equipped sets add up; SC_RUNE_TABLET_REGEN rolls once.
+- Equipped sets are counted in ascending (category, set ID) order. Sets that
+  stop being valid (fragment data changed, set no longer activated) are
+  skipped, and sets beyond the limit are unequipped at the next sync.
+
+Client contract for more than one set (for a client patch):
+
+- Equip: 0x0bd6 <category>.W <set id>.L, answered with 0x0bd7 <0> <category>
+  <set id>, then a full sync (below).
+- Unequip one set: 0x0bd6 <category | 0x8000>.W <set id>.L
+  (rune_tablet_wire::unequip_set_flag). The native Unequip button sends
+  <category> with ID 0, which unequips every set of that category. Both are
+  answered with 0x0bd7 <0> <category> <0>, then a full sync.
+- Full sync (login, map change, @refresh, opening the window, every equip
+  change, activations and upgrades): the fragment and set lists of each
+  category that has an equipped set, then 0x0bd7 <0> <category> <0> for
+  every category (drop all cached sets of it, also those left over from
+  another character), then 0x0bd7 <0> <category> <set id> once per equipped
+  set. A client cache keyed by set ID can rebuild itself from this alone.
+  0x0bd7 is used rather than 0x0bf2/0x0bd5 because those make the client
+  request the category again for every set; it takes the level from the set
+  list and counts the active fragments itself.
+- With rune_tablet_max_equipped 1 the source patch's behaviour is kept:
+  0x0bf2 with the level and active fragment count, and 0x0bd7 <0> <category>
+  <0> for a displaced set.
+
+Verified on the 2025-07-16 Ragexe:
+
+- 0x0bd5, 0x0bd7 and 0x0bf2 all end in CRuneSystemMgr::SetEquipped
+  (0x730b40): 0x0bd7 through the call at 0x00CF953F, 0x0bd5 and 0x0bf2
+  through 0x00CF9591. These are the two calls the WARP patch wraps.
+- The Unequip button sends 0x0bd6 with the category of the selected set
+  ([set+0x48]) and ID 0. The client has no sender for 0x0bd4.
+- With the WARP patch the "Please remove the equipped Rune Set" guard
+  (MSI_RUNESYSTEM_EQUIP_PUTERR, 0x007E68AC) is skipped, so equip requests
+  reach the server while a set is equipped.
+
+A stock client shows only the last equipped set and refuses to equip while
+one is equipped, so keep rune_tablet_max_equipped at 1 for it.
+
+The WARP "Custom Rune System" patch (Scripts/Patches/CustomRuneSystem.qjs,
+QJS only, no DLL) implements this contract for any rune_tablet_max_equipped
+and either rune_tablet_equip_per_category value:
+
+- It caches up to 255 sets by set ID in sync order. 0x0bd7 with ID 0 drops
+  every cached set of the category, so a full sync rebuilds the cache.
+- The equipped pane shows $runeVisibleRows sets (1-4, chosen when patching,
+  default 3). With more sets equipped, a scroll column like the set list's
+  appears at the pane's right edge; the mouse wheel over the pane or a click
+  on the column scrolls one row.
+- Hover and preview follow the row under the cursor. The Equip/Unequip
+  button follows the set shown in the detail panel: Unequip while it is
+  equipped. On the Rune Tablet tab the set list below the pane shrinks to
+  make room; the other tabs are unchanged.
+- Unequip (double click on a pane row, or the button) sends unequip_set_flag
+  with the set ID, so only that set is removed.
+- The equip guard is skipped (see above).
+
+Checked by WARP tools/test_custom_rune_system.py (emulation, not in game).
+
+---------------------------------------
+7. Protocol
+---------------------------------------
+
+Request (CZ)                              Response (ZC)
+0x0bcb <category>.W                       0x0bcc/0x0bcd lists, 0x0c15 rewards
+0x0bce <category>.W <fragment id>.L       0x0bcf <result>.B <category>.W <id>.L
+0x0bd0 <category>.W <set id>.L            0x0bd1 <result>.B <category>.W <id>.L <0>.L
+0x0bd2 <category>.W <set id>.L            0x0bd3 <result>.B <category>.W <id>.L
+                                                 <level>.W <failures>.W
+0x0bd6 <category>.W <set id>.L            0x0bd7 <result>.B <category>.W <id>.L
+       (category | 0x8000: unequip set id; set id 0: unequip the category)
+0x0bd4                                    0x0bd5 <result>.B <category>.W <0>.L
+0x0bd8 <item id>.L <index + 2>.L <mode>.L 0x0bd9 <ids>.8L <amounts>.8W <result>.B
+0x0be0 <state>.B (0 = window destroyed)   -
+0x0c16 <category>.W <set id>.L <slot>.B   0x0c17 <result>.B <category>.W <id>.L <slot>.B
+
+Server initiated: 0x0bdf <open>.B (window), 0x0bf2 <result>.B <category>.W
+<set id>.L <level>.W <active fragments>.W (equipped state).
+
+List header (0x0bcc, 0x0bcd, 0x0c15): <len>.W <reserved>.B <category>.W
+<count>.W, then 4 bytes per fragment, 8 per set (<id>.L <level>.W
+<failures>.W) or 5 per reward entry (<id>.L <last claimed slot>.B).
+
+Requires PACKETVER 2023-08-02 or newer; the reward packets 2024-10-16 or
+newer. Errors without a verified native result code close the window and
+explain the reason in chat; no material or progress is changed by them.
+
+---------------------------------------
+8. Client data
+---------------------------------------
+
+- System/Rune lubs: the 2025-07-16 client's lubs list a subset of the server
+  data. The Chapter 1 sets 1260045 and newer (and fragments 1263093 and
+  newer) are missing from them and stay invisible in the window until newer
+  lubs are deployed.
+- The Chapter 1 and Episode 19/20 monsters (21520-23060) need their sprites
+  and names in the client data.
+- The reward boxes 106408-106414 and cards 27266/300483 need itemInfo
+  entries.
+
+---------------------------------------
+9. Notes
+---------------------------------------
+
+- Deviations from the source patch: 0x0bf2 is sent from 2023-08-02 clients on
+  (the 2025-07-16 handler is verified above, the patch required 2026-02-19);
+  several Rune Sets can be equipped, stored per set ID (6.); the Rune Stone
+  NPCs add the reform and exchange menu (renewal only); Rune_Tablet_Regen
+  has NoSave in db/pre-re/status.yml and db/re/status.yml; non-ASCII spawn
+  names were replaced by the database names.
+- Client addresses in src/map/rune_tablet.cpp comments refer to the
+  executable the source patch was analysed on unless they name 2025-07-16.
+- Not verified officially: the decomposition quantity distribution (see
+  rune_tablet_decomposition_uniform) and the episode race group membership
+  (local decision, see db/re/mob_db_rune_episodes.yml).
+
+---------------------------------------
+10. Pre-renewal data
+---------------------------------------
+
+db/re/ holds the kRO renewal data. It cannot run on pre-renewal item and
+monster databases: they lack most of its activation materials and rewards,
+both rune outputs (1001282/1001283) and all EP18 monsters. Pre-renewal
+servers load db/pre-re/rune_tablet_*.yml instead. The renewal monster spawns and their
+warper entries are disabled on pre-renewal, and the Rune Stone NPCs hide
+reform and exchange.
+
+The pre-renewal data is TWRoZ's "Rune Monument" (Rune Wisdom Monument),
+mined from the TWRoZ live client (System/Rune of the 2026-05-06 patch,
+itemDecom 2026-05-12, runeset_desc 2026-08-11; hashes in the file headers):
+
+	Categories   1-4 (tabs I-IV); sets 1260068-1260099 (32), fragments
+	             1263141-1263300 (159), all sets equippable
+	Fragments    the monster card (3-4), 10 Complete Runes, 1 Goblin Coin Fragment
+	Upgrades     8% to 3% base, +3% to +0.9% per failure (GradeTable/_Fail)
+	Effects      one stat per set at full fragments, plus "at +N upgrade,
+	             +M more" steps: STR..LUK, HIT, FLEE, DEF, MDEF, MaxHP/SP %,
+	             Freeze/Stun/Stone/Sleep resistance, attack speed
+	Rewards      slot 1 [Event] Main Dish Course, slot 5 Complete Rune,
+	             slot 7 Dull Rune Stone Box (100 Unstable Runes)
+	Decompose    171 classic cards; 1 card -> 1-2 Unstable Runes, a batch of
+	             10 -> 10-20 Unstable Runes plus 0-1 Complete Rune at 15%
+	             (needs rune_tablet_decomposition_uniform: yes)
+
+Regenerate the data and the English client tables with:
+
+	python tools/rune_tablet/export_db.py --rune <TWRoZ>/System/Rune --encoding cp950 --db-out db/pre-re
+	python tools/rune_tablet/export_db.py --rune <TWRoZ>/System/Rune --encoding cp950 --client-out <game>/System/Rune
+
+The generator reproduces db/re/rune_tablet_db.yml from the kRO lubs field by
+field (--check), so the mapping matches the source patch; effects are parsed
+from the zh-TW set descriptions. db/pre-re/item_db_rune_tablet.yml adds the
+seven items the pre-renewal item database lacks: Unstable Rune (1001282),
+Complete Rune (1001283), Goblin Coin Fragment (1002346), Dull Rune Stone Box
+(107301), [Event] Main Dish Course (23725), Novice Poring Card (4545) and
+Hunter Fly Card (27266).
+
+Client installation:
+- System/Rune and SystemEN/Rune: the seven numeric TWRoZ lubs as shipped
+  (client/rune_tablet/pre-re/System/Rune) plus the generated English
+  rune_desc.lub and runeset_desc.lub; runesystem_f.lub stays the client's.
+- data/texture/<UI>/runesystem/rune, rune_icon, runeset, tag: 364 TWRoZ
+  images as loose files (the tag images 500, tower and bg already ship in
+  spritedata.grf and are kept), and the Goblin Coin Fragment item,
+  collection and drop sprite. Extract them with grf_dump.ps1 -Pattern
+  "(?i)\\runesystem\\" -Extract.
+- System/itemInfo*.lua: English entries for the seven items.
+
+Open: the Goblin Coin Fragment has no source in the pre-renewal databases.
+Every fragment activation needs one, so add a drop, shop or quest for it.
+
+---------------------------------------
+11. Credits
+---------------------------------------
+
+Original Rune Tablet source (databases, protocol, activation, upgrades,
+rewards, decomposition, Rune Stone NPCs):
+	Scanty (https://rathena.org/board/profile/35710-scanty/)
+
+Multiple equipped Rune Sets (rune_tablet_max_equipped,
+rune_tablet_equip_per_category, the per-set unequip flag and the multi-set
+client sync described in section 6) and the matching WARP "Custom Rune System"
+client patch:
+	Louis T Steinhil

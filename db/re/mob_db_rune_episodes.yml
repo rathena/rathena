@@ -1,0 +1,140 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2026 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Monster Database
+###########################################################################
+#
+# Rune Tablet Monsters
+#
+###########################################################################
+# Field reference: doc/yaml/db/mob_db.yml
+###########################################################################
+#
+# Rune Tablet episode set targets (RC2_RUNE_EP18..21).
+# Partial patches: RaceGroups merge into the existing definitions, no other
+# field is changed. Loaded from db/mob_db.yml after db/re/mob_db.yml, which
+# defines the EP18 monsters.
+#
+# EP18 (Gray Wolf set 1260014): 31 monsters, open world and instance (user
+# decision). NPC-sprite-only records 21292..21294 and 21320..21322 are excluded.
+# Local decision, not an official target list.
+# Evidence: tools/rune_tablet/evidence/ep18_combat_classification_2026-09-23.json
+# EP19/EP20 groups live in db/re/mob_db_rune_ep19_20.yml, together with the
+# monster definitions. EP21 has no usable monster data yet and stays unassigned.
+###########################################################################
+
+Header:
+  Type: MOB_DB
+  Version: 5
+
+Body:
+  # EP18 open world: Oz dungeon, gw_fild, Rachel fields
+  - Id: 21295 # EP18_ASH_TOAD
+    RaceGroups:
+      Rune_Ep18: true
+  - Id: 21296 # EP18_RAKEHAND
+    RaceGroups:
+      Rune_Ep18: true
+  - Id: 21297 # EP18_SPARK
+    RaceGroups:
+      Rune_Ep18: true
+  - Id: 21298 # EP18_HOT_MOLAR
+    RaceGroups:
+      Rune_Ep18: true
+  - Id: 21299 # EP18_VOLCARING
+    RaceGroups:
+      Rune_Ep18: true
+  - Id: 21300 # EP18_LAVA_TOAD
+    RaceGroups:
+      Rune_Ep18: true
+  - Id: 21301 # EP18_BURNING_FANG
+    RaceGroups:
+      Rune_Ep18: true
+  - Id: 21302 # EP18_ASHHOPPER
+    RaceGroups:
+      Rune_Ep18: true
+  - Id: 21303 # EP18_ASHRING
+    RaceGroups:
+      Rune_Ep18: true
+  - Id: 21304 # EP18_GREY_WOLF
+    RaceGroups:
+      Rune_Ep18: true
+  - Id: 21305 # EP18_TUMBLE_RING
+    RaceGroups:
+      Rune_Ep18: true
+  - Id: 21306 # EP18_FIREWIND_KITE
+    RaceGroups:
+      Rune_Ep18: true
+  - Id: 21307 # EP18_PHANTOM_WOLF
+    RaceGroups:
+      Rune_Ep18: true
+  - Id: 21323 # EP18_GREY_GOAT
+    RaceGroups:
+      Rune_Ep18: true
+  - Id: 21324 # EP18_GREY_WOLF_BABY
+    RaceGroups:
+      Rune_Ep18: true
+  # EP18 instances: Wolves, Thor Gunsu Base, Villa of High Priest / Deception
+  - Id: 21308 # EP18_MD_HEARTHUNTER_A
+    RaceGroups:
+      Rune_Ep18: true
+  - Id: 21309 # EP18_MD_THOR_GUARD
+    RaceGroups:
+      Rune_Ep18: true
+  - Id: 21310 # EP18_MD_GUARD_A
+    RaceGroups:
+      Rune_Ep18: true
+  - Id: 21311 # EP18_MD_GUARD_B
+    RaceGroups:
+      Rune_Ep18: true
+  - Id: 21312 # EP18_MD_HEARTHUNTER_R
+    RaceGroups:
+      Rune_Ep18: true
+  - Id: 21313 # EP18_MD_HEARTHUNTER_F
+    RaceGroups:
+      Rune_Ep18: true
+  - Id: 21314 # EP18_MD_SCHULANG (story)
+    RaceGroups:
+      Rune_Ep18: true
+  - Id: 21315 # EP18_MD_DEMI_FREYJA (story)
+    RaceGroups:
+      Rune_Ep18: true
+  - Id: 21316 # EP18_MD_SCHULANG_R (normal)
+    RaceGroups:
+      Rune_Ep18: true
+  - Id: 21317 # EP18_MD_DEMI_FREYJA_R (normal)
+    RaceGroups:
+      Rune_Ep18: true
+  - Id: 21318 # EP18_MD_SANARE_R (normal)
+    RaceGroups:
+      Rune_Ep18: true
+  - Id: 21319 # EP18_MD_HEARTHUNTER_R2 (normal)
+    RaceGroups:
+      Rune_Ep18: true
+  - Id: 21360 # EP18_MD_SCHULANG_L (advanced)
+    RaceGroups:
+      Rune_Ep18: true
+  - Id: 21361 # EP18_MD_DEMI_FREYJA_L (advanced)
+    RaceGroups:
+      Rune_Ep18: true
+  - Id: 21377 # EP18_MD_SANARE_L (advanced)
+    RaceGroups:
+      Rune_Ep18: true
+  - Id: 21378 # EP18_MD_HEARTHUNTER_L (advanced)
+    RaceGroups:
+      Rune_Ep18: true

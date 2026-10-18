@@ -1,0 +1,22 @@
+###########################################################################
+# Rune Tablet Decomposition Database
+###########################################################################
+#
+# Rune Tablet Decomposition Settings
+#
+###########################################################################
+# - Item                    Card item ID that can be decomposed.
+#   Modes:                  Both request modes, once each.
+#     - Mode                1 = single card, 2 = batch.
+#       Consume             Cards taken from the selected stack. (1-MAX_AMOUNT)
+#       Outputs:            Results, one to eight entries.
+#         - Item            Result item ID.
+#           Minimum         Minimum amount; 0 may yield nothing. (0-32767)
+#           Maximum         Maximum amount. (Minimum-32767)
+#           Chance          Chance of the result. (100000 = 100%)
+###########################################################################
+#
+# The quantity distribution inside Minimum..Maximum is not officially
+# verified. Only the fixed sealed-stone conversion is always enabled; the
+# other rows need rune_tablet_decomposition_uniform in conf/battle/feature.conf.
+###########################################################################

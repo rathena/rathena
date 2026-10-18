@@ -34,6 +34,7 @@
 #include "pc.hpp"
 #include "pc_groups.hpp"
 #include "pet.hpp"
+#include "rune_tablet.hpp"
 #include "script.hpp"
 
 using namespace rathena;
@@ -4200,6 +4201,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		}
 	}
 
+	rune_tablet_apply_bonuses(*sd);
 	pc_bonus_script(sd);
 
 	if( sd->pd ) { // Pet Bonus
@@ -15211,6 +15213,15 @@ TIMER_FUNC(status_change_timer){
 			if( src != nullptr && tid != INVALID_TIMER ){
 				skill_unitsetting(src, SKE_STAR_BURST, sce->val1, bl->x, bl->y, 0);
 			}
+		}
+		break;
+
+	// Rune Tablet: val1 = remaining ticks, started via rune_tablet_on_hit.
+	case SC_RUNE_TABLET_REGEN:
+		status_heal(bl, 0, 200, battle_config.show_hp_sp_gain ? 3 : 1);
+		if (--(sce->val1) > 0) {
+			sc_timer_next(1000 + tick);
+			return 0;
 		}
 		break;
 	}

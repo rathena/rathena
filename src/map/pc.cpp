@@ -56,6 +56,7 @@
 #include "pc_groups.hpp"
 #include "pet.hpp" // pet_unlocktarget()
 #include "quest.hpp"
+#include "rune_tablet.hpp"
 #include "skill.hpp" // skill_isCopyable()
 #include "script.hpp" // struct script_reg, struct script_regstr
 #include "searchstore.hpp"  // struct s_search_store_info
@@ -5987,8 +5988,10 @@ int16 pc_search_inventory( const map_session_data* sd, t_itemid nameid) {
  *   5 = max amount reached
  *   6 = ?
  *   7 = stack limitation
+ * @param favorite: Put a new stack into the favorite tab
+ * @param update_observers: Run the achievement/quest observers; a batched caller that passes false must run them after the batch succeeds
  */
-enum e_additem_result pc_additem(map_session_data *sd,struct item *item,int32 amount,e_log_pick_type log_type, bool favorite) {
+enum e_additem_result pc_additem(map_session_data *sd,struct item *item,int32 amount,e_log_pick_type log_type, bool favorite, bool update_observers) {
 	struct item_data *id;
 	int16 i;
 	uint32 w;
@@ -6084,8 +6087,10 @@ enum e_additem_result pc_additem(map_session_data *sd,struct item *item,int32 am
 		}
 	}
 
-	achievement_update_objective(sd, AG_GET_ITEM, 1, id->value_sell);
-	pc_show_questinfo(sd);
+	if( update_observers ){
+		achievement_update_objective(sd, AG_GET_ITEM, 1, id->value_sell);
+		pc_show_questinfo(sd);
+	}
 
 	return ADDITEM_SUCCESS;
 }
@@ -6098,9 +6103,10 @@ enum e_additem_result pc_additem(map_session_data *sd,struct item *item,int32 am
  * @param type &1: Don't notify deletion; &2 Don't notify weight change; &4 Don't calculate status
  * @param reason Delete reason
  * @param log_type e_log_pick_type
+ * @param update_quest Refresh the quest markers; a batched caller that passes false must refresh them itself
  * @return 1 - invalid itemid or negative amount; 0 - Success
  *------------------------------------------*/
-char pc_delitem(map_session_data *sd,int32 n,int32 amount,int32 type, int16 reason, e_log_pick_type log_type)
+char pc_delitem(map_session_data *sd,int32 n,int32 amount,int32 type, int16 reason, e_log_pick_type log_type, bool update_quest)
 {
 	nullpo_retr(1, sd);
 
@@ -6122,7 +6128,8 @@ char pc_delitem(map_session_data *sd,int32 n,int32 amount,int32 type, int16 reas
 	if(!(type&2))
 		clif_updatestatus(*sd,SP_WEIGHT);
 
-	pc_show_questinfo(sd);
+	if( update_quest )
+		pc_show_questinfo(sd);
 
 	return 0;
 }
@@ -6961,6 +6968,7 @@ enum e_setpos pc_setpos(map_session_data* sd, uint16 mapindex, int32 x, int32 y,
 	sd->state.laphine_upgrade = 0;
 	sd->state.roulette_open = false;
 	sd->state.enchantgrade_open = false;
+	rune_tablet_close(*sd); // Notifies the client so its window does not desync on map change.
 	sd->state.item_reform = 0;
 	sd->state.item_enchant_index = 0;
 

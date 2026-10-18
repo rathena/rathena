@@ -2032,6 +2032,32 @@
 
 #if PACKETVER_MAIN_NUM >= 20230802
 	parseable_packet( HEADER_CZ_QUEST_STATUS_REQ, -1, clif_parse_dull, 0 );
+	// Rune Tablet, see doc/rune_tablet.txt
+	parseable_packet( rune_tablet_wire::request_category, 4, clif_parse_rune_tablet, 0 );
+	parseable_packet( rune_tablet_wire::activate_fragment, 8, clif_parse_rune_tablet, 0 );
+	parseable_packet( rune_tablet_wire::activate_set, 8, clif_parse_rune_tablet, 0 );
+	parseable_packet( rune_tablet_wire::upgrade_set, 8, clif_parse_rune_tablet, 0 );
+	parseable_packet( rune_tablet_wire::unequip, 2, clif_parse_rune_tablet, 0 );
+	parseable_packet( rune_tablet_wire::equip, 8, clif_parse_rune_tablet, 0 );
+	parseable_packet( rune_tablet_wire::decompose, 14, clif_parse_rune_tablet, 0 );
+	parseable_packet( rune_tablet_wire::window_state, 3, clif_parse_rune_tablet, 0 );
+	packet( rune_tablet_wire::fragment_list, -1 );
+	packet( rune_tablet_wire::set_list, -1 );
+	packet( rune_tablet_wire::fragment_result, 9 );
+	packet( rune_tablet_wire::set_result, 13 );
+	packet( rune_tablet_wire::upgrade_result, 13 );
+	packet( rune_tablet_wire::unequip_result, 9 );
+	packet( rune_tablet_wire::equip_result, 9 );
+	packet( rune_tablet_wire::decompose_result, 51 );
+	packet( rune_tablet_wire::open_window, 3 );
+	packet( rune_tablet_wire::equipped_state, 13 );
+#endif
+
+#if PACKETVER_MAIN_NUM >= 20241016
+	// Rune Tablet collection rewards
+	packet( rune_tablet_wire::reward_list, -1 );
+	parseable_packet( rune_tablet_wire::claim_reward, 9, clif_parse_rune_tablet, 0 );
+	packet( rune_tablet_wire::reward_result, 10 );
 #endif
 
 #if PACKETVER_MAIN_NUM >= 20230830

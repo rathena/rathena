@@ -2003,6 +2003,7 @@
 	export_constant(SC_WATER_CHARM_POWER);
 	export_constant(SC_WIND_CHARM_POWER);
 	export_constant(SC_GROUND_CHARM_POWER);
+	export_constant(SC_RUNE_TABLET_REGEN);
 
 /// Do not modify code below this, until the end of the API hook, since it will be automatically generated again
 /// @APIHOOK_START(EFST_CONST)
@@ -3550,6 +3551,10 @@
 	export_constant(RC2_GLAST_HEIM_ABYSS);
 	export_constant(RC2_DESTROYED_VALKYRIE_REALM);
 	export_constant(RC2_ENCROACHED_GEPHENIA);
+	export_constant(RC2_RUNE_EP18);
+	export_constant(RC2_RUNE_EP19);
+	export_constant(RC2_RUNE_EP20);
+	export_constant(RC2_RUNE_EP21);
 	export_deprecated_constant(RC2_MAX);	// Mar. 2025
 
 	/* monster ai */

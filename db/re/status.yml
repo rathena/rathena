@@ -9952,3 +9952,9 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+  # Rune Tablet (doc/rune_tablet.txt): silent, no icon. Self-managed 4-tick SP
+  # recovery timer; see SC_RUNE_TABLET_REGEN in src/map/status.cpp.
+  - Status: Rune_Tablet_Regen
+    Flags:
+      RemoveOnMapWarp: true
+      NoSave: true

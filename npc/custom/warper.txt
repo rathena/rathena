@@ -332,7 +332,8 @@ menu	"Abandoned Lab Amicitia",D1, "Abyss Lakes",D2, "Amatsu Dungeon",D3,
 		"Rudus Dungeon",D43, "Scaraba Hole",D44, "Sphinx",D45,
 		"Sunken Ship",D46, "Thanatos Tower",D47, "Thor Volcano",D48,
 		"Toy Factory",D49, "Turtle Dungeon",D50, "Umbala Dungeon",D51,
-		"Varmundt's Dungeon",D52, "Verus Area",D53;
+		"Varmundt's Dungeon",D52, "Verus Area",D53,
+		"Chapter 1 Dungeons",D54, "Episode 18-20 Areas",D55;
 
 D1: Restrict("RE");
 	setarray @c[2],253,244,145,278;
@@ -492,6 +493,21 @@ D52: Restrict("RE");
 D53: Restrict("RE");
 	 setarray @c[2],244,61,72,20,122,22;
 	 Disp("Lab-OPTATIO:R&D-WISH:Verus Center Square"); Pick("verus");
+D54: Restrict("RE");
+	 // Rune Tablet sets 1260045/1260046 monsters (renewal-only data); 0,0 = random free cell.
+	 setarray @c[2],0,0,0,0,0,0;
+	 Disp("Destroyed Valkyrie Realm:Devoured Geffenia East:Devoured Geffenia West"); Pick("","hem_dun02","ch1_gfn01","ch1_gfn03");
+D55: Restrict("RE");
+	 // Rune Tablet sets 1260014/1260023/1260037 monsters (renewal-only data); 0,0 = random free cell.
+	 setarray @c[2],0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;
+	 Disp("EP18 Grey Wolf Forest 1:EP18 Grey Wolf Forest 2:EP18 Oz Labyrinth 1:EP18 Oz Labyrinth 2:"
+		+"EP19 Frozen Tail:EP19 Frozen Scale Hill:EP19 Frozen Scale Plains:EP19 Frozen Scale Glacier:"
+		+"EP19 Snake God's Warmth 1F:EP19 Snake God's Warmth 2F:EP19 Abandoned Pit 1F:EP19 Abandoned Pit 2F:"
+		+"EP20 jor_back4:EP20 jor_back5:EP20 jor_back6:EP20 jor_twice:EP20 jor_maze:"
+		+"EP20 jor_root1:EP20 jor_root2:EP20 jor_root3:EP20 jor_twig");
+	 Pick("","gw_fild01","gw_fild02","oz_dun01","oz_dun02",
+		"jor_tail","jor_back1","jor_back2","jor_back3","jor_dun01","jor_dun02","jor_ab01","jor_ab02",
+		"jor_back4","jor_back5","jor_back6","jor_twice","jor_maze","jor_root1","jor_root2","jor_root3","jor_twig");
 
 // --------------------------------------------------
 	Castles:

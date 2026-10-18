@@ -50,6 +50,7 @@
 #include "pc.hpp"
 #include "pet.hpp"
 #include "quest.hpp"
+#include "rune_tablet.hpp"
 #include "storage.hpp"
 #include "trade.hpp"
 
@@ -5051,6 +5052,7 @@ void MapServer::finalize(){
 	do_final_achievement();
 	do_final_script();
 	do_final_instance();
+	do_final_rune_tablet();
 	do_final_itemdb();
 	do_final_storage();
 	do_final_guild();
@@ -5425,6 +5427,7 @@ bool MapServer::initialize( int32 argc, char *argv[] ){
 #endif
 	do_init_script();
 	do_init_itemdb();
+	do_init_rune_tablet();
 	do_init_channel();
 	do_init_cashshop();
 	do_init_skill();

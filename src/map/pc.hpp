@@ -449,6 +449,8 @@ public:
 		bool barter_open;
 		bool barter_extended_open;
 		bool enchantgrade_open; // Whether the enchantgrade window is open or not
+		bool rune_tablet_open; ///< Rune Tablet window is open
+		bool rune_tablet_activation; ///< Material-consuming operations allowed in the open window
 		// Bitmask of e_pcblock_action_flag values
 		uint16 block_action;
 		bool refineui_open;
@@ -881,6 +883,7 @@ public:
 	unsigned char vars_received; // char loading is only complete when you get it all.
 	bool vars_ok;
 	bool vars_dirty;
+	t_tick rune_tablet_upgrade_after = 0; ///< Rune Tablet upgrade burst guard; session-only, kept when the window closes
 
 	int32 c_marker[MAX_SKILL_CRIMSON_MARKER]; /// Store target that marked by Crimson Marker [Cydh]
 	bool flicker; /// Check RL_FLICKER usage status [Cydh]
@@ -1160,7 +1163,7 @@ static bool pc_cant_act2( map_session_data* sd ){
 		|| sd->state.barter_open || sd->state.barter_extended_open
 		|| sd->state.laphine_synthesis || sd->state.laphine_upgrade
 		|| sd->state.roulette_open || sd->state.enchantgrade_open
-		|| sd->state.item_reform || sd->state.item_enchant_index;
+		|| sd->state.item_reform || sd->state.item_enchant_index || sd->state.rune_tablet_open;
 }
 // equals pc_cant_act2 and additionally checks for chat rooms and npcs
 static bool pc_cant_act( map_session_data* sd ){
@@ -1440,9 +1443,9 @@ char pc_checkadditem( const map_session_data* sd, t_itemid nameid, int32 amount 
 uint8 pc_inventoryblank( const map_session_data* sd );
 int16 pc_search_inventory( const map_session_data* sd, t_itemid nameid);
 char pc_payzeny(map_session_data *sd, int32 zeny, enum e_log_pick_type type, uint32 log_charid = 0);
-enum e_additem_result pc_additem(map_session_data *sd, struct item *item, int32 amount, e_log_pick_type log_type, bool favorite=false);
+enum e_additem_result pc_additem(map_session_data *sd, struct item *item, int32 amount, e_log_pick_type log_type, bool favorite=false, bool update_observers=true);
 char pc_getzeny(map_session_data *sd, int32 zeny, enum e_log_pick_type type, uint32 log_charid = 0);
-char pc_delitem(map_session_data *sd, int32 n, int32 amount, int32 type, int16 reason, e_log_pick_type log_type);
+char pc_delitem(map_session_data *sd, int32 n, int32 amount, int32 type, int16 reason, e_log_pick_type log_type, bool update_quest = true);
 
 uint64 pc_generate_unique_id(map_session_data *sd);
 

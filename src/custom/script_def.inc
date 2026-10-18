@@ -9,3 +9,6 @@
  **/
 
 //BUILDIN_DEF(example,""),
+
+// Rune Tablet
+BUILDIN_DEF(runetablet, ""),            // opens the native Rune Tablet window (Rune Stone NPC)

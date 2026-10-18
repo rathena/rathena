@@ -1,0 +1,54 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2026 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+###########################################################################
+# Rune Tablet Database
+###########################################################################
+#
+# Rune Tablet Settings
+#
+###########################################################################
+# - Id                      Fragment or set ID (RUNEIDTBL/RUNESETIDTBL in System/Rune/runesystemid.lub).
+#   Type                    Fragment or Set.
+#   Category                Client category tab (RUNETAGIDTBL), e.g. 17 for Episode 17.
+#   Name                    Client-side name. Informational only.
+#   Materials:              Activation cost. Only plain, unequipped, permanent stacks are consumed.
+#     - Item                Item ID.
+#       Amount              Amount. (1-MAX_AMOUNT)
+#   Fragments:              Fragments of the set, all of the same category. (Set only, 2-6 entries)
+#     - Id                  Fragment ID.
+#   Effects:                Bonuses while the set is equipped. (Set only, Default: none)
+#     - Fragments           Active fragments required. (2-6)
+#       MinLevel            Minimum upgrade level. (0-15)
+#       LevelStep           Upgrade levels per step. (1-15)
+#       Base                Value at the first step. (-10000-10000)
+#       PerStep             Value added per step. (-10000-10000)
+#       Bonus               bonus/bonus2 type, e.g. bBaseAtk. Exclusive with Special.
+#       Parameter           First bonus2 argument, constant or number. (Default: bonus without argument)
+#       Special             TargetedMagicKillRecoveryHP, TargetedMagicKillRecoverySP or OnHitSPRegenChance.
+#   EffectFree              The set officially grants nothing but may be equipped. (Set only, Default: false)
+#   Rewards:                Collection rewards, claimed in slot order. (Set only, Default: none)
+#     - Slot                Slot number. (1-7, slot 1 is required)
+#       Item                Reward item ID.
+#   Upgrades:               Upgrade table covering all 15 target levels. (Set only, Default: none)
+#     - Level               Target level. (1-15)
+#       Chance              Base success chance. (100000 = 100%)
+#       FailureIncrement    Chance added per failed attempt at this level. (100000 = 100%)
+#       Materials:          Cost of one attempt.
+#         - Item            Item ID.
+#           Amount          Amount. (1-MAX_AMOUNT)
+###########################################################################
+#
+# Effect value: Base + (upgrade level / LevelStep) * PerStep, applied once the
+# set has at least Fragments active fragments and MinLevel upgrades.
+# A set without Effects and without EffectFree cannot be equipped yet.
+###########################################################################
+
+Header:
+  Type: RUNE_TABLET_DB
+  Version: 1

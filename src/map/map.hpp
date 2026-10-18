@@ -383,6 +383,11 @@ enum e_race2 : uint8{
 	RC2_GLAST_HEIM_ABYSS,
 	RC2_DESTROYED_VALKYRIE_REALM,
 	RC2_ENCROACHED_GEPHENIA,
+	// Rune Tablet episode targets; membership is assigned in db/re/mob_db_rune_*.yml.
+	RC2_RUNE_EP18,
+	RC2_RUNE_EP19,
+	RC2_RUNE_EP20,
+	RC2_RUNE_EP21,
 	RC2_MAX
 };
 

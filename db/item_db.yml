@@ -94,4 +94,11 @@ Footer:
     Mode: Prerenewal
   - Path: db/re/item_db.yml
     Mode: Renewal
+  # Rune Tablet: collection reward boxes and decomposable cards missing upstream.
+  - Path: db/pre-re/item_db_rune_tablet.yml
+    Mode: Prerenewal
+  - Path: db/re/item_db_rune_tablet.yml
+    Mode: Renewal
+  - Path: db/re/item_db_rune_cards.yml
+    Mode: Renewal
   - Path: db/import/item_db.yml

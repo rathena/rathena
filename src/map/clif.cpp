@@ -52,6 +52,7 @@
 #include "pc_groups.hpp"
 #include "pet.hpp"
 #include "quest.hpp"
+#include "rune_tablet.hpp"
 #include "script.hpp"
 #include "skill.hpp"
 #include "status.hpp"
@@ -9844,6 +9845,7 @@ void clif_refresh(map_session_data *sd)
 	clif_changemap( *sd, sd->m, sd->x, sd->y );
 	clif_inventorylist(sd);
 	clif_equipswitch_list(sd);
+	rune_tablet_sync_equipped(*sd);
 	if(pc_iscarton(sd)) {
 		clif_cartlist(sd);
 		clif_updatestatus(*sd,SP_CARTINFO);
@@ -10782,6 +10784,7 @@ void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
 	clif_inventorylist(sd);  // inventory list first, otherwise deleted items in pc_checkitem show up as 'unknown item'
 	pc_checkitem(sd);
 	clif_equipswitch_list(sd);
+	rune_tablet_sync_equipped(*sd);
 
 	// cart
 	if(pc_iscarton(sd)) {

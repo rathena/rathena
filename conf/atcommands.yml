@@ -1120,6 +1120,12 @@ Body:
   - Command: refineui
     Help: |
       Opens the refine UI.
+  - Command: runetablet
+    Help: |
+      Params: [close|info [<char name>]]
+      Opens or closes the native Rune Tablet interface (GM level 99 only).
+      "info" lists the equipped Rune Sets of a character and their applied effects.
+      Players use the Rune Stone NPC, gated by rune_tablet_min_group_level in conf/battle/feature.conf.
   - Command: refresh
     Help: |
       Synchronizes the position and state between client and server.
@@ -1188,6 +1194,9 @@ Body:
   - Command: reloadquestdb
     Help: |
       Reload quest database.
+  - Command: reloadrunetabletdb
+    Help: |
+      Reloads the Rune Tablet set and decomposition databases.
   - Command: reloadscript
     Help: |
       Reload all scripts.

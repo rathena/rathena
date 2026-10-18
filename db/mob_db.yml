@@ -88,4 +88,12 @@ Footer:
     Mode: Prerenewal
   - Path: db/re/mob_db.yml
     Mode: Renewal
+  # Rune Tablet: Chapter 1 and Episode 19/20 monsters (divine-pride renewal stats),
+  # then RaceGroups patches for the EP18 monsters of db/re/mob_db.yml.
+  - Path: db/re/mob_db_rune_ch1.yml
+    Mode: Renewal
+  - Path: db/re/mob_db_rune_ep19_20.yml
+    Mode: Renewal
+  - Path: db/re/mob_db_rune_episodes.yml
+    Mode: Renewal
   - Path: db/import/mob_db.yml

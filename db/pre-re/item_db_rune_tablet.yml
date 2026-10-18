@@ -1,0 +1,110 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2026 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Item Database
+###########################################################################
+#
+# Rune Tablet Items (Pre-Renewal)
+#
+###########################################################################
+# Field reference: doc/yaml/db/item_db.yml
+###########################################################################
+#
+# Items used by db/pre-re/rune_tablet_db.yml and rune_tablet_decomposition.yml
+# (TWRoZ "Rune Monument" data) that the pre-renewal item database lacks.
+# 1001282, 1001283, 4545 and 23725 follow db/re; 27266 follows
+# db/re/item_db_rune_cards.yml; 1002346 and 107301 are TWRoZ items (names
+# and effects from the TWRoZ iteminfo, Aegis names chosen locally).
+###########################################################################
+
+Header:
+  Type: ITEM_DB
+  Version: 3
+
+Body:
+  - Id: 1001282
+    AegisName: Imperfect_Rune
+    Name: Unstable Rune
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1001283
+    AegisName: Perfect_Rune
+    Name: Complete Rune
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1002346
+    AegisName: ZTW_G_Coin_C_P
+    Name: Goblin Coin Fragment
+    Type: Etc
+  - Id: 107301
+    AegisName: Dull_Rune_Stone_Box
+    Name: Dull Rune Stone Box
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    Script: |
+      getitem 1001282,100;
+  - Id: 23725
+    AegisName: E_Main_Dish_C
+    Name: "[Event] Main Dish Course"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      specialeffect2 EF_BASH3D;
+      sc_start SC_ALMIGHTY,1800000,30;
+  - Id: 4545
+    AegisName: Novice_Poring_Card
+    Name: Novice Poring Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bLuk,1;
+  - Id: 27266
+    AegisName: Hunter_Fly_Card_Z
+    Name: Hunter Fly Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      // "Physical attacks have a 5% chance to restore 100 HP every second for 5 seconds."
+      autobonus "{ bonus2 bHPRegenRate,100,1000; }",50,5000,BF_WEAPON;

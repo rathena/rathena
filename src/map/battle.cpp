@@ -33,6 +33,7 @@
 #include "pc.hpp"
 #include "pc_groups.hpp"
 #include "pet.hpp"
+#include "rune_tablet.hpp"
 #include "./skills/skill_impl.hpp"
 
 using namespace rathena;
@@ -336,6 +337,17 @@ int32 battle_damage(block_list *src, block_list *target, int64 damage, int16 div
 		dmg_change = status_damage(src, target, damage, 0, delay, 16, skill_id); // Coma attack
 	else if (dmg_lv > ATK_BLOCK)
 		dmg_change = status_fix_damage(src, target, damage, delay, skill_id);
+	// Rune Tablet effects require actual HP damage. Counter effects also run for
+	// blocked/redirected attacks, so they cannot establish a hit or a kill.
+	if (dmg_change > 0 && attack_type && src != target) {
+		if (!status_isdead(*target)) {
+			if (map_session_data* target_sd = BL_CAST(BL_PC, target); target_sd != nullptr)
+				rune_tablet_on_hit(*target_sd);
+		} else if (sd && skill_id && (attack_type & BF_MAGIC)
+			&& !(skill_get_inf(skill_id) & (INF_GROUND_SKILL | INF_SELF_SKILL))) {
+			rune_tablet_on_targeted_magic_kill(*sd);
+		}
+	}
 	if (attack_type && !status_isdead(*target) && additional_effects)
 		skill_additional_effect(src, target, skill_id, skill_lv, attack_type, dmg_lv, tick);
 	if (dmg_lv > ATK_BLOCK && attack_type && additional_effects)

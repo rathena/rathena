@@ -9,3 +9,7 @@
  **/
 
 //ACMD_DEF(newcommand),
+
+// Rune Tablet
+ACMD_DEFR(runetablet, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
+ACMD_DEF(reloadrunetabletdb),

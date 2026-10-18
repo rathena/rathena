@@ -1,0 +1,494 @@
+-- Original translation works of zackdreaver: https://github.com/zackdreaver/ROenglishRE
+-- Continuated by llchrisll at https://github.com/llchrisll/ROenglishRE
+-- This file can be distributed, used and modified freely
+-- This file shouldn't be claimed as part of your project, unless you fork it from https://github.com/llchrisll/ROenglishRE
+-- Last updated: 20260322
+
+Runesystemtbl_tag = {
+	[17] = "EP17",
+	[18] = "EP18",
+	[19] = "EP19",
+	[20] = "EP20",
+	[21] = "EP21",
+	[22] = "Ch01",
+	[500] = "EVT"
+}
+
+RuneSettbl_desc = {
+	[17] = {
+		[1260000] = {
+			RuneSetDisplayName = "Doubtful Components",
+			RuneSetDescription = {
+				[2] = {"For each 3 Refine Levels:", "ATK +2, MATK +2."},
+				[4] = {"Damage against", "monsters of every size +1%.", "ATK +10, MATK +10."}
+			}
+		},
+		[1260001] = {
+			RuneSetDisplayName = "Automatic Armor",
+			RuneSetDescription = {
+				[2] = {"DEF +100, MDEF +25.", "_______________________", "For each 3 Refine Levels:", "MaxHP +1%."}
+			}
+		},
+		[1260002] = {
+			RuneSetDisplayName = "Secret Facility", 
+			RuneSetDescription = {
+				[2] = {"For each 3 Refine Levels:", "Damage against monsters", "of Poison element +2%."},
+				[3] = {"Increases Attack Speed", "(After Attack Delay -4%)."}
+			}
+		},
+		[1260003] = {
+			RuneSetDisplayName = "Mutant", 
+			RuneSetDescription = {
+				[2] = {"For each 5 Refine Levels:", "Variable Casting Time -1%."},
+				[3] = {"Magical Damage with", "Neutral element +3%."}
+			}
+		},
+		[1260004] = {
+			RuneSetDisplayName = "Secret", 
+			RuneSetDescription = {
+				[2] = {"Critical Damage +3%.", "_______________________", "For each 5 Refine Levels:", "Critical Damage +2%."},
+				[3] = {"Critical Damage +8%."}
+			}
+		},
+		[1260005] = {
+			RuneSetDisplayName = "Spell Addiction", 
+			RuneSetDescription = {
+				[2] = {"MATK +15", "_______________________", "For each 3 Refine Levels:", "MATK +3."},
+				[3] = {"Magical Damage with", "every element +1%."},
+				[4] = {"Magical Damage with", "every element +4%."}
+			}
+		},
+		[1260006] = {
+			RuneSetDisplayName = "Baths Administration", 
+			RuneSetDescription = {
+				[2] = {"For each 5 Refine Levels:", "Damage against monsters", "of Brute and Fish race +1%."},
+				[3] = {"Damage against monsters", "of Brute and Fish race +2%."}
+			}
+		},
+		[1260007] = {
+			RuneSetDisplayName = "Garden Administration", 
+			RuneSetDescription = {
+				[2] = {"For each 5 Refine Levels:", "Damage against monsters", "of Plant and Insect race +1%."},
+				[4] = {"Damage against monsters", "of Plant race +2% and", "of Insect race +3%."},
+				[6] = {"Damage taken from enemies", "of every element -3%."}
+			}
+		},
+		[1260008] = {
+			RuneSetDisplayName = "Greenhouse Management", 
+			RuneSetDescription = {
+				[2] = {"For each 5 Refine Levels:", "Damage against monsters", "of Formless and Demi-Human race +1%."},
+				[3] = {"Damage against monsters", "of Formless race +2% and", "of Demi-Human race +3%."},
+				[5] = {"ATK +7%, MATK +7%."}
+			}
+		},
+		[1260009] = {
+			RuneSetDisplayName = "Malfunction", 
+			RuneSetDescription = {
+				[2] = {"For each 3 Refine Levels:", "Physical Damage against", "monsters of Large size +1%."},
+				[3] = {"Ranged Physical Damage +2%."},
+				[4] = {"Ranged Physical Damage +5%."}
+			}
+		},
+		[1260010] = {
+			RuneSetDisplayName = "Wing", 
+			RuneSetDescription = {
+				[2] = {"For each 3 Refine Levels:", "ATK +3, MATK +3,", "_______________________", "For each 5 Refine Levels:", "MaxHP +1%, MaxSP +1%."},
+				[4] = {"MaxHP +1%, MaxSP +1%,", "ATK +15, MATK +15."},
+				[5] = {"MaxHP +3%, MaxSP +3%,", "ATK +45, MATK +45."}
+			}
+		},
+		[1260011] = {
+			RuneSetDisplayName = "Toxic Symptom", 
+			RuneSetDescription = {
+				[2] = {"For each 5 Refine Levels:", "Damage against monsters", "of Shadow element +1%."},
+				[4] = {"Damage against monsters", "of Shadow element +3%."},
+				[5] = {"Refine Levels +15:", "Physical attacks have a 2% chance to", "absorb 2% of the damage dealt as HP."}
+			}
+		},
+		[1260012] = {
+			RuneSetDisplayName = "Strongest", 
+			RuneSetDescription = {
+				[2] = {"For each 3 Refine Levels:", "Damage against monsters", "of Demi-Human race +1%."},
+				[4] = {"Damage against monsters", "of Demi-Human race +2%."},
+				[6] = {"Refine Levels +15:", "Physical attacks have a 1% chance to", "absorb 1% of the damage dealt as SP."}
+			}
+		}
+	},
+	[18] = {
+		[1260014] = {
+			RuneSetDisplayName = "Gray Wolf",
+			RuneSetDescription = {
+				[2] = {"Damage against monsters", "from Episode 18 +10%.", "_______________________", "For each 3 Refine Levels:", "Damage against monsters", "from Episode 18 +1%."}
+			}
+		},
+		[1260015] = {
+			RuneSetDisplayName = "False Warrior",
+			RuneSetDescription = {
+				[2] = {"For each 5 Refine Levels:", "Melee Physical Damage +1%."},
+				[3] = {"Melee Physical Damage +3%."}
+			}
+		},
+		[1260016] = {
+			RuneSetDisplayName = "False Magician",
+			RuneSetDescription = {
+				[2] = {"For each 5 Refine Levels:", "Magical Damage with", "every element +1%."},
+				[3] = {"Magical Damage with", "every element +2%."}
+			}
+		},
+		[1260017] = {
+			RuneSetDisplayName = "False Shooter",
+			RuneSetDescription = {
+				[2] = {"For each 5 Refine Levels:", "Ranged Physical Damage +1%."},
+				[3] = {"Ranged Physical Damage +3%."}
+			}
+		},
+		[1260018] = {
+			RuneSetDisplayName = "Ashy Forest",
+			RuneSetDescription = {
+				[2] = {"Critical Damage +2%."},
+				[3] = {"Critical +3.", "_______________________", "For each 3 Refine Levels:", "Critical +1."},
+				[4] = {"Critical Damage +3%."}
+			}
+		},
+		[1260019] = {
+			RuneSetDisplayName = "Lava Zone",
+			RuneSetDescription = {
+				[2] = {"Magical Damage with", "Shadow element +3%."},
+				[3] = {"Magical Damage with", "Earth element +3%.", "_______________________", "For each 3 Refine Levels:", "Magical Damage with", "Fire element +2%."}
+			}
+		},
+		[1260020] = {
+			RuneSetDisplayName = "Grey Wilderness",
+			RuneSetDescription = {
+				[2] = {"ATK +10, MATK +10.", "_______________________", "For each 3 Refine Levels:", "ATK +3, MATK +3."},
+				[4] = {"For each 3 Refine Levels:", "Variable Casting Time -1%.", "Increases Attack Speed", "(After Attack Delay -1%)."},
+				[6] = {"MaxHP +2%, MaxSP +2%.", "_______________________", "For each 3 Refine Levels:", "MaxHP +1%, MaxSP +1%."}
+			}
+		},
+		[1260021] = {
+			RuneSetDisplayName = "Burning Fang",
+			RuneSetDescription = {
+				[2] = {"When attacked, there is a 2% chance", "to recover 200 SP every second 4 times."},
+				[3] = {"SP Consumption -5%.", "_______________________", "For each 3 Refine Levels:", "SP Consumption -2%."}
+			}
+		},
+		[1260022] = {
+			RuneSetDisplayName = "Demigod",
+			RuneSetDescription = {
+				[2] = {"Damage against monsters", "of Boss class +10%."},
+				[3] = {"Damage against monsters", "of Boss class +15%.", "_______________________", "For each 3 Refine Levels:", "Damage against monsters", "of Boss class +3%."}
+			}
+		}
+	},
+	[19] = {
+		[1260023] = {
+			RuneSetDisplayName = "Snow Flower Armor",
+			RuneSetDescription = {
+				[2] = {"Damage against monsters", "from Episode 19 +10%.", "_______________________", "For each 3 Refine Levels:", "Damage against monsters", "from Episode 19 +1%."}
+			}
+		},
+		[1260024] = {
+			RuneSetDisplayName = "Glacier Weapon",
+			RuneSetDescription = {
+				[2] = {"ATK +35, MATK +35."},
+				[4] = {"P.ATK +2, S.MATK +2.", "_______________________", "For each 5 Refine Levels:", "P.ATK +1, S.MATK +1."},
+				[6] = {"Melee Physical Damage +4%.", "Ranged Physical Damage +4%.", "Magical Damage with", "every element +3%."}
+			}
+		},
+		[1260025] = {
+			RuneSetDisplayName = "Ulra Limacina",
+			RuneSetDescription = {
+				[2] = {"RES +55, MRES +55.", "_______________________", "For each 3 Refine Levels:", "WIS, STA +2.", "RES +5, MRES +5."}
+			}
+		},
+		[1260026] = {
+			RuneSetDisplayName = "Syncytium",
+			RuneSetDescription = {
+				[2] = {"S.MATK +15,", "Resistance against attacks", "of every element -15%.", "_______________________", "For each 3 Refine Levels:", "Resistance against attacks", "of every element +3%.", "Magical Damage with", "Poison and Ghost element +4%."}
+			}	
+		},
+		[1260027] = {
+			RuneSetDisplayName = "Snow Field",
+			RuneSetDescription = {
+				[2] = {"P.ATK +2,", "SP Consumption +5%.", "_______________________", "For each 3 Refine Levels:", "Ranged Physical Damage +1%."},
+				[3] = {"Ranged Physical Damage +4%.", "SP Consumption -5%."}
+			}
+		},
+		[1260028] = {
+			RuneSetDisplayName = "Family",
+			RuneSetDescription = {
+				[2] = {"For each 5 Refine Levels:", "MaxHP +1%, MaxSP +1%."},
+				[3] = {"MaxHP +4%, MaxSP +4%."}
+			}
+		},
+		[1260029] = {
+			RuneSetDisplayName = "Foreign Object",
+			RuneSetDescription = {
+				[2] = {"Critical -3,", "Critical Damage -4%."},
+				[3] = {"C.RATE +1.", "_______________________", "For each 3 Refine Levels:", "Critical +2.", "Critical Damage +2%."}
+			}
+		},
+		[1260030] = {
+			RuneSetDisplayName = "Semi-Basement",
+			RuneSetDescription = {
+				[2] = {"S.MATK +3,", "SP Consumption +5%.", "_______________________", "For each 5 Refine Levels:", "Magical Damage with", "Water, Poison, Shadow, Ghost", "element +1%."},
+				[3] = {"Magical Damage with", "Water, Poison, Shadow, Ghost", "element +5%.", "SP Consumption -5%."}
+			}
+		},
+		[1260031] = {
+			RuneSetDisplayName = "Rgan",
+			RuneSetDescription = {
+				[2] = {"P.ATK +2,", "SP Consumption +5%.", "_______________________", "For each 3 Refine Levels:", "Melee Physical Damage +1%."},
+				[3] = {"Melee Physical Damage +4%.", "SP Consumption -5%."}
+			}
+		},
+		[1260032] = {
+			RuneSetDisplayName = "Rabre Collector",
+			RuneSetDescription = {
+				[2] = {"Damage against monsters", "of Plant race +6%.", "_______________________", "For each 5 Refine Levels:", "Damage against monsters", "of Plant race +3%."},
+				[3] = {"Damage against monsters", "of Fish race +6%.", "_______________________", "For each 5 Refine Levels:", "Damage against monsters", "of Fish race +3%."},
+				[4] = {"Damage against monsters", "of Insect race +6%.", "_______________________", "For each 5 Refine Levels:", "Damage against monsters", "of Insect race +3%."}
+			}
+		}
+	},
+	[20] = {
+		[1260037] = {
+			RuneSetDisplayName = "Glacier",
+			RuneSetDescription = {
+				[2] = {"For each 3 Refine Levels:", "Damage against monsters", "from Episode 20 +1%."},
+				[3] = {"Damage against monsters", "from Episode 20 +7%."}
+			}
+		},
+		[1260038] = {
+			RuneSetDisplayName = "Sanctuary",
+			RuneSetDescription = {
+				[2] = {"MaxHP +2%, POW, CON +3.", "_______________________", "For each 5 Refine Levels:", "MaxHP +1%, MaxSP +1%."},
+				[3] = {"MaxHP +5%, POW, CON +5.", "_______________________", "For each 3 Refine Levels:", "MaxHP +1%, POW, CON +1."}
+			}
+		},
+		[1260039] = {
+			RuneSetDisplayName = "Predator",
+			RuneSetDescription = {
+				[2] = {"P.ATK +20,", "Resistance against attacks", "of every element -15%.", "_______________________", "For each 3 Refine Levels:", "Resistance against attacks", "of every element +2%.", "Physical Damage +4%."}
+			}
+		},
+		[1260040] = {
+			RuneSetDisplayName = "Guardian",
+			RuneSetDescription = {
+				[2] = {"Variable Casting Time -7%, P.ATK +2.", "_______________________", "For each 5 Refine Levels:", "Variable Casting Time -1%."},
+				[3] = {"Physical Damage +4%.", "SP Consumption -4%."}
+			}
+		},
+		[1260041] = {
+			RuneSetDisplayName = "Angel Snail",
+			RuneSetDescription = {
+				[2] = {"MaxHP +2%, SPL, CON +3.", "_______________________", "For each 5 Refine Levels:", "MaxHP +1%, MaxSP +1%."},
+				[3] = {"MaxHP +5%, SPL, CON +5.", "_______________________", "For each 3 Refine Levels:", "MaxHP +1%, SPL, CON +1."}
+			}
+		},
+		[1260042] = {
+			RuneSetDisplayName = "Glacial Daily Life",
+			RuneSetDescription = {
+				[2] = {"Variable Casting Time -7%. S.MATK +2.", "_______________________", "For each 5 Refine Levels:", "Variable Casting Time -1%."},
+				[3] = {"Magical Damage with", "Fire, Wind, Holy and Neutral", "element +5%.", "SP Consumption -4%."}
+			}
+		},
+		[1260043] = {
+			RuneSetDisplayName = "Retire",
+			RuneSetDescription = {
+				[2] = {"Critical +3.", "Critical Damage +3%."},
+				[4] = {"Critical +5.", "Critical Damage +10%.", "C.RATE +3."}
+			}
+		},
+		[1260044] = {
+			RuneSetDisplayName = "Roots",
+			RuneSetDescription = {
+				[2] = {"Physical Damage +4%.", "Magical Damage with", "every element +3%."},
+				[4] = {"RES +15, MRES +15.", "_______________________", "For each 3 Refine Levels:", "RES +3, MRES +3."},
+				[5] = {"After Skill Delay -5%.", "_______________________", "For each 3 Refine Levels:", "After Skill Delay -1%."}
+			}
+		}
+	},
+	[21] = {
+		[1260048] = {
+			RuneSetDisplayName = "Gaebolg",
+			RuneSetDescription = {
+				[2] = {"Damage against monsters", "from Episode 21 +7%.", "_______________________", "For each 3 Refine Levels:", "Damage against monsters", "from Episode 21 +1%."}
+			}
+		},
+		[1260049] = {
+			RuneSetDisplayName = "Ice Seashore",
+			RuneSetDescription = {
+				[2] = {"Damage against monsters", "of Undead and Insect race +10%."}, 
+				[3] = {"Damage against", "monsters of Small size +3%.", "For each 3 Refine Levels:", "Damage against", "monsters of Small size +1%."}
+			}
+		},
+		[1260050] = {
+			RuneSetDisplayName = "Yosker Yorker", 
+			RuneSetDescription = {
+				[2] = {"Melee Physical Damage +4%.", "_______________________", "For each 3 Refine Levels:", "Melee Physical Damage +1%."}
+			}
+		},
+		[1260051] = {
+			RuneSetDisplayName = "Working Group", 
+			RuneSetDescription = {
+				[2] = {"MaxHP +3%.", "_______________________", "For each 5 Refine Levels:", "MaxHP + 3%."}
+			}
+		},
+		[1260052] = {
+			RuneSetDisplayName = "Administrators",
+			RuneSetDescription = {
+				[2] = {"Magical Damage against", "monsters of Medium and Large size +2%.", "_______________________", "For each 3 Refine Levels:", "Magical Damage against", "monsters of Medium and Large size +1%."},
+				[3] = {"Magical Damage against", "monsters of Medium and Large size +3%."}
+			}
+		},
+		[1260053] = {
+			RuneSetDisplayName = "Purification Activity",
+			RuneSetDescription = {
+				[2] = {"Ranged Physical Damage +4%.", "_______________________", "For each 3 Refine Levels:", "Ranged Physical Damage +1%."}, 
+				[3] = {"C.RATE +3,", "Critical Damage +12%."}, 
+				[5] = {"Variable Casting Time -6%.", "_______________________", "For each 3 Refine Levels:", "Variable Casting Time -1%."}
+			}
+		},
+		[1260054] = {
+			RuneSetDisplayName = "Military Aid",
+			RuneSetDescription = {
+				[2] = {"MaxSP +5%.", "_______________________", "For each 3 Refine Levels:", "MaxSP +2%."}, 
+				[4] = {"After Skill Delay -5%.", "_______________________", "For each 5 Refine Levels:", "After Skill Delay -1%."}
+			}
+		},
+		[1260055] = {
+			RuneSetDisplayName = "Company",
+			RuneSetDescription = {
+				[2] = {"Physical Damage +6%.", "_______________________", "For each 3 Refine Levels:", "Physical Damage +1%."}, 
+				[4] = {"P.ATK +20.", "Physical Damage +4%."}, 
+				[6] = {"Critical +15, Critical Damage +35%.", "_______________________", "For each 3 Refine Levels:", "Critical Damage +5%. "}
+			}
+		},
+		[1260056] = {
+			RuneSetDisplayName = "Frozen Horn",
+			RuneSetDescription = {
+				[2] = {"S.MATK +20.", "_______________________", "For each 3 Refine Levels:", "S.MATK +4."}, 
+				[5] = {"Magical Damage with", "Poison, Earth, Wind, Water", "element +25%.", "_______________________", "For each 3 Refine Levels:", "Magical Damage with", "Poison, Earth, Wind, Water", "element +3%."}
+			}
+		},
+		[1260057] = {
+			RuneSetDisplayName = "Encroachment",
+			RuneSetDescription = {
+				[2] = {"Physical Damage against monsters", "of Boss class +20%", "Physical Damage against monsters", "of Normal class +5%.", "_______________________", "For each Refine Level:", "Physical Damage against monsters", "of Normal and Boss class +1%."}
+			}
+		}
+	},
+	[22] = {
+		[1260045] = {
+			RuneSetDisplayName = "Entwined Magical Equipment",
+			RuneSetDescription = {
+				[2] = {"Damage against monsters", "in Destroyed Valkyrie Realm +2%.", "_______________________", "For each 3 Refine Levels:", "Damage against monsters", "in Destroyed Valkyrie Realm +3%."}
+			}
+		},
+		[1260046] = {
+			RuneSetDisplayName = "Footsteps of Dimension",
+			RuneSetDescription = {
+				[2] = {"Damage against monsters", "in Devoured Geffenia +10%.", "_______________________", "For each 3 Refine Levels:", "Damage against monsters", "in Devoured Geffenia +3%."},
+				[3] = {"POW +10, SPL +10,", "CON +10, CRT +10,", "P.ATK, S.MATK +15."},
+				[5] = {"MaxHP +5%.", "_______________________", "For each 3 Refine Levels:", "MaxHP + 3%."}
+			}
+		},
+		[1260047] = {
+			RuneSetDisplayName = "Chaos",
+			RuneSetDescription = {}
+		}, 
+		[1260059] = {
+			RuneSetDisplayName = "Fire",
+			RuneSetDescription = {
+				[2] = {"Magical Damage against monsters", "of Normal and Boss class +5%.", "For each 3 Refine Levels:", "Magical Damage against monsters", "of Normal and Boss class +1%."}, 
+				[3] = {"Magical Damage against monsters", "of Boss class +15%."}
+			}
+		},
+		[1260060] = {
+			RuneSetDisplayName = "Predator",
+			RuneSetDescription = {
+				[2] = {"For each Refine Level:", "When defeating enemies with targeted", "magical damage, recover 35 HP and 20 SP.", "Magical Damage with", "Fire, Ghost, Holy and Neutral", "element +5%."}
+			}
+		},
+		[1260061] = {
+			RuneSetDisplayName = "Uncanny Fruit",
+			RuneSetDescription = {
+				[2] = {"DEF +150, MDEF +15.", "For each 3 Refine Levels:", "DEF +15, MDEF +2."}, 
+				[3] = {"Experience gained from", "defeating monsters +3%."}
+			}
+		},
+		[1260062] = {
+			RuneSetDisplayName = "Junkyard",
+			RuneSetDescription = {
+				[2] = {"For each 3 Refine Levels:", "POW, CON, SPL, CRT +1,", "P.ATK +3, S.MATK +3."}, 
+				[3] = {"After Skill Delay -3%.", "For each 3 Refine Levels:", "After Skill Delay -1%."}
+			}
+		},
+		[1260063] = {
+			RuneSetDisplayName = "Noise",
+			RuneSetDescription = {
+				[2] = {"For each 3 Refine Levels:", "POW, CON, SPL, CRT +1,", "P.ATK +3, S.MATK +3."}, 
+				[3] = {"Increases Attack Speed", "(After Attack Delay -5%).", "For each 3 Refine Levels:", "Increases Attack Speed", "(After Attack Delay -1%)."}
+			}
+		},
+		[1260064] = {
+			RuneSetDisplayName = "Creepy Flower Garden",
+			RuneSetDescription = {
+				[2] = {"HIT +50.", "For each 3 Refine Levels:", "HIT +4."}, 
+				[3] = {"Variable Casting Time -4%.", "For each 3 Refine Levels:", "Variable Casting Time -1%."}
+			}
+		},
+		[1260065] = {
+			RuneSetDisplayName = "Toxic Sidekick",
+			RuneSetDescription = {
+				[2] = {"Physical Damage +5%."}, 
+				[3] = {"Non-Critical Physical Damage +5%.", "For each 3 Refine Levels:", "Non-Critical Physical Damage +1%."}
+			}
+		},
+		[1260066] = {
+			RuneSetDisplayName = "Small and Warm",
+			RuneSetDescription = {
+				[2] = {"Variable Casting Time -3%."}, 
+				[3] = {"Magical Damage with", "Water, Wind and Earth element +3%."}, 
+				[4] = {"Variable Casting Time -5%.", "Magical Damage with", "Water, Wind and Earth element +7%."}
+			}
+		}
+	},
+	[500] = {
+		[1260013] = {
+			RuneSetDisplayName = "21st Anniversary", 
+			RuneSetDescription = {
+				[2] = {"For each 3 Refine Levels:", "ATK +1, MATK +1."},
+				[4] = {"ATK +10, MATK +10."}
+			}
+		}, 
+		[1260034] = {
+			RuneSetDisplayName = "22nd Anniversary",
+			RuneSetDescription = {
+				[2] = {"For each 3 Refine Levels:", "ATK +1, MATK +1."},
+				[4] = {"ATK +10, MATK +10."},
+				[5] = {"For each 5 Refine Levels:", "Increases Attack Speed", "(After Attack Delay -1%).", "Variable Casting Time -1%."},
+				[6] = {"MaxHP +1000, MaxSP +500.", "_______________________", "For each 3 Refine Levels:", "MaxHP +100, MaxSP +10."}
+			}
+		},
+		[1260035] = {
+			RuneSetDisplayName = "Burning Passion", 
+			RuneSetDescription = {
+				[2] = {"ATK +10.", "_______________________", "For each 3 Refine Levels:", "ATK +1."},
+				[3] = {"Experience gained from", "defeating monsters +3%."},
+				[4] = {"SP Consumption -2%."},
+				[6] = {"All Stats +2.", "_______________________", "For each 5 Refine Levels:", "All Stats +1."}
+			}
+		}, 
+		[1260036] = {
+			RuneSetDisplayName = "Burning Spirit", 
+			RuneSetDescription = {
+				[2] = {"MATK +10.", "_______________________", "For each 3 Refine Levels:", "MATK +1."}, 
+				[3] = {"Experience gained from", "defeating monsters +3%."}, 
+				[4] = {"SP Consumption -2%."}, 
+				[6] = {"All Stats +2.", "_______________________", "For each 5 Refine Levels:", "All Stats +1."}
+			}
+		}
+	}
+}
