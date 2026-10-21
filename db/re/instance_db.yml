@@ -583,3 +583,10 @@ Body:
       Map: 1@exsh
       X: 90
       Y: 35
+  - Id: 80
+    Name: Dragon's Test
+    TimeLimit: 3600
+    Enter:
+      Map: 1@4drk
+      X: 62
+      Y: 86
