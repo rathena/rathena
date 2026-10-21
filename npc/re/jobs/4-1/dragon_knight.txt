@@ -1,0 +1,268 @@
+//===== rAthena Script =======================================
+//= Job change : Dragon Knight
+//===== Description: =========================================
+//- [Walkthrough conversion]
+//- Follows the official quest flow; the dialog is our own
+//- wording, not a translation of the official text.
+//- The trials take place in an instance
+//- (npc/re/instances/DragonsTest.txt).
+//===== Changelogs: ==========================================
+//= 1.0 First version. [MondoTruth]
+//============================================================
+
+gef_fild08,54,101,5	script	Oscar#dk_start	4_ED_OSCAR,{
+	.@md_name$ = "Dragon's Test";
+
+	if (Class == JOB_DRAGON_KNIGHT) {
+		cutin "OSCAR03.bmp",2;
+		mes "[Oscar]";
+		mes "How is your new partner treating you, Dragon Knight?";
+		mes "Leticia still talks about your test, you know.";
+		close3;
+	}
+	if (Class != JOB_RUNE_KNIGHT && Class != JOB_RUNE_KNIGHT_T) {
+		cutin "OSCAR03.bmp",2;
+		mes "[Oscar]";
+		mes "Dragons choose their companions carefully.";
+		mes "I'm waiting for a Rune Knight who has walked a long road with a dragon.";
+		close3;
+	}
+	if (BaseLevel < 200 || JobLevel < 70) {
+		cutin "OSCAR03.bmp",2;
+		mes "[Oscar]";
+		mes "You ride well, Rune Knight, but the trial of the dragons would crush you today.";
+		mes "Come back at ^dd5555Base Level 200 and Job Level 70^000000.";
+		close3;
+	}
+	if (isbegin_quest(12508) == 0) {
+		cutin "OSCAR03.bmp",2;
+		mes "- Oscar is gazing into the distance, as if he were waiting for someone. -";
+		next;
+		select( "Oscar? What are you doing out here?" );
+		mes "[Oscar]";
+		mes "Ah, there you are.";
+		mes "Some time ago I saw someone in a vision. The face was a blur, but I knew they would come to me today.";
+		next;
+		mes "[Oscar]";
+		mes "And now here you stand, ^0000ff" + strcharinfo(0) + "^000000.";
+		mes "You came to become a ^ff0000Dragon Knight^000000, didn't you?";
+		next;
+		if (select( "Yes.", "No, I'm just passing by." ) == 2) {
+			mes "[Oscar]";
+			mes "Is that so? Then I won't keep you.";
+			mes "If you ever change your mind, you know where to find me.";
+			close3;
+		}
+		mes "[Oscar]";
+		mes "Nobody is ever pushed into this. Whatever you decide, we will respect it.";
+		mes "So, ^0000ff" + strcharinfo(0) + "^000000: will you take the ^ff0000Dragon's Test^000000 and become one of us?";
+		next;
+		if (select( "I want to take the test.", "Maybe later." ) == 2) {
+			mes "[Oscar]";
+			mes "The dragons are patient. I'll be here.";
+			close3;
+		}
+		setquest 12508;
+		mes "[Oscar]";
+		mes "Good. The test has four parts: life, protection, strength and patience.";
+		mes "Each one is held in the Dragon's Test, a place I will open for you.";
+		next;
+	}
+	if (job_dk_4th == 1) {
+		cloakoffnpcself "Leticia#dk_end";
+		cutin "OSCAR03.bmp",2;
+		mes "[Oscar]";
+		mes "You came back from the test! Leticia is right here and she wants a word with you.";
+		close3;
+	}
+	if (isbegin_quest(12509) == 1) {
+		if (checkquest(12509,PLAYTIME) != 2) {
+			cutin "OSCAR03.bmp",2;
+			mes "[Oscar]";
+			mes "You pushed yourself too hard last time.";
+			mes "Rest for a while, then come back to me.";
+			close3;
+		}
+		erasequest 12509;
+	}
+	if (SkillPoint > 0) {
+		cutin "OSCAR03.bmp",2;
+		mes "[Oscar]";
+		mes "You still have skill points left to learn.";
+		mes "Use all of them before you take the test.";
+		close3;
+	}
+	if (getcharid(1) == 0 || is_party_leader() == false) {
+		cutin "OSCAR03.bmp",2;
+		mes "[Oscar]";
+		mes "The test is opened for a party leader.";
+		mes "Make a party of your own and lead it.";
+		close3;
+	}
+	getpartymember getcharid(1), 0;
+	if ($@partymembercount > 1) {
+		cutin "OSCAR03.bmp",2;
+		mes "[Oscar]";
+		mes "This test is meant for you alone.";
+		mes "Make a party with ^0000ffonly yourself^000000 in it.";
+		close3;
+	}
+	cutin "OSCAR03.bmp",2;
+	mes "[Oscar]";
+	mes "Then take my hands and clear your mind.";
+	next;
+	switch( select( "Enter the Dragon's Test.", "Apply for the Dragon's Test." ) ) {
+	case 2:
+		.@id = instance_create(.@md_name$);
+		if (.@id == -3) {
+			mes "[Oscar]";
+			mes "The way into the test is already open for you.";
+			mes "Choose to enter it.";
+			close3;
+		}
+		if (.@id < 0) {
+			mes "[Oscar]";
+			mes "Hmm, the way won't open right now. Try again in a moment.";
+			close3;
+		}
+		mes "[Oscar]";
+		mes "There. The way is open.";
+		mes "Talk to me again when you want to go in.";
+		close3;
+	case 1:
+		// Back to the trial in progress, e.g. after dying inside.
+		.@x = -1;
+		.@y = -1;
+		.@iid = instance_id(IM_PARTY);
+		if (.@iid > 0) {
+			.@step = getinstancevar('dk_step, .@iid);
+			if (.@step >= 40) {
+				.@x = 211;
+				.@y = 165;
+			} else if (.@step >= 30) {
+				.@x = 92;
+				.@y = 46;
+			} else if (.@step >= 2) {
+				.@x = 19;
+				.@y = 72;
+			}
+		}
+		switch( instance_enter(.@md_name$, .@x, .@y) ) {
+		case IE_OTHER:
+			mes "^ff0000An unknown error occurred.^000000";
+			close3;
+		case IE_NOINSTANCE:
+			mes "[Oscar]";
+			mes "The way isn't open yet. Apply for the test first.";
+			close3;
+		case IE_NOMEMBER:
+			mes "[Oscar]";
+			mes "Only the party that applied may enter.";
+			close3;
+		case IE_OK:
+			cutin "",255;
+			mapannounce "gef_fild08", strcharinfo(0) + " of the " + getpartyname( getcharid(1) ) + " party is entering the " + .@md_name$ + ".", bc_map, 0xFF99;
+			end;
+		}
+		end;
+	}
+	end;
+}
+
+// Leticia waits here after the last trial; the job change happens here.
+// Only players who beat her in the Dragon's Test can see her, and for them
+// fireflies dance over the field.
+gef_fild08	mapflag	loadevent
+
+gef_fild08,57,104,2	script	Leticia#dk_end	4_4JOB_LETICIA,{
+	if (job_dk_4th != 1)
+		end;
+	cutin "4job_leticia_04.png",2;
+	mes "[Leticia]";
+	mes "It's been ages since I met a creature this much fun.";
+	next;
+	mes "[Leticia]";
+	mes "A dragon's companion needs the support of at least two dragon signs.";
+	mes "You earned them. What happens now is your choice.";
+	next;
+	if (Class != JOB_RUNE_KNIGHT && Class != JOB_RUNE_KNIGHT_T) {
+		mes "[Leticia]";
+		mes "Hm? You're not a Rune Knight anymore. I can't help you like this.";
+		close3;
+	}
+	if (checkdragon() || ismounting()) {
+		mes "[Leticia]";
+		mes "Before we go on, get down from your mount.";
+		mes "You can take it off in the equipment window.";
+		close3;
+	}
+	if (SkillPoint > 0) {
+		mes "[Leticia]";
+		mes "You still have skill points left. Learn your skills first.";
+		close3;
+	}
+	if (checkweight(490087,1) == 0) {
+		mes "[Leticia]";
+		mes "You're carrying too much. Make some room in your inventory first.";
+		close3;
+	}
+	mes "[Leticia]";
+	mes "Will you promise to stay our friend for a long, long time?";
+	next;
+	if (select( "Wait, let me think...", "Yes." ) == 1) {
+		mes "[Leticia]";
+		mes "Take your time. I'll wait.";
+		close3;
+	}
+	mes "[Leticia]";
+	mes "Then I'll give you a share of my dragon power. Stay still.";
+	close2;
+	// No picture or window over the animation.
+	cutin "",255;
+	// The official animation is not known: these effects are a guess (blue
+	// sparkles and an expanding circle around the player, Leticia's breath,
+	// then a white light).
+	specialeffect2 EF_CONCENTRATION2;
+	specialeffect2 EF_DHOWL_STR;
+	specialeffect EF_M05;
+	sleep2 1000;
+	specialeffect EF_M05;
+	specialeffect2 EF_DHOWL_STR;
+	sleep2 1000;
+	specialeffect2 EF_RK_LUXANIMA;
+	specialeffect2 EF_LEVEL99_4;
+	sleep2 1000;
+	job_dk_4th = 0;
+	completequest 12508;
+	jobchange JOB_DRAGON_KNIGHT;
+	getitem 490087,1;	// 4th_Q_Necklace
+	specialeffect2 EF_JOBLVUP;
+	sleep2 2000;
+	cutin "4job_leticia_01.png",2;
+	mes "[Leticia]";
+	mes "Lovely!";
+	mes "From today you are a Dragon Knight. Keep the necklace as proof of your test.";
+	close2;
+	cutin "",255;
+	cloakonnpcself;
+	end;
+
+OnInit:
+	cloakonnpc;
+	end;
+
+OnPCLoadMapEvent:
+	if (strcharinfo(3) != "gef_fild08" || job_dk_4th != 1)
+		end;
+	cloakoffnpcself;
+	deltimer strnpcinfo(3) + "::OnFirefly";
+	addtimer 500, strnpcinfo(3) + "::OnFirefly";
+	end;
+
+OnFirefly:
+	if (strcharinfo(3) != "gef_fild08" || job_dk_4th != 1)
+		end;
+	specialeffect2 EF_FIREFLY, SELF;
+	addtimer 2000, strnpcinfo(3) + "::OnFirefly";
+	end;
+}
