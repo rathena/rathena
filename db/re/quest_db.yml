@@ -9364,6 +9364,11 @@ Body:
   - Id: 12506
     Title: Let's try again to seal the crack
     TimeLimit: 4h
+  - Id: 12508
+    Title: Take the Dragon's Trial
+  - Id: 12509
+    Title: Cool Down
+    TimeLimit: +30mn
   - Id: 12520
     Title: "[Normal] Villa of Deception"
   - Id: 12521

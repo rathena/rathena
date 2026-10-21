@@ -15001,4 +15001,12 @@
 21361,EP18_MD_DEMI_FREYJA_L@NPC_CANE_OF_EVIL_EYE,chase,780,3,8000,300,30000,no,target,always,0,,,,,,,
 21361,EP18_MD_DEMI_FREYJA_L@NPC_CANE_OF_EVIL_EYE,attack,780,5,7000,300,30000,yes,target,always,0,,,,,,,
 
+// Dragon Knight job change (npc/re/instances/DragonsTest.txt)
+// Unofficial: Leticia uses a part of Detardeurus skills (no teleport, slaves or reflect).
+20875,Leticia@NPC_DRAGONFEAR,chase,659,5,10000,0,30000,no,self,always,0,,,,,,6,
+20875,Leticia@NPC_DRAGONFEAR,attack,659,5,2000,1000,20000,no,self,myhpltmaxrate,95,,,,,,32,
+20875,Leticia@NPC_CRITICALSLASH,attack,170,1,500,500,5000,no,target,always,0,,,,,,,
+20875,Leticia@NPC_FIREBREATH,attack,654,5,500,800,5000,no,target,always,0,,,,,,32,
+20875,Leticia@NPC_DARKBREATH,attack,202,5,500,800,5000,no,target,always,0,,,,,,36,
+
 // Garden of Time (placeholder). Ids [22177-22180], [22192-22239]
