@@ -1850,7 +1850,7 @@ Body:
       - Level: 119
         Exp: 463852071
       - Level: 120
-        Exp: 468852071
+        Exp: 999999999
   - Jobs:
       Gunslinger: true
       Ninja: true
