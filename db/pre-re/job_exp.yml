@@ -1609,7 +1609,7 @@ Body:
       Clown: true
       Gypsy: true
       Paladin2: true
-    MaxJobLevel: 70
+    MaxJobLevel: 120
     JobExp:
       - Level: 1
         Exp: 288
@@ -1750,7 +1750,107 @@ Body:
       - Level: 69
         Exp: 213852071
       - Level: 70
-        Exp: 999999999
+        Exp: 218852071
+      - Level: 71
+        Exp: 223852071
+      - Level: 72
+        Exp: 228852071
+      - Level: 73
+        Exp: 233852071
+      - Level: 74
+        Exp: 238852071
+      - Level: 75
+        Exp: 243852071
+      - Level: 76
+        Exp: 248852071
+      - Level: 77
+        Exp: 253852071
+      - Level: 78
+        Exp: 258852071
+      - Level: 79
+        Exp: 263852071
+      - Level: 80
+        Exp: 268852071
+      - Level: 81
+        Exp: 273852071
+      - Level: 82
+        Exp: 278852071
+      - Level: 83
+        Exp: 283852071
+      - Level: 84
+        Exp: 288852071
+      - Level: 85
+        Exp: 293852071
+      - Level: 86
+        Exp: 298852071
+      - Level: 87
+        Exp: 303852071
+      - Level: 88
+        Exp: 308852071
+      - Level: 89
+        Exp: 313852071
+      - Level: 90
+        Exp: 318852071
+      - Level: 91
+        Exp: 323852071
+      - Level: 92
+        Exp: 328852071
+      - Level: 93
+        Exp: 333852071
+     - Level: 94
+        Exp: 338852071
+      - Level: 95
+        Exp: 343852071
+      - Level: 96
+        Exp: 348852071
+      - Level: 97
+        Exp: 353852071
+      - Level: 98
+        Exp: 358852071
+      - Level: 99
+        Exp: 363852071
+      - Level: 100
+        Exp: 368852071
+      - Level: 101
+        Exp: 373852071
+      - Level: 102
+        Exp: 378852071
+      - Level: 103
+        Exp: 383852071
+      - Level: 104
+        Exp: 388852071
+      - Level: 105
+        Exp: 393852071
+      - Level: 106
+        Exp: 398852071
+      - Level: 107
+        Exp: 403852071
+      - Level: 108
+        Exp: 408852071
+      - Level: 109
+        Exp: 413852071
+      - Level: 110
+        Exp: 418852071
+      - Level: 111
+        Exp: 423852071
+      - Level: 112
+        Exp: 428852071
+      - Level: 113
+        Exp: 433852071
+      - Level: 114
+        Exp: 438852071
+      - Level: 115
+        Exp: 443852071
+      - Level: 116
+        Exp: 448852071
+      - Level: 117
+        Exp: 453852071
+      - Level: 118
+        Exp: 458852071
+      - Level: 119
+        Exp: 463852071
+      - Level: 120
+        Exp: 468852071
   - Jobs:
       Gunslinger: true
       Ninja: true
