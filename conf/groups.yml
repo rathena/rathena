@@ -64,6 +64,9 @@ Body:
       commands: true
       charcommands: true
       help: true
+      autoloot: true
+      alootid: true
+      autoloottype: true
 
       # Feature commands
       request: true
