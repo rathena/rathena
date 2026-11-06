@@ -1,0 +1,24 @@
+// Forbidden Skills Database
+// Defines unusable skills in map types and zones.
+//
+// Structure of Database:
+// SkillID,Flag
+//
+// Legend for 'Flag' field (bitmask):
+// 1    - cannot be used in normal maps
+// 2    - cannot be used in PvP maps (use this instead of 1 for PK-mode servers)
+// 4    - cannot be used in GvG maps
+// 8    - cannot be used in Battleground maps
+// 16   - cannot be cloned (clones will not copy this skill)
+// Restricted zones - configured by 'restricted <number>' mapflag
+// 32   - cannot be used in zone 1 maps
+// 64   - cannot be used in zone 2 maps
+// 128  - cannot be used in zone 3 maps
+// 256  - cannot be used in zone 4 maps
+// 512  - cannot be used in zone 5 maps
+// 1024 - cannot be used in zone 6 maps
+// 2048 - cannot be used in zone 7 maps
+//
+// Example:
+// 8,6  // Endure cannot be used in PvP and GvG maps (2+4)
+

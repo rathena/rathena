@@ -1,0 +1,486 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Custom Pet Database
+###########################################################################
+#
+# Pet Settings
+#
+###########################################################################
+# - Mob                      Monster that can be used as pet
+#   TameItem                 Pet Tame Item.
+#   EggItem                  Pet Egg Item.
+#   EquipItem                Pet Accessory Item. (Default: 0)
+#   FoodItem                 Pet Food Item. (Default: 0)
+#   Fullness                 The amount of hunger is decreased every [HungryDelay] seconds.
+#   HungryDelay              The amount of time in seconds it takes for hunger to decrease after feeding. (Default: 60)
+#   HungerIncrease           The amount of hunger that is increased every time the pet is fed (Default: 20)
+#   IntimacyStart            Amount of Intimacy the pet starts with. (Default: 250)
+#   IntimacyFed              Amount of Intimacy that is increased when fed. (Default: 50)
+#   IntimacyOverfed          Amount of Intimacy that is increased when over-fed. (Default: -100)
+#   IntimacyHungry           Amount of Intimacy that is increased when the pet is hungry. (Default: -5)
+#   IntimacyOwnerDie         Amount of Intimacy that is increased when the pet owner dies. (Default: -20)
+#   CaptureRate              Capture success rate. (10000 = 100%)
+#   SpecialPerformance       If a pet has a Special Performance. (Default: true)
+#   AttackRate               Rate of which the pet will attack [requires at least pet_support_min_friendly intimacy]. (10000 = 100%)
+#   RetaliateRate            Rate of which the pet will retaliate when master is being attacked [requires at least pet_support_min_friendly intimacy]. (10000 = 100%)
+#   ChangeTargetRate         Rate of which the pet will change its attack target. (10000 = 100%)
+#   AllowAutoFeed            Allows turning automatic pet feeding on. (Default: false)
+#   Script                   Bonus script to execute when the pet is alive. (Default: null)
+#   SupportScript            Bonus script to execute when pet_status_support is enabled. (Default: null)
+#   Evolution:               Pet evolution settings. (Optional) (Default: null)
+#     - Target               Mob this pet can evolve to.
+#       ItemRequirements:      Item requirements for evolving this pet.
+#         - Item               Self-explanatory
+#           Amount
+###########################################################################
+
+Header:
+  Type: PET_DB
+  Version: 1
+
+#Body:
+#  - Mob: PORING
+#    AttackRate: 350
+#    RetaliateRate: 400
+#    ChangeTargetRate: 800
+#    SupportScript: >
+#      petloot 10;
+#  - Mob: DROPS
+#    AttackRate: 300
+#    RetaliateRate: 400
+#    ChangeTargetRate: 500
+#    SupportScript: >
+#      petloot 10;
+#  - Mob: POPORING
+#    AttackRate: 300
+#    RetaliateRate: 500
+#    ChangeTargetRate: 400
+#    SupportScript: >
+#      petloot 15;
+#  - Mob: LUNATIC
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 1000
+#    SupportScript: >
+#      petskillbonus bLuk,3,10,50;
+#  - Mob: PICKY
+#    AttackRate: 500
+#    RetaliateRate: 600
+#    ChangeTargetRate: 50
+#    SupportScript: >
+#      petskillbonus bStr,3,10,50;
+#  - Mob: CHONCHON
+#    AttackRate: 500
+#    RetaliateRate: 500
+#    ChangeTargetRate: 250
+#    SupportScript: >
+#      petskillbonus bAgi,4,10,50;
+#  - Mob: STEEL_CHONCHON
+#    AttackRate: 500
+#    RetaliateRate: 500
+#    ChangeTargetRate: 200
+#    SupportScript: >
+#      petskillbonus bAgiVit,4,20,40;
+#  - Mob: HUNTER_FLY
+#    AttackRate: 500
+#    RetaliateRate: 500
+#    ChangeTargetRate: 200
+#    SupportScript: >
+#      petskillattack2 "NPC_WINDATTACK",888,2,0,10;
+#  - Mob: SAVAGE_BABE
+#    AttackRate: 500
+#    RetaliateRate: 500
+#    ChangeTargetRate: 200
+#    SupportScript: >
+#      petskillbonus bVit,4,10,50;
+#  - Mob: DESERT_WOLF_B
+#    AttackRate: 400
+#    RetaliateRate: 400
+#    ChangeTargetRate: 400
+#    SupportScript: >
+#      petskillattack "SM_PROVOKE",1,0,5;
+#  - Mob: ROCKER
+#    AttackRate: 350
+#    RetaliateRate: 350
+#    ChangeTargetRate: 600
+#    SupportScript: >
+#      petskillbonus bAllStats,1,10,50;
+#  - Mob: SPORE
+#    AttackRate: 350
+#    RetaliateRate: 500
+#    ChangeTargetRate: 500
+#    SupportScript: >
+#      petrecovery SC_POISON,60;
+#  - Mob: POISON_SPORE
+#    AttackRate: 600
+#    RetaliateRate: 200
+#    ChangeTargetRate: 400
+#    SupportScript: >
+#      petskillattack "NPC_POISON",20,0,10;
+#  - Mob: PECOPECO
+#    AttackRate: 400
+#    RetaliateRate: 500
+#    ChangeTargetRate: 800
+#    SupportScript: >
+#      petskillbonus bSpeedRate,25,20,20;
+#  - Mob: SMOKIE
+#    AttackRate: 600
+#    RetaliateRate: 600
+#    ChangeTargetRate: 100
+#    SupportScript: >
+#      petskillbonus bPerfectHide,1,3600,0;
+#  - Mob: YOYO
+#    AttackRate: 300
+#    RetaliateRate: 800
+#    ChangeTargetRate: 400
+#    SupportScript: >
+#      petloot 20;
+#  - Mob: ORK_WARRIOR
+#    AttackRate: 600
+#    RetaliateRate: 200
+#    ChangeTargetRate: 300
+#    SupportScript: >
+#      petskillattack2 "NPC_PIERCINGATT",100,1,0,10;
+#  - Mob: MUNAK
+#    AttackRate: 300
+#    RetaliateRate: 750
+#    ChangeTargetRate: 300
+#    SupportScript: >
+#      petskillattack2 "NPC_DARKNESSATTACK",444,1,0,10;
+#  - Mob: DOKEBI
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#    SupportScript: >
+#      petskillattack "BS_HAMMERFALL",1,0,10;
+#  - Mob: SOHEE
+#    AttackRate: 100
+#    RetaliateRate: 1000
+#    ChangeTargetRate: 200
+#    SupportScript: >
+#      petskillsupport "AL_HEAL",5,60,33,100;
+#  - Mob: ISIS
+#    AttackRate: 650
+#    RetaliateRate: 450
+#    ChangeTargetRate: 150
+#    SupportScript: >
+#      petskillsupport "PR_MAGNIFICAT",2,60,50,50;
+#  - Mob: PETIT
+#    AttackRate: 800
+#    RetaliateRate: 400
+#    ChangeTargetRate: 100
+#    SupportScript: >
+#      petskillattack2 "WZ_HEAVENDRIVE",500,1,0,10;
+#  - Mob: DEVIRUCHI
+#    AttackRate: 800
+#    RetaliateRate: 200
+#    ChangeTargetRate: 100
+#    SupportScript: >
+#      petskillbonus bAgiDexStr,6,20,40;
+#  - Mob: BAPHOMET_
+#    AttackRate: 1000
+#    RetaliateRate: 100
+#    ChangeTargetRate: 200
+#    SupportScript: >
+#      petskillattack2 "NPC_DARKNESSATTACK",1776,4,0,5;
+#  - Mob: BON_GUN
+#    AttackRate: 600
+#    RetaliateRate: 200
+#    ChangeTargetRate: 400
+#    SupportScript: >
+#      petskillattack2 "NPC_DARKNESSATTACK",555,1,1,1;
+#  - Mob: ZHERLTHSH
+#    AttackRate: 1000
+#    RetaliateRate: 100
+#    ChangeTargetRate: 500
+#    SupportScript: >
+#      petskillattack "AS_SONICBLOW",1,0,3;
+#  - Mob: ALICE
+#    AttackRate: 100
+#    RetaliateRate: 1000
+#    ChangeTargetRate: 200
+#    SupportScript: >
+#      petskillsupport "AL_HEAL",5,60,25,100;
+#  - Mob: EVENT_RICECAKE
+#    AttackRate: 500
+#    RetaliateRate: 500
+#    ChangeTargetRate: 200
+#    SupportScript: >
+#      petskillsupport "CR_DEFENDER",3,240,50,100;
+#  - Mob: GOBLINE_XMAS
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#    SupportScript: >
+#      petskillattack "MG_SIGHT",5,5,5;
+#  - Mob: CHUNG_E
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#    SupportScript: >
+#      petskillattack "CR_SHIELDCHARGE",5,5,5;
+#  - Mob: ECLIPSE_P
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#    SupportScript: >
+#      petskillattack "TF_THROWSTONE",1,5,5;
+#  - Mob: GOBLIN_1
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#    SupportScript: >
+#      petskillattack "NPC_WINDATTACK",5,5,5;
+#  - Mob: GOBLIN_2
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#    SupportScript: >
+#      petskillattack "NPC_FIREATTACK",5,5,5;
+#  - Mob: GOBLIN_4
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#    SupportScript: >
+#      petskillattack "NPC_GROUNDATTACK",5,5,5;
+#  - Mob: DELETER_
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#    SupportScript: >
+#      petskillattack "SM_MAGNUM",5,5,5;
+#  - Mob: DIABOLIC
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#    SupportScript: >
+#      petskillattack "WZ_METEOR",2,5,5;
+#  - Mob: WANDER_MAN
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#    SupportScript: >
+#      petskillattack "NPC_UNDEADATTACK",5,5,5;
+#  - Mob: P_CHUNG_E
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#    SupportScript: >
+#      petskillattack "CR_SHIELDCHARGE",5,5,5;
+#  - Mob: GOLEM
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: MARIONETTE
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: MEDUSA
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: WHISPER
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: GOBLIN_LEADER
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: SUCCUBUS
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#    SupportScript: >
+#      bonus2 bHPDrainRate,10,5;
+#  - Mob: INCUBUS
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#    SupportScript: >
+#      bonus bMaxSPRate,3;
+#      bonus2 bSPDrainRate,10,1;
+#  - Mob: NIGHTMARE_TERROR
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: SHINOBI
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: MIYABI_NINGYO
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: WICKED_NYMPH
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: STONE_SHOOTER
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: DULLAHAN
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: LOLI_RURI
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: CIVIL_SERVANT
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: LEAF_CAT
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: BACSOJIN_
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: IMP
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: E_CRAMP
+#    AttackRate: 350
+#    RetaliateRate: 400
+#    ChangeTargetRate: 800
+#  - Mob: E_HYDRA
+#    AttackRate: 350
+#    RetaliateRate: 400
+#    ChangeTargetRate: 800
+#  - Mob: J_TAINI
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: XMAS_LUNATIC
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: TIKBALANG
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: MARIN
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: LITTLE_PORING
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: NINE_TAIL
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: GREMLIN
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: MUMMY
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: TEDDY_BEAR
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: MASTERING
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: METALLER
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: ANGELING
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: MOONLIGHT
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: SAVAGE
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: HIGH_ORC
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: CHOCO
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: ANCIENT_MUMMY
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: AM_MUT
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: CAT_O_NINE_TAIL
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: GRAND_PECO
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: HYEGUN
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: HODREMLIN
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: XM_TEDDY_BEAR
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: DR_EGGRING
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: DR_LUNATIC
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: LITTLE_ISIS
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: DIABOLIC2
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: DELETER_2
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800
+#  - Mob: SWEETS_DROPS
+#    AttackRate: 300
+#    RetaliateRate: 300
+#    ChangeTargetRate: 800

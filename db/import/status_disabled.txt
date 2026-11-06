@@ -1,0 +1,25 @@
+// Status Change Restriction Database
+//
+// Defines restrictions of status changes (SC).
+// Disabled SC will always be removed or fail to be inflicted on this map.
+//
+// Structure of Database:
+// SCType,Flag
+//
+// Legend for 'Flag' field (bitmask):
+// 1    - restricted in normal maps
+// 2    - restricted in PVP
+// 4    - restricted in GVG
+// 8    - restricted in Battlegrounds
+// Restricted zones - configured by 'restricted <number>' mapflag
+// 32   - restricted in zone 1
+// 64   - restricted in zone 2
+// 128  - restricted in zone 3
+// 256  - restricted in zone 4
+// 512  - restricted in zone 5
+// 1024 - restricted in zone 6
+// 2048 - restricted in zone 7
+//
+// Example:
+// SC_ENDURE,4   // Endure status will be removed when the player enters GvG and WoE Castle maps; Also cannot be inflicted again.
+
