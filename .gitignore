@@ -64,7 +64,8 @@ Thumbs.db
 /3rdparty/httplib/obj
 
 # /db/
-/db/import
+# [RO Sandbox] db/import holds this project's game data, so it is tracked.
+# conf/import stays ignored below because it holds passwords and IPs.
 
 # /conf/
 /conf/import
