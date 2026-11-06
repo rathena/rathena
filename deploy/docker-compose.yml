@@ -1,0 +1,55 @@
+name: aethera
+x-ra: &ra
+  image: aethera-rathena
+  env_file: .env
+  volumes: ["./conf-import:/conf-import:ro"]
+  restart: unless-stopped
+  networks: [ro]
+
+services:
+  db:
+    image: mariadb:11
+    environment:
+      MARIADB_RANDOM_ROOT_PASSWORD: "1"
+      MARIADB_DATABASE: ragnarok
+      MARIADB_USER: ragnarok
+      MARIADB_PASSWORD: ${DB_PASS}
+    volumes: ["dbdata:/var/lib/mysql"]
+    restart: unless-stopped
+    networks: [ro]
+    mem_limit: 768m
+    # aucun port publié : la base n'est joignable que par les conteneurs aethera
+
+  dbinit:
+    <<: *ra
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+      args: { PACKETVER: "${PACKETVER}" }
+    command: initdb
+    restart: "no"
+    depends_on: [db]
+
+  login:
+    <<: *ra
+    command: login
+    ports: ["6900:6900"]
+    mem_limit: 256m
+    depends_on: { dbinit: { condition: service_completed_successfully } }
+
+  char:
+    <<: *ra
+    command: char
+    ports: ["6121:6121"]
+    mem_limit: 256m
+    depends_on: [login]
+
+  map:
+    <<: *ra
+    command: map
+    ports: ["5121:5121"]
+    mem_limit: 2g
+    depends_on: [char]
+
+networks: { ro: {} }
+volumes: { dbdata: {} }
