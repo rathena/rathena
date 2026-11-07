@@ -14,8 +14,9 @@ the rAthena implementation map and the build order.
 
 ## Build settings
 
-- **Pre-renewal.** Configure with `./configure --enable-prere=yes`. Never build renewal.
-- **PACKETVER:** not chosen yet. It must match the client `.exe` date. Ask before setting it.
+- **Pre-renewal.** Never build renewal.
+- **PACKETVER:** `20220406`, matching the 2022-04-06 Ragexe client. It must match the client `.exe` date. Ask before changing it.
+- Configure with `./configure --enable-prere=yes --enable-packetver=20220406`.
 - Compile with `make clean && make server` (use `-j` up to the machine's core count).
 
 ## Where changes go
