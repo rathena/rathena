@@ -19,7 +19,7 @@ The full design and build plan is in [`docs/HANDOFF.md`](docs/HANDOFF.md).
 
 | Phase | Status |
 | --- | --- |
-| 1. Base server (clean pre-renewal build) | Done: runs locally on WSL Ubuntu 24.04 |
+| 1. Base server (clean pre-renewal build) | Done: runs locally, client connects (see [`docs/LOCAL_SETUP.md`](docs/LOCAL_SETUP.md)) |
 | 2. Item database | Not started |
 | 3. Existing-job skill data | Not started |
 
