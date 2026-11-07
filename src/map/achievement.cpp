@@ -882,6 +882,13 @@ bool achievement_check_condition( struct script_code* condition, map_session_dat
 		script_detach_rid(previous_st);
 	}
 
+	// Set aside a script the player is still paused in (e.g. an open dialog),
+	// otherwise the condition script backs it up and frees it as a "double continuation"
+	struct script_state* paused_st = sd->st;
+	int32 paused_npc_id = sd->npc_id;
+	sd->st = nullptr;
+	sd->npc_id = 0;
+
 	run_script( condition, 0, sd->id, fake_nd->id );
 
 	struct script_state* st = sd->st;
@@ -893,6 +900,10 @@ bool achievement_check_condition( struct script_code* condition, map_session_dat
 
 		script_free_state(st);
 	}
+
+	// Give the paused script back to the player
+	sd->st = paused_st;
+	sd->npc_id = paused_npc_id;
 
 	// If an old script is present
 	if( previous_st != nullptr ){
