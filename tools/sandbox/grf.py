@@ -29,15 +29,19 @@ def decode(raw, real):
         return lzma.decompress(raw, format=lzma.FORMAT_ALONE)[:real]
     except lzma.LZMAError:
         pass
-    if len(raw) > 5:
-        # Raw LZMA1: 5 property bytes, then the stream.
-        props, dict_size = raw[0], struct.unpack_from("<I", raw, 1)[0]
+    # Raw LZMA1: 5 property bytes, then the stream. GRF Editor puts one
+    # marker byte (00) in front of them.
+    for start in (0, 1):
+        if len(raw) <= start + 5:
+            break
+        props = raw[start]
+        dict_size = struct.unpack_from("<I", raw, start + 1)[0]
         lc, lp, pb = props % 9, (props // 9) % 5, props // 45
         try:
             d = lzma.LZMADecompressor(format=lzma.FORMAT_RAW, filters=[{
                 "id": lzma.FILTER_LZMA1, "dict_size": dict_size,
                 "lc": lc, "lp": lp, "pb": pb}])
-            data = d.decompress(raw[5:], max_length=real)
+            data = d.decompress(raw[start + 5:], max_length=real)
             if len(data) == real:
                 return data
         except (lzma.LZMAError, ValueError):
