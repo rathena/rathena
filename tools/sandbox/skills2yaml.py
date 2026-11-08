@@ -5,12 +5,18 @@
 #
 # Run from the repo root:
 #   python3 tools/sandbox/skills2yaml.py
+#   python3 tools/sandbox/skills2yaml.py --client "/path/to/client folder"
 #
 # Writes:
 #   db/import/skill_tree.yml  new max levels, new prerequisites, moved and
 #                             removed skills, per job
 #   db/import/skill_db.yml    raised max levels, cast time, after-cast delay
 #                             and cooldown that differ from rAthena
+# With --client, also writes the client's skillinfolist.lub and
+# skilltreeview.lub into its data folder (data\luafiles514\lua files\
+# skillinfoz and skillinfozss), edited from the copies in its GRFs, so the
+# skill window shows the same trees, prerequisites and max levels. Delete
+# those files to go back to the GRF versions.
 #
 # Rules:
 #   - Rows whose rAthena Code isn't an rAthena skill are new skills (Phase 8)
@@ -27,11 +33,17 @@
 # Needs the sheet shared as "Anyone with the link can view".
 # Standard library only, so nothing to install.
 
+import argparse
 import csv
 import io
+import os
 import re
 import sys
 import urllib.request
+from collections import Counter
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import grf  # noqa: E402  (tools/sandbox/grf.py)
 
 SHEET_ID = "1hZjgxrIMtovbU2v_QkTTRp4lYQNNunaTGAuN0HEa9RE"
 # Sheet tab -> (gid, rAthena job name), in tree order.
@@ -64,6 +76,19 @@ SKILL_DB_OUT = "db/import/skill_db.yml"
 SKILL_TREE_OUT = "db/import/skill_tree.yml"
 
 MAX_SKILL_LEVEL = 13  # src/map/skill.hpp
+
+# Client skill data (ROenglishRE plain-text Lua), and its job IDs.
+CLIENT_DIRS = ["skillinfoz", "skillinfozss"]
+CLIENT_PATH = "data\\luafiles514\\lua files\\{dir}\\{file}"
+CLIENT_JOBID = {
+    "Novice": "JT_NOVICE", "Swordman": "JT_SWORDMAN", "Mage": "JT_MAGICIAN",
+    "Archer": "JT_ARCHER", "Acolyte": "JT_ACOLYTE", "Merchant": "JT_MERCHANT",
+    "Thief": "JT_THIEF", "Knight": "JT_KNIGHT", "Priest": "JT_PRIEST",
+    "Wizard": "JT_WIZARD", "Blacksmith": "JT_BLACKSMITH", "Hunter": "JT_HUNTER",
+    "Assassin": "JT_ASSASSIN", "Crusader": "JT_CRUSADER", "Monk": "JT_MONK",
+    "Sage": "JT_SAGE", "Rogue": "JT_ROGUE", "Alchemist": "JT_ALCHEMIST",
+    "Bard": "JT_BARD", "Dancer": "JT_DANCER",
+}
 TIMINGS = [("Cast Time (s)", "CastTime"),
            ("After-Cast Delay (s)", "AfterCastActDelay"),
            ("Cooldown (s)", "Cooldown")]
@@ -257,6 +282,12 @@ def parse_prereqs(text, names, where):
 # ---------- building ----------
 
 def main():
+    parser = argparse.ArgumentParser(description="Regenerate skill import files from the sheet.")
+    parser.add_argument("--client", help="client folder; also writes its skill window files")
+    args = parser.parse_args()
+    if args.client:
+        client_sources = read_client_sources(args.client)
+
     ra_skills = read_rathena_skills()
     ra_trees = read_rathena_trees()
     tab_of_job = {job: tab for tab, (_, job) in TABS.items()}
@@ -487,6 +518,312 @@ def main():
             print(f"{title}:")
             for item in items:
                 print("  -", item)
+
+    if args.client:
+        jobs = [job for _, job in TABS.values()]
+        top = {code: lv for code, lv in top_level.items()
+               if lv > ra_skills[code]["MaxLevel"]}
+        write_client(args.client, client_sources, jobs, ra_skills, ra_trees,
+                     finals, desired, leaves, top)
+
+
+# ---------- client skill window files ----------
+
+def read_client_sources(client_dir):
+    """{(dir, file): text} from the client's GRFs, in DATA.INI order."""
+    ini = os.path.join(client_dir, "DATA.INI")
+    if not os.path.exists(ini):
+        sys.exit(f"{ini} not found: is --client the client folder?")
+    grfs = []
+    with open(ini, encoding="latin-1") as f:
+        for line in f:
+            m = re.match(r"\s*(\d+)\s*=\s*(\S.*\.grf)\s*$", line, re.I)
+            if m:
+                grfs.append((int(m.group(1)), m.group(2)))
+    wanted = {CLIENT_PATH.format(dir=d, file=f): (d, f) for d in CLIENT_DIRS
+              for f in ("skillinfolist.lub", "skilltreeview.lub", "skillid.lub")}
+    sources = {}
+    for _, name in sorted(grfs):
+        path = os.path.join(client_dir, name)
+        if not os.path.exists(path):
+            continue
+        for grf_path, data in grf.read_files(path, [w for w in wanted if wanted[w] not in sources]).items():
+            sources[wanted[grf_path]] = data.decode("latin-1")
+    if not sources:
+        sys.exit("No skillinfolist.lub or skilltreeview.lub found in the client's GRFs")
+    for key, text in sources.items():
+        if text.lstrip().startswith("\x1bLua"):
+            sys.exit(f"{key[0]}/{key[1]} is compiled Lua; only plain-text files can be edited")
+    return sources
+
+
+def strip_strings(line):
+    return re.sub(r'"(?:[^"\\]|\\.)*"', '""', line)
+
+
+def depth_change(line):
+    s = strip_strings(line)
+    return s.count("{") - s.count("}")
+
+
+def find_block(lines, start_pattern):
+    """(first, last) line index of a table whose first line matches, or None."""
+    for i, line in enumerate(lines):
+        if re.match(start_pattern, line):
+            depth = 0
+            for j in range(i, len(lines)):
+                depth += depth_change(lines[j])
+                if depth == 0:
+                    return i, j
+    return None
+
+
+def block_fields(lines):
+    """Split the inside of a table into fields: [(name or None, [lines])]."""
+    fields, depth, cur = [], 0, None
+    for line in lines:
+        if depth == 0:
+            m = re.match(r"\s*(\w+)\s*=", line)
+            cur = (m.group(1) if m else None, [])
+            fields.append(cur)
+        cur[1].append(line)
+        depth += depth_change(line)
+    return fields
+
+
+def with_comma(field_lines):
+    last = field_lines[-1].rstrip()
+    if not last.endswith(","):
+        field_lines = field_lines[:-1] + [last + ","]
+    return field_lines
+
+
+def req_lines(reqs, indent):
+    out = []
+    for i, (code, level) in enumerate(reqs):
+        comma = "," if i < len(reqs) - 1 else ""
+        out.append(f"{indent}{{ SKID.{code}, {level} }}{comma}")
+    return out
+
+
+def edit_skillinfo(text, changes, max_levels):
+    """changes: code -> (default reqs, {JOBID name: reqs}, JOBID names we manage);
+    max_levels: code -> raised max level."""
+    lines = text.split("\r\n")
+    missing = []
+    for code in sorted(set(changes) | set(max_levels)):
+        found = find_block(lines, rf"\t\[SKID\.{code}\] = \{{\s*$")
+        if not found:
+            missing.append(code)
+            continue
+        first, last = found
+        fields = block_fields(lines[first + 1:last])
+        out = []
+        old_max = None
+        for name, flines in fields:
+            if name == "MaxLv":
+                old_max = int(re.search(r"\d+", flines[0]).group())
+        new_max = max_levels.get(code, old_max)
+        keep_jobs = []
+        for name, flines in fields:
+            if code in changes and name in ("_NeedSkillList", "NeedSkillList"):
+                if name == "NeedSkillList":
+                    keep_jobs = parse_job_reqs("\n".join(flines))
+                continue
+            if name == "MaxLv" and new_max and new_max > old_max:
+                flines = [re.sub(r"\d+", str(new_max), flines[0], count=1)]
+            elif (new_max and old_max and new_max > old_max and len(flines) == 1
+                  and re.match(r"\s*\w+ = \{[\s\d.,-]+\},?\s*$", flines[0])):
+                values = re.findall(r"-?[\d.]+", flines[0].split("=", 1)[1])
+                if len(values) == old_max:
+                    values += [values[-1]] * (new_max - old_max)
+                    indent = re.match(r"\s*", flines[0]).group()
+                    fname = flines[0].split("=")[0].strip()
+                    flines = [f"{indent}{fname} = {{ {', '.join(values)} }},"]
+            out.append(with_comma(flines))
+        if code in changes:
+            default, per_job, managed = changes[code]
+            if default:
+                out.append(["\t\t_NeedSkillList = {"] + req_lines(default, "\t\t\t") + ["\t\t},"])
+            jobs = dict(per_job)
+            for job, reqs in keep_jobs:
+                if job not in managed:  # e.g. Super Novice: not ours to change
+                    jobs[job] = reqs
+            if jobs:
+                body = ["\t\tNeedSkillList = {"]
+                items = list(jobs.items())
+                for i, (job, reqs) in enumerate(items):
+                    body.append(f"\t\t\t[JOBID.{job}] = {{")
+                    body += req_lines(reqs, "\t\t\t\t")
+                    body.append("\t\t\t}" + ("," if i < len(items) - 1 else ""))
+                body.append("\t\t},")
+                out.append(body)
+        flat = [line for f in out for line in f]
+        if flat:
+            flat[-1] = flat[-1].rstrip(",")
+        lines[first + 1:last] = flat
+    return "\r\n".join(lines), missing
+
+
+def parse_job_reqs(text):
+    """'[JOBID.JT_X] = { { SKID.A, 1 } }, ...' -> [(job, [(code, level)])]"""
+    out, cur = [], None
+    for m in re.finditer(r"\[JOBID\.(\w+)\]|SKID\.(\w+)\s*,\s*(\d+)", text):
+        if m.group(1):
+            cur = (m.group(1), [])
+            out.append(cur)
+        elif cur:
+            cur[1].append((m.group(2), int(m.group(3))))
+    return out
+
+
+def edit_treeview(text, layouts):
+    """layouts: JOBID name -> {slot: code}; rewrites those jobs' tabs."""
+    lines = text.split("\r\n")
+    for job, slots in layouts.items():
+        found = find_block(lines, rf"\t\[JOBID\.{job}\] = \{{")
+        if not found:
+            continue
+        first, last = found
+        body = []
+        items = sorted(slots.items())
+        for i, (slot, code) in enumerate(items):
+            body.append(f"\t\t[{slot}] = SKID.{code}" + ("," if i < len(items) - 1 else ""))
+        closing = lines[last]
+        lines[first:last + 1] = [f"\t[JOBID.{job}] = {{"] + body + [closing]
+    return "\r\n".join(lines)
+
+
+def read_treeview(text):
+    """JOBID name -> {slot: code}"""
+    lines = text.split("\r\n")
+    out = {}
+    for i, line in enumerate(lines):
+        m = re.match(r"\t\[JOBID\.(\w+)\] = \{", line)
+        if not m:
+            continue
+        found = find_block(lines[i:], r"\t\[JOBID\.")
+        block = "\n".join(lines[i:i + found[1] + 1])
+        out[m.group(1)] = {int(s): c for s, c in re.findall(r"\[(\d+)\]\s*=\s*SKID\.(\w+)", block)}
+    return out
+
+
+def write_client(client_dir, sources, jobs, ra_skills, ra_trees, finals, desired,
+                 leaves, top):
+    def effective(own_of, job, code):
+        entry = own_of(job).get(code)
+        if entry is None:
+            for parent in ra_trees[job]["inherit"]:
+                if code in own_of(parent):
+                    entry = own_of(parent)[code]
+        return entry if entry and entry["max"] > 0 else None
+
+    def classic(job):
+        return ra_trees[job]["tree"]
+
+    def new(job):
+        return finals.get(job, ra_trees[job]["tree"])
+
+    # Skills whose tree entry changed for any job, and each job's prerequisites.
+    codes = set()
+    for job in jobs:
+        codes |= set(classic(job)) | set(new(job))
+        for parent in ra_trees[job]["inherit"]:
+            codes |= set(classic(parent)) | set(new(parent))
+    changes = {}
+    for code in sorted(codes):
+        before = [effective(classic, j, code) for j in jobs]
+        after = [effective(new, j, code) for j in jobs]
+        if before == after:
+            continue
+        per_job = {j: tuple(e["req"].items()) for j, e in zip(jobs, after) if e}
+        if not per_job:
+            changes[code] = ([], {}, managed_ids(jobs))
+            continue
+        counts = Counter(per_job.values())
+        default = max(counts, key=lambda r: (counts[r], -list(per_job.values()).index(r)))
+        others = {}
+        for job, reqs in per_job.items():
+            if reqs != default:
+                for jid in job_ids(job):
+                    others[jid] = list(reqs)
+        changes[code] = (list(default), others, managed_ids(jobs))
+    max_levels = top
+
+    # Each job's tab: drop skills it lost or that now show on a parent's tab,
+    # add the ones its sheet tab lists, in free slots.
+    def layouts_for(treeview):
+        current = read_treeview(treeview)
+        result = {}
+        for job in jobs:
+            jid = CLIENT_JOBID[job]
+            slots = dict(current.get(jid, {}))
+            parents = ra_trees[job]["inherit"]
+            for slot, code in list(slots.items()):
+                shown_upstream = (code not in desired[job]
+                                  and any(code in desired.get(p, {}) for p in parents))
+                if (effective(new, job, code) is None or code in leaves[job]
+                        or shown_upstream):
+                    del slots[slot]
+            for code in desired[job]:
+                if code not in slots.values():
+                    slot = next(s for s in range(200) if s not in slots)
+                    slots[slot] = code
+            if slots != current.get(jid, {}):
+                result[jid] = slots
+        return result
+
+    # The client names a few skills differently (BA_FROSTJOKER is BA_FROSTJOKE),
+    # so names go through the numeric skill ID in its skillid.lub.
+    ra_by_id = {s["Id"]: code for code, s in ra_skills.items()}
+
+    def namers(folder):
+        text = sources.get((folder, "skillid.lub"), "")
+        client_by_id = {int(i): n for n, i in re.findall(r"^\s*(\w+)\s*=\s*(\d+)", text, re.M)}
+        to_client = {code: client_by_id.get(s["Id"], code) for code, s in ra_skills.items()}
+        to_ra = {n: ra_by_id.get(i, n) for i, n in client_by_id.items()}
+        return (lambda c: to_client.get(c, c)), (lambda c: to_ra.get(c, c))
+
+    def reqs_to(conv, reqs):
+        return [(conv(r), lv) for r, lv in reqs]
+
+    written = []
+    for (folder, name), text in sorted(sources.items()):
+        to_client, to_ra = namers(folder)
+        if name == "skillinfolist.lub":
+            client_changes = {
+                to_client(code): (reqs_to(to_client, default),
+                                  {j: reqs_to(to_client, r) for j, r in others.items()},
+                                  managed)
+                for code, (default, others, managed) in changes.items()}
+            client_max = {to_client(code): lv for code, lv in max_levels.items()}
+            new_text, missing = edit_skillinfo(text, client_changes, client_max)
+            for code in missing:
+                print(f"  note: {code} is not in the client's {folder}/{name}")
+        elif name == "skilltreeview.lub":
+            ra_text = re.sub(r"SKID\.(\w+)", lambda m: "SKID." + to_ra(m.group(1)), text)
+            layouts = {jid: {slot: to_client(code) for slot, code in slots.items()}
+                       for jid, slots in layouts_for(ra_text).items()}
+            new_text = edit_treeview(text, layouts)
+        else:
+            continue
+        out = os.path.join(client_dir, *CLIENT_PATH.format(dir=folder, file=name).split("\\"))
+        os.makedirs(os.path.dirname(out), exist_ok=True)
+        with open(out, "w", encoding="latin-1", newline="") as f:
+            f.write(new_text)
+        written.append(out)
+    print(f"Client: {len(changes)} skills with new prerequisites or trees")
+    for path in written:
+        print(f"  {path}")
+
+
+def job_ids(job):
+    base = CLIENT_JOBID[job]
+    return [base, base + "_H", base + "_B"]
+
+
+def managed_ids(jobs):
+    return {jid for job in jobs for jid in job_ids(job)}
 
 
 def write_import(path, header_type, version, entries):

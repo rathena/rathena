@@ -83,6 +83,21 @@ def read_table(path):
     return version, entries
 
 
+def read_files(path, names):
+    """{name: bytes} for the given GRF paths (case-insensitive) that the GRF has."""
+    wanted = {n.lower(): n for n in names}
+    found = {}
+    _, entries = read_table(path)
+    with open(path, "rb") as f:
+        for name, comp, aligned, real, flags, offset in entries:
+            key = name.lower()
+            if key not in wanted or not flags & 1 or flags & 6:
+                continue
+            f.seek(HEADER_SIZE + offset)
+            found[wanted[key]] = decode(f.read(aligned)[:comp], real) if real else b""
+    return found
+
+
 def main():
     if len(sys.argv) < 4 or sys.argv[2] not in ("list", "extract"):
         sys.exit("usage: grf.py <file.grf> list <text>\n"
