@@ -7,14 +7,42 @@
 # <text> filters paths (case-insensitive), e.g. "skillinfoz".
 # Extracted files keep their GRF path under the out folder. They are
 # Gravity client files: never commit them.
-# Reads GRF versions 0x200 and 0x300. Standard library only.
+# Reads GRF versions 0x200 and 0x300, with zlib or LZMA data (GRF Editor's
+# cps.dll compression). Standard library only.
 
+import lzma
 import os
 import struct
 import sys
 import zlib
 
 HEADER_SIZE = 46
+
+
+def decode(raw, real):
+    """File data -> bytes. Tries zlib, then LZMA; ValueError if neither fits."""
+    try:
+        return zlib.decompress(raw)
+    except zlib.error:
+        pass
+    try:
+        return lzma.decompress(raw, format=lzma.FORMAT_ALONE)[:real]
+    except lzma.LZMAError:
+        pass
+    if len(raw) > 5:
+        # Raw LZMA1: 5 property bytes, then the stream.
+        props, dict_size = raw[0], struct.unpack_from("<I", raw, 1)[0]
+        lc, lp, pb = props % 9, (props // 9) % 5, props // 45
+        try:
+            d = lzma.LZMADecompressor(format=lzma.FORMAT_RAW, filters=[{
+                "id": lzma.FILTER_LZMA1, "dict_size": dict_size,
+                "lc": lc, "lp": lp, "pb": pb}])
+            data = d.decompress(raw[5:], max_length=real)
+            if len(data) == real:
+                return data
+        except (lzma.LZMAError, ValueError):
+            pass
+    raise ValueError(raw[:16].hex(" "))
 
 
 def read_table(path):
@@ -73,7 +101,11 @@ def main():
                 print(f"  skipped (encrypted): {name}")
                 continue
             f.seek(HEADER_SIZE + offset)
-            data = zlib.decompress(f.read(aligned)[:comp]) if real else b""
+            try:
+                data = decode(f.read(aligned)[:comp], real) if real else b""
+            except ValueError as e:
+                print(f"  can't decode {name}: data starts {e}")
+                continue
             out = os.path.join(out_dir, *name.replace("\\", "/").split("/"))
             os.makedirs(os.path.dirname(out), exist_ok=True)
             with open(out, "wb") as o:
