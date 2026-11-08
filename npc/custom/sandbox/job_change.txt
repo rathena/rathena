@@ -1,0 +1,22 @@
+//===== RO Sandbox ===========================================
+//= Novice job change at Job Lv 25
+//===== Description: =========================================
+//= [RO Sandbox] A Novice has 25 skill points on this server
+//= (Novice tab of RO_Skill_Trees), so changing job needs
+//= Job Lv 25 as well as Basic Skill 9.
+//=
+//= Replaces F_CanChangeJob from npc/other/Global_Functions.txt,
+//= which every 1st-job NPC (and the Super Novice, Taekwon and
+//= Gunslinger NPCs) calls. The later definition wins; the map
+//= server logs "Overwriting user function [F_CanChangeJob]".
+//= Reborn Novices and Babies keep the classic check: their
+//= job level cap is still 10.
+//============================================================
+
+function	script	F_CanChangeJob	{
+	if (!basicskillcheck())
+		return true;
+	if (getskilllv("NV_BASIC") < 9)
+		return false;
+	return (Class != Job_Novice || JobLevel >= 25);
+}
