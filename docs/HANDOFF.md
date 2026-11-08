@@ -136,8 +136,10 @@ Start with data that rAthena already reads, so the server is playable early, and
 2. **Item database.** Export Items and Monster Drops to `db/import/` item and mob files, and the custom items to the client, with `tools/sandbox/sheet2yaml.py`. *Done 2026-11-08.*
    - Check: `@item 30000` gives a Green Gemstone; a Harpy can drop one.
    - The Recipes tab moved to phase 7: classic forging and arrows already match rAthena, and the rest needs the Recipe Book.
-3. **Existing-job skill data.** Levels, costs, cast times, cooldowns and trees for jobs that already exist in rAthena.
+3. **Existing-job skill data.** Levels, costs, cast times, cooldowns and trees for jobs that already exist in rAthena, with `tools/sandbox/skills2yaml.py`.
    - Check: a test Knight sees the new tree and cooldowns in game.
+   - Covers Novice, the six 1st jobs and the 13 classic 2nd jobs. Costs wait for phase 6; new skills and reworked effects for phase 8.
+   - Until a skill named in New Prerequisites exists, the skill keeps its classic prerequisites. Classic skills a tab doesn't list stay until their replacement exists.
 4. **Simple rule changes.** Multiplicative reductions, flat-before-percent, debuff durations, detection timings.
    - Check: stack two DEF reductions on a test target and compare with the sheet's example (72%).
 5. **Elite cooldown and 8-skill bar.**
