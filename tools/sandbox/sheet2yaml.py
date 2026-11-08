@@ -34,6 +34,7 @@ MOB_DB_OUT = "db/import/mob_db.yml"
 
 CUSTOM_ID_START = 30000
 MAX_MOB_DROP = 10  # src/map/mob.hpp
+MAX_WEAPON_LEVEL = 4  # src/common/mmo.hpp, pre-renewal
 
 # Sheet values that differ from rAthena's names.
 TYPE_MAP = {"Food": "Usable"}  # food effects come in Phase 7
@@ -141,11 +142,14 @@ def custom_item(row):
 
     if item_type == "Weapon":
         atk = re.search(r"\bATK (\d+)", notes)
-        wlv = re.search(r"\bWeapon Lv (\d+)", notes)
+        wlv = re.search(r"\bTier (\d+)", notes)  # the sheet's Tier = weapon level
         if not atk:
             errors.append(f"{item_id} {row['Name']}: no 'ATK n' in Notes")
         if not wlv:
-            errors.append(f"{item_id} {row['Name']}: no 'Weapon Lv n' in Notes")
+            errors.append(f"{item_id} {row['Name']}: no 'Tier n' in Notes")
+        elif int(wlv.group(1)) > MAX_WEAPON_LEVEL:
+            errors.append(f"{item_id} {row['Name']}: Tier {wlv.group(1)} is above "
+                          f"pre-renewal's maximum weapon level {MAX_WEAPON_LEVEL}")
         if atk:
             lines.append(f"    Attack: {atk.group(1)}")
     if row["Slots"].strip():
