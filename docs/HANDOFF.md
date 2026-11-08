@@ -4,7 +4,7 @@ Rex Irvin Carpen · Nov 6, 2026
 
 ## Overview
 
-The design is ready to build: 26 job trees (Novice, 6 first jobs, 19 second jobs), about 30 system rules, and an item database with 369 recipes and 51 custom items, all on a pre-renewal rAthena base.
+The design is ready to build: 26 job trees (Novice, 6 first jobs, 19 second jobs), about 30 system rules, and an item database with 369 recipes and 50 custom items, all on a pre-renewal rAthena base.
 
 | Source | What it holds |
 | --- | --- |
@@ -73,11 +73,11 @@ Every 2nd job now offers real build choices: with 50 points, players learn 27% t
 
 ## Items and crafting
 
-All 51 custom items have IDs, prices, weights and effects, and every recipe resolves to a real item. Crafted items are priced at the sum of their ingredients, so crafting never creates zeny from NPCs; the two gold items are priced by the player market instead.
+All 50 custom items have IDs, prices, weights and effects, and every recipe resolves to a real item. Crafted items are priced at the sum of their ingredients, so crafting never creates zeny from NPCs; the two gold items are priced by the player market instead.
 
 | ID range | Category | Items |
 | --- | --- | --- |
-| 30000–30011 | Materials and ingredients | Green Gemstone, 10 cooking ingredients, Artificer's Hammer (crafting tool) |
+| 30000–30011 | Materials and ingredients | Green Gemstone, 9 cooking ingredients, Artificer's Hammer (crafting tool). Egg uses the official Egg (574), so 30001 is unused |
 | 30100–30112 | Potions | 12 boosting potions, Clear White |
 | 30200–30210 | Equipment | Golden Thief Blade, Hunter's Avarice, Mammon's Golden Axe, Golden Cursed Ring, Blade of Golden Lining, 6 runic weapons |
 | 30300–30307 | Recipe pages | One per unique recipe, 0.05% drops (Blade page: Golden Thief Bug, 1%) |
@@ -112,9 +112,9 @@ About half the work is data that rAthena already reads; the rest needs C++ sourc
 | Skill trees and prerequisites | Data | `db/import/skill_tree.yml` |
 | Skill levels, costs, cast times, cooldowns | Data | `db/import/skill_db.yml` (has a Cooldown field) |
 | New skill effects | Source + client | `src/map/skill.cpp`, `battle.cpp`, `status.cpp`; client skill info and descriptions |
-| Custom items | Data | `db/import/item_db.yml` (IDs 30000+), item scripts for effects |
+| Custom items | Data + client | `db/import/item_db.yml` (IDs 30000+), item scripts for effects; client `SystemEN/itemInfo_C.lua` |
 | Monster drops | Data | `db/import/mob_db.yml` |
-| Forging and arrow recipes | Data | `db/pre-re/produce_db.txt`, `db/create_arrow_db.yml` |
+| Forging and arrow recipes | Data | `db/import/produce_db.txt`, `db/import/create_arrow_db.yml` (classic forging and arrows already match rAthena) |
 | Recipe Book, cooking, recipe pages | Script | NPC script menu, learned recipes as character variables |
 | New jobs (Sword Master, Enchantress, Templar, Ranger, Kage), Marksman rename | Source + client | Job IDs and stats in source and `job_stats`; client job names and sprites |
 | Stamina resource | Source + client | New stat and regen in `status.cpp` / `pc.cpp`; a client bar |
@@ -131,10 +131,11 @@ File paths are from rAthena master as of late October 2026; confirm them against
 
 Start with data that rAthena already reads, so the server is playable early, and add source changes one system at a time. Each phase ends with a check on the live server, not a summary.
 
-1. **Base server.** Clean rAthena pre-renewal build, compiles and runs.
+1. **Base server.** Clean rAthena pre-renewal build, compiles and runs. *Done 2026-11-07.*
    - Check: map server log shows the maps and databases loaded with no errors.
-2. **Item database.** Export Items, Monster Drops and Recipes to `db/import/` item, mob, produce and arrow files.
+2. **Item database.** Export Items and Monster Drops to `db/import/` item and mob files, and the custom items to the client, with `tools/sandbox/sheet2yaml.py`. *Done 2026-11-08.*
    - Check: `@item 30000` gives a Green Gemstone; a Harpy can drop one.
+   - The Recipes tab moved to phase 7: classic forging and arrows already match rAthena, and the rest needs the Recipe Book.
 3. **Existing-job skill data.** Levels, costs, cast times, cooldowns and trees for jobs that already exist in rAthena.
    - Check: a test Knight sees the new tree and cooldowns in game.
 4. **Simple rule changes.** Multiplicative reductions, flat-before-percent, debuff durations, detection timings.
@@ -143,7 +144,7 @@ Start with data that rAthena already reads, so the server is playable early, and
    - Check: one elite puts the others on cooldown; a 9th skill cannot be equipped.
 6. **Stamina resource.** The largest change: every skill's SP/MP split depends on it.
    - Check: Stamina regenerates 10 per second and Breathing Mastery adds up to 50.
-7. **Crafting scripts.** Recipe Book, Gourmet and food stomach, potion tolerance, Clear White.
+7. **Crafting scripts.** Recipe Book (and the Recipes tab export: 30 changed or new alchemy recipes, plus every other book), Gourmet and food stomach, potion tolerance, Clear White.
    - Check: a 9th Red Potion inside 10 seconds triggers the poison.
 8. **New skills for existing jobs.** One job at a time, starting with the Merchant branch (its crafting is already in place).
 9. **New jobs.** Sword Master, Enchantress, Templar, Ranger and Kage, including client job names and sprites.
@@ -163,3 +164,6 @@ None of these block phases 1 to 4; most are small design calls or cleanups.
 - [ ] Write the NPC scripts for Jade's gemstone trade and the Jewel Shop (Green Gemstone, Artificer's Hammer).
 - [ ] Decide client art for the five new jobs, or reuse existing sprites for a first version.
 - [ ] Design 3rd jobs, the final form after transcendence.
+- [ ] Draw icons and sprites for the custom items. For now each borrows an official item's look (Items tab, Client Look column).
+- [ ] Rename or switch off the client's "[ExampleRO]" tag on custom item names (ROTP setting in `SystemEN/itemInfo.lua`).
+- [ ] Check 6 Fletcher's Notes rows whose material names match more than one item (for example, Wooden Mail).

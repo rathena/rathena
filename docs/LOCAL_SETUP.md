@@ -39,6 +39,23 @@ Gravity files stay on the laptop. Never commit them.
 - Needs Visual C++ Redistributables and the DirectX runtime. In Setup.exe keep DirectX7.
 - Don't run `rsu-kro-rag-lite-x64.exe`: it can pull a newer `data.grf` the 2022 client can't read.
 
+## Updating items from the sheet
+
+The RO_Items_PreRenewal sheet is shared as "Anyone with the link can view",
+so the converter downloads it directly.
+
+- `~/.bashrc` sets `RO` to the client folder:
+  `/mnt/d/ProgramFiles/Games/Ragnarok Online/fROggo-folder-main`
+- From the repo root:
+  ```
+  python3 tools/sandbox/sheet2yaml.py --client "$RO"
+  ```
+  This writes `db/import/item_db.yml`, `db/import/mob_db.yml` and the client's
+  `SystemEN/itemInfo_C.lua`. If the sheet has a problem, it lists what to fix
+  and writes nothing.
+- Restart the map server, and restart the client to see new item names.
+- Commit the two `db/import` files. The client file stays out of git.
+
 ## Known issues
 
 - A few training-ground floor textures are missing (`new_1-2.bmp`, `new_zone02.bmp`).
