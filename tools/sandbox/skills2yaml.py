@@ -751,13 +751,15 @@ def write_client(client_dir, sources, jobs, ra_skills, ra_trees, finals, desired
     max_levels = top
 
     # Each job's tab: drop skills it lost or that now show on a parent's tab,
-    # add the ones its sheet tab lists, in free slots.
+    # add the ones its sheet tab lists, in free slots. The client draws Novice
+    # on the same grid as each 1st job, so their new skills avoid each
+    # other's slots (only Phase 3 jobs are counted; Super Novice, Gunslinger,
+    # Ninja and Taekwon share that grid too and may overlap until their phase).
     def layouts_for(treeview):
         current = read_treeview(treeview)
-        result = {}
+        kept = {}
         for job in jobs:
-            jid = CLIENT_JOBID[job]
-            slots = dict(current.get(jid, {}))
+            slots = dict(current.get(CLIENT_JOBID[job], {}))
             parents = ra_trees[job]["inherit"]
             for slot, code in list(slots.items()):
                 shown_upstream = (code not in desired[job]
@@ -765,10 +767,23 @@ def write_client(client_dir, sources, jobs, ra_skills, ra_trees, finals, desired
                 if (effective(new, job, code) is None or code in leaves[job]
                         or shown_upstream):
                     del slots[slot]
+            kept[job] = slots
+        first_jobs = [j for j in jobs if ra_trees[j]["inherit"] == ["Novice"]]
+        order = ["Novice"] + [j for j in jobs if j != "Novice"]
+        result = {}
+        for job in order:
+            slots = kept[job]
+            if job == "Novice":
+                reserved = set().union(*(kept[j] for j in first_jobs))
+            elif job in first_jobs:
+                reserved = set(kept["Novice"])
+            else:
+                reserved = set()
             for code in desired[job]:
                 if code not in slots.values():
-                    slot = next(s for s in range(200) if s not in slots)
+                    slot = next(s for s in range(200) if s not in slots and s not in reserved)
                     slots[slot] = code
+            jid = CLIENT_JOBID[job]
             if slots != current.get(jid, {}):
                 result[jid] = slots
         return result
