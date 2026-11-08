@@ -12,8 +12,8 @@
 #                             removed skills, per job
 #   db/import/skill_db.yml    raised max levels, cast time, after-cast delay
 #                             and cooldown that differ from rAthena
-# With --client, also writes the client's skillinfolist.lub and
-# skilltreeview.lub into its data folder (data\luafiles514\lua files\
+# With --client, also writes the client's skillinfolist.lub, skilltreeview.lub
+# and skilldescript.lub into its data folder (data\luafiles514\lua files\
 # skillinfoz and skillinfozss), edited from the copies in its GRFs, so the
 # skill window shows the same trees, prerequisites and max levels. Delete
 # those files to go back to the GRF versions.
@@ -541,7 +541,8 @@ def read_client_sources(client_dir):
             if m:
                 grfs.append((int(m.group(1)), m.group(2)))
     wanted = {CLIENT_PATH.format(dir=d, file=f): (d, f) for d in CLIENT_DIRS
-              for f in ("skillinfolist.lub", "skilltreeview.lub", "skillid.lub")}
+              for f in ("skillinfolist.lub", "skilltreeview.lub", "skilldescript.lub",
+                        "skillid.lub", "jobinheritlist.lub")}
     sources = {}
     for _, name in sorted(grfs):
         path = os.path.join(client_dir, name)
@@ -642,7 +643,7 @@ def edit_skillinfo(text, changes, max_levels):
                     flines = [f"{indent}{fname} = {{ {', '.join(values)} }},"]
             out.append(with_comma(flines))
         if code in changes:
-            default, per_job, managed = changes[code]
+            default, per_job, managed = changes[code][:3]
             if default:
                 out.append(["\t\t_NeedSkillList = {"] + req_lines(default, "\t\t\t") + ["\t\t},"])
             jobs = dict(per_job)
@@ -737,8 +738,9 @@ def write_client(client_dir, sources, jobs, ra_skills, ra_trees, finals, desired
         if before == after:
             continue
         per_job = {j: tuple(e["req"].items()) for j, e in zip(jobs, after) if e}
+        having = [jid for job in per_job for jid in job_ids(job)]
         if not per_job:
-            changes[code] = ([], {}, managed_ids(jobs))
+            changes[code] = ([], {}, managed_ids(jobs), having)
             continue
         counts = Counter(per_job.values())
         default = max(counts, key=lambda r: (counts[r], -list(per_job.values()).index(r)))
@@ -747,7 +749,7 @@ def write_client(client_dir, sources, jobs, ra_skills, ra_trees, finals, desired
             if reqs != default:
                 for jid in job_ids(job):
                     others[jid] = list(reqs)
-        changes[code] = (list(default), others, managed_ids(jobs))
+        changes[code] = (list(default), others, managed_ids(jobs), having)
     max_levels = top
 
     # Each job's tab: drop skills it lost or that now show on a parent's tab,
@@ -805,13 +807,17 @@ def write_client(client_dir, sources, jobs, ra_skills, ra_trees, finals, desired
     written = []
     for (folder, name), text in sorted(sources.items()):
         to_client, to_ra = namers(folder)
-        if name == "skillinfolist.lub":
-            client_changes = {
-                to_client(code): (reqs_to(to_client, default),
-                                  {j: reqs_to(to_client, r) for j, r in others.items()},
-                                  managed)
-                for code, (default, others, managed) in changes.items()}
-            client_max = {to_client(code): lv for code, lv in max_levels.items()}
+        client_changes = {
+            to_client(code): (reqs_to(to_client, default),
+                              {j: reqs_to(to_client, r) for j, r in others.items()},
+                              managed, having)
+            for code, (default, others, managed, having) in changes.items()}
+        client_max = {to_client(code): lv for code, lv in max_levels.items()}
+        if name == "skilldescript.lub":
+            jobid_text = sources.get((folder, "jobinheritlist.lub"), "")
+            job_numbers = {j: int(n) for j, n in re.findall(r"(JT_\w+)\s*=\s*(\d+)", jobid_text)}
+            new_text = edit_descript(text, client_changes, client_max, job_numbers)
+        elif name == "skillinfolist.lub":
             new_text, missing = edit_skillinfo(text, client_changes, client_max)
             for code in missing:
                 print(f"  note: {code} is not in the client's {folder}/{name}")
@@ -830,6 +836,67 @@ def write_client(client_dir, sources, jobs, ra_skills, ra_trees, finals, desired
     print(f"Client: {len(changes)} skills with new prerequisites or trees")
     for path in written:
         print(f"  {path}")
+
+
+def edit_descript(text, changes, max_levels, job_numbers):
+    """Rewrite the "Max Level" and "Requirement" lines of skill descriptions.
+
+    A requirement line may start with a job ID ("14^CC3399Requirement: ...")
+    and then shows only to that job. Lines for jobs this tool doesn't manage
+    (Super Novice...) are kept; if any are, or jobs need different
+    requirements, the new lines get job IDs too."""
+    lines = text.split("\r\n")
+    names = {}
+    for i, line in enumerate(lines[:-1]):
+        m = re.match(r"\t\[SKID\.(\w+)\] = \{", line)
+        n = re.match(r'\s*"(.*?)",?\s*$', lines[i + 1]) if m else None
+        if n:
+            names[m.group(1)] = n.group(1)
+
+    def req_text(reqs):
+        return "Requirement: " + ", ".join(f"{names.get(c, c)} {lv}" for c, lv in reqs)
+
+    for code in sorted(set(changes) | set(max_levels)):
+        found = find_block(lines, rf"\t\[SKID\.{code}\] = \{{\s*$")
+        if not found:
+            continue
+        first, last = found
+        body = lines[first + 1:last]
+        if code in max_levels:
+            body = [re.sub(r'"Max Level: \d+', f'"Max Level: {max_levels[code]}', b) for b in body]
+        if code in changes:
+            default, others, managed, having = changes[code]
+            managed_nums = {job_numbers[j] for j in managed if j in job_numbers}
+            out, kept_prefixed, insert_at, i = [], False, None, 0
+            while i < len(body):
+                m = re.match(r'\s*"(\d*)\^\w{6}Requirement:', body[i])
+                if not m:
+                    out.append(body[i])
+                    i += 1
+                    continue
+                j = i
+                while "^000000" not in body[j] and j < len(body) - 1:
+                    j += 1
+                if m.group(1) and int(m.group(1)) not in managed_nums:
+                    out += body[i:j + 1]
+                    kept_prefixed = True
+                elif insert_at is None:
+                    insert_at = len(out)
+                i = j + 1
+            if insert_at is None:
+                insert_at = next((k + 1 for k, b in enumerate(out) if '"Max Level:' in b), 1)
+            new = []
+            if others or kept_prefixed:
+                for jid in having:
+                    reqs = others.get(jid, default)
+                    if reqs and jid in job_numbers:
+                        new.append(f'\t\t"{job_numbers[jid]}^CC3399{req_text(reqs)}^000000",')
+            elif default:
+                new.append(f'\t\t"^CC3399{req_text(default)}^000000",')
+            out[insert_at:insert_at] = new
+            body = out
+        lines[first + 1:last] = body
+    return "\r\n".join(lines)
 
 
 def job_ids(job):
