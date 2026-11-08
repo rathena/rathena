@@ -164,6 +164,8 @@ def custom_item(row):
         if wlv:
             lines.append(f"    WeaponLevel: {wlv.group(1)}")
         lines.append("    Refineable: true")
+    if item_type == "Armor":
+        lines.append("    ArmorLevel: 1")  # the only armor level pre-renewal has
     if row["Equip Lv"].strip():
         lines.append(f"    EquipLevelMin: {int(number(row['Equip Lv']))}")
     return lines
