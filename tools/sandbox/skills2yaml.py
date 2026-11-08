@@ -12,6 +12,8 @@
 #                             removed skills, per job
 #   db/import/skill_db.yml    raised max levels, cast time, after-cast delay
 #                             and cooldown that differ from rAthena
+#   db/import/job_stats.yml   max job level where a tab's "Skill points
+#                             available" differs from rAthena (Novice: 25)
 # With --client, also writes the client's skillinfolist.lub, skilltreeview.lub
 # and skilldescript.lub into its data folder (data\luafiles514\lua files\
 # skillinfoz and skillinfozss), edited from the copies in its GRFs, so the
@@ -74,6 +76,9 @@ SKILL_DB_SOURCE = "db/pre-re/skill_db.yml"
 SKILL_TREE_SOURCE = "db/pre-re/skill_tree.yml"
 SKILL_DB_OUT = "db/import/skill_db.yml"
 SKILL_TREE_OUT = "db/import/skill_tree.yml"
+JOB_EXP_SOURCE = "db/pre-re/job_exp.yml"
+JOB_STATS_OUT = "db/import/job_stats.yml"
+FIRST_JOB_EXP = "Swordman"  # new job levels borrow the 1st jobs' EXP table
 
 MAX_SKILL_LEVEL = 13  # src/map/skill.hpp
 
@@ -115,6 +120,37 @@ def table(rows, tab):
             return [(i + 1 + n + 1, dict(zip(header, r + [""] * len(header))))
                     for n, r in enumerate(rows[i + 1:])]
     sys.exit(f"{tab}: header row with 'rAthena Code' not found")
+
+
+def skill_points(rows, tab):
+    """The tab's 'Skill points available' number, or None."""
+    for row in rows:
+        cells = [c.strip() for c in row]
+        for i, cell in enumerate(cells):
+            if cell.lower().startswith("skill points available"):
+                for value in cells[i + 1:]:
+                    if value.isdigit():
+                        return int(value)
+                errors.append(f"{tab}: 'Skill points available' has no number")
+                return None
+    return None
+
+
+def read_job_exp():
+    """Job -> {"max": max job level, "exp": {level: exp}}"""
+    with open(JOB_EXP_SOURCE, encoding="utf-8") as f:
+        body = f.read().split("\nBody:", 1)[1]
+    out = {}
+    for entry in re.split(r"\n  - Jobs:", body)[1:]:
+        jobs = re.findall(r"\n      (\w+): true", entry)
+        top = re.search(r"\n    MaxJobLevel: (\d+)", entry)
+        if not top or "JobExp:" not in entry:
+            continue
+        exp = {int(lv): int(x) for lv, x in re.findall(
+            r"- Level: (\d+)\n        Exp: (\d+)", entry.split("JobExp:", 1)[1])}
+        for job in jobs:
+            out[job] = {"max": int(top.group(1)), "exp": exp}
+    return out
 
 
 def norm(name):
@@ -296,10 +332,12 @@ def main():
             sys.exit(f"Job {job} (tab {tab}) is not in {SKILL_TREE_SOURCE}")
 
     # Read every tab, and every skill name -> code (new skills included).
-    tabs, names = {}, {}
+    tabs, names, points = {}, {}, {}
     for tab in TABS:
         rows = []
-        for rownum, row in table(fetch_tab(tab), tab):
+        raw = fetch_tab(tab)
+        points[tab] = skill_points(raw, tab)
+        for rownum, row in table(raw, tab):
             code, name = row["rAthena Code"].strip(), row["Skill"].strip()
             if not code:
                 continue
@@ -500,8 +538,29 @@ def main():
         if lines:
             db_entries.append([f"  - Id: {ra['Id']}", f"    Name: {code}"] + lines)
 
+    # Max job level: a tab's "Skill points available" is the job's level cap
+    # (rAthena gives Job Lv - 1 points; the extra point at Job Lv 1 needs
+    # source). Levels the job's EXP table lacks borrow the 1st jobs' table.
+    ra_job_exp = read_job_exp()
+    job_entries, job_levels = [], []
+    for tab, (_, job) in TABS.items():
+        cap = points.get(tab)
+        if cap is None or job not in ra_job_exp or cap == ra_job_exp[job]["max"]:
+            continue
+        old, borrow = ra_job_exp[job], ra_job_exp[FIRST_JOB_EXP]["exp"]
+        exp = {lv: old["exp"][lv] if lv < old["max"] else borrow.get(lv)
+               for lv in range(1, cap)}
+        if None in exp.values():
+            sys.exit(f"{tab}: no EXP values for job levels up to {cap}")
+        lines = ["  - Jobs:", f"      {job}: true", f"    MaxJobLevel: {cap}", "    JobExp:"]
+        for lv, x in exp.items():
+            lines += [f"      - Level: {lv}", f"        Exp: {x}"]
+        job_entries.append(lines)
+        job_levels.append(f"{job} max job level {old['max']} -> {cap}")
+
     write_import(SKILL_TREE_OUT, "SKILL_TREE_DB", 1, tree_entries)
     write_import(SKILL_DB_OUT, "SKILL_DB", 4, db_entries)
+    write_import(JOB_STATS_OUT, "JOB_STATS", 4, job_entries)
 
     print(f"{SKILL_TREE_OUT}: {len(tree_entries)} jobs")
     for job, n in counts.items():
@@ -509,6 +568,7 @@ def main():
             print(f"  {job}: {n['changed']} changed, {n['added']} added, "
                   f"{n['removed']} removed")
     print(f"{SKILL_DB_OUT}: {len(db_entries)} skills")
+    print(f"{JOB_STATS_OUT}: {', '.join(job_levels) or 'no job level changes'}")
     print(f"Skipped {n_new} rows for new skills (Phase 8).")
     for title, items in (("Kept classic prerequisites", waits),
                          ("Copied from a parent job", mirrored),
