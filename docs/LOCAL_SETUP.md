@@ -56,6 +56,21 @@ so the converter downloads it directly.
 - Restart the map server, and restart the client to see new item names.
 - Commit the two `db/import` files. The client file stays out of git.
 
+## Updating skills from the sheet
+
+The RO_Skill_Trees sheet must also be shared as "Anyone with the link".
+
+- From the repo root:
+  ```
+  python3 tools/sandbox/skills2yaml.py
+  ```
+  This writes `db/import/skill_tree.yml` and `db/import/skill_db.yml`, then
+  prints what it changed: skills that keep classic prerequisites, entries
+  copied from a parent job, raised max levels and timing changes. If the
+  sheet has a problem, it lists what to fix and writes nothing.
+- Restart the map server.
+- Commit the two `db/import` files.
+
 ## Known issues
 
 - A few training-ground floor textures are missing (`new_1-2.bmp`, `new_zone02.bmp`).
