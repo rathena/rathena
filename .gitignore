@@ -153,3 +153,6 @@ Thumbs.db
 
 # generated files
 generated
+
+# Python cache from tools/sandbox
+__pycache__/
