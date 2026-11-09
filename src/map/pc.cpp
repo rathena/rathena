@@ -3593,7 +3593,7 @@ static void pc_bonus_subele(map_session_data* sd, unsigned char ele, int16 rate,
 
 	for (auto &it : sd->subele2) {
 		if (it.ele == ele && it.flag == flag) {
-			it.rate = util::safe_addition_cap(it.rate, rate, (int16)10000);
+			it.rate = (int16)cap_value(100 - (100 - it.rate) * (100 - rate) / 100, -10000, 10000); // [RO Sandbox] multiply
 			return;
 		}
 	}
@@ -3634,7 +3634,7 @@ static void pc_bonus_subrace(map_session_data* sd, unsigned char race, int16 rat
 
 	for (auto &it : sd->subrace3) {
 		if (it.race == race && it.flag == flag) {
-			it.rate = util::safe_addition_cap(it.rate, rate, (int16)10000);
+			it.rate = (int16)cap_value(100 - (100 - it.rate) * (100 - rate) / 100, -10000, 10000); // [RO Sandbox] multiply
 			return;
 		}
 	}

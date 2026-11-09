@@ -873,7 +873,11 @@ int32 battle_calc_cardfix(int32 attack_type, block_list *src, block_list *target
 				cardfix = 1000; // reset var for target
 
 				if( !nk[NK_IGNOREELEMENT] ) { // Affected by Element modifier bonuses
-					int32 ele_fix = tsd->indexed_bonus.subele[rh_ele] + tsd->indexed_bonus.subele[ELE_ALL] + tsd->indexed_bonus.subele_script[rh_ele] + tsd->indexed_bonus.subele_script[ELE_ALL];
+					s_reduction ele_fix = {}; // [RO Sandbox] multiply
+					ele_fix += tsd->indexed_bonus.subele[rh_ele];
+					ele_fix += tsd->indexed_bonus.subele[ELE_ALL];
+					ele_fix += tsd->indexed_bonus.subele_script[rh_ele];
+					ele_fix += tsd->indexed_bonus.subele_script[ELE_ALL];
 
 					for (const auto &it : tsd->subele2) {
 						if (it.ele != ELE_ALL && it.ele != rh_ele)
@@ -884,8 +888,10 @@ int32 battle_calc_cardfix(int32 attack_type, block_list *src, block_list *target
 							continue;
 						ele_fix += it.rate;
 					}
-					if (s_defele != ELE_NONE)
-						ele_fix += tsd->indexed_bonus.magic_subdefele[s_defele] + tsd->indexed_bonus.magic_subdefele[ELE_ALL];
+					if (s_defele != ELE_NONE) { // [RO Sandbox] multiply
+						ele_fix += tsd->indexed_bonus.magic_subdefele[s_defele];
+						ele_fix += tsd->indexed_bonus.magic_subdefele[ELE_ALL];
+					}
 #ifndef RENEWAL
 					// Custom to follow SC_ debuff renewal behavior
 					if (tsc != nullptr)
@@ -893,15 +899,17 @@ int32 battle_calc_cardfix(int32 attack_type, block_list *src, block_list *target
 #endif
 					cardfix = cardfix * (100 - ele_fix) / 100;
 				}
-				cardfix = cardfix * (100 - tsd->indexed_bonus.subsize[sstatus->size] - tsd->indexed_bonus.subsize[SZ_ALL]) / 100;
-				cardfix = cardfix * (100 - tsd->indexed_bonus.magic_subsize[sstatus->size] - tsd->indexed_bonus.magic_subsize[SZ_ALL]) / 100;
+				cardfix = cardfix * (100 - tsd->indexed_bonus.subsize[sstatus->size]) / 100 * (100 - tsd->indexed_bonus.subsize[SZ_ALL]) / 100; // [RO Sandbox] multiply
+				cardfix = cardfix * (100 - tsd->indexed_bonus.magic_subsize[sstatus->size]) / 100 * (100 - tsd->indexed_bonus.magic_subsize[SZ_ALL]) / 100; // [RO Sandbox] multiply
 
-				int32 race_fix = 0;
+				s_reduction race_fix = {}; // [RO Sandbox] multiply
 
 				for (const auto &raceit : s_race2)
 					race_fix += tsd->indexed_bonus.subrace2[raceit];
 				cardfix = cardfix * (100 - race_fix) / 100;
-				race_fix = tsd->indexed_bonus.subrace[sstatus->race] + tsd->indexed_bonus.subrace[RC_ALL];
+				race_fix = {};
+				race_fix += tsd->indexed_bonus.subrace[sstatus->race];
+				race_fix += tsd->indexed_bonus.subrace[RC_ALL];
 				for (const auto &it : tsd->subrace3) {
 					if (it.race != RC_ALL && it.race != sstatus->race)
 						continue;
@@ -912,7 +920,7 @@ int32 battle_calc_cardfix(int32 attack_type, block_list *src, block_list *target
 					race_fix += it.rate;
 				}
 				cardfix = cardfix * (100 - race_fix) / 100;
-				cardfix = cardfix * (100 - tsd->indexed_bonus.subclass[sstatus->class_] - tsd->indexed_bonus.subclass[CLASS_ALL]) / 100;
+				cardfix = cardfix * (100 - tsd->indexed_bonus.subclass[sstatus->class_]) / 100 * (100 - tsd->indexed_bonus.subclass[CLASS_ALL]) / 100; // [RO Sandbox] multiply
 
 				for (const auto &it : tsd->add_mdef) {
 					if (it.id == s_class) {
@@ -1088,7 +1096,11 @@ int32 battle_calc_cardfix(int32 attack_type, block_list *src, block_list *target
 			// Affected by target DEF bonuses
 			else if( tsd && !nk[NK_IGNOREDEFCARD] && !(left&2) ) {
 				if( !nk[NK_IGNOREELEMENT] ) { // Affected by Element modifier bonuses
-					int32 ele_fix = tsd->indexed_bonus.subele[rh_ele] + tsd->indexed_bonus.subele[ELE_ALL] + tsd->indexed_bonus.subele_script[rh_ele] + tsd->indexed_bonus.subele_script[ELE_ALL];
+					s_reduction ele_fix = {}; // [RO Sandbox] multiply
+					ele_fix += tsd->indexed_bonus.subele[rh_ele];
+					ele_fix += tsd->indexed_bonus.subele[ELE_ALL];
+					ele_fix += tsd->indexed_bonus.subele_script[rh_ele];
+					ele_fix += tsd->indexed_bonus.subele_script[ELE_ALL];
 
 					for (const auto &it : tsd->subele2) {
 						if (it.ele != ELE_ALL && it.ele != rh_ele)
@@ -1102,7 +1114,11 @@ int32 battle_calc_cardfix(int32 attack_type, block_list *src, block_list *target
 					cardfix = cardfix * (100 - ele_fix) / 100;
 
 					if( left&1 && lh_ele != rh_ele ) {
-						int32 ele_fix_lh = tsd->indexed_bonus.subele[lh_ele] + tsd->indexed_bonus.subele[ELE_ALL] + tsd->indexed_bonus.subele_script[lh_ele] + tsd->indexed_bonus.subele_script[ELE_ALL];
+						s_reduction ele_fix_lh = {}; // [RO Sandbox] multiply
+						ele_fix_lh += tsd->indexed_bonus.subele[lh_ele];
+						ele_fix_lh += tsd->indexed_bonus.subele[ELE_ALL];
+						ele_fix_lh += tsd->indexed_bonus.subele_script[lh_ele];
+						ele_fix_lh += tsd->indexed_bonus.subele_script[ELE_ALL];
 
 						for (const auto &it : tsd->subele2) {
 							if (it.ele != ELE_ALL && it.ele != lh_ele)
@@ -1116,17 +1132,19 @@ int32 battle_calc_cardfix(int32 attack_type, block_list *src, block_list *target
 						cardfix = cardfix * (100 - ele_fix_lh) / 100;
 					}
 
-					cardfix = cardfix * (100 - tsd->indexed_bonus.subdefele[s_defele] - tsd->indexed_bonus.subdefele[ELE_ALL]) / 100;
+					cardfix = cardfix * (100 - tsd->indexed_bonus.subdefele[s_defele]) / 100 * (100 - tsd->indexed_bonus.subdefele[ELE_ALL]) / 100; // [RO Sandbox] multiply
 				}
 
-				int32 race_fix = 0;
+				s_reduction race_fix = {}; // [RO Sandbox] multiply
 
-				cardfix = cardfix * (100 - tsd->indexed_bonus.subsize[sstatus->size] - tsd->indexed_bonus.subsize[SZ_ALL]) / 100;
-				cardfix = cardfix * (100 - tsd->indexed_bonus.weapon_subsize[sstatus->size] - tsd->indexed_bonus.weapon_subsize[SZ_ALL]) / 100;
+				cardfix = cardfix * (100 - tsd->indexed_bonus.subsize[sstatus->size]) / 100 * (100 - tsd->indexed_bonus.subsize[SZ_ALL]) / 100; // [RO Sandbox] multiply
+				cardfix = cardfix * (100 - tsd->indexed_bonus.weapon_subsize[sstatus->size]) / 100 * (100 - tsd->indexed_bonus.weapon_subsize[SZ_ALL]) / 100; // [RO Sandbox] multiply
 				for (const auto &raceit : s_race2)
 					race_fix += tsd->indexed_bonus.subrace2[raceit];
 				cardfix = cardfix * (100 - race_fix) / 100;
-				race_fix = tsd->indexed_bonus.subrace[sstatus->race] + tsd->indexed_bonus.subrace[RC_ALL];
+				race_fix = {};
+				race_fix += tsd->indexed_bonus.subrace[sstatus->race];
+				race_fix += tsd->indexed_bonus.subrace[RC_ALL];
 				for (const auto &it : tsd->subrace3) {
 					if (it.race != RC_ALL && it.race != sstatus->race)
 						continue;
@@ -1137,7 +1155,7 @@ int32 battle_calc_cardfix(int32 attack_type, block_list *src, block_list *target
 					race_fix += it.rate;
 				}
 				cardfix = cardfix * (100 - race_fix) / 100;
-				cardfix = cardfix * (100 - tsd->indexed_bonus.subclass[sstatus->class_] - tsd->indexed_bonus.subclass[CLASS_ALL]) / 100;
+				cardfix = cardfix * (100 - tsd->indexed_bonus.subclass[sstatus->class_]) / 100 * (100 - tsd->indexed_bonus.subclass[CLASS_ALL]) / 100; // [RO Sandbox] multiply
 				for (const auto &it : tsd->add_def) {
 					if (it.id == s_class) {
 						cardfix = cardfix * (100 - it.val) / 100;
@@ -1164,7 +1182,11 @@ int32 battle_calc_cardfix(int32 attack_type, block_list *src, block_list *target
 			// Affected by target DEF bonuses
 			if( tsd && !nk[NK_IGNOREDEFCARD] ) {
 				if( !nk[NK_IGNOREELEMENT] ) { // Affected by Element modifier bonuses
-					int32 ele_fix = tsd->indexed_bonus.subele[rh_ele] + tsd->indexed_bonus.subele[ELE_ALL] + tsd->indexed_bonus.subele_script[rh_ele] + tsd->indexed_bonus.subele_script[ELE_ALL];
+					s_reduction ele_fix = {}; // [RO Sandbox] multiply
+					ele_fix += tsd->indexed_bonus.subele[rh_ele];
+					ele_fix += tsd->indexed_bonus.subele[ELE_ALL];
+					ele_fix += tsd->indexed_bonus.subele_script[rh_ele];
+					ele_fix += tsd->indexed_bonus.subele_script[ELE_ALL];
 
 					for (const auto &it : tsd->subele2) {
 						if (it.ele != rh_ele)
@@ -1175,11 +1197,15 @@ int32 battle_calc_cardfix(int32 attack_type, block_list *src, block_list *target
 							continue;
 						ele_fix += it.rate;
 					}
-					if (s_defele != ELE_NONE)
-						ele_fix += tsd->indexed_bonus.subdefele[s_defele] + tsd->indexed_bonus.subdefele[ELE_ALL];
+					if (s_defele != ELE_NONE) { // [RO Sandbox] multiply
+						ele_fix += tsd->indexed_bonus.subdefele[s_defele];
+						ele_fix += tsd->indexed_bonus.subdefele[ELE_ALL];
+					}
 					cardfix = cardfix * (100 - ele_fix) / 100;
 				}
-				int32 race_fix = tsd->indexed_bonus.subrace[sstatus->race] + tsd->indexed_bonus.subrace[RC_ALL];
+				s_reduction race_fix = {}; // [RO Sandbox] multiply
+				race_fix += tsd->indexed_bonus.subrace[sstatus->race];
+				race_fix += tsd->indexed_bonus.subrace[RC_ALL];
 				for (const auto &it : tsd->subrace3) {
 					if (it.race != RC_ALL && it.race != sstatus->race)
 						continue;
@@ -1190,12 +1216,12 @@ int32 battle_calc_cardfix(int32 attack_type, block_list *src, block_list *target
 					race_fix += it.rate;
 				}
 				cardfix = cardfix * (100 - race_fix) / 100;
-				cardfix = cardfix * (100 - tsd->indexed_bonus.subsize[sstatus->size] - tsd->indexed_bonus.subsize[SZ_ALL]) / 100;
-				race_fix = 0;
+				cardfix = cardfix * (100 - tsd->indexed_bonus.subsize[sstatus->size]) / 100 * (100 - tsd->indexed_bonus.subsize[SZ_ALL]) / 100; // [RO Sandbox] multiply
+				race_fix = {};
 				for (const auto &raceit : s_race2)
 					race_fix += tsd->indexed_bonus.subrace2[raceit];
 				cardfix = cardfix * (100 - race_fix) / 100;
-				cardfix = cardfix * (100 - tsd->indexed_bonus.subclass[sstatus->class_] - tsd->indexed_bonus.subclass[CLASS_ALL]) / 100;
+				cardfix = cardfix * (100 - tsd->indexed_bonus.subclass[sstatus->class_]) / 100 * (100 - tsd->indexed_bonus.subclass[CLASS_ALL]) / 100; // [RO Sandbox] multiply
 				cardfix = cardfix * (100 - tsd->bonus.misc_def_rate) / 100;
 				if( flag&BF_SHORT )
 					cardfix = cardfix * (100 - tsd->bonus.near_attack_def_rate) / 100;
