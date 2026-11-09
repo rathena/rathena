@@ -39,7 +39,6 @@ jobs:
         # https://github.com/actions/runner-images/blob/main/images/macos/macos-15-Readme.md
         # https://github.com/actions/runner-images/blob/main/images/macos/macos-26-Readme.md
         run: |
-#         brew update
           brew install pcre
           brew install mysql
           brew install mysql-client
