@@ -27,6 +27,23 @@
 #include "unit.hpp" // unit_data
 #include "vending.hpp" // struct s_vending
 
+// [RO Sandbox] A damage reduction that stacks multiplicatively: 30% then 30% gives 51%, not 60%.
+// Negative values (penalties) stack the same way. Reads back as a whole percent.
+struct s_reduction {
+	double rate;
+
+	s_reduction& operator+=(double value) {
+		rate = 100.0 - (100.0 - rate) * (100.0 - value) / 100.0;
+		return *this;
+	}
+	s_reduction& operator-=(double value) {
+		return *this += -value;
+	}
+	operator int32() const {
+		return (int32)(rate >= 0 ? rate + 0.5 : rate - 0.5);
+	}
+};
+
 enum AtCommandType : uint8;
 enum e_instance_mode : uint8;
 //enum e_log_chat_type : uint8;
@@ -561,13 +578,14 @@ public:
 	// here start arrays to be globally zeroed at the beginning of status_calc_pc()
 	struct s_indexed_bonus {
 		int32 param_bonus[PARAM_MAX], param_equip[PARAM_MAX]; //Stores card/equipment bonuses.
-		int32 subele[ELE_MAX];
-		int32 subele_script[ELE_MAX];
-		int32 subdefele[ELE_MAX];
-		int32 subrace[RC_MAX];
-		int32 subclass[CLASS_MAX];
-		int32 subrace2[RC2_MAX];
-		int32 subsize[SZ_MAX];
+		// [RO Sandbox] reductions use s_reduction so they multiply
+		s_reduction subele[ELE_MAX];
+		s_reduction subele_script[ELE_MAX];
+		s_reduction subdefele[ELE_MAX];
+		s_reduction subrace[RC_MAX];
+		s_reduction subclass[CLASS_MAX];
+		s_reduction subrace2[RC2_MAX];
+		s_reduction subsize[SZ_MAX];
 		int16 coma_class[CLASS_MAX];
 		int16 coma_race[RC_MAX];
 		int16 weapon_coma_ele[ELE_MAX];
@@ -585,8 +603,8 @@ public:
 		int32 magic_addclass[CLASS_MAX];
 		int32 magic_addsize[SZ_MAX];
 		int32 magic_atk_ele[ELE_MAX];
-		int32 weapon_subsize[SZ_MAX];
-		int32 magic_subsize[SZ_MAX];
+		s_reduction weapon_subsize[SZ_MAX]; // [RO Sandbox]
+		s_reduction magic_subsize[SZ_MAX]; // [RO Sandbox]
 		int32 critaddrace[RC_MAX];
 		int32 expaddrace[RC_MAX];
 		int32 expaddclass[CLASS_MAX];
@@ -599,7 +617,7 @@ public:
 		int32 ignore_mdef_by_race2[RC2_MAX];
 		int32 dropaddrace[RC_MAX];
 		int32 dropaddclass[CLASS_MAX];
-		int32 magic_subdefele[ELE_MAX];
+		s_reduction magic_subdefele[ELE_MAX]; // [RO Sandbox]
 		int32 ignore_res_by_race[RC_MAX];
 		int32 ignore_mres_by_race[RC_MAX];
 	} indexed_bonus;
@@ -637,7 +655,7 @@ public:
 		int32 critical_def,double_rate;
 		int32 short_attack_atk_rate; // Short range atk rate, not weapon based.
 		int32 long_attack_atk_rate; //Long range atk rate, not weapon based. [Skotlex]
-		int32 near_attack_def_rate,long_attack_def_rate,magic_def_rate,misc_def_rate;
+		s_reduction near_attack_def_rate,long_attack_def_rate,magic_def_rate,misc_def_rate; // [RO Sandbox]
 		int32 ignore_mdef_ele;
 		int32 ignore_mdef_race;
 		int32 ignore_mdef_class;
