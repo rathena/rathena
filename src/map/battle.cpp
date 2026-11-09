@@ -3732,15 +3732,9 @@ static void battle_calc_element_damage(struct Damage* wd, block_list *src, block
 	// These mastery bonuses are non-elemental and should apply even if the attack misses
 	// They are still increased by the EDP/Magnum Break bonus damage (WATK_ELEMENT)
 	// In renewal these bonuses do not apply when the attack misses
-	if (sd && battle_skill_stacks_masteries_vvs(skill_id, BCHK_STAR)) {
-		// Star Crumb bonus damage
-		ATK_ADD2(wd->damage, wd->damage2, sd->right_weapon.star, sd->left_weapon.star);
-	}
+	// [RO Sandbox] Star Crumbs and Spirit Spheres moved before the skill ratio (battle_calc_weapon_attack).
 	// Check if general mastery bonuses apply (above check is only for Star Crumb)
 	if (battle_skill_stacks_masteries_vvs(skill_id, BCHK_ALL)) {
-		// Spirit Sphere bonus damage
-		ATK_ADD(wd->damage, wd->damage2, battle_get_spiritball_damage(*wd, *src, skill_id));
-
 		// Skill-specific bonuses
 		switch(skill_id) {
 			case TF_POISON:
@@ -3782,10 +3776,7 @@ static void battle_calc_element_damage(struct Damage* wd, block_list *src, block
 		if (sd && sc->getSCE(SC_WATK_ELEMENT)) {
 			// Pretend the normal attack was of the element stored in the status change
 			wd->basedamage = battle_attr_fix(src, target, wd->basedamage, sc->getSCE(SC_WATK_ELEMENT)->val1, tstatus->def_ele, tstatus->ele_lv, 1);
-			// Star Crumb bonus damage
-			wd->basedamage += sd->right_weapon.star;
-			// Spirit Sphere bonus damage
-			wd->basedamage += battle_get_spiritball_damage(*wd, *src, skill_id);
+			// [RO Sandbox] Star Crumbs and Spirit Spheres are already in basedamage
 			// Add percent of the base damage to the damage
 			wd->damage += (wd->basedamage * sc->getSCE(SC_WATK_ELEMENT)->val2) / 100;
 		}
@@ -4924,21 +4915,7 @@ static void battle_calc_attack_post_defense(struct Damage* wd, block_list *src,b
 	status_data* sstatus = status_get_status_data(*src);
 
 	// Post skill/vit reduction damage increases
-#ifndef RENEWAL
-	//Refine bonus
-	if (sd) {
-		if (battle_skill_stacks_masteries_vvs(skill_id, BCHK_REFINE)) {
-			ATK_ADD2(wd->damage, wd->damage2, sstatus->rhw.atk2, sstatus->lhw.atk2);
-		}
-		wd->basedamage += sstatus->rhw.atk2;
-	}
-
-	//After DEF reduction, damage can be negative, refine bonus works against that value
-	//After refinement bonus was applied, damage is capped to 1, then masteries are applied
-	battle_min_damage(*wd, *src, skill_id, 1);
-
-	battle_calc_attack_masteries(wd, src, target, skill_id, skill_lv);
-#endif
+	// [RO Sandbox] Pre-renewal refine ATK and masteries moved before the skill ratio (battle_calc_weapon_attack).
 	if (sc) { // SC skill damages
 		if (sc->getSCE(SC_AURABLADE)
 #ifndef RENEWAL
@@ -5487,6 +5464,21 @@ static struct Damage battle_calc_weapon_attack(block_list *src, block_list *targ
 			battle_calc_skill_base_damage(&wd, src, target, skill_id, skill_lv); // base skill damage
 
 #ifndef RENEWAL
+		// [RO Sandbox] Flat bonuses (refine ATK, Star Crumbs, Spirit Spheres, masteries) join the base
+		// before the skill ratio, so the ratio, % bonuses, element and DEF all apply to them.
+		if (sd) {
+			if (battle_skill_stacks_masteries_vvs(skill_id, BCHK_REFINE))
+				ATK_ADD2(wd.damage, wd.damage2, sstatus->rhw.atk2, sstatus->lhw.atk2);
+			wd.basedamage += sstatus->rhw.atk2;
+			if (battle_skill_stacks_masteries_vvs(skill_id, BCHK_STAR))
+				ATK_ADD2(wd.damage, wd.damage2, sd->right_weapon.star, sd->left_weapon.star);
+			wd.basedamage += sd->right_weapon.star;
+		}
+		if (battle_skill_stacks_masteries_vvs(skill_id, BCHK_ALL))
+			ATK_ADD(wd.damage, wd.damage2, battle_get_spiritball_damage(wd, *src, skill_id));
+		wd.basedamage += battle_get_spiritball_damage(wd, *src, skill_id);
+		battle_calc_attack_masteries(&wd, src, target, skill_id, skill_lv);
+
 		// Skill ratio
 		ATK_RATE(wd.damage, wd.damage2, battle_calc_attack_skill_ratio(&wd, src, target, skill_id, skill_lv));
 
