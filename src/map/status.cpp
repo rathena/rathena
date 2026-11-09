@@ -10131,6 +10131,42 @@ TIMER_FUNC(status_change_start_timer) {
 }
 
 /**
+ * [RO Sandbox] Phase 4 decision 8: hard control (stun, freeze, petrify, sleep).
+ * Durations are rescaled so each effect's longest base duration becomes the target's limit,
+ * bosses and MVPs can be controlled, and each effect leaves an immunity window of 20% of the limit.
+ */
+static int32 sandbox_cc_index(sc_type type)
+{
+	switch (type) {
+		case SC_STUN: return 0;
+		case SC_FREEZE: return 1;
+		case SC_STONE:
+		case SC_STONEWAIT: return 2;
+		case SC_SLEEP: return 3;
+		default: return -1;
+	}
+}
+
+/// Longest base duration per effect: stun 5 s, freeze 30 s (Frost Diver Lv 10), petrify 20 s, sleep 30 s
+static const t_tick sandbox_cc_reference[4] = { 5000, 30000, 20000, 30000 };
+
+/// Limit by target: normal monster 15 s, boss 5 s, MVP 3 s, players and everything else 6 s
+static t_tick sandbox_cc_limit(const block_list *bl)
+{
+	if (bl->type == BL_MOB) {
+		switch (reinterpret_cast<const mob_data*>(bl)->get_bosstype()) {
+			case BOSSTYPE_MVP: return 3000;
+			case BOSSTYPE_MINIBOSS: return 5000;
+			default: return 15000;
+		}
+	}
+	return 6000;
+}
+
+/// Per unit, the tick until which each effect can't be applied again
+static std::unordered_map<int32, std::array<t_tick, 4>> sandbox_cc_immune_until;
+
+/**
  * Applies SC defense to a given status change
  * This function also determines whether or not the status change will be applied
  * If not resisted, it will attempt to apply the status change after the given delay
@@ -10186,7 +10222,7 @@ bool status_change_start(block_list* src, block_list* bl, sc_type type, int32 ra
 	status_data* status = status_get_status_data(*bl);
 
 	// Check for Boss resistances
-	if(status->mode&MD_STATUSIMMUNE && !(flag&SCSTART_NOAVOID) && scdb->flag[SCF_BOSSRESIST])
+	if(status->mode&MD_STATUSIMMUNE && !(flag&SCSTART_NOAVOID) && scdb->flag[SCF_BOSSRESIST] && sandbox_cc_index(type) < 0) // [RO Sandbox] not for hard control
 		return false;
 
 	// Check for MVP resistance
@@ -10217,6 +10253,21 @@ bool status_change_start(block_list* src, block_list* bl, sc_type type, int32 ra
 			// Don't let OPT1 that have RemoveOnDamaged start a new effect in the same attack.
 			if (sc->getSCE(it) || sc->lastEffect == it)
 				return false;
+		}
+	}
+
+	// [RO Sandbox] Hard control: immunity window, then rescale to the target's limit (stat reduction still follows)
+	if (int32 cc = sandbox_cc_index(type); cc >= 0 && !(flag&SCSTART_LOADED)) {
+		auto immune = sandbox_cc_immune_until.find(bl->id);
+
+		if (immune != sandbox_cc_immune_until.end() && DIFF_TICK(immune->second[cc], gettick()) > 0)
+			return false;
+		if (type != SC_STONEWAIT && duration > 0) { // Stone wait keeps its delay; the petrify that follows is rescaled
+			t_tick limit = sandbox_cc_limit(bl);
+
+			duration = std::min<t_tick>(duration * limit / sandbox_cc_reference[cc], limit);
+			if (duration < 1)
+				duration = 1;
 		}
 	}
 
@@ -14111,6 +14162,13 @@ int32 status_change_end( block_list* bl, enum sc_type type, int32 tid ){
 	// Needed to be here to make sure OPT1_STONEWAIT has been cleared from the target (only on natural expiration of the stone wait timer)
 	if (type == SC_STONEWAIT && tid != INVALID_TIMER)
 		status_change_start(bl, bl, SC_STONE, 100, val1, val2, 0, 0, val3, SCSTART_NOAVOID);
+
+	// [RO Sandbox] Immunity window after hard control: 20% of the target's limit, per effect
+	if (int32 cc = sandbox_cc_index(type); cc >= 0 && type != SC_STONEWAIT) {
+		auto &until = sandbox_cc_immune_until[bl->id];
+
+		until[cc] = gettick() + sandbox_cc_limit(bl) / 5;
+	}
 
 	return 1;
 }
