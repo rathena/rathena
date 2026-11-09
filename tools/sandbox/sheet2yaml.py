@@ -9,7 +9,14 @@
 # Writes:
 #   db/import/item_db.yml  custom items (ID 30000+) and official items whose
 #                          price or weight differs from rAthena
-#   db/import/mob_db.yml   monsters whose drops differ from rAthena
+#   db/import/mob_db.yml   monsters whose drops differ from rAthena, plus the
+#                          early-game boost (see CARD_CHANCE below): regular
+#                          monsters up to Lv 30 drop more common loot and
+#                          give more EXP, and their cards drop at 10% (Lv 1)
+#                          down to 5% (Lv 30), easing to 0.5% by Lv 50. The
+#                          card and item chances are what players get after
+#                          the drops.conf multipliers, so re-run after
+#                          changing drops.conf.
 # With --client, also writes the client's SystemEN/itemInfo_C.lua (ROTP's
 # custom item file), borrowing each item's icon from its "Client Look (ID)".
 #
@@ -40,6 +47,16 @@ MOB_DB_OUT = "db/import/mob_db.yml"
 
 CUSTOM_ID_START = 30000
 MAX_MOB_DROP = 10  # src/map/mob.hpp
+
+# Early-game boost for regular monsters (not bosses, MVPs, guardians or
+# treasure boxes), by monster level. Points are (level, value); values in
+# between are linear, and levels past the last point are left alone.
+CARD_CHANCE = [(1, 10.0), (30, 5.0), (50, 0.5)]  # % a player gets the card
+ITEMS_PER_KILL = [(1, 5.0), (30, 3.0)]  # average drops per kill
+RAISE_FROM = 1.0  # only common and healing drops already at this % or more
+EXP_BOOST = [(1, 250, 500), (30, 0, 0)]  # extra base and job EXP, in %
+# Server drop multipliers, read like the map server does (later files win).
+DROP_CONF = ["conf/battle/drops.conf", "conf/import/battle_conf.txt"]
 MAX_WEAPON_LEVEL = 4  # src/common/mmo.hpp, pre-renewal
 
 # Sheet values that differ from rAthena's names.
@@ -101,7 +118,7 @@ def read_rathena_items():
             if m:
                 cur = items[int(m.group(1))] = {}
                 continue
-            m = re.match(r"    (AegisName|Buy|Sell|Weight): (.+)", line)
+            m = re.match(r"    (AegisName|Buy|Sell|Weight|Type): (.+)", line)
             if cur is not None and m:
                 cur[m.group(1)] = m.group(2).strip()
     return items
@@ -137,6 +154,138 @@ def read_rathena_mobs():
             else:
                 drop["Steal"] = m.group(2).strip() == "true"
     return mobs
+
+
+def read_mob_info():
+    """Id -> {"Level", "BaseExp", "JobExp", "Regular"} from rAthena's mob_db."""
+    info, cur = {}, None
+    for line in open(MOB_DB_SOURCE, encoding="utf-8"):
+        m = re.match(r"  - Id: (\d+)", line)
+        if m:
+            cur = info[int(m.group(1))] = {"Level": 1, "BaseExp": 0, "JobExp": 0,
+                                           "Regular": True}
+            continue
+        if cur is None:
+            continue
+        m = re.match(r"    (Level|BaseExp|JobExp): (\d+)", line)
+        if m:
+            cur[m.group(1)] = int(m.group(2))
+        elif (re.match(r"    Class: (?!Normal)", line)
+              or re.match(r"      (Mvp|Treasure): true", line)):
+            cur["Regular"] = False
+    return info
+
+
+# ---------- early-game boost ----------
+
+def along(points, level, column=1):
+    """Linear value at a level between (level, value...) points; None past the end."""
+    if level > points[-1][0]:
+        return None
+    if level <= points[0][0]:
+        return points[0][column]
+    for a, b in zip(points, points[1:]):
+        if level <= b[0]:
+            t = (level - a[0]) / (b[0] - a[0])
+            return a[column] + (b[column] - a[column]) * t
+    return None
+
+
+def read_drop_conf():
+    conf = {}
+    for path in DROP_CONF:
+        if not os.path.exists(path):
+            continue
+        for line in open(path, encoding="utf-8", errors="replace"):
+            m = re.match(r"\s*(item_\w+|mob_size_influence)\s*:\s*(\w+)", line)
+            if m:
+                conf[m.group(1)] = m.group(2)
+    for key in ("item_logarithmic_drops", "mob_size_influence"):
+        if conf.get(key, "no").lower() not in ("no", "0", "off", "false"):
+            sys.exit(f"{key} is on; the early-game boost assumes it's off")
+    return conf
+
+
+def drop_category(item_type):
+    """rAthena's drops.conf category for an item type (mob.cpp, mob_load_drops)."""
+    return {"Healing": "heal", "Usable": "use", "Cash": "use", "Weapon": "equip",
+            "Armor": "equip", "PetArmor": "equip", "Card": "card"}.get(item_type, "common")
+
+
+class DropMath:
+    """Base drop rate <-> chance in game, for regular monsters (rate 1 = 0.01%)."""
+
+    def __init__(self, conf, item_types):
+        self.conf, self.types = conf, item_types
+
+    def category(self, item):
+        return drop_category(self.types.get(item, "Etc"))
+
+    def _conf(self, item):
+        cat = self.category(item)
+        adjust = int(self.conf.get(f"item_rate_{cat}", 100))
+        low = int(self.conf.get(f"item_drop_{cat}_min", 1))
+        high = int(self.conf.get(f"item_drop_{cat}_max", 10000))
+        return adjust, low, high
+
+    def chance(self, item, rate):
+        adjust, low, high = self._conf(item)
+        return int(min(max(rate * adjust / 100, low), high))
+
+    def rate_for(self, item, chance):
+        """Smallest base rate whose chance in game is at least the given one."""
+        adjust, _, _ = self._conf(item)
+        rate = max(1, round(chance * 100 / adjust))
+        while self.chance(item, rate) < chance and rate < 10000:
+            rate += 1
+        return min(rate, 10000)
+
+
+def early_game(info, drops, math):
+    """(new drops, base EXP or None, job EXP or None) for one monster."""
+    if not info["Regular"]:
+        return drops, None, None
+    level = info["Level"]
+    drops = [dict(d) for d in drops]
+    normal = [d for d in drops if not d["Mvp"]]
+
+    card = along(CARD_CHANCE, level)
+    if card is not None:
+        for d in normal:
+            if math.category(d["Item"]) == "card":
+                d["Rate"] = max(d["Rate"], math.rate_for(d["Item"], round(card * 100)))
+
+    target = along(ITEMS_PER_KILL, level)
+    if target is not None:
+        raise_these = [d for d in normal if math.category(d["Item"]) in ("common", "heal")
+                       and math.chance(d["Item"], d["Rate"]) >= RAISE_FROM * 100]
+        start = {id(d): d["Rate"] for d in raise_these}
+
+        def per_kill(factor):
+            total = 0
+            for d in normal:
+                rate = d["Rate"]
+                if id(d) in start:
+                    rate = min(round(start[id(d)] * factor), 10000)
+                total += math.chance(d["Item"], rate) / 10000
+            return total
+
+        if raise_these and per_kill(1) < target:
+            low, high = 1.0, 10000.0
+            for _ in range(60):
+                mid = (low + high) / 2
+                low, high = (mid, high) if per_kill(mid) < target else (low, mid)
+            for d in raise_these:
+                d["Rate"] = min(round(start[id(d)] * high), 10000)
+
+    base_exp = job_exp = None
+    if along(EXP_BOOST, level) is not None:
+        base_boost, job_boost = along(EXP_BOOST, level, 1), along(EXP_BOOST, level, 2)
+        if base_boost > 0:
+            base_exp = round(info["BaseExp"] * (100 + base_boost) / 100)
+        if job_boost > 0:
+            job_exp = round(info["JobExp"] * (100 + job_boost) / 100)
+    return drops, base_exp, job_exp
 
 
 # ---------- items ----------
@@ -226,8 +375,12 @@ def drop_key(d):
     return (d["Item"], d["Rate"], d["Mvp"], d["Steal"])
 
 
-def mob_entry(mob_id, drops):
+def mob_entry(mob_id, drops, base_exp=None, job_exp=None):
     lines = [f"  - Id: {mob_id}"]
+    if base_exp is not None:
+        lines.append(f"    BaseExp: {base_exp}")
+    if job_exp is not None:
+        lines.append(f"    JobExp: {job_exp}")
     for section, mvp in (("MvpDrops", True), ("Drops", False)):
         part = [d for d in drops if d["Mvp"] == mvp]
         if not part:
@@ -345,12 +498,14 @@ def yaml_str(text):
 def write_import(path, header_type, version, entries):
     with open(path, encoding="utf-8") as f:
         keep = f.read()
-    # Keep rAthena's comment block, without our note from an earlier run.
-    keep = keep.split("\nHeader:")[0].split("\n# [RO Sandbox]")[0].rstrip("\n")
+    # Keep rAthena's file as it is (its commented examples come after Header)
+    # and replace only our block at the end.
+    keep = keep.split("\n# [RO Sandbox] Generated")[0].rstrip("\n")
     out = [keep, "", "# [RO Sandbox] Generated by tools/sandbox/sheet2yaml.py "
            "from the RO_Items_PreRenewal sheet.", "# Don't edit by hand: "
-           "change the sheet and run the script again.", "",
-           "Header:", f"  Type: {header_type}", f"  Version: {version}", ""]
+           "change the sheet and run the script again.", ""]
+    if not re.search(r"^Header:", keep, re.M):
+        out += ["Header:", f"  Type: {header_type}", f"  Version: {version}", ""]
     if entries:
         out.append("Body:")
         for e in entries:
@@ -393,7 +548,7 @@ def main():
         else:
             errors.append(f"Item {item_id} is below {CUSTOM_ID_START} but not in rAthena")
 
-    mob_entries = []
+    sheet_drops = {}
     for mob_id, drops in sorted(drops_from_sheet(drop_rows).items()):
         if mob_id not in ra_mobs:
             errors.append(f"Monster {mob_id} is not in rAthena's mob_db")
@@ -416,7 +571,26 @@ def main():
             if n_sheet < n_ra:
                 errors.append(f"Monster {mob_id}: sheet has fewer drops than rAthena; "
                               "an import file can't remove drops")
-        mob_entries.append(mob_entry(mob_id, drops))
+        sheet_drops[mob_id] = drops
+
+    # Early-game boost on top of the sheet's (or rAthena's) drops.
+    item_types = {v["AegisName"]: v.get("Type", "Etc") for v in ra_items.values()
+                  if "AegisName" in v}
+    for row in custom_rows:
+        item_types[row["Aegis Name"].strip()] = TYPE_MAP.get(row["Type"], row["Type"])
+    math = DropMath(read_drop_conf(), item_types)
+    mob_entries, boosted = [], Counter()
+    for mob_id, info in sorted(read_mob_info().items()):
+        before = sheet_drops.get(mob_id, ra_mobs.get(mob_id, []))
+        drops, base_exp, job_exp = early_game(info, before, math)
+        if Counter(map(drop_key, drops)) != Counter(map(drop_key, before)):
+            boosted["drops"] += 1
+        if base_exp is not None or job_exp is not None:
+            boosted["EXP"] += 1
+        changed = (mob_id in sheet_drops
+                   or Counter(map(drop_key, drops)) != Counter(map(drop_key, ra_mobs.get(mob_id, []))))
+        if changed or base_exp is not None or job_exp is not None:
+            mob_entries.append(mob_entry(mob_id, drops if changed else [], base_exp, job_exp))
 
     client_entries = []
     if args.client:
@@ -447,7 +621,8 @@ def main():
     write_import(ITEM_DB_OUT, "ITEM_DB", 3, [e for _, e in sorted(item_entries)])
     write_import(MOB_DB_OUT, "MOB_DB", 5, mob_entries)
     print(f"{ITEM_DB_OUT}: {n_custom} custom items, {n_changed} changed official items")
-    print(f"{MOB_DB_OUT}: {len(mob_entries)} monsters with changed drops")
+    print(f"{MOB_DB_OUT}: {len(mob_entries)} monsters ({len(sheet_drops)} from the sheet; "
+          f"early-game boost: {boosted['drops']} drop lists, {boosted['EXP']} EXP)")
     if args.client:
         path = write_client(args.client, client_entries)
         print(f"{path}: {len(client_entries)} custom items")
