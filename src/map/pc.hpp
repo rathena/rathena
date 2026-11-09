@@ -575,6 +575,9 @@ public:
 
 	struct weapon_data right_weapon, left_weapon;
 
+	// [RO Sandbox] Armor part of DEF (item DEF + refine) and MDEF (from equipment scripts), set in status_calc_pc
+	int32 sandbox_armor_def, sandbox_armor_mdef;
+
 	// here start arrays to be globally zeroed at the beginning of status_calc_pc()
 	struct s_indexed_bonus {
 		int32 param_bonus[PARAM_MAX], param_equip[PARAM_MAX]; //Stores card/equipment bonuses.

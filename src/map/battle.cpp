@@ -3040,6 +3040,50 @@ static bool is_attack_left_handed( const block_list* src, int32 skill_id ){
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
+#ifndef RENEWAL
+/**
+ * [RO Sandbox] Phase 4 decisions 5-7: DEF and MDEF mitigation.
+ * Mitigation = 0.75 x A / (A + k) + 0.25 x B / (B + k), with k = C x attacker level / defender level.
+ * A is the armor part (a monster's own DEF/MDEF), B is the rest (cards, item effects, buffs).
+ * Reductions shrink A and B by the same factor. C by attacker: normal monster 500, boss 250,
+ * MVP 125, anything else (players, homunculi, mercenaries...) 24.
+ * @param total: DEF or MDEF left after reductions
+ * @param flat: if set, receives the flat part subtracted after the percentage, 0.75 x B + 0.25 x A
+ * @return mitigation from 0 to just under 1
+ */
+static double battle_sandbox_mitigation(const block_list *src, const block_list *target, int32 total, bool magic, double *flat = nullptr)
+{
+	const status_data *base = status_get_base_status(target);
+	const map_session_data *tsd = BL_CAST(BL_PC, target);
+	int32 base_total = base ? (magic ? base->mdef : base->def) : 0;
+	int32 armor = tsd ? (magic ? tsd->sandbox_armor_mdef : tsd->sandbox_armor_def) : base_total;
+	double left = max(total, 0);
+	double a;
+
+	armor = cap_value(armor, 0, max(base_total, 0));
+	if (base_total > 0 && total < base_total)
+		a = armor * left / base_total; // Reduced: both parts shrink by the same factor
+	else
+		a = min((double)armor, left); // Buffs only add to the bonus part
+	double b = left - a;
+
+	if (flat != nullptr)
+		*flat = 0.75 * b + 0.25 * a;
+
+	double c = 24;
+	if (src->type == BL_MOB) {
+		switch (reinterpret_cast<const mob_data*>(src)->get_bosstype()) {
+			case BOSSTYPE_MVP: c = 125; break;
+			case BOSSTYPE_MINIBOSS: c = 250; break;
+			default: c = 500; break;
+		}
+	}
+	double k = c * max(status_get_lv(src), 1) / max(status_get_lv(target), 1);
+
+	return 0.75 * a / (a + k) + 0.25 * b / (b + k);
+}
+#endif
+
 static bool is_attack_critical(struct Damage* wd, block_list *src, const block_list *target, int32 skill_id, int32 skill_lv, bool first_call)
 {
 	if (!first_call)
@@ -3175,6 +3219,10 @@ static bool is_attack_critical(struct Damage* wd, block_list *src, const block_l
 		}
 		if(tsd && tsd->bonus.critical_def)
 			cri = cri * ( 100 - tsd->bonus.critical_def ) / 100;
+#ifndef RENEWAL
+		// [RO Sandbox] Criticals ignore DEF, but half the defender's mitigation lowers crit chance
+		cri = (int16)(cri * (1.0 - battle_sandbox_mitigation(src, target, status_get_def(target), false) / 2));
+#endif
 		return (rnd()%1000 < cri);
 	}
 	return false;
@@ -4886,12 +4934,19 @@ static void battle_calc_defense_reduction( Damage* wd, block_list* src, block_li
 			wd->damage2 = wd->damage2 * (4000 + def1) / (4000 + 10 * def1) - vit_def;
 	}
 #else
-		if (def1 > 100) def1 = 100;
+		// [RO Sandbox] New DEF formula replaces x (100 - DEF) / 100 and the 100 DEF cap
+		double flat;
+		double keep = 1.0 - battle_sandbox_mitigation(src, target, def1, false, &flat);
 		ATK_RATE2(wd->damage, wd->damage2,
-			attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_R) ?100:(is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_R) ? (int64)is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_R)*(def1+vit_def) : (100-def1)),
-			attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_L) ?100:(is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_L) ? (int64)is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_L)*(def1+vit_def) : (100-def1))
+			attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_R) ?100:(is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_R) ? (int64)is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_R)*(def1+vit_def) : 100),
+			attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_L) ?100:(is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_L) ? (int64)is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_L)*(def1+vit_def) : 100)
 		);
-		ATK_RATER(wd->basedamage, 100 - def1);
+		if (!attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_R) && !is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_R))
+			wd->damage = (int64)(wd->damage * keep);
+		if (is_attack_left_handed(src, skill_id) && !attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_L) && !is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_L))
+			wd->damage2 = (int64)(wd->damage2 * keep);
+		wd->basedamage = (int64)(wd->basedamage * keep);
+		vit_def += (int16)flat; // [RO Sandbox] subtracted after the percentage: VIT DEF + 0.75 x B + 0.25 x A
 		ATK_ADD2(wd->damage, wd->damage2,
 			attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_R) || is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_R) ?0:-vit_def,
 			attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_L) || is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_L) ?0:-vit_def
@@ -6128,8 +6183,10 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 
 			if(battle_config.magic_defense_type)
 				ad.damage = ad.damage - mdef*battle_config.magic_defense_type - mdef2;
-			else
-				ad.damage = ad.damage * (100-mdef)/100 - mdef2;
+			else { // [RO Sandbox] New MDEF formula; after the percentage subtract INT + VIT/2 + 0.75 x B + 0.25 x A
+				double mflat;
+				ad.damage = (int64)(ad.damage * (1.0 - battle_sandbox_mitigation(src, target, mdef, true, &mflat))) - mdef2 - (int64)mflat;
+			}
 #endif
 		}
 
