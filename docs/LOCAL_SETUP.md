@@ -53,6 +53,11 @@ so the converter downloads it directly.
   This writes `db/import/item_db.yml`, `db/import/mob_db.yml` and the client's
   `SystemEN/itemInfo_C.lua`. If the sheet has a problem, it lists what to fix
   and writes nothing.
+- `mob_db.yml` also gets the early-game boost for regular monsters up to Lv 30
+  (more common loot, more EXP, 10% to 5% cards, easing to 0.5% by Lv 50). Its
+  chances are worked out from `conf/battle/drops.conf`, so run the script
+  again after changing drop rates there. The numbers are at the top of
+  `sheet2yaml.py`.
 - Restart the map server, and restart the client to see new item names.
 - Commit the two `db/import` files. The client file stays out of git.
 
