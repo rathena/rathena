@@ -16,11 +16,7 @@ void SkillStoneCurse::castendNoDamageId(block_list *src, block_list *target, uin
 	status_change *tsc = status_get_sc(&*target);
 	sc_type type = skill_get_sc(getSkillId());
 
-	if (status_has_mode(tstatus, MD_STATUSIMMUNE)) {
-		if (sd)
-			clif_skill_fail(*sd, getSkillId());
-		return;
-	}
+	// [RO Sandbox] Bosses and MVPs can be petrified (Phase 4 decision 8)
 
 	if (status_isimmune(target) || !tsc)
 		return;
