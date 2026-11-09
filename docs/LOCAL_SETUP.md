@@ -67,14 +67,23 @@ The RO_Skill_Trees sheet must also be shared as "Anyone with the link".
 
 - From the repo root:
   ```
-  python3 tools/sandbox/skills2yaml.py
+  python3 tools/sandbox/skills2yaml.py --client "$RO"
   ```
-  This writes `db/import/skill_tree.yml` and `db/import/skill_db.yml`, then
+  This writes `db/import/skill_tree.yml`, `db/import/skill_db.yml` and
+  `db/import/job_stats.yml` (max job levels, from each tab's "Skill points
+  available"), then
   prints what it changed: skills that keep classic prerequisites, entries
   copied from a parent job, raised max levels and timing changes. If the
   sheet has a problem, it lists what to fix and writes nothing.
-- Restart the map server.
-- Commit the two `db/import` files.
+- With `--client`, it also writes `skillinfolist.lub`, `skilltreeview.lub` and
+  `skilldescript.lub` into the client's `data\luafiles514\lua files\skillinfoz`
+  (and `skillinfozss`), edited from the copies in `ROTP20220406.grf`, so the
+  skill window and tooltips show the server's trees, prerequisites and max
+  levels. Delete those files to go back to the GRF versions.
+- Restart the map server, and restart the client.
+- Commit the three `db/import` files. The client files stay out of git.
+- `tools/sandbox/grf.py` lists or extracts files from a GRF, for looking at
+  client data. Extracted files are Gravity data: never commit them.
 
 ## Known issues
 
