@@ -3901,6 +3901,10 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		pet_delautobonus(*sd, sd->pd->autobonus3, true);
 	}
 
+	// [RO Sandbox] Track the armor part of DEF and MDEF
+	sd->sandbox_armor_def = 0;
+	int32 sandbox_mdef_before = base_status->mdef;
+
 	// Parse equipment
 	for (i = 0; i < EQI_MAX; i++) {
 		current_equip_item_index = index = sd->equip_index[i]; // We pass INDEX to current_equip_item_index - for EQUIP_SCRIPT (new cards solution) [Lupus]
@@ -3915,6 +3919,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 			continue;
 
 		base_status->def += sd->inventory_data[index]->def;
+		sd->sandbox_armor_def += sd->inventory_data[index]->def; // [RO Sandbox]
 
 		// Items may be equipped, their effects however are nullified.
 		if (opt&SCO_FIRST && sd->inventory_data[index]->equip_script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT)
@@ -4052,6 +4057,8 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		}
 	}
 
+	sd->sandbox_armor_mdef = base_status->mdef - sandbox_mdef_before; // [RO Sandbox] equipment scripts only
+
 	// Process and check item combos
 	if (!sd->combos.empty()) {
 		for (const auto &combo : sd->combos) {
@@ -4094,6 +4101,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	memset(sd->indexed_bonus.param_bonus, 0, sizeof(sd->indexed_bonus.param_bonus));
 
 	base_status->def += (refinedef+50)/100;
+	sd->sandbox_armor_def += (refinedef+50)/100; // [RO Sandbox]
 
 	// Parse Cards
 	for (i = 0; i < EQI_MAX; i++) {
