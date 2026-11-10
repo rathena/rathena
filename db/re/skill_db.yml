@@ -46090,6 +46090,84 @@ Body:
         Area: 3
       - Level: 5
         Area: 3
+  - Id: 6638
+    Name: HN_WIND_CUTTER_TURBO
+    Description: "Wind Cutter Turbo"
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 7
+    Hit: Multi_Hit
+    HitCount: 5
+    Element: Weapon
+    SplashArea: 3
+    GiveAp: 2
+    CastTime: 1000
+    AfterCastActDelay: 1000
+    Cooldown: 700
+    FixedCastTime: 350
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 35
+        - Level: 2
+          Amount: 38
+        - Level: 3
+          Amount: 41
+        - Level: 4
+          Amount: 44
+        - Level: 5
+          Amount: 47
+        - Level: 6
+          Amount: 50
+        - Level: 7
+          Amount: 53
+        - Level: 8
+          Amount: 56
+        - Level: 9
+          Amount: 59
+        - Level: 10
+          Amount: 62
+  - Id: 6639
+    Name: HN_HIGH_MAGNUM_BREAK
+    Description: "High Magnum Break"
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+      Critical: true
+    Hit: Single
+    HitCount: 1
+    Element: Weapon
+    SplashArea: 4
+    GiveAp: 2
+    AfterCastActDelay: 1000
+    Cooldown: 700
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 82
+        - Level: 2
+          Amount: 84
+        - Level: 3
+          Amount: 86
+        - Level: 4
+          Amount: 88
+        - Level: 5
+          Amount: 90
+        - Level: 6
+          Amount: 92
+        - Level: 7
+          Amount: 94
+        - Level: 8
+          Amount: 96
+        - Level: 9
+          Amount: 98
+        - Level: 10
+          Amount: 100
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch
