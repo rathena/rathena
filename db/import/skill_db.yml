@@ -149,6 +149,7 @@ Body:
   - Id: 10
     Name: MG_SIGHT
     Cooldown: 15000
+    Duration1: 8000
   - Id: 13
     Name: MG_SOULSTRIKE
     AfterCastActDelay:
@@ -224,6 +225,7 @@ Body:
   - Id: 24
     Name: AL_RUWACH
     Cooldown: 15000
+    Duration1: 8000
   - Id: 25
     Name: AL_PNEUMA
     MaxLevel: 10
