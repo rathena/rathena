@@ -686,8 +686,8 @@ OnTouch:
 		end;
 	case 2:
 		cloakoffnpcself( "Sealing Spirit Stone#life2" );
-		cloakoffnpcself( "Dimensional Prison#1" );
-		cloakoffnpcself( "Dimensional Prison#2" );
+		cloakoffnpcself( "Dimension Prison#1" );
+		cloakoffnpcself( "Dimension Prison#2" );
 		end;
 	}
 	end;
