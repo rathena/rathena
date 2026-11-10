@@ -6237,12 +6237,12 @@ wolfvill,121,113,1	script	Peco#wms01	4_PECOPECO,{
 }
 
 wolfvill,117,113,7	script	Pando#wms01	4_HEN,{
-	npctalk "Cluck cluck cluck-", "Pande#wms01", bc_self;
+	npctalk "Cluck cluck cluck-", "Pando#wms01", bc_self;
 	end;
 }
 
 wolfvill,123,110,5	script	Guest#wms01	4_HEN,{
-	npctalk "....cluck?", "Pandu#wms01", bc_self;
+	npctalk "....cluck?", "Guest#wms01", bc_self;
 	end;
 }
 

@@ -1646,7 +1646,7 @@ lhz_in01,107,137,5	script	Staff#171_lhzin	4_F_01,{
 		sleep2 2000;
 		npctalk "I'm really hired, right?","Pat#171_lhzin",bc_self;
 		sleep2 2000;
-		npctalk "Of course. You're on the list of new employees. You can go ahead on the 2nd floor, in the OT and listen to the training.","Staff#rek",bc_self;
+		npctalk "Of course. You're on the list of new employees. You can go ahead on the 2nd floor, in the OT and listen to the training.","Staff#171_lhzin",bc_self;
 		sleep2 2000;
 		npctalk "Thank you, Thank you!","Pat#171_lhzin",bc_self;
 		sleep2 2000;
@@ -1807,7 +1807,7 @@ lhz_in01,163,258,5	script	Staff#171_lhzin2	4_M_EINMAN,{
 		cutin "16lei_01",2;
 		mes "[Lazy]";
 		mes "Do you know why so many people were drafted?";
-		npctalk "Do you know why so many people were drafted?","Lazy#171_lhzin2,",bc_self;
+		npctalk "Do you know why so many people were drafted?","Lazy#171_lhzin2",bc_self;
 		next;
 		cutin "",255;
 		mes "[Staff]";
@@ -5487,7 +5487,7 @@ sp_cor,122,141,5	script	Tes#171_cor_0	4_M_PHILOFONTES,{
 		mes "[Lazy]";
 		mes "No, really, just a little bit, I'm late am I? What is this all about, is it drugs?";
 		mes "Was I really this late? What is all of this, why is everyone wounded?";
-		npctalk "It's a mess, it's a total mess. You can't live without me.","Lazy#sp_cor",bc_self;
+		npctalk "It's a mess, it's a total mess. You can't live without me.","Lazy#171_cor",bc_self;
 		next;
 		cutin "ep16_tes01",0;
 		mes "[Tes]";
@@ -5600,7 +5600,7 @@ sp_cor,122,141,5	script	Tes#171_cor_0	4_M_PHILOFONTES,{
 		cutin "16lei_03",2;
 		mes "[Lazy]";
 		mes "The list of missing people. I need to double check with who we have here.";
-		npctalk "I hope they would come out one after another.","Lazy#sp_cor",bc_self;
+		npctalk "I hope they would come out one after another.","Lazy#171_cor",bc_self;
 		next;
 		cutin "16lei_02",2;
 		mes "[Lazy]";
