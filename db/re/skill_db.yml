@@ -46090,6 +46090,34 @@ Body:
         Area: 3
       - Level: 5
         Area: 3
+  - Id: 6613
+    Name: ABC_PHANTOM_DAGGER
+    Description: "Phantom Dagger"
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    Range: 2
+    Hit: Multi_Hit
+    HitCount: 3
+    Element: Weapon
+    GiveAp: 2
+    AfterCastActDelay: 500
+    Cooldown: 700
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 63
+        - Level: 2
+          Amount: 66
+        - Level: 3
+          Amount: 69
+        - Level: 4
+          Amount: 72
+        - Level: 5
+          Amount: 75
+      Weapon:
+        Dagger: true
+        1hSword: true
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch
