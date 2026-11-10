@@ -1226,8 +1226,22 @@ OnInit:
 	end;
 }
 
-/*
-prt_fild01,131,364,5	script	Terrian#terian	4W_M_02,{
+prt_mz03_i,97,31,5	script	Terrian#terian	4W_M_02,{
+	mes "[Therian]";
+	mes "Are there any difficulties in carrying out the mission?";
+	mes "If you want to get out of the Twisted Labyrinth, I can guide you.";
+	next;
+	if (select( "Let's continue talking about the investigation.", "I want to go out." ) == 2) {
+		mes "[Therian]";
+		mes "I will guide you to where the entrance to the Twisted Labyrinth was.";
+		close2;
+		warp "prt_maze01",99,29;
+		end;
+	}
+	mes "[Therian]";
+	mes "I understand.";
+	mes "Then let's talk about the investigation.";
+	next;
 	if (BaseLevel < 170) {
 		mes "[Terrian]";
 		mes "It's nice weather.";
@@ -1261,9 +1275,9 @@ prt_fild01,131,364,5	script	Terrian#terian	4W_M_02,{
 		mes "If you don't mind, please apply for membership with the Commander <NAVI>[Joel]<INFO>prt_in,136,34,</INFO></NAVI> in Prontera.";
 		close;
 	}
-	if (isbegin_quest(3467) == 0) {
+	if (isbegin_quest(3464) == 0) {
 		mes "[Terrian]";
-		mes "The weather is nice";
+		mes "The weather is nice.";
 		next;
 		mes "[Terrian]";
 		mes "I'm a Terrian from the Illusion Investigation Corps.";
@@ -1281,7 +1295,7 @@ prt_fild01,131,364,5	script	Terrian#terian	4W_M_02,{
 		mes "After the flowers wither in winter, they will bloom again in spring. They always bloom in the place where the flowers withered and fell off.";
 		next;
 		mes "[Terrian]";
-		mes "It's the same with animals, the appearance of each of which varies innumerable, but for hundreds of years it has been discovered that there has always been a completely identical appearance";
+		mes "It's the same with animals, the appearance of each of which varies innumerable, but for hundreds of years it has been discovered that there has always been a completely identical appearance.";
 		next;
 		mes "[Terrian]";
 		mes "This is the core of the theory of reincarnation, and it takes a very long time to observe and investigate it.";
@@ -1304,7 +1318,7 @@ prt_fild01,131,364,5	script	Terrian#terian	4W_M_02,{
 			close;
 		}
 		mes "[Terrian]";
-		mes "Thank you";
+		mes "Thank you.";
 		next;
 		mes "[Terrian]";
 		mes "In order to determine the individual recovery rate, we need to reduce the number of monsters as quickly as possible.";
@@ -1352,7 +1366,7 @@ prt_fild01,131,364,5	script	Terrian#terian	4W_M_02,{
 			close;
 		}
 		mes "[Terrian]";
-		mes "Thank you";
+		mes "Thank you.";
 		next;
 		mes "[Terrian]";
 		mes "In order to determine the individual recovery rate, we need to reduce the number of monsters as quickly as possible.";
@@ -1389,10 +1403,11 @@ OnInit:
 
 	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(3465,HUNTING) == 2" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(3464) == 2 && checkquest(3466,PLAYTIME) == -1 && checkquest(3465,HUNTING) == -1" );
-	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(3466,PLAYTIME) == 2" );
+
+	// No questinfo when expired
+	// questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(3466,PLAYTIME) == 2" );
 	end;
 }
-*/
 
 iz_d04_i,127,224,5	script	Lister#ristar	4_F_01,{
 	if (BaseLevel < 180) {

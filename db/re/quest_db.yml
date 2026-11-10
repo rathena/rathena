@@ -1459,21 +1459,21 @@ Body:
     TimeLimit: 4h
   - Id: 3464
     Title: Illusion Investigation Team - Terrian
-  # - Id: 3465
-    # Title: Illusion of Labyrinth 100 Kills
-    # Targets:
-      # - Id: 1
-        # Count: 100
-        # Location: prt_mz03_i
-        # MapMobTargets:
-          # ILL_STEM_WORM: true
-          # ILL_GHOSTRING: true
-          # ILL_POPORING: true
-          # ILL_MANTIS: true
-          # ILL_HUNTER_FLY: true
-          # ILL_SIDE_WINDER: true
-          # ILL_BAPHOMET_J: true
-          # ILL_KILLER_MANTIS: true
+  - Id: 3465
+    Title: Illusion of Labyrinth 100 Kills
+    Targets:
+      - Id: 1
+        Count: 100
+        Location: prt_mz03_i
+        MapMobTargets:
+          ILL_STEM_WORM: true
+          ILL_GHOSTRING: true
+          ILL_POPORING: true
+          ILL_MANTIS: true
+          ILL_HUNTER_FLY: true
+          ILL_SIDE_WINDER: true
+          ILL_BAPHOMET_J: true
+          ILL_KILLER_MANTIS: true
   - Id: 3466
     Title: Illusion of Labyrinth 100 Kills - Standby
     TimeLimit: 4h
@@ -9337,9 +9337,90 @@ Body:
   - Id: 12461
     Title: The aftereffects of powerful death
     TimeLimit: 3d 4h
+  - Id: 12470
+    Title: "[Daily] Andrea's Revenge I"
+    Targets:
+      - Mob: ILL_BAPHOMET_J
+        Count: 5
+  - Id: 12471
+    Title: "[Daily] Andrea's Revenge II"
+    Targets:
+      - Mob: ILL_GHOSTRING
+        Count: 2
+  - Id: 12472
+    Title: "[Daily] Anes' Revenge I"
+    Targets:
+      - Mob: ILL_HUNTER_FLY
+        Count: 5
+  - Id: 12473
+    Title: "[Daily] Anes' Revenge II"
+    Targets:
+      - Mob: ILL_KILLER_MANTIS
+        Count: 5
+  - Id: 12474
+    Title: "[Daily] Silvano's Revenge I"
+    Targets:
+      - Mob: ILL_MANTIS
+        Count: 5
+  - Id: 12475
+    Title: "[Daily] Silvano's Revenge II"
+    Targets:
+      - Mob: ILL_POPORING
+        Count: 5
+  - Id: 12476
+    Title: "[Daily] Cecilia's Revenge I"
+    Targets:
+      - Mob: ILL_SIDE_WINDER
+        Count: 5
+  - Id: 12477
+    Title: "[Daily] Cecilia's Revenge II"
+    Targets:
+      - Mob: ILL_STEM_WORM
+        Count: 3
+  - Id: 12478
+    Title: "[Weekly] Soul Purification - Andrea"
+    Targets:
+      - Mob: ILL_ANDREA
+        Count: 1
+  - Id: 12479
+    Title: "[Weekly] Soul Purification - Anes"
+    Targets:
+      - Mob: ILL_ANES
+        Count: 1
+  - Id: 12480
+    Title: "[Weekly] Soul Purification - Silvano"
+    Targets:
+      - Mob: ILL_SILVANO
+        Count: 1
+  - Id: 12481
+    Title: "[Weekly] Soul Purification - Cecilia"
+    Targets:
+      - Mob: ILL_CECILIA
+        Count: 1
+  - Id: 12482
+    Title: Disappearance of a Colleague
+  - Id: 12483
+    Title: Follow Up
+  - Id: 12484
+    Title: Searching for Traces - Andrea
+  - Id: 12485
+    Title: Searching for Traces - Anes
+  - Id: 12486
+    Title: Searching for Traces - Silvano
+  - Id: 12487
+    Title: Searching for Traces - Cecilia
+  - Id: 12488
+    Title: Search Result
+  - Id: 12489
+    Title: Guest Guild Member
   - Id: 12490
-    Title: Receive today's mission
+    Title: "[Cooldown] Daily Mission"
     TimeLimit: 4h
+  - Id: 12491
+    Title: "[Cooldown] Weekly Mission"
+    TimeLimit: Monday 4h
+  - Id: 12492
+    Title: Esmeralda
   - Id: 12493
     Title: The aftereffect of the challenge
     TimeLimit: 3d 4h
