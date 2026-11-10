@@ -765,6 +765,7 @@
     <ClInclude Include="skills/mage/whirlwind.hpp" />
     <ClInclude Include="skills/mage/whiteimprison.hpp" />
     <ClInclude Include="skills/mage/windinsignia.hpp" />
+    <ClInclude Include="skills/mage/wraithdash.hpp" />
     <ClInclude Include="skills/mercenary/mercenary_arrowrepel.hpp" />
     <ClInclude Include="skills/mercenary/mercenary_arrowshower.hpp" />
     <ClInclude Include="skills/mercenary/mercenary_bash.hpp" />
@@ -3081,6 +3082,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/windinsignia.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mage/wraithdash.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mercenary/mercenary_arrowrepel.cpp">
