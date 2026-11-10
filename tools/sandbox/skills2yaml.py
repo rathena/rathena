@@ -96,7 +96,8 @@ CLIENT_JOBID = {
 }
 TIMINGS = [("Cast Time (s)", "CastTime"),
            ("After-Cast Delay (s)", "AfterCastActDelay"),
-           ("Cooldown (s)", "Cooldown")]
+           ("Cooldown (s)", "Cooldown"),
+           ("Duration (s)", "Duration1")]  # optional column; blank keeps rAthena's value
 
 errors = []
 
@@ -178,7 +179,7 @@ def read_rathena_skills():
                     skills[val] = cur
                 elif key == "MaxLevel":
                     cur["MaxLevel"] = int(val)
-                elif key in ("CastTime", "AfterCastActDelay", "Cooldown"):
+                elif key in ("CastTime", "AfterCastActDelay", "Cooldown", "Duration1"):
                     if val:
                         cur[key] = int(val)
                     else:
@@ -398,7 +399,7 @@ def main():
             # Timings come only from rows that define the skill somewhere.
             for column, field in TIMINGS:
                 try:
-                    value = parse_timing(row[column])
+                    value = parse_timing(row.get(column, ""))
                 except ValueError:
                     errors.append(f"{where}: {column} '{row[column].strip()}' should be "
                                   "a number of seconds, '-', or 'a → b'")
