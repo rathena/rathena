@@ -8422,6 +8422,20 @@ Body:
             Level: 7
           - Name: SH_HYUN_ROKS_BREEZE
             Level: 5
+      - Name: SH_KI_SUL_AND_CHUL_HO
+        MaxLevel: 1
+        Requires:
+          - Name: SH_COMMUNE_WITH_KI_SUL
+            Level: 1
+          - Name: SH_COMMUNE_WITH_CHUL_HO
+            Level: 1
+      - Name: SH_KI_SUL_AND_HYUN_ROK
+        MaxLevel: 1
+        Requires:
+          - Name: SH_COMMUNE_WITH_KI_SUL
+            Level: 1
+          - Name: SH_COMMUNE_WITH_HYUN_ROK
+            Level: 1
   - Job: Sky_Emperor
     Inherit:
       Novice: true
