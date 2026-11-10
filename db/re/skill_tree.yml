@@ -8210,6 +8210,11 @@ Body:
             Level: 3
           - Name: NW_WILD_FIRE
             Level: 3
+      - Name: NW_TACTICAL_REPOSITIONING
+        MaxLevel: 1
+        Requires:
+          - Name: NW_INTENSIVE_AIM
+            Level: 1
   - Job: Hyper_Novice
     Inherit:
       Novice: true
