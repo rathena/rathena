@@ -350,6 +350,7 @@ Body:
   - Id: 130
     Name: HT_DETECTING
     Cooldown: 10000
+    Duration1: 2000
   - Id: 136
     Name: AS_SONICBLOW
     Cooldown: 7500
