@@ -10928,8 +10928,9 @@ bool pc_jobchange(map_session_data *sd,int32 job, char upper)
 		clif_updatestatus(*sd,SP_TRAITPOINT);
 		clif_updatestatus(*sd,SP_BASELEVEL);
 		clif_updatestatus(*sd,SP_BASEEXP);
-		clif_updatestatus(*sd,SP_NEXTBASEEXP);
 	}
+	// The max base level may differ between the old and new job (e.g. 3rd job Lv200 -> 4th job), so always send the new required exp
+	clif_updatestatus(*sd,SP_NEXTBASEEXP);
 
 	// Give or reduce transcendent status points
 	if( ((b_class&JOBL_UPPER) || pc_is_primary_fourth(b_class)) && !((previous_class&JOBL_UPPER) || pc_is_primary_fourth(previous_class)) ){ // Change from a non t class to a t class -> give points
