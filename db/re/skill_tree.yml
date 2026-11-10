@@ -7147,6 +7147,16 @@ Body:
             Level: 5
           - Name: CD_FRAMEN
             Level: 5
+      - Name: CD_PUNITIO
+        MaxLevel: 5
+        Requires:
+          - Name: CD_MACE_BOOK_M
+            Level: 1
+      - Name: CD_LEX_EXPIATRIX
+        MaxLevel: 5
+        Requires:
+          - Name: CD_FRAMEN
+            Level: 5
   - Job: Windhawk
     Inherit:
       Novice: true
