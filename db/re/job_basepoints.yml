@@ -19258,6 +19258,412 @@ Body:
         Sp: 1903
       - Level: 200
         Sp: 1915
+  - Jobs: #TODO: Unknown Values
+      Druid: true 
+      Baby_Druid: true
+      Karnos: true
+      Baby_Karnos: true
+    BaseSp:
+      - Level: 1
+        Sp: 12
+      - Level: 2
+        Sp: 15
+      - Level: 3
+        Sp: 18
+      - Level: 4
+        Sp: 21
+      - Level: 5
+        Sp: 24
+      - Level: 6
+        Sp: 27
+      - Level: 7
+        Sp: 30
+      - Level: 8
+        Sp: 33
+      - Level: 9
+        Sp: 36
+      - Level: 10
+        Sp: 39
+      - Level: 11
+        Sp: 42
+      - Level: 12
+        Sp: 45
+      - Level: 13
+        Sp: 48
+      - Level: 14
+        Sp: 51
+      - Level: 15
+        Sp: 54
+      - Level: 16
+        Sp: 57
+      - Level: 17
+        Sp: 61
+      - Level: 18
+        Sp: 64
+      - Level: 19
+        Sp: 67
+      - Level: 20
+        Sp: 70
+      - Level: 21
+        Sp: 73
+      - Level: 22
+        Sp: 76
+      - Level: 23
+        Sp: 79
+      - Level: 24
+        Sp: 82
+      - Level: 25
+        Sp: 85
+      - Level: 26
+        Sp: 89
+      - Level: 27
+        Sp: 93
+      - Level: 28
+        Sp: 97
+      - Level: 29
+        Sp: 101
+      - Level: 30
+        Sp: 105
+      - Level: 31
+        Sp: 109
+      - Level: 32
+        Sp: 113
+      - Level: 33
+        Sp: 117
+      - Level: 34
+        Sp: 121
+      - Level: 35
+        Sp: 125
+      - Level: 36
+        Sp: 129
+      - Level: 37
+        Sp: 131
+      - Level: 38
+        Sp: 135
+      - Level: 39
+        Sp: 139
+      - Level: 40
+        Sp: 141
+      - Level: 41
+        Sp: 145
+      - Level: 42
+        Sp: 149
+      - Level: 43
+        Sp: 153
+      - Level: 44
+        Sp: 157
+      - Level: 45
+        Sp: 161
+      - Level: 46
+        Sp: 165
+      - Level: 47
+        Sp: 169
+      - Level: 48
+        Sp: 173
+      - Level: 49
+        Sp: 177
+      - Level: 50
+        Sp: 181
+      - Level: 51
+        Sp: 186
+      - Level: 52
+        Sp: 191
+      - Level: 53
+        Sp: 196
+      - Level: 54
+        Sp: 201
+      - Level: 55
+        Sp: 206
+      - Level: 56
+        Sp: 211
+      - Level: 57
+        Sp: 216
+      - Level: 58
+        Sp: 221
+      - Level: 59
+        Sp: 226
+      - Level: 60
+        Sp: 231
+      - Level: 61
+        Sp: 236
+      - Level: 62
+        Sp: 241
+      - Level: 63
+        Sp: 246
+      - Level: 64
+        Sp: 251
+      - Level: 65
+        Sp: 256
+      - Level: 66
+        Sp: 261
+      - Level: 67
+        Sp: 266
+      - Level: 68
+        Sp: 271
+      - Level: 69
+        Sp: 276
+      - Level: 70
+        Sp: 281
+      - Level: 71
+        Sp: 286
+      - Level: 72
+        Sp: 291
+      - Level: 73
+        Sp: 296
+      - Level: 74
+        Sp: 301
+      - Level: 75
+        Sp: 306
+      - Level: 76
+        Sp: 312
+      - Level: 77
+        Sp: 318
+      - Level: 78
+        Sp: 324
+      - Level: 79
+        Sp: 336
+      - Level: 80
+        Sp: 342
+      - Level: 81
+        Sp: 348
+      - Level: 82
+        Sp: 354
+      - Level: 83
+        Sp: 360
+      - Level: 84
+        Sp: 366
+      - Level: 85
+        Sp: 372
+      - Level: 86
+        Sp: 378
+      - Level: 87
+        Sp: 384
+      - Level: 88
+        Sp: 390
+      - Level: 89
+        Sp: 396
+      - Level: 90
+        Sp: 402
+      - Level: 91
+        Sp: 408
+      - Level: 92
+        Sp: 414
+      - Level: 93
+        Sp: 420
+      - Level: 94
+        Sp: 426
+      - Level: 95
+        Sp: 432
+      - Level: 96
+        Sp: 438
+      - Level: 97
+        Sp: 444
+      - Level: 98
+        Sp: 450
+      - Level: 99
+        Sp: 456
+      - Level: 100
+        Sp: 462
+      - Level: 101
+        Sp: 468
+      - Level: 102
+        Sp: 474
+      - Level: 103
+        Sp: 480
+      - Level: 104
+        Sp: 486
+      - Level: 105
+        Sp: 492
+      - Level: 106
+        Sp: 498
+      - Level: 107
+        Sp: 504
+      - Level: 108
+        Sp: 510
+      - Level: 109
+        Sp: 516
+      - Level: 110
+        Sp: 522
+      - Level: 111
+        Sp: 528
+      - Level: 112
+        Sp: 534
+      - Level: 113
+        Sp: 540
+      - Level: 114
+        Sp: 546
+      - Level: 115
+        Sp: 552
+      - Level: 116
+        Sp: 558
+      - Level: 117
+        Sp: 564
+      - Level: 118
+        Sp: 570
+      - Level: 119
+        Sp: 576
+      - Level: 120
+        Sp: 582
+      - Level: 121
+        Sp: 588
+      - Level: 122
+        Sp: 594
+      - Level: 123
+        Sp: 600
+      - Level: 124
+        Sp: 606
+      - Level: 125
+        Sp: 612
+      - Level: 126
+        Sp: 618
+      - Level: 127
+        Sp: 624
+      - Level: 128
+        Sp: 630
+      - Level: 129
+        Sp: 636
+      - Level: 130
+        Sp: 642
+      - Level: 131
+        Sp: 648
+      - Level: 132
+        Sp: 654
+      - Level: 133
+        Sp: 660
+      - Level: 134
+        Sp: 666
+      - Level: 135
+        Sp: 672
+      - Level: 136
+        Sp: 678
+      - Level: 137
+        Sp: 684
+      - Level: 138
+        Sp: 690
+      - Level: 139
+        Sp: 696
+      - Level: 140
+        Sp: 702
+      - Level: 141
+        Sp: 708
+      - Level: 142
+        Sp: 714
+      - Level: 143
+        Sp: 720
+      - Level: 144
+        Sp: 726
+      - Level: 145
+        Sp: 732
+      - Level: 146
+        Sp: 738
+      - Level: 147
+        Sp: 744
+      - Level: 148
+        Sp: 750
+      - Level: 149
+        Sp: 756
+      - Level: 150
+        Sp: 762
+      - Level: 151
+        Sp: 768
+      - Level: 152
+        Sp: 774
+      - Level: 153
+        Sp: 780
+      - Level: 154
+        Sp: 786
+      - Level: 155
+        Sp: 792
+      - Level: 156
+        Sp: 798
+      - Level: 157
+        Sp: 804
+      - Level: 158
+        Sp: 810
+      - Level: 159
+        Sp: 816
+      - Level: 160
+        Sp: 822
+      - Level: 161
+        Sp: 828
+      - Level: 162
+        Sp: 834
+      - Level: 163
+        Sp: 840
+      - Level: 164
+        Sp: 846
+      - Level: 165
+        Sp: 852
+      - Level: 166
+        Sp: 858
+      - Level: 167
+        Sp: 864
+      - Level: 168
+        Sp: 870
+      - Level: 169
+        Sp: 876
+      - Level: 170
+        Sp: 882
+      - Level: 171
+        Sp: 888
+      - Level: 172
+        Sp: 894
+      - Level: 173
+        Sp: 900
+      - Level: 174
+        Sp: 906
+      - Level: 175
+        Sp: 912
+      - Level: 176
+        Sp: 918
+      - Level: 177
+        Sp: 924
+      - Level: 178
+        Sp: 930
+      - Level: 179
+        Sp: 936
+      - Level: 180
+        Sp: 942
+      - Level: 181
+        Sp: 948
+      - Level: 182
+        Sp: 954
+      - Level: 183
+        Sp: 960
+      - Level: 184
+        Sp: 966
+      - Level: 185
+        Sp: 972
+      - Level: 186
+        Sp: 978
+      - Level: 187
+        Sp: 984
+      - Level: 188
+        Sp: 990
+      - Level: 189
+        Sp: 996
+      - Level: 190
+        Sp: 1002
+      - Level: 191
+        Sp: 1008
+      - Level: 192
+        Sp: 1014
+      - Level: 193
+        Sp: 1020
+      - Level: 194
+        Sp: 1026
+      - Level: 195
+        Sp: 1032
+      - Level: 196
+        Sp: 1038
+      - Level: 197
+        Sp: 1044
+      - Level: 198
+        Sp: 1050
+      - Level: 199
+        Sp: 1056
+      - Level: 200
+        Sp: 1062
       # -----------------------------------------------------------------
       # Levels 176-200 SP Data End
       # -----------------------------------------------------------------
@@ -19287,6 +19693,7 @@ Body:
       Shinkiro: true
       Shiranui: true
       Spirit_Handler: true
+      Alitea: true
     BaseAp:
       - Level: 200
         Ap: 200
