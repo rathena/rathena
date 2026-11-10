@@ -6827,6 +6827,13 @@ Body:
         Requires:
           - Name: MT_TRIPLE_LASER
             Level: 3
+      - Name: MT_OVERDRIVE_PROTOCAL
+        MaxLevel: 4
+        Requires:
+          - Name: MT_A_MACHINE
+            Level: 3
+          - Name: MT_ABR_M
+            Level: 1
   - Job: Shadow_Cross
     Inherit:
       Novice: true
