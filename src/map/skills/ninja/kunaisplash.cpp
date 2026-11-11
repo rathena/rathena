@@ -11,7 +11,7 @@ SkillKunaiSplash::SkillKunaiSplash() : SkillImplRecursiveDamageSplash(KO_HAPPOKU
 
 void SkillKunaiSplash::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	clif_skill_nodamage(src,*target,getSkillId(),skill_lv);
-	skill_castend_damage_id(src, target, getSkillId(), skill_lv, tick, flag);
+	SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
 
 	if (skill_area_temp[2] == 0) {
 		clif_skill_damage( *src, *src, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, getSkillId(), skill_lv, DMG_SINGLE );
