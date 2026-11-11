@@ -420,18 +420,18 @@ int32 chmapif_parse_reqsavechar(int32 fd, int32 id){
 		}
 
 		std::shared_ptr<struct online_char_data> character = util::umap_find( char_get_onlinedb(), aid );
+		bool saved = false;
 
-		//Check account only if this ain't final save. Final-save goes through because of the char-map reconnect
-		if( RFIFOB( fd, 12 ) || RFIFOB( fd, 13 ) || ( character != nullptr && character->char_id == cid ) ){
+		if( character != nullptr && character->char_id == cid && character->server == id ){
 			struct mmo_charstatus char_dat;
 			memcpy(&char_dat, RFIFOP(fd,13), sizeof(struct mmo_charstatus));
 			char_mmo_char_tosql(cid, &char_dat);
+			saved = true;
 		} else {	//This may be valid on char-server reconnection, when re-sending characters that already logged off.
 			ShowError("parse_from_map (save-char): Received data for non-existant/offline character (%d:%d).\n", aid, cid);
-			char_set_char_online(id, cid, aid);
 		}
 
-		if (RFIFOB(fd,12))
+		if( saved && RFIFOB(fd,12) )
 		{	//Flag, set character offline after saving. [Skotlex]
 			char_set_char_offline(cid, aid);
 			WFIFOHEAD(fd,10);
@@ -1030,23 +1030,7 @@ int32 chmapif_parse_reqauth(int32 fd, int32 id){
 			cd = util::umap_find( char_get_chardb(), char_id );
 		}
 
-		if( global_core->is_running() && autotrade && cd ){
-			uint16 mmo_charstatus_len = sizeof(struct mmo_charstatus) + 25;
-
-			WFIFOHEAD(fd,mmo_charstatus_len);
-			WFIFOW(fd,0) = 0x2afd;
-			WFIFOW(fd,2) = mmo_charstatus_len;
-			WFIFOL(fd,4) = account_id;
-			WFIFOL(fd,8) = 0;
-			WFIFOL(fd,12) = 0;
-			WFIFOL(fd,16) = 0;
-			WFIFOL(fd,20) = 0;
-			WFIFOB(fd,24) = 0;
-			memcpy( WFIFOP( fd, 25 ), cd.get(), sizeof(struct mmo_charstatus));
-			WFIFOSET(fd, WFIFOW(fd,2));
-
-			char_set_char_online(id, char_id, account_id);
-		} else if( global_core->is_running() &&
+		if( global_core->is_running() &&
 			cd != nullptr &&
 			node != nullptr &&
 			node->account_id == account_id &&
@@ -1064,11 +1048,11 @@ int32 chmapif_parse_reqauth(int32 fd, int32 id){
 			WFIFOW(fd,0) = 0x2afd;
 			WFIFOW(fd,2) = mmo_charstatus_len;
 			WFIFOL(fd,4) = account_id;
-			WFIFOL(fd,8) = node->login_id1;
-			WFIFOL(fd,12) = node->login_id2;
-			WFIFOL(fd,16) = (uint32)node->expiration_time; // FIXME: will wrap to negative after "19-Jan-2038, 03:14:07 AM GMT"
-			WFIFOL(fd,20) = node->group_id;
-			WFIFOB(fd,24) = node->changing_mapservers;
+			WFIFOL(fd,8) = autotrade ? 0 : node->login_id1;
+			WFIFOL(fd,12) = autotrade ? 0 : node->login_id2;
+			WFIFOL(fd,16) = autotrade ? 0 : (uint32)node->expiration_time; // FIXME: will wrap to negative after "19-Jan-2038, 03:14:07 AM GMT"
+			WFIFOL(fd,20) = autotrade ? 0 : node->group_id;
+			WFIFOB(fd,24) = autotrade ? 0 : node->changing_mapservers;
 			memcpy( WFIFOP( fd, 25 ), cd.get(), sizeof( struct mmo_charstatus ) );
 			WFIFOSET(fd, WFIFOW(fd,2));
 
