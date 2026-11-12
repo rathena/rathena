@@ -5103,6 +5103,7 @@ void MapServer::finalize(){
 	iwall_db->destroy(iwall_db, nullptr);
 	regen_db->destroy(regen_db, nullptr);
 
+	log_file_final();
 	map_sql_close();
 
 	ShowStatus("Finished.\n");
@@ -5389,6 +5390,7 @@ bool MapServer::initialize( int32 argc, char *argv[] ){
 	script_config_read(SCRIPT_CONF_NAME);
 	inter_config_read(INTER_CONF_NAME);
 	log_config_read(LOG_CONF_NAME);
+	log_file_init();
 
 	id_db = idb_alloc(DB_OPT_BASE);
 	pc_db = idb_alloc(DB_OPT_BASE);	//Added for reliable map_id2sd() use. [Skotlex]

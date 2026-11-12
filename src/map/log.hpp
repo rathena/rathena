@@ -92,12 +92,15 @@ void log_branch( map_session_data* sd );
 void log_mvpdrop( const map_session_data* sd, int32 monster_id, t_itemid nameid, t_exp exp );
 
 int32 log_config_read( const char* cfgName );
+void log_file_init();
+void log_file_final();
 
 extern struct Log_Config
 {
 	e_log_pick_type enable_logs;
 	int32 filter;
 	bool sql_logs;
+	bool async_picklog;
 	bool log_chat_woe_disable;
 	bool cash;
 	int32 rare_items_log,refine_items_log,price_items_log,amount_items_log; //for filter

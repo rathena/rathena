@@ -3,7 +3,9 @@
 
 #include "log.hpp"
 
+#include <cstdio>
 #include <cstdlib>
+#include <system_error>
 
 #include <common/cbasetypes.hpp>
 #include <common/nullpo.hpp>
@@ -11,6 +13,7 @@
 #include <common/sql.hpp> // SQL_INNODB
 #include <common/strlib.hpp>
 
+#include "async_file_log.hpp"
 #include "battle.hpp"
 #include "homunculus.hpp"
 #include "itemdb.hpp"
@@ -44,6 +47,25 @@ e_log_filter;
 
 
 struct Log_Config log_config;
+static AsyncFileLog pick_log;
+static bool pick_log_warned = false;
+
+void log_file_init() {
+	if( log_config.sql_logs || !log_config.async_picklog || !log_config.enable_logs )
+		return;
+
+	try {
+		pick_log.start( log_config.log_pick );
+	} catch( const std::system_error& e ) {
+		ShowWarning( "Could not start the item log writer: %s\n", e.what() );
+	}
+}
+
+void log_file_final() {
+	const auto failed = pick_log.stop();
+	if( failed != 0 )
+		ShowWarning( "Item log writer failed to append %zu batches to '%s'.\n", failed, log_config.log_pick );
+}
 
 
 #ifdef SQL_INNODB
@@ -244,16 +266,24 @@ void log_pick( int32 id, int16 m, e_log_pick_type type, int32 amount, const item
 	}
 	else
 	{
-		char timestring[255];
-		time_t curtime;
-		FILE* logfp;
-
-		if( ( logfp = fopen(log_config.log_pick, "a") ) == nullptr )
-			return;
-		time(&curtime);
+		char timestring[255]{};
+		time_t curtime = time( nullptr );
 		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
-		fprintf(logfp,"%s - %d\t%c\t%u,%d,%d,%u,%u,%u,%u,%s,'%" PRIu64 "',%d,%d\n", timestring, id, log_picktype2char(type), itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], map_getmapdata(m)->name[0]?map_getmapdata(m)->name:"", itm->unique_id, itm->bound, itm->enchantgrade);
-		fclose(logfp);
+		char line[512];
+		std::snprintf( line, sizeof( line ), "%s - %d\t%c\t%u,%d,%d,%u,%u,%u,%u,%s,'%" PRIu64 "',%d,%d\n", timestring, id, log_picktype2char(type), itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], map_getmapdata(m)->name, itm->unique_id, itm->bound, itm->enchantgrade );
+
+		if( pick_log.append( line ) ) {
+			if( !pick_log_warned && pick_log.failures() != 0 ) {
+				ShowWarning( "Item log writer could not append to '%s'.\n", log_config.log_pick );
+				pick_log_warned = true;
+			}
+			return;
+		}
+
+		if( FILE* file = std::fopen( log_config.log_pick, "a" ) ) {
+			std::fputs( line, file );
+			std::fclose( file );
+		}
 	}
 }
 
@@ -611,6 +641,8 @@ int32 log_config_read( const char* cfgName )
 				log_config.enable_logs = (e_log_pick_type)config_switch(w2);
 			else if( strcmpi(w1, "sql_logs") == 0 )
 				log_config.sql_logs = config_switch(w2) > 0;
+			else if( strcmpi(w1, "async_picklog") == 0 )
+				log_config.async_picklog = config_switch(w2) > 0;
 //start of common filter settings
 			else if( strcmpi(w1, "rare_items_log") == 0 )
 				log_config.rare_items_log = atoi(w2);
