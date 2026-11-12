@@ -57,7 +57,11 @@ so the converter downloads it directly.
   (more common loot, more EXP, 10% to 5% cards, easing to 0.5% by Lv 50). Its
   chances are worked out from `conf/battle/drops.conf`, so run the script
   again after changing drop rates there. The numbers are at the top of
-  `sheet2yaml.py`.
+  `sheet2yaml.py`. Weapons and armor also drop 5x more from monsters up to
+  Lv 25 and 3x more up to Lv 35.
+- The Leveling Route tab of the RO_Monster_Drops sheet adds its Job EXP Bonus
+  to each route monster. That sheet must also be shared as "Anyone with the
+  link".
 - Restart the map server, and restart the client to see new item names.
 - Commit the two `db/import` files. The client file stays out of git.
 

@@ -1188,7 +1188,7 @@ Body:
         Rate: 10000
         Index: 0
       - Item: Knife_
-        Rate: 100
+        Rate: 500
         Index: 1
       - Item: Sticky_Mucus
         Rate: 10000
@@ -1200,7 +1200,7 @@ Body:
         Rate: 10000
         Index: 4
       - Item: Apple
-        Rate: 7801
+        Rate: 3801
         Index: 5
       - Item: Unripe_Apple
         Rate: 20
@@ -1223,7 +1223,7 @@ Body:
         Rate: 10000
         Index: 2
       - Item: Main_Gauche_
-        Rate: 15
+        Rate: 75
         Index: 3
       - Item: Green_Herb
         Rate: 10000
@@ -1243,10 +1243,10 @@ Body:
         Rate: 10000
         Index: 0
       - Item: Falchion_
-        Rate: 20
+        Rate: 100
         Index: 1
       - Item: Ribbon_
-        Rate: 15
+        Rate: 75
         Index: 2
       - Item: Wing_Of_Fly
         Rate: 50
@@ -1272,22 +1272,22 @@ Body:
         Rate: 10000
         Index: 0
       - Item: Feather
-        Rate: 10000
+        Rate: 5961
         Index: 1
       - Item: Club_
-        Rate: 80
+        Rate: 400
         Index: 2
       - Item: Azure_Jewel
         Rate: 5
         Index: 3
       - Item: Green_Herb
-        Rate: 10000
+        Rate: 8345
         Index: 4
       - Item: Clover
         Rate: 10000
         Index: 5
       - Item: Club
-        Rate: 200
+        Rate: 1000
         Index: 6
       - Item: Fabre_Card
         Rate: 20
@@ -1307,7 +1307,7 @@ Body:
         Rate: 10000
         Index: 2
       - Item: Guard_
-        Rate: 2
+        Rate: 10
         Index: 3
       - Item: Shell
         Rate: 10000
@@ -1316,7 +1316,7 @@ Body:
         Rate: 10000
         Index: 5
       - Item: Iron_Ore
-        Rate: 8211
+        Rate: 8131
         Index: 6
       - Item: Pupa_Card
         Rate: 20
@@ -1330,7 +1330,7 @@ Body:
         Rate: 10000
         Index: 0
       - Item: Bow_
-        Rate: 150
+        Rate: 750
         Index: 1
       - Item: Yellow_Gemstone
         Rate: 80
@@ -1339,13 +1339,13 @@ Body:
         Rate: 10000
         Index: 3
       - Item: Meat
-        Rate: 5885
+        Rate: 3485
         Index: 4
       - Item: Feather_Of_Birds
         Rate: 10000
         Index: 5
       - Item: Orange
-        Rate: 8827
+        Rate: 5227
         Index: 6
       - Item: Condor_Card
         Rate: 19
@@ -1353,7 +1353,7 @@ Body:
         StealProtected: true
   - Id: 1010
     BaseExp: 16
-    JobExp: 22
+    JobExp: 33
     Drops:
       - Item: Tree_Root
         Rate: 10000
@@ -1394,7 +1394,7 @@ Body:
         Rate: 10000
         Index: 2
       - Item: Cutter_
-        Rate: 55
+        Rate: 275
         Index: 3
       - Item: Wing_Of_Fly
         Rate: 10000
@@ -1443,19 +1443,19 @@ Body:
         Rate: 10000
         Index: 1
       - Item: Mantle_
-        Rate: 10
+        Rate: 50
         Index: 2
       - Item: Meat
-        Rate: 3597
+        Rate: 3484
         Index: 3
       - Item: Monster's_Feed
-        Rate: 5811
+        Rate: 5629
         Index: 4
       - Item: Animal's_Skin
         Rate: 10000
         Index: 5
       - Item: Strawberry
-        Rate: 3321
+        Rate: 3216
         Index: 6
       - Item: Wolf_Card
         Rate: 12
@@ -1463,13 +1463,13 @@ Body:
         StealProtected: true
   - Id: 1014
     BaseExp: 146
-    JobExp: 369
+    JobExp: 554
     Drops:
       - Item: Mushroom_Spore
         Rate: 10000
         Index: 0
       - Item: Red_Herb
-        Rate: 10000
+        Rate: 9761
         Index: 1
       - Item: Blue_Herb
         Rate: 50
@@ -1478,24 +1478,24 @@ Body:
         Rate: 10
         Index: 3
       - Item: Hat
-        Rate: 40
+        Rate: 200
         Index: 4
       - Item: Poison_Spore
         Rate: 5
         Index: 5
       - Item: Strawberry
-        Rate: 8441
+        Rate: 7320
         Index: 6
       - Item: Spore_Card
         Rate: 15
         Index: 7
         StealProtected: true
       - Item: Onion
-        Rate: 10000
+        Rate: 9761
         Index: 8
   - Id: 1015
     BaseExp: 115
-    JobExp: 118
+    JobExp: 177
     Drops:
       - Item: Decayed_Nail
         Rate: 10000
@@ -1525,10 +1525,10 @@ Body:
         Rate: 70
         Index: 1
       - Item: Apple_Of_Archer
-        Rate: 3
+        Rate: 9
         Index: 2
       - Item: Great_Bow_
-        Rate: 35
+        Rate: 105
         Index: 3
       - Item: Fire_Arrow
         Rate: 1000
@@ -1537,7 +1537,7 @@ Body:
         Rate: 1800
         Index: 5
       - Item: Bow
-        Rate: 150
+        Rate: 450
         Index: 6
       - Item: Archer_Skeleton_Card
         Rate: 10
@@ -1551,22 +1551,22 @@ Body:
         Rate: 10000
         Index: 0
       - Item: Silk_Robe_
-        Rate: 10
+        Rate: 50
         Index: 1
       - Item: Honey
-        Rate: 8051
+        Rate: 7846
         Index: 2
       - Item: Wing_Of_Butterfly
-        Rate: 5368
+        Rate: 5230
         Index: 3
       - Item: Fancy_Flower
-        Rate: 2
+        Rate: 10
         Index: 4
       - Item: Flower
         Rate: 10000
         Index: 5
       - Item: Wind_Scroll_1_3
-        Rate: 5368
+        Rate: 5230
         Index: 6
       - Item: Creamy_Card
         Rate: 15
@@ -1574,32 +1574,32 @@ Body:
         StealProtected: true
   - Id: 1019
     BaseExp: 310
-    JobExp: 209
+    JobExp: 314
     Drops:
       - Item: Bill_Of_Birds
         Rate: 10000
         Index: 0
       - Item: Sandals_
-        Rate: 20
+        Rate: 100
         Index: 1
       - Item: Yellow_Herb
-        Rate: 1657
+        Rate: 1348
         Index: 2
       - Item: Red_Herb
-        Rate: 7458
+        Rate: 6064
         Index: 3
       - Item: Wand
-        Rate: 100
+        Rate: 500
         Index: 4
       - Item: Orange
-        Rate: 8286
+        Rate: 6738
         Index: 5
       - Item: Pecopeco_Card
         Rate: 14
         Index: 6
         StealProtected: true
       - Item: Egg
-        Rate: 8286
+        Rate: 6738
         Index: 7
   - Id: 1020
     BaseExp: 115
@@ -1612,19 +1612,19 @@ Body:
         Rate: 10000
         Index: 1
       - Item: Spear_
-        Rate: 30
+        Rate: 150
         Index: 2
       - Item: Green_Herb
         Rate: 10000
         Index: 3
       - Item: Shoot
-        Rate: 10000
+        Rate: 9511
         Index: 4
       - Item: Four_Leaf_Clover
         Rate: 3
         Index: 5
       - Item: Whip_Of_Earth
-        Rate: 10
+        Rate: 50
         Index: 6
       - Item: Mandragora_Card
         Rate: 17
@@ -1635,10 +1635,10 @@ Body:
         Index: 8
   - Id: 1023
     BaseExp: 619
-    JobExp: 326
+    JobExp: 2200
     Drops:
       - Item: Iron
-        Rate: 10000
+        Rate: 7548
         Index: 0
       - Item: Orcish_Voucher
         Rate: 10000
@@ -1647,16 +1647,16 @@ Body:
         Rate: 40
         Index: 2
       - Item: Cigar
-        Rate: 3
+        Rate: 15
         Index: 3
       - Item: Battle_Axe_
-        Rate: 10
+        Rate: 50
         Index: 4
       - Item: Orcish_Axe
-        Rate: 5
+        Rate: 25
         Index: 5
       - Item: Axe
-        Rate: 100
+        Rate: 500
         Index: 6
       - Item: Orc_Warrior_Card
         Rate: 13
@@ -1679,7 +1679,7 @@ Body:
         Rate: 10000
         Index: 2
       - Item: Pike_
-        Rate: 30
+        Rate: 150
         Index: 3
       - Item: Yellow_Herb
         Rate: 70
@@ -1702,7 +1702,7 @@ Body:
         Rate: 10000
         Index: 0
       - Item: Katana_
-        Rate: 15
+        Rate: 75
         Index: 1
       - Item: Red_Herb
         Rate: 10000
@@ -1717,7 +1717,7 @@ Body:
         Rate: 1
         Index: 5
       - Item: Strawberry
-        Rate: 9359
+        Rate: 8759
         Index: 6
       - Item: Snake_Card
         Rate: 16
@@ -1729,22 +1729,22 @@ Body:
         Rate: 10000
         Index: 0
       - Item: Munak_Turban
-        Rate: 2
+        Rate: 6
         Index: 1
       - Item: Shoes_
-        Rate: 15
+        Rate: 45
         Index: 2
       - Item: Amulet
         Rate: 20
         Index: 3
       - Item: Ninja_Suit
-        Rate: 1
+        Rate: 3
         Index: 4
       - Item: Adventure_Suit
-        Rate: 100
+        Rate: 300
         Index: 5
       - Item: Girl's_Diary
-        Rate: 5
+        Rate: 15
         Index: 6
       - Item: Munak_Card
         Rate: 10
@@ -1761,7 +1761,7 @@ Body:
         Rate: 60
         Index: 1
       - Item: Dagger_
-        Rate: 12
+        Rate: 36
         Index: 2
       - Item: Red_Herb
         Rate: 10000
@@ -1770,10 +1770,10 @@ Body:
         Rate: 10
         Index: 4
       - Item: Knife
-        Rate: 150
+        Rate: 450
         Index: 5
       - Item: Stiletto
-        Rate: 50
+        Rate: 150
         Index: 6
       - Item: Soldier_Skeleton_Card
         Rate: 11
@@ -1817,16 +1817,16 @@ Body:
         Rate: 10000
         Index: 1
       - Item: Glaive_
-        Rate: 10
+        Rate: 50
         Index: 2
       - Item: Scale_Of_Snakes
         Rate: 10000
         Index: 3
       - Item: Scales_Shell
-        Rate: 7987
+        Rate: 7759
         Index: 4
       - Item: Yellow_Herb
-        Rate: 5991
+        Rate: 5819
         Index: 5
       - Item: Oridecon_Stone
         Rate: 50
@@ -1837,7 +1837,7 @@ Body:
         StealProtected: true
   - Id: 1031
     BaseExp: 193
-    JobExp: 165
+    JobExp: 248
     Drops:
       - Item: Sticky_Mucus
         Rate: 10000
@@ -1849,16 +1849,16 @@ Body:
         Rate: 10000
         Index: 2
       - Item: Grape
-        Rate: 4524
+        Rate: 4436
         Index: 3
       - Item: Apple
         Rate: 5
         Index: 4
       - Item: Main_Gauche
-        Rate: 5
+        Rate: 25
         Index: 5
       - Item: Apple
-        Rate: 5656
+        Rate: 5544
         Index: 6
       - Item: Poporing_Card
         Rate: 16
@@ -1908,7 +1908,7 @@ Body:
         Rate: 40
         Index: 3
       - Item: Wooden_Mail_
-        Rate: 30
+        Rate: 150
         Index: 4
       - Item: Fire_Scroll_1_3
         Rate: 10000
@@ -2121,10 +2121,10 @@ Body:
         Rate: 9000
         Index: 1
       - Item: Fin_Helm
-        Rate: 1
+        Rate: 3
         Index: 2
       - Item: Saint_Robe_
-        Rate: 10
+        Rate: 30
         Index: 3
       - Item: Skyblue_Jewel
         Rate: 10
@@ -2140,6 +2140,7 @@ Body:
         Index: 7
         StealProtected: true
   - Id: 1045
+    JobExp: 4219
     Drops:
       - Item: Mistic_Frozen
         Rate: 18
@@ -2171,13 +2172,13 @@ Body:
     JobExp: 23
     Drops:
       - Item: Phracon
-        Rate: 7591
+        Rate: 7511
         Index: 0
       - Item: Shell
         Rate: 10000
         Index: 1
       - Item: Guard_
-        Rate: 2
+        Rate: 10
         Index: 2
       - Item: Red_Herb
         Rate: 10000
@@ -2206,13 +2207,13 @@ Body:
         Rate: 10000
         Index: 1
       - Item: Guard_
-        Rate: 2
+        Rate: 10
         Index: 2
       - Item: Sticky_Mucus
         Rate: 10000
         Index: 3
       - Item: Red_Gemstone
-        Rate: 6952
+        Rate: 6872
         Index: 4
       - Item: Black_Ladle
         Rate: 10
@@ -2232,16 +2233,16 @@ Body:
         Rate: 10000
         Index: 0
       - Item: Feather
-        Rate: 10000
+        Rate: 9064
         Index: 1
       - Item: Cotton_Shirt_
-        Rate: 150
+        Rate: 750
         Index: 2
       - Item: Red_Herb
-        Rate: 10000
+        Rate: 7122
         Index: 3
       - Item: Milk
-        Rate: 6071
+        Rate: 3885
         Index: 4
       - Item: Yellow_Gemstone
         Rate: 50
@@ -2264,7 +2265,7 @@ Body:
         Rate: 10000
         Index: 1
       - Item: Egg_Shell
-        Rate: 10
+        Rate: 50
         Index: 2
       - Item: Red_Herb
         Rate: 10000
@@ -2290,19 +2291,19 @@ Body:
         Rate: 10000
         Index: 0
       - Item: Leather_Jacket_
-        Rate: 80
+        Rate: 400
         Index: 1
       - Item: Red_Herb
-        Rate: 10000
+        Rate: 9101
         Index: 2
       - Item: Jellopy
         Rate: 10000
         Index: 3
       - Item: Leather_Jacket
-        Rate: 120
+        Rate: 600
         Index: 4
       - Item: Iron_Ore
-        Rate: 10000
+        Rate: 6501
         Index: 5
       - Item: Thief_Bug_Card
         Rate: 19
@@ -2310,19 +2311,19 @@ Body:
         StealProtected: true
   - Id: 1052
     BaseExp: 56
-    JobExp: 74
+    JobExp: 111
     Drops:
       - Item: Grasshopper's_Leg
         Rate: 10000
         Index: 0
       - Item: Guitar_Of_Vast_Land
-        Rate: 10
+        Rate: 50
         Index: 1
       - Item: Green_Feeler
-        Rate: 4
+        Rate: 20
         Index: 2
       - Item: Javelin_
-        Rate: 80
+        Rate: 400
         Index: 3
       - Item: Leaflet_Of_Hinal
         Rate: 10
@@ -2348,13 +2349,13 @@ Body:
         Rate: 10000
         Index: 0
       - Item: Garlet
-        Rate: 7581
+        Rate: 7381
         Index: 1
       - Item: Blade_
-        Rate: 15
+        Rate: 75
         Index: 2
       - Item: Insect_Feeler
-        Rate: 6065
+        Rate: 5905
         Index: 3
       - Item: Red_Herb
         Rate: 10000
@@ -2363,7 +2364,7 @@ Body:
         Rate: 50
         Index: 5
       - Item: Iron_Ore
-        Rate: 9098
+        Rate: 8858
         Index: 6
       - Item: Thief_Bug_Female_Card
         Rate: 17
@@ -2383,7 +2384,7 @@ Body:
         Rate: 10000
         Index: 2
       - Item: Slayer_
-        Rate: 10
+        Rate: 50
         Index: 3
       - Item: Yellow_Herb
         Rate: 90
@@ -2392,7 +2393,7 @@ Body:
         Rate: 5
         Index: 5
       - Item: Katana
-        Rate: 50
+        Rate: 250
         Index: 6
       - Item: Thief_Bug_Male_Card
         Rate: 14
@@ -2400,7 +2401,7 @@ Body:
         StealProtected: true
   - Id: 1055
     BaseExp: 579
-    JobExp: 389
+    JobExp: 584
     Drops:
       - Item: Yellow_Live
         Rate: 70
@@ -2412,16 +2413,16 @@ Body:
         Rate: 10000
         Index: 2
       - Item: Green_Herb
-        Rate: 4705
+        Rate: 3793
         Index: 3
       - Item: Red_Herb
-        Rate: 10000
+        Rate: 9482
         Index: 4
       - Item: Guisarme
-        Rate: 50
+        Rate: 250
         Index: 5
       - Item: Iron_Ore
-        Rate: 2941
+        Rate: 2371
         Index: 6
       - Item: Muka_Card
         Rate: 15
@@ -2441,7 +2442,7 @@ Body:
         Rate: 10000
         Index: 2
       - Item: Cat_Hairband
-        Rate: 1
+        Rate: 5
         Index: 3
       - Item: Raccoondog_Doll
         Rate: 2
@@ -2487,7 +2488,7 @@ Body:
         StealProtected: true
   - Id: 1058
     BaseExp: 407
-    JobExp: 362
+    JobExp: 2444
     Drops:
       - Item: Boody_Red
         Rate: 60
@@ -2508,7 +2509,7 @@ Body:
         Rate: 10000
         Index: 5
       - Item: Guitar_Of_Passion
-        Rate: 10
+        Rate: 50
         Index: 6
       - Item: Metaller_Card
         Rate: 13
@@ -2522,7 +2523,7 @@ Body:
         Rate: 10000
         Index: 0
       - Item: Poo_Poo_Hat
-        Rate: 5
+        Rate: 25
         Index: 1
       - Item: Animal's_Skin
         Rate: 10000
@@ -2531,10 +2532,10 @@ Body:
         Rate: 80
         Index: 3
       - Item: Sweet_Potato
-        Rate: 7761
+        Rate: 7638
         Index: 4
       - Item: Honey
-        Rate: 2328
+        Rate: 2292
         Index: 5
       - Item: Oridecon_Stone
         Rate: 43
@@ -2544,7 +2545,7 @@ Body:
         Index: 7
         StealProtected: true
       - Item: Butter
-        Rate: 2587
+        Rate: 2546
         Index: 8
   - Id: 1061
     Drops:
@@ -2590,7 +2591,7 @@ Body:
         Rate: 10000
         Index: 3
       - Item: Santa's_Hat
-        Rate: 100
+        Rate: 500
         Index: 4
       - Item: Apple
         Rate: 7
@@ -2607,19 +2608,19 @@ Body:
         Rate: 10000
         Index: 0
       - Item: Feather
-        Rate: 7400
+        Rate: 7357
         Index: 1
       - Item: Pierrot_Nose
-        Rate: 4
+        Rate: 20
         Index: 2
       - Item: Apple
         Rate: 10000
         Index: 3
       - Item: Red_Herb
-        Rate: 4440
+        Rate: 4414
         Index: 4
       - Item: Carrot
-        Rate: 8141
+        Rate: 8093
         Index: 5
       - Item: Rainbow_Carrot
         Rate: 20
@@ -2629,7 +2630,7 @@ Body:
         Index: 7
         StealProtected: true
       - Item: Cabbage
-        Rate: 7400
+        Rate: 7357
         Index: 8
   - Id: 1064
     BaseExp: 326
@@ -2701,7 +2702,7 @@ Body:
         Rate: 10000
         Index: 2
       - Item: Padded_Armor_
-        Rate: 5
+        Rate: 25
         Index: 3
       - Item: Solid_Shell
         Rate: 10000
@@ -2733,13 +2734,13 @@ Body:
         Rate: 53
         Index: 3
       - Item: Shield_
-        Rate: 5
+        Rate: 25
         Index: 4
       - Item: Solid_Shell
         Rate: 10000
         Index: 5
       - Item: Blue_Gemstone
-        Rate: 4030
+        Rate: 3830
         Index: 6
       - Item: Cornutus_Card
         Rate: 13
@@ -2783,13 +2784,13 @@ Body:
         Rate: 33
         Index: 2
       - Item: Snowy_Horn
-        Rate: 2
+        Rate: 6
         Index: 3
       - Item: Elunium_Stone
         Rate: 50
         Index: 4
       - Item: Katana_
-        Rate: 25
+        Rate: 75
         Index: 5
       - Item: Gill
         Rate: 10000
@@ -2838,16 +2839,16 @@ Body:
         Rate: 10000
         Index: 0
       - Item: Pirate_Bandana
-        Rate: 15
+        Rate: 75
         Index: 1
       - Item: Cookbook06
         Rate: 5
         Index: 2
       - Item: Bandana
-        Rate: 250
+        Rate: 1250
         Index: 3
       - Item: Falchion
-        Rate: 250
+        Rate: 1250
         Index: 4
       - Item: Oridecon_Stone
         Rate: 43
@@ -2916,7 +2917,7 @@ Body:
         Index: 7
   - Id: 1076
     BaseExp: 49
-    JobExp: 62
+    JobExp: 93
     Drops:
       - Item: Phracon
         Rate: 90
@@ -2925,7 +2926,7 @@ Body:
         Rate: 10000
         Index: 1
       - Item: Mace_
-        Rate: 80
+        Rate: 400
         Index: 2
       - Item: Jellopy
         Rate: 10000
@@ -2934,7 +2935,7 @@ Body:
         Rate: 10000
         Index: 4
       - Item: Skul_Ring
-        Rate: 30
+        Rate: 150
         Index: 5
       - Item: Skeleton_Card
         Rate: 17
@@ -2942,13 +2943,13 @@ Body:
         StealProtected: true
   - Id: 1077
     BaseExp: 362
-    JobExp: 269
+    JobExp: 1816
     Drops:
       - Item: Poison_Spore
         Rate: 10000
         Index: 0
       - Item: Hat_
-        Rate: 20
+        Rate: 100
         Index: 1
       - Item: Green_Herb
         Rate: 10000
@@ -2983,19 +2984,19 @@ Body:
         Rate: 10000
         Index: 2
       - Item: Stem
-        Rate: 7666
+        Rate: 7635
         Index: 3
       - Item: Pointed_Scale
-        Rate: 4599
+        Rate: 4581
         Index: 4
       - Item: Fluff
-        Rate: 7666
+        Rate: 7635
         Index: 5
       - Item: Ment
         Rate: 50
         Index: 6
       - Item: Centimental_Flower
-        Rate: 2
+        Rate: 10
         Index: 7
         StealProtected: true
   - Id: 1079
@@ -3012,10 +3013,10 @@ Body:
         Rate: 10000
         Index: 2
       - Item: Stem
-        Rate: 6207
+        Rate: 6156
         Index: 3
       - Item: Pointed_Scale
-        Rate: 3724
+        Rate: 3694
         Index: 4
       - Item: Fruit_Of_Mastela
         Rate: 50
@@ -3024,7 +3025,7 @@ Body:
         Rate: 10000
         Index: 6
       - Item: Centimental_Leaf
-        Rate: 2
+        Rate: 10
         Index: 7
         StealProtected: true
   - Id: 1080
@@ -3053,7 +3054,7 @@ Body:
         Rate: 50
         Index: 6
       - Item: Centimental_Leaf
-        Rate: 2
+        Rate: 10
         Index: 7
         StealProtected: true
   - Id: 1081
@@ -3070,19 +3071,19 @@ Body:
         Rate: 10000
         Index: 2
       - Item: Stem
-        Rate: 7683
+        Rate: 7652
         Index: 3
       - Item: Pointed_Scale
-        Rate: 4610
+        Rate: 4591
         Index: 4
       - Item: Singing_Plant
         Rate: 5
         Index: 5
       - Item: Fluff
-        Rate: 7683
+        Rate: 7652
         Index: 6
       - Item: Centimental_Flower
-        Rate: 2
+        Rate: 10
         Index: 7
         StealProtected: true
   - Id: 1082
@@ -3111,7 +3112,7 @@ Body:
         Rate: 50
         Index: 6
       - Item: Centimental_Flower
-        Rate: 2
+        Rate: 10
         Index: 7
         StealProtected: true
   - Id: 1083
@@ -3243,25 +3244,25 @@ Body:
     JobExp: 270
     Drops:
       - Item: Oldman's_Romance
-        Rate: 50
+        Rate: 250
         Index: 0
       - Item: Grasshopper's_Leg
         Rate: 10000
         Index: 1
       - Item: Azure_Jewel
-        Rate: 3970
+        Rate: 3010
         Index: 2
       - Item: Grasshopper_Doll
-        Rate: 5956
+        Rate: 4516
         Index: 3
       - Item: Angel's_Arrival
-        Rate: 1000
+        Rate: 5000
         Index: 4
       - Item: Center_Potion
         Rate: 700
         Index: 5
       - Item: Guitar_Of_Gentle_Breeze
-        Rate: 10
+        Rate: 50
         Index: 6
       - Item: Vocal_Card
         Rate: 15
@@ -3298,7 +3299,7 @@ Body:
         StealProtected: true
   - Id: 1095
     BaseExp: 231
-    JobExp: 230
+    JobExp: 345
     Drops:
       - Item: Worm_Peelings
         Rate: 10000
@@ -3327,7 +3328,7 @@ Body:
         StealProtected: true
   - Id: 1097
     BaseExp: 16
-    JobExp: 22
+    JobExp: 33
     Drops:
       - Item: Phracon
         Rate: 4645
@@ -3439,19 +3440,19 @@ Body:
         Rate: 10000
         Index: 0
       - Item: Coat_
-        Rate: 5
+        Rate: 25
         Index: 1
       - Item: Animal's_Skin
         Rate: 10000
         Index: 2
       - Item: Glaive_
-        Rate: 10
+        Rate: 50
         Index: 3
       - Item: Spear_
-        Rate: 15
+        Rate: 75
         Index: 4
       - Item: Pike_
-        Rate: 20
+        Rate: 100
         Index: 5
       - Item: Caramel_Card
         Rate: 13
@@ -3465,7 +3466,7 @@ Body:
         Rate: 10000
         Index: 0
       - Item: Hood_
-        Rate: 20
+        Rate: 100
         Index: 1
       - Item: Fluff
         Rate: 10000
@@ -3474,13 +3475,13 @@ Body:
         Rate: 10000
         Index: 3
       - Item: Sweet_Potato
-        Rate: 3530
+        Rate: 2712
         Index: 4
       - Item: Sandals_
-        Rate: 25
+        Rate: 125
         Index: 5
       - Item: Strawberry
-        Rate: 4236
+        Rate: 3254
         Index: 6
       - Item: Coco_Card
         Rate: 15
@@ -3488,7 +3489,7 @@ Body:
         StealProtected: true
   - Id: 1105
     BaseExp: 263
-    JobExp: 246
+    JobExp: 369
     Drops:
       - Item: Worm_Peelings
         Rate: 10000
@@ -3520,16 +3521,16 @@ Body:
     JobExp: 404
     Drops:
       - Item: Katar_
-        Rate: 5
+        Rate: 15
         Index: 0
       - Item: Claw_Of_Desert_Wolf
         Rate: 10000
         Index: 1
       - Item: Mink_Coat
-        Rate: 1
+        Rate: 3
         Index: 2
       - Item: Meat
-        Rate: 9956
+        Rate: 7036
         Index: 3
       - Item: Claw_Of_Wolves
         Rate: 10000
@@ -3538,7 +3539,7 @@ Body:
         Rate: 53
         Index: 5
       - Item: Stiletto_
-        Rate: 140
+        Rate: 420
         Index: 6
       - Item: Desert_Wolf_Card
         Rate: 12
@@ -3555,16 +3556,16 @@ Body:
         Rate: 10000
         Index: 1
       - Item: Adventurere's_Suit_
-        Rate: 80
+        Rate: 400
         Index: 2
       - Item: Meat
-        Rate: 10000
+        Rate: 9248
         Index: 3
       - Item: Cotton_Shirt
-        Rate: 200
+        Rate: 1000
         Index: 4
       - Item: Asura_
-        Rate: 5
+        Rate: 25
         Index: 5
       - Item: Orange
         Rate: 10000
@@ -3636,16 +3637,16 @@ Body:
         Rate: 150
         Index: 1
       - Item: Sword_Mace_
-        Rate: 2
+        Rate: 6
         Index: 2
       - Item: Mighty_Staff
-        Rate: 1
+        Rate: 3
         Index: 3
       - Item: Gold
         Rate: 1
         Index: 4
       - Item: Club
-        Rate: 300
+        Rate: 900
         Index: 5
       - Item: Hammer_Of_Blacksmith
         Rate: 5
@@ -3691,10 +3692,10 @@ Body:
         Rate: 10000
         Index: 0
       - Item: Rod_
-        Rate: 80
+        Rate: 400
         Index: 1
       - Item: Sticky_Mucus
-        Rate: 6621
+        Rate: 5162
         Index: 2
       - Item: Apple
         Rate: 10000
@@ -3703,7 +3704,7 @@ Body:
         Rate: 10000
         Index: 4
       - Item: Apple
-        Rate: 10000
+        Rate: 8259
         Index: 5
       - Item: Orange_Juice
         Rate: 20
@@ -3714,16 +3715,16 @@ Body:
         StealProtected: true
   - Id: 1114
     BaseExp: 387
-    JobExp: 357
+    JobExp: 2410
     Drops:
       - Item: Moth_Dust
         Rate: 10000
         Index: 0
       - Item: Wing_Of_Moth
-        Rate: 5457
+        Rate: 5297
         Index: 1
       - Item: Masquerade
-        Rate: 4
+        Rate: 20
         Index: 2
       - Item: Insect_Feeler
         Rate: 10000
@@ -3740,16 +3741,16 @@ Body:
         StealProtected: true
   - Id: 1116
     BaseExp: 326
-    JobExp: 448
+    JobExp: 3024
     Drops:
       - Item: Scell
         Rate: 10000
         Index: 0
       - Item: Egg_Shell
-        Rate: 20
+        Rate: 100
         Index: 1
       - Item: Piece_Of_Egg_Shell
-        Rate: 7731
+        Rate: 6931
         Index: 2
       - Item: Red_Herb
         Rate: 10000
@@ -3769,13 +3770,13 @@ Body:
         StealProtected: true
   - Id: 1118
     BaseExp: 480
-    JobExp: 382
+    JobExp: 2578
     Drops:
       - Item: Blossom_Of_Maneater
         Rate: 10000
         Index: 0
       - Item: Sunflower
-        Rate: 3
+        Rate: 9
         Index: 1
       - Item: Aloe
         Rate: 10
@@ -3797,6 +3798,7 @@ Body:
         Index: 7
         StealProtected: true
   - Id: 1119
+    JobExp: 2153
     Drops:
       - Item: Lizard_Scruff
         Rate: 10000
@@ -3837,13 +3839,13 @@ Body:
         Rate: 10000
         Index: 2
       - Item: Elven_Ears
-        Rate: 1
+        Rate: 3
         Index: 3
       - Item: Cap_
-        Rate: 10
+        Rate: 30
         Index: 4
       - Item: Sparkling_Dust
-        Rate: 10000
+        Rate: 9780
         Index: 5
       - Item: Giearth_Card
         Rate: 11
@@ -3863,13 +3865,13 @@ Body:
         Rate: 43
         Index: 2
       - Item: Goblini_Mask
-        Rate: 3
+        Rate: 15
         Index: 3
       - Item: Dirk_
-        Rate: 10
+        Rate: 50
         Index: 4
       - Item: Buckler_
-        Rate: 5
+        Rate: 25
         Index: 5
       - Item: Red_Herb
         Rate: 10000
@@ -3889,19 +3891,19 @@ Body:
         Rate: 10000
         Index: 1
       - Item: Indian_Hair_Piece
-        Rate: 3
+        Rate: 15
         Index: 2
       - Item: Flail_
-        Rate: 10
+        Rate: 50
         Index: 3
       - Item: Buckler_
-        Rate: 1
+        Rate: 5
         Index: 4
       - Item: Red_Herb
         Rate: 10000
         Index: 5
       - Item: Goblini_Mask
-        Rate: 3
+        Rate: 15
         Index: 6
       - Item: Goblin_Card
         Rate: 13
@@ -3912,25 +3914,25 @@ Body:
     JobExp: 358
     Drops:
       - Item: Iron
-        Rate: 6797
+        Rate: 6408
         Index: 0
       - Item: Scell
         Rate: 10000
         Index: 1
       - Item: Red_Bandana
-        Rate: 3
+        Rate: 15
         Index: 2
       - Item: Goblin_Mask_02
-        Rate: 15
+        Rate: 75
         Index: 3
       - Item: Buckler_
-        Rate: 1
+        Rate: 5
         Index: 4
       - Item: Red_Herb
         Rate: 10000
         Index: 5
       - Item: Yellow_Herb
-        Rate: 6501
+        Rate: 6130
         Index: 6
       - Item: Goblin_Card
         Rate: 13
@@ -3947,16 +3949,16 @@ Body:
         Rate: 10000
         Index: 1
       - Item: Goblin_Mask_01
-        Rate: 15
+        Rate: 75
         Index: 2
       - Item: Gangster_Patch
-        Rate: 3
+        Rate: 15
         Index: 3
       - Item: Smasher_
-        Rate: 10
+        Rate: 50
         Index: 4
       - Item: Buckler_
-        Rate: 1
+        Rate: 5
         Index: 5
       - Item: Red_Herb
         Rate: 10000
@@ -3970,25 +3972,25 @@ Body:
     JobExp: 362
     Drops:
       - Item: Iron
-        Rate: 5902
+        Rate: 5399
         Index: 0
       - Item: Scell
         Rate: 10000
         Index: 1
       - Item: Wand_
-        Rate: 15
+        Rate: 75
         Index: 2
       - Item: Buckler_
-        Rate: 1
+        Rate: 5
         Index: 3
       - Item: Goblin_Mask_03
-        Rate: 15
+        Rate: 75
         Index: 4
       - Item: Red_Herb
         Rate: 10000
         Index: 5
       - Item: Yellow_Herb
-        Rate: 8656
+        Rate: 7919
         Index: 6
       - Item: Goblin_Card
         Rate: 13
@@ -3996,7 +3998,7 @@ Body:
         StealProtected: true
   - Id: 1127
     BaseExp: 740
-    JobExp: 507
+    JobExp: 3422
     Drops:
       - Item: Yellow_Live
         Rate: 10000
@@ -4011,7 +4013,7 @@ Body:
         Rate: 10000
         Index: 3
       - Item: Town_Sword_
-        Rate: 10
+        Rate: 30
         Index: 4
       - Item: Foolishness_Of_Blind
         Rate: 1
@@ -4037,7 +4039,7 @@ Body:
         Rate: 10000
         Index: 2
       - Item: Guisarme_
-        Rate: 15
+        Rate: 75
         Index: 3
       - Item: Shell
         Rate: 10000
@@ -4058,7 +4060,7 @@ Body:
         Rate: 500
         Index: 1
       - Item: Bomb_Wick
-        Rate: 5
+        Rate: 15
         Index: 2
       - Item: Fire_Arrow
         Rate: 10000
@@ -4169,13 +4171,13 @@ Body:
         Rate: 200
         Index: 2
       - Item: Buckler_
-        Rate: 3
+        Rate: 9
         Index: 3
       - Item: Yellow_Herb
         Rate: 100
         Index: 4
       - Item: Guard
-        Rate: 100
+        Rate: 300
         Index: 5
       - Item: Kobold_Card
         Rate: 10
@@ -4196,10 +4198,10 @@ Body:
         Rate: 200
         Index: 3
       - Item: Hammer_
-        Rate: 5
+        Rate: 15
         Index: 4
       - Item: Buckler_
-        Rate: 3
+        Rate: 9
         Index: 5
       - Item: Yellow_Herb
         Rate: 100
@@ -4330,7 +4332,7 @@ Body:
         Rate: 10000
         Index: 1
       - Item: Chain_
-        Rate: 10
+        Rate: 30
         Index: 2
       - Item: Skyblue_Jewel
         Rate: 10
@@ -4410,19 +4412,19 @@ Body:
         Rate: 10000
         Index: 1
       - Item: Jur_
-        Rate: 10
+        Rate: 50
         Index: 2
       - Item: Goggle_
-        Rate: 5
+        Rate: 25
         Index: 3
       - Item: Safety_Helmet
-        Rate: 1
+        Rate: 5
         Index: 4
       - Item: Battered_Pot
         Rate: 10
         Index: 5
       - Item: Goggle
-        Rate: 15
+        Rate: 75
         Index: 6
       - Item: Martin_Card
         Rate: 15
@@ -4431,7 +4433,7 @@ Body:
   - Id: 1146
     Drops:
       - Item: Matyr's_Flea_Guard
-        Rate: 10
+        Rate: 30
         Index: 0
       - Item: Monster's_Feed
         Rate: 5000
@@ -4452,6 +4454,8 @@ Body:
         Rate: 10
         Index: 6
         StealProtected: true
+  - Id: 1149
+    JobExp: 3792
   - Id: 1151
     Drops:
       - Item: Gas_Mask
@@ -4493,10 +4497,10 @@ Body:
         Rate: 80
         Index: 2
       - Item: Viking_Helm
-        Rate: 2
+        Rate: 6
         Index: 3
       - Item: Buster_
-        Rate: 10
+        Rate: 30
         Index: 4
       - Item: Green_Herb
         Rate: 50
@@ -4507,7 +4511,7 @@ Body:
         StealProtected: true
   - Id: 1153
     BaseExp: 297
-    JobExp: 244
+    JobExp: 1647
     Drops:
       - Item: Nail_Of_Orc
         Rate: 10000
@@ -4523,6 +4527,7 @@ Body:
         Index: 3
         StealProtected: true
   - Id: 1155
+    JobExp: 2844
     Drops:
       - Item: Dragon_Canine
         Rate: 5335
@@ -4550,6 +4555,7 @@ Body:
         Index: 7
         StealProtected: true
   - Id: 1156
+    JobExp: 2956
     Drops:
       - Item: Dragon_Scale
         Rate: 5335
@@ -4607,7 +4613,7 @@ Body:
         StealProtected: true
   - Id: 1160
     BaseExp: 248
-    JobExp: 239
+    JobExp: 358
     Drops:
       - Item: Worm_Peelings
         Rate: 10000
@@ -4740,7 +4746,7 @@ Body:
         Rate: 1500
         Index: 4
       - Item: Mantle_
-        Rate: 10
+        Rate: 30
         Index: 5
       - Item: Cookbook06
         Rate: 1
@@ -4750,6 +4756,7 @@ Body:
         Index: 7
         StealProtected: true
   - Id: 1165
+    JobExp: 3321
     Drops:
       - Item: Great_Nature
         Rate: 35
@@ -4767,10 +4774,10 @@ Body:
         Rate: 200
         Index: 4
       - Item: Katar_Of_Thornbush
-        Rate: 1
+        Rate: 3
         Index: 5
       - Item: Hypnotist's_Staff_
-        Rate: 5
+        Rate: 15
         Index: 6
       - Item: Sand_Man_Card
         Rate: 9
@@ -4790,7 +4797,7 @@ Body:
         Rate: 2
         Index: 2
       - Item: Eagle_Eyes
-        Rate: 1
+        Rate: 3
         Index: 3
       - Item: Anodyne
         Rate: 10
@@ -4810,16 +4817,16 @@ Body:
         Index: 8
   - Id: 1167
     BaseExp: 42
-    JobExp: 60
+    JobExp: 90
     Drops:
       - Item: Animal's_Skin
         Rate: 10000
         Index: 0
       - Item: Axe_
-        Rate: 100
+        Rate: 500
         Index: 1
       - Item: Meat
-        Rate: 10000
+        Rate: 9483
         Index: 2
       - Item: Arrow
         Rate: 10000
@@ -4840,7 +4847,7 @@ Body:
   - Id: 1169
     Drops:
       - Item: Iron
-        Rate: 5366
+        Rate: 5343
         Index: 0
       - Item: Lantern
         Rate: 10000
@@ -4849,13 +4856,13 @@ Body:
         Rate: 90
         Index: 2
       - Item: Safety_Helmet
-        Rate: 2
+        Rate: 6
         Index: 3
       - Item: Steel
-        Rate: 1342
+        Rate: 1336
         Index: 4
       - Item: Coal
-        Rate: 2683
+        Rate: 2672
         Index: 5
       - Item: Iron_Ore
         Rate: 10000
@@ -4865,6 +4872,7 @@ Body:
         Index: 7
         StealProtected: true
   - Id: 1170
+    JobExp: 3071
     Drops:
       - Item: Long_Hair
         Rate: 9000
@@ -4873,13 +4881,13 @@ Body:
         Rate: 50
         Index: 1
       - Item: Nurse_Cap
-        Rate: 1
+        Rate: 3
         Index: 2
       - Item: Muffler_
-        Rate: 5
+        Rate: 15
         Index: 3
       - Item: Stiletto_
-        Rate: 5
+        Rate: 15
         Index: 4
       - Item: Red_Herb
         Rate: 1000
@@ -5007,22 +5015,22 @@ Body:
         Rate: 55
         Index: 0
       - Item: Iron
-        Rate: 10000
+        Rate: 5645
         Index: 1
       - Item: G_Strings
-        Rate: 200
+        Rate: 1000
         Index: 2
       - Item: Ganster_Mask
-        Rate: 3
+        Rate: 15
         Index: 3
       - Item: Cuffs
-        Rate: 10
+        Rate: 50
         Index: 4
       - Item: Iron_Ore
-        Rate: 10000
+        Rate: 8914
         Index: 5
       - Item: Iron_Ore
-        Rate: 10000
+        Rate: 8914
         Index: 6
       - Item: Zerom_Card
         Rate: 13
@@ -5037,10 +5045,10 @@ Body:
         Rate: 5335
         Index: 1
       - Item: Spirit_Chain
-        Rate: 1
+        Rate: 3
         Index: 2
       - Item: Silver_Robe_
-        Rate: 10
+        Rate: 30
         Index: 3
       - Item: Whisper_Card
         Rate: 9
@@ -5070,7 +5078,7 @@ Body:
         Rate: 10000
         Index: 2
       - Item: Cutter_
-        Rate: 55
+        Rate: 275
         Index: 3
       - Item: Wing_Of_Fly
         Rate: 10000
@@ -5090,23 +5098,34 @@ Body:
         Rate: 10000
         Index: 0
       - Item: Feather
-        Rate: 10000
+        Rate: 6666
         Index: 1
       - Item: Club_
-        Rate: 80
+        Rate: 400
         Index: 2
       - Item: Azure_Jewel
         Rate: 2
         Index: 3
       - Item: Green_Herb
-        Rate: 10000
+        Rate: 9332
         Index: 4
       - Item: Clover
         Rate: 10000
         Index: 5
       - Item: Club
-        Rate: 200
+        Rate: 1000
         Index: 6
+  - Id: 1185
+    Drops:
+      - Item: Sparkling_Dust
+        Rate: 10
+        Index: 0
+      - Item: Transparent_Cloth
+        Rate: 100
+        Index: 1
+      - Item: Silver_Robe_
+        Rate: 3
+        Index: 2
   - Id: 1186
     Drops:
       - Item: Sparkling_Dust
@@ -5116,10 +5135,10 @@ Body:
         Rate: 5335
         Index: 1
       - Item: Spirit_Chain
-        Rate: 1
+        Rate: 3
         Index: 2
       - Item: Silver_Robe_
-        Rate: 10
+        Rate: 30
         Index: 3
       - Item: Whisper_Boss_Card
         Rate: 9
@@ -5140,7 +5159,7 @@ Body:
         Rate: 60
         Index: 2
       - Item: Bongun_Hat
-        Rate: 1
+        Rate: 3
         Index: 3
       - Item: Amulet
         Rate: 15
@@ -5213,6 +5232,7 @@ Body:
         Rate: 5
         Index: 8
   - Id: 1199
+    JobExp: 2841
     Drops:
       - Item: Mould_Powder
         Rate: 5335
@@ -5349,13 +5369,13 @@ Body:
     JobExp: 367
     Drops:
       - Item: Katar_
-        Rate: 5
+        Rate: 15
         Index: 0
       - Item: Claw_Of_Desert_Wolf
         Rate: 10000
         Index: 1
       - Item: Mink_Coat
-        Rate: 1
+        Rate: 3
         Index: 2
       - Item: Meat
         Rate: 10000
@@ -5384,7 +5404,7 @@ Body:
         Rate: 3
         Index: 2
       - Item: Eagle_Eyes
-        Rate: 2
+        Rate: 6
         Index: 3
       - Item: Anodyne
         Rate: 15
@@ -5404,22 +5424,22 @@ Body:
         Rate: 10000
         Index: 0
       - Item: Feather
-        Rate: 10000
+        Rate: 6357
         Index: 1
       - Item: Club_
-        Rate: 80
+        Rate: 400
         Index: 2
       - Item: Azure_Jewel
         Rate: 8
         Index: 3
       - Item: Green_Herb
-        Rate: 10000
+        Rate: 7946
         Index: 4
       - Item: Clover
         Rate: 10000
         Index: 5
       - Item: Club
-        Rate: 200
+        Rate: 1000
         Index: 6
       - Item: Fabre_Card
         Rate: 20
@@ -5430,25 +5450,25 @@ Body:
     JobExp: 23
     Drops:
       - Item: Phracon
-        Rate: 4244
+        Rate: 4232
         Index: 0
       - Item: Chrysalis
         Rate: 10000
         Index: 1
       - Item: Sticky_Mucus
-        Rate: 9902
+        Rate: 9874
         Index: 2
       - Item: Guard_
-        Rate: 2
+        Rate: 10
         Index: 3
       - Item: Shell
         Rate: 10000
         Index: 4
       - Item: Sticky_Mucus
-        Rate: 9902
+        Rate: 9874
         Index: 5
       - Item: Iron_Ore
-        Rate: 4244
+        Rate: 4232
         Index: 6
       - Item: Pupa_Card
         Rate: 20
@@ -5462,16 +5482,16 @@ Body:
         Rate: 10000
         Index: 0
       - Item: Silk_Robe_
-        Rate: 10
+        Rate: 50
         Index: 1
       - Item: Honey
-        Rate: 8889
+        Rate: 8624
         Index: 2
       - Item: Wing_Of_Butterfly
-        Rate: 9877
+        Rate: 9582
         Index: 3
       - Item: Fancy_Flower
-        Rate: 4
+        Rate: 20
         Index: 4
       - Item: Flower
         Rate: 10000
@@ -5485,13 +5505,13 @@ Body:
     JobExp: 23
     Drops:
       - Item: Phracon
-        Rate: 7586
+        Rate: 7506
         Index: 0
       - Item: Shell
         Rate: 10000
         Index: 1
       - Item: Guard_
-        Rate: 2
+        Rate: 10
         Index: 2
       - Item: Red_Herb
         Rate: 10000
@@ -5552,16 +5572,16 @@ Body:
         Rate: 40
         Index: 2
       - Item: Cigar
-        Rate: 3
+        Rate: 15
         Index: 3
       - Item: Battle_Axe_
-        Rate: 10
+        Rate: 50
         Index: 4
       - Item: Orcish_Axe
-        Rate: 5
+        Rate: 25
         Index: 5
       - Item: Axe
-        Rate: 100
+        Rate: 500
         Index: 6
       - Item: Orc_Warrior_Card
         Rate: 13
@@ -5691,7 +5711,7 @@ Body:
         Rate: 10000
         Index: 1
       - Item: Cotton_Shirt_
-        Rate: 150
+        Rate: 750
         Index: 2
       - Item: Red_Herb
         Rate: 10000
@@ -5717,7 +5737,7 @@ Body:
         Rate: 10000
         Index: 1
       - Item: Egg_Shell
-        Rate: 7
+        Rate: 35
         Index: 2
       - Item: Red_Herb
         Rate: 10000
@@ -5743,7 +5763,7 @@ Body:
         Rate: 10000
         Index: 1
       - Item: Cold_Scroll_2_1
-        Rate: 9420
+        Rate: 9380
         Index: 2
       - Item: Skyblue_Jewel
         Rate: 40
@@ -5755,7 +5775,7 @@ Body:
         Rate: 10000
         Index: 5
       - Item: Poring_Hat
-        Rate: 1
+        Rate: 5
         Index: 6
       - Item: Marin_Card
         Rate: 16
@@ -5764,16 +5784,16 @@ Body:
   - Id: 1243
     Drops:
       - Item: Zargon
-        Rate: 5697
+        Rate: 5691
         Index: 0
       - Item: White_Herb
-        Rate: 6077
+        Rate: 6071
         Index: 1
       - Item: Feather
-        Rate: 7597
+        Rate: 7589
         Index: 2
       - Item: Panda_Cap
-        Rate: 1
+        Rate: 3
         Index: 3
       - Item: Bear's_Foot
         Rate: 10000
@@ -5832,13 +5852,13 @@ Body:
         Rate: 10
         Index: 3
       - Item: Dirk_
-        Rate: 10
+        Rate: 50
         Index: 4
       - Item: Buckler_
-        Rate: 5
+        Rate: 25
         Index: 5
       - Item: Santa's_Hat
-        Rate: 10
+        Rate: 50
         Index: 6
       - Item: Goblin_Card
         Rate: 12
@@ -5855,16 +5875,16 @@ Body:
         Rate: 45
         Index: 1
       - Item: Zargon
-        Rate: 6990
+        Rate: 6657
         Index: 2
       - Item: Hood_
-        Rate: 25
+        Rate: 75
         Index: 3
       - Item: Gift_Box
         Rate: 5
         Index: 4
       - Item: Cold_Scroll_1_3
-        Rate: 3495
+        Rate: 3328
         Index: 5
       - Item: Red_Herb
         Rate: 10000
@@ -5884,19 +5904,19 @@ Body:
         Rate: 200
         Index: 1
       - Item: Well_Baked_Cookie
-        Rate: 5066
+        Rate: 2327
         Index: 2
       - Item: Piece_Of_Cake
-        Rate: 3378
+        Rate: 1551
         Index: 3
       - Item: Candy
-        Rate: 10000
+        Rate: 8533
         Index: 4
       - Item: Candy_Striper
-        Rate: 10000
+        Rate: 8533
         Index: 5
       - Item: Santa's_Hat
-        Rate: 250
+        Rate: 1250
         Index: 6
       - Item: Antonio_Card
         Rate: 17
@@ -5908,7 +5928,7 @@ Body:
         Rate: 900
         Index: 0
       - Item: Holy_Bonnet
-        Rate: 2
+        Rate: 6
         Index: 1
       - Item: Iron
         Rate: 320
@@ -5920,7 +5940,7 @@ Body:
         Rate: 3500
         Index: 4
       - Item: Branch
-        Rate: 5
+        Rate: 15
         Index: 5
       - Item: Oridecon_Stone
         Rate: 87
@@ -6024,7 +6044,7 @@ Body:
         Rate: 90
         Index: 4
       - Item: Goggle_
-        Rate: 7
+        Rate: 35
         Index: 5
       - Item: Oridecon_Stone
         Rate: 32
@@ -6119,25 +6139,25 @@ Body:
     JobExp: 382
     Drops:
       - Item: Goblini_Mask
-        Rate: 3
+        Rate: 9
         Index: 0
       - Item: Iron
-        Rate: 2390
+        Rate: 2324
         Index: 1
       - Item: Scell
-        Rate: 9558
+        Rate: 9298
         Index: 2
       - Item: Oridecon_Arrow
         Rate: 10000
         Index: 3
       - Item: Red_Herb
-        Rate: 5735
+        Rate: 5579
         Index: 4
       - Item: Composite_Bow_
-        Rate: 25
+        Rate: 75
         Index: 5
       - Item: Grape
-        Rate: 2867
+        Rate: 2789
         Index: 6
       - Item: Goblin_Archer_Card
         Rate: 11
@@ -6200,6 +6220,8 @@ Body:
       - Item: Green_Gemstone
         Rate: 500
         Index: 8
+  - Id: 1264
+    JobExp: 8250
   - Id: 1265
     BaseExp: 444
     JobExp: 350
@@ -6208,7 +6230,7 @@ Body:
         Rate: 10000
         Index: 0
       - Item: Candy_Striper
-        Rate: 7499
+        Rate: 6779
         Index: 1
       - Item: Darkgreen_Dyestuffs
         Rate: 1
@@ -6217,10 +6239,10 @@ Body:
         Rate: 50
         Index: 3
       - Item: Sandals_
-        Rate: 30
+        Rate: 150
         Index: 4
       - Item: Holy_Scroll_1_3
-        Rate: 4999
+        Rate: 4519
         Index: 5
       - Item: Candy
         Rate: 10000
@@ -6307,6 +6329,7 @@ Body:
         Index: 5
         StealProtected: true
   - Id: 1273
+    JobExp: 2747
     Drops:
       - Item: Cyfar
         Rate: 4656
@@ -6315,10 +6338,10 @@ Body:
         Rate: 300
         Index: 1
       - Item: Earring
-        Rate: 1
+        Rate: 3
         Index: 2
       - Item: Wedding_Veil
-        Rate: 1
+        Rate: 3
         Index: 3
       - Item: High_end_Cooking_Kits
         Rate: 10
@@ -6327,7 +6350,7 @@ Body:
         Rate: 3
         Index: 5
       - Item: Wedding_Dress
-        Rate: 1
+        Rate: 3
         Index: 6
       - Item: Orc_Lady_Card
         Rate: 10
@@ -6423,7 +6446,7 @@ Body:
         Rate: 320
         Index: 4
       - Item: The_Garrison
-        Rate: 5
+        Rate: 15
         Index: 5
       - Item: Elunium_Stone
         Rate: 124
@@ -6471,13 +6494,13 @@ Body:
         Rate: 4850
         Index: 2
       - Item: Ear_Of_Puppy
-        Rate: 50
+        Rate: 150
         Index: 3
       - Item: Poison_Arrow
         Rate: 2000
         Index: 4
       - Item: CrossBow_
-        Rate: 5
+        Rate: 15
         Index: 5
       - Item: Oridecon_Stone
         Rate: 79
@@ -6546,6 +6569,10 @@ Body:
       - Item: Recipe_Critical_Ring
         Rate: 5
         Index: 8
+  - Id: 1317
+    JobExp: 5016
+  - Id: 1321
+    JobExp: 3996
   - Id: 1367
     Drops:
       - Item: Burning_Heart
@@ -6609,21 +6636,25 @@ Body:
         Rate: 3
         Index: 5
         StealProtected: true
+  - Id: 1384
+    JobExp: 5682
+  - Id: 1385
+    JobExp: 5682
   - Id: 1392
     BaseExp: 502
     JobExp: 400
     Drops:
       - Item: Large_Jellopy
-        Rate: 3292
+        Rate: 3282
         Index: 0
       - Item: Padded_Armor
-        Rate: 1
+        Rate: 5
         Index: 1
       - Item: Cyfar
-        Rate: 6583
+        Rate: 6563
         Index: 2
       - Item: Steel
-        Rate: 2963
+        Rate: 2953
         Index: 3
       - Item: Oridecon
         Rate: 1
@@ -6644,25 +6675,25 @@ Body:
   - Id: 1400
     Drops:
       - Item: Oil_Paper
-        Rate: 7849
+        Rate: 7822
         Index: 0
       - Item: Bamboo_Cut
-        Rate: 6700
+        Rate: 6677
         Index: 1
       - Item: Wooden_Block
-        Rate: 5023
+        Rate: 5006
         Index: 2
       - Item: Smooth_Paper
-        Rate: 3453
+        Rate: 3442
         Index: 3
       - Item: Zargon
-        Rate: 6395
+        Rate: 6374
         Index: 4
       - Item: Glass_Bead
         Rate: 30
         Index: 5
       - Item: Murasame
-        Rate: 5
+        Rate: 15
         Index: 6
       - Item: Karakasa_Card
         Rate: 10
@@ -6740,10 +6771,10 @@ Body:
         Rate: 10
         Index: 4
       - Item: Hakujin
-        Rate: 5
+        Rate: 15
         Index: 5
       - Item: Mandolin_
-        Rate: 2
+        Rate: 6
         Index: 6
       - Item: Miyabi_Ningyo_Card
         Rate: 9
@@ -6781,22 +6812,22 @@ Body:
     JobExp: 226
     Drops:
       - Item: Bamboo_Cut
-        Rate: 7079
+        Rate: 7073
         Index: 0
       - Item: Oil_Paper
-        Rate: 5531
+        Rate: 5525
         Index: 1
       - Item: Pierrot_Nose
-        Rate: 1
+        Rate: 3
         Index: 2
       - Item: Blade_Of_Pinwheel
         Rate: 10000
         Index: 3
       - Item: Bun
-        Rate: 2212
+        Rate: 2210
         Index: 4
       - Item: Festival_Mask
-        Rate: 6637
+        Rate: 6631
         Index: 5
       - Item: Rice_Cake_Boy_Card
         Rate: 12
@@ -6844,7 +6875,7 @@ Body:
         Rate: 2000
         Index: 3
       - Item: Dagger_
-        Rate: 100
+        Rate: 300
         Index: 4
       - Item: Pet_Food
         Rate: 500
@@ -6919,7 +6950,7 @@ Body:
         Rate: 500
         Index: 3
       - Item: Guard_
-        Rate: 1
+        Rate: 3
         Index: 4
       - Item: Kind_Of_Beetle_Card
         Rate: 9
@@ -7189,7 +7220,7 @@ Body:
     JobExp: 326
     Drops:
       - Item: Iron
-        Rate: 3198
+        Rate: 2798
         Index: 0
       - Item: Orcish_Voucher
         Rate: 10000
@@ -7201,7 +7232,7 @@ Body:
         Rate: 10000
         Index: 3
       - Item: Battle_Axe_
-        Rate: 10
+        Rate: 50
         Index: 4
       - Item: Gift_Box
         Rate: 15
@@ -7236,19 +7267,19 @@ Body:
         Rate: 10000
         Index: 0
       - Item: Iron_Ore
-        Rate: 4485
+        Rate: 4448
         Index: 1
       - Item: Iron
-        Rate: 2242
+        Rate: 2224
         Index: 2
       - Item: Large_Jellopy
-        Rate: 4485
+        Rate: 4448
         Index: 3
       - Item: Screw
-        Rate: 897
+        Rate: 890
         Index: 4
       - Item: Crimson_Bolt_
-        Rate: 5
+        Rate: 15
         Index: 5
       - Item: Jubilee
         Rate: 10000
@@ -7292,7 +7323,7 @@ Body:
         Rate: 10000
         Index: 0
       - Item: Main_Gauche_
-        Rate: 25
+        Rate: 75
         Index: 1
       - Item: Insect_Feeler
         Rate: 10000
@@ -7416,25 +7447,25 @@ Body:
         StealProtected: true
   - Id: 1686
     BaseExp: 391
-    JobExp: 561
+    JobExp: 3787
     Drops:
       - Item: Large_Jellopy
         Rate: 10000
         Index: 0
       - Item: Pacifier
-        Rate: 1374
+        Rate: 1364
         Index: 1
       - Item: Viking_Helm
-        Rate: 1
+        Rate: 5
         Index: 2
       - Item: Milk
         Rate: 10000
         Index: 3
       - Item: Milk_Bottle
-        Rate: 2749
+        Rate: 2729
         Index: 4
       - Item: Bib
-        Rate: 1374
+        Rate: 1364
         Index: 5
       - Item: Orc_Baby_Card
         Rate: 14
@@ -7642,6 +7673,8 @@ Body:
         Rate: 5
         Index: 4
         StealProtected: true
+  - Id: 1777
+    JobExp: 21802
   - Id: 1781
     Drops:
       - Item: Sticky_Poison
@@ -7678,7 +7711,7 @@ Body:
         Rate: 50
         Index: 2
       - Item: Combo_Battle_Glove
-        Rate: 2
+        Rate: 6
         Index: 3
       - Item: Roween_Card
         Rate: 10
@@ -7698,13 +7731,13 @@ Body:
         Rate: 10000
         Index: 2
       - Item: Large_Jellopy
-        Rate: 4138
+        Rate: 4018
         Index: 3
       - Item: Yellow_Live
         Rate: 10
         Index: 4
       - Item: Seismic_Fist
-        Rate: 3
+        Rate: 15
         Index: 5
       - Item: Stapo_Card
         Rate: 13
@@ -7731,10 +7764,10 @@ Body:
     JobExp: 0
     Drops:
       - Item: Sunglasses
-        Rate: 100
+        Rate: 500
         Index: 0
       - Item: Tiger_Skin_Panties
-        Rate: 8638
+        Rate: 6638
         Index: 1
       - Item: Aloebera
         Rate: 10000
@@ -7743,7 +7776,7 @@ Body:
         Rate: 10000
         Index: 3
       - Item: Bamboo_Basket
-        Rate: 8638
+        Rate: 6638
         Index: 4
   - Id: 1820
     BaseExp: 0
@@ -7797,16 +7830,16 @@ Body:
         Rate: 10000
         Index: 2
       - Item: Kaong
-        Rate: 4705
+        Rate: 3793
         Index: 3
       - Item: Red_Herb
-        Rate: 10000
+        Rate: 9482
         Index: 4
       - Item: Guisarme
-        Rate: 50
+        Rate: 250
         Index: 5
       - Item: Iron_Ore
-        Rate: 2941
+        Rate: 2371
         Index: 6
       - Item: Muka_Card
         Rate: 15
@@ -7820,7 +7853,7 @@ Body:
         Rate: 10000
         Index: 0
       - Item: Hat_
-        Rate: 20
+        Rate: 100
         Index: 1
       - Item: Green_Herb
         Rate: 10000
@@ -7881,7 +7914,7 @@ Body:
         Rate: 10000
         Index: 1
       - Item: Cold_Scroll_2_1
-        Rate: 9420
+        Rate: 9380
         Index: 2
       - Item: Skyblue_Jewel
         Rate: 40
@@ -7893,7 +7926,7 @@ Body:
         Rate: 10000
         Index: 5
       - Item: Poring_Hat
-        Rate: 1
+        Rate: 5
         Index: 6
       - Item: Marin_Card
         Rate: 16
@@ -7939,7 +7972,7 @@ Body:
         Rate: 10000
         Index: 1
       - Item: Spear_
-        Rate: 30
+        Rate: 150
         Index: 2
       - Item: Langka
         Rate: 10000
@@ -7951,7 +7984,7 @@ Body:
         Rate: 3
         Index: 5
       - Item: Whip_Of_Earth
-        Rate: 10
+        Rate: 50
         Index: 6
       - Item: Mandragora_Card
         Rate: 17
@@ -7965,7 +7998,7 @@ Body:
         Rate: 10000
         Index: 0
       - Item: Hood_
-        Rate: 20
+        Rate: 100
         Index: 1
       - Item: Fluff
         Rate: 10000
@@ -7974,13 +8007,13 @@ Body:
         Rate: 10000
         Index: 3
       - Item: Sweet_Potato
-        Rate: 3530
+        Rate: 2712
         Index: 4
       - Item: Sandals_
-        Rate: 25
+        Rate: 125
         Index: 5
       - Item: Sweet_Bean
-        Rate: 4236
+        Rate: 3254
         Index: 6
       - Item: Coco_Card
         Rate: 15
@@ -8024,19 +8057,19 @@ Body:
         Rate: 10000
         Index: 1
       - Item: Jur_
-        Rate: 10
+        Rate: 50
         Index: 2
       - Item: Goggle_
-        Rate: 5
+        Rate: 25
         Index: 3
       - Item: Safety_Helmet
-        Rate: 1
+        Rate: 5
         Index: 4
       - Item: Battered_Pot
         Rate: 10
         Index: 5
       - Item: Goggle
-        Rate: 15
+        Rate: 75
         Index: 6
       - Item: Martin_Card
         Rate: 15
@@ -8153,10 +8186,10 @@ Body:
         Rate: 9000
         Index: 1
       - Item: Fin_Helm
-        Rate: 2
+        Rate: 6
         Index: 2
       - Item: Saint_Robe_
-        Rate: 20
+        Rate: 60
         Index: 3
       - Item: Skyblue_Jewel
         Rate: 20
@@ -8185,7 +8218,7 @@ Body:
         Rate: 10000
         Index: 2
       - Item: Padded_Armor_
-        Rate: 10
+        Rate: 50
         Index: 3
       - Item: Solid_Shell
         Rate: 10000

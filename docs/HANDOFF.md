@@ -136,12 +136,15 @@ Start with data that rAthena already reads, so the server is playable early, and
 2. **Item database.** Export Items and Monster Drops to `db/import/` item and mob files, and the custom items to the client, with `tools/sandbox/sheet2yaml.py`. *Done 2026-11-08.*
    - Check: `@item 30000` gives a Green Gemstone; a Harpy can drop one.
    - The Recipes tab moved to phase 7: classic forging and arrows already match rAthena, and the rest needs the Recipe Book.
-3. **Existing-job skill data.** Levels, costs, cast times, cooldowns and trees for jobs that already exist in rAthena, with `tools/sandbox/skills2yaml.py`.
+3. **Existing-job skill data.** Levels, costs, cast times, cooldowns and trees for jobs that already exist in rAthena, with `tools/sandbox/skills2yaml.py`. *Done 2026-11-09.*
    - Check: a test Knight sees the new tree and cooldowns in game.
    - Covers Novice, the six 1st jobs and the 13 classic 2nd jobs. Costs wait for phase 6; new skills and reworked effects for phase 8.
    - Until a skill named in New Prerequisites exists, the skill keeps its classic prerequisites. Classic skills a tab doesn't list stay until their replacement exists.
-4. **Simple rule changes.** Multiplicative reductions, flat-before-percent, debuff durations, detection timings.
-   - Check: stack two DEF reductions on a test target and compare with the sheet's example (72%).
+4. **Simple rule changes.** Multiplicative reductions, flat-before-percent, the DEF and MDEF formula, hard-control durations, detection timings. *Done 2026-11-10 (PRs #11 to #17).*
+   - Check (replaces the sheet's 72% example, which was for the old formula): Horn Card 35% + Noxious Card 10% gives 42% ranged reduction; Bash Lv 10 on Iron Fist matches the new DEF formula; bosses and MVPs can be stunned and the immunity window stops stun-locks.
+   - DEF and MDEF: Mitigation = 0.75 x A / (A + k) + 0.25 x B / (B + k), with k = C x attacker level / defender level (C: player 24, normal monster 500, boss 250, MVP 125). A is armor, B is cards, item effects and buffs. After the percentage, subtract VIT DEF + 0.75 x B + 0.25 x A (magic: INT + VIT/2 + the same). Criticals ignore DEF, but crit chance x (1 - Mitigation / 2). No 99 DEF cap.
+   - Hard control (stun, freeze, petrify, sleep) is rescaled from its longest base duration (5 / 30 / 20 / 30 s) to a limit: normal monster 15 s, player 6 s, boss 5 s, MVP 3 s. Bosses and MVPs can be controlled. Each effect leaves an immunity window of 20% of the limit.
+   - Durations for Ruwach, Sight and Detect come from the Duration (s) column of RO_Skill_Trees. Detect's repeat reveal is not tested in game yet.
 5. **Elite cooldown and 8-skill bar.**
    - Check: one elite puts the others on cooldown; a 9th skill cannot be equipped.
 6. **Stamina resource.** The largest change: every skill's SP/MP split depends on it.

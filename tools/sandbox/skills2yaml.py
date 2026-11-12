@@ -21,7 +21,7 @@
 # those files to go back to the GRF versions.
 #
 # Rules:
-#   - Rows whose rAthena Code isn't an rAthena skill are new skills (Phase 8)
+#   - Rows whose rAthena Code isn't an rAthena skill are new skills (Phase 6)
 #     and are skipped. Their names still count when other rows name them.
 #   - If a skill's New Prerequisites name a skill that doesn't exist yet, the
 #     skill keeps its classic prerequisites until it does.
@@ -30,7 +30,7 @@
 #     own entry copies the parent's instead, so inheritance doesn't drop it.
 #   - Classic skills a tab doesn't list stay until their replacement exists.
 #   - Timings: "-" is 0, blank is no change, "a → b" goes linearly from
-#     level 1 to the top level. Costs (MP/SP) wait for Phase 6.
+#     level 1 to the top level. Costs (MP/SP) wait for Phase 7.
 #
 # Needs the sheet shared as "Anyone with the link can view".
 # Standard library only, so nothing to install.
@@ -570,7 +570,7 @@ def main():
                   f"{n['removed']} removed")
     print(f"{SKILL_DB_OUT}: {len(db_entries)} skills")
     print(f"{JOB_STATS_OUT}: {', '.join(job_levels) or 'no job level changes'}")
-    print(f"Skipped {n_new} rows for new skills (Phase 8).")
+    print(f"Skipped {n_new} rows for new skills (Phase 6).")
     for title, items in (("Kept classic prerequisites", waits),
                          ("Copied from a parent job", mirrored),
                          ("Max level raised (check source formulas)", raised),

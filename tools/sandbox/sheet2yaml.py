@@ -16,7 +16,11 @@
 #                          down to 5% (Lv 30), easing to 0.5% by Lv 50. The
 #                          card and item chances are what players get after
 #                          the drops.conf multipliers, so re-run after
-#                          changing drops.conf.
+#                          changing drops.conf. Weapons and armor drop 5x
+#                          more from monsters up to Lv 25 and 3x more up
+#                          to Lv 35 (EQUIP_BOOST). Monsters on the
+#                          RO_Monster_Drops sheet's Leveling Route tab get
+#                          that tab's Job EXP Bonus on top.
 # With --client, also writes the client's SystemEN/itemInfo_C.lua (ROTP's
 # custom item file), borrowing each item's icon from its "Client Look (ID)".
 #
@@ -34,7 +38,9 @@ import urllib.request
 from collections import Counter
 
 SHEET_ID = "1jWZez0npq46j8lH682okNJrxiZRB0Izs_GIMvZlyHss"
-TAB_GIDS = {"Items": 1345594810, "Monster Drops": 2101865557}
+ROUTE_SHEET_ID = "1Xcfl41BS755ZAMmV-Kvvm55X81bHt02kguC1uHiFr9g"  # RO_Monster_Drops
+TABS = {"Items": (SHEET_ID, 1345594810), "Monster Drops": (SHEET_ID, 2101865557),
+        "Leveling Route": (ROUTE_SHEET_ID, 7001)}
 
 ITEM_DB_SOURCES = [
     "db/pre-re/item_db_equip.yml",
@@ -55,12 +61,14 @@ CARD_CHANCE = [(1, 10.0), (30, 5.0), (50, 0.5)]  # % a player gets the card
 ITEMS_PER_KILL = [(1, 5.0), (30, 3.0)]  # average drops per kill
 RAISE_FROM = 1.0  # only common and healing drops already at this % or more
 EXP_BOOST = [(1, 250, 500), (30, 0, 0)]  # extra base and job EXP, in %
+# Weapon and armor drop multiplier: (up to this monster level, factor).
+EQUIP_BOOST = [(25, 5), (35, 3)]
 # Server drop multipliers, read like the map server does (later files win).
 DROP_CONF = ["conf/battle/drops.conf", "conf/import/battle_conf.txt"]
 MAX_WEAPON_LEVEL = 4  # src/common/mmo.hpp, pre-renewal
 
 # Sheet values that differ from rAthena's names.
-TYPE_MAP = {"Food": "Usable"}  # food effects come in Phase 7
+TYPE_MAP = {"Food": "Usable"}  # food effects come in Phase 11
 SUBTYPE_MAP = {"Two-Handed Axe": "2hAxe"}
 LOCATION_MAP = {
     "Right Hand": "Right_Hand",
@@ -81,8 +89,9 @@ errors = []
 
 
 def fetch_tab(name):
-    url = (f"https://docs.google.com/spreadsheets/d/{SHEET_ID}"
-           f"/export?format=csv&gid={TAB_GIDS[name]}")
+    sheet_id, gid = TABS[name]
+    url = (f"https://docs.google.com/spreadsheets/d/{sheet_id}"
+           f"/export?format=csv&gid={gid}")
     with urllib.request.urlopen(url) as resp:
         text = resp.read().decode("utf-8")
     if text.lstrip().startswith("<"):
@@ -248,6 +257,12 @@ def early_game(info, drops, math):
     level = info["Level"]
     drops = [dict(d) for d in drops]
     normal = [d for d in drops if not d["Mvp"]]
+
+    factor = next((f for top, f in EQUIP_BOOST if level <= top), None)
+    if factor:
+        for d in normal:
+            if math.category(d["Item"]) == "equip":
+                d["Rate"] = min(d["Rate"] * factor, 10000)
 
     card = along(CARD_CHANCE, level)
     if card is not None:
@@ -521,6 +536,7 @@ def main():
 
     items_rows = table(fetch_tab("Items"), "Item ID")
     drop_rows = table(fetch_tab("Monster Drops"), "Monster ID")
+    route_rows = table(fetch_tab("Leveling Route"), "Base Lv From")
     ra_items = read_rathena_items()
     ra_mobs = read_rathena_mobs()
     ra_aegis = {v["AegisName"].lower(): k for k, v in ra_items.items() if "AegisName" in v}
@@ -573,6 +589,15 @@ def main():
                               "an import file can't remove drops")
         sheet_drops[mob_id] = drops
 
+    mob_info = read_mob_info()
+    route_bonus = {}
+    for r in route_rows:
+        mob_id, bonus = r["Monster ID"].strip(), number(r["Job EXP Bonus (%)"] or "0")
+        if not mob_id.isdigit() or int(mob_id) not in mob_info:
+            errors.append(f"Leveling Route: monster {mob_id} {r['Monster']} is not in rAthena's mob_db")
+        elif bonus:
+            route_bonus[int(mob_id)] = bonus
+
     # Early-game boost on top of the sheet's (or rAthena's) drops.
     item_types = {v["AegisName"]: v.get("Type", "Etc") for v in ra_items.values()
                   if "AegisName" in v}
@@ -580,9 +605,12 @@ def main():
         item_types[row["Aegis Name"].strip()] = TYPE_MAP.get(row["Type"], row["Type"])
     math = DropMath(read_drop_conf(), item_types)
     mob_entries, boosted = [], Counter()
-    for mob_id, info in sorted(read_mob_info().items()):
+    for mob_id, info in sorted(mob_info.items()):
         before = sheet_drops.get(mob_id, ra_mobs.get(mob_id, []))
         drops, base_exp, job_exp = early_game(info, before, math)
+        if mob_id in route_bonus:
+            job_exp = round((job_exp or info["JobExp"]) * (100 + route_bonus[mob_id]) / 100)
+            boosted["route"] += 1
         if Counter(map(drop_key, drops)) != Counter(map(drop_key, before)):
             boosted["drops"] += 1
         if base_exp is not None or job_exp is not None:
@@ -622,7 +650,8 @@ def main():
     write_import(MOB_DB_OUT, "MOB_DB", 5, mob_entries)
     print(f"{ITEM_DB_OUT}: {n_custom} custom items, {n_changed} changed official items")
     print(f"{MOB_DB_OUT}: {len(mob_entries)} monsters ({len(sheet_drops)} from the sheet; "
-          f"early-game boost: {boosted['drops']} drop lists, {boosted['EXP']} EXP)")
+          f"early-game boost: {boosted['drops']} drop lists, {boosted['EXP']} EXP; "
+          f"leveling route: {boosted['route']} Job EXP)")
     if args.client:
         path = write_client(args.client, client_entries)
         print(f"{path}: {len(client_entries)} custom items")
