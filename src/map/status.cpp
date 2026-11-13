@@ -1338,7 +1338,9 @@ int32 status_set_maxhp(block_list *bl, uint32 maxhp, int32 flag)
 	if (maxhp == status->max_hp)
 		return 0;
 
-	heal = maxhp - status->max_hp;
+	// Signed difference: both operands are uint32, so a plain subtraction wraps
+	// around when the Max HP is lowered and turns into a huge heal.
+	heal = static_cast<int64>( maxhp ) - static_cast<int64>( status->max_hp );
 	status->max_hp = maxhp;
 
 	if (heal > 0)
