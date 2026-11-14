@@ -85,7 +85,7 @@ Header:
 Body:
   - Id: 25000
     AegisName: META_PORING
-    Name: Meta Poring
+    Name: Poring
     Level: 1
     Hp: 50
     BaseExp: 2
@@ -106,10 +106,11 @@ Body:
     Race: Plant
     Element: Water
     ElementLevel: 1
-    WalkSpeed: 400
+    WalkSpeed: 150
     AttackDelay: 1872
     AttackMotion: 672
     DamageMotion: 480
+    Ai: 02
     Drops:
       - Item: Meta_Coin
         Rate: 10000
