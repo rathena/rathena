@@ -7985,7 +7985,7 @@ Body:
       BuyingStore: true
     Script: |
       bonus bStr,2;
-      autobonus "{ bonus bCritical,100; }",5,5000,0,"{ specialeffect2 EF_ENHANCE; }";
+      autobonus "{ bonus bCritical,100; }",50,5000,0,"{ specialeffect2 EF_ENHANCE; }";
   - Id: 4412
     AegisName: Isilla_Card
     Name: Isilla Card
