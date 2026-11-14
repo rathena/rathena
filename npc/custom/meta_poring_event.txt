@@ -1,0 +1,83 @@
+-	script	MetaPoringEvent	-1,{
+	end;
+
+// Triggers every Saturday at 16:00 (4:00 PM server time)
+// OnSat1600:
+
+// PROTOTYPING START
+OnSat1200:
+// PROTOTYPING END
+
+	.event_active = 1;
+
+	// Enable No-Skill and LoadMapEvent mapflags in Geffen
+	setmapflag "que_sign01", mf_noskill;
+	setmapflag "que_sign01", mf_loadevent;
+
+	// Give @autoloot 100 ONLY to players currently in Geffen
+	addrid(1, 0, "que_sign01");
+	atcommand "@autoloot 100";
+
+	// Announce event start
+	announce "The Poring Invasion has begun in Geffen! Skills are disabled and Autoloot is active in Geffen!", bc_all, 0xFFFF00;
+	announce "Find and defeat the hidden Poring within 1 hour!", bc_all, 0xFFFF00;
+
+	// Spawn 2000 R_PORING (#1725) and 1 META_PORING (#25000) in Geffen
+	monster "que_sign01", 0, 0, "Poring", 1725, 10, "MetaPoringEvent::OnFakePoringDead";
+	monster "que_sign01", 0, 0, "Poring", 25000, 1, "MetaPoringEvent::OnMetaPoringDead";
+
+	// Start the 1-hour (3,600,000 ms) countdown timer
+	initnpctimer;
+	end;
+
+OnFakePoringDead:
+	end;
+
+OnMetaPoringDead:
+	if (!.event_active) end;
+
+	.event_active = 0;
+	stopnpctimer;
+
+	announce strcharinfo(0) + " got a Midgard Coin!", bc_all, 0x00FF00;
+
+	callsub S_CleanupEvent;
+	end;
+
+// OnTimer3600000:
+OnTimer60000:
+	stopnpctimer;
+
+	if (!.event_active) end;
+
+	.event_active = 0;
+	announce "Time is up! Nobody found the hidden Poring in Geffen.", bc_all, 0xFF5555;
+
+	callsub S_CleanupEvent;
+	end;
+
+// Triggers whenever a player enters or leaves Geffen while mf_loadevent is active
+OnPCLoadMapEvent:
+	if (.event_active) {
+		if (strcharinfo(3) == "que_sign01") {
+			atcommand "@autoloot 100";
+		} else {
+			atcommand "@autoloot 0";
+		}
+	}
+	end;
+
+// Cleanup subroutine
+S_CleanupEvent:
+	killmonster "que_sign01", "MetaPoringEvent::OnFakePoringDead";
+	killmonster "que_sign01", "MetaPoringEvent::OnMetaPoringDead";
+
+	// Remove No-Skill and LoadMapEvent restrictions from Geffen
+	removemapflag "que_sign01", mf_noskill;
+	removemapflag "que_sign01", mf_loadevent;
+
+	// Disable @autoloot for all players currently in Geffen
+	addrid(1, 0, "que_sign01");
+	atcommand "@autoloot 0";
+	return;
+}
