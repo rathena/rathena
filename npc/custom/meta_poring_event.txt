@@ -1,6 +1,7 @@
 //	20261114	File Created
 //	20261114	Replaced addrid() with getunits() and for-loop
 //	20261114	General Bugfix, replaced getunits() with getmapunits()
+//	20261114	Change to array .@players
 
 -	script	MetaPoringEvent	-1,{
 	end;
@@ -46,7 +47,7 @@ OnSat1800:
 	initnpctimer;
 
 	// Give @autoloot 100 ONLY to players currently in Geffen
-	set .@count, getmapunits(BL_PC, "geffen", .@players$[0]);
+	set .@count, getmapunits(BL_PC, "geffen", .@players[0]);
 	for (set .@i, 0; .@i < .@count; set .@i, .@i + 1) {
 		if (attachrid(.@players[.@i])) {
 			atcommand "@autoloot 100";
@@ -101,7 +102,7 @@ S_CleanupEvent:
 	removemapflag "geffen", mf_loadevent;
 
 	// Disable @autoloot for all players currently in Geffen
-	set .@count, getmapunits(BL_PC, "geffen", .@players$[0]);
+	set .@count, getmapunits(BL_PC, "geffen", .@players[0]);
 	for (set .@i, 0; .@i < .@count; set .@i, .@i + 1) {
 		if (attachrid(.@players[.@i])) {
 			atcommand "@autoloot 0";
