@@ -46,11 +46,18 @@ OnSat1800:
 	// Start the 1-hour (3,600,000 ms) countdown timer
 	initnpctimer;
 
-	// Give @autoloot 100 ONLY to players currently in Geffen
-	set .@count, getmapunits(BL_PC, "geffen", .@players[0]);
-	for (set .@i, 0; .@i < .@count; set .@i, .@i + 1) {
+	// Give @autoloot 100 ONLY to players currently in Geffen (with Debug Output)
+	.@count = getmapunits(BL_PC, "geffen", .@players);
+	announce "[Debug] Players found in Geffen: " + .@count, bc_all, 0x00FFFF;
+
+	for (.@i = 0; .@i < .@count; .@i++) {
+		announce "[Debug] Loop " + .@i + " - Raw ID stored in array: " + .@players[.@i], bc_all, 0x00FFFF;
+
 		if (attachrid(.@players[.@i])) {
+			announce "[Debug] IF branch entered -> Attached to: " + strcharinfo(0), bc_all, 0x00FF00;
 			atcommand "@autoloot 100";
+		} else {
+			announce "[Debug] ELSE branch entered -> attachrid failed for ID: " + .@players[.@i], bc_all, 0xFF5555;
 		}
 	}
 	detachrid;
