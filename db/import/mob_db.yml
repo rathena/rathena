@@ -83,7 +83,7 @@ Header:
 
 # Custom Mobs
 Body:
-  - Id: 3500
+  - Id: 25000
     AegisName: META_PORING
     Name: Meta Poring
     Level: 1
