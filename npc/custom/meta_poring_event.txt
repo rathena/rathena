@@ -23,15 +23,12 @@ OnSat1745:
 
 // Triggers every Saturday at 18:00 (6:00 PM server time)
 OnSat1800:
+	if (.event_active) end;
 	.event_active = 1;
 
 	// Enable No-Skill and LoadMapEvent mapflags in Geffen
 	setmapflag "geffen", mf_noskill;
 	setmapflag "geffen", mf_loadevent;
-
-	// Give @autoloot 100 ONLY to players currently in Geffen
-	addrid(1, 0, "geffen");
-	atcommand "@autoloot 100";
 
 	// Announce event start
 	announce "The Poring Invasion has begun in Geffen! Skills are disabled and Autoloot is active in Geffen!", bc_all, 0xFFFF00;
@@ -43,6 +40,15 @@ OnSat1800:
 
 	// Start the 1-hour (3,600,000 ms) countdown timer
 	initnpctimer;
+
+	// Give @autoloot 100 ONLY to players currently in Geffen
+	.@count = getunits(BL_PC, .@players, false, "geffen");
+	for (.@i = 0; .@i < .@count; .@i++) {
+		if (attachrid(.@players[.@i])) {
+			atcommand "@autoloot 100";
+		}
+	}
+	detachrid;
 	end;
 
 OnFakePoringDead:
@@ -91,7 +97,12 @@ S_CleanupEvent:
 	removemapflag "geffen", mf_loadevent;
 
 	// Disable @autoloot for all players currently in Geffen
-	addrid(1, 0, "geffen");
-	atcommand "@autoloot 0";
+	.@count = getunits(BL_PC, .@players, false, "geffen");
+	for (.@i = 0; .@i < .@count; .@i++) {
+		if (attachrid(.@players[.@i])) {
+			atcommand "@autoloot 0";
+		}
+	}
+	detachrid;
 	return;
 }
