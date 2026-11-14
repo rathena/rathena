@@ -8,7 +8,7 @@ OnWhisperGlobal:
 
 	if (@whispervar0$ == "start") {
 		dispbottom "Manually starting the Meta Poring Event...";
-		goto OnSat1200;
+		goto OnSat1800;
 	}
 	if (@whispervar0$ == "stop") {
 		dispbottom "Manually stopping and cleaning up the Meta Poring Event...";
@@ -17,30 +17,29 @@ OnWhisperGlobal:
 	dispbottom "Usage: Whisper 'start' to begin the event, or 'stop' to end it.";
 	end;
 
-// Triggers every Saturday at 16:00 (4:00 PM server time)
-// OnSat1600:
+OnSat1745:
+    announce "The Poring Invasion in Geffen will begin in 15 minutes! Prepare yourselves!", bc_all, 0xFFFF00;
+	end;
 
-// PROTOTYPING START
-OnSat1200:
-// PROTOTYPING END
-
+// Triggers every Saturday at 18:00 (6:00 PM server time)
+OnSat1800:
 	.event_active = 1;
 
 	// Enable No-Skill and LoadMapEvent mapflags in Geffen
-	setmapflag "guild_vs2", mf_noskill;
-	setmapflag "guild_vs2", mf_loadevent;
+	setmapflag "geffen", mf_noskill;
+	setmapflag "geffen", mf_loadevent;
 
 	// Give @autoloot 100 ONLY to players currently in Geffen
-	addrid(1, 0, "guild_vs2");
+	addrid(1, 0, "geffen");
 	atcommand "@autoloot 100";
 
 	// Announce event start
 	announce "The Poring Invasion has begun in Geffen! Skills are disabled and Autoloot is active in Geffen!", bc_all, 0xFFFF00;
-	announce "Find and defeat the hidden Poring within 1 hour!", bc_all, 0xFFFF00;
+	announce "Find and defeat the Imposter Poring within 1 hour for an epic reward!", bc_all, 0xFFFF00;
 
 	// Spawn 2000 R_PORING (#1725) and 1 META_PORING (#25000) in Geffen
-	monster "guild_vs2", 0, 0, "Poring", 1725, 10, "MetaPoringEvent::OnFakePoringDead";
-	monster "guild_vs2", 0, 0, "Poring", 25000, 1, "MetaPoringEvent::OnMetaPoringDead";
+	monster "geffen", 0, 0, "Poring", 1725, 2000, "MetaPoringEvent::OnFakePoringDead";
+	monster "geffen", 0, 0, "Poring", 25000, 1, "MetaPoringEvent::OnMetaPoringDead";
 
 	// Start the 1-hour (3,600,000 ms) countdown timer
 	initnpctimer;
@@ -55,7 +54,7 @@ OnMetaPoringDead:
 	.event_active = 0;
 	stopnpctimer;
 
-	announce strcharinfo(0) + " got a Midgard Coin!", bc_all, 0x00FF00;
+	announce strcharinfo(0) + " got a Midgard Coin!", bc_all, 0xFFFF00;
 
 	callsub S_CleanupEvent;
 	end;
@@ -66,7 +65,7 @@ OnTimer3600000:
 	if (!.event_active) end;
 
 	.event_active = 0;
-	announce "Time is up! Nobody found the hidden Poring in Geffen.", bc_all, 0xFF5555;
+	announce "Time is up! The imposter escaped from Geffen!", bc_all, 0xFF5555;
 
 	callsub S_CleanupEvent;
 	end;
@@ -74,7 +73,7 @@ OnTimer3600000:
 // Triggers whenever a player enters or leaves Geffen while mf_loadevent is active
 OnPCLoadMapEvent:
 	if (.event_active) {
-		if (strcharinfo(3) == "guild_vs2") {
+		if (strcharinfo(3) == "geffen") {
 			atcommand "@autoloot 100";
 		} else {
 			atcommand "@autoloot 0";
@@ -84,15 +83,15 @@ OnPCLoadMapEvent:
 
 // Cleanup subroutine
 S_CleanupEvent:
-	killmonster "guild_vs2", "MetaPoringEvent::OnFakePoringDead";
-	killmonster "guild_vs2", "MetaPoringEvent::OnMetaPoringDead";
+	killmonster "geffen", "MetaPoringEvent::OnFakePoringDead";
+	killmonster "geffen", "MetaPoringEvent::OnMetaPoringDead";
 
 	// Remove No-Skill and LoadMapEvent restrictions from Geffen
-	removemapflag "guild_vs2", mf_noskill;
-	removemapflag "guild_vs2", mf_loadevent;
+	removemapflag "geffen", mf_noskill;
+	removemapflag "geffen", mf_loadevent;
 
 	// Disable @autoloot for all players currently in Geffen
-	addrid(1, 0, "guild_vs2");
+	addrid(1, 0, "geffen");
 	atcommand "@autoloot 0";
 	return;
 }
