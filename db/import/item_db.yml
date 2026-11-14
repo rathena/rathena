@@ -91,7 +91,7 @@ Header:
 # Custom Items
 Body:
   - Id: 35000
-    AegisName: Midgard_Coin
+    AegisName: Meta_Coin
     Name: Midgard Coin
     Type: Etc
     Weight: 10
