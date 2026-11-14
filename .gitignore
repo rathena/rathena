@@ -66,6 +66,7 @@ Thumbs.db
 # /db/
 /db/import/*
 !db/import/item_db.yml
+!db/import/mob_db.yml
 
 # /conf/
 /conf/import
