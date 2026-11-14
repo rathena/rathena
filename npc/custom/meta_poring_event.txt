@@ -1,6 +1,22 @@
 -	script	MetaPoringEvent	-1,{
 	end;
 
+// Allows a GM (Group 99) to trigger or stop the event anytime via Whisper
+// Whisper "npc:MetaPoringEvent" with "start" or "stop"
+OnWhisperGlobal:
+	if (getgmlevel() < 99) end;
+
+	if (@whispervar0$ == "start") {
+		dispbottom "Manually starting the Meta Poring Event...";
+		goto OnSat1200;
+	}
+	if (@whispervar0$ == "stop") {
+		dispbottom "Manually stopping and cleaning up the Meta Poring Event...";
+		goto OnTimer3600000;
+	}
+	dispbottom "Usage: Whisper 'start' to begin the event, or 'stop' to end it.";
+	end;
+
 // Triggers every Saturday at 16:00 (4:00 PM server time)
 // OnSat1600:
 
@@ -44,8 +60,7 @@ OnMetaPoringDead:
 	callsub S_CleanupEvent;
 	end;
 
-// OnTimer3600000:
-OnTimer60000:
+OnTimer3600000:
 	stopnpctimer;
 
 	if (!.event_active) end;
