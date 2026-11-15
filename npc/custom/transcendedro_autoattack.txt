@@ -122,7 +122,7 @@ OnMenu:
 	end;
 
 OnInit:
-	.ticket = 9950001; // Auto Hunt Ticket - required to start
+	.ticket = 1000322; // Auto Hunt Ticket - required to start
 	bindatcmd "aa", strnpcinfo(3) + "::OnMenu", 0, 99;
 	end;
 }
