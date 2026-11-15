@@ -1,7 +1,28 @@
-//	20261114	File Created
-//	20261114	Replaced addrid() with getunits() and for-loop
-//	20261114	General Bugfix, replaced getunits() with getmapunits()
-//	20261114	Change to array .@players
+// +-----------------------------------------------------------------------------------------------
+// |
+// |	MetaPoringEvent
+// |
+// +-----------------------------------------------------------------------------------------------
+// |	Description
+// +-----------------------------------------------------------------------------------------------
+// |	Starts an event in Geffen in which a large number of R_PORING and a single META_PORING
+// |	are spawned at a given time of the week. mapflag mf_noskill is active during the event
+// |	and all players in Geffen will receive @autoloot 100, including players who enter Geffen
+// |	after the event already started. The event lasts 60 minutes or until the META_PORING is
+// |	killed. Upon end of the event or the META_PORING is killed, a cleanup event is triggered
+// |	which kills all monsters in Geffen, deactivates the mapflag mf_noskill and sets
+// |	@autoloot 0 to all players on the server.
+// +-----------------------------------------------------------------------------------------------
+// |	Change History
+// +-----------------------------------------------------------------------------------------------
+// |	20261114	File Created
+// |	20261114	Replaced addrid() with getunits() and for-loop
+// |	20261114	General Bugfix, replaced getunits() with getmapunits()
+// |	20261114	Change to array .@players
+// |	20261114	Added Debug Output
+// |	20261114	Removed Debug Output, changed Cleanup Routine to set @autoloot 0 to all
+// |				players on the server, added 5 minute warning before end of the event
+// +-----------------------------------------------------------------------------------------------
 
 -	script	MetaPoringEvent	-1,{
 	end;
@@ -48,16 +69,9 @@ OnSat1800:
 
 	// Give @autoloot 100 ONLY to players currently in Geffen (with Debug Output)
 	.@count = getmapunits(BL_PC, "geffen", .@players);
-	announce "[Debug] Players found in Geffen: " + .@count, bc_all, 0x00FFFF;
-
 	for (.@i = 0; .@i < .@count; .@i++) {
-		announce "[Debug] Loop " + .@i + " - Raw ID stored in array: " + .@players[.@i], bc_all, 0x00FFFF;
-
 		if (attachrid(.@players[.@i])) {
-			announce "[Debug] IF branch entered -> Attached to: " + strcharinfo(0), bc_all, 0x00FF00;
 			atcommand "@autoloot 100";
-		} else {
-			announce "[Debug] ELSE branch entered -> attachrid failed for ID: " + .@players[.@i], bc_all, 0xFF5555;
 		}
 	}
 	detachrid;
@@ -75,6 +89,10 @@ OnMetaPoringDead:
 	announce strcharinfo(0) + " got a Midgard Coin!", bc_all, 0xFFFF00;
 
 	callsub S_CleanupEvent;
+	end;
+
+OnTimer3300000:
+	announce "The Poring Invasion in Geffen will end in 5 minutes! Hurry up!", bc_all, 0xFFFF00;
 	end;
 
 OnTimer3600000:
@@ -108,9 +126,9 @@ S_CleanupEvent:
 	removemapflag "geffen", mf_noskill;
 	removemapflag "geffen", mf_loadevent;
 
-	// Disable @autoloot for all players currently in Geffen
-	set .@count, getmapunits(BL_PC, "geffen", .@players[0]);
-	for (set .@i, 0; .@i < .@count; set .@i, .@i + 1) {
+	// Disable @autoloot for ALL online players on the server
+	.@count = getunits(BL_PC, .@players);
+	for (.@i = 0; .@i < .@count; .@i++) {
 		if (attachrid(.@players[.@i])) {
 			atcommand "@autoloot 0";
 		}
