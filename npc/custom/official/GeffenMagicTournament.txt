@@ -829,7 +829,6 @@ dali,98,141,3	script	Emmitt White	4_M_KHKYEL,{
 }
 
 1@gef,120,34,4	script	#gefmagic_warp01	45,2,2,{
-	callfunc("InventoryCheck");
 	end;
 
 OnTouch:
