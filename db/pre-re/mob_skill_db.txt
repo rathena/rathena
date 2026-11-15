@@ -1,3 +1,5 @@
+//!rathena
+
 // Mob Skill Database
 // Based on Aegis Episode 11.3
 //

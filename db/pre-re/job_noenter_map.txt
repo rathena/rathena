@@ -1,3 +1,5 @@
+//!rathena
+
 // Defines Job(s) that are restricted to enter map (by flag/zones)
 //
 // Structure of Database:

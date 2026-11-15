@@ -1,3 +1,5 @@
+//!rathena
+
 // Change Material Database
 //
 // Structure of Database:

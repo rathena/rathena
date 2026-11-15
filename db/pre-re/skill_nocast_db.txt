@@ -1,3 +1,5 @@
+//!rathena
+
 // Forbidden Skills Database
 // Defines unusable skills in map types and zones.
 //

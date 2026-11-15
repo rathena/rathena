@@ -1,3 +1,5 @@
+//!rathena
+
 //-----------------------------------------
 // GRF Files
 // Add as many as needed.

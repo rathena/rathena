@@ -1,3 +1,5 @@
+//!rathena
+
 // Forbidden Items Database
 // Defines restrictions on equipment, items, and cards in map types and zones.
 //
