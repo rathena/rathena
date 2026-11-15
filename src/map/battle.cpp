@@ -3615,18 +3615,12 @@ static int32 battle_get_spiritball_damage(struct Damage& wd, block_list& src, ui
 			// These skills used as many spheres as they do hits
 			damage = (wd.div_ + sd->spiritball) * 3;
 			break;
-#ifdef RENEWAL
-		case MO_FINGEROFFENSIVE:
-			// These skills store the spheres used in spiritball_old
-			damage = (sd->spiritball_old + sd->spiritball) * 3;
-			break;
-#endif
 		case MO_EXTREMITYFIST:
 			// These skills store the number of spheres the player had before cast
 			damage = sd->spiritball_old * 3;
 			break;
 		default:
-			// Any skills that do not consume spheres or do not care
+			// Includes Renewal Throw Spirit Sphere, whose cost is applied after damage calculation.
 			damage = sd->spiritball * 3;
 			break;
 	}
