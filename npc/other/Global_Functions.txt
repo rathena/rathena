@@ -47,6 +47,7 @@
 //= 2.27 Added "F_GetPlatinumSkills". [mazvi]
 //= 2.28 Added "close3". [Capuche]
 //= 2.29 Updated "F_IsCharm" to support all latest enchants [Everade]
+//= 2.30 Added "mesnpctalk". [Atemo]
 //============================================================ 
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -758,4 +759,16 @@ function	script	F_GetPlatinumSkills	{
 function	script	F_IsCharm	{
 	.@id = getarg(0);
 	return ((.@id >= 4700 && .@id <= 4999) || (.@id >= 29000 && .@id <= 29689) || (.@id >= 310000 && .@id <= 311091 ));
+}
+
+function	script	mesnpctalk	{
+	.@string$ = getarg(0);
+	.@npc_name$ = getarg(1,"");
+
+	mes .@string$;
+	if (.@npc_name$ != "")
+		npctalk .@string$, .@npc_name$;
+	else
+		npctalk .@string$;
+	return;
 }

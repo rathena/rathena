@@ -93,6 +93,9 @@
 // Charleston in Distress
 1@mcd	mapflag	nodynamicnpc
 
+// Remnant's Base Camp
+1@ffp	mapflag	nodynamicnpc
+
 // Ritual of Blessing
 2@mir	mapflag	nodynamicnpc
 
