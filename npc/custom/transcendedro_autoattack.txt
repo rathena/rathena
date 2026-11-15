@@ -33,7 +33,8 @@ function	CanStart	{
 		dispbottom "[Auto Attack] You must be a VIP to use Auto Attack.";
 		return 0;
 	}
-	if (.ticket && countitem(.ticket) <= 0) {
+	// Nested if: script && does not short-circuit, so countitem(0) would run and error.
+	if (.ticket > 0) if (countitem(.ticket) <= 0) {
 		dispbottom "[Auto Attack] You need a " + getitemname(.ticket) + ".";
 		return 0;
 	}

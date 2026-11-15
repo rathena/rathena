@@ -94,19 +94,26 @@ inline void message( map_session_data* sd, const char* msg ) {
 
 /// Bitmask: 1 = usable as attack skill, 2 = usable as buff skill, 0 = neither (passive / unknown)
 inline int32 skill_category( uint16 skill_id ) {
-	if( skill_id == 0 || !skill_db.find( skill_id ) )
+	std::shared_ptr<s_skill_db> skill = skill_db.find( skill_id );
+	if( skill_id == 0 || skill == nullptr )
 		return 0;
 
-	int32 inf = skill_get_inf( skill_id );
-	if( inf == INF_PASSIVE_SKILL )
+	int32 inf = skill->inf;
+	if( inf == INF_PASSIVE_SKILL ) // passive: never castable
 		return 0;
 
-	int32 cat = 0;
-	if( skill_get_casttype( skill_id ) != CAST_NODAMAGE || ( inf & INF_ATTACK_SKILL ) )
-		cat |= 1;
-	if( inf & ( INF_SELF_SKILL | INF_SUPPORT_SKILL | INF_GROUND_SKILL ) )
-		cat |= 2;
-	return cat;
+	bool nodamage = skill->nk[NK_NODAMAGE];
+
+	// Attack: deals damage, or is cast on an enemy (e.g. Provoke, Lex Divina)
+	if( !nodamage || ( inf & INF_ATTACK_SKILL ) )
+		return 1;
+
+	// Buff: cast on self/ally and gives a status we can watch for recasting
+	// (excludes Heal, Teleport, Warp Portal, Resurrection, ground utility like Ice Wall)
+	if( ( inf & ( INF_SELF_SKILL | INF_SUPPORT_SKILL ) ) && skill->sc > SC_NONE && skill->sc < SC_MAX )
+		return 2;
+
+	return 0;
 }
 
 /// Level to use for a slot: configured level capped to learned level, 0 if not usable.
