@@ -427,6 +427,7 @@ inline bool loot( map_session_data* sd, s_state& st ) {
 inline void apply_loot( map_session_data* sd, bool allowed ) {
 	sd->state.autoloot = 0;
 	sd->state.autoloottype = 0;
+	sd->state.autolooting = 0;
 	for( int32 i = 0; i < AUTOLOOTITEM_SIZE; i++ )
 		sd->state.autolootid[i] = 0;
 
@@ -441,9 +442,12 @@ inline void apply_loot( map_session_data* sd, bool allowed ) {
 	int32 n = 0;
 	for( int32 i = 0; i < AUTOLOOTITEM_SIZE; i++ ) {
 		t_itemid nameid = static_cast<t_itemid>( setting( sd, "AA_LOOTID", i ) );
-		if( nameid != 0 && setting( sd, "AA_LOOTON", i ) && itemdb_exists( nameid ) )
+		if( nameid != 0 && setting( sd, "AA_LOOTON", i ) && item_db.exists( nameid ) )
 			sd->state.autolootid[n++] = nameid;
 	}
+	// pc_isautolooting() skips the autolootid list entirely unless this flag is set
+	// (@alootid sets it; without it the list only worked if @alootid was used earlier).
+	sd->state.autolooting = ( n > 0 ) ? 1 : 0;
 }
 
 // ---- combat -----------------------------------------------------------------
