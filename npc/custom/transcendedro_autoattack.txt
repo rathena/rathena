@@ -40,10 +40,15 @@ function	CanStart	{
 	return 1;
 }
 
+// select() splits options on ':' so names must not contain it
+function	NoColon	{
+	return replacestr(getarg(0), ":", " ");
+}
+
 function	ItemLabel	{
 	if (getarg(0) <= 0)
 		return "(empty)";
-	return getitemname(getarg(0)) + " [ItemID: " + getarg(0) + "]";
+	return NoColon(getitemname(getarg(0))) + " [ID " + getarg(0) + "]";
 }
 
 function	SkillLabel	{
@@ -52,7 +57,7 @@ function	SkillLabel	{
 	.@lv$ = "Max";
 	if (getarg(1) > 0)
 		.@lv$ = "" + getarg(1);
-	return aa_skillinfo(getarg(0), 0) + " (SkillID: " + getarg(0) + ") Lv " + .@lv$;
+	return NoColon(aa_skillinfo(getarg(0), 0)) + " Lv " + .@lv$;
 }
 
 //==============================================================
@@ -137,7 +142,7 @@ S_SkillSlots:
 		}
 		.@menu$ = "";
 		for (.@i = 0; .@i < 5; .@i++)
-			.@menu$ += "Slot " + (.@i + 1) + ": " + SkillLabel(getd(.@sk$ + "[" + .@i + "]"), getd(.@lv$ + "[" + .@i + "]")) + ":";
+			.@menu$ += "Slot " + (.@i + 1) + " - " + SkillLabel(getd(.@sk$ + "[" + .@i + "]"), getd(.@lv$ + "[" + .@i + "]")) + ":";
 		.@s = select(.@menu$ + "Back") - 1;
 		if (.@s >= 5)
 			return;
@@ -163,7 +168,7 @@ S_PickSkill:
 		.@ids[.@n] = .@id;
 		.@lvs[.@n] = @skilllist_lv[.@i];
 		.@n++;
-		.@menu$ += aa_skillinfo(.@id, 0) + " (SkillID: " + .@id + "):";
+		.@menu$ += NoColon(aa_skillinfo(.@id, 0)) + " (ID " + .@id + "):";
 	}
 
 	Page();
@@ -192,7 +197,7 @@ S_PickSkill:
 			.@menu$ += "Level " + .@l + ":";
 	}
 	Page();
-	mes aa_skillinfo(.@id, 0) + " (SkillID: " + .@id + ")";
+	mes aa_skillinfo(.@id, 0) + " (SkillID " + .@id + ")";
 	mes "Choose the skill level.";
 	.@l = select(.@menu$);
 
@@ -227,7 +232,7 @@ S_ItemSlots:
 		for (.@i = 0; .@i < 5; .@i++) {
 			.@item = getd(.@it$ + "[" + .@i + "]");
 			.@v = getd(.@val$ + "[" + .@i + "]");
-			.@menu$ += "Slot " + (.@i + 1) + ": " + ItemLabel(.@item);
+			.@menu$ += "Slot " + (.@i + 1) + " - " + ItemLabel(.@item);
 			if (.@item > 0) {
 				if (.@mode == 3)
 					.@menu$ += " every " + .@v + " ms";
@@ -283,7 +288,7 @@ S_PickItem:
 			continue;
 		.@ids[.@n] = .@id;
 		.@n++;
-		.@menu$ += getitemname(.@id) + " [ItemID: " + .@id + "]:";
+		.@menu$ += NoColon(getitemname(.@id)) + " [ID " + .@id + "]:";
 	}
 
 	Page();
@@ -322,7 +327,7 @@ S_Teleport:
 		mes "Teleport needs Fly Wing or the";
 		mes "Teleport skill enabled below.";
 		.@s = select(
-			"Teleport delay (no monsters): " + AA_TPDELAY + " Sec.",
+			"Teleport delay - " + AA_TPDELAY + " Sec.",
 			"Teleport by Item " + OnOff(AA_TPITEM),
 			"Teleport by Skill " + OnOff(AA_TPSKILL),
 			"Teleport away from Monsters (" + getarraysize(AA_AVOID) + ")",
@@ -391,7 +396,7 @@ S_Avoid:
 		.@menu$ = "";
 		for (.@i = 0; .@i < .@n; .@i++) {
 			.@on = (inarray(AA_AVOID[0], .@cls[.@i]) >= 0);
-			.@menu$ += OnOff(.@on) + " " + getmonsterinfo(.@cls[.@i], MOB_NAME) + " (ID: " + .@cls[.@i] + "):";
+			.@menu$ += OnOff(.@on) + " " + NoColon(getmonsterinfo(.@cls[.@i], MOB_NAME)) + " (ID " + .@cls[.@i] + "):";
 		}
 
 		Page();
