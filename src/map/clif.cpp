@@ -11016,8 +11016,8 @@ void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
 	if( sd->state.changemap ) {// restore information that gets lost on map-change
 		clif_partyinvitationstate( *sd );
 #if PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20210818 || PACKETVER_MAIN_NUM >= 20220330
-		PACKET_ZC_RODEX_SETTINGS_INIT p = {};
-		p.packetType = HEADER_ZC_RODEX_SETTINGS_INIT;
+		PACKET_ZC_GET_USERCONFIG_LIST p = {};
+		p.packetType = HEADER_ZC_GET_USERCONFIG_LIST;
 		p.packetLength = sizeof( p );
 		p.settings[0].type = 1;
 		p.settings[0].value = !sd->status.disable_rodex_nonfriend;
@@ -16034,8 +16034,8 @@ void clif_mail_delete( map_session_data* sd, struct mail_message *msg, bool succ
 void clif_Mail_return(map_session_data* sd, int32 mail_id, int16 fail)
 {
 #if PACKETVER_MAIN_NUM >= 20201104 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20201118
-	PACKET_ZC_RODEX_RETURN p = { 0 };
-	p.packetType = HEADER_ZC_RODEX_RETURN;
+	PACKET_ZC_RODEX_RETURN_ACK p = { 0 };
+	p.packetType = HEADER_ZC_RODEX_RETURN_ACK;
 	p.msgId = mail_id;
 	p.result = fail != 0;
 	clif_send( &p, sizeof( p ), sd, SELF );
@@ -16560,9 +16560,9 @@ void clif_Mail_Receiver_Ack( const map_session_data* sd, uint32 char_id, int16 c
 /// This does not confirm the recipient or expose their class and level.
 void clif_Mail_Receiver_Blocked( map_session_data* sd, const char* name ){
 #if PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20210818 || PACKETVER_MAIN_NUM >= 20220330
-	PACKET_ZC_MAIL_RECEIVER_BLOCKED p = { 0 };
+	PACKET_ZC_RODEX_BLOCK_RECEIVE p = { 0 };
 
-	p.PacketType = HEADER_ZC_MAIL_RECEIVER_BLOCKED;
+	p.PacketType = HEADER_ZC_RODEX_BLOCK_RECEIVE;
 	safestrncpy( p.Name, name, sizeof( p.Name ) );
 
 	clif_send( &p, sizeof( p ), sd, SELF );
@@ -16574,7 +16574,7 @@ void clif_Mail_Receiver_Blocked( map_session_data* sd, const char* name ){
 void clif_parse_Mail_Receiver_Check(int32 fd, map_session_data *sd) {
 #if PACKETVER >= 20140423
 #if PACKETVER_MAIN_NUM >= 20201104 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20201118
-	const PACKET_CZ_CHECKNAME2* p = reinterpret_cast<PACKET_CZ_CHECKNAME2*>( RFIFOP( fd, 0 ) );
+	const PACKET_CZ_CHECK_RODEX_RECEIVE* p = reinterpret_cast<PACKET_CZ_CHECK_RODEX_RECEIVE*>( RFIFOP( fd, 0 ) );
 #else
 	const PACKET_CZ_CHECKNAME1* p = reinterpret_cast<PACKET_CZ_CHECKNAME1*>( RFIFOP( fd, 0 ) );
 #endif
@@ -17830,7 +17830,7 @@ void clif_parse_PartyTick( int32 fd, map_session_data* sd ){
 /// Type 1: value 1 accepts everyone, value 0 applies feature.rodex_spam_filter.
 void clif_parse_rodex_settings( int32 fd, map_session_data* sd ){
 #if PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20210818 || PACKETVER_MAIN_NUM >= 20220330
-	const PACKET_CZ_RODEX_SETTINGS* p = reinterpret_cast<const PACKET_CZ_RODEX_SETTINGS*>( RFIFOP( fd, 0 ) );
+	const PACKET_CZ_SET_USERCONFIG* p = reinterpret_cast<const PACKET_CZ_SET_USERCONFIG*>( RFIFOP( fd, 0 ) );
 	uint32 type = p->type;
 	uint32 value = p->value;
 	bool failed = type != 1 || value > 1;
@@ -17845,8 +17845,8 @@ void clif_parse_rodex_settings( int32 fd, map_session_data* sd ){
 		}
 	}
 
-	PACKET_ZC_RODEX_SETTINGS_ACK reply = {};
-	reply.packetType = HEADER_ZC_RODEX_SETTINGS_ACK;
+	PACKET_ZC_SET_USERCONFIG_ACK reply = {};
+	reply.packetType = HEADER_ZC_SET_USERCONFIG_ACK;
 	reply.result = failed ? 1 : 0;
 	reply.type = type;
 	reply.value = !sd->status.disable_rodex_nonfriend;
