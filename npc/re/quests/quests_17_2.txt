@@ -4264,7 +4264,7 @@ ba_in01,26,266,3	script	Smart Elly#ep172_ely01	4_EP17_TABLET,{
 		next;
 		mes "[Elly]";
 		mes "You're authorized.";
-		npctalk "The meeting has ended.", "Smart Elly#ep18ely01", bc_self;
+		npctalk "The meeting has ended.", "Smart Elly#ep172_ely01", bc_self;
 		next;
 		mes "[Elly]";
 		mes "The purpose is not to hinder but to support.";
@@ -4282,7 +4282,7 @@ ba_in01,26,266,3	script	Smart Elly#ep172_ely01	4_EP17_TABLET,{
 		next;
 		mes "[Elly]";
 		mes "But things are a little different now, so I'll give you a beta version.";
-		npctalk "Don't forget to take it with you.", "Smart Elly#ep18ely01", bc_self;
+		npctalk "Don't forget to take it with you.", "Smart Elly#ep172_ely01", bc_self;
 		next;
 		cutin "16loo_02.bmp",0;
 		mes "[Rookie]";
@@ -4306,7 +4306,7 @@ ba_in01,26,266,3	script	Smart Elly#ep172_ely01	4_EP17_TABLET,{
 		mes "[Elly]";
 		mes "Yes, I will do that.";
 		mes "Please take care of yourself.";
-		npctalk "It's strange to be greeting each other like this when we're going together.", "Smart Elly#ep18ely01", bc_self;
+		npctalk "It's strange to be greeting each other like this when we're going together.", "Smart Elly#ep172_ely01", bc_self;
 		next;
 		mes "[Elly]";
 		mes "The nearly exact coordinates of the signal's origin are...";
@@ -5779,7 +5779,7 @@ ba_bath,155,305,0	script(CLOAKED)	Marked Position#172ba04	4_ENERGY_BLUE,{
 		setpcblock PCBLOCK_NPC, true;
 		sleep2 500;
 		cloakoffnpcself( "Magenta#172ba04" );
-		npctalk "Adventurer, have you set up all the traps? It already started over there. Hurry and go.", "Magenta#ep172_bath_trap", bc_self;
+		npctalk "Adventurer, have you set up all the traps? It already started over there. Hurry and go.", "Magenta#172ba04", bc_self;
 		sleep2 1500;
 		setpcblock PCBLOCK_NPC, false;
 		cloakonnpcself( "Magenta#172ba04" );
