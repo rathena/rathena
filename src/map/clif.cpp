@@ -91,7 +91,8 @@ enum mail_type {
 	MAIL_TYPE_TEXT = 0x0,
 	MAIL_TYPE_ZENY = 0x2,
 	MAIL_TYPE_ITEM = 0x4,
-	MAIL_TYPE_NPC = 0x8
+	MAIL_TYPE_NPC = 0x8,
+	MAIL_TYPE_TRUSTED = MAIL_TYPE_NPC // Client skips the stranger warning and return button.
 };
 #endif
 
@@ -11014,6 +11015,14 @@ void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
 
 	if( sd->state.changemap ) {// restore information that gets lost on map-change
 		clif_partyinvitationstate( *sd );
+#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20210818 || PACKETVER_MAIN_NUM >= 20220330
+		PACKET_ZC_RODEX_SETTINGS_INIT p = {};
+		p.packetType = HEADER_ZC_RODEX_SETTINGS_INIT;
+		p.packetLength = sizeof( p );
+		p.settings[0].type = 1;
+		p.settings[0].value = !sd->status.disable_rodex_nonfriend;
+		clif_send( &p, sizeof( p ), sd, SELF );
+#endif
 #if PACKETVER >= 20070918
 		clif_equipcheckbox( *sd );
 #endif
@@ -15523,6 +15532,8 @@ void clif_parse_FriendsListReply(int32 fd, map_session_data *sd)
 		f_sd->status.friends[i].account_id = sd->status.account_id;
 		f_sd->status.friends[i].char_id = sd->status.char_id;
 		safestrncpy(f_sd->status.friends[i].name, sd->status.name, NAME_LENGTH);
+		if( f_sd->status.disable_rodex_nonfriend )
+			chrif_save( f_sd, CSAVE_NORMAL );
 		clif_friendslist_reqack(f_sd, sd, 0);
 
 		achievement_update_objective(f_sd, AG_ADD_FRIEND, 1, i + 1);
@@ -15543,6 +15554,8 @@ void clif_parse_FriendsListReply(int32 fd, map_session_data *sd)
 			sd->status.friends[i].account_id = f_sd->status.account_id;
 			sd->status.friends[i].char_id = f_sd->status.char_id;
 			safestrncpy(sd->status.friends[i].name, f_sd->status.name, NAME_LENGTH);
+			if( sd->status.disable_rodex_nonfriend )
+				chrif_save( sd, CSAVE_NORMAL );
 			clif_friendslist_reqack(sd, f_sd, 0);
 
 			achievement_update_objective(sd, AG_ADD_FRIEND, 1, i + 1);
@@ -15583,6 +15596,8 @@ void clif_parse_FriendsListRemove(int32 fd, map_session_data *sd)
 				memcpy(&f_sd->status.friends[j-1], &f_sd->status.friends[j], sizeof(f_sd->status.friends[0]));
 
 			memset(&f_sd->status.friends[MAX_FRIENDS-1], 0, sizeof(f_sd->status.friends[MAX_FRIENDS-1]));
+			if( f_sd->status.disable_rodex_nonfriend )
+				chrif_save( f_sd, CSAVE_NORMAL );
 			//should the guy be notified of some message? we should add it here if so
 			WFIFOHEAD(f_sd->fd,packet_len(0x20a));
 			WFIFOW(f_sd->fd,0) = 0x20a;
@@ -15606,6 +15621,8 @@ void clif_parse_FriendsListRemove(int32 fd, map_session_data *sd)
 		memcpy(&sd->status.friends[j-1], &sd->status.friends[j], sizeof(sd->status.friends[0]));
 
 	memset(&sd->status.friends[MAX_FRIENDS-1], 0, sizeof(sd->status.friends[MAX_FRIENDS-1]));
+	if( sd->status.disable_rodex_nonfriend )
+		chrif_save( sd, CSAVE_NORMAL );
 	clif_displaymessage(fd, msg_txt(sd,674)); //"Friend removed"
 
 	WFIFOHEAD(fd,packet_len(0x20a));
@@ -16014,13 +16031,21 @@ void clif_mail_delete( map_session_data* sd, struct mail_message *msg, bool succ
 /// result:
 ///     0 = success
 ///     1 = failure
-void clif_Mail_return(int32 fd, int32 mail_id, int16 fail)
+void clif_Mail_return(map_session_data* sd, int32 mail_id, int16 fail)
 {
-	WFIFOHEAD(fd,packet_len(0x274));
-	WFIFOW(fd,0) = 0x274;
-	WFIFOL(fd,2) = mail_id;
-	WFIFOW(fd,6) = fail;
-	WFIFOSET(fd,packet_len(0x274));
+#if PACKETVER_MAIN_NUM >= 20201104 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20201118
+	PACKET_ZC_RODEX_RETURN p = { 0 };
+	p.packetType = HEADER_ZC_RODEX_RETURN;
+	p.msgId = mail_id;
+	p.result = fail != 0;
+	clif_send( &p, sizeof( p ), sd, SELF );
+#else
+	PACKET_ZC_ACK_MAIL_RETURN p = { 0 };
+	p.packetType = HEADER_ZC_ACK_MAIL_RETURN;
+	p.msgId = mail_id;
+	p.result = fail;
+	clif_send( &p, sizeof( p ), sd, SELF );
+#endif
 }
 
 /// Notification about new mail.
@@ -16221,9 +16246,23 @@ void clif_Mail_refreshinbox(map_session_data *sd,enum mail_inbox_type type,int64
 		}
 
 #if PACKETVER >= 20170419
-		// If it came from an npc?
-		if( !msg->send_id ){
-			mailType |= MAIL_TYPE_NPC;
+		bool trusted_sender = msg->send_id == 0;
+#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20210818 || PACKETVER_MAIN_NUM >= 20220330
+		// The client caches its name-based relationship check and does not update
+		// existing inbox entries. Supply the trust flag from current server IDs.
+		trusted_sender = trusted_sender || msg->send_id == sd->status.char_id;
+		if( !trusted_sender ){
+			ARR_FIND( 0, MAX_FRIENDS, k, sd->status.friends[k].char_id == msg->send_id );
+			trusted_sender = k < MAX_FRIENDS;
+		}
+		if( !trusted_sender && sd->guild != nullptr ){
+			const auto& guild = sd->guild->guild;
+			ARR_FIND( 0, guild.max_member, k, guild.member[k].account_id != 0 && guild.member[k].char_id == msg->send_id );
+			trusted_sender = k < guild.max_member;
+		}
+#endif
+		if( trusted_sender ){
+			mailType |= MAIL_TYPE_TRUSTED;
 		}
 #endif
 
@@ -16334,7 +16373,7 @@ void clif_Mail_read( map_session_data *sd, int32 mail_id ){
 
 	ARR_FIND(0, MAIL_MAX_INBOX, i, sd->mail.inbox.msg[i].id == mail_id);
 	if( i == MAIL_MAX_INBOX ) {
-		clif_Mail_return(sd->fd, mail_id, 1); // Mail doesn't exist
+		clif_Mail_return(sd, mail_id, 1); // Mail doesn't exist
 		ShowWarning("clif_parse_Mail_read: char '%s' trying to read a message not the inbox.\n", sd->status.name);
 		return;
 	} else {
@@ -16517,6 +16556,19 @@ void clif_Mail_Receiver_Ack( const map_session_data* sd, uint32 char_id, int16 c
 #endif
 }
 
+/// 0b96 <name>.24B: client displays MSI_RODEX_SPAMOPTION_USERBLOCK.
+/// This does not confirm the recipient or expose their class and level.
+void clif_Mail_Receiver_Blocked( map_session_data* sd, const char* name ){
+#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20210818 || PACKETVER_MAIN_NUM >= 20220330
+	PACKET_ZC_MAIL_RECEIVER_BLOCKED p = { 0 };
+
+	p.PacketType = HEADER_ZC_MAIL_RECEIVER_BLOCKED;
+	safestrncpy( p.Name, name, sizeof( p.Name ) );
+
+	clif_send( &p, sizeof( p ), sd, SELF );
+#endif
+}
+
 /// Request information about the recipient
 /// 0a13 <name>.24B (CZ_CHECK_RECEIVE_CHARACTER_NAME)
 void clif_parse_Mail_Receiver_Check(int32 fd, map_session_data *sd) {
@@ -16696,12 +16748,7 @@ void clif_parse_Mail_return(int32 fd, map_session_data *sd){
 #if PACKETVER_MAIN_NUM >= 20201104 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20201118
 	const PACKET_CZ_RODEX_RETURN* p = reinterpret_cast<PACKET_CZ_RODEX_RETURN*>( RFIFOP( fd, 0 ) );
 
-	//ShowDump( p, sizeof( p ) );
-
 	int32 mail_id = p->msgId;
-
-	// not supported for now
-	return;
 #else
 	int32 mail_id = RFIFOL(fd,packet_db[RFIFOW(fd,0)].pos[0]);
 #endif
@@ -16714,10 +16761,12 @@ void clif_parse_Mail_return(int32 fd, map_session_data *sd){
 		return;
 
 	ARR_FIND(0, MAIL_MAX_INBOX, i, sd->mail.inbox.msg[i].id == mail_id);
-	if( i < MAIL_MAX_INBOX && sd->mail.inbox.msg[i].send_id != 0 )
-		intif_Mail_return(sd->status.char_id, mail_id);
-	else
-		clif_Mail_return(sd->fd, mail_id, 1);
+	if( i < MAIL_MAX_INBOX && sd->mail.inbox.msg[i].send_id != 0 ){
+		if( !intif_Mail_return(sd->status.char_id, mail_id) )
+			clif_Mail_return(sd, mail_id, 1);
+	}else{
+		clif_Mail_return(sd, mail_id, 1);
+	}
 }
 
 
@@ -17775,6 +17824,34 @@ void clif_parse_PartyTick( int32 fd, map_session_data* sd ){
 	sd->status.disable_partyinvite = p->refuseInvite;
 
 	clif_partyinvitationstate( *sd );
+}
+
+/// 0b93 <type>.L <value>.L, with a four-byte packet ID.
+/// Type 1: value 1 accepts everyone, value 0 applies feature.rodex_spam_filter.
+void clif_parse_rodex_settings( int32 fd, map_session_data* sd ){
+#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20210818 || PACKETVER_MAIN_NUM >= 20220330
+	const PACKET_CZ_RODEX_SETTINGS* p = reinterpret_cast<const PACKET_CZ_RODEX_SETTINGS*>( RFIFOP( fd, 0 ) );
+	uint32 type = p->type;
+	uint32 value = p->value;
+	bool failed = type != 1 || value > 1;
+
+	if( !failed ){
+		bool previous = sd->status.disable_rodex_nonfriend;
+		sd->status.disable_rodex_nonfriend = value == 0;
+		// Send the updated status to the character server before subsequent mail.
+		if( chrif_save( sd, CSAVE_NORMAL ) < 0 ){
+			sd->status.disable_rodex_nonfriend = previous;
+			failed = true;
+		}
+	}
+
+	PACKET_ZC_RODEX_SETTINGS_ACK reply = {};
+	reply.packetType = HEADER_ZC_RODEX_SETTINGS_ACK;
+	reply.result = failed ? 1 : 0;
+	reply.type = type;
+	reply.value = !sd->status.disable_rodex_nonfriend;
+	clif_send( &reply, sizeof( reply ), sd, SELF );
+#endif
 }
 
 /// Questlog System [Kevin] [Inkfish]

@@ -1063,28 +1063,32 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 
 0x304d
 	Type: ZI
-	Structure: <cmd>.W <len>.W <aid>.L <msg>.?B
-	index: 0,2,4,8
-	len: variable: 8+mail_message
+	Structure: <cmd>.W <len>.W <aid>.L <msg>.?B <spam_filter>.B <guild_id>.L
+	index: 0,2,4,8,8+sizeof(mail_message),9+sizeof(mail_message)
+	len: variable: 13+sizeof(mail_message)
 	parameter:
 		- cmd : packet identification (0x304d)
 		- len
 		- aid
 		- msg
+		- spam_filter : feature.rodex_spam_filter (1: friends, 2: friends and guildmates)
+		- guild_id : sender guild; membership is verified on the character server
 	desc:
-		- Mail send
+		- Mail send, with recipient privacy checked again before delivery.
 
 0x304e
 	Type: ZI
-	Structure: <cmd>.W <cid>.L <name>.24B
-	index: 0,2,6
-	len: 30
+	Structure: <cmd>.W <cid>.L <name>.24B <spam_filter>.B <guild_id>.L
+	index: 0,2,6,30,31
+	len: 35
 	parameter:
 		- cmd : packet identification (0x304e)
-		- cid
+		- cid : requesting character
 		- name
+		- spam_filter : feature.rodex_spam_filter
+		- guild_id : sender guild; membership is verified on the character server
 	desc:
-		- Checks if a character with the given name exists.
+		- Checks whether a named character exists and accepts mail from the sender.
 
 0x3050
 	Type: ZI
@@ -2079,9 +2083,9 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 
 0x384e
 	Type: IZ
-	Structure: <cmd>.W <cid_sender>.L <cid_receiver>.L <class>.W <level>.W <name>.24B
-	index: 0,2,6,10,12,14
-	len: 38
+	Structure: <cmd>.W <cid_sender>.L <cid_receiver>.L <class>.W <level>.W <name>.24B <result>.B
+	index: 0,2,6,10,12,14,38
+	len: 39
 	parameter:
 		- cmd : packet identification (0x384e)
 		- cid_sender
@@ -2089,8 +2093,9 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- class
 		- level
 		- name
+		- result : 0 allowed, 1 blocked, 2 unavailable
 	desc:
-		- Mail receiver's character data(character id, job, level and name)
+		- Mail receiver validation; receiver ID, class and level are zero unless allowed.
 
 0x3850
 	Type: IZ

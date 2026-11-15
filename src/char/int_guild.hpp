@@ -66,4 +66,6 @@ int32 inter_guild_CharOnline(uint32 char_id, int32 guild_id);
 int32 inter_guild_CharOffline(uint32 char_id, int32 guild_id);
 uint16 inter_guild_storagemax(int32 guild_id);
 
+bool inter_guild_has_members( int32 guild_id, uint32 first_char_id, uint32 second_char_id );
+
 #endif /* INT_GUILD_HPP */

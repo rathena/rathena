@@ -517,7 +517,7 @@ void mail_send(map_session_data *sd, const char *dest_name, const char *title, c
 		memset(msg.body, 0x00, MAIL_BODY_LENGTH);
 
 	msg.timestamp = time(nullptr);
-	if( !intif_Mail_send(sd->status.account_id, &msg) )
+	if( !intif_Mail_send(sd->status.account_id, &msg, sd->status.guild_id) )
 		mail_deliveryfail(sd, &msg);
 
 	sd->cansendmail_tick = gettick() + battle_config.mail_delay; // Flood Protection

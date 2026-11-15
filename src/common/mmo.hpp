@@ -612,6 +612,7 @@ struct mmo_charstatus {
 #endif
 	bool show_equip, disable_call;
 	bool disable_partyinvite;
+	bool disable_rodex_nonfriend;
 	bool disable_showcostumes;
 	int16 rename;
 
@@ -650,6 +651,17 @@ enum mail_attachment_type {
 	MAIL_ATT_ZENY = 1,
 	MAIL_ATT_ITEM = 2,
 	MAIL_ATT_ALL = MAIL_ATT_ZENY | MAIL_ATT_ITEM
+};
+
+enum e_rodex_spam_filter {
+	RODEX_SPAM_FRIENDS = 1,
+	RODEX_SPAM_FRIENDS_GUILD = 2,
+};
+
+enum e_mail_receiver_result {
+	MAIL_RECEIVER_ALLOWED = 0,
+	MAIL_RECEIVER_BLOCKED,
+	MAIL_RECEIVER_UNAVAILABLE,
 };
 
 struct mail_message {
