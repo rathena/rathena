@@ -10,3 +10,5 @@
 
 //BUILDIN_DEF(example,""),
 BUILDIN_DEF(autoattack,"i?"),
+BUILDIN_DEF(aa_skillinfo,"ii"),
+BUILDIN_DEF(aa_applyloot,"i?"),

@@ -1,128 +1,566 @@
 //===== TranscendedRO Script =================================
 //= Auto Attack - settings menu
 //===== Description: =========================================
-//= @aa opens the settings window. The attack logic itself lives
-//= in source: src/custom/autoattack.hpp (script command autoattack()).
-//= Settings are saved in permanent character variables AA_*,
-//= read live by the source every tick.
+//= @aa opens the settings window. The attack logic lives in
+//= source: src/custom/autoattack.hpp
+//= Script commands used: autoattack(), aa_skillinfo(), aa_applyloot()
+//= Settings are permanent character variables AA_*, read live
+//= by the source every tick.
 //============================================================
 
 -	script	autoattack_menu	-1,{
 
-function	CanUse	{
-	if (!(vip_status(VIP_STATUS_ACTIVE) == 1 || getgroupid() == 99)) {
+// Starts a fresh dialog page (clear needs an active mes)
+function	Page	{
+	mes "";
+	clear;
+	mes "[Auto Attack]";
+	return;
+}
+
+function	OnOff	{
+	if (getarg(0))
+		return "[ON]";
+	return "[OFF]";
+}
+
+function	IsVip	{
+	return (vip_status(VIP_STATUS_ACTIVE) == 1 || getgroupid() == 99);
+}
+
+function	CanStart	{
+	if (.require_vip && !IsVip()) {
 		dispbottom "[Auto Attack] You must be a VIP to use Auto Attack.";
 		return 0;
 	}
-	if (countitem(.ticket) <= 0) {
+	if (.ticket && countitem(.ticket) <= 0) {
 		dispbottom "[Auto Attack] You need a " + getitemname(.ticket) + ".";
 		return 0;
 	}
 	return 1;
 }
 
-function	ItemText	{
-	if (getarg(0) <= 0) return "^777777Off^000000";
-	return "^0055FF" + getitemname(getarg(0)) + "^000000 below " + getarg(1) + "%";
+function	ItemLabel	{
+	if (getarg(0) <= 0)
+		return "(empty)";
+	return getitemname(getarg(0)) + " [ItemID: " + getarg(0) + "]";
 }
 
-function	OnOff	{
-	return getarg(0) ? "^00AA00On^000000" : "^777777Off^000000";
+function	SkillLabel	{
+	if (getarg(0) <= 0)
+		return "(empty)";
+	.@lv$ = "Max";
+	if (getarg(1) > 0)
+		.@lv$ = "" + getarg(1);
+	return aa_skillinfo(getarg(0), 0) + " (SkillID: " + getarg(0) + ") Lv " + .@lv$;
 }
 
+//==============================================================
 OnMenu:
-	if (!AA_RANGE) AA_RANGE = 9;
+	if (!AA_INIT) {
+		AA_INIT = 1;
+		AA_NORMAL = 1;
+		AA_TPDELAY = 3;
+	}
+	if (AA_LOOTMANAGED && !IsVip())
+		aa_applyloot(0);
+
 	while (1) {
-		clear;
+		Page();
 		.@running = autoattack(-1);
-		mes "[Auto Attack]";
-		mes "Status: " + (.@running ? "^00AA00Running^000000" : "^FF0000Stopped^000000");
-		mes "Skill: " + (AA_SKILL ? "ID " + AA_SKILL + " Lv " + (AA_SKILLLV ? AA_SKILLLV : getskilllv(AA_SKILL)) : "Normal attack");
-		mes "HP item: " + ItemText(AA_HPITEM, AA_HPPCT);
-		mes "SP item: " + ItemText(AA_SPITEM, AA_SPPCT);
-		mes "Search range: " + AA_RANGE + " cells";
-		mes "Teleport when idle: " + OnOff(AA_TELE);
-		mes "Ignore bosses: " + OnOff(AA_NOBOSS);
-		mes "Avoid kill-steal: " + OnOff(AA_NOKS);
-		.@m = select(
-			(.@running ? "^FF0000Stop^000000" : "^00AA00Start^000000"),
-			"Attack skill",
-			"HP item",
-			"SP item",
-			"Search range",
-			"Teleport when idle",
-			"Ignore bosses",
-			"Avoid kill-steal",
+		if (.@running)
+			mes "Status: ^00AA00Running^000000";
+		else
+			mes "Status: ^FF0000Stopped^000000";
+
+		.@s = select(
+			(.@running ? "Stop" : "Start") + " Auto Attack",
+			"Normal Attack " + OnOff(AA_NORMAL),
+			"Skill Attack",
+			"Skill Buff",
+			"Item Support",
+			"Teleport",
+			"Loot Items",
 			"Close");
-		clear;
-		switch (.@m) {
+
+		switch (.@s) {
 		case 1:
 			if (.@running) {
 				autoattack(0);
 				break;
 			}
-			if (!CanUse()) break;
+			if (!CanStart())
+				break;
 			close2;
 			autoattack(1);
 			end;
 		case 2:
-			mes "[Auto Attack]";
-			mes "Enter skill ID (0 = normal attack).";
-			input .@id;
-			if (.@id > 0 && getskilllv(.@id) <= 0) {
-				mes "You have not learned that skill.";
-				next;
-				break;
-			}
-			AA_SKILL = .@id;
-			AA_SKILLLV = 0;
-			if (.@id > 0) {
-				mes "Skill level (0 = highest learned):";
-				input .@lv, 0, getskilllv(.@id);
-				AA_SKILLLV = .@lv;
-			}
+			AA_NORMAL = !AA_NORMAL;
 			break;
 		case 3:
+			callsub S_SkillSlots, "AA_ATK_SK", "AA_ATK_LV", 1;
+			break;
 		case 4:
-			.@hp = (.@m == 3);
-			mes "[Auto Attack]";
-			mes "Enter item ID (0 = off).";
-			input .@item;
-			if (.@item > 0 && getitemname(.@item) == "null") {
-				mes "Unknown item.";
-				next;
-				break;
-			}
-			.@pct = 0;
-			if (.@item > 0) {
-				mes "Use when " + (.@hp ? "HP" : "SP") + " is below what %? (1-99)";
-				input .@pct, 1, 99;
-			}
-			if (.@hp) {
-				AA_HPITEM = .@item;
-				AA_HPPCT = .@pct;
-			} else {
-				AA_SPITEM = .@item;
-				AA_SPPCT = .@pct;
-			}
+			callsub S_SkillSlots, "AA_BUF_SK", "AA_BUF_LV", 2;
 			break;
 		case 5:
-			mes "[Auto Attack]";
-			mes "Search range (1-14 cells):";
-			input .@r, 1, 14;
-			AA_RANGE = .@r;
+			callsub S_ItemMenu;
 			break;
-		case 6: AA_TELE   = !AA_TELE;   break;
-		case 7: AA_NOBOSS = !AA_NOBOSS; break;
-		case 8: AA_NOKS   = !AA_NOKS;   break;
-		case 9:
+		case 6:
+			callsub S_Teleport;
+			break;
+		case 7:
+			callsub S_Loot;
+			break;
+		default:
 			close;
 		}
 	}
 	end;
 
+//==============================================================
+// Skill slots. getarg: skill var, level var, category (1 attack, 2 buff)
+S_SkillSlots:
+	.@sk$ = getarg(0);
+	.@lv$ = getarg(1);
+	.@cat = getarg(2);
+	while (1) {
+		Page();
+		if (.@cat == 1) {
+			mes "Skill Attack - used in slot order,";
+			mes "skipping skills on cooldown / no SP.";
+			if (!AA_NORMAL)
+				mes "Normal attack is OFF: used only when no skill is set.";
+		} else {
+			mes "Skill Buff - recast automatically";
+			mes "when the buff runs out.";
+		}
+		.@menu$ = "";
+		for (.@i = 0; .@i < 5; .@i++)
+			.@menu$ += "Slot " + (.@i + 1) + ": " + SkillLabel(getd(.@sk$ + "[" + .@i + "]"), getd(.@lv$ + "[" + .@i + "]")) + ":";
+		.@s = select(.@menu$ + "Back") - 1;
+		if (.@s >= 5)
+			return;
+		callsub S_PickSkill, .@sk$, .@lv$, .@cat, .@s;
+	}
+
+// getarg: skill var, level var, category, slot index
+S_PickSkill:
+	.@sk$ = getarg(0);
+	.@lv$ = getarg(1);
+	.@cat = getarg(2);
+	.@slot = getarg(3);
+
+	getskilllist;
+	.@n = 0;
+	.@menu$ = "";
+	for (.@i = 0; .@i < @skilllist_count; .@i++) {
+		.@id = @skilllist_id[.@i];
+		if (.@id <= 0 || @skilllist_lv[.@i] <= 0)
+			continue;
+		if (!(aa_skillinfo(.@id, 1) & .@cat))
+			continue;
+		.@ids[.@n] = .@id;
+		.@lvs[.@n] = @skilllist_lv[.@i];
+		.@n++;
+		.@menu$ += aa_skillinfo(.@id, 0) + " (SkillID: " + .@id + "):";
+	}
+
+	Page();
+	if (!.@n) {
+		mes "You have not learned any skill usable here.";
+		next;
+		return;
+	}
+	mes "Choose a skill for slot " + (.@slot + 1) + ".";
+	.@s = select(.@menu$ + "Clear this slot:Back") - 1;
+	if (.@s == .@n + 1)
+		return;
+	if (.@s == .@n) {
+		setd .@sk$ + "[" + .@slot + "]", 0;
+		setd .@lv$ + "[" + .@slot + "]", 0;
+		return;
+	}
+
+	.@id = .@ids[.@s];
+	.@max = .@lvs[.@s];
+	.@menu$ = "";
+	for (.@l = 1; .@l <= .@max; .@l++) {
+		if (.@l == .@max)
+			.@menu$ += "Level Max (" + .@l + ")";
+		else
+			.@menu$ += "Level " + .@l + ":";
+	}
+	Page();
+	mes aa_skillinfo(.@id, 0) + " (SkillID: " + .@id + ")";
+	mes "Choose the skill level.";
+	.@l = select(.@menu$);
+
+	setd .@sk$ + "[" + .@slot + "]", .@id;
+	setd .@lv$ + "[" + .@slot + "]", (.@l == .@max ? 0 : .@l); // 0 = always highest learned
+	return;
+
+//==============================================================
+S_ItemMenu:
+	while (1) {
+		Page();
+		mes "Item Support";
+		switch (select("HP items:SP items:Other usable items:Back")) {
+		case 1: callsub S_ItemSlots, "AA_HP_IT", "AA_HP_PCT", 1; break;
+		case 2: callsub S_ItemSlots, "AA_SP_IT", "AA_SP_PCT", 2; break;
+		case 3: callsub S_ItemSlots, "AA_OT_IT", "AA_OT_MS", 3; break;
+		default: return;
+		}
+	}
+
+// getarg: item var, value var, mode (1 HP %, 2 SP %, 3 interval ms)
+S_ItemSlots:
+	.@it$ = getarg(0);
+	.@val$ = getarg(1);
+	.@mode = getarg(2);
+	while (1) {
+		Page();
+		if (.@mode == 1) mes "HP items - first slot you own is used.";
+		if (.@mode == 2) mes "SP items - first slot you own is used.";
+		if (.@mode == 3) mes "Other items - used every interval.";
+		.@menu$ = "";
+		for (.@i = 0; .@i < 5; .@i++) {
+			.@item = getd(.@it$ + "[" + .@i + "]");
+			.@v = getd(.@val$ + "[" + .@i + "]");
+			.@menu$ += "Slot " + (.@i + 1) + ": " + ItemLabel(.@item);
+			if (.@item > 0) {
+				if (.@mode == 3)
+					.@menu$ += " every " + .@v + " ms";
+				else
+					.@menu$ += " below " + .@v + "%";
+			}
+			.@menu$ += ":";
+		}
+		.@s = select(.@menu$ + "Back") - 1;
+		if (.@s >= 5)
+			return;
+
+		callsub S_PickItem, .@mode;
+		.@item = @aa_pick;
+		if (.@item < 0)
+			continue; // back
+		if (.@item == 0) {
+			setd .@it$ + "[" + .@s + "]", 0;
+			setd .@val$ + "[" + .@s + "]", 0;
+			continue;
+		}
+
+		Page();
+		mes ItemLabel(.@item);
+		if (.@mode == 3) {
+			mes "Use every how many ms? (100 - 3600000)";
+			input .@v;
+			.@v = cap_value(.@v, 100, 3600000);
+		} else {
+			mes "Use when " + (.@mode == 1 ? "HP" : "SP") + " is below what %? (1 - 99)";
+			input .@v;
+			.@v = cap_value(.@v, 1, 99);
+		}
+		setd .@it$ + "[" + .@s + "]", .@item;
+		setd .@val$ + "[" + .@s + "]", .@v;
+	}
+
+// Item picker from inventory. getarg: 1/2 healing items, 3 usable items, 4 any item.
+// Result in @aa_pick: item id, 0 = clear slot, -1 = back
+S_PickItem:
+	.@mode = getarg(0);
+	getinventorylist;
+	.@n = 0;
+	.@menu$ = "";
+	for (.@i = 0; .@i < @inventorylist_count; .@i++) {
+		.@id = @inventorylist_id[.@i];
+		.@type = getiteminfo(.@id, ITEMINFO_TYPE);
+		if (.@mode <= 2 && .@type != IT_HEALING)
+			continue;
+		if (.@mode == 3 && .@type != IT_HEALING && .@type != IT_USABLE && .@type != IT_DELAYCONSUME && .@type != IT_CASH)
+			continue;
+		if (.@n > 0 && inarray(.@ids[0], .@id) >= 0)
+			continue;
+		.@ids[.@n] = .@id;
+		.@n++;
+		.@menu$ += getitemname(.@id) + " [ItemID: " + .@id + "]:";
+	}
+
+	Page();
+	if (!.@n)
+		mes "No matching item in your inventory.";
+	else
+		mes "Choose an item from your inventory.";
+	.@s = select(.@menu$ + "Enter ItemID manually:Clear this slot:Back") - 1;
+
+	if (.@s < .@n) {
+		@aa_pick = .@ids[.@s];
+		return;
+	}
+	if (.@s == .@n) {
+		Page();
+		mes "Enter ItemID:";
+		input .@id;
+		if (.@id <= 0 || getitemname(.@id) == "null") {
+			mes "Unknown item.";
+			next;
+			@aa_pick = -1;
+			return;
+		}
+		@aa_pick = .@id;
+		return;
+	}
+	@aa_pick = (.@s == .@n + 1) ? 0 : -1;
+	return;
+
+//==============================================================
+S_Teleport:
+	while (1) {
+		if (!AA_TPDELAY)
+			AA_TPDELAY = 3;
+		Page();
+		mes "Teleport needs Fly Wing or the";
+		mes "Teleport skill enabled below.";
+		.@s = select(
+			"Teleport delay (no monsters): " + AA_TPDELAY + " Sec.",
+			"Teleport by Item " + OnOff(AA_TPITEM),
+			"Teleport by Skill " + OnOff(AA_TPSKILL),
+			"Teleport away from Monsters (" + getarraysize(AA_AVOID) + ")",
+			"Teleport away from Bosses " + OnOff(AA_AVOIDBOSS),
+			"Back");
+		switch (.@s) {
+		case 1:
+			setarray .@sec[0], 3, 5, 7, 10;
+			AA_TPDELAY = .@sec[select("3 Sec.:5 Sec.:7 Sec.:10 Sec.") - 1];
+			break;
+		case 2:
+			if (AA_TPITEM) {
+				AA_TPITEM = 0;
+			} else if (countitem(601) || countitem(12887)) {
+				AA_TPITEM = 1;
+			} else {
+				Page();
+				mes "You didn't have any Fly Wing in your Inventory.";
+				next;
+			}
+			break;
+		case 3:
+			if (AA_TPSKILL) {
+				AA_TPSKILL = 0;
+			} else if ((eaclass() & EAJ_BASEMASK) == EAJ_ACOLYTE && getskilllv("AL_TELEPORT") > 0) {
+				AA_TPSKILL = 1;
+			} else {
+				Page();
+				mes "This option is only for Acolyte classes";
+				mes "that have learned the Teleport skill.";
+				next;
+			}
+			break;
+		case 4:
+			callsub S_Avoid;
+			break;
+		case 5:
+			AA_AVOIDBOSS = !AA_AVOIDBOSS;
+			break;
+		default:
+			return;
+		}
+	}
+
+S_Avoid:
+	while (1) {
+		// Monsters currently on this map + those already in the list
+		deletearray .@cls;
+		.@n = 0;
+		.@count = getmapunits(BL_MOB, strcharinfo(3), .@gids);
+		for (.@i = 0; .@i < .@count && .@n < 60; .@i++) {
+			getunitdata .@gids[.@i], .@d;
+			.@c = .@d[UMOB_CLASS];
+			if (.@c <= 0 || (.@n > 0 && inarray(.@cls[0], .@c) >= 0))
+				continue;
+			.@cls[.@n] = .@c;
+			.@n++;
+		}
+		for (.@i = 0; .@i < getarraysize(AA_AVOID); .@i++) {
+			if (.@n > 0 && inarray(.@cls[0], AA_AVOID[.@i]) >= 0)
+				continue;
+			.@cls[.@n] = AA_AVOID[.@i];
+			.@n++;
+		}
+
+		.@menu$ = "";
+		for (.@i = 0; .@i < .@n; .@i++) {
+			.@on = (inarray(AA_AVOID[0], .@cls[.@i]) >= 0);
+			.@menu$ += OnOff(.@on) + " " + getmonsterinfo(.@cls[.@i], MOB_NAME) + " (ID: " + .@cls[.@i] + "):";
+		}
+
+		Page();
+		mes "Teleport away when these monsters";
+		mes "come into view. (max 30)";
+		if (!.@n)
+			mes "No monsters on this map.";
+		.@s = select(.@menu$ + "Back") - 1;
+		if (.@s >= .@n)
+			return;
+
+		.@c = .@cls[.@s];
+		.@idx = inarray(AA_AVOID[0], .@c);
+		if (.@idx >= 0) {
+			deletearray AA_AVOID[.@idx], 1;
+		} else if (getarraysize(AA_AVOID) >= 30) {
+			Page();
+			mes "The list is full (30).";
+			next;
+		} else {
+			AA_AVOID[getarraysize(AA_AVOID)] = .@c;
+		}
+	}
+
+//==============================================================
+S_Loot:
+	while (1) {
+		.@vip = IsVip();
+		if (AA_LOOTMANAGED && !.@vip)
+			aa_applyloot(0);
+
+		.@ids_on = 0;
+		for (.@i = 0; .@i < 10; .@i++)
+			if (AA_LOOTID[.@i] && AA_LOOTON[.@i])
+				.@ids_on++;
+		.@types_on = 0;
+		for (.@i = 0; .@i < getarraysize(.loottype); .@i++)
+			if (AA_LOOTTYPE & (1 << .loottype[.@i]))
+				.@types_on++;
+
+		Page();
+		mes "Loot Items";
+		if (!.@vip)
+			mes "Autoloot options are for VIP only.";
+		.@s = select(
+			"Manual pick-up " + OnOff(AA_PICKUP),
+			"Use 'GREED' pick-up " + OnOff(AA_GREED),
+			(.@vip ? "[VIP] Autoloot all items " + OnOff(AA_LOOTALL) : ""),
+			(.@vip ? "[VIP] Aloottype (" + .@types_on + " types ON)" : ""),
+			(.@vip ? "[VIP] Alootid (" + .@ids_on + "/10 ON)" : ""),
+			"Back");
+		switch (.@s) {
+		case 1:
+			AA_PICKUP = !AA_PICKUP;
+			break;
+		case 2:
+			if (AA_GREED) {
+				AA_GREED = 0;
+			} else if (getskilllv("BS_GREED") > 0) {
+				AA_GREED = 1;
+			} else {
+				Page();
+				mes "You don't have the Greed skill (BS_GREED).";
+				next;
+			}
+			break;
+		case 3:
+			AA_LOOTALL = !AA_LOOTALL;
+			AA_LOOTMANAGED = 1;
+			aa_applyloot(1);
+			break;
+		case 4:
+			callsub S_LootType;
+			break;
+		case 5:
+			callsub S_LootId;
+			break;
+		default:
+			return;
+		}
+	}
+
+S_LootType:
+	while (1) {
+		Page();
+		mes "Aloottype - loot these item types:";
+		.@menu$ = "";
+		for (.@i = 0; .@i < getarraysize(.loottype); .@i++)
+			.@menu$ += OnOff(AA_LOOTTYPE & (1 << .loottype[.@i])) + " " + .lootname$[.@i] + ":";
+		.@s = select(.@menu$ + "Back") - 1;
+		if (.@s >= getarraysize(.loottype))
+			return;
+		AA_LOOTTYPE = AA_LOOTTYPE ^ (1 << .loottype[.@s]);
+		AA_LOOTMANAGED = 1;
+		aa_applyloot(1);
+	}
+
+S_LootId:
+	while (1) {
+		Page();
+		mes "Alootid - loot these items (max 10):";
+		.@menu$ = "";
+		for (.@i = 0; .@i < 10; .@i++) {
+			.@menu$ += (.@i + 1) + ". " + ItemLabel(AA_LOOTID[.@i]);
+			if (AA_LOOTID[.@i])
+				.@menu$ += " " + (AA_LOOTON[.@i] ? "ON" : "OFF");
+			.@menu$ += ":";
+		}
+		.@s = select(.@menu$ + "Back") - 1;
+		if (.@s >= 10)
+			return;
+
+		if (AA_LOOTID[.@s]) {
+			Page();
+			mes ItemLabel(AA_LOOTID[.@s]);
+			.@back = 0;
+			switch (select("Turn " + (AA_LOOTON[.@s] ? "OFF" : "ON") + ":Change item:Clear:Back")) {
+			case 1:
+				AA_LOOTON[.@s] = !AA_LOOTON[.@s];
+				break;
+			case 2:
+				callsub S_PickItem, 4;
+				if (@aa_pick > 0) {
+					AA_LOOTID[.@s] = @aa_pick;
+					AA_LOOTON[.@s] = 1;
+				} else if (@aa_pick == 0) {
+					AA_LOOTID[.@s] = 0;
+					AA_LOOTON[.@s] = 0;
+				}
+				break;
+			case 3:
+				AA_LOOTID[.@s] = 0;
+				AA_LOOTON[.@s] = 0;
+				break;
+			default:
+				.@back = 1;
+				break;
+			}
+			if (.@back)
+				continue;
+		} else {
+			callsub S_PickItem, 4;
+			if (@aa_pick <= 0)
+				continue;
+			AA_LOOTID[.@s] = @aa_pick;
+			AA_LOOTON[.@s] = 1;
+		}
+		AA_LOOTMANAGED = 1;
+		aa_applyloot(1);
+	}
+
+//==============================================================
+OnPCLoginEvent:
+	// VIP info arrives from the char-server shortly after login
+	if (AA_LOOTMANAGED)
+		addtimer 5000, strnpcinfo(3) + "::OnLoginLoot";
+	end;
+
+OnLoginLoot:
+	aa_applyloot(IsVip());
+	end;
+
 OnInit:
-	.ticket = 1000322; // Auto Hunt Ticket - required to start
+	.require_vip = 0;   // 1 = only VIP can start auto attack
+	.ticket = 0;        // item required to start (0 = none, e.g. 9950001)
+
+	setarray .loottype[0], IT_HEALING, IT_USABLE, IT_ETC, IT_ARMOR, IT_WEAPON, IT_CARD, IT_PETEGG, IT_PETARMOR, IT_AMMO;
+	setarray .lootname$[0], "Healing items", "Usable items", "Etcs", "Armors", "Weapons", "Cards", "Pet eggs", "Pet armors", "Ammos";
+
 	bindatcmd "aa", strnpcinfo(3) + "::OnMenu", 0, 99;
 	end;
 }
