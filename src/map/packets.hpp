@@ -220,11 +220,54 @@ struct PACKET_ZC_ENTRY_QUEUE_INIT {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_ENTRY_QUEUE_INIT, 0x90e)
 
+#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20210818 || PACKETVER_MAIN_NUM >= 20220330
+struct PACKET_CZ_SET_USERCONFIG{
+	uint32 packetType;
+	uint32 type;
+	uint32 value;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_SET_USERCONFIG, 0xb93)
+
+struct PACKET_ZC_SET_USERCONFIG_ACK{
+	int16 packetType;
+	uint32 result;
+	uint32 type;
+	uint32 value;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_SET_USERCONFIG_ACK, 0xb94)
+
+struct PACKET_ZC_GET_USERCONFIG_LIST{
+	int16 packetType;
+	int16 packetLength;
+	struct {
+		uint32 type;
+		uint32 value;
+	} settings[1];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_GET_USERCONFIG_LIST, 0xb95)
+#endif
+
+#if PACKETVER_MAIN_NUM >= 20201104 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20201118
 struct PACKET_CZ_RODEX_RETURN{
 	int16 packetType;
 	uint32 msgId;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_RODEX_RETURN, 0xb98)
+
+struct PACKET_ZC_RODEX_RETURN_ACK{
+	int16 packetType;
+	uint32 msgId;
+	uint32 result;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_RODEX_RETURN_ACK, 0xb99)
+#else
+struct PACKET_ZC_ACK_MAIL_RETURN{
+	int16 packetType;
+	uint32 msgId;
+	uint16 result;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_MAIL_RETURN, 0x274)
+#endif
 
 struct PACKET_CZ_REQ_STYLE_CLOSE{
 	int16 packetType;

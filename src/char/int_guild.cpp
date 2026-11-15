@@ -39,6 +39,8 @@ static const char dataToHex[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9
 static std::unordered_map<int32, std::shared_ptr<CharGuild>> guild_db;
 static std::unordered_map<int32, std::shared_ptr<struct guild_castle>> castle_db;
 
+std::shared_ptr<CharGuild> inter_guild_fromsql( int32 guild_id );
+
 int32 mapif_parse_GuildLeave(int32 fd,int32 guild_id,uint32 account_id,uint32 char_id,int32 flag,const char *mes);
 int32 mapif_guild_broken(int32 guild_id,int32 flag);
 bool guild_check_empty( std::shared_ptr<CharGuild> g );
@@ -329,6 +331,24 @@ int32 inter_guild_tosql( mmo_guild &g, int32 flag ){
 	if (charserv_config.save_log)
 		ShowInfo("Saved guild (%d - %s):%s\n",g.guild_id,g.name,t_info);
 	return 1;
+}
+
+/// Check current guild membership, including changes not yet saved by the guild timer.
+bool inter_guild_has_members( int32 guild_id, uint32 first_char_id, uint32 second_char_id ){
+	auto g = inter_guild_fromsql( guild_id );
+	if( g == nullptr )
+		return false;
+
+	bool first = false, second = false;
+	for( const auto& member : g->guild.member ){
+		if( member.account_id == 0 )
+			continue;
+		if( member.char_id == first_char_id )
+			first = true;
+		if( member.char_id == second_char_id )
+			second = true;
+	}
+	return first && second;
 }
 
 // Read guild from sql

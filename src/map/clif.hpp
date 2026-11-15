@@ -1239,7 +1239,7 @@ enum mail_send_result : uint8_t {
 void clif_Mail_window(int32 fd, int32 flag);
 void clif_Mail_read(map_session_data *sd, int32 mail_id);
 void clif_mail_delete(map_session_data* sd, struct mail_message *msg, bool success);
-void clif_Mail_return(int32 fd, int32 mail_id, int16 fail);
+void clif_Mail_return(map_session_data* sd, int32 mail_id, int16 fail);
 void clif_Mail_send(map_session_data* sd, enum mail_send_result result);
 void clif_Mail_new(map_session_data* sd, int32 mail_id, const char *sender, const char *title);
 void clif_Mail_refreshinbox(map_session_data *sd,enum mail_inbox_type type,int64 mailID);
@@ -1509,5 +1509,8 @@ void clif_set_npc_window_pos_percent( const map_session_data& sd, int32 x, int32
 void clif_noask_sub( const map_session_data& sd, const map_session_data& tsd, int32 type );
 
 void clif_specialpopup(const map_session_data& sd, int32 id);
+
+void clif_Mail_Receiver_Blocked( map_session_data* sd, const char* name );
+void clif_parse_rodex_settings( int32 fd, map_session_data* sd );
 
 #endif /* CLIF_HPP */
