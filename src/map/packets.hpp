@@ -245,7 +245,9 @@ struct PACKET_ZC_GET_USERCONFIG_LIST{
 	} settings[1];
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_GET_USERCONFIG_LIST, 0xb95)
+#endif
 
+#if PACKETVER_MAIN_NUM >= 20201104 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20201118
 struct PACKET_CZ_RODEX_RETURN{
 	int16 packetType;
 	uint32 msgId;
@@ -258,14 +260,14 @@ struct PACKET_ZC_RODEX_RETURN_ACK{
 	uint32 result;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_RODEX_RETURN_ACK, 0xb99)
-#endif
-
+#else
 struct PACKET_ZC_ACK_MAIL_RETURN{
 	int16 packetType;
 	uint32 msgId;
 	uint16 result;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_ACK_MAIL_RETURN, 0x274)
+#endif
 
 struct PACKET_CZ_REQ_STYLE_CLOSE{
 	int16 packetType;
