@@ -1,3 +1,5 @@
+//!rathena
+
 // Status Change Restriction Database
 //
 // Defines restrictions of status changes (SC).

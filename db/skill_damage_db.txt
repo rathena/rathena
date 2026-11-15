@@ -1,3 +1,5 @@
+//!rathena
+
 // Skill Damage Adjustment Database
 //
 // Structure of Database:
