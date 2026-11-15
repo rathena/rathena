@@ -9,7 +9,9 @@
 //
 //   AA_NORMAL                 1 = normal attack enabled (always used when no attack skill is set)
 //   AA_ATK_SK[0..4]/AA_ATK_LV attack skill slots (lv 0 = highest learned)
-//   AA_BUF_SK[0..4]/AA_BUF_LV buff skill slots, recast when the buff ends
+//   AA_BUF_SK[0..4]/AA_BUF_LV buff skill slots, checked in order 1 > 5; recast when the
+//                             buff's real remaining time is almost over
+//   AA_BUF_SEC[0..4]          0 = auto (read buff time), >0 = recast every N seconds instead
 //   AA_HP_IT[0..4]/AA_HP_PCT  HP items, used when HP% < pct (first slot the player owns)
 //   AA_SP_IT[0..4]/AA_SP_PCT  SP items, same for SP
 //   AA_OT_IT[0..4]/AA_OT_MS   other items, used every N ms
@@ -51,7 +53,8 @@ namespace autoattack {
 
 constexpr t_tick TICK_INTERVAL = 300;      // ms between decisions
 constexpr t_tick IDLE_WALK_DELAY = 1500;    // ms without a target before wandering
-constexpr t_tick BUFF_RETRY_DELAY = 5000;   // minimum ms between casts of the same buff slot
+constexpr t_tick BUFF_RETRY_DELAY = 3000;   // minimum ms between casts of the same buff slot
+constexpr t_tick BUFF_REFRESH_LEAD = 1500;  // recast a buff when this many ms are left on it
 constexpr t_tick AVOID_TP_DELAY = 1000;     // minimum ms between "run away" teleports
 constexpr int32 DEFAULT_RANGE = 9;
 constexpr int32 MAX_RANGE = 14;
@@ -445,7 +448,23 @@ inline void apply_loot( map_session_data* sd, bool allowed ) {
 
 // ---- combat -----------------------------------------------------------------
 
-/// Casts the first buff slot that needs refreshing. Returns true if a cast started.
+/// Remaining ms of a status on the player: 0 = not active, -1 = active without end (permanent).
+inline t_tick status_remaining( map_session_data* sd, sc_type sc, t_tick tick ) {
+	if( sc <= SC_NONE || sc >= SC_MAX )
+		return 0;
+	status_change_entry* sce = sd->sc.getSCE( sc );
+	if( sce == nullptr )
+		return 0;
+	const TimerData* td = get_timer( sce->timer );
+	if( td == nullptr )
+		return -1;
+	return std::max<t_tick>( 1, DIFF_TICK( td->tick, tick ) );
+}
+
+/// Walks buff slots in order 1 > 5 and casts the first one that needs refreshing.
+/// Auto mode reads the real remaining time of the buff's status (incl. duration bonuses)
+/// and recasts when it is about to run out; AA_BUF_SEC[slot] > 0 overrides with a fixed interval.
+/// Returns true if a cast started.
 inline bool use_buffs( map_session_data* sd, s_state& st, t_tick tick ) {
 	for( int32 i = 0; i < SLOTS; i++ ) {
 		uint16 skill_id = static_cast<uint16>( setting( sd, "AA_BUF_SK", i ) );
@@ -457,11 +476,17 @@ inline bool use_buffs( map_session_data* sd, s_state& st, t_tick tick ) {
 			continue;
 
 		bool need;
+		int64 manual_sec = setting( sd, "AA_BUF_SEC", i );
 		sc_type sc = skill_get_sc( skill_id );
-		if( sc > SC_NONE && sc < SC_MAX ) {
-			need = sd->sc.getSCE( sc ) == nullptr;
+
+		if( manual_sec > 0 ) {
+			// Manual: fixed interval since our last cast
+			need = st.buff_last[i] == 0 || DIFF_TICK( tick, st.buff_last[i] ) >= manual_sec * 1000;
+		} else if( sc > SC_NONE && sc < SC_MAX ) {
+			t_tick left = status_remaining( sd, sc, tick );
+			need = left == 0 || ( left > 0 && left <= BUFF_REFRESH_LEAD );
 		} else {
-			// No status attached: recast when the skill's real duration has passed
+			// No status to watch: use the duration from skill_db, or cast once if it has none
 			int32 duration = skill_get_time( skill_id, skill_lv );
 			need = st.buff_last[i] == 0 || ( duration > 0 && DIFF_TICK( tick, st.buff_last[i] ) >= duration );
 		}

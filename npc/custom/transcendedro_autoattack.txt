@@ -61,6 +61,27 @@ function	SkillLabel	{
 	return NoColon(aa_skillinfo(getarg(0), 0)) + " Lv " + .@lv$;
 }
 
+// Buff slot timing text. getarg: skill id, slot index
+function	BuffInfo	{
+	.@id = getarg(0);
+	if (.@id <= 0)
+		return "";
+	.@sec = AA_BUF_SEC[getarg(1)];
+	if (.@sec > 0)
+		.@t$ = " (every " + .@sec + "s)";
+	else
+		.@t$ = " (auto)";
+	.@sc = aa_skillinfo(.@id, 3);
+	if (.@sc > 0) if (getstatus(.@sc)) {
+		.@left = getstatus(.@sc, 5);
+		if (.@left > 0)
+			.@t$ += " - " + (.@left / 1000) + "s left";
+		else
+			.@t$ += " - active";
+	}
+	return .@t$;
+}
+
 //==============================================================
 OnMenu:
 	if (!AA_INIT) {
@@ -138,12 +159,18 @@ S_SkillSlots:
 			if (!AA_NORMAL)
 				mes "Normal attack is OFF: used only when no skill is set.";
 		} else {
-			mes "Skill Buff - recast automatically";
-			mes "when the buff runs out.";
+			mes "Skill Buff - checked in order 1 > 5.";
+			mes "(auto) reads the real buff time and";
+			mes "recasts just before it runs out.";
 		}
 		.@menu$ = "";
-		for (.@i = 0; .@i < 5; .@i++)
-			.@menu$ += "Slot " + (.@i + 1) + " - " + SkillLabel(getd(.@sk$ + "[" + .@i + "]"), getd(.@lv$ + "[" + .@i + "]")) + ":";
+		for (.@i = 0; .@i < 5; .@i++) {
+			.@id = getd(.@sk$ + "[" + .@i + "]");
+			.@menu$ += "Slot " + (.@i + 1) + " - " + SkillLabel(.@id, getd(.@lv$ + "[" + .@i + "]"));
+			if (.@cat == 2)
+				.@menu$ += BuffInfo(.@id, .@i);
+			.@menu$ += ":";
+		}
 		.@s = select(.@menu$ + "Back") - 1;
 		if (.@s >= 5)
 			return;
@@ -185,6 +212,8 @@ S_PickSkill:
 	if (.@s == .@n) {
 		setd .@sk$ + "[" + .@slot + "]", 0;
 		setd .@lv$ + "[" + .@slot + "]", 0;
+		if (.@cat == 2)
+			AA_BUF_SEC[.@slot] = 0;
 		return;
 	}
 
@@ -204,6 +233,22 @@ S_PickSkill:
 
 	setd .@sk$ + "[" + .@slot + "]", .@id;
 	setd .@lv$ + "[" + .@slot + "]", (.@l == .@max ? 0 : .@l); // 0 = always highest learned
+
+	if (.@cat == 2) {
+		Page();
+		mes aa_skillinfo(.@id, 0);
+		mes "When should this buff be recast?";
+		mes "Auto reads the buff's real remaining";
+		mes "time (incl. duration bonuses).";
+		if (select("Auto - read buff time (recommended):Every N seconds (manual)") == 1) {
+			AA_BUF_SEC[.@slot] = 0;
+		} else {
+			Page();
+			mes "Recast every how many seconds? (1 - 3600)";
+			input .@sec;
+			AA_BUF_SEC[.@slot] = cap_value(.@sec, 1, 3600);
+		}
+	}
 	return;
 
 //==============================================================
@@ -246,7 +291,10 @@ S_ItemSlots:
 		if (.@s >= 5)
 			return;
 
-		callsub S_PickItem, .@mode;
+		if (.@mode == 3)
+			callsub S_InputItem, 3, getd(.@it$ + "[" + .@s + "]");
+		else
+			callsub S_PickItem, .@mode;
 		.@item = @aa_pick;
 		if (.@item < 0)
 			continue; // back
@@ -317,6 +365,44 @@ S_PickItem:
 		return;
 	}
 	@aa_pick = (.@s == .@n + 1) ? 0 : -1;
+	return;
+
+// Typed ItemID entry. getarg: 3 usable items only, 4 any item; current item id.
+// Result in @aa_pick: item id, 0 = clear slot, -1 = back / invalid
+S_InputItem:
+	.@mode = getarg(0);
+	Page();
+	if (getarg(1) > 0)
+		mes "Current - " + ItemLabel(getarg(1));
+	mes "Enter ItemID.";
+	mes "0 = clear this slot, -1 = back.";
+	input .@id, -1, 2147483647;
+	if (.@id < 0) {
+		@aa_pick = -1;
+		return;
+	}
+	if (.@id == 0) {
+		@aa_pick = 0;
+		return;
+	}
+	if (getitemname(.@id) == "null") {
+		Page();
+		mes "Item ID " + .@id + " does not exist.";
+		next;
+		@aa_pick = -1;
+		return;
+	}
+	if (.@mode == 3) {
+		.@type = getiteminfo(.@id, ITEMINFO_TYPE);
+		if (.@type != IT_HEALING && .@type != IT_USABLE && .@type != IT_DELAYCONSUME && .@type != IT_CASH) {
+			Page();
+			mes ItemLabel(.@id) + " is not a usable item.";
+			next;
+			@aa_pick = -1;
+			return;
+		}
+	}
+	@aa_pick = .@id;
 	return;
 
 //==============================================================
@@ -519,7 +605,7 @@ S_LootId:
 				AA_LOOTON[.@s] = !AA_LOOTON[.@s];
 				break;
 			case 2:
-				callsub S_PickItem, 4;
+				callsub S_InputItem, 4, AA_LOOTID[.@s];
 				if (@aa_pick > 0) {
 					AA_LOOTID[.@s] = @aa_pick;
 					AA_LOOTON[.@s] = 1;
@@ -539,7 +625,7 @@ S_LootId:
 			if (.@back)
 				continue;
 		} else {
-			callsub S_PickItem, 4;
+			callsub S_InputItem, 4, 0;
 			if (@aa_pick <= 0)
 				continue;
 			AA_LOOTID[.@s] = @aa_pick;
