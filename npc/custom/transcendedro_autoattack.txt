@@ -1,0 +1,128 @@
+//===== TranscendedRO Script =================================
+//= Auto Attack - settings menu
+//===== Description: =========================================
+//= @aa opens the settings window. The attack logic itself lives
+//= in source: src/custom/autoattack.hpp (script command autoattack()).
+//= Settings are saved in permanent character variables AA_*,
+//= read live by the source every tick.
+//============================================================
+
+-	script	autoattack_menu	-1,{
+
+function	CanUse	{
+	if (!(vip_status(VIP_STATUS_ACTIVE) == 1 || getgroupid() == 99)) {
+		dispbottom "[Auto Attack] You must be a VIP to use Auto Attack.";
+		return 0;
+	}
+	if (countitem(.ticket) <= 0) {
+		dispbottom "[Auto Attack] You need a " + getitemname(.ticket) + ".";
+		return 0;
+	}
+	return 1;
+}
+
+function	ItemText	{
+	if (getarg(0) <= 0) return "^777777Off^000000";
+	return "^0055FF" + getitemname(getarg(0)) + "^000000 below " + getarg(1) + "%";
+}
+
+function	OnOff	{
+	return getarg(0) ? "^00AA00On^000000" : "^777777Off^000000";
+}
+
+OnMenu:
+	if (!AA_RANGE) AA_RANGE = 9;
+	while (1) {
+		clear;
+		.@running = autoattack(-1);
+		mes "[Auto Attack]";
+		mes "Status: " + (.@running ? "^00AA00Running^000000" : "^FF0000Stopped^000000");
+		mes "Skill: " + (AA_SKILL ? "ID " + AA_SKILL + " Lv " + (AA_SKILLLV ? AA_SKILLLV : getskilllv(AA_SKILL)) : "Normal attack");
+		mes "HP item: " + ItemText(AA_HPITEM, AA_HPPCT);
+		mes "SP item: " + ItemText(AA_SPITEM, AA_SPPCT);
+		mes "Search range: " + AA_RANGE + " cells";
+		mes "Teleport when idle: " + OnOff(AA_TELE);
+		mes "Ignore bosses: " + OnOff(AA_NOBOSS);
+		mes "Avoid kill-steal: " + OnOff(AA_NOKS);
+		.@m = select(
+			(.@running ? "^FF0000Stop^000000" : "^00AA00Start^000000"),
+			"Attack skill",
+			"HP item",
+			"SP item",
+			"Search range",
+			"Teleport when idle",
+			"Ignore bosses",
+			"Avoid kill-steal",
+			"Close");
+		clear;
+		switch (.@m) {
+		case 1:
+			if (.@running) {
+				autoattack(0);
+				break;
+			}
+			if (!CanUse()) break;
+			close2;
+			autoattack(1);
+			end;
+		case 2:
+			mes "[Auto Attack]";
+			mes "Enter skill ID (0 = normal attack).";
+			input .@id;
+			if (.@id > 0 && getskilllv(.@id) <= 0) {
+				mes "You have not learned that skill.";
+				next;
+				break;
+			}
+			AA_SKILL = .@id;
+			AA_SKILLLV = 0;
+			if (.@id > 0) {
+				mes "Skill level (0 = highest learned):";
+				input .@lv, 0, getskilllv(.@id);
+				AA_SKILLLV = .@lv;
+			}
+			break;
+		case 3:
+		case 4:
+			.@hp = (.@m == 3);
+			mes "[Auto Attack]";
+			mes "Enter item ID (0 = off).";
+			input .@item;
+			if (.@item > 0 && getitemname(.@item) == "null") {
+				mes "Unknown item.";
+				next;
+				break;
+			}
+			.@pct = 0;
+			if (.@item > 0) {
+				mes "Use when " + (.@hp ? "HP" : "SP") + " is below what %? (1-99)";
+				input .@pct, 1, 99;
+			}
+			if (.@hp) {
+				AA_HPITEM = .@item;
+				AA_HPPCT = .@pct;
+			} else {
+				AA_SPITEM = .@item;
+				AA_SPPCT = .@pct;
+			}
+			break;
+		case 5:
+			mes "[Auto Attack]";
+			mes "Search range (1-14 cells):";
+			input .@r, 1, 14;
+			AA_RANGE = .@r;
+			break;
+		case 6: AA_TELE   = !AA_TELE;   break;
+		case 7: AA_NOBOSS = !AA_NOBOSS; break;
+		case 8: AA_NOKS   = !AA_NOKS;   break;
+		case 9:
+			close;
+		}
+	}
+	end;
+
+OnInit:
+	.ticket = 9950001; // Auto Hunt Ticket - required to start
+	bindatcmd "aa", strnpcinfo(3) + "::OnMenu", 0, 99;
+	end;
+}
