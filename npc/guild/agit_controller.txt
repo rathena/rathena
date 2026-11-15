@@ -4,7 +4,7 @@
 //= kalen (1.0)
 //= 1.1 by Akaru and ho|yAnge|
 //===== Current Version: =====================================
-//= 2.0
+//= 2.0a
 //===== Compatible With: =====================================
 //= rAthena Project; RO Episode 4+
 //===== Description: =========================================
@@ -28,21 +28,18 @@
 //= 1.9 Rearranged the time-checks so they no longer use goto. [L0ne_W0lf]
 //=     Removed treasure spawning function calls. (No longer needed)
 //= 2.0 Added WoE Battle Log support for broadcasts. [L0ne_W0lf]
+//= 2.0a Changed the start and end time to Saturday only. [Metatr0n]
 //============================================================
 
 -	script	Agit_Event	-1,{
 	end;
 
-OnClock2100:	//start time for Tuesday and Thursday
-OnClock2300:	//end time for Tuesday and Thursday
-OnClock1600:	//start time for Saturday
-OnClock1800:	//end time for Saturday
+OnClock1800:	//start time for Saturday
+OnClock2000:	//end time for Saturday
 
 OnAgitInit:
 	// starting time checks
-	if((gettime(DT_DAYOFWEEK)==TUESDAY) && (gettime(DT_HOUR)>=21 && gettime(DT_HOUR)<23) ||
-	   (gettime(DT_DAYOFWEEK)==THURSDAY) && (gettime(DT_HOUR)>=21 && gettime(DT_HOUR)<23) ||
-	   (gettime(DT_DAYOFWEEK)==SATURDAY) && (gettime(DT_HOUR)>=16 && gettime(DT_HOUR)<18)) {
+	if((gettime(DT_DAYOFWEEK)==SATURDAY) && (gettime(DT_HOUR)>=18&& gettime(DT_HOUR)<20)) {
 		if (!agitcheck()) {
 			AgitStart;
 			callsub S_DisplayOwners;
@@ -51,9 +48,7 @@ OnAgitInit:
 	}
 
 	// end time checks
-	if ((gettime(DT_DAYOFWEEK)==TUESDAY) && (gettime(DT_HOUR)==23) ||
-	    (gettime(DT_DAYOFWEEK)==THURSDAY) && (gettime(DT_HOUR)==23) ||
-	    (gettime(DT_DAYOFWEEK)==SATURDAY) && (gettime(DT_HOUR)==18)) { 
+	if ((gettime(DT_DAYOFWEEK)==SATURDAY) && (gettime(DT_HOUR)==20)) { 
 		if (agitcheck()) {
 			AgitEnd;
 			callsub S_DisplayOwners;
