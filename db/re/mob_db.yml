@@ -99468,8 +99468,18 @@ Body:
 #    AegisName: IA_MIYABI_NINGYO
 #  - Id: 3909
 #    AegisName: IA_MARIONETTE
-#  - Id: 3910
-#    AegisName: E_EMPEL_1
+  # Dragon Knight job change healing stones (npc/re/instances/DragonsTest.txt): nothing can hurt them.
+  # Unofficial stats.
+  - Id: 3910
+    AegisName: E_EMPEL_1
+    Name: Guardian Stone
+    Hp: 20000000
+    DamageMotion: 200
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
 #  - Id: 3911
 #    AegisName: E_GIBBET
 #  - Id: 3912
@@ -103659,10 +103669,63 @@ Body:
 #    AegisName: ACIDUS_S_MJ
 #  - Id: 20506
 #    AegisName: FERUS_P_MJ
-#  - Id: 20507
-#    AegisName: BONE_FERUS_MJ
-#  - Id: 20508
-#    AegisName: BONE_ACIDUS_MJ
+  # Dragon Knight job change (npc/re/instances/DragonsTest.txt). Unofficial stats: those of
+  # BONE_FERUS/BONE_ACIDUS (20616/20617, kRO), with 1 HP (they fall to any hit in the quest)
+  # and no experience or drops.
+  - Id: 20507
+    AegisName: BONE_FERUS_MJ
+    Name: Bone Ferus
+    Level: 206
+    Hp: 1
+    Attack: 6732
+    Attack2: 868
+    Defense: 285
+    MagicDefense: 80
+    Str: 242
+    Agi: 173
+    Vit: 75
+    Int: 122
+    Dex: 173
+    Luk: 67
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Undead
+    Element: Undead
+    ElementLevel: 4
+    WalkSpeed: 120
+    AttackDelay: 108
+    AttackMotion: 576
+    DamageMotion: 432
+    Ai: 21
+  - Id: 20508
+    AegisName: BONE_ACIDUS_MJ
+    Name: Bone Acidus
+    Level: 207
+    Hp: 1
+    Attack: 6917
+    Attack2: 870
+    Defense: 294
+    MagicDefense: 81
+    Str: 248
+    Agi: 175
+    Vit: 78
+    Int: 120
+    Dex: 175
+    Luk: 68
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Undead
+    Element: Undead
+    ElementLevel: 4
+    WalkSpeed: 180
+    AttackDelay: 168
+    AttackMotion: 768
+    DamageMotion: 360
+    Ai: 21
 #  - Id: 20509
 #    AegisName: BONE_DETALE_MJ
 #  - Id: 20510
@@ -109169,10 +109232,67 @@ Body:
 #    AegisName: WAR_NUT
 #  - Id: 20874
 #    AegisName: MOLE_TW
-#  - Id: 20875
-#    AegisName: 4JOB_LETICIA
-#  - Id: 20876
-#    AegisName: 4JOB_ACIDUS
+  # Dragon Knight job change (npc/re/instances/DragonsTest.txt). Unofficial stats, Leticia's
+  # taken from Detardeurus (DETALE). Leticia's 90,000,000 HP and title as seen in an official
+  # play-through video. The Spacetime Observer is aggressive but has Dex 1, so it mostly misses.
+  - Id: 20875
+    AegisName: 4JOB_LETICIA
+    Name: Leticia
+    Title: Red Flame Dragon Queen
+    Level: 200
+    Hp: 90000000
+    Attack: 6108
+    Attack2: 2662
+    Defense: 364
+    MagicDefense: 166
+    Str: 165
+    Agi: 153
+    Vit: 171
+    Int: 136
+    Dex: 278
+    Luk: 72
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Dragon
+    Element: Dark
+    ElementLevel: 3
+    WalkSpeed: 250
+    AttackDelay: 432
+    AttackMotion: 936
+    ClientAttackMotion: 240
+    DamageMotion: 360
+    Ai: 21
+    Class: Boss
+  - Id: 20876
+    AegisName: 4JOB_ACIDUS
+    Name: Spacetime Observer
+    Level: 200
+    Hp: 5500000
+    Attack: 1
+    Attack2: 1
+    Defense: 101
+    MagicDefense: 90
+    Str: 109
+    Agi: 78
+    Vit: 50
+    Int: 55
+    Dex: 1
+    Luk: 55
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 20
+    Size: Large
+    Race: Dragon
+    Element: Holy
+    ElementLevel: 2
+    WalkSpeed: 170
+    AttackDelay: 168
+    AttackMotion: 1008
+    ClientAttackMotion: 528
+    DamageMotion: 300
+    Ai: 04
 #  - Id: 20877
 #    AegisName: G_ILL_SROPHO
 #  - Id: 20878

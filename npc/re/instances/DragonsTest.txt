@@ -1,0 +1,554 @@
+//===== rAthena Script =======================================
+//= Instance: Dragon's Test.
+//===== Description: =========================================
+//- [Walkthrough conversion]
+//- Part of the Dragon Knight job change (npc/re/jobs/4-1/dragon_knight.txt).
+//- Dialog and messages checked against the iRO quest video.
+//- The positions of the NPCs, eggs, healing stones and monsters inside
+//- 1@4drk are unknown and were picked by us on walkable cells:
+//-   entrance (62,86, after a rAthena forum post), Oscar and eggs: middle cave,
+//-   healing stones: west cave,
+//-   soldiers: south cave, dragon: north-east cave.
+//- The dragon spirits and Leticia's soldiers have 1 HP (BONE_ACIDUS_MJ,
+//- BONE_FERUS_MJ) and fall to any hit; the healing stones are NPCs that
+//- look like a big Guardian Stone (E_EMPEL_1), so nothing can hurt them.
+//- No experience and no loot on the instance map, as in the official quest.
+//- Total : 4 trials.
+//===== Changelogs: ==========================================
+//= 1.0 First version. [MondoTruth]
+//============================================================
+
+// Trial 1: Trial of Life.
+1@4drk,64,89,3	script	Oscar#dk1	4_ED_OSCAR,{
+	cutin "OSCAR03.bmp",2;
+	switch('dk_step) {
+	case 0:
+		mes "[Oscar]";
+		mes "I'll be the examiner for your first and second tests, " + strcharinfo(0) + ". Good luck.";
+		next;
+		mes "[Oscar]";
+		mes "Consider this your test, " + strcharinfo(0) + ".";
+		mes "By doing it, you'll say hello to your future dragon friends.";
+		next;
+		mes "[Oscar]";
+		mes "Note not all eggs will welcome your approach.";
+		next;
+		switch( select( "I'm ready!", "Give up the test." ) ) {
+		case 1:
+			'dk_step = 1;
+			mes "[Oscar]";
+			mes "Then go. The eggs are waiting.";
+			close3;
+		case 2:
+			callsub S_GiveUp;
+		}
+		end;
+	case 1:
+		mes "[Oscar]";
+		mes "Eggs revived: ^0000ff" + 'dk_eggs + " / 7^000000.";
+		mes "Keep going, the rest are further along the cave.";
+		next;
+		if (select( "Continue.", "Give up the test." ) == 2)
+			callsub S_GiveUp;
+		close3;
+	default:
+		mes "[Oscar]";
+		mes "The eggs are warm again. You did well.";
+		close3;
+	}
+	end;
+
+S_GiveUp:
+	mes "[Oscar]";
+	mes "Giving up ends this test. You'll need a rest before you can try again.";
+	mes "Are you sure?";
+	next;
+	if (select( "Stay.", "Leave the test." ) == 1)
+		close3;
+	.@id = instance_id();
+	setquest 12509;
+	cutin "",255;
+	warp "gef_fild08",54,98;
+	instance_destroy .@id;
+	end;
+
+OnInstanceInit:
+	'dk_map$ = instance_mapname("1@4drk");
+	'dk_step = 0;
+	'dk_eggs = 0;
+	'dk_fails = 0;
+	// Healing Stones (trial 2), in order.
+	setarray 'dk_fx[1], 19, 25, 43, 65, 65, 68, 78,110,133,136;
+	setarray 'dk_fy[1],100,126,141,152,181,208,231,232,242,271;
+	// Spawn points of Leticia's soldiers (trial 3).
+	setarray 'dk_sx[0], 47, 59, 70, 92,113,122,128,145,160,167;
+	setarray 'dk_sy[0], 44, 44, 44, 46, 49, 52, 57, 64, 73, 78;
+	setmapflag 'dk_map$, MF_NOBASEEXP;
+	setmapflag 'dk_map$, MF_NOJOBEXP;
+	setmapflag 'dk_map$, MF_NOMOBLOOT;
+	setmapflag 'dk_map$, MF_NOMVPLOOT;
+	end;
+}
+
+1@4drk,67,96,0	script	Dragon Egg#dk1	4_DRAGON_EGG,{
+	// The eggs are duplicates and share .variables, so each egg keeps its
+	// state in instance variables named after its own NPC id.
+	.@egg$ = "'dk_egg_" + getnpcid(0);
+	if (getd(.@egg$ + "_ok")) {
+		mes "- The egg is warm. Something inside stirs happily. -";
+		close;
+	}
+	if ('dk_step != 1) {
+		mes "- A cold Dragon Egg. -";
+		mes "- Oscar may know what to do with it. -";
+		close;
+	}
+	// Someone is already sharing their life force with it.
+	if (gettimetick(2) - getd(.@egg$ + "_busy") < 5)
+		end;
+	mes "Touch the egg and start communing.";
+	mes "Your HP and SP will continuously decrease until you succeed.";
+	next;
+	if (select( "Quit.", "Start." ) == 1)
+		close;
+	close2;
+	getmapxy(.@nmap$, .@nx, .@ny, BL_NPC);
+	// The iRO reference drains HP and SP roughly once per second and stops
+	// the communion near 10% of either resource.
+	while (true) {
+		if (Hp * 100 / MaxHp < 10 || Sp * 100 / MaxSp < 10) {
+			mes "^ff0000Communion didn't occur until you were near death. Please recover HP and SP, and then try again.^000000";
+			close;
+		}
+		getmapxy(.@map$, .@x, .@y, BL_PC);
+		if (.@map$ != .@nmap$ || distance(.@x, .@y, .@nx, .@ny) > 3) {
+			dispbottom "You stepped away from the egg.";
+			end;
+		}
+		setd .@egg$ + "_busy", gettimetick(2);
+		.@hp = rand(15,20);
+		.@sp = rand(15,20);
+		percentheal -.@hp, -.@sp;
+		// Stars, as in the official quest (the official effect id is unknown;
+		// the one of Steal looks closest).
+		specialeffect EF_STEAL;
+		sleep2 1000;
+		// The first tries on each egg are harder (the official chances are
+		// not known).
+		.@tries = getd(.@egg$ + "_tries") + 1;
+		setd .@egg$ + "_tries", .@tries;
+		.@chance = 30;
+		if (.@tries <= 3)
+			.@chance = 10;
+		if (rand(100) < .@chance)
+			break;
+	}
+	setd .@egg$ + "_busy", 0;
+	setd .@egg$ + "_ok", 1;
+	'dk_eggs++;
+	callsub S_Tree;
+	mes "It gently wraps your hand with its mana. You've successfully communed with this egg.";
+	close2;
+	if ('dk_eggs < 7 || 'dk_step != 1)
+		end;
+	'dk_step = 2;
+	mapannounce 'dk_map$, "Oscar: It seems you're done communing with them. Please wait. I'll send you to the next place.", bc_map, 0x00FF00;
+	sleep2 3000;
+	warp 'dk_map$,19,72;
+	end;
+
+// A revived egg stands in a green tree of light over a green circle (the
+// Epiclesis effects), as in the official quest. The effects are short, so
+// they are shown again and again.
+S_Tree:
+	specialeffect EF_GLASSWALL4;
+	specialeffect EF_GLASSWALL3;
+	initnpctimer;
+	return;
+
+OnTimer3000:
+	callsub S_Tree;
+	end;
+}
+1@4drk,79,105,0	duplicate(Dragon Egg#dk1)	Dragon Egg#dk2	4_DRAGON_EGG
+1@4drk,90,115,0	duplicate(Dragon Egg#dk1)	Dragon Egg#dk3	4_DRAGON_EGG
+1@4drk,96,129,0	duplicate(Dragon Egg#dk1)	Dragon Egg#dk4	4_DRAGON_EGG
+1@4drk,99,147,0	duplicate(Dragon Egg#dk1)	Dragon Egg#dk5	4_DRAGON_EGG
+1@4drk,112,155,0	duplicate(Dragon Egg#dk1)	Dragon Egg#dk6	4_DRAGON_EGG
+1@4drk,114,174,0	duplicate(Dragon Egg#dk1)	Dragon Egg#dk7	4_DRAGON_EGG
+
+
+// Trial 2: Trial of the Protector.
+1@4drk,21,74,3	script	Oscar#dk2	4_ED_OSCAR,{
+	cutin "OSCAR03.bmp",2;
+	if ('dk_step < 2) {
+		mes "[Oscar]";
+		mes "Finish the Trial of Life first.";
+		close3;
+	}
+	if ('dk_step >= 30) {
+		mes "[Oscar]";
+		mes "The Spacetime Observer is safe. Leticia is waiting for you.";
+		close3;
+	}
+	if ('dk_step == 21) {
+		mes "[Oscar]";
+		mes "Healing Stone: ^0000ff" + 'dk_fountain + " / 10^000000.";
+		mes "Put the dragon spirit at the shining stone to rest, then lead the Spacetime Observer into its circle.";
+		mes "It is weak enough already. Whatever you do, don't hurt it.";
+		close3;
+	}
+	mes "[Oscar]";
+	if ('dk_step == 2) {
+		mes strcharinfo(0) + ", we want to know how patient you can be with our people. It can be a painful process.";
+		next;
+		mes "[Oscar]";
+		mes "A dying dragon will appear next to you.";
+		mes "^ff0000Escort it to the healing stones without getting it killed along the way.^000000";
+		next;
+		mes "[Oscar]";
+		mes "Every time it's close to a healing stone, it'll recover energy. " + strcharinfo(0) + ", the objective of your second test is help it fully regain its energy.";
+	} else {
+		mes "The Spacetime Observer has fallen.";
+		mes "Shall we try again from the first stone?";
+	}
+	next;
+	if (select( "Quit.", "I'm ready." ) == 1) {
+		mes "[Oscar]";
+		mes "Giving up ends this test. You'll need a rest before you can try again.";
+		mes "Are you sure?";
+		next;
+		if (select( "Stay.", "Leave the test." ) == 1)
+			close3;
+		.@id = instance_id();
+		setquest 12509;
+		cutin "",255;
+		warp "gef_fild08",54,98;
+		instance_destroy .@id;
+		end;
+	}
+	mes "[Oscar]";
+	mes "Go. The first stone is just ahead.";
+	close2;
+	cutin "",255;
+	if ('dk_step == 2 || 'dk_step == 20)
+		donpcevent instance_npcname("#dk_escort") + "::OnStart";
+	end;
+}
+
+// A healing stone: a big Guardian Stone. Officially it stands in a rune
+// circle, but the client has no matching effect, so it has none for now.
+// The dragon is healed when it walks within 3 cells of the shining stone
+// (OnTouchNPC; hidden stones don't react).
+1@4drk,19,100,0	script	Healing Stone#dk1	E_EMPEL_1,3,3,{
+	end;
+
+OnTouchNPC:
+	if (getattachedrid() == 'dk_gold)
+		donpcevent instance_npcname("#dk_escort") + "::OnArrive";
+	end;
+
+OnShow:
+	enablenpc();
+	setnpcdisplay strnpcinfo(3), "Healing Stone", 3910, Size_Large;
+	end;
+
+OnHide:
+OnInstanceInit:
+	disablenpc();
+	end;
+}
+1@4drk,25,126,0	duplicate(Healing Stone#dk1)	Healing Stone#dk2	E_EMPEL_1,3,3
+1@4drk,43,141,0	duplicate(Healing Stone#dk1)	Healing Stone#dk3	E_EMPEL_1,3,3
+1@4drk,65,152,0	duplicate(Healing Stone#dk1)	Healing Stone#dk4	E_EMPEL_1,3,3
+1@4drk,65,181,0	duplicate(Healing Stone#dk1)	Healing Stone#dk5	E_EMPEL_1,3,3
+1@4drk,68,208,0	duplicate(Healing Stone#dk1)	Healing Stone#dk6	E_EMPEL_1,3,3
+1@4drk,78,231,0	duplicate(Healing Stone#dk1)	Healing Stone#dk7	E_EMPEL_1,3,3
+1@4drk,110,232,0	duplicate(Healing Stone#dk1)	Healing Stone#dk8	E_EMPEL_1,3,3
+1@4drk,133,242,0	duplicate(Healing Stone#dk1)	Healing Stone#dk9	E_EMPEL_1,3,3
+1@4drk,136,271,0	duplicate(Healing Stone#dk1)	Healing Stone#dk10	E_EMPEL_1,3,3
+
+1@4drk,1,1,0	script	#dk_escort	-1,{
+	end;
+
+OnStart:
+	.@npc$ = instance_npcname("#dk_escort");
+	killmonster 'dk_map$, .@npc$ + "::OnBoneDead";
+	killmonster 'dk_map$, .@npc$ + "::OnGoldDead";
+	for (.@i = 1; .@i <= 10; .@i++)
+		donpcevent instance_npcname("Healing Stone#dk" + .@i) + "::OnHide";
+	'dk_step = 21;
+	'dk_fountain = 1;
+	monster 'dk_map$,19,78,"--en--","4JOB_ACIDUS",1, .@npc$ + "::OnGoldDead";
+	'dk_gold = $@mobid[0];
+	// The dragon arrives dying: a tenth of its HP, healed at each stone.
+	getunitdata 'dk_gold, .@d;
+	setunitdata 'dk_gold, UMOB_HP, .@d[UMOB_MAXHP] / 10;
+	callsub S_Fountain;
+	end;
+
+// Shows the current stone and the dragon spirit at it.
+// After 3 failures the guards are no longer spawned.
+S_Fountain:
+	donpcevent instance_npcname("Healing Stone#dk" + 'dk_fountain) + "::OnShow";
+	if ('dk_fails < 3) {
+		monster 'dk_map$,'dk_fx['dk_fountain],'dk_fy['dk_fountain],"Bone Acidus","BONE_ACIDUS_MJ",1, instance_npcname("#dk_escort") + "::OnBoneDead";
+		// The client may not know BONE_ACIDUS_MJ: show it as BONE_ACIDUS (20617).
+		setunitdata $@mobid[0], UMOB_CLASS, 20617;
+	}
+	mapannounce 'dk_map$, "Oscar: The spirits of dead dragons appear around the healing stones. You may put them to rest.", bc_map, 0x00FF00;
+	return;
+
+// The dragon reached the shining stone, or the last spirit there fell
+// while the dragon was already waiting at it.
+OnArrive:
+OnBoneDead:
+	if ('dk_step != 21 || unitexists('dk_gold) == false)
+		end;
+	if (mobcount('dk_map$, instance_npcname("#dk_escort") + "::OnBoneDead") > 0)
+		end;
+	getunitdata 'dk_gold, .@d;
+	.@f = 'dk_fountain;
+	if (distance(.@d[UMOB_X], .@d[UMOB_Y], 'dk_fx[.@f], 'dk_fy[.@f]) > 3)
+		end;
+	specialeffect EF_HEAL2, AREA, instance_npcname("Healing Stone#dk" + .@f);
+	// Not min(): it would read .@d[UMOB_MAXHP] as the rest of the array.
+	.@hp = .@d[UMOB_HP] + .@d[UMOB_MAXHP] / 10;
+	if (.@f == 10 || .@hp > .@d[UMOB_MAXHP])
+		.@hp = .@d[UMOB_MAXHP];
+	setunitdata 'dk_gold, UMOB_HP, .@hp;
+	donpcevent instance_npcname("Healing Stone#dk" + .@f) + "::OnHide";
+	if (.@f < 10) {
+		'dk_fountain++;
+		callsub S_Fountain;
+		end;
+	}
+	'dk_step = 30;
+	mapannounce 'dk_map$, "Oscar: You're so patient! Congrats! Now, let me guide you to your next test.", bc_map, 0x00FF00;
+	sleep 3000;
+	killmonster 'dk_map$, instance_npcname("#dk_escort") + "::OnGoldDead";
+	sleep 2000;
+	enablenpc instance_npcname("Leticia#dk3");
+	instance_warpall 'dk_map$,92,46, instance_id();
+	end;
+
+OnGoldDead:
+	if ('dk_step != 21)
+		end;
+	'dk_step = 20;
+	'dk_fails++;
+	killmonster 'dk_map$, instance_npcname("#dk_escort") + "::OnBoneDead";
+	for (.@i = 1; .@i <= 10; .@i++)
+		donpcevent instance_npcname("Healing Stone#dk" + .@i) + "::OnHide";
+	mapannounce 'dk_map$, "Oscar : The Spacetime Observer has fallen! Come back to me and start over.", bc_map, 0xFFFF00;
+	end;
+
+}
+
+
+// Trial 3: Trial of Strength.
+1@4drk,95,48,3	script	Leticia#dk3	4_4JOB_LETICIA,{
+	if ('dk_step == 31) {
+		cutin "4job_leticia_01.png",2;
+		mes "[Leticia]";
+		mes "Weak creature, are you ready to pass my test?";
+		close3;
+	}
+	if ('dk_step >= 40) {
+		cutin "4job_leticia_01.png",2;
+		mes "[Leticia]";
+		mes "Not bad at all. Now come and find me further in.";
+		close3;
+	}
+	cutin "4job_leticia_04.png",2;
+	mes "[Leticia]";
+	if ('dk_step == 30) {
+		mes "You're the creature that my cute space-time dinosaur has been watching.";
+		next;
+		mes "[Leticia]";
+		mes "But you don't look strong at all. I wonder what about you my yellow cutie likes so much...";
+		next;
+		mes "[Leticia]";
+		mes "I don't talk to the weak. If you want to talk to me, prove your worthiness first.";
+		next;
+		mes "[Leticia]";
+		mes "Weak creature, are you ready to pass my test?";
+	} else {
+		mes "Time ran out, didn't it?";
+		mes "Want to try again? 50 soldiers, 5 minutes.";
+	}
+	next;
+	if (select( "Quit.", "Let's get started." ) == 1)
+		close3;
+	close2;
+	cutin "",255;
+	if ('dk_step == 30 || 'dk_step == 32)
+		donpcevent instance_npcname("#dk_soldiers") + "::OnStart";
+	end;
+
+OnInstanceInit:
+	disablenpc();
+	end;
+}
+
+1@4drk,1,2,0	script	#dk_soldiers	-1,{
+	end;
+
+OnStart:
+	'dk_step = 31;
+	'dk_killed = 0;
+	for (.@i = 0; .@i < 10; .@i++)
+		callsub S_Spawn;
+	initnpctimer;
+	end;
+
+S_Spawn:
+	.@r = rand(getarraysize('dk_sx));
+	monster 'dk_map$,'dk_sx[.@r],'dk_sy[.@r],"Leticia's Soldier","BONE_FERUS_MJ",1, instance_npcname("#dk_soldiers") + "::OnSoldierDead";
+	// The client may not know BONE_FERUS_MJ: show it as BONE_FERUS (20616).
+	setunitdata $@mobid[0], UMOB_CLASS, 20616;
+	return;
+
+OnSoldierDead:
+	if ('dk_step != 31)
+		end;
+	'dk_killed++;
+	if ('dk_killed >= 50) {
+		stopnpctimer;
+		'dk_step = 40;
+		killmonster 'dk_map$, instance_npcname("#dk_soldiers") + "::OnSoldierDead";
+		mapannounce 'dk_map$, "Leticia: You're not as weak as I thought. That's enough.", bc_map, 0xFF99CC;
+		sleep 3000;
+		disablenpc instance_npcname("Leticia#dk3");
+		enablenpc instance_npcname("Leticia#dk4");
+		instance_warpall 'dk_map$,211,165, instance_id();
+		end;
+	}
+	// 10 at the start and one for each of the first 40 kills: 50 in all.
+	if ('dk_killed <= 40)
+		callsub S_Spawn;
+	end;
+
+OnTimer300000:
+	stopnpctimer;
+	if ('dk_step != 31)
+		end;
+	'dk_step = 32;
+	killmonster 'dk_map$, instance_npcname("#dk_soldiers") + "::OnSoldierDead";
+	mapannounce 'dk_map$, "Leticia : Time's up! Talk to me if you want another try.", bc_map, 0xFF99CC;
+	end;
+}
+
+
+// Trial 4: Trial of Patience.
+1@4drk,213,170,3	script	Leticia#dk4	4_4JOB_LETICIA,{
+	if ('dk_step == 40) {
+		cutin "4job_leticia_02.png",2;
+		mes "[Leticia]";
+		mes "Now, I know you're stronger than I thought, but you're still not strong enough to beat me. This time, I have a more difficult test for you, weak creature.";
+		next;
+		mes "[Leticia]";
+		mes "I'll take the weakest of all my forms. If you can leave a scratch on me, I'll acknowledge you.";
+		next;
+		if (select( "Quit.", "Okay." ) == 1) {
+			mes "[Leticia]";
+			mes "Scared already? I'll be here.";
+			close3;
+		}
+		mes "[Leticia]";
+		mes "Here I come!";
+		close2;
+		cutin "",255;
+		donpcevent instance_npcname("#dk_dragon") + "::OnStart";
+		end;
+	}
+	if ('dk_step != 50)
+		end;
+	cutin "4job_leticia_01.png",2;
+	mes "[Leticia]";
+	mes "I've watched you taking the space-time dinosaur's tests.";
+	close2;
+	cutin "",255;
+	// The choice itself is made with Leticia next to Oscar
+	// (npc/re/jobs/4-1/dragon_knight.txt).
+	job_dk_4th = 1;
+	.@id = instance_id();
+	warp "gef_fild08",55,104;
+	instance_destroy .@id;
+	end;
+
+OnInstanceInit:
+	disablenpc();
+	end;
+}
+
+1@4drk,1,3,0	script	#dk_dragon	-1,{
+	end;
+
+OnStart:
+	if ('dk_step != 40)
+		end;
+	'dk_step = 41;
+	'dk_shown = 0;
+	disablenpc instance_npcname("Leticia#dk4");
+	monster 'dk_map$,219,211,"--en--","4JOB_LETICIA",1, instance_npcname("#dk_dragon") + "::OnDragonDead";
+	'dk_dragon = $@mobid[0];
+	// Green Aura reduces incoming damage to 10% during the opening phase.
+	setunitdata 'dk_dragon, UMOB_DAMAGETAKEN, 10;
+	mapannounce 'dk_map$, "Attack and decrease Leticia's HP to 90%.", bc_map, 0xFFFF00;
+	initnpctimer instance_npcname("#dk_dragon"), false;
+	donpcevent instance_npcname("#dk_dragon_aura") + "::OnStart";
+	end;
+
+// Shows her HP every 2 seconds while it changes.
+OnTimer2000:
+	if ('dk_step != 41)
+		end;
+	if (unitexists('dk_dragon) == false) {
+		initnpctimer instance_npcname("#dk_dragon"), false;
+		end;
+	}
+	getunitdata 'dk_dragon, .@d;
+	if (.@d[UMOB_HP] <= .@d[UMOB_MAXHP] / 10 * 9) {
+		callsub S_Passed;
+		end;
+	}
+	if (.@d[UMOB_HP] != 'dk_shown) {
+		'dk_shown = .@d[UMOB_HP];
+		mapannounce 'dk_map$, "Leticia's HP: " + .@d[UMOB_HP] + " / " + .@d[UMOB_MAXHP], bc_map, 0x00FF00;
+	}
+	initnpctimer instance_npcname("#dk_dragon"), false;
+	end;
+
+OnDragonDead:
+	if ('dk_step != 41)
+		end;
+	stopnpctimer;
+	'dk_step = 40;
+	enablenpc instance_npcname("Leticia#dk4");
+	end;
+
+S_Passed:
+	stopnpctimer;
+	'dk_step = 50;
+	killmonster 'dk_map$, instance_npcname("#dk_dragon") + "::OnDragonDead";
+	sleep 2000;
+	enablenpc instance_npcname("Leticia#dk4");
+	instance_warpall 'dk_map$,211,165, instance_id();
+	end;
+}
+
+// Independent timer: the opening aura ends without resetting the HP checks.
+1@4drk,1,4,0	script	#dk_dragon_aura	-1,{
+	end;
+
+OnStart:
+	initnpctimer;
+	end;
+
+OnTimer15000:
+	stopnpctimer;
+	if ('dk_step == 41 && unitexists('dk_dragon))
+		setunitdata 'dk_dragon, UMOB_DAMAGETAKEN, 100;
+	end;
+}
