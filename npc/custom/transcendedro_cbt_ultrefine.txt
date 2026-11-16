@@ -21,8 +21,8 @@ grademk,22,180,4	script	Ultimate Refiner	636,{
         close;
     }
 
-    setarray .@eq_slots[0], EQI_HEAD_TOP, EQI_ARMOR, EQI_HAND_R, EQI_HAND_L, EQI_GARMENT, EQI_SHOES;
-    setarray .@eq_names$[0], "Top Headgear", "Armor", "Right Hand", "Left Hand", "Garment", "Shoes";
+    setarray .@eq_slots[0], EQI_HEAD_TOP, EQI_ARMOR, EQI_HAND_R, EQI_HAND_L, EQI_GARMENT, EQI_SHOES, EQI_ACC_L, EQI_ACC_R; // EQI_ACC_L = 0, keep it before ACC_R so getarraysize still counts it
+    setarray .@eq_names$[0], "Top Headgear", "Armor", "Right Hand", "Left Hand", "Garment", "Shoes", "Left Accessory", "Right Accessory";
 
     .@menu$ = "";
     for (.@i = 0; .@i < getarraysize(.@eq_slots); .@i++) {
