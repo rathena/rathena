@@ -1,4 +1,4 @@
-izlude,119,170,4	script	Donation Exchanger	21620,{
+izlude,119,170,4	script	Donation Exchanger	10301,{
 	switch(select(
 	
 	"~ Exchange with Donation Coins",
