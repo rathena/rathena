@@ -10058,8 +10058,12 @@ struct s_skill_condition skill_get_requirement(map_session_data* sd, uint16 skil
 		case BO_ACIDIFIED_ZONE_GROUND:
 		case BO_ACIDIFIED_ZONE_WIND:
 		case BO_ACIDIFIED_ZONE_FIRE:
-			if (sc != nullptr && sc->hasSCE(SC_RESEARCHREPORT) && req.amount[0] > 0)
+			if (sc != nullptr && sc->hasSCE(SC_RESEARCHREPORT) && req.amount[0] > 0) {
 				req.amount[0]--;
+				// A zero amount must also remove the inventory requirement.
+				if (req.amount[0] == 0)
+					req.itemid[0] = 0;
+			}
 			break;
 		case MT_A_MACHINE:
 			if (sc != nullptr && sc->hasSCE(SC_ABR_INFINITY))
