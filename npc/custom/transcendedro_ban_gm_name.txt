@@ -11,7 +11,7 @@ OnPCLoginEvent:
 	}
 
 	.@name$ = strcharinfo(0);
-	if( compare( .@name$,"GM" ) || compare( .@name$,"Admin" ) || compare( .@name$,"จีเอ็ม" ) || compare( .@name$,"จีเอม" ) || compare( .@name$,"แอ็ดมิน" ) || compare( .@name$,"G M" ) || compare( .@name$,"แอดมิน" ) ){
+	if( getgmlevel() < 99 && ( compare( .@name$,"GM" ) || compare( .@name$,"Admin" ) || compare( .@name$,"จีเอ็ม" ) || compare( .@name$,"จีเอม" ) || compare( .@name$,"แอ็ดมิน" ) || compare( .@name$,"G M" ) || compare( .@name$,"แอดมิน" ) ) ){
 		mes "[GM]";
 		mes "<FONT SIZE = 16><B>Your name will be banned";
 		mes "because it contains words about someting 'GM',";
