@@ -34,7 +34,8 @@ function	CanStart	{
 		return 0;
 	}
 	// Nested if: script && does not short-circuit, so countitem(0) would run and error.
-	if (.ticket > 0) if (countitem(.ticket) <= 0) {
+	// countitem skips rental items, so count rentals too (the Device is a rental)
+	if (.ticket > 0) if (countitem(.ticket) + rentalcountitem(.ticket) <= 0) {
 		dispbottom "[Auto Attack] You need a " + getitemname(.ticket) + ".";
 		return 0;
 	}
