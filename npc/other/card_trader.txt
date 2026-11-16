@@ -147,7 +147,7 @@ prontera,115,90,0	script	Putty	4_F_01,{
 			mes "[Putty]";
 			mes "These are the items that I have.";
 			next;
-			switch(select("1 Old Card Album - 50 Points","20 Yggdrasil Berry - 50 Points","10 Blue Potion - 20 Points","4 Honey - 1 Point","^777777Nerver mind.^000000")) {
+			switch(select("1 Old Card Album - 100 Points","20 Yggdrasil Berry - 50 Points","10 Blue Potion - 20 Points","4 Honey - 1 Point","^777777Nerver mind.^000000")) {
 				case 1:
 					if (.@points < 100) break;
 					mes "[Putty]";

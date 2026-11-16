@@ -29,19 +29,16 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-          # The macos-latest label currently points to macos-14.
-          # macos-latest YAML-label will use macos-15 in August 2025
-          os: [macos-14, macos-15]
+          os: [macos-15, macos-26]
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Update & Install packages
         # Macos runners already have most of the packages rAthena requires to build.
-        # https://github.com/actions/runner-images/blob/main/images/macos/macos-14-Readme.md
         # https://github.com/actions/runner-images/blob/main/images/macos/macos-15-Readme.md
+        # https://github.com/actions/runner-images/blob/main/images/macos/macos-26-Readme.md
         run: |
-          brew update
           brew install pcre
           brew install mysql
           brew install mysql-client
