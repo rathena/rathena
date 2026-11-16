@@ -7,10 +7,13 @@ sec_in02,156,184,4	script	H O T S P I N !	OBJ_A2,{
 	.@aid = getcharid(3);
 	.@spins = 0;
 	query_sql("SELECT spins FROM hotspin_rank WHERE account_id = " + .@aid, .@spins);
+	setarray .@day$, "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday";
+	.@reset_dow  = getvariableofnpc(.reset_dow, "HOTSPIN_WEEKLY");
+	.@reset_hour = getvariableofnpc(.reset_hour, "HOTSPIN_WEEKLY");
 	mes "^i[12828] <font size = 18><b>^0000AA[ H O T S P I N ! ]^000000</b></font> ^i[12828]";
 	mes "==============================";
 	mes "<font size = 14>Spins: <font size = 18><b>^AA0000" + callfunc("F_InsertComma",.@spins) + "^000000</b></font> times.</font>";
-	mes "<font size = 10>^FF0000* Reset to 0 when announced on Discord^000000</font>";
+	mes "<font size = 10>^FF0000* Reset every " + .@day$[.@reset_dow] + " " + (.@reset_hour < 10 ? "0" : "") + .@reset_hour + ":00, TOP3 get rewards via Rodex^000000</font>";
 	mes "==============================";
 	mes "<font size = 14>Guarantee Points: <font size = 18><b>^0066FF" + callfunc("F_InsertComma",#GUARANTEE_POINT) + "^000000</b></font> Points.</font>";
 	mes "<font size = 10>^FF0000* Not reset, this points are used for Guarantee Shop^000000</font>";
@@ -31,7 +34,7 @@ sec_in02,156,184,4	script	H O T S P I N !	OBJ_A2,{
 		if (.@main == 2) goto L_Guarantee;
 		if (.@main == 3) goto L_Recycle;
 		if (.@main == 4) goto L_TrashExchange;
-		if (.@main == 5) goto L_Top20;
+		if (.@main == 5) goto L_Top10;
 		if (.@main == 6) goto L_ViewPool;
 		//if (.@main == 7) goto L_GMAdd;
 		//if (.@main == 8) goto L_GMRemovePool;
@@ -39,27 +42,27 @@ sec_in02,156,184,4	script	H O T S P I N !	OBJ_A2,{
 		// if (.@main == 10) goto L_BPGiveRankReward;
 	} else {
 		// Player Menu
-		set .@main, select(" ~ ^FF0000START SPIN!!!^000000: ~~ Guarantee Shop: ~~ ^00AA00Recycle Shop^000000: ~~ Trash Exchange Shop: ~ Hotspin Top 20: ~ All Hotspin List");
+		set .@main, select(" ~ ^FF0000START SPIN!!!^000000: ~~ Guarantee Shop: ~~ ^00AA00Recycle Shop^000000: ~~ Trash Exchange Shop: ~ Hotspin Top 10: ~ All Hotspin List");
 		if (.@main == 1) goto L_Roll;
 		if (.@main == 2) goto L_Guarantee;
 		if (.@main == 3) goto L_Recycle;
 		if (.@main == 4) goto L_TrashExchange;
-		if (.@main == 5) goto L_Top20;
+		if (.@main == 5) goto L_Top10;
 		if (.@main == 6) goto L_ViewPool;
 	}
 	close;
 
 // ==== Bypass GiveRankReward ====
 // L_BPGiveRankReward:
-// 
+//
 // 	query_sql(" SELECT char_id, name, spins FROM hotspin_rank WHERE spins > 0 ORDER BY spins DESC LIMIT 3", .@cid, .@name$, .@score);
-// 
+//
 // 	if (getarraysize(.@cid) == 0) {
 // 		announce "[ HOTSPIN! ] Sorry, there is no weekly TOP3 this week.", bc_all;
 // 		end;
 // 	}
-// 
-// 	callfunc "GiveRankReward";
+//
+// 	callfunc "F_HotspinRankReward";
 // 	next;
 // 	callfunc "S_ResetHotspin";
 // 	close2;
@@ -67,19 +70,20 @@ sec_in02,156,184,4	script	H O T S P I N !	OBJ_A2,{
 
 // ==== Roll ====
 L_Roll:
-	mes "<font size = 18><b>^FF00BB1 SPIN = 99 CASH^000000";
+	.@price = 99;	// Cash per 1 spin
+	mes "<font size = 18><b>^FF00BB1 SPIN = " + .@price + " CASH^000000";
 	mes "     ";
 	mes "How many times to spin?";
 	mes "(1 - 500)</b></font>";
 	next;
-	input .@count;
-	if (.@count == 0) close;
-	if (.@count > 500) {
+	.@in = input(.@count, 1, 500);
+	if (.@in < 0) close;	// 0 or less = cancel
+	if (.@in > 0) {
 		mes "Please enter only 1 - 500!";
 		next;
 		goto L_Roll;
 	}
-	set .@total_cost, .@count * 99;
+	set .@total_cost, .@count * .@price;
 	mes "<font size = 18><b>PAY ^FF0000" + .@total_cost + " CASH^000000</b></font>";
 	mes "<font size = 18><b>FOR ^0099FF" + .@count + " SPINS^000000</b></font>";
 	mes "     ";
@@ -91,6 +95,14 @@ L_Roll:
 	next;
 	if (#CASHPOINTS < .@total_cost) {
 		mes "You don't have enough Cash.";
+		close;
+	}
+
+	if (Weight * 100 / MaxWeight >= 50) {
+		mes "<font size = 16><b>Your weight is over</b></font>";
+		mes "<font size = 20><b>^FF000050%^000000</b></font>";
+		mes "     ";
+		mes "<font size = 16><b>Please reduce your weight.</b></font>";
 		close;
 	}
 
@@ -130,74 +142,92 @@ L_Roll:
 	}
 
 	if (select("^AA0000 ~ Confirm to SPIN!!!^000000: ~ Nah, not yet.") == 2) close;
+	if (#CASHPOINTS < .@total_cost) {
+		mes "You don't have enough Cash.";
+		close;
+	}
+
+	// Pay up front. Spins that never run (inventory full / logout)
+	// are refunded by F_HotspinSettle, which also records the ranking.
 	set #CASHPOINTS, #CASHPOINTS - .@total_cost;
+	@hotspin_price = .@price;
+	@hotspin_left  = .@count;
+	@hotspin_done  = 0;
 	dispbottom "Now you have " +#CASHPOINTS+ " Cash Points.";
+
+	// index 1 = UR, 2 = NEW, 3 = Rerun
+	setarray .@tier_gp[1], 35, 2, 1;
+	setarray .@tier_tag$[1], "[ UR ] ", "[ NEW ] ", "[ Rerun ] ";
+	setarray .@tier_bang$[1], "!!!", "!!", "!";
 
 	set .@hotspin_hits, 0;
 	set .@guarantee_gained, 0;
+	set .@stopped, 0;
 
 	for (set .@i, 0; .@i < .@count; set .@i, .@i + 1) {
-		specialeffect2 EF_STEAL;
-		//set #HOTSPIN_COUNT, #HOTSPIN_COUNT + 1;
-		set #HOTSPIN_POINT, #HOTSPIN_POINT + 1;
 		set .@roll, rand(10000);
-		set .@got_item, 0;
+		set .@tier, 0;
+		set .@item, 0;
 
 		// Pool 1 - Ultimate Rare (0.05% = 5/10000)
 		if (.@roll < 5 && getarraysize($hotspin_pool1) > 0) {
+			set .@tier, 1;
 			set .@item, $hotspin_pool1[rand(getarraysize($hotspin_pool1))];
-			getitem .@item, 1;
-			set .@hotspin_hits, .@hotspin_hits + 1;
-			set .@got_item, 1;
-			set #GUARANTEE_POINT, #GUARANTEE_POINT + 35;
-			set .@guarantee_gained, .@guarantee_gained + 35;
-			specialeffect2 EF_MVP;
-			announce "[ HOTSPIN! ] " + strcharinfo(0) + " received [ UR ] " + getitemname(.@item) + "!!!", bc_all;
 		}
 		// Pool 2 - New Items (0.75% = 75/10000)
 		else if (.@roll < 80 && getarraysize($hotspin_pool2) > 0) {
+			set .@tier, 2;
 			set .@item, $hotspin_pool2[rand(getarraysize($hotspin_pool2))];
-			getitem .@item, 1;
-			set .@hotspin_hits, .@hotspin_hits + 1;
-			set .@got_item, 1;
-			set #GUARANTEE_POINT, #GUARANTEE_POINT + 2;
-			set .@guarantee_gained, .@guarantee_gained + 2;
-			specialeffect2 EF_MVP;
-			announce "[ HOTSPIN! ] " + strcharinfo(0) + " received [ NEW ] " + getitemname(.@item) + "!!", bc_all;
 		}
 		// Pool 3 - Rerun Items (2.20% = 220/10000)
 		else if (.@roll < 300 && getarraysize($hotspin_pool3) > 0) {
+			set .@tier, 3;
 			set .@item, $hotspin_pool3[rand(getarraysize($hotspin_pool3))];
-			getitem .@item, 1;
-			set .@hotspin_hits, .@hotspin_hits + 1;
-			set .@got_item, 1;
-			set #GUARANTEE_POINT, #GUARANTEE_POINT + 1;
-			set .@guarantee_gained, .@guarantee_gained + 1;
-			specialeffect2 EF_MVP;
-			announce "[ HOTSPIN! ] " + strcharinfo(0) + " received [ Rerun ] " + getitemname(.@item) + "!", bc_all;
+		}
+		// Trash
+		else {
+			.@troll = rand(100);
+			if (.@troll < 90 && getarraysize($hotspin_trash3) > 0)
+				set .@item, $hotspin_trash3[rand(getarraysize($hotspin_trash3))];
+			else if (.@troll < 97 && getarraysize($hotspin_trash2) > 0)
+				set .@item, $hotspin_trash2[rand(getarraysize($hotspin_trash2))];
+			else if (getarraysize($hotspin_trash1) > 0)
+				set .@item, $hotspin_trash1[rand(getarraysize($hotspin_trash1))];
 		}
 
-		if (.@got_item == 0) {
-			.@troll = rand(100);
-			if (.@troll < 90 && getarraysize($hotspin_trash3) > 0) {
-				getitem $hotspin_trash3[rand(getarraysize($hotspin_trash3))], 1;
-			} else if (.@troll < 97 && getarraysize($hotspin_trash2) > 0) {
-				getitem $hotspin_trash2[rand(getarraysize($hotspin_trash2))], 1;
-			} else if (getarraysize($hotspin_trash1) > 0) {
-				getitem $hotspin_trash1[rand(getarraysize($hotspin_trash1))], 1;
-			}
+		// Stop before the item would drop on the floor; this spin is not charged.
+		if (.@item && !checkweight(.@item, 1)) {
+			set .@stopped, 1;
+			break;
+		}
+
+		@hotspin_left--;
+		@hotspin_done++;
+		set #HOTSPIN_POINT, #HOTSPIN_POINT + 1;
+		specialeffect2 EF_STEAL;
+		if (.@item) getitem .@item, 1;
+
+		if (.@tier) {
+			set .@hotspin_hits, .@hotspin_hits + 1;
+			set #GUARANTEE_POINT, #GUARANTEE_POINT + .@tier_gp[.@tier];
+			set .@guarantee_gained, .@guarantee_gained + .@tier_gp[.@tier];
+			specialeffect2 EF_MVP;
+			announce "[ HOTSPIN! ] " + strcharinfo(0) + " received " + .@tier_tag$[.@tier] + getitemname(.@item) + .@tier_bang$[.@tier], bc_all;
 		}
 		sleep2 60;
 	}
 
-	set .@aid, getcharid(3);
-	set .@cid, getcharid(0);
-	set .@name$, strcharinfo(0);
-
-	query_sql("INSERT INTO hotspin_rank (account_id, char_id, name, spins) VALUES ("+.@aid+","+.@cid+",'"+escape_sql(.@name$)+"',"+.@count+") ON DUPLICATE KEY UPDATE spins = spins + "+.@count+", name = '"+escape_sql(.@name$)+"'");
+	.@spun = @hotspin_done;
+	.@refunded = callfunc("F_HotspinSettle", 0);
 
 	mes "[ HOTSPIN! ]";
-	mes "Done. Are you feel lucky?";
+	if (.@stopped) {
+		mes "^FF0000Your inventory is full or too heavy!^000000";
+		mes "Stopped at spin ^FF0000" + .@spun + "^000000 / " + .@count + ".";
+		mes "Refunded ^0066FF" + callfunc("F_InsertComma", .@refunded * .@price) + "^000000 Cash for " + .@refunded + " unused spin(s).";
+	} else {
+		mes "Done. Are you feel lucky?";
+	}
 	mes "     ";
 	mes "<font size = 16><b>Jackpot: ^AA0000" + .@hotspin_hits + "^000000 time(s).</b></font>";
 	mes "<font size = 12><b>Hotspin Overall: " + callfunc("F_InsertComma",#HOTSPIN_POINT) + " times.</b></font>";
@@ -232,7 +262,6 @@ L_Recycle:
 	mes "<font size = 14>Put the items you want to recycle</font>";
 	mes "<font size = 14>into the trade window.</font>";
 	mes "<font size = 14>I'll calculate the Guarantee Points.</font>";
-	deletearray @sold_nameid[0], getarraysize(@sold_nameid);
 	close2;
 	callshop "hotspin_recycle_shop", 2;
 	npcshopattach "hotspin_recycle_shop";
@@ -244,8 +273,8 @@ L_TrashExchange:
 	callshop "HotspinExchange";
 	end;
 
-// ==== Top 20 ====
-L_Top20:
+// ==== Top 10 ====
+L_Top10:
 	mes "^i[12828] <font size = 18><b>^00AA00[HOTSPIN TOP 10]</b></font> ^i[12828]";
 	mes "==============================";
 	query_sql("SELECT name, spins FROM hotspin_rank WHERE spins > 0 ORDER BY spins DESC LIMIT 10", .@name$, .@score);
@@ -256,13 +285,10 @@ L_Top20:
 	}
 
 	for (set .@i, 0; .@i < getarraysize(.@name$); set .@i, .@i + 1) {
-		if (.@i < 3) {
+		if (.@i < 3)
 			mes "<font size = 14><b>^FF0000#" + (.@i + 1) + " - " + .@name$[.@i] + " - " + callfunc("F_InsertComma",.@score[.@i]) + " spins.^000000</b></font>";
-		}
-		else {
-			if (.@i > 2)
-				mes "<font size = 12>#" + (.@i + 1) + " - " + .@name$[.@i] + " - " + callfunc("F_InsertComma",.@score[.@i]) + " spins.</font>";
-		}
+		else
+			mes "<font size = 12>#" + (.@i + 1) + " - " + .@name$[.@i] + " - " + callfunc("F_InsertComma",.@score[.@i]) + " spins.</font>";
 	}
 	mes "==============================";
 
@@ -278,145 +304,6 @@ L_ViewPool:
 	callshop "HOTSPIN_VIEWSHOP", 1;
 	npcshopattach "HOTSPIN_VIEWSHOP";
 	end;
-
-// ==== GM Add ====
-L_GMAdd:
-	mes "[GM Add Item]";
-	set .@type, select("UR Pool (0.05%):New Items Pool (0.8%):Rerun Pool (0.4%):Trash Tier 1:Trash Tier 2:Trash Tier 3");
-	mes "Enter Item ID:";
-	input .@item;
-
-	if (.@type == 1) set $hotspin_pool1[getarraysize($hotspin_pool1)], .@item;
-	else if (.@type == 2) set $hotspin_pool2[getarraysize($hotspin_pool2)], .@item;
-	else if (.@type == 3) set $hotspin_pool3[getarraysize($hotspin_pool3)], .@item;
-	else if (.@type == 4) set $hotspin_trash1[getarraysize($hotspin_trash1)], .@item;
-	else if (.@type == 5) set $hotspin_trash2[getarraysize($hotspin_trash2)], .@item;
-	else if (.@type == 6) set $hotspin_trash3[getarraysize($hotspin_trash3)], .@item;
-
-	if (.@type <= 3) callfunc "ReloadHotspinPool";
-
-	mes "Item ^00AA00" + getitemname(.@item) + "^000000 added successfully.";
-	close;
-
-// ==== GM Remove Pool ====
-L_GMRemovePool:
-	set .@total_pools, getarraysize($hotspin_pool1) + getarraysize($hotspin_pool2) + getarraysize($hotspin_pool3);
-	if (.@total_pools <= 0) {
-		mes "No items in pool.";
-		close;
-	}
-
-	set .@menu$, "";
-	set .@counter, 0;
-
-	for (set .@i,0; .@i<getarraysize($hotspin_pool1); set .@i,.@i+1)
-		set .@menu$, .@menu$ + ((.@counter++?":":"") + "[UR] " + getitemname($hotspin_pool1[.@i]));
-	for (set .@i,0; .@i<getarraysize($hotspin_pool2); set .@i,.@i+1)
-		set .@menu$, .@menu$ + ((.@counter++?":":"") + "[NEW] " + getitemname($hotspin_pool2[.@i]));
-	for (set .@i,0; .@i<getarraysize($hotspin_pool3); set .@i,.@i+1)
-		set .@menu$, .@menu$ + ((.@counter++?":":"") + "[R] " + getitemname($hotspin_pool3[.@i]));
-
-	set .@menu$, .@menu$ + ":Cancel";
-	set .@choice, select(.@menu$);
-	if (.@choice > .@total_pools) close;
-
-	if (.@choice <= getarraysize($hotspin_pool1)) {
-		set .@delitem, $hotspin_pool1[.@choice-1];
-		deletearray $hotspin_pool1[.@choice-1], 1;
-	}
-	else if (.@choice <= getarraysize($hotspin_pool1)+getarraysize($hotspin_pool2)) {
-		set .@delitem, $hotspin_pool2[.@choice - getarraysize($hotspin_pool1) - 1];
-		deletearray $hotspin_pool2[.@choice - getarraysize($hotspin_pool1) - 1], 1;
-	}
-	else {
-		set .@delitem, $hotspin_pool3[.@choice - getarraysize($hotspin_pool1) - getarraysize($hotspin_pool2) - 1];
-		deletearray $hotspin_pool3[.@choice - getarraysize($hotspin_pool1) - getarraysize($hotspin_pool2) - 1], 1;
-	}
-
-	callfunc "ReloadHotspinPool";
-
-	mes "Deleted ^FF0000" + getitemname(.@delitem) + "^000000 successfully.";
-	close;
-
-// ==== GM Remove Trash ====
-L_GMRemoveTrash:
-	set .@total_items, getarraysize($hotspin_trash1) + getarraysize($hotspin_trash2) + getarraysize($hotspin_trash3);
-	
-	if (.@total_items <= 0) {
-		mes "No items in Trash";
-		close;
-	}
-	
-	mes "[Delete Trash Item]";
-	mes "Select item to delete:";
-
-	set .@menu$, "";
-	set .@counter, 0;
-
-	for (set .@i, 0; .@i < getarraysize($hotspin_trash1); set .@i, .@i + 1) {
-		if (.@counter > 0) set .@menu$, .@menu$ + ":";
-		set .@menu$, .@menu$ + "T1-" + (.@i + 1) + ". " + getitemname($hotspin_trash1[.@i]);
-		set .@counter, .@counter + 1;
-	}
-
-	for (set .@i, 0; .@i < getarraysize($hotspin_trash2); set .@i, .@i + 1) {
-		if (.@counter > 0) set .@menu$, .@menu$ + ":";
-		set .@menu$, .@menu$ + "T2-" + (.@i + 1) + ". " + getitemname($hotspin_trash2[.@i]);
-		set .@counter, .@counter + 1;
-	}
-
-	for (set .@i, 0; .@i < getarraysize($hotspin_trash3); set .@i, .@i + 1) {
-		if (.@counter > 0) set .@menu$, .@menu$ + ":";
-		set .@menu$, .@menu$ + "T3-" + (.@i + 1) + ". " + getitemname($hotspin_trash3[.@i]);
-		set .@counter, .@counter + 1;
-	}
-	
-	set .@menu$, .@menu$ + ":Cancel";
-	
-	set .@choice, select(.@menu$);
-
-	if (.@choice > .@total_items) close;
-
-	set .@current_pos, 0;
-	set .@selected_array, 0;
-	set .@selected_index, 0;
-	set .@item_name$, "";
-
-	if (.@choice <= getarraysize($hotspin_trash1)) {
-		set .@selected_array, 1;
-		set .@selected_index, .@choice - 1;
-		set .@item_name$, getitemname($hotspin_trash1[.@selected_index]);
-	}
-	else if (.@choice <= getarraysize($hotspin_trash1) + getarraysize($hotspin_trash2)) {
-		set .@selected_array, 2;
-		set .@selected_index, .@choice - getarraysize($hotspin_trash1) - 1;
-		set .@item_name$, getitemname($hotspin_trash2[.@selected_index]);
-	}
-	else {
-		set .@selected_array, 3;
-		set .@selected_index, .@choice - getarraysize($hotspin_trash1) - getarraysize($hotspin_trash2) - 1;
-		set .@item_name$, getitemname($hotspin_trash3[.@selected_index]);
-	}
-
-	mes "Confirm delete: ^FF0000" + .@item_name$ + "^000000";
-	mes "From Trash Array " + .@selected_array + " index " + (.@selected_index + 1);
-	if (select("Confirm:Cancel") == 2) close;
-
-	if (.@selected_array == 1) {
-		deletearray $hotspin_trash1[.@selected_index], 1;
-		npcshopdelitem "HOTSPIN_POINTSHOP", $hotspin_trash1[.@selected_index];
-	}
-	else if (.@selected_array == 2) {
-		deletearray $hotspin_trash2[.@selected_index], 1;
-		npcshopdelitem "HOTSPIN_POINTSHOP", $hotspin_trash2[.@selected_index];
-	}
-	else if (.@selected_array == 3) {
-		deletearray $hotspin_trash3[.@selected_index], 1;
-		npcshopdelitem "HOTSPIN_POINTSHOP", $hotspin_trash3[.@selected_index];
-	}
-	
-	mes "Deleted ^00FF00" + .@item_name$ + "^000000 successfully";
-	close;
 
 OnBuyItem:
 	if (@hotspin_viewonly) {
@@ -434,7 +321,7 @@ OnBuyItem:
 	.@need = 0;
 	freeloop(1);
 	for (set .@i, 0; .@i < .@size; set .@i, .@i + 1) {
-		.@item_price = callfunc("GetItemPrice", @bought_nameid[.@i]);
+		.@item_price = callfunc("F_HotspinItemPrice", @bought_nameid[.@i]);
 		.@need += @bought_quantity[.@i] * .@item_price;
 	}
 	freeloop(0);
@@ -447,11 +334,19 @@ OnBuyItem:
 		dispbottom "The deal was unsuccessful.", 0xFF0000;
 		close;
 	}
-	
+
+	if (!checkweight2(@bought_nameid, @bought_quantity)) {
+		mes "[ HOTSPIN! ]";
+		mes "^FF0000You are overweight or your inventory is full!^000000";
+		mes "Please make some room and try again.";
+		dispbottom "The deal was unsuccessful.", 0xFF0000;
+		close;
+	}
+
 	freeloop(1);
 	for (set .@i, 0; .@i < .@size; set .@i, .@i + 1) {
 		getitem @bought_nameid[.@i], @bought_quantity[.@i];
-		.@item_price = callfunc("GetItemPrice", @bought_nameid[.@i]);
+		.@item_price = callfunc("F_HotspinItemPrice", @bought_nameid[.@i]);
 		.@item_total = @bought_quantity[.@i] * .@item_price;
 		dispbottom "Redeemed " + @bought_quantity[.@i] + "x " + getitemname(@bought_nameid[.@i]) + " (-" + callfunc("F_InsertComma",.@item_total) + " Guarantee Points.)";
 	}
@@ -464,26 +359,21 @@ OnBuyItem:
 	close;
 
 OnSellItem:
-	mes "Items to recycle:";
-	mes "==================";
-
-	deletearray @valid_items[0], getarraysize(@valid_items);
-	deletearray @valid_amounts[0], getarraysize(@valid_amounts);
-	set .@total_points, 0;
-	set .@valid_count, 0;
-
-	// เก็บขนาดของ traded arrays ไว้ (เรียกครั้งเดียว)
+	// The server does NOT remove sold items for an attached shop; we delete
+	// them ourselves with delitem4 so the exact copy put in the window
+	// (refine / cards / grade / random options) is the one removed.
 	set .@sold_size, getarraysize(@sold_nameid);
 	if (.@sold_size <= 0) {
 		mes "No items in trade.";
 		close;
 	}
-
-	// safety cap เผื่อ getarraysize ให้ค่าผิดพลาด
 	if (.@sold_size > 200) set .@sold_size, 200;
 
-	// flag ถ้าเจอ unrecyclable ให้ยกเลิกหลังจากเคลียร์ arrays
-	set .@found_unrecyclable, 0;
+	mes "Items to recycle:";
+	mes "==================";
+
+	set .@total_points, 0;
+	set .@valid_count, 0;
 
 	freeloop(1);
 	for (set .@i, 0; .@i < .@sold_size; set .@i, .@i + 1) {
@@ -491,41 +381,20 @@ OnSellItem:
 		set .@amount, @sold_quantity[.@i];
 		if (.@item_id <= 0 || .@amount <= 0) continue;
 
-		// ตรวจสอบว่าไอเท็มอยู่ใน pool ใด ๆ หรือไม่
-		set .@is_recyclable, 0;
-		for (set .@j, 0; .@j < getarraysize($hotspin_pool1) && !.@is_recyclable; set .@j, .@j + 1) {
-			if ($hotspin_pool1[.@j] == .@item_id) set .@is_recyclable, 1;
-		}
-		for (set .@j, 0; .@j < getarraysize($hotspin_pool2) && !.@is_recyclable; set .@j, .@j + 1) {
-			if ($hotspin_pool2[.@j] == .@item_id) set .@is_recyclable, 1;
-		}
-		for (set .@j, 0; .@j < getarraysize($hotspin_pool3) && !.@is_recyclable; set .@j, .@j + 1) {
-			if ($hotspin_pool3[.@j] == .@item_id) set .@is_recyclable, 1;
+		if (!callfunc("F_HotspinTier", .@item_id)) {
+			freeloop(0);
+			mes "  ^FF0000" + .@amount + "x " + getitemname(.@item_id) + " (Unrecyclable)^000000";
+			mes "==================";
+			mes "^FF0000Only Hotspin items can be recycled.^000000";
+			close;
 		}
 
-		if (.@is_recyclable) {
-			set @valid_items[.@valid_count], .@item_id;
-			set @valid_amounts[.@valid_count], .@amount;
-			set .@valid_count, .@valid_count + 1;
-			set .@total_points, .@total_points + .@amount;
-			mes "  ^00AA00" + .@amount + "x " + getitemname(.@item_id) + "^000000";
-		}
-		else {
-			mes "  ^FF0000" + .@amount + "x " + getitemname(.@item_id) + " (Unrecyclable)^000000";
-			set .@found_unrecyclable, 1;
-			break;
-		}
+		set .@valid_idx[.@valid_count], .@i;	// index into @sold_* arrays
+		set .@valid_count, .@valid_count + 1;
+		set .@total_points, .@total_points + .@amount;
+		mes "  ^00AA00" + .@amount + "x " + getitemname(.@item_id) + "^000000";
 	}
 	freeloop(0);
-
-	deletearray @sold_nameid[0], getarraysize(@sold_nameid);
-	deletearray @sold_quantity[0], getarraysize(@sold_quantity);
-
-	if (.@found_unrecyclable) {
-		mes "==================";
-		mes "^FF0000Only Hotspin items can be recycled.^000000";
-		close;
-	}
 
 	if (.@valid_count == 0) {
 		mes "==================";
@@ -546,9 +415,34 @@ OnSellItem:
 		close;
 	}
 
+	// Make sure every exact item is still there before deleting anything.
 	for (set .@i, 0; .@i < .@valid_count; set .@i, .@i + 1) {
-		delitem @valid_items[.@i], @valid_amounts[.@i];
+		.@k = .@valid_idx[.@i];
+		for (.@o = 0; .@o < 5; .@o++) {
+			.@opt_id[.@o]    = getd("@sold_option_id" + (.@o + 1) + "[" + .@k + "]");
+			.@opt_val[.@o]   = getd("@sold_option_val" + (.@o + 1) + "[" + .@k + "]");
+			.@opt_param[.@o] = getd("@sold_option_param" + (.@o + 1) + "[" + .@k + "]");
+		}
+		if (countitem4(@sold_nameid[.@k], @sold_identify[.@k], @sold_refine[.@k], @sold_attribute[.@k], @sold_card1[.@k], @sold_card2[.@k], @sold_card3[.@k], @sold_card4[.@k], @sold_enchantgrade[.@k], .@opt_id, .@opt_val, .@opt_param) < @sold_quantity[.@k]) {
+			mes "[Hotspin Recycle]";
+			mes "^FF0000Some items are no longer in your inventory.^000000";
+			mes "Recycling cancelled.";
+			close;
+		}
 	}
+
+	for (set .@i, 0; .@i < .@valid_count; set .@i, .@i + 1) {
+		.@k = .@valid_idx[.@i];
+		for (.@o = 0; .@o < 5; .@o++) {
+			.@opt_id[.@o]    = getd("@sold_option_id" + (.@o + 1) + "[" + .@k + "]");
+			.@opt_val[.@o]   = getd("@sold_option_val" + (.@o + 1) + "[" + .@k + "]");
+			.@opt_param[.@o] = getd("@sold_option_param" + (.@o + 1) + "[" + .@k + "]");
+		}
+		delitem4 @sold_nameid[.@k], @sold_quantity[.@k], @sold_identify[.@k], @sold_refine[.@k], @sold_attribute[.@k], @sold_card1[.@k], @sold_card2[.@k], @sold_card3[.@k], @sold_card4[.@k], @sold_enchantgrade[.@k], .@opt_id, .@opt_val, .@opt_param;
+	}
+
+	deletearray @sold_nameid[0], getarraysize(@sold_nameid);
+	deletearray @sold_quantity[0], getarraysize(@sold_quantity);
 
 	set #GUARANTEE_POINT, #GUARANTEE_POINT + .@total_points;
 
@@ -564,7 +458,19 @@ OnSellItem:
 	close;
 
 OnInit:
-	setarray $hotspin_pool1, 
+	// The duplicate NPC also runs OnInit; set up the shared $ arrays and shops only once.
+	if (strnpcinfo(2) != "") end;
+
+	// $ arrays are saved in the DB: clear them first, otherwise items removed
+	// from these lists would stay at the end of the old (longer) array.
+	deletearray $hotspin_pool1;
+	deletearray $hotspin_pool2;
+	deletearray $hotspin_pool3;
+	deletearray $hotspin_trash1;
+	deletearray $hotspin_trash2;
+	deletearray $hotspin_trash3;
+
+	setarray $hotspin_pool1,
 	24882,					// 21Anni3_W_Shadow_TW
 	1270049,				// Clear_Shield_Shadow3_TW
 	1270142,				// S_BP8_Melee_W
@@ -606,7 +512,7 @@ OnInit:
 	9910002,				// T_W1_Refining
 	9910003;				// T_W2_Refining
 
-	setarray $hotspin_pool2, 
+	setarray $hotspin_pool2,
 	480640,					// WK_Mantle_All_TH_LT
 	460084,					// Alice_Pillow_US
 	480540,					// Royal_Alberta_US
@@ -639,7 +545,7 @@ OnInit:
 	450355,					// Violent_D_S_Armor
 	450356,					// Abbys_L_H_Armor
 	410211,					// Little_Abyss_Dragon_
-	460178,					// Ignis_Guard_TH	
+	460178,					// Ignis_Guard_TH
 	420863,					// Red_Bat2_US
 	410708,					// Dracul_Ear_US
 	410709,					// Dimglacier_Follower_US
@@ -698,7 +604,7 @@ OnInit:
 	27425,					// Shard_Jewelry_Vit
 	27426;					// Shard_Jewelry_Int
 
-	setarray $hotspin_pool3, 
+	setarray $hotspin_pool3,
 	490310,					// Secret_Illusion_Ring_TH
 	490552,					// Nebula_Nec
 	470424,					// Aladdin_Shoes
@@ -706,7 +612,7 @@ OnInit:
 	490966,					// 6th_Anni_Ring_TH
 	460094,					// Aegis_Illusive_TH
 	28394,					// King_of_Spirit_Ring
-	
+
 	19102,					// Pale_Moon_Hat
 	20799,					// Elemental_Towel
 	18813,					// New_Wave_Sunglasses
@@ -739,7 +645,6 @@ OnInit:
 	28916,					// Gaia_Shield
 	19269,					// Angel_Of_Happiness_J
 	28521,					// Giant_Protection
-	28372,					// Imperial_Ring
 	18823,					// Imperial_Feather
 	5978,					// Toy_Syringe
 	20859,					// Phreeoni_Wing
@@ -767,7 +672,7 @@ OnInit:
 	19444,					// Star_Eyepatch_JP_
 	28502;					// Mob_Scarf
 
-	setarray $hotspin_trash1, 
+	setarray $hotspin_trash1,
 	6635,					// Blacksmith_Blessing
 	616,						// Old_Card_Album
 	12246,					// Magic_Card_Album
@@ -778,7 +683,7 @@ OnInit:
 	6230,					// Guarantee_Weapon_7Up
 	6234;					// Guarantee_Armor_7Up
 
-	setarray $hotspin_trash2, 
+	setarray $hotspin_trash2,
 	9955500,				// Transcended_Coin
 	6241,					// HD_Elunium
 	6240,					// HD_Oridecon
@@ -789,7 +694,7 @@ OnInit:
 	6417,					// Silvervine
 	25464;					// World_Tour_Ticket
 
-	setarray $hotspin_trash3, 
+	setarray $hotspin_trash3,
 	14522,					// Big_Bun
 	14523,					// Pill_
 	984,						// Oridecon
@@ -834,7 +739,7 @@ OnInit:
 			npcshopdelitem "HOTSPIN_VIEWSHOP", $hotspin_pool3[.@i];
 			npcshopadditem "HOTSPIN_VIEWSHOP", $hotspin_pool3[.@i], 1;
 		}
-	
+
 	for (set .@i, 0; .@i < getarraysize($hotspin_pool1); set .@i, .@i + 1)
 		npcshopadditem "hotspin_recycle_shop", $hotspin_pool1[.@i], 0;
 	for (set .@i, 0; .@i < getarraysize($hotspin_pool2); set .@i, .@i + 1)
@@ -852,31 +757,88 @@ OnInit:
 // ================================
 // HOTSPIN Functions
 // ================================
-function	script	IsWeekend	{
-	set .@dow, gettime(4);
-	return (.@dow == 0 || .@dow == 6);
+
+// Returns 1 = UR pool, 2 = NEW pool, 3 = Rerun pool, 0 = not a Hotspin item
+function	script	F_HotspinTier	{
+	set .@item_id, getarg(0);
+	for (set .@i, 0; .@i < getarraysize($hotspin_pool1); set .@i, .@i + 1) {
+		if ($hotspin_pool1[.@i] == .@item_id) return 1;
+	}
+	for (set .@i, 0; .@i < getarraysize($hotspin_pool2); set .@i, .@i + 1) {
+		if ($hotspin_pool2[.@i] == .@item_id) return 2;
+	}
+	for (set .@i, 0; .@i < getarraysize($hotspin_pool3); set .@i, .@i + 1) {
+		if ($hotspin_pool3[.@i] == .@item_id) return 3;
+	}
+	return 0;
 }
 
-function	script	GiveRankReward	{
+function	script	F_HotspinItemPrice	{
+	switch (callfunc("F_HotspinTier", getarg(0))) {
+		case 1: return 1000;
+		case 2: return 250;
+	}
+	return 100;
+}
+
+// Refunds spins that never ran and records the spins that did into hotspin_rank.
+// Called at the end of a spin and from OnPCLogoutEvent (player left mid-spin).
+// getarg(0): 1 = silent (no dispbottom). Returns the number of refunded spins.
+function	script	F_HotspinSettle	{
+	.@done  = @hotspin_done;
+	.@left  = @hotspin_left;
+	.@price = @hotspin_price;
+	@hotspin_done  = 0;
+	@hotspin_left  = 0;
+	@hotspin_price = 0;
+
+	if (.@left > 0 && .@price > 0) {
+		set #CASHPOINTS, #CASHPOINTS + .@left * .@price;
+		if (!getarg(0, 0))
+			dispbottom "Refunded " + (.@left * .@price) + " Cash for " + .@left + " unused spin(s). Now you have " + #CASHPOINTS + " Cash Points.";
+	}
+
+	if (.@done > 0) {
+		.@aid = getcharid(3);
+		.@cid = getcharid(0);
+		.@name$ = strcharinfo(0);
+		query_sql("INSERT INTO hotspin_rank (account_id, char_id, name, spins) VALUES ("+.@aid+","+.@cid+",'"+escape_sql(.@name$)+"',"+.@done+") ON DUPLICATE KEY UPDATE spins = spins + "+.@done+", name = '"+escape_sql(.@name$)+"'");
+	}
+	return .@left;
+}
+
+// Index of the current ranking week. A new week starts every
+// getarg(0) (0 = Sunday .. 6 = Saturday) at getarg(1):00, server local time.
+function	script	F_HotspinWeekIndex	{
+	.@now = gettimetick(2);
+	// server's UTC offset, taken from the local clock
+	.@tz = gettime(DT_HOUR) * 3600 + gettime(DT_MINUTE) * 60 + gettime(DT_SECOND) - (.@now % 86400);
+	if (.@tz > 50400) .@tz -= 86400;
+	else if (.@tz < -43200) .@tz += 86400;
+	// 1970-01-01 was a Thursday, so +4 days puts week boundaries on Sunday 00:00
+	return (.@now + .@tz + 4 * 86400 - getarg(0) * 86400 - getarg(1) * 3600) / 604800;
+}
+
+// Mails the weekly TOP3 their reward via Rodex (config in HOTSPIN_WEEKLY).
+function	script	F_HotspinRankReward	{
 	.@sender$ = "GM Transcended RO";
-	.@title$  = "Hotspin TOP3 Reward";
-	.@body$   = "Congratulations! You're in the weekly TOP3 ranking!";
-	.@zeny    = 0;
-	.@reward  = 9955503;
+	.@title$  = "Hotspin Weekly TOP3 Reward";
+	.@reward  = getvariableofnpc(.reward_item, "HOTSPIN_WEEKLY");
 
-	query_sql(" SELECT char_id, name, spins FROM hotspin_rank WHERE spins > 0 ORDER BY spins DESC LIMIT 3", .@cid, .@name$, .@score);
+	query_sql("SELECT char_id, name, spins FROM hotspin_rank WHERE spins > 0 ORDER BY spins DESC LIMIT 3", .@cid, .@name$, .@score);
 
-	if (getarraysize(.@cid) == 0) {
+	.@n = getarraysize(.@cid);
+	if (.@n == 0) {
 		announce "[ HOTSPIN! ] Sorry, there is no weekly TOP3 this week.", bc_all;
 		return;
 	}
 
-	for (set .@i, 0; .@i < getarraysize(.@cid) && .@i < 3; set .@i, .@i + 1) {
-		if (.@i == 0) set .@amount, 5;
-		else if (.@i == 1) set .@amount, 3;
-		else set .@amount, 1;
-
-		mail .@cid[.@i], .@sender$, .@title$, .@body$, .@zeny, .@reward, .@amount;
+	for (.@i = 0; .@i < .@n; .@i++) {
+		setarray .@item[0], .@reward;
+		setarray .@amount[0], getvariableofnpc(.reward_amount[.@i], "HOTSPIN_WEEKLY");
+		.@body$ = "Congratulations! You ranked #" + (.@i + 1) + " in this week's Hotspin with " + callfunc("F_InsertComma", .@score[.@i]) + " spins.";
+		mail .@cid[.@i], .@sender$, .@title$, .@body$, 0, .@item, .@amount;
+		announce "[ HOTSPIN! ] Weekly TOP" + (.@i + 1) + ": " + .@name$[.@i] + " - " + callfunc("F_InsertComma", .@score[.@i]) + " spins!", bc_all;
 	}
 	announce "[ HOTSPIN! ] The weekly TOP3 rewards have been sent via Rodex!!", bc_all;
 	return;
@@ -888,62 +850,39 @@ function	script	S_ResetHotspin	{
 	return;
 }
 
-function	script	GetItemPrice	{
-	set .@item_id, getarg(0);
-	for (set .@i, 0; .@i < getarraysize($hotspin_pool1); set .@i, .@i + 1) {
-		if ($hotspin_pool1[.@i] == .@item_id) return 1000;
-	}
-	for (set .@i, 0; .@i < getarraysize($hotspin_pool2); set .@i, .@i + 1) {
-		if ($hotspin_pool2[.@i] == .@item_id) return 250;
-	}
-	for (set .@i, 0; .@i < getarraysize($hotspin_pool3); set .@i, .@i + 1) {
-		if ($hotspin_pool3[.@i] == .@item_id) return 100;
-	}
-	return 100;
-}
-
-function	script	ReloadHotspinPool	{
-	npcshopdelitem "HOTSPIN_POINTSHOP", 512;
-
-	freeloop(1);
-	for (set .@j, 0; .@j < 500; set .@j, .@j + 1) {
-		npcshopdelitem "HOTSPIN_POINTSHOP", 0;
-	}
-
-	for (set .@i, 0; .@i < getarraysize($hotspin_pool1); set .@i, .@i + 1) {
-		npcshopdelitem "HOTSPIN_POINTSHOP", $hotspin_pool1[.@i];
-		npcshopadditem "HOTSPIN_POINTSHOP", $hotspin_pool1[.@i], 1000;
-	}
-
-	for (set .@i, 0; .@i < getarraysize($hotspin_pool2); set .@i, .@i + 1) {
-		npcshopdelitem "HOTSPIN_POINTSHOP", $hotspin_pool2[.@i];
-		npcshopadditem "HOTSPIN_POINTSHOP", $hotspin_pool2[.@i], 250;
-	}
-
-	for (set .@i, 0; .@i < getarraysize($hotspin_pool3); set .@i, .@i + 1) {
-		npcshopdelitem "HOTSPIN_POINTSHOP", $hotspin_pool3[.@i];
-		npcshopadditem "HOTSPIN_POINTSHOP", $hotspin_pool3[.@i], 100;
-	}
-	freeloop(0);
-	return;
-}
-
 // ================================
-// HOTSPIN System Controller
+// HOTSPIN Weekly Ranking Controller
 // ================================
-// -	script	HOTSPIN_EVENTS	-1,{
-// 
-// OnHour20:
-// 	// Check if it's Sunday 23:00 (end of weekend)
-// 	if (gettime(4) == 3 && gettime(3) == 20 && gettime(2) == 00) {
-// 		callfunc "GiveRankReward";
-// 	}
-// 	// Check if it's Monday 00:00 (reset time)
-// 	if (gettime(4) == 3 && gettime(3) == 20 && gettime(2) == 01) {
-// 		callfunc "S_ResetHotspin";
-// 	}
-// 	end;
-// }
+-	script	HOTSPIN_WEEKLY	-1,{
+	end;
+
+OnInit:
+	// ---- Config ----
+	.reset_dow  = 3;			// reset day: 0 = Sun, 1 = Mon, ... 6 = Sat
+	.reset_hour = 20;			// reset hour (server local time, 0-23)
+	.reward_item = 9955503;		// Transcended_Coin_10000
+	setarray .reward_amount, 5, 3, 1;	// amount for TOP1, TOP2, TOP3
+	// Fall through: also catches a reset that was missed while the server was down.
+
+OnMinute00:
+	.@week = callfunc("F_HotspinWeekIndex", .reset_dow, .reset_hour);
+	if ($HOTSPIN_WEEK == 0) {
+		// first run: start tracking from this week
+		$HOTSPIN_WEEK = .@week;
+		end;
+	}
+	if (.@week <= $HOTSPIN_WEEK) end;
+	$HOTSPIN_WEEK = .@week;	// mark first so a reward can never be sent twice
+	callfunc "F_HotspinRankReward";
+	callfunc "S_ResetHotspin";
+	end;
+
+OnPCLogoutEvent:
+	// Player left in the middle of a spin: refund unused spins, record the rest.
+	if (@hotspin_left > 0 || @hotspin_done > 0)
+		callfunc "F_HotspinSettle", 1;
+	end;
+}
 
 izlude,102,134,4	duplicate(H O T S P I N !)	H O T S P I N !#iz	CLEAR_NPC
 
