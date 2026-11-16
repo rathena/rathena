@@ -540,12 +540,67 @@ inline int32 search_range( map_session_data* sd ) {
 	return cap_value( range, 1, MAX_RANGE );
 }
 
+inline int32 enemy_count_sub( block_list* bl, va_list ap ) {
+	map_session_data* sd = va_arg( ap, map_session_data* );
+	if( status_isdead( *bl ) )
+		return 0;
+	return battle_check_target( sd, bl, BCT_ENEMY ) > 0 ? 1 : 0;
+}
+
+/// Living enemy monsters within `range` (square, like skill splash) of `center`.
+inline int32 enemies_around( map_session_data* sd, block_list* center, int32 range ) {
+	return map_foreachinrange( enemy_count_sub, center, range, BL_MOB, sd );
+}
+
+/// Radius (square) a self-cast attack skill hits around the caster, 0 = it hits only the
+/// target in melee (combo / counter skills like Chain Combo, Tiger Fist).
+inline int32 self_area( uint16 skill_id, uint16 skill_lv ) {
+	if( !( skill_get_inf( skill_id ) & INF_SELF_SKILL ) )
+		return 0;
+
+	int32 splash = skill_get_splash( skill_id, skill_lv );
+	if( splash > 0 )
+		return splash;
+
+	// Elemental Buster: the real hit is an element variant with its own splash
+	if( skill_id == EM_ELEMENTAL_BUSTER )
+		return std::max( 1, skill_get_splash( EM_ELEMENTAL_BUSTER_FIRE, skill_lv ) );
+
+	// Ground units placed around us (Grand Cross, Kaensin, Tatami Gaeshi, Rain of Crystal,
+	// Kunai Kaiten, ...): splash is 0 in skill_db, the area comes from the unit layout.
+	// Layout >= 0 is a square of that radius; -1 is a special shape that always covers
+	// the cells right next to us.
+	if( skill_get_unit_id( skill_id ) != 0 ) {
+		std::shared_ptr<s_skill_db> skill = skill_db.find( skill_id );
+		int32 layout = skill->unit_layout_type[std::min<int32>( skill_lv, MAX_SKILL_LEVEL ) - 1];
+		int32 unit_range = skill_get_unit_range( skill_id, skill_lv );
+		return std::max( { 1, layout, unit_range } );
+	}
+	return 0;
+}
+
+/// Area of the first self-centred AoE attack skill in the slots (Explosion Blaster,
+/// Magnum Break, Grand Cross, ...), 0 if none. These hit around the caster, not the target.
+inline int32 self_aoe_splash( map_session_data* sd ) {
+	for( int32 i = 0; i < SLOTS; i++ ) {
+		uint16 skill_id = static_cast<uint16>( setting( sd, "AA_ATK_SK", i ) );
+		uint16 skill_lv = slot_level( sd, skill_id, setting( sd, "AA_ATK_LV", i ) );
+		if( skill_lv == 0 )
+			continue;
+		int32 area = self_area( skill_id, skill_lv );
+		if( area > 0 )
+			return area;
+	}
+	return 0;
+}
+
 inline int32 search_sub( block_list* bl, va_list ap ) {
 	map_session_data* sd = va_arg( ap, map_session_data* );
 	int32* best_id = va_arg( ap, int32* );
 	int32* best_dist = va_arg( ap, int32* );
 	s_state* st = va_arg( ap, s_state* );
 	t_tick tick = va_arg( ap, t_tick );
+	int32 aoe = va_arg( ap, int32 );
 
 	mob_data* md = reinterpret_cast<mob_data*>( bl );
 
@@ -566,10 +621,18 @@ inline int32 search_sub( block_list* bl, va_list ap ) {
 			return 0;
 	}
 
-	// Monsters already attacking us come first (score lowered by 100), then the nearest
 	int32 dist = distance_bl( sd, bl );
-	if( md->target_id == sd->id )
+	if( aoe > 0 ) {
+		// Self AoE: prefer packs. Every other monster one cast around this one would hit
+		// counts as a cell closer. A monster attacking us is only a small bonus, so a ranged
+		// one shooting from afar doesn't pull us out of the pack.
+		dist -= std::min( enemies_around( sd, bl, aoe ) - 1, 10 );
+		if( md->target_id == sd->id )
+			dist -= 2;
+	} else if( md->target_id == sd->id ) {
+		// Monsters already attacking us come first (score lowered by 100), then the nearest
 		dist -= 100;
+	}
 	if( dist >= *best_dist )
 		return 0;
 	if( !safe_path_bl( sd, bl ) ) // unreachable, or only through a warp
@@ -600,7 +663,7 @@ inline block_list* find_target( map_session_data* sd, s_state& st, t_tick tick )
 	int32 range = search_range( sd );
 	int32 best_id = 0;
 	int32 best_dist = range + 1;
-	map_foreachinallrange( search_sub, sd, range, BL_MOB, sd, &best_id, &best_dist, &st, tick );
+	map_foreachinallrange( search_sub, sd, range, BL_MOB, sd, &best_id, &best_dist, &st, tick, self_aoe_splash( sd ) );
 	return best_id ? map_id2bl( best_id ) : nullptr;
 }
 
@@ -816,16 +879,26 @@ inline bool use_attack_skills( map_session_data* sd, block_list* target, bool* h
 			continue;
 
 		int32 inf = skill_get_inf( skill_id );
-		int32 range;
-		if( inf & INF_SELF_SKILL )
-			range = std::max( 1, skill_get_splash( skill_id, skill_lv ) );
-		else
-			range = skill_get_range2( sd, skill_id, skill_lv, true );
+		int32 splash = self_area( skill_id, skill_lv );
 
-		if( !battle_check_range( sd, target, range ) ) {
-			if( !unit_is_walking( sd ) )
-				unit_walktobl( sd, target, range, 0 );
-			return true;
+		if( splash > 0 ) {
+			// Self AoE hits a square around us. Use the same square check as the splash
+			// (the circular battle_check_range disagreed with the square walk-stop check on
+			// diagonals, so we stood still neither walking nor casting). Walk close so the
+			// target's pack is inside too; cast early once enemies already surround us.
+			int32 close = std::max( 1, splash - 2 );
+			bool in_area = check_distance_bl( sd, target, splash );
+			if( !check_distance_bl( sd, target, close ) && !( in_area && enemies_around( sd, sd, splash ) >= 2 ) ) {
+				if( unit_is_walking( sd ) || unit_walktobl( sd, target, close, 0 ) || !in_area )
+					return true; // walking in, or can't reach: the stuck watchdog drops the target
+			}
+		} else {
+			int32 range = ( inf & INF_SELF_SKILL ) ? 1 : skill_get_range2( sd, skill_id, skill_lv, true );
+			if( !battle_check_range( sd, target, range ) ) {
+				if( !unit_is_walking( sd ) )
+					unit_walktobl( sd, target, range, 0 );
+				return true;
+			}
 		}
 
 		bool ok;
@@ -927,6 +1000,16 @@ inline void think( map_session_data* sd, s_state& st, t_tick tick ) {
 		}
 		target = find_target( sd, st, tick );
 		st.target_id = target ? target->id : 0;
+	} else {
+		// Self AoE: don't keep chasing a target out of reach while a pack already surrounds us
+		int32 aoe = self_aoe_splash( sd );
+		if( aoe > 0 && !check_distance_bl( sd, target, aoe ) && enemies_around( sd, sd, aoe ) >= 2 ) {
+			block_list* closer = find_target( sd, st, tick );
+			if( closer != nullptr ) {
+				target = closer;
+				st.target_id = closer->id;
+			}
+		}
 	}
 
 	// Stuck on this target (can't reach it, not moving, its hp not dropping): drop it for a while
