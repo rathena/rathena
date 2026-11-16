@@ -11,7 +11,8 @@
 //   AA_ATK_SK[0..4]/AA_ATK_LV attack skill slots (lv 0 = highest learned)
 //   AA_BUF_SK[0..4]/AA_BUF_LV buff skill slots, checked in order 1 > 5; recast when the
 //                             buff's real remaining time is almost over
-//   AA_BUF_SEC[0..4]          0 = auto (read buff time), >0 = recast every N seconds instead
+//   AA_BUF_SEC[0..4]          0 = auto (read buff time), >0 = recast every N seconds instead.
+//                             Sphere skills ignore it (refill by count); heals / summons use it.
 //   AA_HP_IT[0..4]/AA_HP_PCT  HP items, used when HP% < pct (first slot the player owns)
 //   AA_SP_IT[0..4]/AA_SP_PCT  SP items, same for SP
 //   AA_OT_IT[0..4]/AA_OT_MS   other items, used every N ms
@@ -55,6 +56,7 @@ constexpr t_tick TICK_INTERVAL = 300;      // ms between decisions
 constexpr t_tick IDLE_WALK_DELAY = 1500;    // ms without a target before wandering
 constexpr t_tick BUFF_RETRY_DELAY = 3000;   // minimum ms between casts of the same buff slot
 constexpr t_tick BUFF_REFRESH_LEAD = 1500;  // recast a buff when this many ms are left on it
+constexpr t_tick SPHERE_RETRY_DELAY = 500;  // minimum ms between casts of a sphere slot
 constexpr t_tick AVOID_TP_DELAY = 1000;     // minimum ms between "run away" teleports
 constexpr int32 DEFAULT_RANGE = 9;
 constexpr int32 MAX_RANGE = 14;
@@ -173,6 +175,81 @@ inline void message( map_session_data* sd, const char* msg ) {
 
 // ---- skill helpers (also used by the NPC menu) ------------------------------
 
+// ---- skill classification ---------------------------------------------------
+// skill_db has no "heal" / "sphere" flag, so these groups are explicit lists.
+// Add custom skills here (then recompile) to put them in a group.
+
+/// How a Skill Buff slot decides when to recast.
+enum e_buff_mode : int32 {
+	BUFF_NONE = 0,     // not a buff
+	BUFF_STATUS = 1,   // watch the skill's status and its real remaining time
+	BUFF_SPHERE = 2,   // keep spirit spheres / coins / charms / soul energy / elemental balls full
+	BUFF_INTERVAL = 3, // no status to watch: recast every AA_BUF_SEC seconds (heals, summons)
+};
+
+/// Spirit spheres, coins, charms, soul energy, Warlock balls: recast while below max.
+constexpr uint16 SPHERE_SKILLS[] = {
+	MO_CALLSPIRITS, CH_SOULCOLLECT, GS_GLITTERING, RL_RICHS_COIN,
+	KO_KAHU_ENTEN, KO_HYOUHU_HUBUKI, KO_KAZEHU_SEIRAN, KO_DOHU_KOUKAI,
+	SOA_SOUL_GATHERING,
+	WL_SUMMONFB, WL_SUMMONBL, WL_SUMMONWB, WL_SUMMONSTONE,
+};
+
+/// Heals and summons: no status, recast on a fixed interval set by the player.
+constexpr uint16 INTERVAL_SKILLS[] = {
+	// heal
+	NV_FIRSTAID, AL_HEAL, AB_HIGHNESSHEAL, AB_CHEAL, CD_DILECTIO_HEAL,
+	AM_POTIONPITCHER, CR_SLIMPITCHER, SU_TUNABELLY,
+	// summon
+	SO_SUMMON_AGNI, SO_SUMMON_AQUA, SO_SUMMON_VENTUS, SO_SUMMON_TERA,
+	AM_CANNIBALIZE, AM_SPHEREMINE, KO_ZANZOU, NC_SILVERSNIPER, NC_MAGICDECOY,
+	MT_M_MACHINE, SH_KI_SUL_WATER_SPRAYING,
+};
+
+/// Toggle / stealth skills that would break auto attack (can't attack while hidden, running, ...).
+constexpr uint16 NO_AUTO_SKILLS[] = {
+	TF_HIDING, AS_CLOAKING, GC_CLOAKINGEXCEED, NV_TRICKDEAD, ST_CHASEWALK,
+	RA_CAMOUFLAGE, KO_YAMIKUMO, TK_RUN, RA_WUGDASH, SC_INVISIBILITY,
+};
+
+/// Skills that switch OFF when cast again but lack the Toggleable flag in skill_db.
+constexpr uint16 TOGGLE_SKILLS[] = {
+	SM_AUTOBERSERK, NC_STEALTHFIELD, LG_FORCEOFVANGUARD, SC_REPRODUCE, CG_LONGINGFREEDOM,
+};
+
+inline bool is_toggle( uint16 skill_id );
+
+/// Status that shows the skill is active on the caster (usually the skill_db Status).
+inline sc_type watched_status( uint16 skill_id ) {
+	if( skill_id == NC_STEALTHFIELD )
+		return SC_STEALTHFIELD_MASTER; // caster gets the MASTER status, allies get SC_STEALTHFIELD
+	return skill_get_sc( skill_id );
+}
+
+template <size_t N>
+inline bool in_list( const uint16 ( &list )[N], uint16 skill_id ) {
+	return std::find( std::begin( list ), std::end( list ), skill_id ) != std::end( list );
+}
+
+inline bool is_toggle( uint16 skill_id ) {
+	return skill_get_inf2( skill_id, INF2_TOGGLEABLE ) || in_list( TOGGLE_SKILLS, skill_id );
+}
+
+inline e_buff_mode buff_mode( uint16 skill_id ) {
+	std::shared_ptr<s_skill_db> skill = skill_db.find( skill_id );
+	if( skill_id == 0 || skill == nullptr || skill->inf == INF_PASSIVE_SKILL )
+		return BUFF_NONE;
+	if( in_list( NO_AUTO_SKILLS, skill_id ) )
+		return BUFF_NONE;
+	if( in_list( SPHERE_SKILLS, skill_id ) )
+		return BUFF_SPHERE;
+	if( in_list( INTERVAL_SKILLS, skill_id ) )
+		return BUFF_INTERVAL;
+	if( ( skill->inf & ( INF_SELF_SKILL | INF_SUPPORT_SKILL ) ) && skill->sc > SC_NONE && skill->sc < SC_MAX )
+		return BUFF_STATUS;
+	return BUFF_NONE;
+}
+
 /// Bitmask: 1 = usable as attack skill, 2 = usable as buff skill, 0 = neither (passive / unknown)
 inline int32 skill_category( uint16 skill_id ) {
 	std::shared_ptr<s_skill_db> skill = skill_db.find( skill_id );
@@ -183,18 +260,51 @@ inline int32 skill_category( uint16 skill_id ) {
 	if( inf == INF_PASSIVE_SKILL ) // passive: never castable
 		return 0;
 
-	bool nodamage = skill->nk[NK_NODAMAGE];
-
 	// Attack: deals damage, or is cast on an enemy (e.g. Provoke, Lex Divina)
-	if( !nodamage || ( inf & INF_ATTACK_SKILL ) )
+	if( !skill->nk[NK_NODAMAGE] || ( inf & INF_ATTACK_SKILL ) )
 		return 1;
 
-	// Buff: cast on self/ally and gives a status we can watch for recasting
-	// (excludes Heal, Teleport, Warp Portal, Resurrection, ground utility like Ice Wall)
-	if( ( inf & ( INF_SELF_SKILL | INF_SUPPORT_SKILL ) ) && skill->sc > SC_NONE && skill->sc < SC_MAX )
+	// Buff: status buffs (incl. toggles), sphere skills, heals / summons on interval.
+	// Traps, cures, teleport/warp, crafting etc. are in no group.
+	if( buff_mode( skill_id ) != BUFF_NONE )
 		return 2;
 
 	return 0;
+}
+
+/// BUFF_SPHERE: true while the skill's resource is below its maximum.
+inline bool sphere_needed( map_session_data* sd, uint16 skill_id, uint16 skill_lv ) {
+	int32 dragon = 0;
+	if( status_change_entry* rd = sd->sc.getSCE( SC_RAISINGDRAGON ); rd != nullptr )
+		dragon = rd->val1;
+
+	switch( skill_id ) {
+	case MO_CALLSPIRITS:
+		return sd->spiritball < skill_lv + dragon;
+	case CH_SOULCOLLECT:
+		return sd->spiritball < 5 + dragon;
+	case GS_GLITTERING:
+	case RL_RICHS_COIN:
+		return sd->spiritball < 10;
+	case KO_KAHU_ENTEN:
+	case KO_HYOUHU_HUBUKI:
+	case KO_KAZEHU_SEIRAN:
+	case KO_DOHU_KOUKAI:
+		return sd->spiritcharm_type != skill_get_ele( skill_id, skill_lv ) || sd->spiritcharm < MAX_SPIRITCHARM;
+	case SOA_SOUL_GATHERING:
+		// Only castable while Soul Collect is on
+		return sd->sc.getSCE( SC_SOULCOLLECT ) != nullptr
+			&& sd->soulball < 5 + pc_checkskill( sd, SP_SOULENERGY ) * 3;
+	case WL_SUMMONFB:
+	case WL_SUMMONBL:
+	case WL_SUMMONWB:
+	case WL_SUMMONSTONE:
+		for( int32 i = SC_SPHERE_1; i <= SC_SPHERE_5; i++ )
+			if( sd->sc.getSCE( static_cast<sc_type>( i ) ) == nullptr )
+				return true; // a free ball slot
+		return false;
+	}
+	return false;
 }
 
 /// Level to use for a slot: configured level capped to learned level, 0 if not usable.
@@ -579,25 +689,46 @@ inline bool use_buffs( map_session_data* sd, s_state& st, t_tick tick ) {
 		uint16 skill_id = static_cast<uint16>( setting( sd, "AA_BUF_SK", i ) );
 		uint16 skill_lv = slot_level( sd, skill_id, setting( sd, "AA_BUF_LV", i ) );
 
-		if( skill_lv == 0 )
-			continue;
-		if( st.buff_last[i] != 0 && DIFF_TICK( tick, st.buff_last[i] ) < BUFF_RETRY_DELAY )
+		e_buff_mode mode = buff_mode( skill_id );
+		if( skill_lv == 0 || mode == BUFF_NONE )
 			continue;
 
-		bool need;
+		// Spheres refill one cast at a time, so retry quickly; others wait a bit after a cast
+		t_tick retry = ( mode == BUFF_SPHERE ) ? SPHERE_RETRY_DELAY : BUFF_RETRY_DELAY;
+		if( st.buff_last[i] != 0 && DIFF_TICK( tick, st.buff_last[i] ) < retry )
+			continue;
+
+		bool need = false;
 		int64 manual_sec = setting( sd, "AA_BUF_SEC", i );
-		sc_type sc = skill_get_sc( skill_id );
+		sc_type sc = watched_status( skill_id );
 
-		if( manual_sec > 0 ) {
-			// Manual: fixed interval since our last cast
-			need = st.buff_last[i] == 0 || DIFF_TICK( tick, st.buff_last[i] ) >= manual_sec * 1000;
-		} else if( sc > SC_NONE && sc < SC_MAX ) {
-			t_tick left = status_remaining( sd, sc, tick );
-			need = left == 0 || ( left > 0 && left <= BUFF_REFRESH_LEAD );
-		} else {
-			// No status to watch: use the duration from skill_db, or cast once if it has none
-			int32 duration = skill_get_time( skill_id, skill_lv );
-			need = st.buff_last[i] == 0 || ( duration > 0 && DIFF_TICK( tick, st.buff_last[i] ) >= duration );
+		switch( mode ) {
+		case BUFF_SPHERE:
+			need = sphere_needed( sd, skill_id, skill_lv );
+			break;
+		case BUFF_STATUS:
+			if( is_toggle( skill_id ) ) {
+				// Toggle: casting again would switch it OFF, so only cast when it is off
+				need = status_remaining( sd, sc, tick ) == 0;
+			} else if( manual_sec > 0 ) {
+				need = st.buff_last[i] == 0 || DIFF_TICK( tick, st.buff_last[i] ) >= manual_sec * 1000;
+			} else {
+				t_tick left = status_remaining( sd, sc, tick );
+				need = left == 0 || ( left > 0 && left <= BUFF_REFRESH_LEAD );
+			}
+			break;
+		case BUFF_INTERVAL: {
+			// Interval set in the menu; fall back to the skill_db duration, then 10s
+			t_tick every = manual_sec * 1000;
+			if( every <= 0 )
+				every = skill_get_time( skill_id, skill_lv );
+			if( every <= 0 )
+				every = 10000;
+			need = st.buff_last[i] == 0 || DIFF_TICK( tick, st.buff_last[i] ) >= every;
+			break;
+		}
+		default:
+			break;
 		}
 
 		if( !need || !skill_ready( sd, skill_id, skill_lv ) )

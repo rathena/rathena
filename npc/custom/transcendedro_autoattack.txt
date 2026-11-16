@@ -67,8 +67,15 @@ function	BuffInfo	{
 	if (.@id <= 0)
 		return "";
 	.@sec = AA_BUF_SEC[getarg(1)];
-	if (.@sec > 0)
+	.@mode = aa_skillinfo(.@id, 4);
+	if (.@mode == 2)
+		return " (keep spheres full)";
+	if (.@mode == 4)
+		.@t$ = " (toggle - keep ON)";
+	else if (.@sec > 0)
 		.@t$ = " (every " + .@sec + "s)";
+	else if (.@mode == 3)
+		.@t$ = " (every 10s)";
 	else
 		.@t$ = " (auto)";
 	.@sc = aa_skillinfo(.@id, 3);
@@ -235,18 +242,35 @@ S_PickSkill:
 	setd .@lv$ + "[" + .@slot + "]", (.@l == .@max ? 0 : .@l); // 0 = always highest learned
 
 	if (.@cat == 2) {
+		AA_BUF_SEC[.@slot] = 0;
+		.@mode = aa_skillinfo(.@id, 4);
 		Page();
 		mes aa_skillinfo(.@id, 0);
-		mes "When should this buff be recast?";
-		mes "Auto reads the buff's real remaining";
-		mes "time (incl. duration bonuses).";
-		if (select("Auto - read buff time (recommended):Every N seconds (manual)") == 1) {
-			AA_BUF_SEC[.@slot] = 0;
-		} else {
-			Page();
+		if (.@mode == 2) {
+			// Spheres / coins / charms / soul energy / elemental balls
+			mes "Recast whenever you have fewer";
+			mes "spheres than the maximum.";
+			next;
+		} else if (.@mode == 4) {
+			mes "Toggle skill - turned ON when it is off,";
+			mes "never toggled off by Auto Attack.";
+			next;
+		} else if (.@mode == 3) {
+			// Heals / summons have no status to watch
+			mes "This skill has no buff timer.";
 			mes "Recast every how many seconds? (1 - 3600)";
 			input .@sec;
 			AA_BUF_SEC[.@slot] = cap_value(.@sec, 1, 3600);
+		} else {
+			mes "When should this buff be recast?";
+			mes "Auto reads the buff's real remaining";
+			mes "time (incl. duration bonuses).";
+			if (select("Auto - read buff time (recommended):Every N seconds (manual)") == 2) {
+				Page();
+				mes "Recast every how many seconds? (1 - 3600)";
+				input .@sec;
+				AA_BUF_SEC[.@slot] = cap_value(.@sec, 1, 3600);
+			}
 		}
 	}
 	return;

@@ -49,7 +49,8 @@ BUILDIN_FUNC(autoattack)
 /**
  * aa_skillinfo(<skill id>,<type>)
  *  type 0 = skill name (description), 1 = category bitmask (1 attack, 2 buff), 2 = max level,
- *  3 = status (SC_*) the skill gives, 0 = none
+ *  3 = status (SC_*) the skill gives, 0 = none,
+ *  4 = buff mode (0 none, 1 status, 2 sphere count, 3 interval, 4 toggle)
  **/
 BUILDIN_FUNC(aa_skillinfo)
 {
@@ -66,8 +67,15 @@ BUILDIN_FUNC(aa_skillinfo)
 	case 1:
 		script_pushint(st, autoattack::skill_category(skill_id));
 		break;
+	case 4: { // buff mode: 0 none, 1 status, 2 sphere count, 3 interval, 4 toggle (status, only cast when off)
+		int32 mode = autoattack::buff_mode(skill_id);
+		if (mode == autoattack::BUFF_STATUS && autoattack::is_toggle(skill_id))
+			mode = 4;
+		script_pushint(st, mode);
+		break;
+	}
 	case 3: // status the skill gives (for getstatus), 0 = none
-		script_pushint(st, (skill_id == 0 || !skill_db.find(skill_id)) ? 0 : std::max<int32>(0, skill_get_sc(skill_id)));
+		script_pushint(st, (skill_id == 0 || !skill_db.find(skill_id)) ? 0 : std::max<int32>(0, autoattack::watched_status(skill_id)));
 		break;
 	default:
 		script_pushint(st, (skill_id == 0 || !skill_db.find(skill_id)) ? 0 : skill_get_max(skill_id));
