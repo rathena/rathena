@@ -428,7 +428,7 @@ S_Teleport:
 		case 2:
 			if (AA_TPITEM) {
 				AA_TPITEM = 0;
-			} else if (countitem(601) || countitem(12887)) {
+			} else if (countitem(601) || rentalcountitem(12887)) {
 				AA_TPITEM = 1;
 			} else {
 				Page();
