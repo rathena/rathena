@@ -1,0 +1,433 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "targets": [
+        {
+          "expr": "topk(20, (increase(map_script_npc_run_seconds_sum[$__rate_interval]) / clamp_min(increase(map_script_npc_run_seconds_count[$__rate_interval]), 1)) * 1000)",
+          "legendFormat": "{{npc}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Top 20 Slowest NPCs (Avg Cycle Time ms)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "expr": "(sum(increase(map_script_npc_run_seconds_sum[$__rate_interval])) / clamp_min(sum(increase(map_script_npc_run_seconds_count[$__rate_interval])), 1)) * 1000",
+          "legendFormat": "NPC avg",
+          "refId": "A"
+        }
+      ],
+      "title": "Average NPC Cycle Time (ms)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "id": 3,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "targets": [
+        {
+          "expr": "(rate(server_socket_poll_seconds_sum[$__rate_interval]) / clamp_min(rate(server_socket_poll_seconds_count[$__rate_interval]), 1e-9)) * 1000",
+          "legendFormat": "socket avg",
+          "refId": "A"
+        }
+      ],
+      "title": "Average Socket Poll Time (ms)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "id": 4,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "targets": [
+        {
+          "expr": "(rate(map_ai_loop_seconds_sum{loop=\"hard\"}[$__rate_interval]) / clamp_min(rate(map_ai_loop_seconds_count{loop=\"hard\"}[$__rate_interval]), 1e-9)) * 1000",
+          "legendFormat": "AI hard",
+          "refId": "A"
+        },
+        {
+          "expr": "(rate(map_ai_loop_seconds_sum{loop=\"lazy\"}[$__rate_interval]) / clamp_min(rate(map_ai_loop_seconds_count{loop=\"lazy\"}[$__rate_interval]), 1e-9)) * 1000",
+          "legendFormat": "AI lazy",
+          "refId": "B"
+        }
+      ],
+      "title": "Average AI Loop Time (ms)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 16
+      },
+      "id": 5,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "targets": [
+        {
+          "expr": "(rate(map_script_run_seconds_sum[$__rate_interval]) / clamp_min(rate(map_script_run_seconds_count[$__rate_interval]), 1e-9)) * 1000",
+          "legendFormat": "script avg",
+          "refId": "A"
+        },
+        {
+          "expr": "(rate(map_packet_process_seconds_sum[$__rate_interval]) / clamp_min(rate(map_packet_process_seconds_count[$__rate_interval]), 1e-9)) * 1000",
+          "legendFormat": "packet avg",
+          "refId": "B"
+        }
+      ],
+      "title": "Script/Packet Average Time (ms)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 16
+      },
+      "id": 6,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "targets": [
+        {
+          "expr": "(rate(server_main_loop_seconds_sum[$__rate_interval]) / clamp_min(rate(server_main_loop_seconds_count[$__rate_interval]), 1e-9)) * 1000",
+          "legendFormat": "main loop",
+          "refId": "A"
+        },
+        {
+          "expr": "(rate(server_timer_process_seconds_sum[$__rate_interval]) / clamp_min(rate(server_timer_process_seconds_count[$__rate_interval]), 1e-9)) * 1000",
+          "legendFormat": "timer process",
+          "refId": "B"
+        },
+        {
+          "expr": "(rate(server_main_io_loop_seconds_sum[$__rate_interval]) / clamp_min(rate(server_main_io_loop_seconds_count[$__rate_interval]), 1e-9)) * 1000",
+          "legendFormat": "main io",
+          "refId": "C"
+        }
+      ],
+      "title": "Main/Timer Loop Average Time (ms)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "unit": "ops"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 32
+      },
+      "id": 7,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "targets": [
+        {
+          "expr": "rate(map_packets_processed_total[$__rate_interval])",
+          "legendFormat": "packets/sec",
+          "refId": "A"
+        },
+        {
+          "expr": "rate(map_packet_bytes_total[$__rate_interval])",
+          "legendFormat": "packet bytes/sec",
+          "refId": "B"
+        },
+        {
+          "expr": "rate(map_script_runs_total[$__rate_interval])",
+          "legendFormat": "script runs/sec",
+          "refId": "C"
+        },
+        {
+          "expr": "rate(map_script_npc_runs_total[$__rate_interval])",
+          "legendFormat": "npc script runs/sec",
+          "refId": "D"
+        }
+      ],
+      "title": "Throughput Counters",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 32
+      },
+      "id": 8,
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "targets": [
+        {
+          "expr": "topk(15, (rate(server_timer_callback_seconds_sum[$__rate_interval]) / clamp_min(rate(server_timer_callback_seconds_count[$__rate_interval]), 1e-9)) * 1000)",
+          "legendFormat": "{{name}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Top Timer Callback Average Time (ms)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 24
+      },
+      "id": 9,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "targets": [
+        {
+          "expr": "(rate(server_cycle_time_ns_total[$__rate_interval]) / clamp_min(rate(server_main_loop_cycles_total[$__rate_interval]), 1e-9)) / 1e6",
+          "legendFormat": "cycle avg",
+          "refId": "A"
+        },
+        {
+          "expr": "server_cycle_time_last_ms",
+          "legendFormat": "cycle last",
+          "refId": "B"
+        }
+      ],
+      "title": "Server Cycle Time (ms)",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 39,
+  "style": "dark",
+  "tags": [
+    "rathena",
+    "metrics"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "rAthena Metrics",
+  "uid": "rathena-metrics",
+  "version": 4,
+  "weekStart": ""
+}
