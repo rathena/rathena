@@ -2898,6 +2898,18 @@ Body:
       - Index: 2
         Item: Aquila_Antiquity2
         Rate: 1500
+      - Index: 3
+        Item: EP19_S_F_1_Extract
+        Rate: 1000
+      - Index: 4
+        Item: EP19_S_F_2_Extract
+        Rate: 1000
+      - Index: 5
+        Item: EP19_S_F_3_Extract
+        Rate: 1000
+      - Index: 6
+        Item: EP19_Gla_Extract
+        Rate: 1000
     SpecificDrops:
       - Monster: EP19_RGAN_A
         Drops:
@@ -2942,6 +2954,18 @@ Body:
       - Index: 2
         Item: Aquila_Antiquity2
         Rate: 1500
+      - Index: 3
+        Item: EP19_S_F_1_Extract
+        Rate: 1000
+      - Index: 4
+        Item: EP19_S_F_2_Extract
+        Rate: 1000
+      - Index: 5
+        Item: EP19_S_F_3_Extract
+        Rate: 1000
+      - Index: 6
+        Item: EP19_Gla_Extract
+        Rate: 1000
     SpecificDrops:
       - Monster: EP19_HEARTHUNTER_AT
         Drops:
@@ -2986,6 +3010,18 @@ Body:
       - Index: 2
         Item: Aquila_Antiquity2
         Rate: 1500
+      - Index: 3
+        Item: EP19_S_F_1_Extract
+        Rate: 1000
+      - Index: 4
+        Item: EP19_S_F_2_Extract
+        Rate: 1000
+      - Index: 5
+        Item: EP19_S_F_3_Extract
+        Rate: 1000
+      - Index: 6
+        Item: EP19_Gla_Extract
+        Rate: 1000
     SpecificDrops:
       - Monster: EP19_CAVE_CALMARING
         Drops:
@@ -3038,6 +3074,18 @@ Body:
       - Index: 2
         Item: Aquila_Antiquity2
         Rate: 1500
+      - Index: 3
+        Item: EP19_S_F_1_Extract
+        Rate: 1000
+      - Index: 4
+        Item: EP19_S_F_2_Extract
+        Rate: 1000
+      - Index: 5
+        Item: EP19_S_F_3_Extract
+        Rate: 1000
+      - Index: 6
+        Item: EP19_Gla_Extract
+        Rate: 1000
     SpecificDrops:
       - Monster: EP19_ONE_EYE_DOLLOCARIS
         Drops:
@@ -3089,7 +3137,7 @@ Body:
         Rate: 4000
       - Index: 2
         Item: F_Iceslug_Antiquiy
-        Rate: 1500
+        Rate: 1700
     SpecificDrops:
       - Monster: EP20_JORMUNGUARD1
         Drops:
@@ -3101,7 +3149,7 @@ Body:
             Rate: 7500
           - Index: 2
             Item: F_Iceslug_Antiquiy
-            Rate: 1500
+            Rate: 1700
       - Monster: EP20_JORMUNGUARD2
         Drops:
           - Index: 0
@@ -3112,7 +3160,7 @@ Body:
             Rate: 7500
           - Index: 2
             Item: F_Iceslug_Antiquiy
-            Rate: 1500
+            Rate: 1700
       - Monster: EP20_RGAN_HEALER
         Drops:
           - Index: 0
@@ -3123,7 +3171,7 @@ Body:
             Rate: 7500
           - Index: 2
             Item: F_Iceslug_Antiquiy
-            Rate: 1500
+            Rate: 1700
       - Monster: EP20_RGAN_WARLOCK
         Drops:
           - Index: 0
@@ -3134,7 +3182,7 @@ Body:
             Rate: 7500
           - Index: 2
             Item: F_Iceslug_Antiquiy
-            Rate: 1500
+            Rate: 1700
       - Monster: EP20_JORGAN_GUARDIAN
         Drops:
           - Index: 0
@@ -3145,7 +3193,7 @@ Body:
             Rate: 7500
           - Index: 2
             Item: F_Iceslug_Antiquiy
-            Rate: 1500
+            Rate: 1700
   - Map: jor_root2
     GlobalDrops:
       - Index: 0
@@ -3156,7 +3204,7 @@ Body:
         Rate: 4000
       - Index: 2
         Item: F_Iceslug_Antiquiy
-        Rate: 1500
+        Rate: 1700
     SpecificDrops:
       - Monster: EP20_JORMUNGUARD1
         Drops:
@@ -3168,7 +3216,7 @@ Body:
             Rate: 7500
           - Index: 2
             Item: F_Iceslug_Antiquiy
-            Rate: 1500
+            Rate: 1700
       - Monster: EP20_JORMUNGUARD2
         Drops:
           - Index: 0
@@ -3179,7 +3227,7 @@ Body:
             Rate: 7500
           - Index: 2
             Item: F_Iceslug_Antiquiy
-            Rate: 1500
+            Rate: 1700
       - Monster: EP20_JORGAN_HEALER
         Drops:
           - Index: 0
@@ -3190,7 +3238,7 @@ Body:
             Rate: 7500
           - Index: 2
             Item: F_Iceslug_Antiquiy
-            Rate: 1500
+            Rate: 1700
       - Monster: EP20_JORGAN_WARLOCK
         Drops:
           - Index: 0
@@ -3201,7 +3249,7 @@ Body:
             Rate: 7500
           - Index: 2
             Item: F_Iceslug_Antiquiy
-            Rate: 1500
+            Rate: 1700
       - Monster: EP20_JORGAN_GUARDIAN
         Drops:
           - Index: 0
@@ -3212,7 +3260,7 @@ Body:
             Rate: 7500
           - Index: 2
             Item: F_Iceslug_Antiquiy
-            Rate: 1500
+            Rate: 1700
   - Map: jor_root3
     GlobalDrops:
       - Index: 0
@@ -3223,7 +3271,7 @@ Body:
         Rate: 4000
       - Index: 2
         Item: F_Iceslug_Antiquiy
-        Rate: 1500
+        Rate: 1700
     SpecificDrops:
       - Monster: EP20_ICEBEAR
         Drops:
@@ -3235,7 +3283,7 @@ Body:
             Rate: 7500
           - Index: 2
             Item: F_Iceslug_Antiquiy
-            Rate: 1500
+            Rate: 1700
       - Monster: EP20_JORGAN_CLEANER
         Drops:
           - Index: 0
@@ -3246,7 +3294,7 @@ Body:
             Rate: 7500
           - Index: 2
             Item: F_Iceslug_Antiquiy
-            Rate: 1500
+            Rate: 1700
       - Monster: EP20_MELIBE_ICESLUG
         Drops:
           - Index: 0
@@ -3257,7 +3305,7 @@ Body:
             Rate: 7500
           - Index: 2
             Item: F_Iceslug_Antiquiy
-            Rate: 1500
+            Rate: 1700
       - Monster: EP20_BOSS_CLANER
         Drops:
           - Index: 0
@@ -3268,7 +3316,7 @@ Body:
             Rate: 7500
           - Index: 2
             Item: F_Iceslug_Antiquiy
-            Rate: 1500
+            Rate: 1700
   - Map: odin_past
     GlobalDrops:
       - Index: 0
