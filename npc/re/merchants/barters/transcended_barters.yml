@@ -10234,3 +10234,11 @@ Body:
           - Index: 3
             Item: Instance_Emblem
             Amount: 100
+  - Name: Donation
+    Items:
+      - Index: 0
+        Item: AutoAttackBox1D
+        RequiredItems:
+          - Index: 0
+            Item: Donation_Coin
+            Amount: 10

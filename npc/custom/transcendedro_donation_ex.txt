@@ -1,0 +1,26 @@
+izlude,119,170,4	script	Donation Exchanger	3306,{
+	switch(select(
+	
+	"~ Exchange with Donation Coins",
+	"Cancel"
+	
+	)) {
+		case 1:
+			callshop "Donation";
+			end;
+		case 2:
+			mes "Bye, guys!";
+			close2;
+			end;
+	}
+	close;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer1000:
+    showscript(" ! Donation Exchanger ! ");
+    setnpctimer 0;
+    end;
+}
