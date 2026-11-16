@@ -10238,6 +10238,7 @@ Body:
     Items:
       - Index: 0
         Item: AutoAttackBox1D
+        Zeny: 10
         RequiredItems:
           - Index: 0
             Item: Donation_Coin
