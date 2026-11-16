@@ -8,14 +8,14 @@
 // (npc/custom/transcendedro_autoattack.txt) and re-read every tick, so changes apply live.
 //
 //   AA_NORMAL                 1 = normal attack enabled (always used when no attack skill is set)
-//   AA_ATK_SK[0..4]/AA_ATK_LV attack skill slots (lv 0 = highest learned)
-//   AA_BUF_SK[0..4]/AA_BUF_LV buff skill slots, checked in order 1 > 5; recast when the
+//   AA_ATK_SK[0..9]/AA_ATK_LV attack skill slots (lv 0 = highest learned)
+//   AA_BUF_SK[0..9]/AA_BUF_LV buff skill slots, checked in order 1 > 10; recast when the
 //                             buff's real remaining time is almost over
-//   AA_BUF_SEC[0..4]          0 = auto (read buff time), >0 = recast every N seconds instead.
+//   AA_BUF_SEC[0..9]          0 = auto (read buff time), >0 = recast every N seconds instead.
 //                             Sphere skills ignore it (refill by count); heals / summons use it.
-//   AA_HP_IT[0..4]/AA_HP_PCT  HP items, used when HP% < pct (first slot the player owns)
-//   AA_SP_IT[0..4]/AA_SP_PCT  SP items, same for SP
-//   AA_OT_IT[0..4]/AA_OT_MS   other items, used every N ms
+//   AA_HP_IT[0..9]/AA_HP_PCT  HP items, used when HP% < pct (first slot the player owns)
+//   AA_SP_IT[0..9]/AA_SP_PCT  SP items, same for SP
+//   AA_OT_IT[0..9]/AA_OT_MS   other items, used every N ms
 //   AA_TPDELAY                seconds without a monster before teleporting (3/5/7/10)
 //   AA_TPITEM                 1 = teleport with Fly Wing (601 / 12887)
 //   AA_TPSKILL                1 = teleport with AL_TELEPORT
@@ -60,7 +60,7 @@ constexpr t_tick SPHERE_RETRY_DELAY = 500;  // minimum ms between casts of a sph
 constexpr t_tick AVOID_TP_DELAY = 1000;     // minimum ms between "run away" teleports
 constexpr int32 DEFAULT_RANGE = 9;
 constexpr int32 MAX_RANGE = 14;
-constexpr int32 SLOTS = 5;
+constexpr int32 SLOTS = 10;
 constexpr int32 MAX_AVOID = 30;
 constexpr int32 LOOT_RANGE = 9;
 constexpr t_itemid FLY_WINGS[] = { 601, 12887 };
@@ -680,7 +680,7 @@ inline t_tick status_remaining( map_session_data* sd, sc_type sc, t_tick tick ) 
 	return std::max<t_tick>( 1, DIFF_TICK( td->tick, tick ) );
 }
 
-/// Walks buff slots in order 1 > 5 and casts the first one that needs refreshing.
+/// Walks buff slots in order 1 > 10 and casts the first one that needs refreshing.
 /// Auto mode reads the real remaining time of the buff's status (incl. duration bonuses)
 /// and recasts when it is about to run out; AA_BUF_SEC[slot] > 0 overrides with a fixed interval.
 /// Returns true if a cast started.

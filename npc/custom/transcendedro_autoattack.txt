@@ -166,12 +166,12 @@ S_SkillSlots:
 			if (!AA_NORMAL)
 				mes "Normal attack is OFF: used only when no skill is set.";
 		} else {
-			mes "Skill Buff - checked in order 1 > 5.";
+			mes "Skill Buff - checked in order 1 > 10.";
 			mes "(auto) reads the real buff time and";
 			mes "recasts just before it runs out.";
 		}
 		.@menu$ = "";
-		for (.@i = 0; .@i < 5; .@i++) {
+		for (.@i = 0; .@i < 10; .@i++) {
 			.@id = getd(.@sk$ + "[" + .@i + "]");
 			.@menu$ += "Slot " + (.@i + 1) + " - " + SkillLabel(.@id, getd(.@lv$ + "[" + .@i + "]"));
 			if (.@cat == 2)
@@ -179,7 +179,7 @@ S_SkillSlots:
 			.@menu$ += ":";
 		}
 		.@s = select(.@menu$ + "Back") - 1;
-		if (.@s >= 5)
+		if (.@s >= 10)
 			return;
 		callsub S_PickSkill, .@sk$, .@lv$, .@cat, .@s;
 	}
@@ -299,7 +299,7 @@ S_ItemSlots:
 		if (.@mode == 2) mes "SP items - first slot you own is used.";
 		if (.@mode == 3) mes "Other items - used every interval.";
 		.@menu$ = "";
-		for (.@i = 0; .@i < 5; .@i++) {
+		for (.@i = 0; .@i < 10; .@i++) {
 			.@item = getd(.@it$ + "[" + .@i + "]");
 			.@v = getd(.@val$ + "[" + .@i + "]");
 			.@menu$ += "Slot " + (.@i + 1) + " - " + ItemLabel(.@item);
@@ -312,7 +312,7 @@ S_ItemSlots:
 			.@menu$ += ":";
 		}
 		.@s = select(.@menu$ + "Back") - 1;
-		if (.@s >= 5)
+		if (.@s >= 10)
 			return;
 
 		if (.@mode == 3)
