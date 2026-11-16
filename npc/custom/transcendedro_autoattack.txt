@@ -69,7 +69,7 @@ function	BuffInfo	{
 	.@sec = AA_BUF_SEC[getarg(1)];
 	.@mode = aa_skillinfo(.@id, 4);
 	if (.@mode == 2)
-		return " (keep spheres full)";
+		return " (refill to skill need)";
 	if (.@mode == 4)
 		.@t$ = " (toggle - keep ON)";
 	else if (.@sec > 0)
@@ -248,8 +248,10 @@ S_PickSkill:
 		mes aa_skillinfo(.@id, 0);
 		if (.@mode == 2) {
 			// Spheres / coins / charms / soul energy / elemental balls
-			mes "Recast whenever you have fewer";
-			mes "spheres than the maximum.";
+			mes "Recast only when you have fewer";
+			mes "spheres than your slotted skills need";
+			mes "(highest cost). No sphere skill";
+			mes "slotted = keep them full.";
 			next;
 		} else if (.@mode == 4) {
 			mes "Toggle skill - turned ON when it is off,";

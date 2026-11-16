@@ -272,7 +272,59 @@ inline int32 skill_category( uint16 skill_id ) {
 	return 0;
 }
 
-/// BUFF_SPHERE: true while the skill's resource is below its maximum.
+inline uint16 slot_level( map_session_data* sd, uint16 skill_id, int64 wanted );
+
+/// Skills whose SpiritSphereCost is paid with soul energy (soulball) instead of spirit spheres / coins.
+constexpr uint16 SOUL_COST_SKILLS[] = {
+	SP_SOULGOLEM, SP_SOULSHADOW, SP_SOULFALCON, SP_SOULFAIRY, SP_SOULCURSE, SP_SPA, SP_SHA,
+	SP_SWHOO, SP_SOULUNITY, SP_SOULDIVISION, SP_SOULREAPER, SP_SOULEXPLOSION, SP_KAUTE,
+	SOA_EXORCISM_OF_MALICIOUS_SOUL,
+};
+
+enum e_sphere_pool { POOL_SPIRIT, POOL_SOUL, POOL_OTHER };
+
+inline e_sphere_pool cost_pool( uint16 skill_id ) {
+	if( in_list( SOUL_COST_SKILLS, skill_id ) )
+		return POOL_SOUL;
+	switch( skill_id ) {
+	case DK_SERVANT_W_SIGN: // servants
+	case DK_SERVANT_W_PHANTOM:
+	case DK_SERVANT_W_DEMOL:
+	case LG_RAGEBURST: // rage counter from Force of Vanguard
+		return POOL_OTHER;
+	}
+	return POOL_SPIRIT;
+}
+
+/// Highest sphere cost among the skills set in the attack / buff slots for this pool.
+/// -1 = a skill spends every sphere (fill to max), 0 = no slot uses this pool.
+inline int32 sphere_target( map_session_data* sd, e_sphere_pool pool ) {
+	static const char* vars[][2] = { { "AA_ATK_SK", "AA_ATK_LV" }, { "AA_BUF_SK", "AA_BUF_LV" } };
+	int32 want = 0;
+
+	for( const auto& v : vars ) {
+		for( int32 i = 0; i < SLOTS; i++ ) {
+			uint16 skill_id = static_cast<uint16>( setting( sd, v[0], i ) );
+			uint16 skill_lv = slot_level( sd, skill_id, setting( sd, v[1], i ) );
+			if( skill_lv == 0 || in_list( SPHERE_SKILLS, skill_id ) || cost_pool( skill_id ) != pool )
+				continue;
+			int32 cost = ( skill_id == SR_CURSEDCIRCLE ) ? -1 : skill_get_spiritball( skill_id, skill_lv );
+			if( cost < 0 )
+				return -1;
+			want = std::max( want, cost );
+		}
+	}
+	return want;
+}
+
+/// How many spheres to keep: what the configured skills need, capped at the maximum.
+/// Nothing configured that spends them, or a skill that spends all -> keep them full.
+inline int32 sphere_goal( map_session_data* sd, e_sphere_pool pool, int32 cap ) {
+	int32 want = sphere_target( sd, pool );
+	return want <= 0 ? cap : std::min( want, cap );
+}
+
+/// BUFF_SPHERE: true while the skill's resource is below what the configured skills need.
 inline bool sphere_needed( map_session_data* sd, uint16 skill_id, uint16 skill_lv ) {
 	int32 dragon = 0;
 	if( status_change_entry* rd = sd->sc.getSCE( SC_RAISINGDRAGON ); rd != nullptr )
@@ -280,12 +332,12 @@ inline bool sphere_needed( map_session_data* sd, uint16 skill_id, uint16 skill_l
 
 	switch( skill_id ) {
 	case MO_CALLSPIRITS:
-		return sd->spiritball < skill_lv + dragon;
+		return sd->spiritball < sphere_goal( sd, POOL_SPIRIT, skill_lv + dragon );
 	case CH_SOULCOLLECT:
-		return sd->spiritball < 5 + dragon;
+		return sd->spiritball < sphere_goal( sd, POOL_SPIRIT, 5 + dragon );
 	case GS_GLITTERING:
 	case RL_RICHS_COIN:
-		return sd->spiritball < 10;
+		return sd->spiritball < sphere_goal( sd, POOL_SPIRIT, 10 );
 	case KO_KAHU_ENTEN:
 	case KO_HYOUHU_HUBUKI:
 	case KO_KAZEHU_SEIRAN:
@@ -294,7 +346,7 @@ inline bool sphere_needed( map_session_data* sd, uint16 skill_id, uint16 skill_l
 	case SOA_SOUL_GATHERING:
 		// Only castable while Soul Collect is on
 		return sd->sc.getSCE( SC_SOULCOLLECT ) != nullptr
-			&& sd->soulball < 5 + pc_checkskill( sd, SP_SOULENERGY ) * 3;
+			&& sd->soulball < sphere_goal( sd, POOL_SOUL, 5 + pc_checkskill( sd, SP_SOULENERGY ) * 3 );
 	case WL_SUMMONFB:
 	case WL_SUMMONBL:
 	case WL_SUMMONWB:
