@@ -72,7 +72,85 @@ struct s_state {
 	std::array<t_tick, SLOTS> buff_last{};
 	std::array<t_tick, SLOTS> other_last{};
 	std::unordered_set<int32> bad_items; // floor items we failed to take
+	std::unordered_map<int32, t_tick> bad_mobs; // mob id -> ignore until tick (stuck on it)
+
+	// Stuck watchdog: what we were doing and when it last made progress
+	int32 watch_id = 0;      // target or floor item being watched
+	uint32 watch_hp = 0;     // target hp at last progress
+	int16 watch_x = 0, watch_y = 0; // our position at last progress
+	t_tick watch_tick = 0;
 };
+
+constexpr t_tick STUCK_TIMEOUT = 3000;  // ms without progress before giving up on a target/item
+constexpr t_tick BAD_MOB_TIME = 10000;  // ms to ignore a monster we got stuck on
+
+/// Returns true when `id` has made no progress (we did not move, its hp did not drop)
+/// for STUCK_TIMEOUT. `hp` is 0 for floor items.
+inline bool is_stuck( map_session_data* sd, s_state& st, int32 id, uint32 hp, t_tick tick ) {
+	if( st.watch_id != id || hp < st.watch_hp || sd->x != st.watch_x || sd->y != st.watch_y ) {
+		st.watch_id = id;
+		st.watch_hp = hp;
+		st.watch_x = sd->x;
+		st.watch_y = sd->y;
+		st.watch_tick = tick;
+		return false;
+	}
+	st.watch_hp = hp;
+	return DIFF_TICK( tick, st.watch_tick ) >= STUCK_TIMEOUT;
+}
+
+// ---- warp avoidance -----------------------------------------------------------
+// Warps (and other OnTouch NPCs) mark their trigger area with CELL_NPC. We never pick
+// destinations whose path crosses such a cell, and stop walking if a path is about to.
+
+/// True if the cells of `wpd` (from x,y, starting at step `from`) touch an OnTouch NPC cell.
+inline bool walkpath_hits_npc( int16 m, int16 x, int16 y, const walkpath_data& wpd, int32 from ) {
+	for( int32 i = from; i < wpd.path_len; i++ ) {
+		x += dirx[wpd.path[i]];
+		y += diry[wpd.path[i]];
+		if( map_getcell( m, x, y, CELL_CHKNPC ) )
+			return true;
+	}
+	return false;
+}
+
+/// True if walking from our position to (x, y) is possible without stepping on a warp.
+inline bool safe_path( map_session_data* sd, int16 x, int16 y ) {
+	if( map_getcell( sd->m, x, y, CELL_CHKNPC ) )
+		return false;
+	walkpath_data wpd;
+	if( !path_search( &wpd, sd->m, sd->x, sd->y, x, y, 0, CELL_CHKNOREACH ) )
+		return false;
+	return !walkpath_hits_npc( sd->m, sd->x, sd->y, wpd, 0 );
+}
+
+/// True if a target/item is reachable without stepping on a warp.
+inline bool safe_path_bl( map_session_data* sd, block_list* bl ) {
+	if( sd->x == bl->x && sd->y == bl->y )
+		return true;
+	int16 x = bl->x, y = bl->y;
+	if( !unit_can_reach_bl( sd, bl, MAX_RANGE * 2, 0, &x, &y ) )
+		return false;
+	return safe_path( sd, x, y );
+}
+
+/// Our current walk is about to step on a warp cell.
+inline bool walking_into_warp( map_session_data* sd ) {
+	if( !unit_is_walking( sd ) )
+		return false;
+	return walkpath_hits_npc( sd->m, sd->x, sd->y, sd->ud.walkpath, sd->ud.walkpath.path_pos );
+}
+
+inline bool is_bad_mob( s_state& st, int32 id, t_tick tick ) {
+	auto it = st.bad_mobs.find( id );
+	if( it == st.bad_mobs.end() )
+		return false;
+	if( DIFF_TICK( tick, it->second ) >= 0 ) {
+		st.bad_mobs.erase( it );
+		return false;
+	}
+	return true;
+}
 
 // char_id -> state
 inline std::unordered_map<uint32, s_state>& states() {
@@ -304,10 +382,14 @@ inline int32 search_sub( block_list* bl, va_list ap ) {
 	map_session_data* sd = va_arg( ap, map_session_data* );
 	int32* best_id = va_arg( ap, int32* );
 	int32* best_dist = va_arg( ap, int32* );
+	s_state* st = va_arg( ap, s_state* );
+	t_tick tick = va_arg( ap, t_tick );
 
 	mob_data* md = reinterpret_cast<mob_data*>( bl );
 
 	if( status_isdead( *bl ) )
+		return 0;
+	if( is_bad_mob( *st, bl->id, tick ) )
 		return 0;
 	if( md->special_state.ai != AI_NONE ) // summoned / player-owned monsters
 		return 0;
@@ -322,10 +404,13 @@ inline int32 search_sub( block_list* bl, va_list ap ) {
 			return 0;
 	}
 
+	// Monsters already attacking us come first (score lowered by 100), then the nearest
 	int32 dist = distance_bl( sd, bl );
+	if( md->target_id == sd->id )
+		dist -= 100;
 	if( dist >= *best_dist )
 		return 0;
-	if( !unit_can_reach_bl( sd, bl, MAX_RANGE * 2, 0, nullptr, nullptr ) )
+	if( !safe_path_bl( sd, bl ) ) // unreachable, or only through a warp
 		return 0;
 
 	*best_id = bl->id;
@@ -346,12 +431,26 @@ inline block_list* valid_target( map_session_data* sd, int32 id ) {
 	return bl;
 }
 
-inline block_list* find_target( map_session_data* sd ) {
+inline block_list* find_target( map_session_data* sd, s_state& st, t_tick tick ) {
+	if( st.bad_mobs.size() > 200 )
+		st.bad_mobs.clear();
+
 	int32 range = search_range( sd );
 	int32 best_id = 0;
 	int32 best_dist = range + 1;
-	map_foreachinallrange( search_sub, sd, range, BL_MOB, sd, &best_id, &best_dist );
+	map_foreachinallrange( search_sub, sd, range, BL_MOB, sd, &best_id, &best_dist, &st, tick );
 	return best_id ? map_id2bl( best_id ) : nullptr;
+}
+
+inline int32 aggressor_sub( block_list* bl, va_list ap ) {
+	map_session_data* sd = va_arg( ap, map_session_data* );
+	mob_data* md = reinterpret_cast<mob_data*>( bl );
+	return ( !status_isdead( *bl ) && md->target_id == sd->id ) ? 1 : 0;
+}
+
+/// True when a living monster nearby is targeting us.
+inline bool under_attack( map_session_data* sd ) {
+	return map_foreachinallrange( aggressor_sub, sd, AREA_SIZE, BL_MOB, sd ) > 0;
 }
 
 // ---- loot -------------------------------------------------------------------
@@ -367,7 +466,7 @@ inline int32 item_sub( block_list* bl, va_list ap ) {
 	int32 dist = distance_bl( sd, bl );
 	if( dist >= *best_dist )
 		return 0;
-	if( dist > 1 && !unit_can_reach_bl( sd, bl, LOOT_RANGE * 2, 0, nullptr, nullptr ) )
+	if( dist > 1 && !safe_path( sd, bl->x, bl->y ) ) // unreachable, or only through a warp
 		return 0;
 
 	*best_id = bl->id;
@@ -381,7 +480,7 @@ inline int32 count_items_sub( block_list* bl, va_list ap ) {
 }
 
 /// Returns true if this tick was spent on looting.
-inline bool loot( map_session_data* sd, s_state& st ) {
+inline bool loot( map_session_data* sd, s_state& st, t_tick tick ) {
 	bool pickup = setting( sd, "AA_PICKUP" ) != 0;
 	bool greed = setting( sd, "AA_GREED" ) != 0 && pc_checkskill( sd, BS_GREED ) > 0;
 
@@ -413,6 +512,12 @@ inline bool loot( map_session_data* sd, s_state& st ) {
 		if( !pc_takeitem( sd, reinterpret_cast<flooritem_data*>( bl ) ) )
 			st.bad_items.insert( bl->id ); // not ours (yet) / overweight
 		return true;
+	}
+
+	// Could not get closer for a while (blocked path / kept getting interrupted): skip it
+	if( is_stuck( sd, st, bl->id, 0, tick ) ) {
+		st.bad_items.insert( bl->id );
+		return false;
 	}
 
 	if( !unit_is_walking( sd ) || st.loot_id != bl->id ) {
@@ -558,14 +663,23 @@ inline void wander( map_session_data* sd ) {
 	if( unit_is_walking( sd ) )
 		return;
 
-	int16 x = sd->x, y = sd->y;
-	if( map_search_freecell( sd, sd->m, &x, &y, 10, 10, 1 ) )
-		unit_walktoxy( sd, x, y, 0 );
+	// A few random spots; take the first one we can reach without crossing a warp
+	for( int32 i = 0; i < 8; i++ ) {
+		int16 x = sd->x, y = sd->y;
+		if( !map_search_freecell( sd, sd->m, &x, &y, 10, 10, 1 ) )
+			return;
+		if( safe_path( sd, x, y ) ) {
+			unit_walktoxy( sd, x, y, 0 );
+			return;
+		}
+	}
 }
 
 inline void after_teleport( s_state& st, t_tick tick ) {
 	st.target_id = 0;
 	st.loot_id = 0;
+	st.watch_id = 0;
+	st.bad_mobs.clear();
 	st.last_target_tick = tick;
 }
 
@@ -591,24 +705,55 @@ inline void think( map_session_data* sd, s_state& st, t_tick tick ) {
 		}
 	}
 
-	// Busy casting / stunned etc. - wait for next tick
-	if( pc_cant_act( sd ) || sd->ud.skilltimer != INVALID_TIMER )
+	// Never walk into a warp: the engine may re-path a chase through one, so check the live path
+	if( walking_into_warp( sd ) ) {
+		unit_stop_walking( sd, USW_FIXPOS | USW_RELEASE_TARGET );
+		unit_stop_attack( sd );
+		if( st.target_id != 0 )
+			st.bad_mobs[st.target_id] = tick + BAD_MOB_TIME;
+		if( st.loot_id != 0 )
+			st.bad_items.insert( st.loot_id );
+		st.target_id = 0;
+		st.loot_id = 0;
+		st.watch_id = 0;
 		return;
+	}
+
+	// Busy casting / stunned etc. - wait for next tick (not counted as being stuck)
+	if( pc_cant_act( sd ) || sd->ud.skilltimer != INVALID_TIMER ) {
+		st.watch_tick = tick;
+		return;
+	}
 
 	// 3. Buffs
-	if( use_buffs( sd, st, tick ) )
+	if( use_buffs( sd, st, tick ) ) {
+		st.watch_tick = tick;
 		return;
+	}
 
-	// 4. Keep fighting the current target, otherwise loot before looking for the next one
+	// 4. Keep fighting the current target, otherwise loot before looking for the next one.
+	//    Looting waits while monsters are attacking us.
 	block_list* target = valid_target( sd, st.target_id );
+	if( target != nullptr && is_bad_mob( st, target->id, tick ) )
+		target = nullptr;
 	if( target == nullptr ) {
 		st.target_id = 0;
-		if( loot( sd, st ) ) {
+		if( !under_attack( sd ) && loot( sd, st, tick ) ) {
 			st.last_target_tick = tick;
 			return;
 		}
-		target = find_target( sd );
+		target = find_target( sd, st, tick );
 		st.target_id = target ? target->id : 0;
+	}
+
+	// Stuck on this target (can't reach it, not moving, its hp not dropping): drop it for a while
+	if( target != nullptr && is_stuck( sd, st, target->id, status_get_hp( target ), tick ) ) {
+		st.bad_mobs[target->id] = tick + BAD_MOB_TIME;
+		st.target_id = 0;
+		st.watch_id = 0;
+		unit_stop_attack( sd );
+		unit_stop_walking( sd, USW_FIXPOS | USW_RELEASE_TARGET );
+		return;
 	}
 
 	// 5. Nothing to fight: teleport after the configured delay, otherwise wander
@@ -638,7 +783,9 @@ inline void think( map_session_data* sd, s_state& st, t_tick tick ) {
 		return;
 
 	if( !has_skill || setting( sd, "AA_NORMAL" ) ) {
-		if( sd->ud.target != target->id || sd->ud.attacktimer == INVALID_TIMER )
+		// Don't re-issue while already walking toward / swinging at this target (caused jitter)
+		bool busy = sd->ud.target == target->id && ( sd->ud.attacktimer != INVALID_TIMER || unit_is_walking( sd ) );
+		if( !busy )
 			unit_attack( sd, target->id, 1 );
 	}
 }
