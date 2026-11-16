@@ -25,6 +25,10 @@
 //   AA_GREED                  1 = use BS_GREED when items are close
 //   AA_RANGE                  search range (hidden, default 9)
 //
+// Global $AA_TICKET (set by the NPC from .ticket): item id the player must carry, 0 = none.
+// Checked every tick; when it is gone (rental expired) auto attack stops and the player
+// is warped to their save point.
+//
 // Loot (VIP) settings AA_LOOTALL / AA_LOOTTYPE / AA_LOOTID[] / AA_LOOTON[] are applied to
 // the engine's own autoloot fields by apply_loot() (script command aa_applyloot).
 
@@ -42,6 +46,7 @@
 #include "../map/clif.hpp"
 #include "../map/itemdb.hpp"
 #include "../map/map.hpp"
+#include "../map/mapreg.hpp"
 #include "../map/mob.hpp"
 #include "../map/path.hpp"
 #include "../map/pc.hpp"
@@ -402,6 +407,18 @@ inline bool can_run( map_session_data* sd, const char** reason ) {
 	return true;
 }
 
+/// Item the player must carry to run auto attack (e.g. the rental Auto Attack Device).
+/// Set by the NPC as $AA_TICKET; 0 = none required.
+inline t_itemid required_item() {
+	return static_cast<t_itemid>( mapreg_readreg( add_str( "$AA_TICKET" ) ) );
+}
+
+/// False when a required item is set and the player no longer has it (rental expired / removed).
+inline bool has_required_item( map_session_data* sd ) {
+	t_itemid nameid = required_item();
+	return nameid == 0 || pc_search_inventory( sd, nameid ) >= 0;
+}
+
 inline TIMER_FUNC( tick_timer );
 
 inline bool start( map_session_data* sd ) {
@@ -409,6 +426,14 @@ inline bool start( map_session_data* sd ) {
 		return false;
 	if( is_active( sd ) )
 		return true;
+
+	if( !has_required_item( sd ) ) {
+		std::shared_ptr<item_data> item = item_db.find( required_item() );
+		char buf[CHAT_SIZE_MAX];
+		safesnprintf( buf, sizeof( buf ), "[Auto Attack] Cannot start: you need %s.", item ? item->ename.c_str() : "the Auto Attack item" );
+		message( sd, buf );
+		return false;
+	}
 
 	const char* reason = nullptr;
 	if( !can_run( sd, &reason ) ) {
@@ -940,6 +965,14 @@ inline void after_teleport( s_state& st, t_tick tick ) {
 }
 
 inline void think( map_session_data* sd, s_state& st, t_tick tick ) {
+	// Required item gone (rental expired while running): stop and send the player home
+	if( !has_required_item( sd ) ) {
+		stop( sd, "your Auto Attack time has expired" );
+		if( !pc_isdead( sd ) )
+			pc_setpos_savepoint( *sd, CLR_TELEPORT );
+		return;
+	}
+
 	const char* reason = nullptr;
 	if( !can_run( sd, &reason ) ) {
 		stop( sd, reason );

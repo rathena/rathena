@@ -674,7 +674,10 @@ OnLoginLoot:
 
 OnInit:
 	.require_vip = 0;   // 1 = only VIP can start auto attack
-	.ticket = 0;        // item required to start (0 = none, e.g. 9950001)
+	.ticket = 9955508;  // item required to run (0 = none). Auto Attack Device [1 Day] (rental)
+	// The source checks this every tick: once the item is gone (rental expired)
+	// auto attack stops and the player is sent to their save point.
+	$AA_TICKET = .ticket;
 
 	setarray .loottype[0], IT_HEALING, IT_USABLE, IT_ETC, IT_ARMOR, IT_WEAPON, IT_CARD, IT_PETEGG, IT_PETARMOR, IT_AMMO;
 	setarray .lootname$[0], "Healing items", "Usable items", "Etcs", "Armors", "Weapons", "Cards", "Pet eggs", "Pet armors", "Ammos";

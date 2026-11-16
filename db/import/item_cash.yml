@@ -8210,6 +8210,10 @@ Body:
         Price: 990
   - Tab: Hot
     Items:
+      - Item: AutoAttackBox1D
+        Price: 1999
+  - Tab: Hot
+    Items:
       - Item: Bossnia_Ticket_Box_1F1h
         Price: 1999
   - Tab: Hot

@@ -155,17 +155,27 @@ Body:
       specialeffect2 18;
       getitem 9900000,1000;
   - Id: 9955507
-    AegisName: OldHeadgearEnchant
-    Name: "Old Headgear Enchant"
-    Type: DelayConsume
+    AegisName: AutoAttackBox1D
+    Name: "Auto Attack Box [1 Day]"
+    Type: Cash
     Weight: 0
     Flags:
       BuyingStore: true
       DropEffect: CLIENT
+      Container: true
     Trade:
       NoSell: true
     Script: |
-      item_enchant(1001);
+      rentitem 9955508, 86400;
+  - Id: 9955508
+    AegisName: AutoAttackDevice1D
+    Name: "Auto Attack Device [1 Day]"
+    Type: DelayConsume
+    Weight: 0
+    Trade:
+      NoSell: true
+    Script: |
+      doevent "autoattack_menu::OnMenu";
   - Id: 9955517
     AegisName: GEHeadEnchant
     Name: "Good and Evil Headgear Enchant"
