@@ -7083,6 +7083,7 @@ Body:
     Flags:
       TargetTrap: true
       TargetEmperium: true
+      MultiHitOnPlants: true
     Range: -1
     Hit: Multi_Hit
     HitCount: -3
@@ -7152,6 +7153,7 @@ Body:
     TargetType: Attack
     Flags:
       TargetTrap: true
+      MultiHitOnPlants: true
     Range: 9
     Hit: Multi_Hit
     HitCount:

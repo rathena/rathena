@@ -10468,6 +10468,7 @@
 	export_constant(INF2_SHOWSCALE);
 	export_constant(INF2_IGNOREGTB);
 	export_constant(INF2_TOGGLEABLE);
+	export_constant(INF2_MULTIHITONPLANTS);
 	export_constant(INF2_IGNORENONCRITATKBONUS);
 
 	/* skill no near npc flags */
