@@ -881,14 +881,17 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 	setarray .@part_name$[0], "Upper", "Middle", "Lower";
 	.@count = 0;
 	.@menu$ = "";
+	.@prev_id = -1;
 	for ( .@i = 0; .@i < 3; ++.@i ) {
 		.@id = getequipid(.@parts[.@i]);
 		// a multi-slot costume (e.g. upper+middle) is listed once, under its highest slot
-		if (.@id > -1 && (.@i == 0 || .@id != getequipid(.@parts[.@i-1]))) {
+		// (script || doesn't short-circuit, so no .@parts[.@i-1] lookup here)
+		if (.@id > -1 && .@id != .@prev_id) {
 			.@menu$ += .@part_name$[.@i] + ": " + getitemname(.@id);
 			.@count++;
 		}
 		.@menu$ += ":";
+		.@prev_id = .@id;
 	}
 	if (.@count == 0) {
 		mes "[Aver De Dosh]";
