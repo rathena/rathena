@@ -1,5 +1,0 @@
-login_server_ip: db
-ipban_db_ip: db
-char_server_ip: db
-map_server_ip: db
-log_db_ip: db
