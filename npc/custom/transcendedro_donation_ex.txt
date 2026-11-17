@@ -1,26 +1,191 @@
+//===== Transcended RO =======================================
+//= Donation Exchanger + automatic website donation delivery
+//============================================================
+//= The website (TranscendedROwww) queues approved donations in
+//= `web_delivery` / `web_delivery_item`. DonationDelivery below:
+//=  - sends the items by RODEX to the chosen character
+//=    (online or offline, max 5 items per mail)
+//=  - adds the cash to #CASHPOINTS while the account is online
+//=    (safe: the map server owns #CASHPOINTS while online)
+//= It runs every 30 seconds and when a player logs in.
+//=
+//= GM menu (group 99): test delivery to yourself, deliver now,
+//= queue status.
+//============================================================
+
 izlude,119,170,4	script	Donation Exchanger	10301,{
+	.@gm = (getgmlevel() >= 99);
+	mes "[ ^0065DFDonation Exchanger^000000 ]";
+	mes "Thank you for supporting Transcended RO!";
+	mes "Rewards from the website arrive in your ^AA0000RODEX mailbox^000000 automatically.";
+	next;
 	switch(select(
-	
-	"~ Exchange with Donation Coins",
-	"Cancel"
-	
+		"~ Exchange with Donation Coins",
+		"~ My donations",
+		(.@gm ? "~ ^FF0000[GM] Test delivery to me^000000" : ""),
+		(.@gm ? "~ ^FF0000[GM] Deliver queue now^000000" : ""),
+		(.@gm ? "~ ^FF0000[GM] Queue status^000000" : ""),
+		"Cancel"
 	)) {
-		case 1:
-			callshop "Donation";
-			end;
-		case 2:
-			mes "Bye, guys!";
-			close2;
-			end;
+	case 1:
+		close2;
+		callshop "Donation";
+		end;
+
+	case 2:
+		.@aid = getcharid(3);
+		.@n = query_sql("SELECT DATE_FORMAT(d.created_at, '%d/%m %H:%i'), d.amount, d.cash, d.status, "
+			+ "IFNULL(w.items_sent, -1), IFNULL(w.cash_sent, -1) "
+			+ "FROM web_donation d LEFT JOIN web_delivery w ON w.donation_id = d.id "
+			+ "WHERE d.account_id = " + .@aid + " ORDER BY d.id DESC LIMIT 5",
+			.@date$, .@amount, .@cash, .@status$, .@isent, .@csent);
+		mes "[ ^0065DFMy donations^000000 ]";
+		if (.@n < 1) {
+			mes "You have no donations yet.";
+			mes "Visit our website to support the server!";
+			close;
+		}
+		for (.@i = 0; .@i < .@n; .@i++) {
+			if (.@status$[.@i] == "pending")
+				.@s$ = "^D88A00Waiting for check^000000";
+			else if (.@status$[.@i] == "rejected")
+				.@s$ = "^FF0000Rejected^000000";
+			else if (.@isent[.@i] == 1 && .@csent[.@i] == 1)
+				.@s$ = "^00AA00Delivered^000000";
+			else
+				.@s$ = "^0065DFDelivering...^000000";
+			mes "^777777" + .@date$[.@i] + "^000000  " + callfunc("F_InsertComma", .@amount[.@i]) + " THB"
+				+ (.@cash[.@i] ? " / " + callfunc("F_InsertComma", .@cash[.@i]) + " Cash" : "");
+			mes "  " + .@s$;
+		}
+		mes " ";
+		mes "Cash Points now: ^0000FF" + callfunc("F_InsertComma", #CASHPOINTS) + "^000000";
+		close;
+
+	case 3:
+		// Queue a delivery to this character exactly like the website does, then run it.
+		mes "[ ^FF0000GM Test^000000 ]";
+		mes "Item ID to send (0 = no item):";
+		next;
+		input .@item;
+		if (.@item > 0) {
+			if (getitemname(.@item) == "null") {
+				mes "Item " + .@item + " does not exist.";
+				close;
+			}
+			mes "Amount of ^0000FF" + getitemname(.@item) + "^000000:";
+			next;
+			input .@amt, 1, 30000;
+		}
+		mes "Cash Points to add (0 = none):";
+		next;
+		input .@cash, 0, 10000000;
+		if (.@item <= 0 && .@cash <= 0) {
+			mes "Nothing to send.";
+			close;
+		}
+		mes "Send to ^0000FF" + strcharinfo(0) + "^000000:";
+		if (.@item > 0) mes "- " + .@amt + "x " + getitemname(.@item) + " (RODEX)";
+		if (.@cash > 0) mes "- " + callfunc("F_InsertComma", .@cash) + " Cash Points";
+		next;
+		if (select("Send:Cancel") == 2) close;
+		query_sql("INSERT INTO web_delivery (donation_id, account_id, char_id, cash, items_sent, cash_sent, note, created_at) VALUES (0, "
+			+ getcharid(3) + ", " + getcharid(0) + ", " + .@cash + ", " + (.@item > 0 ? 0 : 1) + ", " + (.@cash > 0 ? 0 : 1) + ", 'GM test', NOW())");
+		query_sql("SELECT LAST_INSERT_ID()", .@did);
+		if (.@item > 0)
+			query_sql("INSERT INTO web_delivery_item (delivery_id, idx, nameid, amount) VALUES (" + .@did + ", 0, " + .@item + ", " + .@amt + ")");
+		close2;
+		donpcevent "DonationDelivery::OnDeliverNow";
+		end;
+
+	case 4:
+		close2;
+		donpcevent "DonationDelivery::OnDeliverNow";
+		dispbottom "[Donation] Delivery queue processed.";
+		end;
+
+	case 5:
+		query_sql("SELECT COUNT(*) FROM web_delivery WHERE items_sent = 0", .@qi);
+		query_sql("SELECT COUNT(*), IFNULL(SUM(cash), 0) FROM web_delivery WHERE cash_sent = 0", .@qc, .@qcash);
+		query_sql("SELECT COUNT(*) FROM web_donation WHERE status = 'pending'", .@qp);
+		mes "[ ^FF0000Queue status^000000 ]";
+		mes "Waiting for admin check: ^D88A00" + .@qp + "^000000";
+		mes "Items waiting to mail: ^0065DF" + .@qi + "^000000";
+		mes "Cash waiting (owner offline): ^0065DF" + .@qc + "^000000 (" + callfunc("F_InsertComma", .@qcash) + " Cash)";
+		close;
+
+	case 6:
+		mes "Bye, guys!";
+		close;
 	}
-	close;
+	end;
 
 OnInit:
 	initnpctimer;
 	end;
 
 OnTimer1000:
-    showscript(" ! Donation Exchanger ! ");
-    setnpctimer 0;
-    end;
+	showscript(" ! Donation Exchanger ! ");
+	setnpctimer 0;
+	end;
+}
+
+-	script	DonationDelivery	-1,{
+OnInit:
+	.sender$ = "Transcended RO";
+	.title$ = "Donation Reward";
+	.body$ = "Thank you for supporting Transcended RO! Here are your donation rewards. Please claim them within 15 days.";
+	initnpctimer;
+	end;
+
+OnTimer30000:
+	stopnpctimer;
+	callsub S_Deliver;
+	initnpctimer;
+	end;
+
+OnPCLoginEvent:
+OnDeliverNow:
+	callsub S_Deliver;
+	end;
+
+S_Deliver:
+	// Scripts run one at a time, so the timer and login events can't overlap here.
+	// 1) Items -> RODEX. Works whether the character is online or not.
+	deletearray .@did; deletearray .@aid; deletearray .@cid;
+	.@n = query_sql("SELECT id, account_id, char_id FROM web_delivery WHERE items_sent = 0 AND char_id > 0 ORDER BY id LIMIT 20", .@did, .@aid, .@cid);
+	for (.@i = 0; .@i < .@n; .@i++) {
+		// Mark first, so a script error can never mail the same rewards twice.
+		query_sql("UPDATE web_delivery SET items_sent = 2 WHERE id = " + .@did[.@i] + " AND items_sent = 0");
+		deletearray .@nid; deletearray .@amt;
+		.@k = query_sql("SELECT nameid, amount FROM web_delivery_item WHERE delivery_id = " + .@did[.@i] + " ORDER BY idx", .@nid, .@amt);
+		for (.@j = 0; .@j < .@k; .@j += 5) {
+			deletearray .@mi; deletearray .@ma;
+			for (.@x = 0; .@x < 5 && .@j + .@x < .@k; .@x++) {
+				.@mi[.@x] = .@nid[.@j + .@x];
+				.@ma[.@x] = .@amt[.@j + .@x];
+			}
+			mail .@cid[.@i], .sender$, .title$, .body$, 0, .@mi, .@ma;
+		}
+		query_sql("UPDATE web_delivery SET items_sent = 1, items_sent_at = NOW() WHERE id = " + .@did[.@i]);
+		if (isloggedin(.@aid[.@i], .@cid[.@i]) && attachrid(.@aid[.@i])) {
+			dispbottom "[Donation] Your rewards were sent to your RODEX mailbox. Thank you!", 0x00FF99;
+			detachrid;
+		}
+	}
+
+	// 2) Cash -> #CASHPOINTS, only while the account is online.
+	deletearray .@did; deletearray .@aid; deletearray .@cash;
+	.@n = query_sql("SELECT id, account_id, cash FROM web_delivery WHERE cash_sent = 0 AND cash > 0 ORDER BY id LIMIT 50", .@did, .@aid, .@cash);
+	for (.@i = 0; .@i < .@n; .@i++) {
+		if (!isloggedin(.@aid[.@i]))
+			continue;
+		if (!attachrid(.@aid[.@i]))
+			continue;
+		query_sql("UPDATE web_delivery SET cash_sent = 1, cash_sent_at = NOW() WHERE id = " + .@did[.@i] + " AND cash_sent = 0");
+		#CASHPOINTS += .@cash[.@i];
+		dispbottom "[Donation] +" + callfunc("F_InsertComma", .@cash[.@i]) + " Cash Points (total " + callfunc("F_InsertComma", #CASHPOINTS) + "). Thank you!", 0x00FF99;
+		detachrid;
+	}
+	return;
 }
