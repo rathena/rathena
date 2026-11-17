@@ -13,6 +13,7 @@
 #include "astralstrike.cpp"
 #include "beastlyhypnosis.cpp"
 #include "blindingmist.cpp"
+#include "burningflame.cpp"
 #include "castcancel.cpp"
 #include "chainlightning.cpp"
 #include "classchange.cpp"
@@ -63,6 +64,7 @@
 #include "frostdiver.cpp"
 #include "frostnova.cpp"
 #include "frostymisty.cpp"
+#include "frozenhail.cpp"
 #include "frozenslash.cpp"
 #include "ganbantein.cpp"
 #include "golddigger.cpp"
@@ -120,6 +122,7 @@
 #include "stonecurse.cpp"
 #include "stormcannon.cpp"
 #include "stormgust.cpp"
+#include "stormrise.cpp"
 #include "strantumtremor.cpp"
 #include "striking.cpp"
 #include "suicide.cpp"
@@ -136,12 +139,14 @@
 #include "summonwaterball.cpp"
 #include "summonwaterspiritaqua.cpp"
 #include "summonwindspiritventus.cpp"
+#include "terraburst.cpp"
 #include "terradrive.cpp"
 #include "tetravortex.cpp"
 #include "thunderstorm.cpp"
 #include "tornadostorm.cpp"
 #include "vacuumextreme.cpp"
 #include "varetyrspear.cpp"
+#include "venombombard.cpp"
 #include "venomswamp.cpp"
 #include "violentquake.cpp"
 #include "volcano.cpp"
@@ -206,6 +211,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<SkillViolentQuakeAttack>();
 		case EM_ACTIVITY_BURN:
 			return std::make_unique<SkillActivityBurn>();
+		case EM_BURNING_FLAME:
+			return std::make_unique<SkillBurningFlame>();
 		case EM_CONFLAGRATION:
 			return std::make_unique<SkillConflagration>();
 		case EM_DIAMOND_STORM:
@@ -222,8 +229,12 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<SkillElementalBusterWater>();
 		case EM_ELEMENTAL_BUSTER_WIND:
 			return std::make_unique<SkillElementalBusterWind>();
+		case EM_ELEMENTAL_INTEGRATION:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case EM_ELEMENTAL_VEIL:
 			return std::make_unique<SkillElementalVeil>();
+		case EM_FROZEN_HAIL:
+			return std::make_unique<SkillFrozenHail>();
 		case EM_INCREASING_ACTIVITY:
 			return std::make_unique<SkillIncreasingActivity>();
 		case EM_LIGHTNING_LAND:
@@ -232,6 +243,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<SkillPsychicStream>();
 		case EM_SPELL_ENCHANTING:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case EM_STORM_RISE:
+			return std::make_unique<SkillStormRise>();
 		case EM_SUMMON_ELEMENTAL_ARDOR:
 			return std::make_unique<SkillSummonElementalArdor>();
 		case EM_SUMMON_ELEMENTAL_DILUVIO:
@@ -242,8 +255,12 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<SkillSummonElementalSerpens>();
 		case EM_SUMMON_ELEMENTAL_TERREMOTUS:
 			return std::make_unique<SkillSummonElementalTerremotus>();
+		case EM_TERRA_BURST:
+			return std::make_unique<SkillTerraBurst>();
 		case EM_TERRA_DRIVE:
 			return std::make_unique<SkillTerraDrive>();
+		case EM_VENOM_BOMBARD:
+			return std::make_unique<SkillVenomBombard>();
 		case EM_VENOM_SWAMP:
 			return std::make_unique<SkillVenomSwamp>();
 		case HW_GANBANTEIN:
