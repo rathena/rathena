@@ -46,17 +46,20 @@ const char* mapindex_getmapname_ext(const char* string, char* output) {
 	static char buf[MAP_NAME_LENGTH_EXT];
 	char* dest = (output != nullptr) ? output : buf;
 
-	size_t len;
+	const char* name = strchr( string, '#' );
+	if( name != nullptr )
+		name++;
+	else
+		name = string;
 
-	strcpy(buf,string);
-	sscanf(string,"%*[^#]%*[#]%15s",buf);
+	size_t len = safestrnlen(name, MAP_NAME_LENGTH);
 
-	len = safestrnlen(buf, MAP_NAME_LENGTH);
-
-	if (len == MAP_NAME_LENGTH) {
-		ShowWarning("(mapindex_normalize_name) Map name '%*s' is too long!\n", 2*MAP_NAME_LENGTH, buf);
+	if( len == MAP_NAME_LENGTH ){
+		ShowWarning("(mapindex_normalize_name) Map name '%*s' is too long!\n", 2*MAP_NAME_LENGTH, name);
 		len--;
 	}
+
+	safestrncpy(buf, name, len + 1);
 	safestrncpy(dest, buf, len+1);
 
 	if (len < 4 || stricmp(&dest[len-4], ".gat") != 0) {
