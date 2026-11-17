@@ -7,8 +7,13 @@
 #include <unordered_map>
 #include <vector>
 
+#if __has_include(<ryml/ryml_std.hpp>)
+#include <ryml/ryml_std.hpp>
+#include <ryml/ryml.hpp>
+#else
 #include <ryml_std.hpp>
 #include <ryml.hpp>
+#endif
 
 #include <config/core.hpp>
 

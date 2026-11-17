@@ -1,0 +1,25 @@
+{
+  "name": "rathena",
+  "version-string": "dev",
+  "builtin-baseline": "05442024c3fda64320bd25d2251cc9807b84fb6f",
+  "dependencies": [
+    "cpp-httplib",
+    "libconfig",
+    "libmariadb",
+    "nlohmann-json",
+    "pcre",
+    "ryml",
+    "yaml-cpp",
+    "zlib"
+  ],
+  "overrides": [
+    {
+      "name": "cpp-httplib",
+      "version": "0.8.9"
+    },
+    {
+      "name": "ryml",
+      "version": "0.4.1"
+    }
+  ]
+}

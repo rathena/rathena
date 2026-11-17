@@ -36,13 +36,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v2
+      - name: Bootstrap vcpkg
+        shell: pwsh
+        run: |
+          if (-not (Test-Path .vcpkg)) {
+            git clone https://github.com/microsoft/vcpkg.git .vcpkg
+          }
+          .\.vcpkg\bootstrap-vcpkg.bat -disableMetrics
+
+      - name: Configure CMake for PRE
+        if: ${{ matrix.mode == 'PRE' }}
+        run: cmake --preset msvs -DENABLE_EXTRA_BUILDBOT_CODE=ON -DENABLE_PRERE=ON
+
+      - name: Configure CMake for RE
+        if: ${{ matrix.mode == 'RE' }}
+        run: cmake --preset msvs -DENABLE_EXTRA_BUILDBOT_CODE=ON -DENABLE_PRERE=OFF
 
       - name: Build solution in Debug
         if: ${{ matrix.mode == 'PRE' }}
-        run: msbuild rAthena.sln -t:rebuild -property:Configuration=Debug /p:DefineConstants="BUILDBOT%3BPRERE" /warnaserror
+        run: cmake --build --preset build-msvs --config Debug --parallel
 
       - name: Build solution in Debug
         if: ${{ matrix.mode == 'RE' }}
-        run: msbuild rAthena.sln -t:rebuild -property:Configuration=Debug /p:DefineConstants="BUILDBOT" /warnaserror
+        run: cmake --build --preset build-msvs --config Debug --parallel
