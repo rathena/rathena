@@ -16736,11 +16736,17 @@ void clif_parse_Mail_setattach(int32 fd, map_session_data *sd){
 
 	if( !chrif_isconnected() )
 		return;
-	if (amount < 0 || server_index(idx) >= MAX_INVENTORY)
+	if (amount < 0)
 		return;
 
-	if (sd->inventory_data[server_index(idx)] == nullptr)
-		return;
+#if PACKETVER < 20150513
+	// Legacy mail uses index zero for Zeny, not an inventory item.
+	if (idx != 0)
+#endif
+	{
+		if (server_index(idx) >= MAX_INVENTORY || sd->inventory_data[server_index(idx)] == nullptr)
+			return;
+	}
 
 	if( mail_invalid_operation( sd ) ){
 		return;
