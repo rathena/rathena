@@ -29,6 +29,7 @@
 #include "falconssoul.cpp"
 #include "fallingstar.cpp"
 #include "feelingthesunmoonandstars.cpp"
+#include "fieldofkirin.cpp"
 #include "flashkick.cpp"
 #include "fullmoonkick.cpp"
 #include "golemssoul.cpp"
@@ -248,6 +249,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryTaekwon::create(const e_skill skill
 			return std::make_unique<SkillCircleOfDirectionsAndElementals>();
 		case SOA_EXORCISM_OF_MALICIOUS_SOUL:
 			return std::make_unique<SkillExorcismOfMaliciousSoul>();
+		case SOA_FIELD_OF_KIRIN:
+			return std::make_unique<SkillFieldOfKirin>();
 		case SOA_SOUL_GATHERING:
 			return std::make_unique<SkillSoulGathering>();
 		case SOA_SOUL_OF_HEAVEN_AND_EARTH:
