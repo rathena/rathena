@@ -9952,3 +9952,8 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+  - Status: Lockon_Laser
+    Icon: EFST_LOCKON_LASER
+    Flags:
+      NoSave: true
+      RemoveOnChangeMap: true
