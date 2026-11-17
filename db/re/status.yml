@@ -1033,6 +1033,7 @@ Body:
     Opt3:
       ExplosionSpirits: true
     Flags:
+      DisplayPc: true
       Debuff: true
       NoClearance: true
       NoSave: true
@@ -1201,6 +1202,7 @@ Body:
     Opt3:
       AuraBlade: true
     Flags:
+      DisplayPc: true
       NoSave: true
       RequireWeapon: true
       RemoveOnUnequipWeapon: true
@@ -1222,6 +1224,7 @@ Body:
     Opt3:
       Quicken: true
     Flags:
+      DisplayPc: true
       NoSave: true
       RemoveOnHermode: true
   - Status: Tensionrelax
@@ -1247,6 +1250,7 @@ Body:
     Opt3:
       Berserk: true
     Flags:
+      DisplayPc: true
       NoSave: true
     Fail:
       Saturdaynightfever: true
@@ -1275,6 +1279,7 @@ Body:
     EndOnStart:
       Kaite: true
     Flags:
+      DisplayPc: true
       RemoveOnHermode: true
   - Status: Basilica
     Icon: EFST_BASILICA_BUFF
@@ -1399,6 +1404,7 @@ Body:
     Opt3:
       Marionette: true
     Flags:
+      DisplayPc: true
       RemoveOnChangeMap: true
     Fail:
       Marionette: true
@@ -1415,6 +1421,7 @@ Body:
     Opt3:
       Marionette: true
     Flags:
+      DisplayPc: true
       RemoveOnChangeMap: true
     Fail:
       Marionette2: true
@@ -1426,6 +1433,7 @@ Body:
     Opt3:
       Undead: true
     Flags:
+      DisplayPc: true
       Debuff: true
       NoClearance: true
       NoSave: true
@@ -1516,6 +1524,7 @@ Body:
       Aspd: true
       Speed: true
     Flags:
+      DisplayPc: true
       NoSave: true
       RemoveOnHermode: true
     Opt3:
@@ -2085,6 +2094,7 @@ Body:
     Opt3:
       SoulLink: true
     Flags:
+      DisplayPc: true
       NoClearance: true
       NoSave: true
       NoBanishingBuster: true
@@ -2383,6 +2393,7 @@ Body:
     Opt3:
       Warm: true
     Flags:
+      DisplayPc: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
@@ -2437,6 +2448,7 @@ Body:
     Opt3:
       Kaite: true
     Flags:
+      DisplayPc: true
       NoSave: true
       NoClearance: true
       RemoveOnHermode: true
@@ -2543,6 +2555,7 @@ Body:
     Opt3:
       Bunsin: true
     Flags:
+      DisplayPc: true
       NoSave: true
       NoClearance: true
       RemoveOnHermode: true
