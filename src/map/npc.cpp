@@ -2952,7 +2952,8 @@ static int32 npc_selllist_sub(map_session_data* sd, int32 list_length, const PAC
 {
 	char npc_ev[EVENT_NAME_LENGTH];
 	char card_slot[NAME_LENGTH];
-	char option_id[NAME_LENGTH], option_val[NAME_LENGTH], option_param[NAME_LENGTH];
+	// Allow for the longest option variable prefix, a signed int32 suffix, and the null terminator.
+	char option_id[32], option_val[32], option_param[32];
 	int32 i, j;
 	int32 key_nameid = 0;
 	int32 key_amount = 0;
