@@ -9952,3 +9952,28 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+  - Status: Ki_Sul_And_Chul_Ho
+    Icon: EFST_KI_SUL_AND_CHUL_HO
+    DurationLookup: SH_KI_SUL_AND_CHUL_HO
+    Flags:
+      DisplayPc: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      bonus2 bSkillAtk,"SH_CHUL_HO_SONIC_CLAW",50;
+      bonus2 bSkillAtk,"SH_HOWLING_OF_CHUL_HO",30;
+      bonus2 bSkillAtk,"SH_HOGOGONG_STRIKE",60;
+      bonus2 bSkillAtk,"SH_CHUL_HO_BATTERING",50;
+  - Status: Ki_Sul_And_Hyun_Rok
+    Icon: EFST_KI_SUL_AND_HYUN_ROK
+    DurationLookup: SH_KI_SUL_AND_HYUN_ROK
+    Flags:
+      DisplayPc: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      bonus2 bSkillAtk,"SH_HYUN_ROKS_BREEZE",50;
+      bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",30;
+      bonus2 bSkillAtk,"SH_HYUN_ROK_SPIRIT_POWER",60;
