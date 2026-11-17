@@ -4047,9 +4047,11 @@ int32 parse_console(const char* buf){
 	int16 x = 0;
 	int16 y = 0;
 	int32 n;
-	map_session_data sd;
+	map_session_data sd{};
 
 	strcpy(sd.status.name, "console");
+	sd.group_id = 99;
+	pc_group_pc_load( &sd );
 
 	if( ( n = sscanf(buf, "%63[^:]:%63[^:]:%11s %6hd %6hd[^\n]", type, command, mapname, &x, &y) ) < 5 ){
 		if( ( n = sscanf(buf, "%63[^:]:%63[^\n]", type, command) ) < 2 )		{
