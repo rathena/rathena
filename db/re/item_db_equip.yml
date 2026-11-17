@@ -58104,7 +58104,7 @@ Body:
       bonus2 bSubClass,Class_Boss,.@def;
   - Id: 5977
     AegisName: C_Poker_Card_In_Mouth
-    Name: "Costume: Poker Card In Mouth"
+    Name: "Costume Poker Card In Mouth"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -91618,7 +91618,7 @@ Body:
       }
   - Id: 18921
     AegisName: C_Aladdin_Lamp
-    Name: "Costume: Tarnished Lamp"
+    Name: "Costume Tarnished Lamp"
     Type: Armor
     Weight: 200
     Locations:
@@ -103933,7 +103933,7 @@ Body:
     View: 384
   - Id: 19877
     AegisName: C_Eyes_Of_Darkness
-    Name: "Costume: Eyes Of Darkness"
+    Name: "Costume Eyes Of Darkness"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -104246,7 +104246,7 @@ Body:
     EquipLevelMin: 1
   - Id: 19912
     AegisName: C_Cat_Eye
-    Name: "Costume: Cat eye"
+    Name: "Costume Cat eye"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -108508,7 +108508,7 @@ Body:
     View: 1374
   - Id: 20344
     AegisName: C_Happy_Balloon_J
-    Name: "Costume: Happy Balloon"
+    Name: "Costume Happy Balloon"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -110136,7 +110136,7 @@ Body:
       hateffect(HAT_EF_C_BLESSINGS_OF_SOUL,false);
   - Id: 20523
     AegisName: C_2018_RTC_Cape_TW
-    Name: "Costume: 2018 RTC Memorial Cloak"
+    Name: "Costume 2018 RTC Memorial Cloak"
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -110790,7 +110790,7 @@ Body:
     View: 63
   - Id: 20586
     AegisName: C_Loli_Ruri_Moon
-    Name: "Costume: Loli Ruri's Crescent"
+    Name: "Costume Loli Ruri's Crescent"
     Type: Armor
     View: 64
     Locations:
@@ -110848,7 +110848,7 @@ Body:
     View: 70
   - Id: 20593
     AegisName: C_Ice_Wing
-    Name: "Costume: Ice Wings"
+    Name: "Costume Ice Wings"
     Type: Armor
     View: 71
     Locations:
@@ -110880,7 +110880,7 @@ Body:
       NoAuction: true
   - Id: 20596
     AegisName: C_BlackBear_Back_TW
-    Name: "Costume: Black Bear Backpack"
+    Name: "Costume Black Bear Backpack"
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -110888,7 +110888,7 @@ Body:
     View: 81
   - Id: 20597
     AegisName: C_Evil_Scythe
-    Name: "Costume: Evil Scythe"
+    Name: "Costume Evil Scythe"
     Type: Armor
     View: 79
     Locations:
@@ -110904,7 +110904,7 @@ Body:
     ArmorLevel: 1
   - Id: 20599
     AegisName: C_Sakura_Wing
-    Name: "Costume: Sakura Wings"
+    Name: "Costume Sakura Wings"
     Type: Armor
     View: 83
     Locations:
@@ -110934,7 +110934,7 @@ Body:
       hateffect(HAT_EF_99LV_Rune_Red,false);
   - Id: 20602
     AegisName: C_Seraphim_Wing_TW
-    Name: "Costume: Ace of Angel Wing (Sweet)"
+    Name: "Costume Ace of Angel Wing (Sweet)"
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -110950,7 +110950,7 @@ Body:
     ArmorLevel: 1
   - Id: 20604
     AegisName: C_Blessed_Veil
-    Name: "Costume: Blessed Veil"
+    Name: "Costume Blessed Veil"
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -116243,7 +116243,7 @@ Body:
     View: 58
   - Id: 20988
     AegisName: C_Mechanical_Butterfly
-    Name: "Costume: Mechanical Butterfly"
+    Name: "Costume Mechanical Butterfly"
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -152607,7 +152607,7 @@ Body:
     View: 1483
   - Id: 31032
     AegisName: C_Tare_Luwmin
-    Name: "Costume: Sailing Lumin"
+    Name: "Costume Sailing Lumin"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -152850,7 +152850,7 @@ Body:
       hateffect(HAT_EF_BAKURETSU_HADOU,false);
   - Id: 31057
     AegisName: C_Eremes_Scarf_Black
-    Name: "Costume: Eremes' Scarf (Black)"
+    Name: "Costume Eremes' Scarf (Black)"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -153185,7 +153185,7 @@ Body:
     View: 845
   - Id: 31093
     AegisName: C_Underlamp
-    Name: "Costume: Lamp of Fairy"
+    Name: "Costume Lamp of Fairy"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -153671,7 +153671,7 @@ Body:
       sc_end SC_TIME_ACCESSORY;
   - Id: 31143
     AegisName: C_Krathong_Crown_TH
-    Name: "Costume: Krathong Crown"
+    Name: "Costume Krathong Crown"
     Type: Armor
     View: 1560
     Locations:
@@ -155159,7 +155159,7 @@ Body:
     View: 1051
   - Id: 31305
     AegisName: C_TW_1th_Balloon
-    Name: "Costume: Walking Poring"
+    Name: "Costume Walking Poring"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -155445,7 +155445,7 @@ Body:
     View: 1676
   - Id: 31333
     AegisName: C_Straight_Pony_WH_V
-    Name: "Costume: Straight Pony (White)"
+    Name: "Costume Straight Pony (White)"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -155454,7 +155454,7 @@ Body:
     View: 1395
   - Id: 31334
     AegisName: C_Straight_Pony_BU_V
-    Name: "Costume: Straight Pony (Blue)"
+    Name: "Costume Straight Pony (Blue)"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -155463,7 +155463,7 @@ Body:
     View: 1394
   - Id: 31335
     AegisName: C_Straight_Pony_OM_V
-    Name: "Costume: Straight Pony (Brown)"
+    Name: "Costume Straight Pony (Brown)"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -155472,7 +155472,7 @@ Body:
     View: 1393
   - Id: 31336
     AegisName: C_Straight_Pony_RD_V
-    Name: "Costume: Straight Pony (Red)"
+    Name: "Costume Straight Pony (Red)"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -155481,7 +155481,7 @@ Body:
     View: 1392
   - Id: 31337
     AegisName: C_Straight_Pony_PP_V
-    Name: "Costume: Straight Pony (Purple)"
+    Name: "Costume Straight Pony (Purple)"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -155490,7 +155490,7 @@ Body:
     View: 1391
   - Id: 31338
     AegisName: C_Straight_Pony_GN_V
-    Name: "Costume: Straight Pony (Green)"
+    Name: "Costume Straight Pony (Green)"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -155499,7 +155499,7 @@ Body:
     View: 1390
   - Id: 31339
     AegisName: C_Straight_Pony_YL_V
-    Name: "Costume: Straight Pony (Yellow)"
+    Name: "Costume Straight Pony (Yellow)"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -155508,7 +155508,7 @@ Body:
     View: 1389
   - Id: 31340
     AegisName: C_Straight_Pony_BL_V
-    Name: "Costume: Straight Pony (Black)"
+    Name: "Costume Straight Pony (Black)"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -156276,7 +156276,7 @@ Body:
     View: 976
   - Id: 31423
     AegisName: C_Bear_Balloon
-    Name: "Costume: Cute Bear Bear Balloon (Brown)"
+    Name: "Costume Cute Bear Bear Balloon (Brown)"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -156339,7 +156339,7 @@ Body:
     View: 958
   - Id: 31430
     AegisName: C_Seppl_Hat_TW
-    Name: "Costume: Seppl Hat"
+    Name: "Costume Seppl Hat"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -156348,7 +156348,7 @@ Body:
     View: 1023
   - Id: 31431
     AegisName: C_Curupira_Hat_TW
-    Name: "Costume: Curupira Hat"
+    Name: "Costume Curupira Hat"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -156960,7 +156960,7 @@ Body:
     View: 746
   - Id: 31497
     AegisName: C_Flowery_Vision_TH
-    Name: "Costume: Flowery Vision"
+    Name: "Costume Flowery Vision"
     Type: Armor
     View: 1744
     Locations:
@@ -157121,7 +157121,7 @@ Body:
     View: 1756
   - Id: 31515
     AegisName: C_Leopard_Cat
-    Name: "Costume: Bengal Cat"
+    Name: "Costume Bengal Cat"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -157273,7 +157273,7 @@ Body:
     View: 1770
   - Id: 31532
     AegisName: C_Neev_Barrette
-    Name: "Costume: Neev Barrette"
+    Name: "Costume Neev Barrette"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -157300,7 +157300,7 @@ Body:
     View: 1019
   - Id: 31535
     AegisName: C_Old_Pink_Poo_Hat
-    Name: "Costume: Pink Poo Poo Hat"
+    Name: "Costume Pink Poo Poo Hat"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -157318,7 +157318,7 @@ Body:
     View: 1350
   - Id: 31537
     AegisName: C_Return_TW_2th_Hat
-    Name: "Costume: 2nd Anniversary Hat"
+    Name: "Costume 2nd Anniversary Hat"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -157516,7 +157516,7 @@ Body:
     View: 1781
   - Id: 31558
     AegisName: C_Hoplite_Helmet_Black
-    Name: "Costume: Hoplite Helmet Black"
+    Name: "Costume Hoplite Helmet Black"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -157744,7 +157744,7 @@ Body:
     View: 1644
 #  - Id: 31583
 #    AegisName: C_Willothewisp
-#    Name: "Costume: Firefly Spirit Light"
+#    Name: "Costume Firefly Spirit Light"
 #    Type: Armor
 #    Locations:
 #      Costume_Head_Low: true
@@ -157757,7 +157757,7 @@ Body:
 #      sc_end SC_STRANGELIGHTS;
   - Id: 31584
     AegisName: C_Marin_Muffler
-    Name: "Costume: Marin's Muffler"
+    Name: "Costume Marin's Muffler"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -157782,7 +157782,7 @@ Body:
     View: 1797
   - Id: 31587
     AegisName: C_NationalDay_helmet_TW
-    Name: "Costume: Skoi Rider"
+    Name: "Costume Skoi Rider"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -158148,7 +158148,7 @@ Body:
     View: 1761
   - Id: 31626
     AegisName: C_FluffyWing_TW
-    Name: "Costume: Wing of Harmony"
+    Name: "Costume Wing of Harmony"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -160772,7 +160772,7 @@ Body:
     View: 32
   - Id: 31921
     AegisName: C_Fairy_Long_CB
-    Name: "Costume: Choa Hairstyle (Peach)"
+    Name: "Costume Choa Hairstyle (Peach)"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -164620,7 +164620,7 @@ Body:
       bonus2 bExpAddClass,Class_All,10;
   - Id: 400056
     AegisName: C_VIP_Hair_Female
-    Name: "Costume: Blue Devil Wig"
+    Name: "Costume Blue Devil Wig"
     Type: Armor
     View: 1990
     Locations:
@@ -164632,7 +164632,7 @@ Body:
       hateffect HAT_EF_VIP_HAIR,false;
   - Id: 400057
     AegisName: C_VIP_Hair_Male
-    Name: "Costume: Red Lotus Demon Wig"
+    Name: "Costume Red Lotus Demon Wig"
     Type: Armor
     View: 1989
     Locations:
@@ -167870,7 +167870,7 @@ Body:
       }
   - Id: 400214
     AegisName: C_Faith_Of_Yggdrasil
-    Name: "Costume: Faith of Yggdrasl"
+    Name: "Costume Faith of Yggdrasl"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -169362,7 +169362,7 @@ Body:
     View: 1489
   - Id: 400278
     AegisName: C_Drooping_Omega
-    Name: "Costume: Drooping Omega"
+    Name: "Costume Drooping Omega"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -169395,7 +169395,7 @@ Body:
       autobonus2 "{}",50,100,BF_WEAPON|BF_MAGIC,"{ heal 0,-30; }";
   - Id: 400280
     AegisName: C_AI_Nabi
-    Name: "Costume: AI Nabi Minimi"
+    Name: "Costume AI Nabi Minimi"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -169977,7 +169977,7 @@ Body:
     View: 423
   - Id: 400365
     AegisName: C_Larva_Red
-    Name: "Costume: Larva (Red)"
+    Name: "Costume Larva (Red)"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -172644,7 +172644,7 @@ Body:
       }
   - Id: 400471
     AegisName: C_Angry_Fish
-    Name: "Costume: Angry Fish"
+    Name: "Costume Angry Fish"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -177746,7 +177746,7 @@ Body:
     View: 2580
   - Id: 400717
     AegisName: aegis_400717
-    Name: "Costume: Yakgwa Headband"
+    Name: "Costume Yakgwa Headband"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -177928,7 +177928,7 @@ Body:
       }
   - Id: 400725
     AegisName: C_G_S_Captain_Hat
-    Name: "Costume: Ghost Ship Captain Hat"
+    Name: "Costume Ghost Ship Captain Hat"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -178571,7 +178571,7 @@ Body:
     View: 2687
   - Id: 400913
     AegisName: C_CLB_DT_TS_Mini
-    Name: "Costume: Toothless Mini"
+    Name: "Costume Toothless Mini"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -178587,7 +178587,7 @@ Body:
       NoAuction: true
   - Id: 400914
     AegisName: C_CLB_DT_TS_Drooping
-    Name: "Costume: Toothless Floppy"
+    Name: "Costume Toothless Floppy"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -182778,7 +182778,7 @@ Body:
     View: 700
   - Id: 410144
     AegisName: C_Omega_Golf_Bag
-    Name: "Costume: Omega Golf Bag"
+    Name: "Costume Omega Golf Bag"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -182786,7 +182786,7 @@ Body:
     View: 2251
   - Id: 410145
     AegisName: C_Agnes_Mini
-    Name: "Costume: Agnes Minimi"
+    Name: "Costume Agnes Minimi"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -182794,7 +182794,7 @@ Body:
     View: 2254
   - Id: 410146
     AegisName: C_Debris_Mini
-    Name: "Costume: De Vries Minimi"
+    Name: "Costume De Vries Minimi"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -182802,7 +182802,7 @@ Body:
     View: 2255
   - Id: 410147
     AegisName: C_ElenaVolkova_Mini
-    Name: "Costume: Elena Volkova Minimi"
+    Name: "Costume Elena Volkova Minimi"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -182810,7 +182810,7 @@ Body:
     View: 2256
   - Id: 410148
     AegisName: C_Elumina_Mini
-    Name: "Costume: Elumina Minimi"
+    Name: "Costume Elumina Minimi"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -182818,7 +182818,7 @@ Body:
     View: 2257
   - Id: 410149
     AegisName: C_Berner_Mini
-    Name: "Costume: Eisen Werner Minimi"
+    Name: "Costume Eisen Werner Minimi"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -183010,7 +183010,7 @@ Body:
     View: 2116
   - Id: 410188
     AegisName: C_King_Mini
-    Name: "Costume: King Mini-Me"
+    Name: "Costume King Mini-Me"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -183018,7 +183018,7 @@ Body:
     View: 2290
   - Id: 410189
     AegisName: C_Angeling_Mini
-    Name: "Costume: Angeling Mini-Me"
+    Name: "Costume Angeling Mini-Me"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -183026,7 +183026,7 @@ Body:
     View: 2291
   - Id: 410190
     AegisName: C_Seyren_Mini
-    Name: "Costume: Seyren Mini-Me"
+    Name: "Costume Seyren Mini-Me"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -183034,7 +183034,7 @@ Body:
     View: 2292
   - Id: 410191
     AegisName: C_Spica_Mini
-    Name: "Costume: Spica Nerius Minimi"
+    Name: "Costume Spica Nerius Minimi"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -183042,7 +183042,7 @@ Body:
     View: 2307
   - Id: 410192
     AegisName: C_Evil_Mini
-    Name: "Costume: Evil Minimi"
+    Name: "Costume Evil Minimi"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -183148,7 +183148,7 @@ Body:
     View: 2303
   - Id: 410205
     AegisName: C_Marlbron_Mini
-    Name: "Costume: Marlbron Minimi"
+    Name: "Costume Marlbron Minimi"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -183156,7 +183156,7 @@ Body:
     View: 2306
   - Id: 410206
     AegisName: C_Lehar_Mini
-    Name: "Costume: Lehar Minimi"
+    Name: "Costume Lehar Minimi"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -183244,7 +183244,7 @@ Body:
       bonus bLongAtkRate,.@b+(15*.@c);
   - Id: 410214
     AegisName: C_Larva_Yellow_Mini
-    Name: "Costume: Larva Yellow Minimi"
+    Name: "Costume Larva Yellow Minimi"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -184271,7 +184271,7 @@ Body:
       bonus2 bResEff,Eff_Blind,10000;
   - Id: 410308
     AegisName: C_Heine_Tab_1
-    Name: "Costume: Heine’s Tablet"
+    Name: "Costume Heine’s Tablet"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -184286,7 +184286,7 @@ Body:
       NoAuction: true
   - Id: 410309
     AegisName: C_Heine_Tab_2
-    Name: "Costume: Heine’s Tablet (Rose)"
+    Name: "Costume Heine’s Tablet (Rose)"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -184301,7 +184301,7 @@ Body:
       NoAuction: true
   - Id: 410310
     AegisName: C_Heine_Tab_3
-    Name: "Costume: Heine’s Tablet (Silver)"
+    Name: "Costume Heine’s Tablet (Silver)"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -185068,7 +185068,7 @@ Body:
       hateffect HAT_EF_AURA_OF_GHOST_S,false;
   - Id: 410364
     AegisName: C_Wisdom_Core_Headphone
-    Name: "Costume: Wisdom Core Headphones"
+    Name: "Costume Wisdom Core Headphones"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -185232,7 +185232,7 @@ Body:
     View: 2685
   - Id: 410440
     AegisName: C_CLB_DT_TS_Hat
-    Name: "Costume: Toothless Head"
+    Name: "Costume Toothless Head"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -187046,7 +187046,7 @@ Body:
     View: 2270
   - Id: 420163
     AegisName: C_Protect_Cloth_B
-    Name: "Costume: Protect Cloth"
+    Name: "Costume Protect Cloth"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -188845,7 +188845,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Earth,10;
   - Id: 420376
     AegisName: C_Traditors_Low_Tail
-    Name: "Costume: Traditor's Low Tail"
+    Name: "Costume Traditor's Low Tail"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -188853,7 +188853,7 @@ Body:
     View: 2588
   - Id: 420377
     AegisName: C_Braids_Wave
-    Name: "Costume: Braid Wave"
+    Name: "Costume Braid Wave"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -190040,7 +190040,7 @@ Body:
       bonus2 bSubClass,Class_Normal,-5;
   - Id: 430010
     AegisName: C_Yorker_Hood
-    Name: "Costume: Yorker Hood"
+    Name: "Costume Yorker Hood"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -190555,7 +190555,7 @@ Body:
       NoAuction: true
   - Id: 440017
     AegisName: C_Jormun_Cape
-    Name: "Costume: Jormungandr Church Cape"
+    Name: "Costume Jormungandr Church Cape"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -212274,7 +212274,7 @@ Body:
          skill "WZ_HEAVENDRIVE",3;
   - Id: 480117
     AegisName: C_Elec_Guitar_Of_Phen
-    Name: "Costume: Electric Guitar Of Phen"
+    Name: "Costume Electric Guitar Of Phen"
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -219171,7 +219171,7 @@ Body:
       NoAuction: true
   - Id: 480566
     AegisName: C_Immortal_H_Wing
-    Name: "Costume: Immortal Monarch's Wings"    # !todo check english name
+    Name: "Costume Immortal Monarch's Wings"    # !todo check english name
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -219213,7 +219213,7 @@ Body:
     View: 266
   - Id: 480595
     AegisName: C_CLB_DT_TS_Wing
-    Name: "Costume: Toothless Wings"
+    Name: "Costume Toothless Wings"
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -219229,7 +219229,7 @@ Body:
       NoAuction: true
   - Id: 480596
     AegisName: C_CLB_DT_TS_Hood
-    Name: "Costume: Toothless Hood"
+    Name: "Costume Toothless Hood"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -219273,7 +219273,7 @@ Body:
     View: 273
   - Id: 480611
     AegisName: C_Immortal_H_Spear
-    Name: "Costume: Immortal Monarch's Spear"    # !todo check english name
+    Name: "Costume Immortal Monarch's Spear"    # !todo check english name
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -219289,7 +219289,7 @@ Body:
       NoAuction: true
   - Id: 480616
     AegisName: C_Qualifier_1st
-    Name: "Costume: Royal Knight's Rune Sword"    # !todo check english name
+    Name: "Costume Royal Knight's Rune Sword"    # !todo check english name
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -219297,7 +219297,7 @@ Body:
     View: 276
   - Id: 480617
     AegisName: C_Qualifier_2nd
-    Name: "Costume: Royal Knight's Greatsword"    # !todo check english name
+    Name: "Costume Royal Knight's Greatsword"    # !todo check english name
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -219305,7 +219305,7 @@ Body:
     View: 277
   - Id: 480618
     AegisName: C_Qualifier_3rd
-    Name: "Costume: Knight's Greatsword"    # !todo check english name
+    Name: "Costume Knight's Greatsword"    # !todo check english name
     Type: Armor
     Locations:
       Costume_Garment: true
