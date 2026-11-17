@@ -85,10 +85,8 @@ sec_in02,144,168,3	script	Balheele#episkip	4_F_VALKYRIE,{
 					close;
 			}
 			break;
-		case 3: mes "Not available yet."; break;
-		case 4: mes "Not available yet."; break;
-//		case 3: callfunc("F_EpDesc", 18); callfunc("F_EpClearSkip", 18); break;
-//		case 4: callfunc("F_EpDesc", 19); callfunc("F_EpClearSkip", 19); break;
+		case 3: callfunc("F_EpDesc", 18); callfunc("F_EpClearSkip", 18); break;
+		case 4: callfunc("F_EpDesc", 19); callfunc("F_EpClearSkip", 19); break;
 		case 5:
 			if (!getbattleflag("feature.barter")) {
 				mes "[Balheele]";
@@ -260,9 +258,9 @@ function	script	F_EpClearConfirm	{
 		else
 			setarray .@names$[0], "Enterprise Crisis", "Reclaim Regenschirm", "To the Island", "Cat on Bullet", "New Operation", "Second Operation", "Old Memories", "The Research Note", "Regicide", "Call from Elena Volkova", "Golden Troublemaker", "Pure Wicked", "Pure Facts";
 	} else if (.@ep == 18) {
-		setarray .@names$[0], "To the Church State", "Niren's Request", "Children of Gray", "Oz's Maze and the Merchant", "Daily Bread to Be Thankful For", "Sacred Relic for Essence", "Belated Migration", "I Can't Sleep", "This Is Not That Place", "Where Is My Home", "There Are No Bad Beasts in the World", "Gray Village Governor Candidate", "Great Meeting in Gray Wolf Forest", "Wolf in Sheep's Clothing", "Sacred Deception";
+		setarray .@names$[0], "Towards Rachel (1)", "Gray Children (17)", "Gray Children (21)", "People's Opinion (1)", "People's Opinion (2)", "People's Opinion (3)", "People's Opinion (4)", "Direction of Prayer";
 	} else if (.@ep == 19) {
-		setarray .@names$[0], "Guest Who Came on the North Wind", "Patrol with Awin", "Encounter with Experiment Subject 210426", "Infiltration of Rgan's Dwelling", "Finding Clues", "Accumulating Suspicions", "Confused Snake's Nest", "Finding Underground Hideout from the Surface", "Airship Destruction Operation", "Saint of Purification", "Frozen Sea";
+		setarray .@names$[0], "Airship Sabotage Operation", "Underground Entrance Search", "Those Who Vanished";
 	}
 
 	mes "[Balheele]";
@@ -376,12 +374,12 @@ function	script	F_EpClearSkip	{
 		setarray .@ids[0], 7682, 7698, 7699, 7701, 7703, 7705, 7736, 14599, 14602, 14615, 12374, 7741;
 		setarray .@tickets[0], 1000283, 1001260, 1000282;
 	} else if (.@ep == 18) {
-		setarray .@names$[0], "To the Church State", "Niren's Request", "Children of Gray", "Oz's Maze and the Merchant", "Daily Bread to Be Thankful For", "Sacred Relic for Essence", "Belated Migration", "I Can't Sleep", "This Is Not That Place", "Where Is My Home", "There Are No Bad Beasts in the World", "Gray Village Governor Candidate", "Great Meeting in Gray Wolf Forest", "Wolf in Sheep's Clothing", "Sacred Deception";
-		setarray .@ids[0], 18150,18151,18152,18153,18154,18155,18156,18157,18158,18159,18160,18161,18162,18163,18164; // Last 18085
+		setarray .@names$[0], "Towards Rachel (1)", "Gray Children (17)", "Gray Children (21)", "People's Opinion (1)", "People's Opinion (2)", "People's Opinion (3)", "People's Opinion (4)", "Direction of Prayer";
+		setarray .@ids[0], 8681, 11720, 11724, 16568, 16569, 16570, 16571, 18085; // Last must be 18085 (episode marker)
 		setarray .@tickets[0], 1001262, 1000288;
 	} else if (.@ep == 19) {
-		setarray .@names$[0], "Guest Who Came on the North Wind", "Patrol with Awin", "Encounter with Experiment Subject 210426", "Infiltration of Rgan's Dwelling", "Finding Clues", "Accumulating Suspicions", "Confused Snake's Nest", "Finding Underground Hideout from the Surface", "Airship Destruction Operation", "Saint of Purification", "Frozen Sea";
-		setarray .@ids[0], 19200,19201,19202,19203,19204,19205,19206,19207,19208,19209,19210;
+		setarray .@names$[0], "Airship Sabotage Operation", "Underground Entrance Search", "Those Who Vanished";
+		setarray .@ids[0], 17637, 17650, 17649; // Last must be 17649 (episode marker); 17650 is required to start EP20
 		setarray .@tickets[0], 1001263, 1000988;
 	}
 
@@ -533,11 +531,41 @@ function	script	F_EpClearApply	{
 	case 18:
 		if (ep18_main < 57)
 			set ep18_main, 57;
+		// Remove in-progress main story quests left in the quest log
+		// (official script erases these as the story advances).
+		setarray .@chain[0],
+			8682, 8683, 8684, 8685, 8686, 8687,
+			11696, 11697, 11698, 11699, 11700, 11701, 11702, 11703,
+			11704, 11705, 11706, 11707, 11708, 11709, 11710, 11711, 11712, 11713, 11714, 11715, 11716, 11717, 11719,
+			11721, 11722, 11723,
+			18082, 16567, 16572,
+			16573, 16574, 16575, 16576, 16577, 16578, 16579, 16580,
+			17517, 17518, 17519, 17520, 17521, 17525,
+			18083, 18084;
+		for (.@i = 0; .@i < getarraysize(.@chain); .@i++) {
+			if (checkquest(.@chain[.@i]) != -1)
+				erasequest .@chain[.@i];
+		}
 		break;
 
 	case 19:
 		if (ep19_main < 100)
 			set ep19_main, 100;
+		// Remove in-progress main story quests left in the quest log.
+		// Side quests (18128 Saintess starter, 18132) and cooldowns are left alone.
+		setarray .@chain[0],
+			18119, 18120, 18121, 18122, 18123, 18129, 18124, 18125, 18126, 18127,
+			5972, 5983, 5984, 17639,
+			17619, 17620, 17621, 17622, 17623, 17624, 17625, 17626, 17627, 17628, 17629,
+			17630, 17631, 17632, 17633, 17634, 17635, 17636, 17638,
+			16636, 16637, 16638, 16639, 16640, 16641, 16642, 16643, 16644, 16645,
+			16646, 16647, 16648, 16649, 16650, 16651, 16652, 16653, 16654, 16655,
+			16656, 16657, 16658, 16659, 16660, 16661,
+			17640, 17641, 17642, 17643, 17644, 17645, 17646, 17647, 17648;
+		for (.@i = 0; .@i < getarraysize(.@chain); .@i++) {
+			if (checkquest(.@chain[.@i]) != -1)
+				erasequest .@chain[.@i];
+		}
 		break;
 	}
 
