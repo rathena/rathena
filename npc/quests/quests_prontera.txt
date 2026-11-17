@@ -3390,7 +3390,7 @@ moc_fild16,201,295,5	script	Assassin Guildsman#poiso	884,{
 			mes "......";
 			mes ".........";
 			next;
-			mes "[Assassin Guildsman";
+			mes "[Assassin Guildsman]";
 			mes "Listen carefully.";
 			mes "I will only tell this";
 			mes "to you one time.";

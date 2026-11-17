@@ -144,7 +144,7 @@ int32 intif_request_petdata(uint32 account_id,uint32 char_id,int32 pet_id)
  * @param p
  * @return 
  */
-int32 intif_save_petdata(uint32 account_id,struct s_pet *p)
+int32 intif_save_petdata( uint32 account_id, const s_pet* p )
 {
 	if (CheckForCharServer())
 		return 0;
@@ -182,7 +182,7 @@ int32 intif_delete_petdata(int32 pet_id)
  * @param name
  * @return 
  */
-int32 intif_rename(map_session_data *sd, int32 type, char *name)
+int32 intif_rename( const map_session_data* sd, int32 type, char* name )
 {
 	if (CheckForCharServer())
 		return 0;
@@ -202,7 +202,7 @@ int32 intif_rename(map_session_data *sd, int32 type, char *name)
  * @param mes : Message to send
  * @param len ; Size of the message
  * @param type : Color of msg
- * @return 0=error occured, 1=msg sent
+ * @return 0=error occurred, 1=msg sent
  */
 int32 intif_broadcast( const char* mes, size_t len, int32 type ){
 	nullpo_ret(mes);
@@ -436,7 +436,7 @@ int32 intif_saveregistry(map_session_data *sd)
 		lValid = script_check_RegistryVariableLength(0,varname,&len);
 		++len;
 
-		if (!lValid) { //this is sql colum size, must be retrive from config
+		if (!lValid) { //this is sql colum size, must be retrieve from config
 			ShowError("intif_saveregistry: Variable name length is too long (aid: %d, cid: %d): '%s' sz=%" PRIuPTR "\n", sd->status.account_id, sd->status.char_id, varname, len);
 			continue;
 		}
@@ -1197,7 +1197,7 @@ int32 intif_guild_castle_datasave(int32 castle_id,int32 index, int32 value)
  * @param sh : TMp homunlus data
  * @return 0=error, 1=msg_sent
  */
-int32 intif_homunculus_create(uint32 account_id, struct s_homunculus *sh)
+int32 intif_homunculus_create( uint32 account_id, const s_homunculus* sh )
 {
 	if (CheckForCharServer())
 		return 0;
@@ -1234,7 +1234,7 @@ int32 intif_homunculus_requestload(uint32 account_id, int32 homun_id)
  * @param sh : homunculus struct
  * @return : 0=error, 1=msg sent
  */
-int32 intif_homunculus_requestsave(uint32 account_id, struct s_homunculus* sh)
+int32 intif_homunculus_requestsave( uint32 account_id, const s_homunculus* sh )
 {
 	if (CheckForCharServer())
 		return 0;
@@ -1308,7 +1308,7 @@ int32 intif_parse_WisMessage(int32 fd)
 		return 0;
 	}
 	//Success to send whisper.
-	clif_wis_message(sd, wisp_source, RFIFOCP(fd,12+2*NAME_LENGTH),RFIFOW(fd,2)-12+2*NAME_LENGTH, gmlvl);
+	clif_wis_message(sd, wisp_source, RFIFOCP(fd,12+2*NAME_LENGTH),RFIFOW(fd,2)-(12+2*NAME_LENGTH), gmlvl);
 	intif_wis_reply(id,0);   // success
 	return 1;
 }
@@ -1371,7 +1371,7 @@ int32 mapif_parse_WisToGM(int32 fd)
 	char Wisp_name[NAME_LENGTH];
 	char *message;
 
-	mes_len =  RFIFOW(fd,2) - 8+NAME_LENGTH;
+	mes_len =  RFIFOW(fd,2) - (8+NAME_LENGTH);
 	message = (char *) aMalloc(mes_len+1);
 
 	safestrncpy(Wisp_name, RFIFOCP(fd,4), NAME_LENGTH);
@@ -1386,7 +1386,7 @@ int32 mapif_parse_WisToGM(int32 fd)
 /**
  * Request player registry
  * @param fd : char-serv link
- * @return 0=error, 1=sucess
+ * @return 0=error, 1=success
  */
 void intif_parse_Registers(int32 fd)
 {
@@ -1485,7 +1485,7 @@ void intif_parse_Registers(int32 fd)
 /**
  * Received a guild storage
  * @param fd : char-serv link
- * @return 0=error, 1=sucess
+ * @return 0=error, 1=success
  */
 int32 intif_parse_LoadGuildStorage(int32 fd)
 {
@@ -1558,7 +1558,7 @@ int32 intif_parse_PartyCreated(int32 fd)
 /**
  * Receive party info
  * @param fd : char-serv link
- * @return 0=error, 1=sucess
+ * @return 0=error, 1=success
  */
 int32 intif_parse_PartyInfo(int32 fd)
 {
@@ -1658,7 +1658,7 @@ int32 intif_parse_GuildCreated(int32 fd)
 /**
  * ACK guild infos
  * @param fd : char-serv link
- * @return 0=error, 1=sucess
+ * @return 0=error, 1=success
  */
 int32 intif_parse_GuildInfo(int32 fd)
 {
@@ -1723,7 +1723,7 @@ int32 intif_parse_GuildBroken(int32 fd)
  * basic guild info change notice
  * 0x3839 <packet len>.w <guild id>.l <type>.w <data>.?b
  * @param fd : char-serv link
- * @return 0=error, 1=sucess
+ * @return 0=error, 1=success
  */
 int32 intif_parse_GuildBasicInfoChanged(int32 fd)
 {
@@ -1749,7 +1749,7 @@ int32 intif_parse_GuildBasicInfoChanged(int32 fd)
  * guild member info change notice
  * 0x383a <packet len>.w <guild id>.l <account id>.l <char id>.l <type>.w <data>.?b
  * @param fd : char-serv link
- * @return 0=error, 1=sucess
+ * @return 0=error, 1=success
  */
 int32 intif_parse_GuildMemberInfoChanged(int32 fd)
 {
@@ -1938,7 +1938,7 @@ int32 intif_parse_DeletePetOk(int32 fd)
 /**
  * ACK changing name resquest, players,pets,hommon
  * @param fd : char-serv link
- * @return 0=error, 1=sucess
+ * @return 0=error, 1=success
  */
 int32 intif_parse_ChangeNameOk(int32 fd)
 {
@@ -1966,7 +1966,7 @@ int32 intif_parse_ChangeNameOk(int32 fd)
 /**
  * ACK Homunculus creation
  * @param fd : char-serv link
- * @return 0=error, 1=sucess
+ * @return 0=error, 1=success
  */
 int32 intif_parse_CreateHomunculus(int32 fd)
 {
@@ -1984,7 +1984,7 @@ int32 intif_parse_CreateHomunculus(int32 fd)
 /**
  * ACK homunculus get data (load homun from char)
  * @param fd : char-serv link
- * @return 0=error, 1=sucess
+ * @return 0=error, 1=success
  */
 int32 intif_parse_RecvHomunculusData(int32 fd)
 {
@@ -2282,7 +2282,7 @@ void intif_parse_achievementreward(int32 fd){
 /**
  * Request the achievement rewards from the inter server.
  */
-int32 intif_achievement_reward(map_session_data *sd, struct s_achievement_db *adb){
+int32 intif_achievement_reward( const map_session_data* sd, struct s_achievement_db *adb ){
 	if( CheckForCharServer() ){
 		return 0;
 	}
@@ -2413,7 +2413,7 @@ bool intif_mail_getattach( map_session_data* sd, struct mail_message *msg, enum 
 /**
  * Receive the attachment from char-serv of a mail
  * @param fd : char-serv link
- * @return 0=error, 1=sucess
+ * @return 0=error, 1=success
  */
 int32 intif_parse_Mail_getattach(int32 fd)
 {
@@ -3626,7 +3626,7 @@ void intif_parse_StorageInfo_recv(int32 fd) {
  * @param mode: Storage mode
  * @return false - error, true - message sent
  */
-bool intif_storage_request(map_session_data *sd, enum storage_type type, uint8 stor_id, uint8 mode)
+bool intif_storage_request( const map_session_data* sd, enum storage_type type, uint8 stor_id, uint8 mode )
 {
 	if (CheckForCharServer())
 		return false;
@@ -3649,7 +3649,7 @@ bool intif_storage_request(map_session_data *sd, enum storage_type type, uint8 s
  * @param stor: Storage data
  * @ return false - error, true - message sent
  */
-bool intif_storage_save(map_session_data *sd, struct s_storage *stor)
+bool intif_storage_save( const map_session_data* sd, const s_storage* stor )
 {
 	int32 stor_size = sizeof(struct s_storage);
 
@@ -3758,7 +3758,7 @@ int32 intif_parse_clan_onlinecount( int32 fd ){
  * @param fd : inter-serv link
  * @return
  *  0 (unknow packet).
- *  1 sucess (no error)
+ *  1 success (no error)
  *  2 invalid length of packet (not enough data yet)
  */
 int32 intif_parse(int32 fd)

@@ -399,7 +399,7 @@ void mail_getattachment(map_session_data* sd, struct mail_message* msg, int32 ze
 	}
 }
 
-int32 mail_openmail(map_session_data *sd)
+int32 mail_openmail( const map_session_data* sd )
 {
 	nullpo_ret(sd);
 
@@ -433,7 +433,7 @@ void mail_deliveryfail(map_session_data *sd, struct mail_message *msg){
 }
 
 // This function only check if the mail operations are valid
-bool mail_invalid_operation(map_session_data *sd)
+bool mail_invalid_operation( const map_session_data* sd )
 {
 #if PACKETVER < 20150513
 	if( !map_getmapflag(sd->m, MF_TOWN) && !pc_can_use_command(sd, "mail", COMMAND_ATCOMMAND) )

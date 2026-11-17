@@ -220,7 +220,7 @@ DamageMotion: Damage animation motion, same as aMotion but used to display the "
 
 ---------------------------------------
 
-DamageTaken: Rate at which the monster will recieve damage from players.
+DamageTaken: Rate at which the monster will receive damage from players.
 
 ---------------------------------------
 

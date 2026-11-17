@@ -13,8 +13,8 @@
 #include "pc.hpp"  // map_session_data
 
 /// Type for shop search function
-typedef bool (*searchstore_search_t)(map_session_data* sd, t_itemid nameid);
-typedef bool (*searchstore_searchall_t)(map_session_data* sd, const struct s_search_store_search* s);
+typedef bool (*searchstore_search_t)( const map_session_data* sd, t_itemid nameid );
+typedef bool (*searchstore_searchall_t)( const map_session_data* sd, const struct s_search_store_search* s );
 
 /**
  * Retrieves search function by type.
@@ -52,7 +52,7 @@ static searchstore_searchall_t searchstore_getsearchallfunc(e_searchstore_search
  * @param type : type of search to conduct
  * @return : store type
  */
-static bool searchstore_hasstore(map_session_data& sd, e_searchstore_searchtype type)
+static bool searchstore_hasstore( const map_session_data& sd, e_searchstore_searchtype type )
 {
 	switch( type ) {
 		case SEARCHTYPE_VENDING:      return sd.state.vending;
@@ -68,7 +68,7 @@ static bool searchstore_hasstore(map_session_data& sd, e_searchstore_searchtype 
  * @param type : type of search to conduct
  * @return : store ID
  */
-static int32 searchstore_getstoreid(map_session_data& sd, e_searchstore_searchtype type)
+static int32 searchstore_getstoreid( const map_session_data& sd, e_searchstore_searchtype type )
 {
 	switch( type ) {
 		case SEARCHTYPE_VENDING:      return sd.vender_id;
@@ -224,7 +224,7 @@ void searchstore_query(map_session_data& sd, e_searchstore_searchtype type, uint
  * @param sd : player requesting
  * @return : true : more items to search, false : no more items
  */
-bool searchstore_querynext(map_session_data& sd)
+bool searchstore_querynext( const map_session_data& sd )
 {
 	if( !sd.searchstore.items.empty() && ( sd.searchstore.items.size()-1 )/SEARCHSTORE_RESULTS_PER_PAGE > sd.searchstore.pages )
 		return true;
@@ -346,7 +346,7 @@ void searchstore_click(map_session_data& sd, uint32 account_id, int32 store_id, 
  * @param account_id : account ID of owner's shop
  * @return : true : shop opened, false : shop not opened
  */
-bool searchstore_queryremote(map_session_data& sd, uint32 account_id)
+bool searchstore_queryremote( const map_session_data& sd, uint32 account_id )
 {
 	return (bool)( sd.searchstore.open && !sd.searchstore.items.empty() && sd.searchstore.remote_id == account_id );
 }

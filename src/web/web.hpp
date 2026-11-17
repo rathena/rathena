@@ -15,21 +15,19 @@
 using rathena::server_core::Core;
 using rathena::server_core::e_core_type;
 
-namespace rathena{
-	namespace server_web{
-		class WebServer : public Core{
-			protected:
-				bool initialize( int32 argc, char* argv[] ) override;
-				void handle_main( t_tick next ) override;
-				void finalize() override;
-				void handle_crash() override;
+namespace rathena::server_web {
+class WebServer : public Core{
+	protected:
+		bool initialize( int32 argc, char* argv[] ) override;
+		void handle_main( t_tick next ) override;
+		void finalize() override;
+		void handle_crash() override;
 
-			public:
-				WebServer() : Core( e_core_type::WEB ){
+	public:
+		WebServer() : Core( e_core_type::WEB ){
 
-				}
-		};
-	}
+		}
+};
 }
 
 #ifndef SQL_BUFFER_SIZE
@@ -44,6 +42,8 @@ struct Web_Config {
 	char webconf_name[256];						/// name of main config file
 	char msgconf_name[256];							/// name of msg_conf config file
 	bool allow_gifs;
+
+	std::string allowed_origin_cors;				// allowed origin for CORS
 };
 
 struct Inter_Config {

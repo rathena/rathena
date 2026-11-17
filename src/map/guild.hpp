@@ -113,8 +113,8 @@ bool guild_agit3_start(void);
 bool guild_agit3_end(void);
 
 /* guild flag cachin */
-void guild_flag_add(struct npc_data *nd);
-void guild_flag_remove(struct npc_data *nd);
+void guild_flag_add(npc_data *nd);
+void guild_flag_remove(npc_data *nd);
 void guild_flags_clear(void);
 
 void guild_guildaura_refresh(map_session_data *sd, uint16 skill_id, uint16 skill_lv);

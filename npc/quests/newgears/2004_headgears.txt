@@ -3288,7 +3288,7 @@ OnTouch_:
 					mes "10,000 battles";
 					mes "with Orcs.";
 					next;
-					mes "[Orc Warrior";
+					mes "[Orc Warrior]";
 					mes "For a human, accomplishing such a feat is truly astonishing. Through all of that fighting, I'm sure that you have learned both good and bad things about my tribe.";
 					next;
 					mes "[Orc Warrior]";

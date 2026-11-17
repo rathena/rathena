@@ -397,9 +397,9 @@ OnTouch:
 		mes "I bought all of his fish";
 		mes "right then and there.";
 		next;
-		mes "[Gloomy Male Voice";
+		mes "[Gloomy Male Voice]";
 		mes "Boy, were you lucky.";
-		mes "And you never hestitate";
+		mes "And you never hesitate";
 		mes "to splurge when it comes";
 		mes "to food, do you? Heh heh~";
 		next;

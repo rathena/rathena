@@ -423,7 +423,7 @@ int8 vending_openvending( map_session_data& sd, const char* message, const uint8
  * @param nameid : item id
  * @return 0:not selling it, 1: yes
  */
-bool vending_search(map_session_data* sd, t_itemid nameid)
+bool vending_search( const map_session_data* sd, t_itemid nameid )
 {
 	int32 i;
 
@@ -445,11 +445,11 @@ bool vending_search(map_session_data* sd, t_itemid nameid)
  * @param s : parameter of the search (see s_search_store_search)
  * @return Whether or not the search should be continued.
  */
-bool vending_searchall(map_session_data* sd, const struct s_search_store_search* s)
+bool vending_searchall( const map_session_data* sd, const struct s_search_store_search* s )
 {
 	int32 i, c, slot;
 	uint32 idx, cidx;
-	struct item* it;
+	const item* it;
 
 	if( !sd->state.vending ) // not vending
 		return true;

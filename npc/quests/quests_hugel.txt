@@ -1981,7 +1981,7 @@ hugel,70,137,5	script	Shede	879,{
 				mes "There were many obstacles in my way to become the best cookie baker.";
 				mes "But, see? I am still here, alive and kicking! I will never give up! In that sense..";
 				mes "I am going to challenge on baking ^FF0000Clam Cookies^000000 today!";
-				mes "I am going to make them taste tangy and unique. I am sure that they will be a great sucess!";
+				mes "I am going to make them taste tangy and unique. I am sure that they will be a great success!";
 				next;
 				mes "[Shede]";
 				mes "When you go to the beach, ";

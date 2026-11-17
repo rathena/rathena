@@ -2301,7 +2301,7 @@ mid_camp,261,284,4	script	Instructor#ep13bs	405,{
 	if (ep13_newbs == 14) {
 		if (countitem(6045) > 2) {
 			mes "[Instructor Lugen]";
-			mes "Did you recieve the supplies?";
+			mes "Did you receive the supplies?";
 			mes "Can you show them to me, please?";
 			next;
 			mes "[Instructor Lugen]";
@@ -5168,7 +5168,7 @@ OnTouch_:
 			mes "Hi, I'm Hansenne from Arunafeltz. We have conclused that his world of Ash-Vacuum is nothing related to the continent of Midgard, as it is placed in a totally indipendent world dimension.";
 			next;
 			mes "[Hansenne]";
-			mes "The enviroment of the fields on the East and West where we can work on the research has nothing in common with the enviroment within the boundrary of the Tripartite Union's army post.";
+			mes "The environment of the fields on the East and West where we can work on the research has nothing in common with the environment within the boundrary of the Tripartite Union's army post.";
 			next;
 			mes "[Hansenne]";
 			mes "I also have been reported that the ecosystem in the researched are is different.";

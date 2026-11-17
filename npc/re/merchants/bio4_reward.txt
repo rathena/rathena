@@ -642,9 +642,9 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 	.@equip_item = getequipid(.@part);
 	setarray .@equip_card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 	.@lhz_max_num = 4000;
-	if (.@equip_item == 13069 || .@equip_item == 1291 || .@equip_item == 1392 || 
-	    .@equip_item == 1393 || .@equip_item == 1435 || .@equip_item == 1490 || 
-	    .@equip_item == 13069 || .@equip_item == 13070 || .@equip_item == 16017) {
+	if (.@equip_item == 13069 || .@equip_item == 1291 || .@equip_item == 1392 ||
+	    .@equip_item == 1393 || .@equip_item == 1435 || .@equip_item == 1490 ||
+	    .@equip_item == 13070 || .@equip_item == 16017) {
 		.@type = 1;
 		if (.@equip_item == 1490)
 			.@lhz_max_num = 4200;

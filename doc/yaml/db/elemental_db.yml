@@ -32,6 +32,7 @@
 #   AttackDelay             Attack speed. (Default: 504)
 #   AttackMotion            Attack animation speed. Base AttackMotion depends on the caster AttackMotion. (Default: 1020)
 #   DamageMotion            Damage animation speed. (Default: 360)
+#   DamageTaken             Rate at which the elemental will receive incoming damage. (Default: 100)
 #   Mode:                   List of elemental skills by mode. (Optional)
 #     <mode>:               Mode name to define the skill available. Available modes are Passive, Assist, and Aggressive.
 #       Skill               Skill name.

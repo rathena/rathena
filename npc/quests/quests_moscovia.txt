@@ -7103,16 +7103,21 @@ mosk_dun01,45,259,0	script	Wall#rus04	HIDDEN_NPC,{
 
 OnInit:
 	$@rus_req02 = 0;
+	end;
+
 OnEnable:
 	enablenpc "Wall#rus04";
 	end;
 
+OnDisable:
+	disablenpc "Wall#rus04";
+	end;
+
 OnMyMobDead:
+	donpcevent "Koshei#rus47::OnDisable";
 	$@rus_req02 = 0;
 	// stopnpctimer;
 	announce "Koshei, the Immortal : Keeeek, you, cursed human.. I'll never give up!!! We'll see who's smiling in the end!!!",bc_map,0xCE3131;
-OnDisable:
-	disablenpc "Wall#rus04";
 	end;
 }
 
@@ -8580,7 +8585,7 @@ mosk_fild02,124,202,3	script	Lusalka#rus23	4_F_RUSGREEN,{
 				mes "[Lusalka]";
 				mes "Ah! Thank you so much! His name is '^0000ffIgor^000000'. Ah, give these earrings to him. He gave them to me as a present.";
 				next;
-				mes "- ^0000ffI recieve the^000000 -";
+				mes "- ^0000ffI receive the^000000 -";
 				mes "- ^0000ffgolden earrings^000000 -";
 				mes "- ^0000fffrom Lusalka!^000000 -";
 				rhea_rus_hair = 3;

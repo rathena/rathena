@@ -1,0 +1,19 @@
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
+#include "homunculus_painkiller.hpp"
+
+#include "map/battle.hpp"
+#include "map/status.hpp"
+
+SkillPainKiller::SkillPainKiller() : SkillImpl(MH_PAIN_KILLER) {
+}
+
+void SkillPainKiller::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
+	const sc_type type = skill_get_sc(getSkillId());
+
+	target = battle_get_master(src);
+	if (target != nullptr) {
+		sc_start(src, target, type, 100, skill_lv, skill_get_time(getSkillId(), skill_lv));
+	}
+}

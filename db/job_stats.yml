@@ -77,11 +77,12 @@
 #   BaseAp:                  Base AP per base level.
 #     - Level                Base level.
 #       Ap                   Base AP.
+#   AlternateOutfits:        Alternate Jobs outfits. (Default: empty)
 ###########################################################################
 
 Header:
   Type: JOB_STATS
-  Version: 3
+  Version: 4
 
 Footer:
   Imports:
@@ -108,6 +109,10 @@ Footer:
   - Path: db/pre-re/job_basepoints.yml
     Mode: Prerenewal
   - Path: db/re/job_basepoints.yml
+    Mode: Renewal
+
+  # Next, populate outfit information
+  - Path: db/re/job_outfits.yml
     Mode: Renewal
 
   # Finally, import custom information

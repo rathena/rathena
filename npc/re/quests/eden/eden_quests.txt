@@ -2390,7 +2390,7 @@ moc_para01,179,44,3	script	Chef	820,{
 				mes "You didn't get eden group uniform?";
 				next;
 				mes "[Chef]";
-				mes "Hmm, it's not neccessary but if you remain with the eden group, it would be a good symbol.";
+				mes "Hmm, it's not necessary but if you remain with the eden group, it would be a good symbol.";
 				next;
 				mes "[Chef]";
 				mes "You can't get it easily but..";

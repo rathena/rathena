@@ -470,6 +470,9 @@ e_hugel	mapflag	nomemo
 // Training Ground outside Prontera
 //============================================================
 tra_fild	mapflag	nomemo
+tra_fild01	mapflag	nomemo
+tra_fild02	mapflag	nomemo
+tra_fild03	mapflag	nomemo
 
 //============================================================
 // Episode 18 - Direction of Prayer

@@ -365,7 +365,7 @@ ein_in01,38,29,0	script	Paul Spanner	63,{
 			.@item_cost = 150;
 			.@item_weight = 200;
 			mes "[Paul Spanner]";
-			mes "You definately need this furnce to process ores!";
+			mes "You definitely need this furnace to process ores!";
 			next;
 			break;
 		case 2:

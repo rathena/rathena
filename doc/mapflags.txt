@@ -396,6 +396,15 @@ prtg_cas01	mapflag	skill_duration	HT_ANKLESNARE,400
 
 ---------------------------------------
 
+*invincible_time	<duration>
+
+Sets the duration (in milliseconds) for when a player loads onto a map with how long they are invincible for.
+The duration is cancelled if the player walks or interacts in any fashion.
+
+Duration defaults to 'player_invincible_time' in '/conf/battle/player.conf' if the value is not specified.
+
+---------------------------------------
+
 ==================
 | 3. Map Effects |
 ==================

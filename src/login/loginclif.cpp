@@ -172,7 +172,7 @@ static void logclif_auth_failed( int32 fd, int32 result, const char* unblock_tim
 
 	p.packetType = HEADER_AC_REFUSE_LOGIN;
 	p.error = result;
-	safestrncpy( p.unblock_time, "", sizeof( p.unblock_time ) );
+	safestrncpy( p.unblock_time, unblock_time, sizeof( p.unblock_time ) );
 
 	socket_send( fd, p );
 }
@@ -340,7 +340,7 @@ static bool logclif_parse_reqauth_sso( int32 fd, login_session_data& sd ){
 
 	ShowStatus( "Request for connection (SSO mode) of %s (ip: %s)\n", sd.userid, ip );
 	// Shinryo: For the time being, just use token as password.
-	safestrncpy( sd.passwd, p->token, token_length + 1 );
+	safestrncpy( sd.passwd, p->token, std::min( sizeof( sd.passwd ), token_length + 1 ) );
 
 	if( login_config.use_md5_passwds ){
 		MD5_String( sd.passwd, sd.passwd );

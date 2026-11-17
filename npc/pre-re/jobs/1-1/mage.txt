@@ -128,7 +128,7 @@ geffen_in,164,124,4	script	Mage Guildsman	123,{
 				next;
 				getitem 1092,1; //Empty_Cylinder
 				mes "[Mage Guildsman]";
-				mes "You can find the neccessary ingredients inside the Guide Book in this Guild. So you better look up what you need before you go.";
+				mes "You can find the necessary ingredients inside the Guide Book in this Guild. So you better look up what you need before you go.";
 				next;
 				mes "[Mage Guildsman]";
 				mes "Once you collect all the ingredients you, use the machine in the center of the room to mix the solution. Good luck!";

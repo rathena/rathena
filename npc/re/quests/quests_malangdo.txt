@@ -1683,7 +1683,7 @@ mal_in01,114,169,5	script	Rican#mal	547,{
 		mes "But we are selling the dried kind, which is ^0000FFa bit different from what human being originally know, and less effective, and hard to eat raw^000000.";
 		next;
 		mes "[Rican]";
-		mes "Since it disappears as we prepare, it's definately the best for our group.";
+		mes "Since it disappears as we prepare, it's definitely the best for our group.";
 		emotion ET_GOODBOY;
 		next;
 		mes "[Rican]";
@@ -9705,7 +9705,7 @@ mal_in01,134,221,4	script	KungKung#gamer	422,{
 				} else {
 					set .@attack_turn,1;
 					cutin "cat_g_06",4;
-					mes "Defending was succesful.";
+					mes "Defending was successful.";
 					mes "You can start attack now.";
 					next;
 					cutin "",255;
@@ -9715,7 +9715,7 @@ mal_in01,134,221,4	script	KungKung#gamer	422,{
 				if (.@cat_hand <= 5) {
 					set .@attack_turn,1;
 					cutin "cat_g_07",4;
-					mes "Defending was succesful.";
+					mes "Defending was successful.";
 					mes "You can start attack now.";
 					next;
 					cutin "",255;

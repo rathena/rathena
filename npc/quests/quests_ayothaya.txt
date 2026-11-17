@@ -2714,7 +2714,7 @@ OnTouch_:
 				mes "going to pay me for the Lemons?";
 				mes "Oh, you've got me wrong. I don't intend to sell these.";
 				next;
-				mes "[Mr. Jun[";
+				mes "[Mr. Jun]";
 				mes "But...";
 				mes "I'm more than willing";
 				mes "to share some of them with";

@@ -20,7 +20,7 @@ bool clan_member_join( map_session_data& sd, int32 clan_id, uint32 account_id, u
 bool clan_member_leave( map_session_data& sd, int32 clan_id, uint32 account_id, uint32 char_id );
 void clan_send_message( map_session_data& sd, const char *mes, size_t len );
 void clan_recv_message( int32 clan_id, uint32 account_id, const char *mes, size_t len );
-map_session_data* clan_getavailablesd( struct clan& clan );
+map_session_data* clan_getavailablesd( const clan& clan );
 int32 clan_get_alliance_count( struct clan& clan, int32 flag );
 
 #endif /* CLAN_HPP */

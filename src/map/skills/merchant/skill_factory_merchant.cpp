@@ -1,0 +1,378 @@
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
+#include "skill_factory_merchant.hpp"
+
+#include <config/core.hpp>
+
+#include "../skill_impl.hpp"
+
+// Include .cpp files into the TU to optimize compile time
+// For reference see unity builds or amalgamated builds
+#include "abrbattlewarior.cpp"
+#include "abrdualcannon.cpp"
+#include "abrinfinity.cpp"
+#include "abrmothernet.cpp"
+#include "aciddemonstration.cpp"
+#include "acidifiedzonefire.cpp"
+#include "acidifiedzoneground.cpp"
+#include "acidifiedzonewater.cpp"
+#include "acidifiedzonewind.cpp"
+#include "acidterror.cpp"
+#include "adrenalinerush.cpp"
+#include "advancedadrenalinerush.cpp"
+#include "advanceprotection.cpp"
+#include "aidberserkpotion.cpp"
+#include "aidcondensedpotion.cpp"
+#include "aidpotion.cpp"
+#include "alchemicalweapon.cpp"
+#include "analyze.cpp"
+#include "armcannon.cpp"
+#include "attackmachine.cpp"
+#include "axeboomerang.cpp"
+#include "axestomp.cpp"
+#include "axetornado.cpp"
+#include "backsideslide.cpp"
+#include "biochemicalhelm.cpp"
+#include "bionicpharmacy.cpp"
+#include "bomb.cpp"
+#include "boostknuckle.cpp"
+#include "callhomunculus.cpp"
+#include "cartcannon.cpp"
+#include "cartrevolution.cpp"
+#include "carttermination.cpp"
+#include "carttornado.cpp"
+#include "changecart.cpp"
+#include "changematerial.cpp"
+#include "coldslower.cpp"
+#include "crazyuproar.cpp"
+#include "crazyweed.cpp"
+#include "createbomb.cpp"
+#include "creeper.cpp"
+#include "decoratecart.cpp"
+#include "demonicfire.cpp"
+#include "dustexplosion.cpp"
+#include "emergencycool.cpp"
+#include "energycannonade.cpp"
+#include "explosivepowder.cpp"
+#include "fawmagicdecoy.cpp"
+#include "fawremoval.cpp"
+#include "fawsilversniper.cpp"
+#include "fireexpansion.cpp"
+#include "flamelauncher.cpp"
+#include "frontsideslide.cpp"
+#include "fullprotection.cpp"
+#include "greed.cpp"
+#include "hammerfall.cpp"
+#include "hellsplant.cpp"
+#include "helltree.cpp"
+#include "homunculusresurrection.cpp"
+#include "howlingofmandragora.cpp"
+#include "illusiondoping.cpp"
+#include "infraredscan.cpp"
+#include "itemappraisal.cpp"
+#include "magmaeruption.cpp"
+#include "magneticfield.cpp"
+#include "mammonite.cpp"
+#include "manufacturemachine.cpp"
+#include "mayhemicthorns.cpp"
+#include "mightysmash.cpp"
+#include "mixcooking.cpp"
+#include "mysterypowder.cpp"
+#include "neutralbarrier.cpp"
+#include "pilebunker.cpp"
+#include "plantcultivation.cpp"
+#include "powerfulswing.cpp"
+#include "powerswing.cpp"
+#include "powerthrust.cpp"
+#include "preparepotion.cpp"
+#include "repair.cpp"
+#include "rushquake.cpp"
+#include "rushstrike.cpp"
+#include "selfdestruction.cpp"
+#include "skill_vending.cpp"
+#include "slingitem.cpp"
+#include "sparkblaster.cpp"
+#include "specialpharmacy.cpp"
+#include "sporeexplosion.cpp"
+#include "stealthfield.cpp"
+#include "summonflora.cpp"
+#include "summonmarinesphere.cpp"
+#include "synthesizedshield.cpp"
+#include "syntheticarmor.cpp"
+#include "thewholeprotection.cpp"
+#include "thorntrap.cpp"
+#include "triplelaser.cpp"
+#include "twilightalchemy1.cpp"
+#include "twilightalchemy2.cpp"
+#include "twilightalchemy3.cpp"
+#include "upgradeweapon.cpp"
+#include "vaporize.cpp"
+#include "vulcanarm.cpp"
+#include "wallofthorns.cpp"
+#include "weaponperfection.cpp"
+#include "weaponrepair.cpp"
+#include "woodenfairy.cpp"
+#include "woodenwarrior.cpp"
+
+std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skill_id) const {
+	switch (skill_id) {
+		case AM_ACIDTERROR:
+			return std::make_unique<SkillAcidTerror>();
+		case AM_BERSERKPITCHER:
+			return std::make_unique<SkillAidBerserkPotion>();
+		case AM_CALLHOMUN:
+			return std::make_unique<SkillCallHomunculus>();
+		case AM_CANNIBALIZE:
+			return std::make_unique<SkillSummonFlora>();
+		case AM_CP_ARMOR:
+			return std::make_unique<SkillSyntheticArmor>();
+		case AM_CP_HELM:
+			return std::make_unique<SkillBiochemicalHelm>();
+		case AM_CP_SHIELD:
+			return std::make_unique<SkillSynthesizedShield>();
+		case AM_CP_WEAPON:
+			return std::make_unique<SkillAlchemicalWeapon>();
+		case AM_DEMONSTRATION:
+			return std::make_unique<SkillBomb>();
+		case AM_RESURRECTHOMUN:
+			return std::make_unique<SkillHomunculusResurrection>();
+		case AM_PHARMACY:
+			return std::make_unique<SkillPreparePotion>();
+		case AM_POTIONPITCHER:
+			return std::make_unique<SkillAidPotion>();
+		case AM_REST:
+			return std::make_unique<SkillVaporize>();
+		case AM_SPHEREMINE:
+			return std::make_unique<SkillSummonMarineSphere>();
+		case AM_TWILIGHT1:
+			return std::make_unique<SkillTwilightAlchemy1>();
+		case AM_TWILIGHT2:
+			return std::make_unique<SkillTwilightAlchemy2>();
+		case AM_TWILIGHT3:
+			return std::make_unique<SkillTwilightAlchemy3>();
+		case BO_ACIDIFIED_ZONE_FIRE:
+			return std::make_unique<SkillAcidifiedZoneFire>();
+		case BO_ACIDIFIED_ZONE_FIRE_ATK:
+			return std::make_unique<SkillActifiedZoneFireAttack>();
+		case BO_ACIDIFIED_ZONE_GROUND:
+			return std::make_unique<SkillAcidifiedZoneGround>();
+		case BO_ACIDIFIED_ZONE_GROUND_ATK:
+			return std::make_unique<SkillActifiedZoneGroundAttack>();
+		case BO_ACIDIFIED_ZONE_WATER:
+			return std::make_unique<SkillAcidifiedZoneWater>();
+		case BO_ACIDIFIED_ZONE_WATER_ATK:
+			return std::make_unique<SkillActifiedZoneWaterAttack>();
+		case BO_ACIDIFIED_ZONE_WIND:
+			return std::make_unique<SkillAcidifiedZoneWind>();
+		case BO_ACIDIFIED_ZONE_WIND_ATK:
+			return std::make_unique<SkillActifiedZoneWindAttack>();
+		case BO_ADVANCE_PROTECTION:
+			return std::make_unique<SkillAdvanceProtection>();
+		case BO_BIONIC_PHARMACY:
+			return std::make_unique<SkillBionicPharmacy>();
+		case BO_CREEPER:
+			return std::make_unique<SkillCreeper>();
+		case BO_DUST_EXPLOSION:
+			return std::make_unique<SkillDustExplosion>();
+		case BO_EXPLOSIVE_POWDER:
+			return std::make_unique<SkillExplosivePowder>();
+		case BO_HELLTREE:
+			return std::make_unique<SkillHellTree>();
+		case BO_MAYHEMIC_THORNS:
+			return std::make_unique<SkillMayhemicThorns>();
+		case BO_MYSTERY_POWDER:
+			return std::make_unique<SkillMysteryPowder>();
+		case BO_RESEARCHREPORT:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case BO_THE_WHOLE_PROTECTION:
+			return std::make_unique<SkillTheWholeProtection>();
+		case BO_WOODENWARRIOR:
+			return std::make_unique<SkillWoodenWarrior>();
+		case BO_WOODEN_ATTACK:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case BO_WOODEN_FAIRY:
+			return std::make_unique<SkillWoodenFairy>();
+		case BO_WOODEN_THROWROCK:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case BS_ADRENALINE:
+			return std::make_unique<SkillAdrenalineRush>();
+		case BS_ADRENALINE2:
+			return std::make_unique<SkillAdvancedAdrenalineRush>();
+		case BS_GREED:
+			return std::make_unique<SkillGreed>();
+		case BS_HAMMERFALL:
+			return std::make_unique<SkillHammerFall>();
+		case BS_MAXIMIZE:
+			return std::make_unique<StatusSkillImpl>(skill_id, true);
+		case BS_OVERTHRUST:
+			return std::make_unique<SkillPowerThrust>();
+		case BS_REPAIRWEAPON:
+			return std::make_unique<SkillWeaponRepair>();
+		case BS_WEAPONPERFECT:
+			return std::make_unique<SkillWeaponPerfection>();
+		case CR_ACIDDEMONSTRATION:
+			return std::make_unique<SkillAcidDemonstration>();
+		case CR_CULTIVATION:
+			return std::make_unique<SkillPlantCultivation>();
+		case CR_FULLPROTECTION:
+			return std::make_unique<SkillFullProtection>();
+		case CR_SLIMPITCHER:
+			return std::make_unique<SkillAidCondensedPotion>();
+		case GN_BLOOD_SUCKER:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case GN_CARTBOOST:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case GN_CARTCANNON:
+			return std::make_unique<SkillCartCannon>();
+		case GN_CART_TORNADO:
+			return std::make_unique<SkillCartTornado>();
+		case GN_CHANGEMATERIAL:
+			return std::make_unique<SkillChangeMaterial>();
+		case GN_CRAZYWEED:
+			return std::make_unique<SkillCrazyWeed>();
+		case GN_CRAZYWEED_ATK:
+			return std::make_unique<SkillCrazyWeedAttack>();
+		case GN_DEMONIC_FIRE:
+			return std::make_unique<SkillDemonicFire>();
+		case GN_FIRE_EXPANSION:
+			return std::make_unique<SkillFireExpansion>();
+		case GN_FIRE_EXPANSION_ACID:
+			return std::make_unique<SkillFireExpansionAcid>();
+		case GN_HELLS_PLANT:
+			return std::make_unique<SkillHellsPlant>();
+		case GN_HELLS_PLANT_ATK:
+			return std::make_unique<SkillHellsPlantAttack>();
+		case GN_ILLUSIONDOPING:
+			return std::make_unique<SkillIllusionDoping>();
+		case GN_MAKEBOMB:
+			return std::make_unique<SkillCreateBomb>();
+		case GN_MANDRAGORA:
+			return std::make_unique<SkillHowlingOfMandragora>();
+		case GN_MIX_COOKING:
+			return std::make_unique<SkillMixCooking>();
+		case GN_SLINGITEM:
+			return std::make_unique<SkillSlingItem>();
+		case GN_SLINGITEM_RANGEMELEEATK:
+			return std::make_unique<SkillSlingItemAttack>();
+		case GN_SPORE_EXPLOSION:
+			return std::make_unique<SkillSporeExplosion>();
+		case GN_S_PHARMACY:
+			return std::make_unique<SkillSpecialPharmacy>();
+		case GN_THORNS_TRAP:
+			return std::make_unique<SkillThornTrap>();
+		case GN_WALLOFTHORN:
+			return std::make_unique<SkillWallOfThorns>();
+		case MC_CARTDECORATE:
+			return std::make_unique<SkillDecorateCart>();
+		case MC_CARTREVOLUTION:
+			return std::make_unique<SkillCartRevolution>();
+		case MC_CHANGECART:
+			return std::make_unique<SkillChangeCart>();
+		case MC_IDENTIFY:
+			return std::make_unique<SkillItemAppraisal>();
+		case MC_LOUD:
+			return std::make_unique<SkillCrazyUproar>();
+		case MC_MAMMONITE:
+			return std::make_unique<SkillMammonite>();
+		case MC_VENDING:
+			return std::make_unique<SkillVending>();
+		case MT_AXE_STOMP:
+			return std::make_unique<SkillAxeStomp>();
+		case MT_A_MACHINE:
+			return std::make_unique<SkillAttackMachine>();
+		case MT_D_MACHINE:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case MT_ENERGY_CANNONADE:
+			return std::make_unique<SkillEnergyCannonade>();
+		case MT_MIGHTY_SMASH:
+			return std::make_unique<SkillMightySmash>();
+		case MT_M_MACHINE:
+			return std::make_unique<SkillManufactureMachine>();
+		case MT_POWERFUL_SWING:
+			return std::make_unique<SkillPowerfulSwing>();
+		case MT_RUSH_QUAKE:
+			return std::make_unique<SkillRushQuake>();
+		case MT_RUSH_STRIKE:
+			return std::make_unique<SkillRushStrike>();
+		case MT_SPARK_BLASTER:
+			return std::make_unique<SkillSparkBlaster>();
+		case MT_SUMMON_ABR_BATTLE_WARIOR:
+			return std::make_unique<SkillAbrBattleWarrior>();
+		case MT_SUMMON_ABR_DUAL_CANNON:
+			return std::make_unique<SkillAbrDualCannon>();
+		case MT_SUMMON_ABR_INFINITY:
+			return std::make_unique<SkillAbrInfinity>();
+		case MT_SUMMON_ABR_MOTHER_NET:
+			return std::make_unique<SkillAbrMotherNet>();
+		case MT_TRIPLE_LASER:
+			return std::make_unique<SkillTripleLaser>();
+		case NC_ACCELERATION:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case NC_ANALYZE:
+			return std::make_unique<SkillAnalyze>();
+		case NC_ARMSCANNON:
+			return std::make_unique<SkillArmCannon>();
+		case NC_AXEBOOMERANG:
+			return std::make_unique<SkillAxeBoomerang>();
+		case NC_AXETORNADO:
+			return std::make_unique<SkillAxeTornado>();
+		case NC_B_SIDESLIDE:
+			return std::make_unique<SkillBackSideSlide>();
+		case NC_BOOSTKNUCKLE:
+			return std::make_unique<SkillBoostKnuckle>();
+		case NC_COLDSLOWER:
+			return std::make_unique<SkillColdSlower>();
+		case NC_DISJOINT:
+			return std::make_unique<SkillFawRemoval>();
+		case NC_EMERGENCYCOOL:
+			return std::make_unique<SkillEmergencyCool>();
+		case NC_FLAMELAUNCHER:
+			return std::make_unique<SkillFlameLauncher>();
+		case NC_F_SIDESLIDE:
+			return std::make_unique<SkillFrontSideSlide>();
+		case NC_HOVERING:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case NC_INFRAREDSCAN:
+			return std::make_unique<SkillInfraredScan>();
+		case NC_MAGICDECOY:
+			return std::make_unique<SkillFawMagicDecoy>();
+		case NC_MAGMA_ERUPTION:
+			return std::make_unique<SkillMagmaEruption>();
+		case NC_MAGMA_ERUPTION_DOTDAMAGE:
+			return std::make_unique<SkillMagmaEruptionDotDamage>();
+		case NC_MAGNETICFIELD:
+			return std::make_unique<SkillMagneticField>();
+		case NC_NEUTRALBARRIER:
+			return std::make_unique<SkillNeutralBarrier>();
+		case NC_PILEBUNKER:
+			return std::make_unique<SkillPileBunker>();
+		case NC_POWERSWING:
+			return std::make_unique<SkillPowerSwing>();
+		case NC_REPAIR:
+			return std::make_unique<SkillRepair>();
+		case NC_SELFDESTRUCTION:
+			return std::make_unique<SkillSelfDestruction>();
+		case NC_SHAPESHIFT:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case NC_SILVERSNIPER:
+			return std::make_unique<SkillFawSilverSniper>();
+		case NC_STEALTHFIELD:
+			return std::make_unique<SkillStealthField>();
+		case NC_VULCANARM:
+			return std::make_unique<SkillVulcanArm>();
+		case WS_CARTBOOST:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case WS_CARTTERMINATION:
+			return std::make_unique<SkillCartTermination>();
+		case WS_MELTDOWN:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case WS_OVERTHRUSTMAX:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case WS_WEAPONREFINE:
+			return std::make_unique<SkillUpgradeWeapon>();
+
+		default:
+			return nullptr;
+	}
+}

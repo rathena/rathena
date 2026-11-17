@@ -98,3 +98,8 @@ que_swat	mapflag	nosave	SavePoint
 // Rockridge
 //============================================================
 rockmi2	mapflag	nosave	SavePoint
+
+//============================================================
+// Old Training Ground
+//============================================================
+tra_fild	mapflag	nosave	SavePoint
