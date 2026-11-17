@@ -46090,6 +46090,33 @@ Body:
         Area: 3
       - Level: 5
         Area: 3
+  - Id: 6623
+    Name: IQ_BROKENHEAVEN
+    Description: "Zeroth Strike: Heaven Breaker"
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+      Critical: true
+    Range: 2
+    Hit: Multi_Hit
+    HitCount: 3
+    Element: Weapon
+    SplashArea: 3
+    Cooldown: 700
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 20
+        - Level: 2
+          Amount: 30
+        - Level: 3
+          Amount: 40
+        - Level: 4
+          Amount: 50
+        - Level: 5
+          Amount: 60
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch
