@@ -3804,6 +3804,18 @@ Body:
           - Index: 0
             Item: Silvervine
             Amount: 28
+      - Index: 2
+        Item: EpisodClear18
+        RequiredItems:
+          - Index: 0
+            Item: Silvervine
+            Amount: 80
+      - Index: 3
+        Item: EpisodClear19
+        RequiredItems:
+          - Index: 0
+            Item: Silvervine
+            Amount: 100
   - Name: balheele_20
     Items:
       - Index: 0
