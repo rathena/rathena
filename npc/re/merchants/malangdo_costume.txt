@@ -887,7 +887,8 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 		// a multi-slot costume (e.g. upper+middle) is listed once, under its highest slot
 		// (script || doesn't short-circuit, so no .@parts[.@i-1] lookup here)
 		if (.@id > -1 && .@id != .@prev_id) {
-			.@menu$ += .@part_name$[.@i] + ": " + getitemname(.@id);
+			// no ':' inside an option -- select() uses ':' as the option separator
+			.@menu$ += "[" + .@part_name$[.@i] + "] " + getitemname(.@id);
 			.@count++;
 		}
 		.@menu$ += ":";
