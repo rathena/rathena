@@ -2252,6 +2252,16 @@ int32 unit_skilluse_id2(block_list *src, int32 target_id, uint16 skill_id, uint1
 					return 0;
 				}
 				break;
+			case MO_KITRANSLATION:
+			case SR_POWERVELOCITY: {
+				map_session_data* tsd = BL_CAST(BL_PC, target);
+
+				if( tsd && (tsd->class_&MAPID_FOURTHMASK) == MAPID_DRAGON_KNIGHT ) {
+					clif_skill_fail( *sd, skill_id );
+					return 0;
+				}
+				break;
+			}
 			case WL_WHITEIMPRISON:
 				if( battle_check_target(src,target,BCT_SELF|BCT_ENEMY) < 0 ) {
 					clif_skill_fail( *sd, skill_id, USESKILL_FAIL_TOTARGET );
