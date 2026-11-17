@@ -8648,6 +8648,21 @@ Body:
             Level: 1
           - Name: SS_SHINKIROU
             Level: 1
+      - Name: SS_SHINKIROU_GUNSHU
+        MaxLevel: 1
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+      - Name: SS_NOBORU
+        MaxLevel: 5
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+      - Name: SS_KAGEGEKIRYU
+        MaxLevel: 10
+        Requires:
+          - Name: SS_KAGENOMAI
+            Level: 5
   - Job: Shiranui
     Inherit:
       Novice: true
@@ -8758,3 +8773,18 @@ Body:
             Level: 1
           - Name: SS_SHINKIROU
             Level: 1
+      - Name: SS_SHINKIROU_GUNSHU
+        MaxLevel: 1
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+      - Name: SS_NOBORU
+        MaxLevel: 5
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+      - Name: SS_KAGEGEKIRYU
+        MaxLevel: 10
+        Requires:
+          - Name: SS_KAGENOMAI
+            Level: 5
