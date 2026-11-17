@@ -2933,6 +2933,9 @@ map_session_data* mob_data::get_mvp_player(map_session_data* first_sd) {
  *------------------------------------------*/
 int32 mob_dead(mob_data *md, block_list *src, int32 type)
 {
+#ifdef MAP_GENERATOR
+	return 3; // NEVER kill mobs during Navigenerate or it crashes
+#endif
 	struct status_data *status;
 	map_session_data *sd = nullptr, *tmpsd[DAMAGELOG_SIZE];
 	map_session_data *first_sd = nullptr, *second_sd = nullptr, *third_sd = nullptr;
