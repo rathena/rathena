@@ -346,6 +346,16 @@ OnInstanceInit:
 		200,
 		400;	// brutal: x2 hard
 
+	// Brutal-only buffs (applied with sc_start on every patrol and the boss)
+	'brutal_atk = 100;	// +100% ATK
+	'brutal_def = 50;	// +50% DEF
+	'brutal_hit = 100;	// +100% HIT
+	'brutal_aspd = 30;	// +30% ASPD
+	'brutal_speed = 100;	// walk speed (lower = faster)
+
+	// Brutal boss skill rotation: seconds between casts at HP >50% / <=50% / <=25%
+	setarray 'brutal_cd[0], 7, 5, 3;
+
 	// number of broken cleaning robots summoned during the boss fight by mode
 	setarray 'mode_cleaner_count[0], 20, 20, 20, 40;
 
@@ -893,7 +903,21 @@ S_Mob:
 		unitskilluseid $@mobid[0], rand(167,168), 1;	// NPC_CHANGEHOLY or NPC_CHANGEDARKNESS
 		setunitdata $@mobid[0], UMOB_MAXHP, 'hp[ 'mode ];
 		setunitdata $@mobid[0], UMOB_HP, 'hp[ 'mode ];
+		if ('mode == 3)
+			callsub( S_BrutalBuff, $@mobid[0] );
 	}
+	return;
+
+// Brutal mode: permanent buffs through status changes (no mob_skill_db edit needed)
+S_BrutalBuff:
+	.@gid = getarg(0);
+	.@t = 3600000;	// 1 hour
+	.@f = SCSTART_NOAVOID|SCSTART_NORATEDEF|SCSTART_NOTICKDEF;
+	sc_start SC_INCATKRATE, .@t, 'brutal_atk, 10000, .@f, .@gid;	// +ATK%
+	sc_start SC_INCDEFRATE, .@t, 'brutal_def, 10000, .@f, .@gid;	// +DEF%
+	sc_start SC_INCHITRATE, .@t, 'brutal_hit, 10000, .@f, .@gid;	// +HIT%
+	sc_start SC_INCASPDRATE, .@t, 'brutal_aspd, 10000, .@f, .@gid;	// +ASPD%
+	setunitdata .@gid, UMOB_SPEED, 'brutal_speed;	// faster movement
 	return;
 
 OnMobDead:
@@ -1101,6 +1125,8 @@ OnStart:
 
 	initnpctimer;
 	donpcevent instance_npcname("airshipD_hp_regen") + "::OnStart";
+	if ('mode == 3)
+		donpcevent instance_npcname("airshipD_brutal") + "::OnStart";
 	end;
 
 OnTimer1000:
@@ -1139,6 +1165,7 @@ OnMyMobDead:
 	donpcevent instance_npcname("airshipD_RA_UNLIMIT") + "::OnStop";
 	donpcevent instance_npcname("airshipD_NPC_RELIEVE_ON_10") + "::OnStop";
 	donpcevent instance_npcname("airshipD_hp_regen") + "::OnStop";
+	donpcevent instance_npcname("airshipD_brutal") + "::OnStop";
 	donpcevent instance_npcname("#g_1") + "::OnStop";
 	donpcevent instance_npcname("#g_2") + "::OnStop";
 	donpcevent instance_npcname("#g_3") + "::OnStop";
@@ -1194,6 +1221,135 @@ OnStop:
 	end;
 }
 
+// Brutal mode (private jet) only: boss buffs, scripted skill rotation and enrage phases.
+// Everything is cast from script so mob_skill_db stays untouched.
+1@whl,1,1,0	script	airshipD_brutal	-1,{
+	end;
+OnStart:
+	'brutal_on = true;
+	'brutal_phase = 0;
+	callsub( S_Buff, 'boss_id );
+	mapannounce 'map_whl$, "Aquila: Private jet protocol confirmed. Combat limiter... released.", bc_map, 0xFF3333;
+	sleep 5000;
+
+	while ('brutal_on && unitexists('boss_id)) {
+		getunitdata 'boss_id, .@data;
+		.@rate = .@data[UMOB_HP] / ('mode_hp_boss[ 'mode ] / 100);	// avoid int overflow on 1.2B HP
+
+		// Enrage phase 1: HP <= 50%
+		if (.@rate <= 50 && 'brutal_phase < 1) {
+			'brutal_phase = 1;
+			mapannounce 'map_whl$, "Aquila: Damage exceeds tolerance. Calling the guard units!", bc_map, 0xFF3333;
+			callsub( S_Adds, 6 );
+		}
+		// Enrage phase 2: HP <= 25%
+		if (.@rate <= 25 && 'brutal_phase < 2) {
+			'brutal_phase = 2;
+			mapannounce 'map_whl$, "Aquila: Core critical!! All output to weapons. I will take you down with this airship!", bc_map, 0xFF0000;
+			unitskilluseid 'boss_id, "NPC_POWERUP", 5;
+			callsub( S_Adds, 8 );
+		}
+
+		callsub( S_Cast );
+		sleep 'brutal_cd[ 'brutal_phase ] * 1000;
+	}
+	end;
+
+// Cast one random heavy skill with a short warning so players can react
+S_Cast:
+	if (unitexists('boss_id) == false)
+		return;
+	getunitdata 'boss_id, .@data;
+	.@target = .@data[UMOB_TARGETID];
+
+	switch( rand(9) ) {
+	case 0:
+		unittalk 'boss_id, "Shockwave incoming!";
+		sleep 1500;
+		unitskilluseid 'boss_id, "NPC_EARTHQUAKE", 3;
+		break;
+	case 1:
+		unittalk 'boss_id, "Freezing the intruders.";
+		sleep 1000;
+		unitskilluseid 'boss_id, "NPC_WIDEFREEZE", 3;
+		break;
+	case 2:
+		unittalk 'boss_id, "Pulse discharge.";
+		sleep 1000;
+		unitskilluseid 'boss_id, "NPC_PULSESTRIKE", 5;
+		break;
+	case 3:
+		unittalk 'boss_id, "Ignition!";
+		sleep 1500;
+		unitskilluseid 'boss_id, "NPC_IGNITIONBREAK", 5;
+		break;
+	case 4:
+		unittalk 'boss_id, "Judgement.";
+		sleep 1500;
+		unitskilluseid 'boss_id, "NPC_HELLJUDGEMENT", 5;
+		break;
+	case 5:
+		unittalk 'boss_id, "Stun field.";
+		sleep 1000;
+		unitskilluseid 'boss_id, "NPC_WIDESTUN", 3;
+		break;
+	case 6:
+		unitskilluseid 'boss_id, "NPC_SLOWCAST", 5;
+		break;
+	case 7:	// single target
+		if (.@target > 0 && getunittype(.@target) == BL_PC) {
+			unittalk 'boss_id, "Target locked.";
+			unitskilluseid 'boss_id, "NPC_CRITICALWOUND", 5, .@target;
+			sleep 500;
+			unitskilluseid 'boss_id, "NPC_DARKBREATH", 5, .@target;
+		}
+		break;
+	case 8:	// meteor on the current target's position
+		if (.@target > 0 && getunittype(.@target) == BL_PC) {
+			getmapxy .@m$, .@x, .@y, BL_PC, .@target;
+			unittalk 'boss_id, "Orbital strike. Move!";
+			sleep 2000;
+			if (unitexists('boss_id))
+				unitskillusepos 'boss_id, "NPC_COMET", 3, .@x, .@y;
+		}
+		break;
+	}
+	return;
+
+// Summon buffed District Inspectors around the boss
+S_Adds:
+	if (unitexists('boss_id) == false)
+		return;
+	getunitdata 'boss_id, .@data;
+	.@event$ = instance_npcname("airshipD_brutal") + "::OnAddDead";
+	for ( .@i = 0; .@i < getarg(0); ++.@i ) {
+		areamonster 'map_whl$, .@data[UMOB_X]-6, .@data[UMOB_Y]-6, .@data[UMOB_X]+6, .@data[UMOB_Y]+6, "Brutal Inspector", "MD_E_EA2S", 1, .@event$;
+		setunitdata $@mobid[0], UMOB_MAXHP, 'hp[ 'mode ];
+		setunitdata $@mobid[0], UMOB_HP, 'hp[ 'mode ];
+		unitskilluseid $@mobid[0], "NPC_RELIEVE_ON", 10;
+		callsub( S_Buff, $@mobid[0] );
+	}
+	return;
+
+S_Buff:
+	.@gid = getarg(0);
+	.@t = 3600000;
+	.@f = SCSTART_NOAVOID|SCSTART_NORATEDEF|SCSTART_NOTICKDEF;
+	sc_start SC_INCATKRATE, .@t, 'brutal_atk, 10000, .@f, .@gid;
+	sc_start SC_INCDEFRATE, .@t, 'brutal_def, 10000, .@f, .@gid;
+	sc_start SC_INCHITRATE, .@t, 'brutal_hit, 10000, .@f, .@gid;
+	sc_start SC_INCASPDRATE, .@t, 'brutal_aspd, 10000, .@f, .@gid;
+	return;
+
+OnAddDead:
+	end;
+
+OnStop:
+	'brutal_on = false;
+	killmonster 'map_whl$, instance_npcname("airshipD_brutal") + "::OnAddDead";
+	end;
+}
+
 // Regen the hp per second. The amount of HP depends on the mode.
 1@whl,1,1,0	script	airshipD_hp_regen	-1,{
 	end;
@@ -1224,9 +1380,9 @@ OnStart:
 	'event_type[2] = true;
 	end;
 OnTimer2000:
-	if (checkcell(.@map$,.@x,.@y,cell_chkpass)) {
+	if (checkcell('map_whl$,'berserk_x,'berserk_y,cell_chkpass)) {
 		unitstopwalk 'boss_id, USW_FORCE_STOP;
-		unitwalk 'boss_id, .@x, .@y;
+		unitwalk 'boss_id, 'berserk_x, 'berserk_y;
 	}
 
 	if ('DE_BERSERKAIZER != 0) {
@@ -1234,7 +1390,7 @@ OnTimer2000:
 	}
 	'DE_BERSERKAIZER = 1;
 	setunitdata 'boss_id, UMOB_ATKRANGE, 8;
-	unitskilluseid 'boss_id, "DE_BERSERKAIZER",1;	// only used to display the effect
+	unittalk 'boss_id, "Core overload! Berserk drive engaged.";	// DE_BERSERKAIZER doesn't exist in this skill_db, message only
 
 	// Similiar to NPC_RUN. Currently NPC_RUN doesn't prevent to autoattack while the mob is running unlike official, this part simulates that
 	getunitdata 'boss_id, .@data;
@@ -1289,16 +1445,18 @@ OnTimer2000:
 	}
 	.@x = .@data[UMOB_X] + .@dx;
 	.@y = .@data[UMOB_Y] + .@dy;
+	'berserk_x = .@x;
+	'berserk_y = .@y;
 
-	if (checkcell(.@map$,.@x,.@y,cell_chkpass)) {
+	if (checkcell('map_whl$,.@x,.@y,cell_chkpass)) {
 		unitstopwalk 'boss_id, USW_FORCE_STOP;
 		unitwalk 'boss_id,.@x,.@y;
 	}
 	end;
 OnTimer5000:
-	if (checkcell(.@map$,.@x,.@y,cell_chkpass)) {
+	if (checkcell('map_whl$,'berserk_x,'berserk_y,cell_chkpass)) {
 		unitstopwalk 'boss_id, USW_FORCE_STOP;
-		unitwalk 'boss_id, .@x, .@y;
+		unitwalk 'boss_id, 'berserk_x, 'berserk_y;
 	}
 	end;
 OnTimer150000:
@@ -1329,9 +1487,9 @@ OnStop:
 	if (unitexists('boss_id) == true) {
 		'DE_BERSERKAIZER = 0;
 		setunitdata 'boss_id, UMOB_ATKRANGE, 1;
-		if (checkcell(.@map$,.@x,.@y,cell_chkpass)) {
+		if (checkcell('map_whl$,'berserk_x,'berserk_y,cell_chkpass)) {
 			unitstopwalk 'boss_id, USW_FORCE_STOP;
-			unitwalk 'boss_id, .@x, .@y;
+			unitwalk 'boss_id, 'berserk_x, 'berserk_y;
 		}
 	}
 	end;
