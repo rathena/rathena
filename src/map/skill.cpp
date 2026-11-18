@@ -9378,6 +9378,31 @@ bool skill_check_condition_castend( map_session_data& sd, uint16 skill_id, uint1
 
 	// perform skill-specific checks (and actions)
 	switch( skill_id ) {
+		case AB_ANCILLA: {
+			int32 count = 0;
+			for (const auto& item : sd.inventory.u.items_inventory) {
+				if (item.nameid == ITEMID_ANCILLA)
+					count += item.amount;
+			}
+			if (count >= 3) {
+				clif_skill_fail(sd, skill_id, USESKILL_FAIL_ANCILLA_NUMOVER);
+				return false;
+			}
+
+			const auto ancilla = item_db.find(ITEMID_ANCILLA);
+			const int32 capacity = pc_checkadditem(&sd, ITEMID_ANCILLA, 1);
+			if (ancilla == nullptr || sd.weight + ancilla->weight > sd.max_weight
+				|| capacity == CHKADDITEM_OVERAMOUNT
+				|| (capacity == CHKADDITEM_NEW && pc_inventoryblank(&sd) == 0)) {
+				clif_skill_fail(sd, skill_id, USESKILL_FAIL_WEIGHTOVER);
+				return false;
+			}
+			if (skill_can_produce_mix(&sd, ITEMID_ANCILLA, -1, 1) == 0) {
+				clif_skill_fail(sd, skill_id);
+				return false;
+			}
+			break;
+		}
 		case PR_BENEDICTIO:
 			skill_check_pc_partner(&sd, skill_id, &skill_lv, 1, 1);
 			break;
@@ -10060,6 +10085,10 @@ struct s_skill_condition skill_get_requirement(map_session_data* sd, uint16 skil
 		case BO_ACIDIFIED_ZONE_FIRE:
 			if (sc != nullptr && sc->hasSCE(SC_RESEARCHREPORT) && req.amount[0] > 0)
 				req.amount[0]--;
+			break;
+		case AB_ANCILLA:
+			if (sc != nullptr && sc->hasSCE(SC_ANCILLA))
+				req.itemid[0] = req.amount[0] = 0;
 			break;
 		case MT_A_MACHINE:
 			if (sc != nullptr && sc->hasSCE(SC_ABR_INFINITY))
@@ -12813,6 +12842,8 @@ int16 skill_can_produce_mix(map_session_data *sd, t_itemid nameid, int32 trigger
 
 		if (!(nameid_produce = skill_produce_db[i].mat_id[j]))
 			continue;
+		if (skill_produce_db[i].req_skill == AB_ANCILLA && nameid_produce == ITEMID_BLUE_GEMSTONE && sd->sc.hasSCE(SC_ANCILLA))
+			continue;
 		if (skill_produce_db[i].mat_amount[j] == 0) {
 			if (pc_search_inventory(sd,nameid_produce) < 0)
 				return 0;
@@ -12899,6 +12930,8 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 		t_itemid id = skill_produce_db[idx].mat_id[i];
 
 		if (!item_db.exists(id))
+			continue;
+		if (skill_id == AB_ANCILLA && id == ITEMID_BLUE_GEMSTONE && sd->sc.hasSCE(SC_ANCILLA))
 			continue;
 		num++;
 		x = (skill_id == RK_RUNEMASTERY ? 1 : qty) * skill_produce_db[idx].mat_amount[i];

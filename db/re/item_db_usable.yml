@@ -8592,7 +8592,7 @@ Body:
       NoAuction: true
     Script: |
       percentheal 0,15;
-      sc_start SC_ANCILLA,60000,1;
+      sc_start SC_ANCILLA,180000,1;
   - Id: 12334
     AegisName: Cherish_Box
     Name: Treasure Edition Helm Box
