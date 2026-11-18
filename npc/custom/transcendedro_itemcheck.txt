@@ -1,0 +1,39 @@
+//===== rAthena Script =======================================
+//= Transcended RO - GM Item ID Checker
+//===== Description: =========================================
+//= GM-only NPC at sec_in02,142,156.
+//= Drop an item into the sell window and press Sell.
+//= The NPC reports the ItemID / name / amount. The item is kept.
+//= Useful for finding IDs of items that have no iteminfo yet.
+//============================================================
+
+sec_in02,142,156,4	script	Item Checker#gm	4_M_SOULREAPER,{
+	if (getgmlevel() < 1) {
+		mes "[Item Checker]";
+		mes "This NPC is for GMs only.";
+		close;
+	}
+	mes "[Item Checker]";
+	mes "Drop the item into the sell window and press ^0055FFSell^000000.";
+	mes "I will tell you its ItemID.";
+	close2;
+	callshop "gm_itemcheck_shop", 2;
+	npcshopattach "gm_itemcheck_shop";
+	end;
+
+OnSellItem:
+	if (getgmlevel() < 1)
+		end;
+	mes "[Item Checker]";
+	mes "==================================";
+	for (set .@i, 0; .@i < getarraysize(@sold_nameid); set .@i, .@i + 1) {
+		set .@id, @sold_nameid[.@i];
+		set .@qty, @sold_quantity[.@i];
+		mes "ItemID: ^00AA00" + .@id + "^000000  x" + .@qty;
+		mes "Name: " + getitemname(.@id);
+		mes "==================================";
+	}
+	close;
+}
+
+-	shop	gm_itemcheck_shop	-1,909:-1
