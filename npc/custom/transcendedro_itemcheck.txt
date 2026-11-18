@@ -1,20 +1,16 @@
 //===== rAthena Script =======================================
-//= Transcended RO - GM Item ID Checker
+//= Transcended RO - Item ID Checker
 //===== Description: =========================================
-//= GM-only NPC at sec_in02,142,156.
+//= Public NPC at sec_in02,142,156 and izlude,161,170.
 //= Drop an item into the sell window and press Sell.
 //= The NPC reports the ItemID / name / amount. The item is kept.
 //= Useful for finding IDs of items that have no iteminfo yet.
-//= GM command: @itemcheck opens the same window from anywhere.
+//= GM command: @itemcheck (GM level 99+) opens the same window
+//= from anywhere.
 //============================================================
 
 sec_in02,142,156,4	script	Item Checker#gm	4_M_SOULREAPER,{
-OnAtItemCheck:
-	if (getgmlevel() < 1) {
-		mes "[Item Checker]";
-		mes "This NPC is for GMs only.";
-		close;
-	}
+	set @itemchk_remote, 0;
 	mes "[Item Checker]";
 	mes "Drop the item into the sell window and press ^0055FFSell^000000.";
 	mes "I will tell you its ItemID.";
@@ -23,14 +19,34 @@ OnAtItemCheck:
 	npcshopattach "gm_itemcheck_shop";
 	end;
 
-OnInit:
-	// @itemcheck — GM level 1+ (no # charcommand)
-	bindatcmd "itemcheck", strnpcinfo(3) + "::OnAtItemCheck", 1, 100;
+// @itemcheck is used far from the NPC -> no mes/close dialog
+// (npc_checknear would fail and hang the script). Use chat output.
+OnAtItemCheck:
+	set @itemchk_remote, 1;
+	dispbottom "[Item Checker] Drop the item into the sell window and press Sell.";
+	callshop "gm_itemcheck_shop", 2;
+	npcshopattach "gm_itemcheck_shop";
 	end;
 
+OnInit:
+	initnpctimer;
+	// Bind only once (duplicates also run OnInit).
+	// @itemcheck — GM level 99+ only (no # charcommand)
+	if (strnpcinfo(2) == "gm")
+		bindatcmd "itemcheck", strnpcinfo(3) + "::OnAtItemCheck", 99, 100;
+	end;
+
+OnTimer1000:
+    showscript("Apple Checker!!!");
+    setnpctimer 0;
+    end;
+
 OnSellItem:
-	if (getgmlevel() < 1)
+	if (@itemchk_remote) {
+		for (set .@i, 0; .@i < getarraysize(@sold_nameid); set .@i, .@i + 1)
+			dispbottom "[Item Checker] ItemID: " + @sold_nameid[.@i] + " x" + @sold_quantity[.@i] + " - " + getitemname(@sold_nameid[.@i]), 0x00FF00;
 		end;
+	}
 	mes "[Item Checker]";
 	mes "==================================";
 	for (set .@i, 0; .@i < getarraysize(@sold_nameid); set .@i, .@i + 1) {
@@ -42,5 +58,7 @@ OnSellItem:
 	}
 	close;
 }
+
+izlude,161,170,4	duplicate(Item Checker#gm)	Item Checker#izl	4_M_SOULREAPER
 
 -	shop	gm_itemcheck_shop	-1,909:-1
