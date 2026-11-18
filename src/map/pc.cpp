@@ -12311,6 +12311,7 @@ static void pc_deleteautobonus( std::vector<std::shared_ptr<s_autobonus>>& bonus
 static void pc_unequipitem_sub(map_session_data *sd, int32 n, int32 flag) {
 	int32 i, iflag;
 	bool status_calc = false;
+	const auto previous_combos = sd->combos;
 
 	pc_deleteautobonus( sd->autobonus, sd->inventory.u.items_inventory[n].equip );
 	pc_deleteautobonus( sd->autobonus2, sd->inventory.u.items_inventory[n].equip );
@@ -12347,12 +12348,56 @@ static void pc_unequipitem_sub(map_session_data *sd, int32 n, int32 flag) {
 		}
 	}
 
+	// Capture only combos that were active and are no longer satisfied after removal.
+	// Keep the scripts alive and finish collecting before any script can change equipment.
+	std::vector<std::pair<std::shared_ptr<s_item_combo>, uint32>> unequip_combos;
+
+	for (const auto& previous_combo : previous_combos) {
+		bool active = false;
+
+		for (const auto& combo : sd->combos) {
+			if (combo->id == previous_combo->id) {
+				active = true;
+				break;
+			}
+		}
+
+		if (!active) {
+			std::shared_ptr<s_item_combo> combo = itemdb_combo.find(previous_combo->id);
+
+			if (combo != nullptr && combo->unequip_script != nullptr)
+				unequip_combos.emplace_back(combo, previous_combo->pos);
+		}
+	}
+
 	if (flag & 1 || status_calc) {
 		status_calc_pc(sd, SCO_FORCE);
 	}
 
 	if (sd->sc.getSCE(SC_SIGNUMCRUCIS) && !battle_check_undead(sd->battle_status.race, sd->battle_status.def_ele))
 		status_change_end(sd, SC_SIGNUMCRUCIS);
+
+	// Run each lost combo's UnEquipScript once, after recalculating equipment bonuses.
+	if (!unequip_combos.empty()) {
+		int32 old_index = current_equip_item_index;
+		int32 old_card = current_equip_card_id;
+		int32 old_combo = current_equip_combo_pos;
+		int32 old_option = current_equip_opt_index;
+
+		for (const auto& combo : unequip_combos) {
+			current_equip_item_index = -1;
+			current_equip_card_id = 0;
+			current_equip_combo_pos = combo.second;
+			current_equip_opt_index = -1;
+			run_script(combo.first->unequip_script, 0, sd->id, fake_nd->id);
+			sd->npc_item_flag = iflag;
+		}
+
+		current_equip_item_index = old_index;
+		current_equip_card_id = old_card;
+		current_equip_combo_pos = old_combo;
+		current_equip_opt_index = old_option;
+	}
 
 	//OnUnEquip script [Skotlex]
 	if (sd->inventory_data[n]) {

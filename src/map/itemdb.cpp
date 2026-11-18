@@ -3921,6 +3921,18 @@ uint64 ComboDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			}
 		}
 
+		if (this->nodeExists(node, "UnEquipScript")) {
+			std::string script;
+
+			if (!this->asString(node, "UnEquipScript", script))
+				return 0;
+
+			if (combo->unequip_script)
+				script_free_code(combo->unequip_script);
+
+			combo->unequip_script = parse_script(script.c_str(), this->getCurrentFile().c_str(), this->getLineNumber(node["UnEquipScript"]), SCRIPT_IGNORE_EXTERNAL_BRACKETS);
+		}
+
 		if (!exists)
 			this->put( combo->id, combo );
 
