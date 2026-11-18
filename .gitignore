@@ -110,6 +110,7 @@ Thumbs.db
 /tools/*.exe
 /tools/*.ilk
 /tools/*.pdb
+/tools/discord*.*
 
 # Visual Studio
 .vs
@@ -152,3 +153,4 @@ generated
 
 # Discord relay config (contains webhook URL / DB password)
 /tools/discord_item_report.conf.php
+tools/discord_item_report.conf.example.php
