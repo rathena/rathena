@@ -360,7 +360,7 @@ OnInstanceInit:
 	// DamageTaken by mode, same scale as mob_db.yml DamageTaken (10000 = 100% damage, 1000 = 10%, 100 = 1%, 10 = 0.1%)
 	// 0 = keep the mob_db value
 	setarray 'mode_dmgtaken_mob[0], 0, 0, 0, 100;	// every monster except the boss
-	setarray 'mode_dmgtaken_boss[0], 0, 0, 0, 10;	// Aquila
+	setarray 'mode_dmgtaken_boss[0], 0, 0, 0, 100;	// Aquila
 
 	// Brutal: random skills for every monster on the map (airshipD_mobskill)
 	'brutal_mob_skill_rate = 25;	// % chance per monster per tick to cast
