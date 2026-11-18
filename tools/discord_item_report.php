@@ -24,7 +24,7 @@ function log_msg($msg) {
 
 function db_connect(array $conf) {
 	$dsn = "mysql:host={$conf['db_host']};port={$conf['db_port']};dbname={$conf['db_name']};charset=utf8mb4";
-	return new PDO($dsn, $conf['NIIQ'], $conf['Barcode001'], [
+	return new PDO($dsn, $conf['db_user'], $conf['db_pass'], [
 		PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
 		PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
 	]);
@@ -71,7 +71,7 @@ function run_once(array $conf) {
 			]],
 		];
 
-		list($code, $retry) = discord_post($conf['https://discord.com/api/webhooks/1572472655972540436/dxgt3xUd6vaN9q6W8SX9YAeyZ0dn7Rm1XuVR3KHySPUDi4jeE0GacGKXKBno2ekEhXXG'], $payload);
+		list($code, $retry) = discord_post($conf['webhook_url'], $payload);
 		if ($code >= 200 && $code < 300) {
 			$mark->execute([$r['id']]);
 			log_msg("Sent report #{$r['id']} (ItemID {$r['nameid']})");
