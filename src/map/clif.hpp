@@ -1218,7 +1218,15 @@ void clif_quest_send_mission( const map_session_data* sd );
 void clif_quest_add( const map_session_data* sd, const quest* qd );
 void clif_quest_delete( const map_session_data* sd, int32 quest_id );
 void clif_quest_update_status( const map_session_data* sd, int32 quest_id, bool active );
+struct s_quest_objective_update {
+	int32 quest_id;
+	int32 objective_index;
+	uint16 mob_id;
+	uint16 total_count;
+	uint16 current_count;
+};
 void clif_quest_update_objective( const map_session_data* sd, const quest* qd );
+void clif_quest_update_objectives( const map_session_data* sd, const std::vector<s_quest_objective_update>& updates );
 void clif_quest_show_event( const map_session_data* sd, const block_list* bl, e_questinfo_types effect, e_questinfo_markcolor color );
 void clif_displayexp(const map_session_data* sd, t_exp exp, char type, bool quest, bool lost );
 

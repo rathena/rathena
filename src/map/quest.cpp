@@ -618,7 +618,6 @@ int32 quest_add(map_session_data *sd, int32 quest_id)
 	sd->save_quest = true;
 
 	clif_quest_add(sd, &sd->quest_log[n]);
-	clif_quest_update_objective(sd, &sd->quest_log[n]);
 
 	if( save_settings&CHARSAVE_QUEST )
 		chrif_save(sd, CSAVE_NORMAL);
@@ -668,7 +667,6 @@ int32 quest_change(map_session_data *sd, int32 qid1, int32 qid2)
 
 	clif_quest_delete(sd, qid1);
 	clif_quest_add(sd, &sd->quest_log[i]);
-	clif_quest_update_objective(sd, &sd->quest_log[i]);
 
 	if( save_settings&CHARSAVE_QUEST )
 		chrif_save(sd, CSAVE_NORMAL);
@@ -758,6 +756,8 @@ void quest_update_objective(map_session_data *sd, mob_data* md)
 {
 	nullpo_retv(sd);
 
+	std::vector<s_quest_objective_update> updates;
+
 	for (int32 i = 0; i < sd->avail_quests; i++) {
 		if (sd->quest_log[i].state == Q_COMPLETE) // Skip complete quests
 			continue;
@@ -802,7 +802,8 @@ void quest_update_objective(map_session_data *sd, mob_data* md)
 			if (objective_check == total_check && sd->quest_log[i].count[j] < qi->objectives[j]->count)  {
 				sd->quest_log[i].count[j]++;
 				sd->save_quest = true;
-				clif_quest_update_objective(sd, &sd->quest_log[i]);
+				updates.push_back({ sd->quest_log[i].quest_id, j, qi->objectives[j]->mob_id,
+					qi->objectives[j]->count, static_cast<uint16>(sd->quest_log[i].count[j]) });
 			}
 		}
 
@@ -834,6 +835,7 @@ void quest_update_objective(map_session_data *sd, mob_data* md)
 //				intif_broadcast_obtain_special_item(sd, it.nameid, it.mob_id, ITEMOBTAIN_TYPE_MONSTER_ITEM);
 		}
 	}
+	clif_quest_update_objectives(sd, updates);
 	pc_show_questinfo(sd);
 }
 
