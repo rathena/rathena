@@ -14,8 +14,7 @@
 //= 1.1 Added Izlude duplicates. [Euphy]
 //============================================================ 
 
-izlude,202,75,3	duplicate(Airship_Staff_izlude)	Airship Staff#izlude	90
-izlude_a,202,75,3	duplicate(Airship_Staff_izlude)	Airship Staff#izlude_a	90
-izlude_b,202,75,3	duplicate(Airship_Staff_izlude)	Airship Staff#izlude_b	90
-izlude_c,202,75,3	duplicate(Airship_Staff_izlude)	Airship Staff#izlude_c	90
-izlude_d,202,75,3	duplicate(Airship_Staff_izlude)	Airship Staff#izlude_d	90
+izlude_a,202,75,3	duplicate(Boarding Serviceroid#i)	Airship Staff#izlude_a	4_SERVICE_30_M_01
+izlude_b,202,75,3	duplicate(Boarding Serviceroid#i)	Airship Staff#izlude_b	4_SERVICE_30_M_01
+izlude_c,202,75,3	duplicate(Boarding Serviceroid#i)	Airship Staff#izlude_c	4_SERVICE_30_M_01
+izlude_d,202,75,3	duplicate(Boarding Serviceroid#i)	Airship Staff#izlude_d	4_SERVICE_30_M_01

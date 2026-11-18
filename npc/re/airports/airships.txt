@@ -1,0 +1,1388 @@
+//===== rAthena Script =======================================
+//= The Airship System Script
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [Skylove]
+//= 1.1 Texts from this script were translated according to KRO. [Haydrich]
+//============================================================
+
+//============================================================
+//= International Airship Route
+//= ... -> Izlude -> Juno -> Rachel -> ...
+//============================================================
+
+airplane_01,1,1,0	script	International_Airship	-1,{
+	end;
+
+OnInit:
+	set $@airplanelocation2, -1; // Initial state: in flight
+	set $@airplane_status, 0;   // Initial state: in flight
+	initnpctimer;
+	end;
+
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer25000:
+	mapannounce "airplane_01", "This airship is heading to Izlude.", bc_map, "0x00ff00";
+	end;
+
+OnTimer50000:
+	mapannounce "airplane_01", "We will arrive in Izlude shortly.", bc_map, "0x00ff00";
+	end;
+
+OnTimer60000: // Izlude arrival
+	set $@airplanelocation2, 1;
+	set $@airplane_status, 1; // Docked
+	mapannounce "airplane_01", "We have arrived in Izlude. Have a safe trip.", bc_map, "0x00ff00";
+	end;
+
+OnTimer70000:
+	mapannounce "airplane_01", "We are currently in Izlude. The airship will depart shortly.", bc_map, "0x00ff00";
+	end;
+
+OnTimer80000: // Izlude departure
+	set $@airplane_status, 0; // In flight
+	mapannounce "airplane_01", "The airship is taking off. Our next destination is Juno.", bc_map, "0x70dbdb";
+	end;
+
+OnTimer105000:
+	mapannounce "airplane_01", "This airship is heading to Juno.", bc_map, "0x70dbdb";
+	end;
+
+OnTimer130000:
+	mapannounce "airplane_01", "We will arrive in Juno shortly.", bc_map, "0x70dbdb";
+	end;
+
+OnTimer140000: // Juno arrival
+	set $@airplanelocation2, 2;
+	set $@airplane_status, 1; // Docked
+	mapannounce "airplane_01", "We have arrived in Juno. Have a safe trip.", bc_map, "0x70dbdb";
+	end;
+
+OnTimer150000:
+	mapannounce "airplane_01", "We are currently in Juno. The airship will depart shortly.", bc_map, "0x70dbdb";
+	end;
+
+OnTimer160000: // Juno departure
+	set $@airplane_status, 0; // In flight
+	mapannounce "airplane_01", "The airship is taking off. Our next destination is Rachel.", bc_map, "0xFF8200";
+	end;
+
+OnTimer185000:
+	mapannounce "airplane_01", "This airship is heading to Rachel.", bc_map, "0xFF8200";
+	end;
+
+OnTimer210000:
+	mapannounce "airplane_01", "We will arrive in Rachel shortly.", bc_map, "0xFF8200";
+	end;
+
+OnTimer220000: // Rachel arrival
+	set $@airplanelocation2, 0;
+	set $@airplane_status, 1; // Docked
+	mapannounce "airplane_01", "We have arrived in Rachel. Have a safe trip.", bc_map, "0xFF8200";
+	end;
+
+OnTimer230000:
+	mapannounce "airplane_01", "We are currently in Rachel. The airship will depart shortly.", bc_map, "0xFF8200";
+	end;
+
+OnTimer240000: // Rachel departure
+	set $@airplane_status, 0; // In flight
+	mapannounce "airplane_01", "The airship is taking off. Our next destination is Izlude.", bc_map, "0x00ff00";
+	stopnpctimer;
+	// Preserve the monster attack event used by the airship quest.
+	.moninv++;
+	if (.moninv == 7) {
+		if (rand(1,3) == 3) {
+			donpcevent "Airship#airplane02::OnEnable";
+			end;
+		}
+		.moninv = 0;
+	}
+	initnpctimer;
+	end;
+}
+
+// The airship quest uses these events to open and close the boarding exits.
+-	script	#AirshipWarp-3	-1,{
+	end;
+OnHide:
+	$@airplane_status = 0;
+	end;
+OnUnhide:
+	$@airplane_status = 1;
+	end;
+}
+-	duplicate(#AirshipWarp-3)	#AirshipWarp-4	-1
+
+// OnTouch requires an explicit trigger area; use 3 cells in each direction.
+airplane_01,243,30,1	script	Exit Serviceroid#air	4_SERVICE_30_M_01,3,3,{
+
+OnTouch:
+	// Check whether the airship is in flight
+	if ($@airplane_status == 0) {
+		npctalk"We are currently in flight. Please enjoy your journey with Valkyrie Airlines.","Exit Serviceroid#air",bc_self;
+		end;
+	}
+
+	switch ($@airplanelocation2) {
+		case 0: // Rachel
+			npctalk"We have arrived in Rachel. Enjoy your trip.","Exit Serviceroid#air",bc_self;
+			warp "ra_fild12", 292, 204;
+			end;
+		case 1: // Izlude
+			npctalk"We have arrived in Izlude. Enjoy your trip.","Exit Serviceroid#air",bc_self;
+			warp "izlude",200,73;
+			end;
+		case 2: // Juno
+			npctalk"We have arrived in Juno. Enjoy your trip.","Exit Serviceroid#air",bc_self;
+			warp "y_airport",143,39;
+			end;
+		}
+		end;
+
+OnInit:
+	setunitdata(getnpcid(0), UNPC_GROUP_ID, 2);
+	setunittitle(getnpcid(0), "<Valkyrie Airlines>");
+	end;
+}
+
+// OnTouch requires an explicit trigger area; use 3 cells in each direction.
+airplane_01,243,74,5	script	Exit Serviceroid#air1	4_SERVICE_30_M_01,3,3,{
+
+OnTouch:
+	// Check whether the airship is in flight
+	if ($@airplane_status == 0) {
+		npctalk"We are currently in flight. Please enjoy your journey with Valkyrie Airlines.","Exit Serviceroid#air1",bc_self;
+		end;
+	}
+
+	switch ($@airplanelocation2) {
+		case 0: // Rachel
+			npctalk"We have arrived in Rachel. Enjoy your trip.","Exit Serviceroid#air1",bc_self;
+			warp "ra_fild12", 292, 204;
+			end;
+		case 1: // Izlude
+			npctalk"We have arrived in Izlude. Enjoy your trip.","Exit Serviceroid#air1",bc_self;
+			warp "izlude",200,73;
+			end;
+		case 2: // Juno
+			npctalk"We have arrived in Juno. Enjoy your trip.","Exit Serviceroid#air1",bc_self;
+			warp "y_airport",143,39;
+			end;
+		}
+		end;
+
+OnInit:
+	setunitdata(getnpcid(0), UNPC_GROUP_ID, 2);
+	setunittitle(getnpcid(0), "<Valkyrie Airlines>");
+	end;
+}
+
+izlude,202,75,3	script	Boarding Serviceroid#i	4_SERVICE_30_M_01,{
+	mes "[Boarding Serviceroid]";
+	mes "Thank you for choosing Valkyrie Airlines.";
+	mes "Would you like to board the ^CC3333Juno, Izlude, and Rachel airship^000000, which stops at all three cities?";
+	next;
+	if (select( "Yes", "No" )== 1) {
+		mes "[Boarding Serviceroid]";
+		mes "The fare is 1,200 Zeny. Passengers with a Free Airship Ticket can travel free of charge. Would you like to board the ^CC3333Juno, Izlude, and Rachel airship^000000?";
+		next;
+		if (select("Yes:No") == 1) {
+			if (countitem(7311) > 0) {
+				delitem 7311,1; //Free_Flying_Ship_Ticket
+				warp "airplane_01",244,58;
+				end;
+			}
+			if (Zeny >= 1200) {
+				set Zeny, Zeny - 1200;
+				warp "airplane_01",244,58;
+				end;
+			}
+			mes "[Boarding Serviceroid]";
+			mes "The airship fare is 1,200 Zeny. You do not have enough Zeny to board.";
+			close;
+		}
+	}
+	mes "[Boarding Serviceroid]";
+	mes "Thank you for traveling with Valkyrie Airlines. We look forward to welcoming you aboard again.";
+	close;
+
+OnInit:
+	setunitdata (getnpcid(0), UNPC_GROUP_ID,2);
+	setunittitle(getnpcid(0), "<Valkyrie Airlines>");
+	end;
+}
+
+y_airport,148,46,5	duplicate(Boarding Serviceroid#i)	#y5002	10145
+y_airport,158,46,5	duplicate(Boarding Serviceroid#i)	#y5005	10145
+
+
+airplane_01,250,58,2	script	Airship Staff#airplane01	4_SERVICE_30_F_01,{
+
+	mes "[Guide Serviceroid]";
+	mes "Valkyrie Airlines is committed to your comfort and safety aboard the ^006600Juno, Izlude, and Rachel airship^000000. How may I help you?";
+	next;
+	switch( select( "How to use the airship", "Captain's cabin", "Onboard facilities", "Cancel" )) {
+	case 1:
+		mes "[Guide Serviceroid]";
+		mes "All Valkyrie Airlines airships announce their routes and destinations over the onboard speakers.";
+		mes "When we arrive at your destination, you can leave through the exits on either side of the airship.";
+		next;
+		mes "[Guide Serviceroid]";
+		// mes "If you miss your stop, please stay aboard. This airship runs a round trip between Juno and Izlude, so you can get off the next time we arrive.";
+		// Correction: the international route also stops at Rachel.
+		mes "If you miss your stop, please stay aboard. This airship stops at Izlude, Juno, and Rachel, so you can get off the next time we arrive.";
+		close;
+	case 2:
+		mes "[Guide Serviceroid]";
+		mes "The <NAVI>[Captain's Cabin]<INFO>airplane_01.gat,208,53,0,101,0</INFO></NAVI> is at the front of the airship. Captain Ferlock and the pilot work there.";
+		next;
+		mes "[Guide Serviceroid]";
+		mes "The captain is sometimes away from his cabin. If you need to speak to him, please leave a message with a crew member.";
+		close;
+	case 3:
+		mes "[Guide Serviceroid]";
+		mes "Inside, you will find windows with scenic views, a lounge where you can relax, and minigames to enjoy during your flight.";
+		close;
+	case 4:
+		mes "[Guide Serviceroid]";
+		mes "Thank you for choosing Valkyrie Airlines. We wish you a comfortable and pleasant journey.";
+		close;
+	}
+
+OnInit:
+	setunitdata (getnpcid(0), UNPC_GROUP_ID,2);
+	setunittitle(getnpcid(0), "<Valkyrie Airlines>");
+	end;
+}
+
+
+
+// OnTouch requires an explicit trigger area; use 3 cells in each direction.
+airplane_01,110,72,2	script	Guide Serviceroid#air1a	4_SERVICE_30_M_01,3,3,{
+
+OnTouch:
+	npctalk"The area below is reserved for the crew. Passengers are not permitted to enter.","Guide Serviceroid#air1a",bc_self;
+	end;
+
+OnInit:
+	setunitdata (getnpcid(0), UNPC_GROUP_ID,2);
+	setunittitle(getnpcid(0), "<Valkyrie Airlines>");
+	end;
+}
+
+// OnTouch requires an explicit trigger area; use 3 cells in each direction.
+airplane_01,110,52,2	script	Guide Serviceroid#air1b	4_SERVICE_30_M_01,3,3,{
+
+OnTouch:
+	npctalk"The area below is reserved for the crew. Passengers are not permitted to enter.","Guide Serviceroid#air1b",bc_self;
+	end;
+
+OnInit:
+	setunitdata (getnpcid(0), UNPC_GROUP_ID,2);
+	setunittitle(getnpcid(0), "<Valkyrie Airlines>");
+	end;
+}
+
+airplane_01,50,66,5	script	Apple Merchant#airplane	86,{
+	mes "[Meltz]";
+	mes "Welcome! I sell fresh Apples and can turn your Apples into Apple Juice~.";
+	next;
+	switch (select("Buy Apples:Make Apple Juice:Cancel")) {
+	case 1:
+		mes "[Meltz]";
+		mes "Please enter the number you would like to buy.";
+		mes "Apples cost 15 Zeny each. You may buy";
+		mes "up to 500 at a time. To cancel,";
+		mes "please enter 0.";
+		next;
+		while (1) {
+			input .@input;
+			set .@pay, .@input * 15;
+			if (.@input == 0) {
+				mes "[Meltz]";
+				mes "Please come again.";
+				mes "Goodbye~.";
+				close;
+			}
+			else if (.@input < 1 || .@input > 500) {
+				mes "[Meltz]";
+				mes "That amount is outside the allowed range.";
+				mes "Please try again.";
+				next;
+			}
+			else {
+				mes "[Meltz]";
+				mes "You would like to buy ^FF0000" + .@input + " Apples^000000.";
+				mes "The total price is ^FF0000" + .@pay + " Zeny^000000.";
+				mes "Would you like to make this purchase?";
+				next;
+				if (select("Yes:No") == 2) {
+					mes "[Meltz]";
+					mes "Please come again.";
+					mes "Goodbye~.";
+					close;
+				}
+				break;
+			}
+		}
+		if (Zeny < .@pay) {
+			mes "[Meltz]";
+			mes "It looks like you do not have enough Zeny.";
+			mes "Please bring more Zeny, or try";
+			mes "buying fewer Apples.";
+			close;
+		}
+		else if (checkweight(512,.@input) == 0) {
+			mes "[Meltz]";
+			mes "You are carrying too many items,";
+			mes "or your inventory is too heavy";
+			mes "to make this purchase.";
+			mes "Please make some room in your inventory";
+			mes "and come back.";
+			close;
+		}
+		else {
+			set Zeny, Zeny - .@pay;
+			getitem 512,.@input; //Apple
+			mes "[Meltz]";
+			mes "Thank you! If you need Apples,";
+			mes "please visit me anytime.";
+			close;
+		}
+	case 2:
+		mes "[Meltz]";
+		mes "To make Apple Juice, bring me ^FF00003 Apples and 1 Empty Bottle^000000.";
+		mes "I will turn them into juice for you.";
+		mes "Would you like some Apple Juice?";
+		next;
+		switch (select("Yes:No")) {
+		case 1:
+			if (countitem(512) < 3 || countitem(713) < 1) {
+				mes "[Meltz]";
+				mes "You do not have enough ingredients.";
+				mes "Let me remind you. Bring me ^FF00003 Apples";
+				mes "and 1 Empty Bottle^000000,";
+				mes "and I will make the juice for you.";
+				mes "Come see me when you are ready.";
+				close;
+			}
+			else {
+				mes "[Meltz]";
+				mes "Please wait a moment.";
+				next;
+				mes "^3355FFGrind, grind,";
+				mes "and grind some more~";
+				mes "Clink, clink....^000000";
+				next;
+				// Recheck after the dialogue pauses, before consuming either ingredient.
+				if (countitem(512) < 3 || countitem(713) < 1) {
+					mes "[Meltz]";
+					mes "You no longer have enough ingredients to make Apple Juice.";
+					close;
+				}
+				if (!checkweight(531,1)) {
+					mes "[Meltz]";
+					mes "Please make room in your inventory for the Apple Juice first.";
+					close;
+				}
+				delitem 512,3; //Apple
+				delitem 713,1; //Empty_Bottle
+				getitem 531,1; //Apple_Juice
+				mes "[Meltz]";
+				mes "Here you are~.";
+				mes "Have a wonderful time!";
+				mes "Whenever you need Apples or Apple Juice,";
+				mes "just come and";
+				mes "Come see me when you are ready.";
+				close;
+			}
+		case 2:
+			mes "[Meltz]";
+			mes "Thank you! If you need Apples,";
+			mes "please visit me anytime.";
+			close;
+		}
+	case 3:
+		mes "[Meltz]";
+		mes "Please come again.";
+		mes "Goodbye~.";
+		close;
+	}
+}
+
+airplane,50,66,5	duplicate(Apple Merchant#airplane)	#airplane1	86
+
+airplane_01,69,63,2	script	Nobleman#01airplane_01	55,{
+	mes "[Nobleman]";
+	mes "As I expected, the food aboard this ship";
+	mes "does not suit my palate. It has neither";
+	mes "elegance nor taste. Perhaps I should have";
+	mes "brought my personal chef today...";
+	close;
+}
+
+airplane_01,83,61,2	script	Girl#01airplane_01	72,2,2,{
+	mes "[Girl]";
+	mes "Waaaaaah.......";
+	mes "I was playing outside when a deer";
+	mes "suddenly got angry at me. It scared me so much...";
+	mes "*Sniff*";
+	close;
+
+OnTouch_:
+	emotion ET_CRY;
+	end;
+}
+
+airplane_01,71,31,2	script	Swordsman Shimizu#air_01	106,{
+	mes "[Swordsman]";
+	mes ".......Revenge for five years ago......";
+	mes ".......Just you wait.....";
+	mes "I will not let you escape this time!!";
+	close;
+}
+
+airplane_01,32,61,4	script	Nils#ein	49,1,1,{
+	mes "[Nils]";
+	mes "Hello.";
+	mes "I am the host of";
+	mes "^ff0000Typing of the Ragnarok^000000. My name is Nils.";
+	mes "How may I help you?";
+	next;
+	switch (select("Try ^ff0000Typing of the Ragnarok^000000:Learn about ^ff0000Typing of the Ragnarok^000000:View the best record:Cancel")) {
+	case 1:
+		mes "[Nils]";
+		mes "You would like to try";
+		mes "^ff0000Typing of the Ragnarok^000000. Please type";
+		mes "the displayed sentences quickly and accurately.";
+		mes "Let us begin.";
+		setarray .@line1_1$[0],	"^3cbcbcUntil the East Sea dries and Mount Baekdu wears away^000000",
+					"^3cbcbcBrr ding ding diri ding ding pff diam bam boora^000000",
+					"^0000ffResults never betray effort^000000",
+					"^3cbcbcWelcome^000000",
+					"^3cbcbcA carefully earned level never falls^000000",
+					"^3cbcbcGyot ttwal ttwim myon hyap hakk jyat bwek^000000",
+					"^3cbcbcBorn a Ragnarok adventurer with so much left to do^000000";
+		setarray .@line1_2$[0],	"^3cbcbcMay heaven protect our land forever^000000",
+					"^3cbcbcBaem baram bam baam bam bam beuram bam ding^000000",
+					"^3cbcbcEven if time turns back and that moment comes again^000000",
+					"^3cbcbcKafra Service is always by your side^000000",
+					"^3cbcbcA kind word repays ten million Zeny^000000",
+					"^3cbcbcNyat ryak nyot ryup pyot jyat nyul nywik^000000",
+					"^3cbcbcYou and I lived for the glory of hunting through battle after battle^000000";
+		setarray .@line1_3$[0],	"",
+					"",
+					"",
+					"^0000ffHow may I help you^000000",
+					"^0000ffThe player who chased a monster gazes at the sky^000000",
+					"",
+					"";
+		setarray .@word1$[0],	"Until the East Sea dries and Mount Baekdu wears away May heaven protect our land forever",
+					"Brr ding ding diri ding ding pff diam bam boora Baem baram bam baam bam bam beuram bam ding",
+					"Results never betray effort Even if time turns back and that moment comes again",
+					"Welcome Kafra Service is always by your side How may I help you",
+					"A carefully earned level never falls A kind word repays ten million Zeny The player who chased a monster gazes at the sky",
+					"Gyot ttwal ttwim myon hyap hakk jyat bwek Nyat ryak nyot ryup pyot jyat nyul nywik",
+					"Born a Ragnarok adventurer with so much left to do You and I lived for the glory of hunting through battle after battle";
+		setarray .@line2_1$[0],	"^3cbcbcThree thousand leagues of splendid hibiscus-covered mountains and rivers^000000",
+					"^ff1493Brapa peurareu ran deurim deuran battu hui^000000",
+					"^ff1493I could not do better than I did then^000000",
+					"^ff1493Please tell me your destination^000000",
+					"^ff1493Even a weak Poring is better hunted in a party^000000",
+					"^800080Habult swit don chyat nyul ju myat kyat syat^000000",
+					"^3cbcbcAs the sun rises and sets over Aldebaran our guildmates stand together^000000";
+		setarray .@line2_2$[0],	"^3cbcbcMay our people preserve our homeland forever^000000",
+					"^ff1493Euik baaam bam tteureu bam ding ding^000000",
+					"^00ff00There is no end only a new beginning",
+					"^ff1493You do not have enough Zeny to pay^000000",
+					"^ff1493An airship with no feet travels a thousand leagues^000000",
+					"^800080Mult heuk ssat nyat hit chwek^000000",
+					"^3cbcbcMy guildmates trust me and sleep peacefully^000000";
+		setarray .@word2$[0],	"Three thousand leagues of splendid hibiscus-covered mountains and rivers May our people preserve our homeland forever",
+					"Brapa peurareu ran deurim deuran battu hui Euik baaam bam tteureu bam ding ding",
+					"I could not do better than I did then There is no end only a new beginning",
+					"Please tell me your destination You do not have enough Zeny to pay",
+					"Even a weak Poring is better hunted in a party An airship with no feet travels a thousand leagues",
+					"Habult swit don chyat nyul ju myat kyat syat Mult heuk ssat nyat hit chwek",
+					"As the sun rises and sets over Aldebaran our guildmates stand together My guildmates trust me and sleep peacefully";
+		setarray .@letters[0], 2050, 1700, 1530, 1290, 2180, 1560, 2330;
+		set .@wordtest, rand(7);
+		next;
+		mes "[Nils]";
+		mes .@line1_1$[.@wordtest];
+		mes .@line1_2$[.@wordtest];
+		mes .@line1_3$[.@wordtest];
+		set .@start_time, gettimetick(1);
+		next;
+		input .@save1$;
+		set .@end_time, gettimetick(1);
+		set .@total_time, .@end_time - .@start_time;
+		mes "[Nils]";
+		mes .@line2_1$[.@wordtest];
+		mes .@line2_2$[.@wordtest];
+		set .@start_time, gettimetick(1);
+		next;
+		input .@save2$;
+		set .@end_time, gettimetick(1);
+		set .@total_time, .@total_time + (.@end_time - .@start_time);
+		set .@tasoo, (.@letters[.@wordtest] * 6) / max(1, .@total_time);
+		if ((.@save1$ == .@word1$[.@wordtest]) && (.@save2$ == .@word2$[.@wordtest])) {
+			mes "[Nils]";
+			mes "^ff0000" + .@total_time + " seconds^000000 to type the sentences correctly.";
+			mes "Your typing speed was " + .@tasoo + " keystrokes per minute.";
+			next;
+			if (.@tasoo >= 1300) {
+				mes "[Nils]";
+				mes "Hmm, that speed is not humanly possible";
+				mes "unless you copied and pasted the whole sentence.";
+				mes "Please play fairly next time.";
+				close;
+			}
+			if (.@tasoo >= $050320_ein_typing) {
+				mes "[Nils]";
+				mes "The previous record holder was ^0000ff" + $050320_minus1_typing$ + "^000000, with a speed of";
+				mes "^0000ff" + $050320_ein_typing + " keystrokes per minute^000000, but";
+				mes "^ff0000" + strcharinfo(0) + "^000000 has broken that record and become";
+				mes "our new champion. Congratulations!";
+				set $050320_minus1_typing$, strcharinfo(0);
+				set $050320_ein_typing, .@tasoo;
+				close;
+			}
+			else {
+				mes "[Nils]";
+				mes "The current record holder is ^0000ff" + $050320_minus1_typing$ + "^000000, with a speed of";
+				mes "^0000ff" + $050320_ein_typing + " keystrokes per minute^000000. Keep";
+				mes "practicing and challenge the record!";
+				close;
+			}
+		}
+		else {
+			mes "[Nils]";
+			mes "That was not quite right. You need to";
+			mes "type the sentences exactly as shown.";
+			close;
+		}
+	case 2:
+		mes "[Nils]";
+		mes "In ^ff0000Typing of the Ragnarok^000000, you";
+		mes "type the sentences I give you as quickly";
+		mes "and accurately as possible. I record";
+		mes "the fastest player's name and typing speed,";
+		mes "so if you are confident with a keyboard,";
+		mes "why not give it a try?";
+		close;
+	case 3:
+		mes "[Nils]";
+		mes "The current record holder is ^0000ff" + $050320_minus1_typing$ + "^000000, with a speed of";
+		mes "^0000ff" + $050320_ein_typing + " keystrokes per minute^000000.";
+		close;
+	case 4:
+		mes "[Nils]";
+		mes "This is not your only chance.";
+		mes "If you would like to try ^ff0000Typing of the Ragnarok^000000,";
+		mes "come see me anytime!";
+		close;
+	}
+}
+
+//============================================================
+//= Apple Gambling
+//============================================================
+airplane_01,33,69,4	script	Clarice	74,{
+	mes "[Clarice]";
+	mes "Hello, my name is Clarice.";
+	mes "Just sitting aboard the airship";
+	mes "can get rather boring, can't it?";
+	mes "Would you like to play";
+	mes "a little dice game with me?";
+	next;
+	callfunc "applegamble","Clarice";
+	end;
+}
+
+function	script	applegamble	{
+	.@npc_name$ = getarg(0);
+	// Collect a previously blocked payout before allowing another wager.
+	if (airship_dice_reward > 0) {
+		mes "[" + .@npc_name$ + "]";
+		mes "You still have an Apple payout waiting. Let me give it to you first.";
+		callsub S_Payout, 0;
+		end;
+	}
+	switch (select("Play the dice game:Learn the rules:Cancel")) {
+	case 3:
+		mes "["+ .@npc_name$ +"]";
+		mes "Come and speak to me whenever";
+		mes "you feel like playing. I get rather";
+		mes "bored just standing here myself. Goodbye.";
+		close;
+	case 2:
+		mes "["+ .@npc_name$ +"]";
+		mes "Let me explain the rules of the dice game.";
+		mes "They are very simple. First, when";
+		mes "we start, you give me your wager,";
+		mes "up to 50 Apples. Of course, without Apples,";
+		mes "you cannot join the game.";
+		next;
+		mes "["+ .@npc_name$ +"]";
+		mes "Then we each roll two dice.";
+		mes "Whoever has the higher total wins.";
+		mes "But deciding everything at once";
+		mes "would be boring, so each of us gets";
+		mes "one more chance to roll.";
+		next;
+		mes "["+ .@npc_name$ +"]";
+		mes "You can choose whether to take";
+		mes "that extra roll. However, if it brings";
+		mes "your total over 12,";
+		mes "you lose.";
+		next;
+		mes "["+ .@npc_name$ +"]";
+		mes "For the third roll, you go first.";
+		mes "If your total goes over 12,";
+		mes "I win automatically without";
+		mes "having to roll again.";
+		next;
+		mes "["+ .@npc_name$ +"]";
+		mes "The winner takes all the Apples";
+		mes "that both players wagered";
+		mes "at the beginning. I think that";
+		mes "should explain everything.";
+		close;
+	case 1:
+		break;
+	}
+	mes "["+ .@npc_name$ +"]";
+	mes "You need Apples to play the dice game.";
+	mes "How many Apples would you like";
+	mes "to wager?";
+	mes "You may wager up to 50 Apples.";
+	mes "If you would like to cancel,";
+	mes "please enter 0.";
+	next;
+	while(1) {
+		input .@amount;
+		if (.@amount == 0) {
+			mes "["+ .@npc_name$ +"]";
+			mes "Changed your mind? Come back";
+			mes "whenever you are bored.";
+			mes "Goodbye.";
+			close;
+		}
+		else if (.@amount < 1 || .@amount > 50) {
+			mes "["+ .@npc_name$ +"]";
+			mes "That amount is outside the allowed range.";
+			mes "Please enter it again.";
+			next;
+			continue;
+		}
+		mes "["+ .@npc_name$ +"]";
+		mes "You entered ^FF0000"+.@amount+" Apples^000000.";
+		mes "Is that correct?";
+		next;
+		if (select("Yes:No") == 2) {
+			mes "["+ .@npc_name$ +"]";
+			mes "Please enter the amount again.";
+			next;
+			continue;
+		}
+		if (countitem(512) <.@amount) {
+			mes "You do not seem to have enough Apples.";
+			mes "Please enter the amount again.";
+			next;
+			continue;
+		}
+		// Require room for the maximum payout before accepting the wager.
+		if (!checkweight(512,.@amount * 2)) {
+			mes "Please make room in your inventory for the Apple payout before playing.";
+			close;
+		}
+		delitem 512,.@amount;
+		mes "["+ .@npc_name$ +"]";
+		mes "All right. Let us begin.";
+		mes "I will roll first.";
+		break;
+	}
+	mes "^3355FFRattle... Roll, roll.^000000";
+	next;
+	set .@giveapple, .@amount*2;
+	set .@table1, rand(1,6);
+	set .@table2, rand(1,6);
+	set .@tablesub, .@table1 + .@table2;
+	set .@tabletotal, .@tablesub;
+	mes "["+ .@npc_name$ +"]";
+	mes "I rolled ^0000FF" + .@table1 + "^000000, ^0000FF" + .@table2 + "^000000. My total is";
+	mes "^0000FF" + .@tablesub + "^000000. Now,";
+	mes "^FF0000" + strcharinfo(0) + "^000000, it is your turn.";
+	next;
+	select("Roll the dice.");
+	mes "^3355FFRattle... Roll, roll... Clatter.^000000";
+	set .@player1, rand(1,6);
+	set .@player2, rand(1,6);
+	set .@playersub, .@player1 + .@player2;
+	if (.@playersub > 9 && .@amount > 39) {
+		set .@player1, rand(1,6);
+		set .@player2, rand(1,6);
+		set .@playersub, .@player1 + .@player2;
+	}
+	set .@playertotal, .@playersub;
+	next;
+	mes "["+ .@npc_name$ +"]";
+	mes "^FF0000" + strcharinfo(0) + "^000000, you rolled ^FF0000" + .@player1 + "^000000, ^FF0000" + .@player2 + "^000000.";
+	mes "Your total is ^FF0000" + .@playersub + "^000000.";
+	next;
+	mes "["+ .@npc_name$ +"]";
+	if(.@playersub == .@tablesub) {
+		mes "My current total is ^0000FF" + .@tablesub + "^000000, ^FF0000" + strcharinfo(0) + "^000000, your";
+		mes "total is ^FF0000" + .@playersub + "^000000. We are tied. Would you like to roll again?";
+	} else if (.@playersub > .@tablesub) {
+		mes "My current total is ^0000FF" + .@tablesub + "^000000, and ^FF0000" + strcharinfo(0) + "^000000, your";
+		mes "total is ^FF0000" + .@playersub + "^000000. ^FF0000" + strcharinfo(0) + "^000000 is ahead.";
+		mes "Would you like to roll again?";
+	} else if(.@tablesub > .@playersub) {
+		mes "My current total is ^0000FF" + .@tablesub + "^000000, and ^FF0000" + strcharinfo(0) + "^000000, your";
+		mes "total is ^FF0000" + .@playersub + "^000000. I am ahead.";
+		mes "Would you like to roll again?";
+	}
+	next;
+	switch (select("Roll again:Do not roll again")) {
+	case 1:
+		mes "^3355FFRattle... Roll... Rrrroll... Ping!^000000";
+		set .@player3, rand(1,6);
+		set .@playertotal, .@playertotal + .@player3;
+		next;
+		mes "["+ .@npc_name$ +"]";
+		if (.@playertotal > 12) {
+			mes "This time, ^FF0000" + strcharinfo(0) + "^000000 rolled";
+			mes "a ^FF0000" + .@player3 + "^000000, making a total of ^FF0000" + .@playertotal + "^000000.";
+			mes "I win. Please try again sometime.";
+			close;
+		}
+		else if (.@playertotal < .@tablesub) {
+			mes "This time, ^FF0000" + strcharinfo(0) + "^000000 rolled";
+			mes "a ^FF0000" + .@player3 + "^000000, making a total of ^FF0000" + .@playertotal + "^000000.";
+			mes "Even with that extra roll, you could not beat me.";
+			mes "I win. Better luck";
+			mes "next time. Goodbye.";
+			close;
+		}
+		else if (.@playertotal == .@tablesub) {
+			if (.@tablesub > 8) {
+				mes "This time, ^FF0000" + strcharinfo(0) + "^000000 rolled";
+				mes "a ^FF0000" + .@player3 + "^000000, making a total of ^FF0000" + .@playertotal + "^000000.";
+				mes "I would rather not take the risk";
+				mes "of another roll. Let us call it a draw";
+				mes "and end the game here.";
+				mes "Please play another game";
+				mes "with me sometime.";
+				callsub S_Payout, .@amount;
+				end;
+			}
+			mes "All right.";
+			mes "Now I will roll.";
+		}
+		else {
+			mes "This time, ^FF0000" + strcharinfo(0) + "^000000 rolled";
+			mes "a ^FF0000" + .@player3 + "^000000, making a total of ^FF0000" + .@playertotal + "^000000.";
+			mes "Now I will roll.";
+		}
+		break;
+	case 2:
+		mes "["+ .@npc_name$ +"]";
+		if (.@playersub > .@tablesub) {
+			mes "Hmm... You will leave it there? Then";
+			mes "I will roll one more time.";
+		}
+		else if (.@playersub == .@tablesub) {
+			if (.@tablesub > 8) {
+				mes "Hmm... You will leave it there? Well,";
+				mes "I would rather not take the risk either.";
+				mes "Let us call it a draw.";
+				mes "Please play another game";
+				mes "with me sometime. Goodbye.";
+				callsub S_Payout, .@amount;
+				end;
+			}
+			mes "All right.";
+			mes "Now I will roll.";
+		}
+		else {
+			mes "You had nothing to lose by rolling.";
+			mes "You should have tried it. Since you";
+			mes "chose not to roll, I win as things stand.";
+			mes "Better luck next time.";
+			mes "Goodbye.";
+			close;
+		}
+		break;
+	}
+	next;
+	mes "^3355FFRattle... Rrrroll... Roll... Click!^000000";
+	set .@table3, rand(1,6);
+	set .@tabletotal, .@tabletotal + .@table3;
+	next;
+	mes "["+ .@npc_name$ +"]";
+	if (.@tabletotal > 12) {
+		mes "This time, my die shows";
+		mes "a ^0000FF" + .@table3 + "^000000, making a total of ^0000FF" + .@tabletotal + "^000000.";
+		mes "I lose. My total went over 12.";
+		mes "Here are your Apples. Please play again";
+		mes "with me sometime.";
+		callsub S_Payout, .@giveapple;
+		end;
+	}
+	else if (.@playertotal > .@tabletotal) {
+		mes "This time, my die shows ^0000FF" + .@table3 + "^000000,";
+		mes "My total is ^0000FF" + .@tabletotal + "^000000. With a total of ^FF0000" + .@playertotal + "^000000,";
+		mes "^FF0000" + strcharinfo(0) + "^000000 wins. Here";
+		mes "are your Apples. Please play again sometime.";
+		callsub S_Payout, .@giveapple;
+		end;
+	}
+	else if (.@playertotal == .@tabletotal) {
+		mes "This time, my die shows";
+		mes "a ^0000FF" + .@table3 + "^000000, making a total of ^0000FF" + .@tabletotal + "^000000.";
+		mes "With a total of ^FF0000" + .@playertotal + "^000000, ^FF0000" + strcharinfo(0) + "^000000 has";
+		mes "the same total as me. It is a draw, so I will return your Apples.";
+		mes "Let us play again sometime.";
+		callsub S_Payout, .@amount;
+		end;
+	}
+	else if (.@playertotal < .@tabletotal) {
+		mes "This time, my die shows ^0000FF" + .@table3 + "^000000,";
+		mes "My total is ^0000FF" + .@tabletotal + "^000000. With a total of ^FF0000" + .@playertotal + "^000000,";
+		mes "^FF0000" + strcharinfo(0) + "^000000 loses. Better luck";
+		mes "next time. Goodbye.";
+		close;
+	}
+
+	end;
+
+S_Payout:
+	// Inventory can change during dialogue. Save winnings/refunds on the
+	// character and retain them on a failed capacity check, so Apples are not lost.
+	// Talk to Clarice again after making room to collect an outstanding payout.
+	airship_dice_reward += getarg(0);
+	if (!checkweight(512,airship_dice_reward)) {
+		mes "Please make room in your inventory for " + airship_dice_reward + " Apples.";
+		mes "Your payout has been saved. Talk to me again when you are ready to collect it.";
+		close;
+	}
+	getitem 512,airship_dice_reward; //Apple
+	airship_dice_reward = 0;
+	close;
+}
+
+
+ra_fild12,295,208,0	script	toairplane#rachel	45,1,1,{
+	mes "[Boarding Serviceroid]";
+	mes "Would you like to board the ^CC3333Juno, Izlude, and Rachel airship^000000, which stops at all three cities?";
+	mes "The fare is 1,200 Zeny. Passengers with a Free Airship Ticket can travel free of charge. Would you like to board the ^CC3333Juno, Izlude, and Rachel airship^000000?";
+	next;
+	if (select( "Yes", "No" )== 1) {
+		mes "[Boarding Serviceroid]";
+		mes "The fare is 1,200 Zeny. Passengers with a Free Airship Ticket can travel free of charge. Would you like to board the ^CC3333Juno, Izlude, and Rachel airship^000000?";
+		next;
+		if (select("Yes:No") == 1) {
+			if (countitem(7311) > 0) {
+				delitem 7311,1; //Free_Flying_Ship_Ticket
+				warp "airplane_01",244,58;
+				end;
+			}
+			if (Zeny >= 1200) {
+				set Zeny, Zeny - 1200;
+				warp "airplane_01",244,58;
+				end;
+			}
+			mes "[Boarding Serviceroid]";
+			mes "The airship fare is 1,200 Zeny. You do not have enough Zeny to board.";
+			close;
+		}
+	}
+	mes "[Boarding Serviceroid]";
+	mes "Thank you for choosing Valkyrie Airlines. We look forward to seeing you again.";
+	end;
+}
+
+y_airport,138,46,5	script	Boarding Serviceroid#y	10146,{
+	mes "[Boarding Serviceroid]";
+	mes "Thank you for choosing Valkyrie Airlines.";
+	mes "Would you like to board the ^336699Schwarzwald domestic airship^000000, serving Juno, Hugel, Einbroch, and Lighthalzen?";
+	next;
+	if (select( "Yes", "No" )== 1) {
+		mes "[Boarding Serviceroid]";
+		mes "The fare is 1,200 Zeny. Passengers with a Free Airship Ticket can travel free of charge. Would you like to board the ^336699Schwarzwald domestic airship^000000?";
+		next;
+		if (select("Yes:No") == 1) {
+			if (countitem(7311) > 0) {
+				mes "[Boarding Serviceroid]";
+				mes "Thank you for choosing Valkyrie Airlines. We wish you a comfortable and pleasant journey.";
+				delitem 7311,1; //Free_Flying_Ship_Ticket
+				warp "airplane", 244, 58;
+				end;
+			}
+			if (Zeny >= 1200) {
+				mes "[Boarding Serviceroid]";
+				mes "Thank you for choosing Valkyrie Airlines. We wish you a comfortable and pleasant journey.";
+				set Zeny, Zeny - 1200;
+				warp "airplane", 244, 58;
+				end;
+			}
+			mes "[Boarding Serviceroid]";
+			mes "The airship fare is 1,200 Zeny. You do not have enough Zeny to board.";
+			close;
+		}
+	}
+	mes "[Boarding Serviceroid]";
+	mes "Thank you for traveling with Valkyrie Airlines. We look forward to welcoming you aboard again.";
+	end;
+}
+
+y_airport,128,46,5	duplicate(Boarding Serviceroid#y)	#y5004	10146
+lhz_airport,138,43,4	duplicate(Boarding Serviceroid#y)	#l	10146
+lhz_airport,148,43,4	duplicate(Boarding Serviceroid#y)	#l6862	10146
+airport,148,46,4	duplicate(Boarding Serviceroid#y)	#e	10146
+airport,138,46,4	duplicate(Boarding Serviceroid#y)	#e6860	10146
+hugel,186,147,1	duplicate(Boarding Serviceroid#y)	#h	10146
+
+
+//============================================================
+//= Domestic Airship Route
+//= ... -> Juno -> Einbroch -> Lighthalzen -> Einbroch
+//= -> Juno -> Hugel -> ...
+//============================================================
+
+
+airplane,1,1,0	script	Domestic_Airship	-1,{
+    end;
+
+OnInit:
+    set $@airplanelocation, -1; // Initial state: in flight
+    set $@airplane_status1, 0;    // Initial state: in flight
+    initnpctimer;
+    end;
+
+OnTimer25000:
+    mapannounce "airplane", "This airship is heading to Juno.", bc_map, "0x00ff00";
+    end;
+
+OnTimer50000:
+    mapannounce "airplane", "We will arrive in Juno shortly.", bc_map, "0x00ff00";
+    end;
+
+OnTimer60000: // Juno arrival
+    set $@airplanelocation, 0;
+    set $@airplane_status1, 1; // Docked
+    mapannounce "airplane", "We have arrived in Juno. Have a safe trip.", bc_map, "0x00ff00";
+    end;
+
+OnTimer70000:
+    mapannounce "airplane", "We are currently in Juno. The airship will depart shortly.", bc_map, "0x00ff00";
+    end;
+
+OnTimer80000: // Juno departure
+    set $@airplane_status1, 0; // In flight
+    mapannounce "airplane", "The airship is taking off. Our next destination is Einbroch.", bc_map, "0x70dbdb";
+    end;
+
+OnTimer105000:
+    mapannounce "airplane", "This airship is heading to Einbroch.", bc_map, "0x70dbdb";
+    end;
+
+OnTimer130000:
+    mapannounce "airplane", "We will arrive in Einbroch shortly.", bc_map, "0x70dbdb";
+    end;
+
+OnTimer140000: // Einbroch arrival
+    set $@airplanelocation, 1;
+    set $@airplane_status1, 1; // Docked
+    mapannounce "airplane", "We have arrived in Einbroch. Have a safe trip.", bc_map, "0x70dbdb";
+    end;
+
+OnTimer150000:
+    mapannounce "airplane", "We are currently in Einbroch. The airship will depart shortly.", bc_map, "0x70dbdb";
+    end;
+
+OnTimer160000: // Einbroch departure
+    set $@airplane_status1, 0; // In flight
+    mapannounce "airplane", "The airship is taking off. Our next destination is Lighthalzen.", bc_map, "0xFF8200";
+    end;
+
+OnTimer185000:
+    mapannounce "airplane", "This airship is heading to Lighthalzen.", bc_map, "0xFF8200";
+    end;
+
+OnTimer210000:
+    mapannounce "airplane", "We will arrive in Lighthalzen shortly.", bc_map, "0xFF8200";
+    end;
+
+OnTimer220000: // Lighthalzen arrival
+    set $@airplanelocation, 2;
+    set $@airplane_status1, 1; // Docked
+    mapannounce "airplane", "We have arrived in Lighthalzen. Have a safe trip.", bc_map, "0xFF8200";
+    end;
+
+OnTimer230000:
+    mapannounce "airplane", "We are currently in Lighthalzen. The airship will depart shortly.", bc_map, "0xFF8200";
+    end;
+
+OnTimer240000: // Lighthalzen departure
+    set $@airplane_status1, 0; // In flight
+    mapannounce "airplane", "The airship is taking off. Our next destination is Einbroch.", bc_map, "0x70dbdb";
+    end;
+
+OnTimer265000:
+    mapannounce "airplane", "This airship is heading to Einbroch.", bc_map, "0x70dbdb";
+    end;
+
+OnTimer285000:
+    mapannounce "airplane", "We will arrive in Einbroch shortly.", bc_map, "0x70dbdb";
+    end;
+
+OnTimer300000: // Einbroch arrival (second stop)
+    set $@airplanelocation, 1;
+    set $@airplane_status1, 1; // Docked
+    mapannounce "airplane", "We have arrived in Einbroch. Have a safe trip.", bc_map, "0x70dbdb";
+    end;
+
+OnTimer310000:
+    mapannounce "airplane", "We are currently in Einbroch. The airship will depart shortly.", bc_map, "0x70dbdb";
+    end;
+
+OnTimer320000: // Einbroch departure (second stop)
+    set $@airplane_status1, 0; // In flight
+    mapannounce "airplane", "The airship is taking off. Our next destination is Juno.", bc_map, "0x00ff00";
+    end;
+
+OnTimer345000:
+    mapannounce "airplane", "This airship is heading to Juno.", bc_map, "0x00ff00";
+    end;
+
+OnTimer365000:
+    mapannounce "airplane", "We will arrive in Juno shortly.", bc_map, "0x00ff00";
+    end;
+
+OnTimer380000: // Juno arrival (second stop)
+    set $@airplanelocation, 0;
+    set $@airplane_status1, 1; // Docked
+    mapannounce "airplane", "We have arrived in Juno. Have a safe trip.", bc_map, "0x00ff00";
+    end;
+
+OnTimer390000:
+    mapannounce "airplane", "We are currently in Juno. The airship will depart shortly.", bc_map, "0x00ff00";
+    end;
+
+OnTimer400000: // Juno departure (second stop)
+    set $@airplane_status1, 0; // In flight
+    mapannounce "airplane", "The airship is taking off. Our next destination is Hugel.", bc_map, "0x70dbdb";
+    end;
+
+OnTimer425000:
+    mapannounce "airplane", "This airship is heading to Hugel.", bc_map, "0x70dbdb";
+    end;
+
+OnTimer445000:
+    mapannounce "airplane", "We will arrive in Hugel shortly.", bc_map, "0x70dbdb";
+    end;
+
+OnTimer460000: // Hugel arrival
+    set $@airplanelocation, 3;
+    set $@airplane_status1, 1; // Docked
+    mapannounce "airplane", "We have arrived in Hugel. Have a safe trip.", bc_map, "0x70dbdb";
+    end;
+
+OnTimer470000:
+    mapannounce "airplane", "We are currently in Hugel. The airship will depart shortly.", bc_map, "0x70dbdb";
+    end;
+
+OnTimer480000: // Hugel departure
+    set $@airplane_status1, 0; // In flight
+    mapannounce "airplane", "The airship is taking off. Our next destination is Juno.", bc_map, "0x00ff00";
+    stopnpctimer;
+    initnpctimer;
+    end;
+}
+
+airplane,250,58,2	script	Airship Staff#airplane	10145,{
+	mes "[Guide Serviceroid]";
+	mes "Valkyrie Airlines is committed to your comfort and safety aboard the ^336699Schwarzwald domestic airship^000000, serving Juno, Hugel, Einbroch, and Lighthalzen. How may I help you?";
+	next;
+	switch( select( "How to use the airship", "Captain's cabin", "Onboard facilities", "Cancel" )) {
+		case 1:
+			mes "[Guide Serviceroid]";
+			mes "All Valkyrie Airlines airships announce their routes and destinations over the onboard speakers.";
+			mes "When we arrive at your destination, you can leave through the exits on either side of the airship.";
+			next;
+			mes "[Guide Serviceroid]";
+			// mes "If you miss your stop, please stay aboard. This airship runs a round trip between Juno and Izlude, so you can get off the next time we arrive.";
+			// Correction: the domestic route does not stop at Izlude.
+			mes "If you miss your stop, please stay aboard. This domestic airship stops at Juno, Einbroch, Lighthalzen, and Hugel, so you can get off the next time we arrive.";
+			close;
+		case 2:
+			mes "[Guide Serviceroid]";
+			mes "The captain's cabin is at the front of the airship. Captain Ferlock and the pilot work there.";
+			close;
+		case 3:
+			mes "[Guide Serviceroid]";
+			mes "Inside, you will find windows with scenic views, a lounge where you can relax, and minigames to keep you entertained. Please enjoy them during your flight.";
+			close;
+		case 4:
+			mes "[Guide Serviceroid]";
+			mes "Thank you for choosing Valkyrie Airlines. We wish you a comfortable and pleasant journey.";
+			close;
+	}
+
+OnInit:
+	setunitdata (getnpcid(0), UNPC_GROUP_ID,2);
+	setunittitle(getnpcid(0), "<Valkyrie Airlines>");
+	end;
+}
+
+// OnTouch requires an explicit trigger area; use 3 cells in each direction.
+airplane,243,73,4	script	Exit Serviceroid#air6842	10146,3,3,{
+
+OnTouch:
+	// Check whether the airship is in flight
+	if ($@airplane_status1 == 0) {
+		npctalk"We are currently in flight. Please enjoy your journey with Valkyrie Airlines.","Exit Serviceroid#air6842",bc_self;
+		end;
+	}
+	switch ($@airplanelocation) {
+		case 0: // Juno
+			npctalk"We have arrived in Juno. Enjoy your trip.","Exit Serviceroid#air6842",bc_self;
+			warp "y_airport",143,39;
+			end;
+		case 1: // Einbroch
+			npctalk"We have arrived in Einbroch. Enjoy your trip.","Exit Serviceroid#air6842",bc_self;
+			warp "airport",143,39;
+			end;
+		case 2: // Lighthalzen
+			npctalk"We have arrived in Lighthalzen. Enjoy your trip.","Exit Serviceroid#air6842",bc_self;
+			warp "lhz_airport",143,39;
+			end;
+		case 3: // Hugel
+			npctalk"We have arrived in Hugel. Enjoy your trip.","Exit Serviceroid#air6842",bc_self;
+			warp "hugel",183,149;
+			end;
+		}
+		end;
+
+OnInit:
+	setunitdata (getnpcid(0), UNPC_GROUP_ID,2);
+	setunittitle(getnpcid(0), "<Valkyrie Airlines>");
+	end;
+
+}
+
+// OnTouch requires an explicit trigger area; use 3 cells in each direction.
+airplane,243,30,8	script	Exit Serviceroid#air02	10146,3,3,{
+
+OnTouch:
+	// Check whether the airship is in flight
+	if ($@airplane_status1 == 0) {
+		npctalk"We are currently in flight. Please enjoy your journey with Valkyrie Airlines.","Exit Serviceroid#air02",bc_self;
+		end;
+	}
+	switch ($@airplanelocation) {
+		case 0: // Juno
+			npctalk"We have arrived in Juno. Enjoy your trip.","Exit Serviceroid#air02",bc_self;
+			warp "y_airport",143,39;
+			end;
+		case 1: // Einbroch
+			npctalk"We have arrived in Einbroch. Enjoy your trip.","Exit Serviceroid#air02",bc_self;
+			warp "airport",143,39;
+			end;
+		case 2: // Lighthalzen
+			npctalk"We have arrived in Lighthalzen. Enjoy your trip.","Exit Serviceroid#air02",bc_self;
+			warp "lhz_airport",143,39;
+			end;
+		case 3: // Hugel
+			npctalk"We have arrived in Hugel. Enjoy your trip.","Exit Serviceroid#air02",bc_self;
+			warp "hugel",183,149;
+			end;
+		}
+		end;
+
+OnInit:
+	setunitdata (getnpcid(0), UNPC_GROUP_ID,2);
+	setunittitle(getnpcid(0), "<Valkyrie Airlines>");
+	end;
+
+}
+
+// OnTouch requires an explicit trigger area; use 3 cells in each direction.
+airplane,110,72,2	script	Guide Serviceroid#air0a	4_SERVICE_30_M_01,3,3,{
+
+OnTouch:
+	npctalk"The area below is reserved for the crew. Passengers are not permitted to enter.","Guide Serviceroid#air0a",bc_self;
+	end;
+
+OnInit:
+	setunitdata (getnpcid(0), UNPC_GROUP_ID,2);
+	setunittitle(getnpcid(0), "<Valkyrie Airlines>");
+	end;
+}
+
+// OnTouch requires an explicit trigger area; use 3 cells in each direction.
+airplane,110,52,2	script	Guide Serviceroid#air0b	4_SERVICE_30_M_01,3,3,{
+
+OnTouch:
+	npctalk"The area below is reserved for the crew. Passengers are not permitted to enter.","Guide Serviceroid#air0b",bc_self;
+	end;
+
+OnInit:
+	setunitdata (getnpcid(0), UNPC_GROUP_ID,2);
+	setunittitle(getnpcid(0), "<Valkyrie Airlines>");
+	end;
+}
+
+lhz_airport,138,28,3	script	Andrea#lhzsw01	878,{
+	mes "[Andrea]";
+	mes "We have been seeing many adventurers lately.";
+	mes "Sightseeing? Shopping? A field trip?";
+	mes "Or could something else be going on...";
+	next;
+	mes "^4d4dff - This quest is available to characters at level 70 or above. -^000000";
+	end;
+}
+
+
+airplane,250,41,3	script	Suil#hg_01	706,{
+	mes "[Suil]";
+	mes "Swish, scrub~ Swish, scrub~";
+	next;
+	mes "[Suil]";
+	mes "Ah! Who left this sticky candy here?";
+	end;
+
+}
+
+airport,133,42,5	script	Guard Karl#lhzdq07	852,{
+	mes "[Karl]";
+	mes ".....";
+	next;
+	emotion ET_HUK;
+	mes "[Karl]";
+	mes "...Ah... Welcome to Einbroch!";
+	mes "This is Einbroch Airport, serving the domestic airship route!";
+	next;
+	mes "[Karl]";
+	mes ".....Passengers bound for Lighthalzen, Juno, or Hugel, please board!";
+	end;
+}
+
+
+
+airplane,65,63,4	script	Maelin#01airplane	714,{
+	mes "[Girl]";
+	mes "This airship goes to Lutie, right? I have been waiting forever, but they never announce that we have arrived there...";
+	end;
+}
+
+airplane,47,76,5	script	Verona#hg_01	894,{
+	mes "[Verona]";
+	mes "Hello. Would you like to try your luck today? Put an Apple into this machine to have your fortune told.";
+	end;
+}
+
+airplane,80,71,2	script	Zerta#01airplane	834,{
+	mes "[Zerta]";
+	mes "I am traveling to spread these teachings. My wish is to unite all of Rune-Midgarts through them.";
+	end;
+}
+
+
+airplane,72,34,6	script	Aanos#01airplane	702,{
+	mes "[Aanos]";
+	mes "The view from the sky is wonderful. If only I could become a bird and fly freely.";
+	end;
+}
+
+airplane,221,158,2	script	Pilot#airplane	852,{
+	// Hugel quest addition
+	if (hg_ma1 == 3) {
+		mes "[Pilot]";
+		mes "I want to go out and drink";
+		mes "some nice, cold beer.";
+		mes "Drinking is my purpose in life!";
+		mes "Alcohol gives me strength!";
+		mes "Without alcohol, I am nothing!";
+		next;
+		mes "[Pilot]";
+		mes "But! Drinking and flying is wrong.";
+		mes "But! That only makes me want to drink even more!";
+		emotion ET_CRY;
+		next;
+		select("Do you know a passenger named Thierry?");
+		mes "[Pilot]";
+		mes "This uniform looks very smart,";
+		mes "but it is far too thick to wear";
+		mes "near the airship's deck.";
+		next;
+		mes "[Pilot]";
+		mes "...";
+		mes "......";
+		mes "Nobody ever comes into this room.";
+		mes "And the captain is a reindeer.";
+		mes "I could even take off my boxers.";
+		next;
+		emotion ET_HUK;
+		mes "[Pilot]";
+		mes "Huh!? Who is there!";
+		next;
+		mes "- ...He is not listening to you at all. -";
+		close;
+	}
+	// Hugel quest end
+	switch (rand(1,4)) {
+	case 1:
+		mes "[Pilot]";
+		mes "If only I could go out";
+		mes "for a drink... Alcohol is my life!";
+		mes "Alcohol is my strength! Life without it";
+		mes "is like a bun without any filling~!";
+		next;
+		mes "[Pilot]";
+		mes "But drinking and flying is wrong.";
+		mes "That makes it all the more painful~";
+		emotion ET_CRY;
+		close;
+	case 2:
+		mes "[Pilot]";
+		mes "The weather is beautiful today.";
+		mes "Days like this make flying an airship";
+		mes "a real pleasure.";
+		close;
+	case 3:
+		mes "[Pilot]";
+		mes "Our captain is famous throughout";
+		mes "Schwarzwald for his character";
+		mes "and good manners. That is why";
+		mes "the entire crew respects and follows him.";
+		next;
+		mes "[Pilot]";
+		mes "His older brother can be rather eccentric,";
+		mes "but our captain still";
+		mes "adores and looks up to him.";
+		mes "It seems his brother borrowed";
+		mes "something from him. The captain";
+		mes "was looking for it rather urgently...";
+		close;
+	default:
+		mes "[Pilot]";
+		mes "Whew... This uniform looks smart,";
+		mes "but it is so hot... Nobody comes in here anyway.";
+		mes "Could I just work in my underwear?";
+		next;
+		mes "[Pilot]";
+		mes "........";
+		next;
+		emotion ET_HUK;
+		mes "[Pilot]";
+		mes "Gasp!? Who are you!!";
+		close;
+	}
+}
