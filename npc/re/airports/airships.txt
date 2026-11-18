@@ -1125,7 +1125,6 @@ airplane,250,58,2	script	Airship Staff#airplane	10145,{
 			mes "[Guide Serviceroid]";
 			mes "The captain's cabin is at the front of the airship. Captain Ferlock and the pilot work there.";
 			close;
-			close;
 		case 3:
 			mes "[Guide Serviceroid]";
 			mes "Inside, you will find windows with scenic views, a lounge where you can relax, and minigames to keep you entertained. Please enjoy them during your flight.";
