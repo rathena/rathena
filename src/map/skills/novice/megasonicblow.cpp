@@ -20,7 +20,7 @@ void SkillMegaSonicBlow::calculateSkillRatio(const Damage *wd, const block_list 
 	const status_data* sstatus = status_get_status_data(*src);
 	const map_session_data* sd = BL_CAST( BL_PC, src );
 
-	skillratio += -100 + 900 + 750 * skill_lv;
+	skillratio += -100 + 900 + 825 * skill_lv;
 	skillratio += pc_checkskill(sd, HN_SELFSTUDY_TATICS) * 5 * skill_lv;
 	skillratio += 5 * sstatus->pow;
 	if (status_get_hp(target) < status_get_max_hp(target) / 2)

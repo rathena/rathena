@@ -12069,7 +12069,7 @@ bool pc_equipitem(map_session_data *sd,int16 n,int32 req_pos,bool equipswitch)
 		}
 		return false;
 	}
-	if( !sd->sc.empty() && (sd->sc.cant.equip || (sd->sc.getSCE(SC_PYROCLASTIC) && sd->inventory_data[n]->type == IT_WEAPON))) {
+	if( !sd->sc.empty() && sd->sc.cant.equip ) {
 		if( equipswitch ){
 			clif_equipswitch_add( sd, n, req_pos, ITEM_EQUIP_ACK_FAIL );
 		}else{
@@ -12409,8 +12409,7 @@ bool pc_unequipitem(map_session_data *sd, int32 n, int32 flag) {
 		return false; //Nothing to unequip
 	}
 	// status change that makes player cannot unequip equipment
-	if (!(flag&2) && !sd->sc.empty() &&( sd->sc.cant.unequip ||
-		(sd->sc.getSCE(SC_PYROCLASTIC) &&	sd->inventory_data[n]->type == IT_WEAPON)))	// can't switch weapon
+	if (!(flag&2) && !sd->sc.empty() && sd->sc.cant.unequip)
 	{
 		clif_unequipitemack(*sd,n,0,false);
 		return false;

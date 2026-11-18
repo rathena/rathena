@@ -20820,7 +20820,6 @@ Body:
     CastTime: 1000
     AfterCastActDelay: 1000
     Requires:
-      SpCost: 30
       SpRateCost: -10
       ItemCost:
         - Item: Blue_Gemstone
@@ -43642,10 +43641,10 @@ Body:
     HitCount: 1
     Element: Weapon
     FixedCastTime: 1000
-    Cooldown: 2000
+    Cooldown: 1000
     Requires:
       SpCost: 85
-      ApCost: 70
+      ApCost: 35
   - Id: 5475
     Name: SKE_ENCHANTING_SKY
     Description: Enchanting Sky
@@ -44011,7 +44010,7 @@ Body:
     Range: 9
     Hit: Multi_Hit
     HitCount: -3
-    GiveAp: 1
+    GiveAp: 2
     Element: Weapon
     SplashArea: 2
     ActiveInstance: 13
@@ -44104,7 +44103,7 @@ Body:
     Range: 1
     Hit: Multi_Hit
     HitCount: -3
-    GiveAp: 1
+    GiveAp: 2
     Element: Weapon
     DamageFlags:
       IgnoreFlee: true
@@ -44155,7 +44154,7 @@ Body:
     Range: 1
     Hit: Single
     HitCount: 1
-    GiveAp: 1
+    GiveAp: 2
     Element: Weapon
     DamageFlags:
       Splash: true
@@ -45400,7 +45399,7 @@ Body:
         Area: 4
     CastCancel: true
     CastTime: 2000
-    AfterCastActDelay: 1000
+    AfterCastActDelay: 700
     Cooldown: 450
     FixedCastTime: 1500
     Requires:
@@ -45898,7 +45897,7 @@ Body:
       - Level: 4
         Time: 4000
       - Level: 5
-        Time: 2000
+        Time: 1500
     FixedCastTime: 1500
     Requires:
       SpCost:

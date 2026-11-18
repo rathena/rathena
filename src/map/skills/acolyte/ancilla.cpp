@@ -5,6 +5,7 @@
 
 #include "map/clif.hpp"
 #include "map/pc.hpp"
+#include "map/status.hpp"
 
 SkillAncilla::SkillAncilla() : SkillImpl(AB_ANCILLA) {
 }
@@ -14,6 +15,7 @@ void SkillAncilla::castendNoDamageId(block_list *src, block_list *target, uint16
 
 	if( sd ) {
 		clif_skill_nodamage(src,*target,getSkillId(),skill_lv);
-		skill_produce_mix(sd, getSkillId(), ITEMID_ANCILLA, 0, 0, 0, 1, -1);
+		if (skill_produce_mix(sd, getSkillId(), ITEMID_ANCILLA, 0, 0, 0, 1, -1))
+			status_change_end(sd, SC_ANCILLA);
 	}
 }
