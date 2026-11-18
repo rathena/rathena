@@ -176,18 +176,64 @@ Body:
       NoSell: true
     Script: |
       doevent "autoattack_menu::OnMenu";
-  - Id: 9955517
-    AegisName: GEHeadEnchant
-    Name: "Good and Evil Headgear Enchant"
-    Type: DelayConsume
+  - Id: 9955509
+    AegisName: Donate2500
+    Name: "Donation Step Box (2,500)"
+    Type: Usable
     Weight: 0
     Flags:
       BuyingStore: true
-      DropEffect: CLIENT
-    Trade:
-      NoSell: true
+      Container: true
     Script: |
-      item_enchant(67);
+      getitem 6635,125;
+      getitem 9955518,25;
+      getitem 9900010,250;
+  - Id: 9955510
+    AegisName: Donate5000
+    Name: "Donation Step Box (5,000)"
+    Type: Usable
+    Weight: 0
+    Flags:
+      BuyingStore: true
+      Container: true
+    Script: |
+      getitem 6635,125;
+      getitem 9955518,25;
+      getitem 9900010,250;
+  - Id: 9955511
+    AegisName: Donate7500
+    Name: "Donation Step Box (7,500)"
+    Type: Usable
+    Weight: 0
+    Flags:
+      BuyingStore: true
+      Container: true
+    Script: |
+      getitem 6635,125;
+      getitem 9955518,25;
+      getitem 9900010,250;
+  - Id: 9955512
+    AegisName: Donate10000
+    Name: "Donation Step Box (10,000)"
+    Type: Usable
+    Weight: 0
+    Flags:
+      BuyingStore: true
+      Container: true
+    Script: |
+      getitem 6635,125;
+      getitem 9955518,25;
+      getitem 9900010,250;
+  - Id: 9955517
+    AegisName: Blacksmith_Bless_Box_10
+    Name: "Blacksmith's Blessing Box 10"
+    Type: Usable
+    Weight: 0
+    Flags:
+      BuyingStore: true
+      Container: true
+    Script: |
+      getitem 6635,10;
   - Id: 9955518
     AegisName: GumX2_10hr
     Name: "Bubble Gum (10 Hours)"
