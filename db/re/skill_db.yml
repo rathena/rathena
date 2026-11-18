@@ -18613,6 +18613,8 @@ Body:
     TargetType: Attack
     DamageFlags:
       Critical: true
+    Flags:
+      MultiHitOnPlants: true
     Range:
       - Level: 1
         Size: 7
@@ -18635,7 +18637,7 @@ Body:
       - Level: 10
         Size: 11
     Hit: Single
-    HitCount: 3
+    HitCount: -3
     Element: Weapon
     CopyFlags:
       Skill:
