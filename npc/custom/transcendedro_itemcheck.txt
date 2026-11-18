@@ -49,12 +49,35 @@ OnSellItem:
 	}
 	mes "[Item Checker]";
 	mes "====================";
-	for (set .@i, 0; .@i < getarraysize(@sold_nameid); set .@i, .@i + 1) {
+	set .@n, getarraysize(@sold_nameid);
+	for (set .@i, 0; .@i < .@n; set .@i, .@i + 1) {
 		set .@id, @sold_nameid[.@i];
 		set .@qty, @sold_quantity[.@i];
+		set .@ids[.@i], .@id;
 		mes "ItemID: ^00AA00" + .@id + "^000000  x" + .@qty;
 		mes "Name: " + getitemname(.@id);
 		mes "====================";
+	}
+	next;
+	if (select("Report to GM (make ItemInfo)", "Close") == 2)
+		close;
+
+	// Report -> SQL table itemcheck_report.
+	// tools/discord_item_report.php relays new rows to Discord.
+	// One report per ItemID (UNIQUE nameid) to stop spam.
+	mes "[Item Checker]";
+	for (set .@i, 0; .@i < .@n; set .@i, .@i + 1) {
+		set .@id, .@ids[.@i];
+		set .@dup, 0;
+		query_sql("SELECT COUNT(*) FROM `itemcheck_report` WHERE `nameid` = " + .@id, .@dup);
+		if (.@dup) {
+			mes "ItemID ^00AA00" + .@id + "^000000 was already reported.";
+			continue;
+		}
+		query_sql("INSERT INTO `itemcheck_report` (`nameid`, `item_name`, `account_id`, `char_id`, `char_name`, `report_time`) VALUES ("
+			+ .@id + ", '" + escape_sql(getitemname(.@id)) + "', " + getcharid(3) + ", " + getcharid(0) + ", '"
+			+ escape_sql(strcharinfo(0)) + "', NOW())");
+		mes "ItemID ^00AA00" + .@id + "^000000 reported. Thank you!";
 	}
 	close;
 }
