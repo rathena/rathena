@@ -154,3 +154,4 @@ generated
 # Discord relay config (contains webhook URL / DB password)
 /tools/discord_item_report.conf.php
 tools/discord_item_report.conf.example.php
+tools/discord_item_report.conf.example.php
