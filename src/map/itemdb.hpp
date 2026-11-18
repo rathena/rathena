@@ -3309,13 +3309,18 @@ enum e_group_algorithm_type : uint8 {
 /// Item combo struct
 struct s_item_combo {
 	std::vector<t_itemid> nameid;
-	script_code *script;
+	script_code *script = nullptr;
+	script_code *unequip_script = nullptr;
 	uint16 id;
 
 	~s_item_combo() {
 		if (this->script) {
 			script_free_code(this->script);
 			this->script = nullptr;
+		}
+		if (this->unequip_script) {
+			script_free_code(this->unequip_script);
+			this->unequip_script = nullptr;
 		}
 
 		this->nameid.clear();
