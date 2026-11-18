@@ -51,10 +51,12 @@ function discord_post($webhook, array $payload) {
 	return [$code, $retry];
 }
 
-function run_once(array $conf) {
+function run_once(array $conf, $verbose) {
 	$db = db_connect($conf);
 	$rows = $db->query("SELECT * FROM `itemcheck_report` WHERE `discord_sent` = 0 ORDER BY `id` LIMIT 20")->fetchAll();
 	$mark = $db->prepare("UPDATE `itemcheck_report` SET `discord_sent` = 1 WHERE `id` = ?");
+	if ($verbose && !$rows)
+		log_msg('Connected to DB - no new reports.');
 
 	foreach ($rows as $r) {
 		$payload = [
@@ -88,12 +90,19 @@ function run_once(array $conf) {
 }
 
 $loop = in_array('--loop', $argv ?? [], true);
+$interval = max(5, (int)$conf['interval']);
+if ($loop)
+	log_msg("Relay started - checking every {$interval}s. Close this window to stop.");
+$first = true;
 do {
 	try {
-		run_once($conf);
+		// Say "no new reports" on the first check (and in --once mode) only,
+		// so the loop window doesn't fill up with idle lines.
+		run_once($conf, $first || !$loop);
 	} catch (Throwable $e) {
 		log_msg('Error: ' . $e->getMessage());
 	}
+	$first = false;
 	if ($loop)
-		sleep(max(5, (int)$conf['interval']));
+		sleep($interval);
 } while ($loop);
