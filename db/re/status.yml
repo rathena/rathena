@@ -8973,15 +8973,20 @@ Body:
       BlEffect: true
       DisplayPc: true
       SendVal1: true
+      SendVal2: true
+      SendVal3: true
       NoSave: true
       NoBanishingBuster: true
       NoDispell: true
       NoClearance: true
   - Status: Intensive_Aim_Count
-    Icon: EFST_INTENSIVE_AIM_COUNT
+    Icon: EFST_AIM_INTENSIVE_SKILLORB
     Flags:
+      BlEffect: true
       DisplayPc: true
       SendVal1: true
+      SendVal2: true
+      SendVal3: true
       NoSave: true
       NoBanishingBuster: true
       NoDispell: true

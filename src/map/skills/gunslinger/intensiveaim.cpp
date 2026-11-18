@@ -19,6 +19,7 @@ void SkillIntensiveAim::castendNoDamageId(block_list* src, block_list* target, u
 	} else {
 		status_change_end(src, SC_INTENSIVE_AIM_COUNT);
 		sc_start(src, target, type, 100, skill_lv, skill_get_time(getSkillId(), skill_lv));
+		sc_start4(src, target, SC_INTENSIVE_AIM_COUNT, 100, 1, 1, 1, 0, INFINITE_TICK);
 	}
 	clif_skill_nodamage(src, *src, getSkillId(), skill_lv);
 }
