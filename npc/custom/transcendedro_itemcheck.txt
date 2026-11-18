@@ -48,13 +48,13 @@ OnSellItem:
 		end;
 	}
 	mes "[Item Checker]";
-	mes "==================================";
+	mes "====================";
 	for (set .@i, 0; .@i < getarraysize(@sold_nameid); set .@i, .@i + 1) {
 		set .@id, @sold_nameid[.@i];
 		set .@qty, @sold_quantity[.@i];
 		mes "ItemID: ^00AA00" + .@id + "^000000  x" + .@qty;
 		mes "Name: " + getitemname(.@id);
-		mes "==================================";
+		mes "====================";
 	}
 	close;
 }
