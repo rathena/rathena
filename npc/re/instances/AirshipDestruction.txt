@@ -176,7 +176,7 @@ OnTouch:
 		mes "--------------";
 		mes "Current Rating - ^0000ff" + 'mode_word$['mode] + " ^000000";
 		next;
-		.@s = select( "I quit", "Economy", "Business", "First Class" ) - 2;
+		.@s = select( "I quit", "Economy", "Business", "First Class", "^ff0000Private Jet (Brutal)^000000" ) - 2;
 		if (.@s == -1) {
 			mes "[Management robot]";
 			mes "Please think slowly and choose.";
@@ -239,7 +239,9 @@ OnReach2:
 	sleep 4000;
 	mapannounce 'map_whl$, "Flight control robot: Fake ticket occupant occurred in the air plane! All crew robots must enter the free passenger response sequence.", bc_map, 0xFFDDAA;
 	sleep 6000;
-	if ('mode == 2)	// hard
+	if ('mode == 3)	// brutal
+		mapannounce 'map_whl$, "Aircraft management robot: This person is forging a " + 'mode_word$['mode] + " ticket! Response level " + 'mode_letter$['mode] + ". All combat units, deploy double forces and show no mercy!", bc_map, 0xFF5555;
+	else if ('mode == 2)	// hard
 		mapannounce 'map_whl$, "Aircraft management robot: This person is forging with " + 'mode_word$['mode] + ". Please respond with the maximum available force.", bc_map, 0xFFDDAA;
 	else
 		mapannounce 'map_whl$, "Aircraft management robot: This person is being forged into class " + 'mode_word$['mode] + ". Response level is " + 'mode_letter$['mode] + ".", bc_map, 0xFFDDAA;
@@ -252,7 +254,7 @@ OnInstanceInit:
 	'event = 0;
 	'DE_BERSERKAIZER = 0;
 	deletearray 'event_type[0];
-	deletearray 'mob_id_cleaner[0],20;
+	deletearray 'mob_id_cleaner[0],40;
 	deletearray 'count_mob[0], 5;
 
 	disablenpc();
@@ -274,67 +276,99 @@ OnInstanceInit:
 	setarray 'mode_word$[0],
 		"economy",		// easy
 		"business",		// medium
-		"first class";	// hard
+		"first class",	// hard
+		"private jet";	// brutal (SS)
 
 	// letters to link mode to npc
 	setarray 'mode_letter$[0],
 		"C",	// easy
 		"A",	// medium
-		"S";	// hard
+		"S",	// hard
+		"SS";	// brutal
+
+	// spawn list label used by mode (brutal reuses the hard list, spawned x'mode_mob_mult)
+	setarray 'mode_spawn$[0],
+		"C",	// easy
+		"A",	// medium
+		"S",	// hard
+		"S";	// brutal
+
+	// number of monsters spawned per spawn point by mode
+	setarray 'mode_mob_mult[0],
+		1,
+		1,
+		1,
+		2;	// brutal: x2 monsters
+
+	// NPC_RELIEVE_ON level of normal patrols / inspectors by mode
+	setarray 'mode_patrol_relieve[0], 1, 1, 1, 3;
+	setarray 'mode_inspector_relieve[0], 9, 9, 9, 10;
 
 	// mob ~hp by mode
 	setarray 'hp[0],
 		2500000,
 		4000000,
-		5000000;
+		5000000,
+		10000000;	// brutal: x2 hard
 
 	// boss hp by mode
 	setarray 'mode_hp_boss[0],
 		300000000,
 		500000000,
-		600000000;
+		600000000,
+		1200000000;	// brutal: x2 hard
 
 	// boss hp regen/second by mode
 	setarray 'mode_hp_regen_boss[0],
 		100000,
 		1000000,
-		1000000;	// unknown
+		1000000,	// unknown
+		2000000;	// brutal: x2 hard
 
 	// NPC_RELIEVE_ON from boss by mode
 	setarray 'mode_boss_relieve[0],
 		1,
 		5,
-		8;
+		8,
+		10;	// brutal: max level
 
 	// boss res by mode (custom, unknown value)
 	setarray 'mode_res[0],
 		0,
 		100,
-		200;
+		200,
+		400;	// brutal: x2 hard
 
 	// boss mres by mode (custom, unknown value)
 	setarray 'mode_mres[0],
 		0,
 		100,
-		200;
+		200,
+		400;	// brutal: x2 hard
+
+	// number of broken cleaning robots summoned during the boss fight by mode
+	setarray 'mode_cleaner_count[0], 20, 20, 20, 40;
 
 	// [1/value] chance to activate the event from airshipD_DE_BERSERKAIZER by mode every 1s
 	setarray 'rate_event_2[0],
 		15,
 		15,
-		15;
+		15,
+		8;	// brutal: ~x2 more frequent
 
 	// [1/value] chance to activate the event from airshipD_RA_UNLIMIT by mode every 1s
 	setarray 'rate_event_3[0],
 		15,
 		15,
-		15;
+		15,
+		8;
 
 	// [1/value] chance to activate the event from airshipD_NPC_RELIEVE_ON_10 by mode every 1s
 	setarray 'rate_event_4[0],
 		15,
 		15,
-		15;
+		15,
+		8;
 	end;
 }
 
@@ -846,17 +880,20 @@ S_Mob:
 	if ('round != getarg(0))	// shouldn't happen
 		end;
 	.@event$ = instance_npcname("airship_destruction_main") + "::OnMobDead";
-	if (getarg(4,0)) {
-		monster 'map_whl$, getarg(1), getarg(2), 'round + " District Inspector", getarg(3),1, .@event$;
-		unitskilluseid $@mobid[0], 771, 9;	// NPC_RELIEVE_ON
+	// brutal mode spawns several monsters per spawn point
+	for ( .@n = 0; .@n < 'mode_mob_mult[ 'mode ]; ++.@n ) {
+		if (getarg(4,0)) {
+			monster 'map_whl$, getarg(1), getarg(2), 'round + " District Inspector", getarg(3),1, .@event$;
+			unitskilluseid $@mobid[0], 771, 'mode_inspector_relieve[ 'mode ];	// NPC_RELIEVE_ON
+		}
+		else {
+			monster 'map_whl$, getarg(1), getarg(2), 'round + " Zone Patrol", getarg(3),1, .@event$;
+			unitskilluseid $@mobid[0], 771, 'mode_patrol_relieve[ 'mode ];	// NPC_RELIEVE_ON
+		}
+		unitskilluseid $@mobid[0], rand(167,168), 1;	// NPC_CHANGEHOLY or NPC_CHANGEDARKNESS
+		setunitdata $@mobid[0], UMOB_MAXHP, 'hp[ 'mode ];
+		setunitdata $@mobid[0], UMOB_HP, 'hp[ 'mode ];
 	}
-	else {
-		monster 'map_whl$, getarg(1), getarg(2), 'round + " Zone Patrol", getarg(3),1, .@event$;
-		unitskilluseid $@mobid[0], 771, 1;	// NPC_RELIEVE_ON
-	}
-	unitskilluseid $@mobid[0], rand(167,168), 1;	// NPC_CHANGEHOLY or NPC_CHANGEDARKNESS
-	setunitdata $@mobid[0], UMOB_MAXHP, 'hp[ 'mode ];
-	setunitdata $@mobid[0], UMOB_HP, 'hp[ 'mode ];
 	return;
 
 OnMobDead:
@@ -916,9 +953,10 @@ OnTimer100:
 		break;
 	}
 
-	if ('count_total_mob['round] == 0 || 'count_mob['round] < 'count_total_mob['round]) {
+	.@total = 'count_total_mob['round] * 'mode_mob_mult[ 'mode ];	// brutal spawns x2 per spawn point
+	if (.@total == 0 || 'count_mob['round] < .@total) {
 		if ('mob_all_spawn) {	// No announcement until all monsters are summoned
-			.@left = 'count_total_mob['round] - 'count_mob['round];
+			.@left = .@total - 'count_mob['round];
 			if (.@left <= 10)
 				mapannounce 'map_whl$, "SYSTEM : " + .@left + " patrol units remaining in the area. If things continue like this, defense will be difficult. We need reinforcements.", bc_map, 0xFF99;
 		}
@@ -943,7 +981,7 @@ OnTouch:
 	if ('event == 2 && is_party_leader()) {
 		'event = 3;
 		'round = 2;
-		.@label$ = "::OnStart_" + 'round + "_" + 'mode_letter$['mode];
+		.@label$ = "::OnStart_" + 'round + "_" + 'mode_spawn$['mode];
 		donpcevent instance_npcname("airship_destruction_main") + .@label$;	// start round 2
 	}
 	if ('event < 10)
@@ -966,7 +1004,7 @@ OnTouch:
 	if ('event == 4 && is_party_leader()) {
 		'event = 5;
 		'round = 3;
-		.@label$ = "::OnStart_" + 'round + "_" + 'mode_letter$['mode];
+		.@label$ = "::OnStart_" + 'round + "_" + 'mode_spawn$['mode];
 		donpcevent instance_npcname("airship_destruction_main") + .@label$;	// start round 3
 	}
 	warp 'map_whl$,53,110;
@@ -986,7 +1024,7 @@ OnTouch:
 	if ('event == 6 && is_party_leader()) {
 		'event = 7;
 		'round = 4;
-		.@label$ = "::OnStart_" + 'round + "_" + 'mode_letter$['mode];
+		.@label$ = "::OnStart_" + 'round + "_" + 'mode_spawn$['mode];
 		donpcevent instance_npcname("airship_destruction_main") + .@label$;	// start round 4
 	}
 	warp 'map_whl$,139,24;
@@ -1006,7 +1044,7 @@ OnTouch:
 	if ('event == 8 && is_party_leader()) {
 		'event = 9;
 		'round = 5;
-		.@label$ = "::OnStart_" + 'round + "_" + 'mode_letter$['mode];
+		.@label$ = "::OnStart_" + 'round + "_" + 'mode_spawn$['mode];
 		donpcevent instance_npcname("airship_destruction_main") + .@label$;	// start round 5
 	}
 	warp 'map_whl$,160,53;
@@ -1113,12 +1151,16 @@ OnMyMobDead:
 		monster 'map_whl$,160,155,"--ja--","EP19_MD_BOX1",1;
 	else if ('mode == 2)	// hard
 		monster 'map_whl$,160,155,"--ja--","EP19_MD_BOX2",1;
+	else if ('mode == 3) {	// brutal: x2 hard boxes
+		monster 'map_whl$,159,155,"--ja--","EP19_MD_BOX2",1;
+		monster 'map_whl$,161,155,"--ja--","EP19_MD_BOX2",1;
+	}
 
-	// Relic
-	if (rand(100) < 10) {
+	// Relic (brutal: x2 chance)
+	if (rand(100) < (('mode == 3) ? 20 : 10)) {
 		getunitdata 'boss_id, .@data;
 
-		if ('mode == 2)	// hard
+		if ('mode >= 2)	// hard / brutal
 			makeitem 102565,1,'map_whl$,.@data[UMOB_X],.@data[UMOB_Y],true;	// Relic of Issgard (Aquila (First Class))
 		else
 			makeitem 102564,1,'map_whl$,.@data[UMOB_X],.@data[UMOB_Y],true;	// Relic of Issgard (Aquila)
@@ -1310,7 +1352,7 @@ OnTimer15000:
 	.@event$ = instance_npcname("airshipD_EP17_2_OMEGA_CLEANER_NG") + "::OnMobDead";
 	.@mob_mode = (MD_AGGRESSIVE | MD_NORANDOMWALK | MD_CANATTACK | MD_KNOCKBACKIMMUNE | MD_TELEPORTBLOCK | MD_STATUSIMMUNE | MD_SKILLIMMUNE);
 
-	for ( .@i = 0; .@i < 20; ++.@i ) {
+	for ( .@i = 0; .@i < 'mode_cleaner_count[ 'mode ]; ++.@i ) {
 		areamonster 'map_whl$,133,133,186,186,"Broken cleaning robot","EP17_2_OMEGA_CLEANER_NG",1, .@event$;
 		'mob_id_cleaner[.@i] = $@mobid[0];
 		setunitdata 'mob_id_cleaner[.@i], UMOB_MODE, .@mob_mode;
@@ -1323,7 +1365,7 @@ OnTimer15000:
 OnTimer28000:
 	mapannounce 'map_whl$, "Run cleanup sequence", bc_map, 0xFFFF;
 
-	for ( .@i = 0; .@i < 20; ++.@i ) {
+	for ( .@i = 0; .@i < 'mode_cleaner_count[ 'mode ]; ++.@i ) {
 		if (unitexists('mob_id_cleaner[.@i]) == true) {
 			unittalk 'mob_id_cleaner[.@i], "Cleans pollutants!!";
 			unitskilluseid 'mob_id_cleaner[.@i], "SJ_LIGHTOFSUN",1;
@@ -1337,7 +1379,7 @@ OnTimer30000:
 	if (unitexists('boss_id) == false)	// No explosion if the boss is dead
 		killmonster 'map_whl$, instance_npcname("airshipD_EP17_2_OMEGA_CLEANER_NG") + "::OnMobDead";
 	else {
-		for ( .@i = 0; .@i < 20; ++.@i ) {
+		for ( .@i = 0; .@i < 'mode_cleaner_count[ 'mode ]; ++.@i ) {
 			if (unitexists('mob_id_cleaner[.@i]) == true) {
 				unitskilluseid 'mob_id_cleaner[.@i], "NPC_SELFDESTRUCTION",1;
 				sleep 100;
@@ -1505,6 +1547,13 @@ OnStop:
 			.@amount_emb = 700;
 			.@reputation = 20;
 		}
+		else if ('mode == 3) {	// Brutal (x2 Hard)
+			.@amount_flower = 180;
+			.@amount_ore = 40;
+			.@amount_lum = 20;
+			.@amount_emb = 1400;
+			.@reputation = 40;
+		}
 		else {	// Easy
 			.@amount_flower = 40;
 			.@amount_ore = 10;
@@ -1524,12 +1573,13 @@ OnStop:
 		getitem 9900009,.@amount_emb;	// Instance_Emblem
 		erasequest 12561;
 		add_reputation_points( REPUTATION_EP19, .@reputation );
-		for ( .@i = 0; .@i < 10; ++.@i )
+		.@exp_mult = (('mode == 3) ? 2 : 1);	// brutal: x2 exp
+		for ( .@i = 0; .@i < 10 * .@exp_mult; ++.@i )
 			getexp2 1605000,0;	// = medium. todo easy
-		getexp 0,3000000;	// unknown jexp
+		getexp 0,3000000 * .@exp_mult;	// unknown jexp
 		if (get_reputation_points(4) >= 3000) {
-			getitem 1000608,100;	// Ep19_Snow_Flower
-			getitem 1000833,10;	// EP19_Luminant
+			getitem 1000608,100 * .@exp_mult;	// Ep19_Snow_Flower
+			getitem 1000833,10 * .@exp_mult;	// EP19_Luminant
 			mes "======================";
 			mes "Due to your close relationship with the Ice Castle, you gained 2 additional " + mesitemlink(1000608) + ".";
 		}
