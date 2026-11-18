@@ -5,9 +5,11 @@
 //= Drop an item into the sell window and press Sell.
 //= The NPC reports the ItemID / name / amount. The item is kept.
 //= Useful for finding IDs of items that have no iteminfo yet.
+//= GM command: @itemcheck opens the same window from anywhere.
 //============================================================
 
 sec_in02,142,156,4	script	Item Checker#gm	4_M_SOULREAPER,{
+OnAtItemCheck:
 	if (getgmlevel() < 1) {
 		mes "[Item Checker]";
 		mes "This NPC is for GMs only.";
@@ -19,6 +21,11 @@ sec_in02,142,156,4	script	Item Checker#gm	4_M_SOULREAPER,{
 	close2;
 	callshop "gm_itemcheck_shop", 2;
 	npcshopattach "gm_itemcheck_shop";
+	end;
+
+OnInit:
+	// @itemcheck — GM level 1+ (no # charcommand)
+	bindatcmd "itemcheck", strnpcinfo(3) + "::OnAtItemCheck", 1, 100;
 	end;
 
 OnSellItem:
