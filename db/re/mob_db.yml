@@ -82028,8 +82028,35 @@ Body:
         StealProtected: true
 #  - Id: 3024
 #    AegisName: 14_3_MERCENARY_A
-#  - Id: 3025
-#    AegisName: 14_3_MERCENARY_B
+  - Id: 3025
+    AegisName: 14_3_MERCENARY_B
+    Name: Mercenary
+    Level: 17
+    Hp: 234
+    BaseExp: 58
+    JobExp: 43
+    Attack: 38
+    Attack2: 12
+    Defense: 20
+    MagicDefense: 3
+    Str: 15
+    Agi: 8
+    Vit: 17
+    Int: 0
+    Dex: 15
+    Luk: 0
+    AttackRange: 1
+    SkillRange: 1
+    ChaseRange: 1
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 909
+    AttackMotion: 432
+    DamageMotion: 300
+    Ai: 01
   - Id: 3026
     AegisName: FIREPIT
     Name: Fire Pit
