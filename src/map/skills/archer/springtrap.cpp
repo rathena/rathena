@@ -4,6 +4,7 @@
 #include "springtrap.hpp"
 
 #include "map/clif.hpp"
+#include "map/status.hpp"
 
 SkillSpringTrap::SkillSpringTrap() : SkillImpl(HT_SPRINGTRAP) {
 }
@@ -15,10 +16,16 @@ void SkillSpringTrap::castendNoDamageId(block_list* src, block_list* target, uin
 	if((target->type==BL_SKILL) && (su=(skill_unit *)target) && (su->group) ){
 		switch(su->group->unit_id){
 			case UNT_ANKLESNARE:	// ankle snare
-				if (su->group->val2 != 0)
-					// if it is already trapping something don't spring it,
-					// remove trap should be used instead
-					break;
+				// Release the target now; the used trap disappears after 1500 ms.
+				if (su->group->val2 != 0) {
+					block_list* trapped = map_id2bl(su->group->val2);
+					status_change* tsc = trapped != nullptr ? status_get_sc(trapped) : nullptr;
+					status_change_entry* sce = tsc != nullptr ? tsc->getSCE(SC_ANKLE) : nullptr;
+
+					if (sce != nullptr && sce->val2 == su->group->group_id)
+						status_change_end(trapped, SC_ANKLE);
+					su->group->val2 = 0;
+				}
 				[[fallthrough]];
 			case UNT_BLASTMINE:
 			case UNT_SKIDTRAP:
