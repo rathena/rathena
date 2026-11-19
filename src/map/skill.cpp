@@ -7087,6 +7087,7 @@ int32 skill_unit_onplace_timer(skill_unit *unit, block_list *bl, t_tick tick)
 			int32 bl_flag = sg->bl_flag;
 			block_list* center = unit;
 			switch (sg->unit_id) {
+				case UNT_BLASTMINE:
 				case UNT_CLAYMORETRAP:
 				case UNT_FIRINGTRAP:
 				case UNT_ICEBOUNDTRAP:
@@ -11154,6 +11155,7 @@ int32 skill_detonator(block_list *bl, va_list ap)
 					clif_talkiebox(bl,group->valstr);
 					group->val2 = -1;
 					break;
+				case UNT_BLASTMINE:
 				case UNT_CLAYMORETRAP:
 				case UNT_FIRINGTRAP:
 				case UNT_ICEBOUNDTRAP:
@@ -11429,6 +11431,22 @@ int32 skill_trap_splash(block_list *bl, va_list ap)
 			if( ss != bl )
 				skill_attack(BF_MISC,ss,src,bl,sg->skill_id,sg->skill_lv,tick,sg->val1|SD_LEVEL);
 			break;
+		case UNT_BLASTMINE:
+			if (src->id == bl->id)
+				break;
+			if (bl->type == BL_SKILL) {
+				skill_unit* su = BL_CAST(BL_SKILL, bl);
+
+				if (su == nullptr || su->group == nullptr || !skill_get_inf2(su->group->skill_id, INF2_ISTRAP))
+					break;
+
+				// The explosion destroys nearby traps regardless of their remaining HP.
+				clif_changetraplook(bl, UNT_USED_TRAPS);
+				su->group->limit = DIFF_TICK(gettick(), su->group->tick) + 1500;
+				su->group->unit_id = UNT_USED_TRAPS;
+				break;
+			}
+			[[fallthrough]];
 		case UNT_CLAYMORETRAP:
 			if( src->id == bl->id ) break;
 			if( bl->type == BL_SKILL ) {

@@ -4452,6 +4452,7 @@ Body:
       IgnoreDefCard: true
     Flags:
       IsTrap: true
+      TargetTrap: true
       AlterRangeResearchTrap: true
       IgnoreHovering: true
       AllowOnWarg: true
