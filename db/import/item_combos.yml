@@ -32,3 +32,32 @@
 Header:
   Type: COMBO_DB
   Version: 1
+
+Body:
+  - Combos:
+      - Combo:
+          - Evil_Taegeuk_US
+          - Dark_Snake_Lord_Card
+    Script: |
+      bonus bSpl,15;
+      bonus bPow,15;
+      bonus2 bAddClass,Class_Boss,30;
+      bonus2 bMagicAddClass,Class_Boss,30;
+  - Combos:
+      - Combo:
+          - Evil_Taegeuk_US
+          - Evil_Card
+    Script: |
+      bonus bSpl,20;
+      bonus bPow,20;
+      bonus2 bAddClass,Class_All,40;
+      bonus2 bMagicAddClass,Class_All,40;
+  - Combos:
+      - Combo:
+          - Evil_Taegeuk_US
+          - Wicked_Nymph_Card
+    Script: |
+      bonus bSpl,7;
+      bonus bPow,7;
+      bonus2 bAddClass,Class_Normal,7;
+      bonus2 bMagicAddClass,Class_Normal,7;

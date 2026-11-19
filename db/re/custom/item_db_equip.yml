@@ -9038,3 +9038,88 @@ Body:
       if (getskilllv("SU_MEOWMEOW") == 5) {
          bonus2 bSkillCooldown,"SU_CN_METEOR",-2000;
       }
+  - Id: 450606
+    AegisName: Evil_Taegeuk_US
+    Name: Evil Taegeuk
+    Type: Armor
+    Weight: 300
+    Defense: 20
+    Slots: 1
+    Jobs:
+      Taekwon: true
+      StarGladiator: true
+      SoulLinker: true
+    Locations:
+      Armor: true
+    ArmorLevel: 2
+    EquipLevelMin: 100
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus bUnbreakableArmor;
+      skill "GC_CROSSIMPACT",1;
+      bonus bMdef,15;
+      bonus bMaxHPrate,30;
+      bonus bMaxSPrate,30;
+      bonus2 bExpAddClass,Class_All,30;
+      bonus bMatk,70*(.@r/2);
+      bonus bBaseAtk,70*(.@r/2);
+      bonus bSpl,3*(.@r/3);
+      bonus bPow,3*(.@r/3);
+      if (readparam(bInt) >= 110) {
+         bonus bMatk,200;
+         bonus bSpl,10;
+         bonus2 bSkillAtk,"SP_SPA",200;
+         bonus2 bSkillAtk,"SP_SWHOO",200;
+         bonus4 bAutoSpellOnSkill,"GC_CROSSIMPACT","AG_CRYSTAL_IMPACT",2,1000;
+      }
+      if (readparam(bStr) >= 110) {
+         bonus bBaseAtk,200;
+         bonus bPow,10;
+         bonus2 bSkillAtk,"SJ_NEWMOONKICK",200;
+         bonus2 bSkillAtk,"SJ_FULLMOONKICK",200;
+         bonus4 bAutoSpellOnSkill,"GC_CROSSIMPACT","BO_EXPLOSIVE_POWDER",5,1000;
+      }
+      if (readparam(bSpl) >= 70) {
+         bonus bMatk,300;
+         bonus bSpl,15;
+         bonus2 bSkillAtk,"SOA_TALISMAN_OF_WHITE_TIGER",200;
+         bonus2 bSkillAtk,"SOA_TALISMAN_OF_BLACK_TORTOISE",200;
+      }
+      if (readparam(bPow) >= 70) {
+         bonus bBaseAtk,300;
+         bonus bPow,15;
+         bonus2 bSkillAtk,"SKE_NOON_BLAST",200;
+         bonus2 bSkillAtk,"SKE_MIDNIGHT_KICK",200;
+      }
+      if (.@r >= 11) {
+         bonus2 bSkillCooldown,"SOA_TALISMAN_OF_WHITE_TIGER",-400;
+      }
+      if (.@r >= 12) {
+         bonus2 bSkillCooldown,"SKE_NOON_BLAST",-700;
+      }
+      if (.@r >= 13) {
+         bonus bPow,20;
+         bonus bSpl,20;
+      }
+      if (.@r >= 14) {
+         skill "CD_ARGUTUS_VITA",5;
+         skill "CD_ARGUTUS_TELUM",5;
+      }
+      if (.@g >= ENCHANTGRADE_D) {
+         bonus bMaxHPrate,20;
+         bonus bMaxSPrate,20;
+      }
+      if (.@g >= ENCHANTGRADE_C) {
+         bonus2 bAddSize,Size_All,20;
+         bonus2 bMagicAddSize,Size_All,20;
+      }
+      if (.@g >= ENCHANTGRADE_B) {
+         bonus bDelayRate,-20;
+      }
+      if (.@g >= ENCHANTGRADE_A) {
+         bonus bSMatk,20;
+         bonus bPAtk,20;
+      }
