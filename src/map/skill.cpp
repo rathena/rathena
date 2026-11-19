@@ -7087,6 +7087,7 @@ int32 skill_unit_onplace_timer(skill_unit *unit, block_list *bl, t_tick tick)
 			int32 bl_flag = sg->bl_flag;
 			block_list* center = unit;
 			switch (sg->unit_id) {
+				case UNT_BLASTMINE:
 				case UNT_CLAYMORETRAP:
 				case UNT_FIRINGTRAP:
 				case UNT_ICEBOUNDTRAP:
@@ -11154,6 +11155,7 @@ int32 skill_detonator(block_list *bl, va_list ap)
 					clif_talkiebox(bl,group->valstr);
 					group->val2 = -1;
 					break;
+				case UNT_BLASTMINE:
 				case UNT_CLAYMORETRAP:
 				case UNT_FIRINGTRAP:
 				case UNT_ICEBOUNDTRAP:
@@ -11429,6 +11431,7 @@ int32 skill_trap_splash(block_list *bl, va_list ap)
 			if( ss != bl )
 				skill_attack(BF_MISC,ss,src,bl,sg->skill_id,sg->skill_lv,tick,sg->val1|SD_LEVEL);
 			break;
+		case UNT_BLASTMINE:
 		case UNT_CLAYMORETRAP:
 			if( src->id == bl->id ) break;
 			if( bl->type == BL_SKILL ) {
