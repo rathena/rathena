@@ -5187,6 +5187,9 @@ TIMER_FUNC(skill_castend_id){
 	} while(0);
 
 	//Skill failed.
+	// A failed Encore recast must not discount the next manually cast song.
+	if (sd != nullptr && sd->skill_id_old == BD_ENCORE && ud->skill_id == sd->skill_id_dance)
+		sd->skill_id_old = 0;
 	if (ud->skill_id == MO_EXTREMITYFIST && sd && !(sc && sc->getSCE(SC_FOGWALL)))
 	{	//When Asura fails... (except when it fails from Wall of Fog)
 		//Consume SP/spheres
@@ -9604,7 +9607,9 @@ void skill_consume_requirement(map_session_data *sd, uint16 skill_id, uint16 ski
 			case MC_IDENTIFY:
 			case SM_AUTOBERSERK:
 			case BD_ADAPTATION:
+#ifndef RENEWAL
 			case BD_ENCORE:
+#endif
 				require.sp = 0;
 				break;
 			case AL_HOLYLIGHT:

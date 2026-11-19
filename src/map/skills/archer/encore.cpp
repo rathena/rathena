@@ -14,6 +14,9 @@ void SkillEncore::castendNoDamageId(block_list *src, block_list *target, uint16 
 
 	clif_skill_nodamage(src,*target,getSkillId(),skill_lv);
 	if (sd != nullptr) {
-		unit_skilluse_id(src,src->id,sd->skill_id_dance,sd->skill_lv_dance);
+		// Apply the discount only to this recast; rejected attempts must not retain it.
+		sd->skill_id_old = getSkillId();
+		if (!unit_skilluse_id(src,src->id,sd->skill_id_dance,sd->skill_lv_dance))
+			sd->skill_id_old = 0;
 	}
 }
