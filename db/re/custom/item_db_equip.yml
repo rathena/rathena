@@ -9123,3 +9123,219 @@ Body:
          bonus bSMatk,20;
          bonus bPAtk,20;
       }
+  - Id: 470489
+    AegisName: Stray_Archer_US
+    Name: Heretic Archer Boots
+    Type: Armor
+    Weight: 300
+    Defense: 20
+    Slots: 1
+    Jobs:
+      Archer: true
+      BardDancer: true
+      Hunter: true
+    Locations:
+      Shoes: true
+    ArmorLevel: 2
+    EquipLevelMin: 100
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus bMdef,10;
+      bonus bUnbreakableShoes;
+      bonus bAllStats,15;
+      bonus bAllTraitStats,15;
+      bonus bMaxHPrate,20;
+      bonus bMaxSPrate,20;
+      bonus bBaseAtk,75*(BaseLevel/20);
+      bonus bMatk,75*(BaseLevel/20);
+      bonus2 bMagicAtkEle,Ele_All,25*(.@r/2);
+      bonus bShortAtkRate,25*(.@r/2);
+      bonus bLongAtkRate,25*(.@r/2);
+      bonus bCon,5*(.@r/3);
+      bonus bSpl,5*(.@r/3);
+      if (.@r >= 11) {
+         bonus bCon,15;
+         bonus bSpl,15;
+         bonus2 bSkillCooldown,"RA_UNLIMIT",-120000;
+      }
+      if (.@r >= 12) {
+         bonus2 bMagicAtkEle,Ele_All,40;
+         bonus bShortAtkRate,40;
+         bonus bLongAtkRate,40;
+         skill "MG_ENERGYCOAT",1;
+      }
+      if (.@r >= 13) {
+         bonus2 bSkillAtk,"TR_METALIC_FURY",100;
+         bonus2 bSkillAtk,"WH_CRESCIVE_BOLT",100;
+         bonus bFixedCast,-1000;
+      }
+      if (.@r >= 14) {
+         bonus bCon,20;
+         bonus bSpl,20;
+         bonus bDelayRate,-30;
+      }
+      if (.@r >= 15) {
+         bonus2 bAddEle,Ele_All,60;
+         bonus2 bMagicAddEle,Ele_All,60;
+      }
+      if (.@g >= ENCHANTGRADE_D) {
+         if (Class == JOB_TROUBADOUR || Class == JOB_TROUVERE)
+            skill "RA_UNLIMIT",5;
+         if (Class == JOB_WINDHAWK || Class == JOB_WINDHAWK2)
+            skill "BS_MAXIMIZE",5;
+      }
+      if (.@g >= ENCHANTGRADE_C) {
+         autobonus3 "{ bonus bDex,150; bonus bInt,150; bonus bSpeedRate,25; }",1000,15000,"MG_ENERGYCOAT";
+      }
+      if (.@g >= ENCHANTGRADE_B) {
+         bonus2 bAddRace,RC_All,25;
+         bonus2 bMagicAddRace,RC_All,25;
+      }
+      if (.@g >= ENCHANTGRADE_A) {
+         bonus bNoWalkDelay;
+      }
+  - Id: 510241
+    AegisName: Jack_Ripper_US
+    Name: Jack the Ripper
+    Type: Weapon
+    SubType: Dagger
+    Weight: 500
+    Attack: 300
+    MagicAttack: 300
+    Slots: 3
+    Jobs:
+      Rogue: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 100
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus bUnbreakableWeapon;
+      bonus bAspd,10;
+      bonus bDelayRate,-10;
+      bonus2 bSubRace,RC_All,20;
+      bonus2 bSubRace,RC_Player_Human,20;
+      bonus2 bSubRace,RC_Player_Doram,20;
+      bonus2 bAddSize,Size_All,40+12*.@r;
+      bonus bPow,4*(.@r/2);
+      bonus bMaxHPrate,4*(.@r/2);
+      bonus2 bSkillAtk,"ABC_UNLUCKY_RUSH",15*(.@r/2);
+      bonus2 bSkillAtk,"ABC_ABYSS_DAGGER",15*(.@r/2);
+      bonus2 bSkillAtk,"ABC_DEFT_STAB",15*(.@r/2);
+      if (.@r >= 10) {
+         bonus bPow,15;
+         bonus bDelayRate,-20;
+      }
+      if (.@r >= 11) {
+         bonus2 bSkillCooldown,"SC_ENERVATION",-2000;
+         bonus2 bSkillCooldown,"SC_GROOMY",-2000;
+         bonus2 bSkillCooldown,"SC_IGNORANCE",-2000;
+         bonus2 bSkillCooldown,"SC_LAZINESS",-2000;
+         bonus2 bSkillCooldown,"SC_UNLUCKY",-2000;
+         bonus2 bSkillCooldown,"SC_WEAKNESS",-2000;
+      }
+      if (.@r >= 12) {
+         bonus2 bSkillAtk,"ABC_ABYSS_DAGGER",40;
+         bonus2 bSkillCooldown,"ABC_ABYSS_DAGGER",-400;
+      }
+      if (.@r >= 13) {
+         bonus bAllStats,25;
+         bonus bBaseAtk,250;
+         bonus bMaxHPrate,25;
+      }
+      if (.@r >= 14) {
+         bonus bShortAtkRate,40;
+         bonus bAllTraitStats,15;
+      }
+      if (.@r >= 15) {
+         bonus bLongAtkDef,40;
+         bonus2 bSubEle,Ele_All,40;
+      }
+      if (.@g >= ENCHANTGRADE_D) {
+         bonus bFixedCast,-1000;
+      }
+      if (.@g >= ENCHANTGRADE_C) {
+         bonus bShortAtkRate,20;
+      }
+      if (.@g >= ENCHANTGRADE_B) {
+         bonus2 bSkillAtk,"ABC_UNLUCKY_RUSH",30;
+         bonus2 bSkillAtk,"ABC_ABYSS_DAGGER",30;
+         bonus2 bSkillAtk,"ABC_DEFT_STAB",30;
+      }
+      if (.@g >= ENCHANTGRADE_A) {
+         skill "AS_CLOAKING",5;
+         bonus bAllTraitStats,7;
+         bonus bAllStats,7;
+      }
+  - Id: 570110
+    AegisName: Metallic_Guitar_US
+    Name: Metallic Guitar
+    Type: Weapon
+    SubType: Musical
+    Weight: 700
+    Attack: 300
+    MagicAttack: 300
+    Slots: 3
+    Jobs:
+      BardDancer: true
+    Gender: Male
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus bUnbreakableWeapon;
+      bonus bMaxHPrate,20;
+      bonus bMaxSPrate,20;
+      bonus bDelayRate,-20;
+      bonus2 bSkillAtk,"TR_METALIC_FURY",50;
+      bonus2 bMagicAtkEle,Ele_Wind,15*.@r;
+      bonus2 bMagicAtkEle,Ele_Neutral,15*.@r;
+      bonus bCon,10*(.@r/3);
+      bonus bSpl,10*(.@r/3);
+      if (.@r >= 10) {
+         autobonus3 "{ bonus bInt,100; bonus bSpeedRate,25; }",1000,30000,"MI_RUSH_WINDMILL";
+      }
+      if (.@r >= 11) {
+         bonus bAllStats,25;
+         bonus bMatk,250;
+      }
+      if (.@r >= 12) {
+         bonus2 bSkillCooldown,"TR_METALIC_FURY",-400;
+         bonus2 bSkillAtk,"TR_METALIC_FURY",100;
+         bonus2 bSkillCooldown,"WM_METALICSOUND",-2000;
+         bonus2 bSkillAtk,"WM_METALICSOUND",100;
+      }
+      if (.@r >= 13) {
+         bonus4 bAutoSpellOnSkill,"TR_METALIC_FURY","WL_CHAINLIGHTNING",5,300;
+      }
+      if (.@r >= 14) {
+         bonus4 bAutoSpellOnSkill,"TR_METALIC_FURY","SS_RAIDENPOU",10,300;
+      }
+      if (.@r >= 15) {
+         skill "EM_LIGHTNING_LAND",5;
+         bonus4 bAutoSpellOnSkill,"WM_METALICSOUND","EM_LIGHTNING_LAND",5,300;
+      }
+      if (.@g >= ENCHANTGRADE_D) {
+         bonus bMatk,200;
+      }
+      if (.@g >= ENCHANTGRADE_C) {
+         skill "CD_RELIGIO",5;
+      }
+      if (.@g >= ENCHANTGRADE_B) {
+         bonus bSMatk,20;
+      }
+      if (.@g >= ENCHANTGRADE_A) {
+         bonus2 bMagicAddEle,Ele_All,20;
+      }
