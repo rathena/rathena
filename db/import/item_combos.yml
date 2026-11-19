@@ -237,6 +237,9 @@ Body:
   - Combos:
       - Combo:
           - Good_Evil_Follower_US
+          - Destruction_Axe
+      - Combo:
+          - Good_Evil_Follower_US
           - Devil_Cursed_Sword
       - Combo:
           - Good_Evil_Follower_US
@@ -439,3 +442,47 @@ Body:
       bonus bAllTraitStats,15;
       bonus2 bAddRace,RC_All,20;
       bonus2 bMagicAddRace,RC_All,20;
+  - Combos:
+      - Combo:
+          - Purified_Grimoire_US
+          - Fallen_Valkyrie_US
+    Script: |
+      bonus bAllTraitStats,10;
+      bonus2 bSkillAtk,"AG_VIOLENT_QUAKE",100;
+      bonus2 bSkillAtk,"AG_VIOLENT_QUAKE_ATK",100;
+  - Combos:
+      - Combo:
+          - Fallen_Valkyrie_US
+          - C_Amdarais_Card
+    Script: |
+      bonus bPow,15;
+      bonus bSpl,15;
+      bonus2 bAddClass,Class_All,30;
+      bonus2 bMagicAddClass,Class_All,30;
+  - Combos:
+      - Combo:
+          - Fallen_Valkyrie_US
+          - C_Himel_Card
+    Script: |
+      bonus bPow,15;
+      bonus bSpl,15;
+      bonus2 bAddClass,Class_All,30;
+      bonus2 bMagicAddClass,Class_All,30;
+  - Combos:
+      - Combo:
+          - Fallen_Valkyrie_US
+          - Bijou_Card
+    Script: |
+      bonus bPow,10;
+      bonus bSpl,10;
+      bonus2 bAddClass,Class_All,25;
+      bonus2 bMagicAddClass,Class_All,25;
+  - Combos:
+      - Combo:
+          - Fallen_Valkyrie_US
+          - Randgris_Card
+    Script: |
+      bonus bPow,10;
+      bonus bSpl,10;
+      bonus2 bAddClass,Class_All,25;
+      bonus2 bMagicAddClass,Class_All,25;

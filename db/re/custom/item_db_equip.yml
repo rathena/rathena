@@ -9348,6 +9348,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    View: 381
     ArmorLevel: 2
     EquipLevelMin: 1
     Refineable: true
@@ -9422,6 +9423,7 @@ Body:
       Gunslinger: true
     Locations:
       Head_Top: true
+    View: 1191
     ArmorLevel: 2
     EquipLevelMin: 1
     Refineable: true
@@ -9603,4 +9605,64 @@ Body:
       }
       if (.@g >= ENCHANTGRADE_A) {
          bonus bNoWalkDelay;
+      }
+  - Id: 480663
+    AegisName: Fallen_Valkyrie_US
+    Name: Fallen Valkyrie
+    Type: Armor
+    Weight: 1000
+    Defense: 200
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 2
+    EquipLevelMin: 100
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus bMdef,20;
+      bonus bBaseAtk,250;
+      bonus bMatk,250;
+      bonus bFlee2,25;
+      bonus2 bSkillAtk,"CD_PETITIO",20;
+      bonus bBaseAtk,40*(.@r/2);
+      bonus bMatk,40*(.@r/2);
+      bonus bPow,.@r/2;
+      bonus bSpl,.@r/2;
+      if (.@r >= 11) {
+         bonus bPow,15;
+         bonus bSpl,15;
+      }
+      if (.@r >= 12) {
+         skill "NC_POWERSWING",10;
+         bonus2 bSkillAtk,"NC_POWERSWING",3*BaseLevel;
+      }
+      if (.@r >= 13) {
+         bonus bAllStats,25;
+         bonus bBaseAtk,250;
+         bonus bMatk,250;
+         bonus4 bAutoSpellOnSkill,"NC_POWERSWING","CD_PETITIO",10,200;
+         bonus4 bAutoSpellOnSkill,"CD_PETITIO","AG_VIOLENT_QUAKE",5,700;
+      }
+      if (.@r >= 14) {
+         skill "LG_SHIELDSPELL",3;
+         bonus2 bSkillAtk,"CD_PETITIO",40;
+         bonus2 bSkillCooldown,"CD_PETITIO",-500;
+      }
+      if (.@g >= ENCHANTGRADE_D) {
+         bonus bDelayRate,-20;
+      }
+      if (.@g >= ENCHANTGRADE_C) {
+         bonus bPow,10;
+         bonus bSpl,10;
+      }
+      if (.@g >= ENCHANTGRADE_B) {
+         bonus bPAtk,20;
+         bonus bSMatk,20;
+      }
+      if (.@g >= ENCHANTGRADE_A && .@r >= 15) {
+         bonus2 bAddSize,Size_All,40;
+         bonus2 bMagicAddSize,Size_All,40;
       }
