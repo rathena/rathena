@@ -11432,21 +11432,6 @@ int32 skill_trap_splash(block_list *bl, va_list ap)
 				skill_attack(BF_MISC,ss,src,bl,sg->skill_id,sg->skill_lv,tick,sg->val1|SD_LEVEL);
 			break;
 		case UNT_BLASTMINE:
-			if (src->id == bl->id)
-				break;
-			if (bl->type == BL_SKILL) {
-				skill_unit* su = BL_CAST(BL_SKILL, bl);
-
-				if (su == nullptr || su->group == nullptr || !skill_get_inf2(su->group->skill_id, INF2_ISTRAP))
-					break;
-
-				// The explosion destroys nearby traps regardless of their remaining HP.
-				clif_changetraplook(bl, UNT_USED_TRAPS);
-				su->group->limit = DIFF_TICK(gettick(), su->group->tick) + 1500;
-				su->group->unit_id = UNT_USED_TRAPS;
-				break;
-			}
-			[[fallthrough]];
 		case UNT_CLAYMORETRAP:
 			if( src->id == bl->id ) break;
 			if( bl->type == BL_SKILL ) {
