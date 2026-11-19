@@ -11787,8 +11787,11 @@ int32 skill_delunit(skill_unit* unit)
 		case SC_ESCAPE:
 			{
 				block_list* target = map_id2bl(group->val2);
+				status_change* tsc = target != nullptr ? status_get_sc(target) : nullptr;
+				status_change_entry* sce = tsc != nullptr ? tsc->getSCE(SC_ANKLE) : nullptr;
 
-				if( target )
+				// An older trap must not end a newer snare or another skill's stop effect.
+				if( sce != nullptr && sce->val2 == group->group_id )
 					status_change_end(target, SC_ANKLE);
 			}
 			break;
@@ -12383,9 +12386,17 @@ static int32 skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 			case UNT_ANKLESNARE:
 			case UNT_B_TRAP:
 				if( unit->val1 <= 0 ) {
-					if( group->unit_id == UNT_ANKLESNARE && group->val2 > 0 )
+					if( group->unit_id == UNT_ANKLESNARE && group->val2 > 0 ) {
+						// Damage destroys the trap without ending the target's remaining snare duration.
+						block_list* trapped = map_id2bl(group->val2);
+						status_change* tsc = trapped != nullptr ? status_get_sc(trapped) : nullptr;
+						status_change_entry* sce = tsc != nullptr ? tsc->getSCE(SC_ANKLE) : nullptr;
+
+						if (sce != nullptr && sce->val2 == group->group_id)
+							sce->val2 = 0;
+						group->val2 = 0; // Detach the target before the trap's normal deletion cleanup.
 						skill_delunit(unit);
-					else {
+					} else {
 						clif_changetraplook(bl, group->unit_id == UNT_LANDMINE ? UNT_FIREPILLAR_ACTIVE : UNT_USED_TRAPS);
 						group->limit = DIFF_TICK(tick, group->tick) + 1500;
 						group->unit_id = UNT_USED_TRAPS;

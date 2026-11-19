@@ -25,7 +25,7 @@ void SkillRemoveTrap::castendNoDamageId(block_list* src, block_list* target, uin
 	if( su && (sg = su->group) && (sg->src_id == src->id || map_flag_vs(target->m)) && ( skill_group = skill_db.find(sg->skill_id) ) && skill_group->inf2[INF2_ISTRAP] )
 	{
 		clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
-		if( !(sg->unit_id == UNT_USED_TRAPS || (sg->unit_id == UNT_ANKLESNARE && sg->val2 != 0 )) )
+		if( sg->unit_id != UNT_USED_TRAPS )
 		{ // prevent picking up expired traps
 			if( battle_config.skill_removetrap_type )
 			{ // get back all items used to deploy the trap
