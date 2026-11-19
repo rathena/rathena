@@ -640,7 +640,9 @@ void pet_set_intimate(pet_data *pd, int32 value)
 {
 	nullpo_retv(pd);
 
+#if PACKETVER >= 20250618
 	bool was_friendly = pd->pet.intimate > PET_INTIMATE_NONE;
+#endif
 	pd->pet.intimate = cap_value(value, PET_INTIMATE_NONE, PET_INTIMATE_MAX);
 
 	map_session_data *sd = pd->master;
@@ -649,10 +651,12 @@ void pet_set_intimate(pet_data *pd, int32 value)
 
 	if( pd->pet.intimate <= PET_INTIMATE_NONE ){
 		pc_delitem( sd, index, 1, 0, 0, LOG_TYPE_OTHER );
+#if PACKETVER >= 20250618
 		// The client displays MSI_PET_DISAPPEAR in its native message box.
 		if( was_friendly && sd != nullptr ){
 			clif_send_petdata( sd, *pd, CHANGESTATEPET_RUNAWAY );
 		}
+#endif
 	}else{
 		// Remove everything except the rename flag
 		sd->inventory.u.items_inventory[index].card[3] &= 1;
