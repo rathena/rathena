@@ -9501,6 +9501,7 @@ Body:
     Slots: 1
     Locations:
       Head_Mid: true
+    View: 2831
     EquipLevelMin: 100
     Script: |
       bonus bUnbreakableHelm;
