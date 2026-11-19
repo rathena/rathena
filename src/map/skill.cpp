@@ -320,16 +320,26 @@ e_cast_type skill_get_casttype (uint16 skill_id) {
 	return CAST_DAMAGE;
 }
 
-//Returns actual skill range taking into account attack range and AC_OWL [Skotlex]
-int32 skill_get_range2(const block_list* bl, uint16 skill_id, uint16 skill_lv, bool isServer) {
+// Returns skill range with passive bonuses. Exclude Vulture's Eye when classifying damage.
+int32 skill_get_range2(const block_list* bl, uint16 skill_id, uint16 skill_lv, bool isServer, bool include_vulture) {
 	if( bl->type == BL_MOB && battle_config.mob_ai&0x400 )
 		return 9; //Mobs have a range of 9 regardless of skill used.
 
+	const map_session_data* sd = BL_CAST(BL_PC, bl);
+	// Extended and Hyper Novices are excluded until their behavior is confirmed.
+	bool super_novice = sd != nullptr && (sd->class_ & MAPID_THIRDMASK) == MAPID_SUPER_NOVICE;
+	int32 vulture = sd != nullptr ? pc_checkskill(sd, AC_VULTURE) : 0;
+	int32 vulture_bonus = include_vulture && isServer && super_novice ? vulture : 0;
 	int32 range = skill_get_range(skill_id, skill_lv);
 
 	if( range < 0 ) {
-		if( battle_config.use_weapon_skill_range&bl->type )
-			return status_get_range(bl);
+		if( battle_config.use_weapon_skill_range&bl->type ) {
+			range = status_get_range(bl);
+			// Bow range already includes Vulture's Eye; do not count it twice.
+			if (sd != nullptr && sd->status.weapon == W_BOW && (!include_vulture || vulture_bonus > 0))
+				range -= vulture;
+			return range + vulture_bonus;
+		}
 		range *=-1;
 	}
 
@@ -341,7 +351,7 @@ int32 skill_get_range2(const block_list* bl, uint16 skill_id, uint16 skill_lv, b
 
 	if(inf2[INF2_ALTERRANGEVULTURE] || inf2[INF2_ALTERRANGESNAKEEYE] ){
 		if( bl->type == BL_PC ) {
-			if(inf2[INF2_ALTERRANGEVULTURE]) range += pc_checkskill((TBL_PC*)bl, AC_VULTURE);
+			if(inf2[INF2_ALTERRANGEVULTURE] && include_vulture && !(isServer && super_novice)) range += vulture;
 			// added to allow GS skills to be effected by the range of Snake Eyes [Reddozen]
 			if(inf2[INF2_ALTERRANGESNAKEEYE]) range += pc_checkskill((TBL_PC*)bl, GS_SNAKEEYE);
 		} else
@@ -361,7 +371,8 @@ int32 skill_get_range2(const block_list* bl, uint16 skill_id, uint16 skill_lv, b
 
 	if( !range && bl->type != BL_PC )
 		return 9; // Enable non players to use self skills on others. [Skotlex]
-	return range;
+	// The client keeps its normal range checks; this bonus applies on the server only.
+	return range + vulture_bonus;
 }
 
 /** Copy Referral: dummy skills should point to their source.
