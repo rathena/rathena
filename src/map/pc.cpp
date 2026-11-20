@@ -7131,7 +7131,7 @@ enum e_setpos pc_setpos(map_session_data* sd, uint16 mapindex, int32 x, int32 y,
 			sd->regen.state.gc = 1;
 	}
 
-	if( sd->status.pet_id > 0 && sd->pd && sd->pd->pet.intimate > 0 )
+	if( sd->status.pet_id > 0 && sd->pd != nullptr && !pet_is_lost(*sd->pd) )
 	{
 		sd->pd->m = m;
 		sd->pd->x = sd->pd->ud.to_x = x;

@@ -8275,7 +8275,7 @@ void clif_sendegg( map_session_data* sd)
 ///     4 = performance (data = 1~3: normal, 4: special)
 ///     5 = hairstyle
 ///     6 = close egg selection ui and update egg in inventory (PACKETVER >= 20180704)
-///     7 = pet ran away (opens the MSI_PET_DISAPPEAR message box; PACKETVER >= 20250618)
+///     7 = pet disappeared (opens the MSI_PET_DISAPPEAR message box; PACKETVER >= 20250618)
 ///
 /// If sd is null, the update is sent to nearby objects, otherwise it is sent only to that player.
 void clif_send_petdata( const map_session_data* sd, const pet_data& pd, e_changestate_pet data_type ){
@@ -8283,7 +8283,7 @@ void clif_send_petdata( const map_session_data* sd, const pet_data& pd, e_change
 
 	switch( data_type ) {
 		case CHANGESTATEPET_INIT:
-		case CHANGESTATEPET_RUNAWAY:
+		case CHANGESTATEPET_DISAPPEAR:
 			value = 0;
 			break;
 		case CHANGESTATEPET_INTIMACY:

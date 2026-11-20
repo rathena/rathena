@@ -631,31 +631,38 @@ int16 pet_get_card3_intimacy( int32 intimacy ){
 	}
 }
 
+bool pet_is_lost(const pet_data& pd)
+{
+#ifdef RENEWAL
+	return pd.pet.intimate <= PET_INTIMATE_AWKWARD;
+#else
+	return pd.pet.intimate <= PET_INTIMATE_NONE;
+#endif
+}
+
 /**
  * Set the value of the pet's intimacy.
  * @param pd : pet requesting
- * @param value : new intimacy value. Will be bounded by PET_INTIMATE_NONE and PET_INTIMATE_MAX
+ * @param value : new intimacy value. Minimum is 1 in Renewal, 0 in Pre-Renewal.
  */
 void pet_set_intimate(pet_data *pd, int32 value)
 {
 	nullpo_retv(pd);
 
-#if PACKETVER >= 20250618
-	bool was_friendly = pd->pet.intimate > PET_INTIMATE_NONE;
-#endif
+#ifdef RENEWAL
+	// Keep the actual loss boundary visible to the client instead of sending zero.
+	pd->pet.intimate = cap_value(value, PET_INTIMATE_AWKWARD, PET_INTIMATE_MAX);
+#else
 	pd->pet.intimate = cap_value(value, PET_INTIMATE_NONE, PET_INTIMATE_MAX);
+#endif
 
 	map_session_data *sd = pd->master;
 
 	int32 index = pet_egg_search( sd, pd->pet.pet_id );
 
-	if( pd->pet.intimate <= PET_INTIMATE_NONE ){
+	if( pet_is_lost(*pd) ){
+#ifndef RENEWAL
 		pc_delitem( sd, index, 1, 0, 0, LOG_TYPE_OTHER );
-#if PACKETVER >= 20250618
-		// The client displays MSI_PET_DISAPPEAR in its native message box.
-		if( was_friendly && sd != nullptr ){
-			clif_send_petdata( sd, *pd, CHANGESTATEPET_RUNAWAY );
-		}
 #endif
 	}else{
 		// Remove everything except the rename flag
@@ -858,7 +865,7 @@ static TIMER_FUNC(pet_hungry){
 
 	pd->pet_hungry_timer = INVALID_TIMER;
 
-	if (pd->pet.intimate <= PET_INTIMATE_NONE)
+	if (pet_is_lost(*pd))
 		return 1; //You lost the pet already, the rest is irrelevant.
 
 	std::shared_ptr<s_pet_db> pet_db_ptr = pd->get_pet_db();
@@ -875,7 +882,7 @@ static TIMER_FUNC(pet_hungry){
 		pd->pet.hungry = PET_HUNGRY_NONE;
 		pet_set_intimate(pd, pd->pet.intimate + pet_db_ptr->hungry_intimacy_dec);
 
-		if( pd->pet.intimate <= PET_INTIMATE_NONE ) {
+		if( pet_is_lost(*pd) ) {
 			pd->status.speed = pd->get_pet_walk_speed();
 		}
 
@@ -1436,7 +1443,7 @@ int32 pet_menu(map_session_data *sd,int32 menunum)
 		return 1;
 
 	//You lost the pet already.
-	if(!sd->status.pet_id || sd->pd->pet.intimate <= PET_INTIMATE_NONE || sd->pd->pet.incubate)
+	if(!sd->status.pet_id || pet_is_lost(*sd->pd) || sd->pd->pet.incubate)
 		return 1;
 
 	switch(menunum) {
@@ -1645,6 +1652,12 @@ int32 pet_food(map_session_data *sd, pet_data *pd)
 	nullpo_retr(1, sd);
 	nullpo_retr(1, pd);
 
+#ifdef RENEWAL
+	// Automatic feeding must not revive a pet awaiting removal on the next AI tick.
+	if (pet_is_lost(*pd))
+		return 1;
+#endif
+
 	std::shared_ptr<s_pet_db> pet_db_ptr = pd->get_pet_db();
 	int32 i,k;
 
@@ -1660,7 +1673,7 @@ int32 pet_food(map_session_data *sd, pet_data *pd)
 
 	if (pd->pet.hungry > PET_HUNGRY_SATISFIED) {
 		pet_set_intimate(pd, pd->pet.intimate + pet_db_ptr->r_full);
-		if (pd->pet.intimate <= PET_INTIMATE_NONE) {
+		if (pet_is_lost(*pd)) {
 			unit_stop_attack( pd );
 			pd->status.speed = pd->get_pet_walk_speed();
 		}
@@ -1766,6 +1779,35 @@ static int32 pet_ai_sub_hard(pet_data *pd, map_session_data *sd, t_tick tick)
 	if(pd->prev == nullptr || sd == nullptr || sd->prev == nullptr)
 		return 0;
 
+#ifdef RENEWAL
+	if (pet_is_lost(*pd)) {
+		// Preserve Pet Info after removal, including a pet loaded with intimacy already at 1.
+		PACKET_ZC_PROPERTY_PET packet{};
+		packet.PacketType = HEADER_ZC_PROPERTY_PET;
+		safestrncpy( packet.szName, pd->pet.name, NAME_LENGTH );
+		packet.bModified = battle_config.pet_rename ? 0 : pd->pet.rename_flag;
+		packet.nLevel = pd->pet.level;
+		packet.nFullness = pd->pet.hungry;
+		packet.nRelationship = pd->pet.intimate;
+		packet.ITID = static_cast<decltype(packet.ITID)>( pd->pet.equip );
+#if PACKETVER >= 20081126
+		packet.job = pd->pet.class_;
+#endif
+
+		int32 index = pet_egg_search(sd, pd->pet.pet_id);
+
+		if (index >= 0)
+			pc_delitem(sd, index, 1, 0, 0, LOG_TYPE_OTHER);
+#if PACKETVER >= 20250618
+		clif_send_petdata(sd, *pd, CHANGESTATEPET_DISAPPEAR);
+#endif
+		// Use the normal lost-pet cleanup after hunger/feeding callbacks have returned.
+		unit_remove_map(pd, CLR_OUTSIGHT);
+		clif_send( &packet, sizeof( packet ), sd, SELF );
+		return 0;
+	}
+#endif
+
 	if(DIFF_TICK(tick,pd->last_thinktime) < MIN_PETTHINKTIME)
 		return 0;
 
@@ -1777,7 +1819,7 @@ static int32 pet_ai_sub_hard(pet_data *pd, map_session_data *sd, t_tick tick)
 	if(pd->ud.walktimer != INVALID_TIMER && pd->ud.walkpath.path_pos <= 2)
 		return 0; // No thinking when you just started to walk.
 
-	if(pd->pet.intimate <= PET_INTIMATE_NONE) {
+	if(pet_is_lost(*pd)) {
 		// Pet should just... well, random walk.
 		pet_randomwalk(pd,tick);
 
@@ -2056,7 +2098,7 @@ TIMER_FUNC(pet_skill_bonus_timer){
 	if (pd->state.skillbonus && pd->bonus->delay > 0) {
 		bonus = 0;
 		timer = pd->bonus->delay*1000;	// the duration until pet bonuses will be reactivated again
-	} else if (pd->pet.intimate) {
+	} else if (!pet_is_lost(*pd)) {
 		bonus = 1;
 		timer = pd->bonus->duration*1000;	// the duration for pet bonuses to be in effect
 	} else { //Lost pet...

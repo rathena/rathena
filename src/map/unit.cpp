@@ -1217,7 +1217,7 @@ bool unit_movepos(block_list *bl, int16 dst_x, int16 dst_y, int32 easy, bool che
 		} else
 			sd->areanpc.clear();
 
-		if( sd->status.pet_id > 0 && sd->pd && sd->pd->pet.intimate > PET_INTIMATE_NONE ) {
+		if( sd->status.pet_id > 0 && sd->pd != nullptr && !pet_is_lost(*sd->pd) ) {
 			// Check if pet needs to be teleported. [Skotlex]
 			int32 flag = 0;
 			block_list* pbl = sd->pd;
@@ -3748,7 +3748,7 @@ int32 unit_remove_map_(block_list *bl, clr_type clrtype, const char* file, int32
 		case BL_PET: {
 			pet_data *pd = (pet_data*)bl;
 
-			if( pd->pet.intimate <= PET_INTIMATE_NONE && !(pd->master && !pd->master->state.active) ) {
+			if( pet_is_lost(*pd) && !(pd->master != nullptr && !pd->master->state.active) ) {
 				// If logging out, this is deleted on unit_free
 				clif_clearunit_area( *bl, clrtype );
 				map_delblock(bl);
@@ -4050,7 +4050,7 @@ int32 unit_free(block_list *bl, clr_type clrtype)
 			pet_hungry_timer_delete(pd);
 			pet_clear_support_bonuses(sd);
 
-			if( pd->pet.intimate > PET_INTIMATE_NONE )
+			if( !pet_is_lost(*pd) )
 				intif_save_petdata(pd->pet.account_id,&pd->pet);
 			else { // Remove pet.
 				intif_delete_petdata(pd->pet.pet_id);
