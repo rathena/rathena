@@ -2266,6 +2266,7 @@ struct PACKET_ZC_UI_ACTION {
 	int32 UIType;
 	int32 data;
 } __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_UI_ACTION, 0x0af0);
 
 struct PACKET_CZ_PRIVATE_AIRSHIP_REQUEST {
 	int16 PacketType;

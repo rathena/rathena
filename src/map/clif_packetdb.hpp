@@ -1905,7 +1905,6 @@
 #if PACKETVER >= 20180307
 	parseable_packet(0x0A68,3,clif_parse_open_ui,2);
 	parseable_packet(0x0AEF,2,clif_parse_attendance_request,0);
-	packet(0x0AF0,10);
 #endif
 
 // 2018-03-21aRagexeRE
