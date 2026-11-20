@@ -403,6 +403,8 @@ OnInit:
 	if (getbattleflag("feature.refineui")) {
 		unloadnpc "Basta";
 		unloadnpc "MightyHammer";
+		unloadnpc "Vestri#prt";
+		unloadnpc "Suhnbi#cash";
 	}
 	end;
 }
