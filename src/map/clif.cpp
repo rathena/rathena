@@ -22015,18 +22015,17 @@ void clif_parse_open_ui( int32 fd, map_session_data* sd ){
 	}
 }
 
-/// Response for attedance request
-/// 0AF0 <unknown>.L <data>.L
+/// Attendance reward response (ZC_UI_ACTION)
+/// 0AF0 <type>.L <data>.L
 void clif_attendence_response( const map_session_data* sd, int32 data ){
 	nullpo_retv(sd);
 
-	int32 fd = sd->fd;
+	PACKET_ZC_UI_ACTION p{};
+	p.PacketType = HEADER_ZC_UI_ACTION;
+	p.UIType = battle_config.feature_attendance_close;
+	p.data = data;
 
-	WFIFOHEAD(fd,packet_len(0xAF0));
-	WFIFOW(fd,0) = 0xAF0;
-	WFIFOL(fd,2) = 0;
-	WFIFOL(fd,6) = data;
-	WFIFOSET(fd,packet_len(0xAF0));
+	clif_send( &p, sizeof( p ), sd, SELF );
 }
 
 /// Request from the client to retrieve today's attendance reward
