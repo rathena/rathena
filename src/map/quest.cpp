@@ -618,6 +618,9 @@ int32 quest_add(map_session_data *sd, int32 quest_id)
 	sd->save_quest = true;
 
 	clif_quest_add(sd, &sd->quest_log[n]);
+#if PACKETVER < 20150513
+	clif_quest_update_objective(sd, &sd->quest_log[n]);
+#endif
 
 	if( save_settings&CHARSAVE_QUEST )
 		chrif_save(sd, CSAVE_NORMAL);
@@ -667,6 +670,9 @@ int32 quest_change(map_session_data *sd, int32 qid1, int32 qid2)
 
 	clif_quest_delete(sd, qid1);
 	clif_quest_add(sd, &sd->quest_log[i]);
+#if PACKETVER < 20150513
+	clif_quest_update_objective(sd, &sd->quest_log[i]);
+#endif
 
 	if( save_settings&CHARSAVE_QUEST )
 		chrif_save(sd, CSAVE_NORMAL);
