@@ -1784,7 +1784,7 @@ Body:
     Rewards:
       TitleId: 1034
     Score: 10
-  - Id: 130005 # TODO (Terra Gloria: give achievement when player visit the coronation ceremony)
+  - Id: 130005
     Group: Chatting
     Name: Who made the king
     Rewards:
