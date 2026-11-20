@@ -6,7 +6,7 @@
 //============================================================
 
 //== Making Wood :: re_wood ==========
-morocc, 285, 70, 4	script	Wood Supply Team Chief	2_M_OLDBLSMITH,{
+morocc,285,70,4	script	Wood Supply Team Chief	2_M_OLDBLSMITH,{
 	if (!checkweight(6685, 1)) {
 		mes "[Wood Supply Team Chief]";
 		mes " - You're carrying too many items. Please make some room in your bag first. - ";
@@ -123,7 +123,7 @@ morocc, 285, 70, 4	script	Wood Supply Team Chief	2_M_OLDBLSMITH,{
 	}
 }
 
-morocc, 278, 80, 3	script	Carpenter Helper	1_M_04,{
+morocc,278,80,3	script	Carpenter Helper	1_M_04,{
 	if (!checkweight(6698, 1)) {
 		mes "[Carpenter Helper]";
 		mes " - You're carrying too many items. Please make some room in your bag first. - ";
@@ -184,29 +184,29 @@ OnTouch:
 }
 
 // Duplicates
-moc_fild12,  42, 369, 4	duplicate(MocReTree)	Tree#ep14.3_01	CLEAR_NPC,1,1
-moc_fild12,  55, 376, 4	duplicate(MocReTree)	Tree#ep14.3_02	CLEAR_NPC,1,1
-moc_fild12,  57, 347, 4	duplicate(MocReTree)	Tree#ep14.3_03	CLEAR_NPC,1,1
-moc_fild12,  83, 376, 4	duplicate(MocReTree)	Tree#ep14.3_04	CLEAR_NPC,1,1
-moc_fild12,  92, 345, 4	duplicate(MocReTree)	Tree#ep14.3_05	CLEAR_NPC,1,1
-moc_fild12, 113, 366, 4	duplicate(MocReTree)	Tree#ep14.3_06	CLEAR_NPC,1,1
-moc_fild12, 125, 374, 4	duplicate(MocReTree)	Tree#ep14.3_07	CLEAR_NPC,1,1
-moc_fild12, 136, 343, 4	duplicate(MocReTree)	Tree#ep14.3_08	CLEAR_NPC,1,1
-moc_fild12, 151, 372, 4	duplicate(MocReTree)	Tree#ep14.3_09	CLEAR_NPC,1,1
-moc_fild12, 166, 370, 4	duplicate(MocReTree)	Tree#ep14.3_10	CLEAR_NPC,1,1
-moc_fild12, 167, 315, 4	duplicate(MocReTree)	Tree#ep14.3_11	CLEAR_NPC,1,1
-moc_fild12, 168, 365, 4	duplicate(MocReTree)	Tree#ep14.3_12	CLEAR_NPC,1,1
-moc_fild12, 169, 351, 4	duplicate(MocReTree)	Tree#ep14.3_13	CLEAR_NPC,1,1
-moc_fild12, 186, 370, 4	duplicate(MocReTree)	Tree#ep14.3_14	CLEAR_NPC,1,1
-moc_fild12, 218, 375, 4	duplicate(MocReTree)	Tree#ep14.3_15	CLEAR_NPC,1,1
-moc_fild12, 218, 361, 4	duplicate(MocReTree)	Tree#ep14.3_16	CLEAR_NPC,1,1
-moc_fild12, 221, 322, 4	duplicate(MocReTree)	Tree#ep14.3_17	CLEAR_NPC,1,1
-moc_fild12, 229, 362, 4	duplicate(MocReTree)	Tree#ep14.3_18	CLEAR_NPC,1,1
-moc_fild12, 236, 352, 4	duplicate(MocReTree)	Tree#ep14.3_19	CLEAR_NPC,1,1
-moc_fild12, 264, 357, 4	duplicate(MocReTree)	Tree#ep14.3_20	CLEAR_NPC,1,1
+moc_fild12,42,369,4	duplicate(MocReTree)	Tree#ep14.3_01	CLEAR_NPC,1,1
+moc_fild12,55,376,4	duplicate(MocReTree)	Tree#ep14.3_02	CLEAR_NPC,1,1
+moc_fild12,57,347,4	duplicate(MocReTree)	Tree#ep14.3_03	CLEAR_NPC,1,1
+moc_fild12,83,376,4	duplicate(MocReTree)	Tree#ep14.3_04	CLEAR_NPC,1,1
+moc_fild12,92,345,4	duplicate(MocReTree)	Tree#ep14.3_05	CLEAR_NPC,1,1
+moc_fild12,113,366,4	duplicate(MocReTree)	Tree#ep14.3_06	CLEAR_NPC,1,1
+moc_fild12,125,374,4	duplicate(MocReTree)	Tree#ep14.3_07	CLEAR_NPC,1,1
+moc_fild12,136,343,4	duplicate(MocReTree)	Tree#ep14.3_08	CLEAR_NPC,1,1
+moc_fild12,151,372,4	duplicate(MocReTree)	Tree#ep14.3_09	CLEAR_NPC,1,1
+moc_fild12,166,370,4	duplicate(MocReTree)	Tree#ep14.3_10	CLEAR_NPC,1,1
+moc_fild12,167,315,4	duplicate(MocReTree)	Tree#ep14.3_11	CLEAR_NPC,1,1
+moc_fild12,168,365,4	duplicate(MocReTree)	Tree#ep14.3_12	CLEAR_NPC,1,1
+moc_fild12,169,351,4	duplicate(MocReTree)	Tree#ep14.3_13	CLEAR_NPC,1,1
+moc_fild12,186,370,4	duplicate(MocReTree)	Tree#ep14.3_14	CLEAR_NPC,1,1
+moc_fild12,218,375,4	duplicate(MocReTree)	Tree#ep14.3_15	CLEAR_NPC,1,1
+moc_fild12,218,361,4	duplicate(MocReTree)	Tree#ep14.3_16	CLEAR_NPC,1,1
+moc_fild12,221,322,4	duplicate(MocReTree)	Tree#ep14.3_17	CLEAR_NPC,1,1
+moc_fild12,229,362,4	duplicate(MocReTree)	Tree#ep14.3_18	CLEAR_NPC,1,1
+moc_fild12,236,352,4	duplicate(MocReTree)	Tree#ep14.3_19	CLEAR_NPC,1,1
+moc_fild12,264,357,4	duplicate(MocReTree)	Tree#ep14.3_20	CLEAR_NPC,1,1
 
 //== Making Rope =======================
-morocc, 282, 284, 4	script	Rope Team Chief#ep14	1_M_ORIENT01,{
+morocc,282,284,4	script	Rope Team Chief#ep14	1_M_ORIENT01,{
 	if (!checkweight(6685, 1)) {
 		mes "[Rope Team Chief]";
 		mes " - You're carrying too many items. Please make some room in your bag first. - ";
@@ -356,7 +356,7 @@ morocc, 282, 284, 4	script	Rope Team Chief#ep14	1_M_ORIENT01,{
 }
 
 //== Making Bricks :: re_brick ========
-morocc, 42, 73, 6	script	Brick Team Chief#ep1	4_M_NFMAN,{
+morocc,42,73,6	script	Brick Team Chief#ep1	4_M_NFMAN,{
 	if (!checkweight(6685, 1)) {
 		mes "[Brick Team Chief]";
 		mes " - You're carrying too many items. Please make some room in your bag first. - ";
@@ -494,7 +494,7 @@ morocc, 42, 73, 6	script	Brick Team Chief#ep1	4_M_NFMAN,{
 	end;
 }
 
-morocc, 40, 72, 6	script	Annoyed Mimic#ep14_3	4_MIMIC,{
+morocc,40,72,6	script	Annoyed Mimic#ep14_3	4_MIMIC,{
 	if (!checkweight(6686, 1)) {
 		mes "^FF0000You're carrying too many items. Please make some room in your bag first.^000000";
 		close;
@@ -855,32 +855,32 @@ OnTouch:
 //== Wood Delivery :: re_wood ==========
 // Note: for those duplicates, the hidden name is relevant for code logic.
 
-morocc, 265, 74, 4	duplicate(MocReDeliveryStart)	Carpenter#ep14_3w	4_M_ORIENT01
+morocc,265,74,4	duplicate(MocReDeliveryStart)	Carpenter#ep14_3w	4_M_ORIENT01
 
 //morocc, 162, 109, 0	script	#wood_or	HIDDEN_WARP_NPC,2,2,{
-morocc, 162, 109, 5	duplicate(MocReDeliveryPile)	Woodpile#wood	4_WOODPILE,2,2
+morocc,162,109,5	duplicate(MocReDeliveryPile)	Woodpile#wood	4_WOODPILE,2,2
 
-morocc, 162, 112, 5	duplicate(MocReDeliveryInfo)	Woodworker#wood	4_M_ORIENT01
+morocc,162,112,5	duplicate(MocReDeliveryInfo)	Woodworker#wood	4_M_ORIENT01
 
 //== Rope Delivery :: re_rope ==========
 // Note: for those duplicates, the hidden name is relevant for code logic.
 
-morocc, 266, 288, 5	duplicate(MocReDeliveryStart)	Artisan#ep14_3r	4_M_BARBER
+morocc,266,288,5	duplicate(MocReDeliveryStart)	Artisan#ep14_3r	4_M_BARBER
 
 // morocc, 148, 109, 0	script	#rope_or	HIDDEN_WARP_NPC,2,2
-morocc, 148, 109, 5	duplicate(MocReDeliveryPile)	Rope Pile#rope	4_ROPEPILE,2,2
+morocc,148,109,5	duplicate(MocReDeliveryPile)	Rope Pile#rope	4_ROPEPILE,2,2
 
-morocc, 148, 112, 5	duplicate(MocReDeliveryInfo)	Artisan#rope	4_M_BARBER
+morocc,148,112,5	duplicate(MocReDeliveryInfo)	Artisan#rope	4_M_BARBER
 
 //== Brick Delivery :: re_brick ========
 // Note: for those duplicates, the hidden name is relevant for code logic.
 
-morocc, 55, 67, 4	duplicate(MocReDeliveryStart)	Bricklayer#ep14_3b	4_M_03
+morocc,55,67,4	duplicate(MocReDeliveryStart)	Bricklayer#ep14_3b	4_M_03
 
 // morocc, 155, 109, 0	script	#brick_or	HIDDEN_WARP_NPC,2,2
-morocc, 155, 109, 5	duplicate(MocReDeliveryPile)	Brick Pile#brick	4_BRICKPILE,2,2
+morocc,155,109,5	duplicate(MocReDeliveryPile)	Brick Pile#brick	4_BRICKPILE,2,2
 
-morocc, 155, 112, 5	duplicate(MocReDeliveryInfo)	Bricklayer#brick	4_M_03
+morocc,155,112,5	duplicate(MocReDeliveryInfo)	Bricklayer#brick	4_M_03
 
 //== Wood Piles ========================
 -	script	MocReWoodpile	4_WOODPILE,{
@@ -894,16 +894,16 @@ morocc, 155, 112, 5	duplicate(MocReDeliveryInfo)	Bricklayer#brick	4_M_03
 }
 
 // Duplicates
-morocc, 270, 75, 5	duplicate(MocReWoodpile)	Woodpile#1	4_WOODPILE,
-morocc, 272, 75, 5	duplicate(MocReWoodpile)	Woodpile#2	4_WOODPILE
-morocc, 274, 75, 5	duplicate(MocReWoodpile)	Woodpile#3	4_WOODPILE
-morocc, 276, 75, 5	duplicate(MocReWoodpile)	Woodpile#4	4_WOODPILE
-morocc, 278, 75, 5	duplicate(MocReWoodpile)	Woodpile#5	4_WOODPILE
-morocc, 270, 73, 5	duplicate(MocReWoodpile)	Woodpile#6	4_WOODPILE
-morocc, 272, 73, 5	duplicate(MocReWoodpile)	Woodpile#7	4_WOODPILE
-morocc, 274, 73, 5	duplicate(MocReWoodpile)	Woodpile#8	4_WOODPILE
-morocc, 276, 73, 5	duplicate(MocReWoodpile)	Woodpile#9	4_WOODPILE
-morocc, 278, 73, 5	duplicate(MocReWoodpile)	Woodpile#10	4_WOODPILE
+morocc,270,75,5	duplicate(MocReWoodpile)	Woodpile#1	4_WOODPILE,
+morocc,272,75,5	duplicate(MocReWoodpile)	Woodpile#2	4_WOODPILE
+morocc,274,75,5	duplicate(MocReWoodpile)	Woodpile#3	4_WOODPILE
+morocc,276,75,5	duplicate(MocReWoodpile)	Woodpile#4	4_WOODPILE
+morocc,278,75,5	duplicate(MocReWoodpile)	Woodpile#5	4_WOODPILE
+morocc,270,73,5	duplicate(MocReWoodpile)	Woodpile#6	4_WOODPILE
+morocc,272,73,5	duplicate(MocReWoodpile)	Woodpile#7	4_WOODPILE
+morocc,274,73,5	duplicate(MocReWoodpile)	Woodpile#8	4_WOODPILE
+morocc,276,73,5	duplicate(MocReWoodpile)	Woodpile#9	4_WOODPILE
+morocc,278,73,5	duplicate(MocReWoodpile)	Woodpile#10	4_WOODPILE
 
 //== Rope Piles ========================
 -	script	MocReRopePile	-1,{
@@ -916,16 +916,16 @@ morocc, 278, 73, 5	duplicate(MocReWoodpile)	Woodpile#10	4_WOODPILE
 	end;
 }
 
-morocc, 270, 287, 5	duplicate(MocReRopePile)	Rope Pile#1	4_ROPEPILE
-morocc, 272, 287, 5	duplicate(MocReRopePile)	Rope Pile#2	4_ROPEPILE
-morocc, 274, 287, 5	duplicate(MocReRopePile)	Rope Pile#3	4_ROPEPILE
-morocc, 276, 287, 5	duplicate(MocReRopePile)	Rope Pile#4	4_ROPEPILE
-morocc, 278, 287, 5	duplicate(MocReRopePile)	Rope Pile#5	4_ROPEPILE
-morocc, 270, 289, 5	duplicate(MocReRopePile)	Rope Pile#6	4_ROPEPILE
-morocc, 272, 289, 5	duplicate(MocReRopePile)	Rope Pile#7	4_ROPEPILE
-morocc, 274, 289, 5	duplicate(MocReRopePile)	Rope Pile#8	4_ROPEPILE
-morocc, 276, 289, 5	duplicate(MocReRopePile)	Rope Pile#9	4_ROPEPILE
-morocc, 278, 289, 5	duplicate(MocReRopePile)	Rope Pile#10	4_ROPEPILE
+morocc,270,287,5	duplicate(MocReRopePile)	Rope Pile#1	4_ROPEPILE
+morocc,272,287,5	duplicate(MocReRopePile)	Rope Pile#2	4_ROPEPILE
+morocc,274,287,5	duplicate(MocReRopePile)	Rope Pile#3	4_ROPEPILE
+morocc,276,287,5	duplicate(MocReRopePile)	Rope Pile#4	4_ROPEPILE
+morocc,278,287,5	duplicate(MocReRopePile)	Rope Pile#5	4_ROPEPILE
+morocc,270,289,5	duplicate(MocReRopePile)	Rope Pile#6	4_ROPEPILE
+morocc,272,289,5	duplicate(MocReRopePile)	Rope Pile#7	4_ROPEPILE
+morocc,274,289,5	duplicate(MocReRopePile)	Rope Pile#8	4_ROPEPILE
+morocc,276,289,5	duplicate(MocReRopePile)	Rope Pile#9	4_ROPEPILE
+morocc,278,289,5	duplicate(MocReRopePile)	Rope Pile#10	4_ROPEPILE
 
 //== Brick Piles =======================
 -	script	MocReBrickPile	-1,{
@@ -938,16 +938,16 @@ morocc, 278, 289, 5	duplicate(MocReRopePile)	Rope Pile#10	4_ROPEPILE
 	end;
 }
 
-morocc, 50, 67, 5	duplicate(MocReBrickPile)	Brick Pile#1	4_BRICKPILE
-morocc, 48, 67, 5	duplicate(MocReBrickPile)	Brick Pile#2	4_BRICKPILE
-morocc, 46, 67, 5	duplicate(MocReBrickPile)	Brick Pile#3	4_BRICKPILE
-morocc, 44, 67, 5	duplicate(MocReBrickPile)	Brick Pile#4	4_BRICKPILE
-morocc, 42, 67, 5	duplicate(MocReBrickPile)	Brick Pile#5	4_BRICKPILE
-morocc, 50, 65, 5	duplicate(MocReBrickPile)	Brick Pile#6	4_BRICKPILE
-morocc, 48, 65, 5	duplicate(MocReBrickPile)	Brick Pile#7	4_BRICKPILE
-morocc, 46, 65, 5	duplicate(MocReBrickPile)	Brick Pile#8	4_BRICKPILE
-morocc, 44, 65, 5	duplicate(MocReBrickPile)	Brick Pile#9	4_BRICKPILE
-morocc, 42, 65, 5	duplicate(MocReBrickPile)	Brick Pile#10	4_BRICKPILE
+morocc,50,67,5	duplicate(MocReBrickPile)	Brick Pile#1	4_BRICKPILE
+morocc,48,67,5	duplicate(MocReBrickPile)	Brick Pile#2	4_BRICKPILE
+morocc,46,67,5	duplicate(MocReBrickPile)	Brick Pile#3	4_BRICKPILE
+morocc,44,67,5	duplicate(MocReBrickPile)	Brick Pile#4	4_BRICKPILE
+morocc,42,67,5	duplicate(MocReBrickPile)	Brick Pile#5	4_BRICKPILE
+morocc,50,65,5	duplicate(MocReBrickPile)	Brick Pile#6	4_BRICKPILE
+morocc,48,65,5	duplicate(MocReBrickPile)	Brick Pile#7	4_BRICKPILE
+morocc,46,65,5	duplicate(MocReBrickPile)	Brick Pile#8	4_BRICKPILE
+morocc,44,65,5	duplicate(MocReBrickPile)	Brick Pile#9	4_BRICKPILE
+morocc,42,65,5	duplicate(MocReBrickPile)	Brick Pile#10	4_BRICKPILE
 
 //== Material Controller ===============
 // Controls the display/update of Wood, Brick and Ropes
@@ -1040,7 +1040,7 @@ OnInit:
 }
 
 //== Reward Coordinator ================
-morocc, 54, 190, 5	script	Reward Coordinator	4_M_SAGE_C,{
+morocc,54,190,5	script	Reward Coordinator	4_M_SAGE_C,{
 	if (!checkweight(6685, 10)) {
 		mes "[Reward Coordinator]";
 		mes " - You're carrying too many items. Please make some room in your bag first. - ";
@@ -1249,7 +1249,7 @@ morocc, 54, 190, 5	script	Reward Coordinator	4_M_SAGE_C,{
 }
 
 // == Snack Order =====================
-morocc, 40, 190, 6	script	Snack Lady#ep14_3	4_F_CAVE1,{
+morocc,40,190,6	script	Snack Lady#ep14_3	4_F_CAVE1,{
 	if (!checkweight(6685, 1)) {
 		mes " - You're carrying too many items. Please make some room in your bag first. - ";
 		close;
@@ -1385,7 +1385,7 @@ morocc, 40, 190, 6	script	Snack Lady#ep14_3	4_F_CAVE1,{
 }
 
 // == Worker Transport : re_transport ======
-morocc, 57, 196, 5	script	HR Coordinator	4_M_ALCHE_A,{
+morocc,57,196,5	script	HR Coordinator	4_M_ALCHE_A,{
 	if (BaseLevel < 80) {
 		mes "[HR Coordinator]";
 		mes "You don't have enough experience for this task.";
@@ -1905,15 +1905,15 @@ S_LoadSite:
 	return;
 }
 
-morocc, 50, 75, 5	duplicate(HRSupervisor)	HR Supervisor#brick	4_M_SEAMAN,4,4
-morocc, 161, 117, 5	duplicate(HRSupervisor)	HR Supervisor#siro	4_M_SEAMAN,4,4
-morocc, 270, 282, 5	duplicate(HRSupervisor)	HR Supervisor#rope	4_M_SEAMAN,4,4
-morocc, 275, 68, 5	duplicate(HRSupervisor)	HR Supervisor#wood	4_M_SEAMAN,4,4
+morocc,50,75,5	duplicate(HRSupervisor)	HR Supervisor#brick	4_M_SEAMAN,4,4
+morocc,161,117,5	duplicate(HRSupervisor)	HR Supervisor#siro	4_M_SEAMAN,4,4
+morocc,270,282,5	duplicate(HRSupervisor)	HR Supervisor#rope	4_M_SEAMAN,4,4
+morocc,275,68,5	duplicate(HRSupervisor)	HR Supervisor#wood	4_M_SEAMAN,4,4
 
 // == Purging the Land ================
 // Note: The NPC logic regarding the quest itself is totally based on online information.
 
-morocc, 47, 193, 6	script	HR Centurion#ep14_3	4_M_MOCASS1,{
+morocc,47,193,6	script	HR Centurion#ep14_3	4_M_MOCASS1,{
 	if (isbegin_quest(5265) == 0) {
 		mes "[Centurion Van]";
 		mes "I am Van, and I am in charge of purging the monsters around Morroc. What brings you here?";
@@ -1992,7 +1992,7 @@ morocc, 47, 193, 6	script	HR Centurion#ep14_3	4_M_MOCASS1,{
 }
 
 // == Other NPCs ======================
-morocc, 50, 188, 5	script	Architect#ep14	4_M_DOCTOR,{
+morocc,50,188,5	script	Architect#ep14	4_M_DOCTOR,{
 	switch (select("What do you do?", "Where can I get jobs?", "What does the HQ do?", "End conversation.")) {
 	case 1:
 		mes "[Architect]";
@@ -2023,7 +2023,7 @@ morocc, 50, 188, 5	script	Architect#ep14	4_M_DOCTOR,{
 	}
 }
 
-morocc, 50, 197, 6	script	Accountant#ep14_3	4_M_01,{
+morocc,50,197,6	script	Accountant#ep14_3	4_M_01,{
 	switch (rand(3)) {
 	case 0:
 		mes "[Accountant]";
@@ -2099,5 +2099,169 @@ function	script	F_MocRePickMaterial	{
 	next;
 	mes "- Now, deliver the materials to the construction site near the central castle. -";
 	close2;
+	return;
+}
+
+morocc,43,191,5	script	Notice Board#moc_re::MocReContribute	4_BOARD3,{
+	if ($mocre_highestcontrib$ == "") {
+		mes "There is a blank notice board here.";
+		close;
+	}
+
+	mes "[Notice Board]";
+	mes "Right now the biggest contributor to the Morroc restauration is";
+	mes "the Great Adventurer " + $mocre_highestcontrib$ + ",";
+	mes "who, so far, made a total of " + $mocre_highestnum + " contributions.";
+	mes "I want to offer my gratitude to the adventurer in the name of the entire city.";
+	close;
+
+
+}
+
+morocc,52,197,6	script	Morroc Merit Machine#re	2_VENDING_MACHINE1,{
+	if (MaxWeight - Weight < 80 || checkweight(1201, 1) == 0) {
+		mes " - You're carrying too many items. Please make some room in your bag first. - ";
+		close;
+	}
+
+	if (BaseLevel < 80) {
+		mes "[Vending Machine Manager]";
+		mes "Wow, kid. Don't touch on this vending machine.";
+		close;
+	}
+
+	mes "[Morroc Merit Machine]";
+	mes "- Select your desired reward -";
+	mes "Currently you have " + countitem(6685) + " Morroc Merits";
+	next;
+	.@menu$ = "Don't exchange";
+	.@count = 1;
+	for (.@i = 0; .@i < getarraysize(.rewards); .@i += 3) {
+		if (.rewards[.@i + 2] == 1)
+			.@reward$ = "Base EXP";
+		else if (.rewards[.@i + 2] == 2)
+			.@reward$ = "Job EXP";
+		else
+			.@reward$ = ("" + (.rewards[.@i + 1]) + " " + getitemname(.rewards[.@i + 2]));
+
+		.@menu$ += (":[" + .@count + "] " + .@reward$ + " (" + (.rewards[.@i]) + ")");
+		.@count++;
+	}
+	.@option = select(.@menu$) - 1;
+	if (.@option == 0)
+		close;
+
+	callsub S_GetReward, .@option - 1;
+	mes "[Morroc Merit Machine]";
+	mes "Thank you for using the vending machine.";
+	close;
+
+// S_GetReward(index)
+S_GetReward:
+	.@cost = .rewards[getarg(0) * 3];
+	.@itemQt = .rewards[getarg(0) * 3 + 1];
+	.@itemId = .rewards[getarg(0) * 3 + 2];
+
+
+	switch (.@itemId) {
+	case 1:
+		.@reward$ = "Base Experience";
+		break;
+
+	case 2:
+		.@reward$ = "Job Experience";
+		break;
+
+	default:
+		.@reward$ = ("" + .@itemQt + " " + getitemname(.@itemId));
+		break;
+	}
+	mes "[Morroc Merit Machine]";
+	mes "Do you want " + .@reward$ + "?";
+	next;
+	while (select("Yes.", "No.") == 1) {
+		if (countitem(6685) < .@cost) {
+			mes "[Morroc Merit Machine]";
+			mes "Insuficient merits.";
+			next;
+			return;
+		}
+
+		if (.@itemId > 2) {
+			if (!checkweight(.@itemId, .@itemQt)) {
+				mes " - You're carrying too many items. Please make some room in your bag first. - ";
+				close;
+			}
+		}
+
+		delitem 6685, .@cost;
+
+		// EXP Reward
+		if (.@itemId == 1 || .@itemId == 2) {
+			for (.@i = 0; .@i < getarraysize(.expTable); .@i += 4) {
+				if (BaseLevel < .expTable[.@i] || BaseLevel > .expTable[.@i + 1])
+					continue;
+
+				break;
+			}
+
+			// should never happen, but just in case.
+			if (.@i >= getarraysize(.expTable))
+				.@i = getarraysize(.expTable) - 4;
+
+			if (.@itemId == 1)
+				getexp .expTable[.@i + 2], 0;
+			else
+				getexp 0, .expTable[.@i + 3];
+		} else {
+			getitem .@itemId, .@itemQt;
+		}
+
+		mes "[Morroc Merit Machine]";
+		mes "Do you want to exchange again?";
+		next;
+	}
+
+	return;
+
+OnInit:
+	setarray .rewards[0],
+		// Merits, Item Qt, Item ID,
+		  1,  1, 1, // Experience
+		  1,  1, 2, // Job Experience
+		 10, 20, 547,
+		 20, 10, 716,
+		 20, 10, 715,
+		 20,  1, 12814,
+		 20,  1, 12815,
+		 20,  1, 12812,
+		 20,  1, 12813,
+		 30,  1, 505,
+		 50,  1, 997,
+		 50,  1, 996,
+		 50,  1, 995,
+		 50,  1, 994,
+		100,  1, 608;
+
+	setarray .expTable[0],
+		// MinBaseLevel, MaxBaseLevel, BaseEXP, JobEXP,
+		 80,  90, 10000, 10000,
+		 91, 100, 15000, 12000,
+		101, 110, 20000,  5000,
+		111, 120, 25000,  7000,
+		121, 130, 30000,  9000,
+		131, 140, 35000, 11000,
+		141, 150, 40000, 13000,
+		151, 175, 45000, 13000;
+	end;
+}
+
+function	script	F_MocReAddContribution	{
+	re_contribution++;
+	if (re_contribution > $mocre_highestnum) {
+		$mocre_highestnum = re_contribution;
+		$mocre_highestcontrib$ = strcharinfo(0);
+	}
+
 	return;
 }

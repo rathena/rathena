@@ -1,170 +1,266 @@
 //===== rAthena Script =======================================
 //= Rebuilding Morroc Rewards
 //===== Changelogs: ==========================================
-//= 1.0 Hercules release [Guilherme]
-//= 1.1 Converted into rAthena syntax. [Haydrich]
+//= 1.0 Initial release [Capuche]
 //============================================================
 
-morocc, 43, 191, 5	script	Notice Board#moc_re::MocReContribute	4_BOARD3,{
-	if ($mocre_highestcontrib$ == "") {
-		mes "There is a blank notice board here.";
+// ep15_1_moc_nk - Reward Coordinator
+morocc,54,190,5	script	Reward Coordinator	4_M_SAGE_C,{
+	for ( .@i = 5252; .@i <= 5264; .@i += 2 ) {
+		if (isbegin_quest(.@i) == 1)
+			erasequest .@i;
+	}
+	if (isbegin_quest(5269) == 1)
+		erasequest 5269;
+	if (isbegin_quest(5275) == 1)
+		erasequest 5275;
+
+	if (countitem(6688) > 0)
+		delitem 6688, countitem(6688);	// Wood_
+	if (countitem(6687) > 0)
+		delitem 6687, countitem(6687);	// LongRopes
+	if (countitem(6686) > 0)
+		delitem 6686, countitem(6686);	// Brick
+	mes "[Reward Coordinator]";
+	mes "So, um... I'm...";
+	mes "I think I'm sent here";
+	mes "to... to... Let me think...";
+	mes "Oh yes, to support the Morroc restoration work.";
+	next;
+	mes "[Reward Coordinator]";
+	mes "The restoration work is finished,";
+	mes "but I remain";
+	mes "to finish rewarding the volunteers.";
+	next;
+	mes "[Reward Coordinator]";
+	mes "So, how may I help you today?";
+	next;
+	switch( select( "Claim rewards.", "What can I do with the Contribution Certificate Vending Machine?", "End conversation." ) ) {
+	case 1:
+		for ( .@i = 5251; .@i <= 5263; .@i += 2 ) {
+			if (isbegin_quest(.@i) == 1)
+				.@moc_on++;
+		}
+		if (isbegin_quest(5265) == 1 || isbegin_quest(5266) == 1 || isbegin_quest(5267) == 1 || isbegin_quest(5268) == 1)
+			.@moc_on++;
+		if (isbegin_quest(5270) == 1 || isbegin_quest(5271) == 1 || isbegin_quest(5272) == 1 || isbegin_quest(5273) == 1 || isbegin_quest(5274) == 1)
+			.@moc_on++;
+		if (.@moc_on > 0) {
+			mes "[Reward Coordinator]";
+			mes "In recognition of your credit,";
+			mes "we will grant you a certificate.";
+			mes "The certificates can be used by the vending machine next to it.";
+			getitem 6685, .@moc_on;	// MoroccMerit
+			for ( .@i = 5251; .@i < 5275; .@i++ ) {
+				if (isbegin_quest(.@i) == 1)
+					completequest .@i;
+			}
+			close;
+		}
+		mes "[Reward Coordinator]";
+		mes "You haven't finished your quest,";
+		mes "or never accepted one. Please check your quest history.";
+		close;
+	case 2:
+		mes "[Reward Coordinator]";
+		mes "Do you see the vending machine next to me?";
+		mes "You can use your Certificates with the machine";
+		mes "to get EXP and a variety of items in exchange.";
+		next;
+		mes "[Reward Coordinator]";
+		mes "For more details, you should click the vending machine.";
+		close;
+	case 3:
+		mes "[Reward Coordinator]";
+		mes "Um, so...";
+		mes "Why did you";
+		mes "talk to me, if I may ask?";
+		next;
+		mes "[Reward Coordinator]";
+		mes "Aww, I hate this sandy wind.";
+		mes "It leaves my nice clothes";
+		mes "sandy and nasty-feeling.";
 		close;
 	}
-
-	mes "[Notice Board]";
-	mes "Right now the biggest contributor to the Morroc restauration is";
-	mes "the Great Adventurer " + $mocre_highestcontrib$ + ",";
-	mes "who, so far, made a total of " + $mocre_highestnum + " contributions.";
-	mes "I want to offer my gratitude to the adventurer in the name of the entire city.";
-	close;
-
-
 }
 
-morocc, 52, 197, 6	script	Morroc Merit Machine#re	2_VENDING_MACHINE1,{
-	if (MaxWeight - Weight < 80 || checkweight(1201, 1) == 0) {
-		mes " - You're carrying too many items. Please make some room in your bag first. - ";
-		close;
+morocc,43,191,5	script	Announcement#moc_re	4_BOARD3,{
+	if (ep14_3_mocrank > $@2012_ep14_moc_most) {
+		$@2012_ep14_moc_most = ep14_3_mocrank;
+		$@2012_ep14_moc_mostname$ = strcharinfo(0);
 	}
-
-	if (BaseLevel < 80) {
-		mes "[Vending Machine Manager]";
-		mes "Wow, kid. Don't touch on this vending machine.";
-		close;
+	// Include the record saved by the original reconstruction event.
+	.@most = $@2012_ep14_moc_most;
+	.@mostname$ = $@2012_ep14_moc_mostname$;
+	if ($mocre_highestnum > .@most) {
+		.@most = $mocre_highestnum;
+		.@mostname$ = $mocre_highestcontrib$;
 	}
-
-	mes "[Morroc Merit Machine]";
-	mes "- Select your desired reward -";
-	mes "Currently you have " + countitem(6685) + " Morroc Merits";
-	next;
-	.@menu$ = "Don't exchange";
-	.@count = 1;
-	for (.@i = 0; .@i < getarraysize(.rewards); .@i += 3) {
-		if (.rewards[.@i + 2] == 1)
-			.@reward$ = "Base EXP";
-		else if (.rewards[.@i + 2] == 2)
-			.@reward$ = "Job EXP";
-		else
-			.@reward$ = ("" + (.rewards[.@i + 1]) + " " + getitemname(.rewards[.@i + 2]));
-
-		.@menu$ += (":[" + .@count + "] " + .@reward$ + " (" + (.rewards[.@i]) + ")");
-		.@count++;
-	}
-	.@option = select(.@menu$) - 1;
-	if (.@option == 0)
-		close;
-
-	callsub S_GetReward, .@option - 1;
-	mes "[Morroc Merit Machine]";
-	mes "Thank you for using the vending machine.";
+	mes "[Morroc Restoration Project Director Paek]";
+	mes "Currently the greatest contributor is";
+	mes "Great Adventurer " + .@mostname$ + ",";
+	mes "who has made a total of " + .@most + " contributions so far.";
+	mes "I'd like to give thanks to this adventurer on behalf of the entire city.";
 	close;
+}
 
-// S_GetReward(index)
-S_GetReward:
-	.@cost = .rewards[getarg(0) * 3];
-	.@itemQt = .rewards[getarg(0) * 3 + 1];
-	.@itemId = .rewards[getarg(0) * 3 + 2];
-
-
-	switch (.@itemId) {
-	case 1:
-		.@reward$ = "Base Experience";
-		break;
-
-	case 2:
-		.@reward$ = "Job Experience";
-		break;
-
-	default:
-		.@reward$ = ("" + .@itemQt + " " + getitemname(.@itemId));
-		break;
+morocc,52,197,6	script	Contribution Certificate Vending Machine#ep14_3	2_VENDING_MACHINE1,{
+	if (checkweight(1301,1) == 0) {
+		mes "- You are carrying too many items to proceed with the dialog -";
+		close;
 	}
-	mes "[Morroc Merit Machine]";
-	mes "Do you want " + .@reward$ + "?";
+	if (BaseLevel < 80) {
+		mes "[Vending Machine Administrator]";
+		mes "Hello~ Don't touch the vending machine casually.";
+		close;
+	}
+	mes "[Contribution Certificate Vending Machine]";
+	mes "- Select an item you want. -";
+	mes "Current Contribution Certificates: " + countitem(6685) + "";
 	next;
-	while (select("Yes.", "No.") == 1) {
-		if (countitem(6685) < .@cost) {
-			mes "[Morroc Merit Machine]";
-			mes "Insuficient merits.";
-			next;
-			return;
-		}
-
-		if (.@itemId > 2) {
-			if (!checkweight(.@itemId, .@itemQt)) {
-				mes " - You're carrying too many items. Please make some room in your bag first. - ";
+	switch( select(
+		"Do not exchange.",
+		"[1] EXP -(1)",
+		"[2] Job Agency Recommendation -(1)",
+		"[3] 20 Condensed White Potions -(10)",
+		"[4] 10 Red Gemstones -(20)",
+		"[5] 10 Yellow Gemstones -(20)",
+		"[6] 1 Sadagui -(20)",
+		"[7] 1 Yggdrasil Dust -(20)",
+		"[8] 1 Snow Flip -(20)",
+		"[9] 1 Peony Mami -(20)",
+		"[10] 1 Blue Potion -(30)",
+		"[11] 1 Great Nature -(50)",
+		"[12] 1 Rough Wind -(50)",
+		"[13] 1 Mystic Frozen -(50)",
+		"[14] 1 Flame Heart -(50)",
+		"[15] 1 Yggdrasil Seed -(100)" ) ) {
+	case 1:
+		close;
+	case 2:
+		mes "[Contribution Certificate Vending Machine]";
+		mes "Do you want EXP?";
+		next;
+		while(1) {
+			if (select("Yes.", "No.") == 2) {
+				mes "[Contribution Certificate Vending Machine]";
+				mes "Thank you for using the vending machine.";
 				close;
 			}
-		}
-
-		delitem 6685, .@cost;
-
-		// EXP Reward
-		if (.@itemId == 1 || .@itemId == 2) {
-			for (.@i = 0; .@i < getarraysize(.expTable); .@i += 4) {
-				if (BaseLevel < .expTable[.@i] || BaseLevel > .expTable[.@i + 1])
-					continue;
-
-				break;
+			if (countitem(6685) < 1) {
+				mes "[Contribution Certificate Vending Machine]";
+				mes "Not enough Certificates.";
+				next;
+				mes "[Contribution Certificate Vending Machine]";
+				mes "Thank you for using the vending machine.";
+				close;
 			}
-
-			// should never happen, but just in case.
-			if (.@i >= getarraysize(.expTable))
-				.@i = getarraysize(.expTable) - 4;
-
-			if (.@itemId == 1)
-				getexp .expTable[.@i + 2], 0;
+			delitem 6685,1;	// MoroccMerit
+			if (BaseLevel > 79 && BaseLevel < 91)
+				getexp 10000,0;
+			else if (BaseLevel > 90 && BaseLevel < 101)
+				getexp 15000,0;
+			else if (BaseLevel > 100 && BaseLevel < 111)
+				getexp 20000,0;
+			else if (BaseLevel > 110 && BaseLevel < 121)
+				getexp 25000,0;
+			else if (BaseLevel > 120 && BaseLevel < 131)
+				getexp 30000,0;
+			else if (BaseLevel > 130 && BaseLevel < 141)
+				getexp 35000,0;
+			else if (BaseLevel > 140 && BaseLevel < 151)
+				getexp 40000,0;
 			else
-				getexp 0, .expTable[.@i + 3];
-		} else {
-			getitem .@itemId, .@itemQt;
+				getexp 45000,0;
+			mes "[Contribution Certificate Vending Machine]";
+			mes "Do you want to continue to redeem?";
+			next;
 		}
+		end;
+	case 3:
+		mes "[Contribution Certificate Vending Machine]";
+		mes "Do you want Job Agency Recommendation?";
+		next;
+		while(1) {
+			if (select("Yes.", "No.") == 2) {
+				mes "[Contribution Certificate Vending Machine]";
+				mes "Thank you for using the vending machine.";
+				close;
+			}
+			if (countitem(6685) < 1) {
+				mes "[Contribution Certificate Vending Machine]";
+				mes "Not enough Certificates.";
+				next;
+				mes "[Contribution Certificate Vending Machine]";
+				mes "Thank you for using the vending machine.";
+				close;
+			}
+			delitem 6685,1;	// MoroccMerit
+			if (BaseLevel > 79 && BaseLevel < 91)
+				getexp 0,10000;
+			else if (BaseLevel > 90 && BaseLevel < 101)
+				getexp 0,12000;
+			else if (BaseLevel > 100 && BaseLevel < 111)
+				getexp 0,5000;
+			else if (BaseLevel > 110 && BaseLevel < 121)
+				getexp 0,7000;
+			else if (BaseLevel > 120 && BaseLevel < 131)
+				getexp 0,9000;
+			else if (BaseLevel > 130 && BaseLevel < 141)
+				getexp 0,11000;
+			else if (BaseLevel > 140 && BaseLevel < 151)
+				getexp 0,13000;
+			else
+				getexp 0,13000;
+			mes "[Contribution Certificate Vending Machine]";
+			mes "Do you want to continue to redeem?";
+			next;
+		}
+		end;
+	case 4:  callsub( S_Exchange, 10,   547, 20 );	// White_Slim_Potion
+	case 5:  callsub( S_Exchange, 20,   716, 10 );	// Red_Gemstone
+	case 6:  callsub( S_Exchange, 20,   715, 10 );	// Yellow_Gemstone
+	case 7:  callsub( S_Exchange, 20, 12814,  1 );	// Slapping_Herb
+	case 8:  callsub( S_Exchange, 20, 12815,  1 );	// Yggdrasil_Dust
+	case 9:  callsub( S_Exchange, 20, 12812,  1 );	// Snow_Flip
+	case 10: callsub( S_Exchange, 20, 12813,  1 );	// Peony_Mommy
+	case 11: callsub( S_Exchange, 30,   505,  1 );	// Blue_Potion
+	case 12: callsub( S_Exchange, 50,   997,  1 );	// Great_Nature
+	case 13: callsub( S_Exchange, 50,   996,  1 );	// Rough_Wind
+	case 14: callsub( S_Exchange, 50,   995,  1 );	// Mistic_Frozen
+	case 15: callsub( S_Exchange, 50,   994,  1 );	// Flame_Heart
+	case 16: callsub( S_Exchange, 100,  608,  1 );	// Seed_Of_Yggdrasil
+	default:
+		mes "[Contribution Certificate Vending Machine]";
+		mes "Malfunction.";
+		close;
+	}
+	end;
 
-		mes "[Morroc Merit Machine]";
-		mes "Do you want to exchange again?";
+S_Exchange:
+	.@item_id = getarg(1);
+	mes "[Contribution Certificate Vending Machine]";
+	mes "Do you want " + getitemname(.@item_id) + "?";
+	next;
+	while(1) {
+		if (select("Yes.", "No.") == 2) {
+			mes "[Contribution Certificate Vending Machine]";
+			mes "Thank you for using the vending machine.";
+			close;
+		}
+		if (countitem(6685) < getarg(0)) {
+			mes "[Contribution Certificate Vending Machine]";
+			mes "Not enough Certificates.";
+			next;
+			mes "[Contribution Certificate Vending Machine]";
+			mes "Thank you for using the vending machine.";
+			close;
+		}
+		delitem 6685, getarg(0);	// MoroccMerit
+		getitem .@item_id, getarg(2);
+		mes "[Contribution Certificate Vending Machine]";
+		mes "Do you want to continue to redeem?";
 		next;
 	}
-
-	return;
-
-OnInit:
-	setarray .rewards[0],
-		// Merits, Item Qt, Item ID,
-		  1,  1, 1, // Experience
-		  1,  1, 2, // Job Experience
-		 10, 20, 547,
-		 20, 10, 716,
-		 20, 10, 715,
-		 20,  1, 12814,
-		 20,  1, 12815,
-		 20,  1, 12812,
-		 20,  1, 12813,
-		 30,  1, 505,
-		 50,  1, 997,
-		 50,  1, 996,
-		 50,  1, 995,
-		 50,  1, 994,
-		100,  1, 608;
-
-	setarray .expTable[0],
-		// MinBaseLevel, MaxBaseLevel, BaseEXP, JobEXP,
-		 80,  90, 10000, 10000,
-		 91, 100, 15000, 12000,
-		101, 110, 20000,  5000,
-		111, 120, 25000,  7000,
-		121, 130, 30000,  9000,
-		131, 140, 35000, 11000,
-		141, 150, 40000, 13000,
-		151, 175, 45000, 13000;
 	end;
-}
-
-function	script	F_MocReAddContribution	{
-	re_contribution++;
-	if (re_contribution > $mocre_highestnum) {
-		$mocre_highestnum = re_contribution;
-		$mocre_highestcontrib$ = strcharinfo(0);
-	}
-
-	return;
 }
