@@ -2605,27 +2605,75 @@ Body:
   - Id: 5238
     Title: Harvest Waiting Time
     TimeLimit: +30mn
+  - Id: 5251
+    Title: Wood Supply Mission
   - Id: 5252
     Title: (Pending) Wood Supply Mission
     TimeLimit: +3h
+  - Id: 5253
+    Title: Wood Delivery Mission
   - Id: 5254
     Title: (Pending) Wood Delivery Mission
     TimeLimit: +3h
+  - Id: 5255
+    Title: Rope Making Mission
+  - Id: 5256
+    Title: (Pending) Rope Making Mission
+    TimeLimit: +3h
+  - Id: 5257
+    Title: Rope Delivery Mission
   - Id: 5258
     Title: (Pending) Rope Delivery Mission
     TimeLimit: +3h
+  - Id: 5259
+    Title: Brick Making Mission
   - Id: 5260
     Title: (Pending) Brick Making Mission
     TimeLimit: +3h
+  - Id: 5261
+    Title: Brick Delivery Mission
   - Id: 5262
     Title: (Pending) Brick Delivery Mission
     TimeLimit: +3h
+  - Id: 5263
+    Title: Snack Order
   - Id: 5264
     Title: (Pending) Snack Order
     TimeLimit: +3h
+  - Id: 5265
+    Title: Purging the Land (1)
+    Targets:
+      - Mob: MOROCC_1
+        Count: 10
+  - Id: 5266
+    Title: Purging the Land (2)
+    Targets:
+      - Mob: MOROCC_2
+        Count: 10
+  - Id: 5267
+    Title: Purging the Land (3)
+    Targets:
+      - Mob: MOROCC_3
+        Count: 10
+  - Id: 5268
+    Title: Purging the Land (4)
+    Targets:
+      - Mob: MOROCC_4
+        Count: 10
   - Id: 5269
     Title: (Pending) Purging the Land
     TimeLimit: +3h
+  - Id: 5270
+    Title: Worker Transport
+    TimeLimit: +3mn
+  - Id: 5271
+    Title: Worker Transport
+  - Id: 5272
+    Title: Worker Transport
+  - Id: 5273
+    Title: Worker Transport
+  - Id: 5274
+    Title: Worker Transport
   - Id: 5275
     Title: (Pending) Worker Transport
     TimeLimit: +3h
