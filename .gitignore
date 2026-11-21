@@ -69,7 +69,8 @@ Thumbs.db
 !db/import/mob_db.yml
 
 # /conf/
-/conf/import
+/conf/import/*
+!/conf/import/import_sql.sh
 /conf/msg_conf/import
 
 # /lib
