@@ -1,7 +1,7 @@
 #!/bin/bash
 
 shopt -s nullglob
-files=(./sql-files/*.sql)
+files=(./*.sql)
 
 IFS=$'\n' files=($(printf '%s\n' "${files[@]}" | sort))
 unset IFS
