@@ -70,7 +70,6 @@ Thumbs.db
 
 # /conf/
 /conf/import/*
-!/conf/import/import_sql.sh
 /conf/msg_conf/import
 
 # /lib
