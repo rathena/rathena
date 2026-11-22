@@ -12,12 +12,17 @@ on:
       - master
   pull_request:
     paths:
-      # Always trigger all Github Actions if an action or something CI related was changed
-      - '.github/workflows/**'
-      - 'tools/ci/**'
-      # This workflow should run when a file in a source directory has been modified.
+      # This workflow should run when
+      # 1) its own workflow configuration file was changed
+      - '.github/workflows/build_servers_modes.yml'
+      # 2) a source code file in the src directory was changed
       - 'src/**'
+      # 3) a source code file in the 3rdparty directory was changed
       - '3rdparty/**'
+      # 4) a CI related file was changed
+      - 'tools/ci/**'
+      # 5) a SQL script file in the sql-files directory was changed
+      - 'sql-files/**'
 
 jobs:
   build:
