@@ -43,11 +43,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Update & Install packages
+      - name: Install packages
         # Ubuntu runners already have most of the packages rAthena requires to build.
         # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-Readme.md
         run: |
-          sudo apt update
           sudo apt install zlib1g-dev libpcre3-dev gcc-${{ matrix.gcc }} g++-${{ matrix.gcc }}
 
       - name: Command - configure

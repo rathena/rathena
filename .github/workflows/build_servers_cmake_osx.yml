@@ -35,7 +35,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Update & Install packages
+      - name: Install packages
         # Macos runners already have most of the packages rAthena requires to build.
         # https://github.com/actions/runner-images/blob/main/images/macos/macos-15-Readme.md
         # https://github.com/actions/runner-images/blob/main/images/macos/macos-26-Readme.md
