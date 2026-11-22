@@ -55,12 +55,6 @@ jobs:
         run: |
           sudo apt install zlib1g-dev libpcre3-dev
 
-      - name: Start MySQL
-        run: sudo systemctl start mysql.service
-
-      - name: Setup Database and import table data
-        run: ./tools/ci/sql.sh
-
       - name: Command - configure
         env:
             CONFIGURE_FLAGS: '--enable-prere=${{ env.PRERE }} --enable-packetver=${{ matrix.packetver }} --enable-buildbot=yes'
