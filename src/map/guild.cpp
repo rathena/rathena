@@ -735,7 +735,7 @@ int32 guild_created(uint32 account_id,int32 guild_id) {
 	if(battle_config.guild_emperium_check){
 		int32 index = pc_search_inventory(sd,ITEMID_EMPERIUM);
 
-		if( index > 0 )
+		if( index >= 0 )
 			pc_delitem(sd,index,1,0,0,LOG_TYPE_CONSUME);	//emperium consumption
 	}
 	return 0;
