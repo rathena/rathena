@@ -64,7 +64,7 @@ OnInit:
 
 OnTimer7980000:
 	stopnpctimer;
-    	switch(rand(6))
+    	switch(rand(7))
 	{
 
 	case 0:
