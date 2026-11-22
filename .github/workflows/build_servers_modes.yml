@@ -35,8 +35,6 @@ jobs:
           # The ubuntu-latest label currently points to ubuntu-26.04.
           # Available: ubuntu-24.04, ubuntu-26.04
           os: [ubuntu-latest]
-          # Older versions of GCC are not available via unaltered aptitude repo lists.
-          gcc: ['11']
           # We run build checks for both Renewal and PRE-Renewal
           mode: ['PRE','RE']
 
@@ -57,7 +55,7 @@ jobs:
         # Ubuntu runners already have most of the packages rAthena requires to build.
         # https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2604-Readme.md
         run: |
-          sudo apt install zlib1g-dev libpcre3-dev gcc-${{ matrix.gcc }} g++-${{ matrix.gcc }}
+          sudo apt install zlib1g-dev libpcre3-dev
 
       - name: Start MySQL
         run: sudo systemctl start mysql.service
@@ -67,7 +65,7 @@ jobs:
 
       - name: Command - configure
         env:
-            CONFIGURE_FLAGS: 'CC=gcc-${{ matrix.gcc }} CXX=g++-${{ matrix.gcc }} --enable-prere=${{ env.PRERE }} --enable-buildbot=yes'
+            CONFIGURE_FLAGS: '--enable-prere=${{ env.PRERE }} --enable-buildbot=yes'
         run: ./configure $CONFIGURE_FLAGS
 
       - name: Command - make clean
