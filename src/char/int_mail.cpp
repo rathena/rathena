@@ -17,6 +17,7 @@
 #include "char.hpp"
 #include "char_mapif.hpp"
 #include "inter.hpp"
+#include "int_guild.hpp"
 
 using namespace rathena;
 
@@ -596,6 +597,33 @@ void mapif_Mail_send(int32 fd, struct mail_message* msg)
 	WFIFOSET(fd,len);
 }
 
+/// Shared by name validation and final delivery so privacy changes cannot be bypassed.
+static e_mail_receiver_result mail_receiver_check( uint32 sender_id, uint32 recipient_id, uint8 spam_filter, int32 sender_guild_id ){
+	if( sender_id == 0 || sender_id == recipient_id )
+		return MAIL_RECEIVER_ALLOWED;
+
+	char* data;
+	bool allowed = false, recipient_found = false;
+	if( SQL_ERROR == Sql_Query( sql_handle,
+		"SELECT c.`disable_rodex_nonfriend`, EXISTS(SELECT 1 FROM `%s` f WHERE f.`char_id` = c.`char_id` AND f.`friend_id` = '%u') "
+		"FROM `%s` c WHERE c.`char_id` = '%u'",
+		schema_config.friend_db, sender_id, schema_config.char_db, recipient_id ) ){
+		Sql_ShowDebug( sql_handle );
+	}else if( SQL_SUCCESS == Sql_NextRow( sql_handle ) ){
+		recipient_found = true;
+		Sql_GetData( sql_handle, 0, &data, nullptr );
+		bool restricted = atoi( data ) != 0;
+		Sql_GetData( sql_handle, 1, &data, nullptr );
+		allowed = !restricted || atoi( data ) != 0;
+	}
+	Sql_FreeResult( sql_handle );
+	if( !recipient_found )
+		return MAIL_RECEIVER_UNAVAILABLE;
+	if( !allowed && spam_filter == RODEX_SPAM_FRIENDS_GUILD )
+		allowed = inter_guild_has_members( sender_guild_id, sender_id, recipient_id );
+	return allowed ? MAIL_RECEIVER_ALLOWED : MAIL_RECEIVER_BLOCKED;
+}
+
 void mapif_parse_Mail_send(int32 fd)
 {
 	struct mail_message msg;
@@ -603,10 +631,12 @@ void mapif_parse_Mail_send(int32 fd)
 	char *data;
 	size_t len;
 
-	if(RFIFOW(fd,2) != 8 + sizeof(struct mail_message))
+	if(RFIFOW(fd,2) != 13 + sizeof(struct mail_message))
 		return;
 
 	memcpy(&msg, RFIFOP(fd,8), sizeof(struct mail_message));
+	uint8 spam_filter = RFIFOB( fd, 8 + sizeof(struct mail_message) );
+	int32 sender_guild_id = RFIFOL( fd, 9 + sizeof(struct mail_message) );
 
 	if( msg.dest_id != 0 ){
 		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`, `name` FROM `%s` WHERE `char_id` = '%u'", schema_config.char_db, msg.dest_id) ){
@@ -650,6 +680,16 @@ void mapif_parse_Mail_send(int32 fd)
 	Sql_FreeResult(sql_handle);
 	msg.status = MAIL_NEW;
 
+	// Enforce player mail privacy here, including offline and other-map recipients.
+	// Script mail and returned attachments use separate paths and remain deliverable.
+	if( msg.dest_id > 0 && msg.send_id > 0 && msg.send_id != msg.dest_id ){
+		if( mail_receiver_check( msg.send_id, msg.dest_id, spam_filter, sender_guild_id ) != MAIL_RECEIVER_ALLOWED ){
+			msg.id = 0;
+			mapif_Mail_send( fd, &msg ); // Existing failure path refunds attachments.
+			return;
+		}
+	}
+
 	if( msg.dest_id > 0 )
 		msg.id = mail_savemessage(&msg);
 
@@ -688,15 +728,16 @@ bool mail_sendmail(int32 send_id, const char* send_name, int32 dest_id, const ch
 	return true;
 }
 
-void mapif_Mail_receiver_send( int32 fd, int32 requesting_char_id, int32 char_id, int32 class_, int32 base_level, const char* name ){
-	WFIFOHEAD(fd,38);
+void mapif_Mail_receiver_send( int32 fd, int32 requesting_char_id, int32 char_id, int32 class_, int32 base_level, const char* name, e_mail_receiver_result result ){
+	WFIFOHEAD(fd,39);
 	WFIFOW(fd,0) = 0x384e;
 	WFIFOL(fd,2) = requesting_char_id;
 	WFIFOL(fd,6) = char_id;
 	WFIFOW(fd,10) = class_;
 	WFIFOW(fd,12) = base_level;
-	strncpy(WFIFOCP(fd, 14), name, NAME_LENGTH);
-	WFIFOSET(fd,38);
+	safestrncpy(WFIFOCP(fd, 14), name, NAME_LENGTH);
+	WFIFOB(fd,38) = result;
+	WFIFOSET(fd,39);
 }
 
 void mapif_parse_Mail_receiver_check( int32 fd ){
@@ -720,7 +761,15 @@ void mapif_parse_Mail_receiver_check( int32 fd ){
 	}
 
 	Sql_FreeResult(sql_handle);
-	mapif_Mail_receiver_send( fd, RFIFOL(fd, 2), char_id, class_, base_level, name );
+	e_mail_receiver_result result = MAIL_RECEIVER_UNAVAILABLE;
+	if( char_id != 0 )
+		result = mail_receiver_check( RFIFOL( fd, 2 ), char_id, RFIFOB( fd, 6 + NAME_LENGTH ), RFIFOL( fd, 7 + NAME_LENGTH ) );
+	if( result != MAIL_RECEIVER_ALLOWED ){
+		char_id = 0;
+		class_ = 0;
+		base_level = 0;
+	}
+	mapif_Mail_receiver_send( fd, RFIFOL(fd, 2), char_id, class_, base_level, name, result );
 }
 
 /*==========================================

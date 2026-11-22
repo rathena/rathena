@@ -101,7 +101,7 @@ int32 intif_Mail_read(int32 mail_id);
 bool intif_mail_getattach( map_session_data* sd, struct mail_message *msg, enum mail_attachment_type type );
 int32 intif_Mail_delete(uint32 char_id, int32 mail_id);
 int32 intif_Mail_return(uint32 char_id, int32 mail_id);
-int32 intif_Mail_send(uint32 account_id, struct mail_message *msg);
+int32 intif_Mail_send(uint32 account_id, struct mail_message *msg, int32 guild_id = 0);
 bool intif_mail_checkreceiver(map_session_data* sd, char* name);
 // AUCTION SYSTEM
 int32 intif_Auction_requestlist(uint32 char_id, int16 type, int32 price, const char* searchtext, int16 page);

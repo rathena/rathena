@@ -39,7 +39,7 @@ static const int32 packet_len_table[] = {
 	 0, 0, 0, 0,  0, 0, 0, 0, -1,11, 0, 0,  0, 0,  0, 0, //0x3810
 	39,-1,15,15, 15+NAME_LENGTH,17+MAP_NAME_LENGTH_EXT, 7,-1,  0, 0, 0, 0,  0, 0,  0, 0, //0x3820
 	10,-1,15, 0, 79,19, 7,-1,  0,-1,-1,-1, 14,67,186,-1, //0x3830
-	-1,10, 0,18,  0, 0, 0, 0, -1,75,-1,11, 11,-1, 38, 0, //0x3840
+	-1,10, 0,18,  0, 0, 0, 0, -1,75,-1,11, 11,-1, 39, 0, //0x3840
 	-1,-1, 7, 7,  7,11, 8,-1,  0, 0, 0, 0,  0, 0,  0, 0, //0x3850  Auctions [Zephyrus] itembound[Akinari]
 	-1, 7,-1, 7, 14, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3860  Quests [Kevin] [Inkfish] / Achievements [Aleos]
 	-1, 3, 3, 0,  0, 0, 0, 0,  0, 0, 0, 0, -1, 3,  3, 0, //0x3870  Mercenaries [Zephyrus] / Elemental [pakpil]
@@ -2562,7 +2562,7 @@ int32 intif_parse_Mail_return(int32 fd)
 		}
 	}
 
-	clif_Mail_return(sd->fd, mail_id, fail);
+	clif_Mail_return(sd, mail_id, fail);
 	return 1;
 }
 
@@ -2576,9 +2576,9 @@ int32 intif_parse_Mail_return(int32 fd)
  * @param msg : mail struct
  * @return 0=error, 1=msg sent
  */
-int32 intif_Mail_send(uint32 account_id, struct mail_message *msg)
+int32 intif_Mail_send(uint32 account_id, struct mail_message *msg, int32 guild_id)
 {
-	int32 len = sizeof(struct mail_message) + 8;
+	int32 len = sizeof(struct mail_message) + 13;
 
 	if (CheckForCharServer())
 		return 0;
@@ -2588,6 +2588,8 @@ int32 intif_Mail_send(uint32 account_id, struct mail_message *msg)
 	WFIFOW(inter_fd,2) = len;
 	WFIFOL(inter_fd,4) = account_id;
 	memcpy(WFIFOP(inter_fd,8), msg, sizeof(struct mail_message));
+	WFIFOB(inter_fd,8 + sizeof(struct mail_message)) = battle_config.feature_rodex_spam_filter;
+	WFIFOL(inter_fd,9 + sizeof(struct mail_message)) = guild_id;
 	WFIFOSET(inter_fd,len);
 
 	return 1;
@@ -2656,32 +2658,30 @@ static void intif_parse_Mail_receiver( int32 fd ){
 
 	// Only f the player is online
 	if( sd ){
+		sd->mail.dest_id = 0;
+		if( RFIFOB( fd, 38 ) == MAIL_RECEIVER_BLOCKED ){
+			clif_Mail_Receiver_Blocked( sd, RFIFOCP( fd, 14 ) );
+			return;
+		}
 		clif_Mail_Receiver_Ack( sd, RFIFOL( fd, 6 ), RFIFOW( fd, 10 ), RFIFOW( fd, 12 ), RFIFOCP( fd, 14 ) );
 		sd->mail.dest_id = RFIFOL(fd, 6);
 	}
 }
 
 bool intif_mail_checkreceiver( map_session_data* sd, char* name ){
-	map_session_data *tsd;
-
-	tsd = map_nick2sd( name, false );
 	sd->mail.dest_id = 0;
-
-	// If the target player is online on this map-server
-	if( tsd != nullptr ){
-		clif_Mail_Receiver_Ack( sd, tsd->status.char_id, tsd->status.class_, tsd->status.base_level, name );
-		sd->mail.dest_id = tsd->status.char_id;
-		return true;
-	}
 
 	if( CheckForCharServer() )
 		return false;
 
-	WFIFOHEAD(inter_fd, 6 + NAME_LENGTH);
+	// Always validate on the character server, including local online recipients.
+	WFIFOHEAD(inter_fd, 11 + NAME_LENGTH);
 	WFIFOW(inter_fd, 0) = 0x304e;
 	WFIFOL(inter_fd, 2) = sd->status.char_id;
 	safestrncpy(WFIFOCP(inter_fd, 6), name, NAME_LENGTH);
-	WFIFOSET(inter_fd, 6 + NAME_LENGTH);
+	WFIFOB(inter_fd, 6 + NAME_LENGTH) = battle_config.feature_rodex_spam_filter;
+	WFIFOL(inter_fd, 7 + NAME_LENGTH) = sd->status.guild_id;
+	WFIFOSET(inter_fd, 11 + NAME_LENGTH);
 
 	return true;
 }
