@@ -35,8 +35,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-          # The ubuntu-latest label currently points to ubuntu-24.04.
-          # Available: ubuntu-24.04, ubuntu-22.04
+          # The ubuntu-latest label currently points to ubuntu-26.04.
+          # Available: ubuntu-24.04, ubuntu-26.04
           os: [ubuntu-latest]
           # Only a single version of GCC is required for validating NPC scripts and database changes.
           gcc: ['11']
@@ -58,7 +58,7 @@ jobs:
 
       - name: Install packages
         # Ubuntu runners already have most of the packages rAthena requires to build.
-        # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-Readme.md
+        # https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2604-Readme.md
         run: |
           sudo apt install zlib1g-dev libpcre3-dev gcc-${{ matrix.gcc }} g++-${{ matrix.gcc }}
           
