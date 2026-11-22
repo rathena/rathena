@@ -32,7 +32,7 @@ jobs:
       matrix:
           # The ubuntu-latest label currently points to ubuntu-26.04.
           # Available: ubuntu-24.04, ubuntu-26.04
-          os: [ubuntu-latest]
+          os: [ubuntu-24.04]
           # Older versions of GCC are not available via unaltered aptitude repo lists.
           gcc: ['9', '10', '11', '12']
           # GCC 13 was removed from 22.04, include it as a separate job

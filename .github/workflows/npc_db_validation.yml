@@ -37,7 +37,7 @@ jobs:
       matrix:
           # The ubuntu-latest label currently points to ubuntu-26.04.
           # Available: ubuntu-24.04, ubuntu-26.04
-          os: [ubuntu-latest]
+          os: [ubuntu-24.04]
           # We run build checks for both Renewal and PRE-Renewal
           mode: ['PRE', 'RE']
 
