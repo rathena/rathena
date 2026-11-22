@@ -589,6 +589,7 @@ malangdo,224,172,6	script	Clink#mal_normal	544,{
 	end;
 OnInit:
 	if (getbattleflag("feature.barter")) {
+		unloadnpc "Austri#prt";
 		unloadnpc "Vurewell";
 		unloadnpc "Begnahd";
 		unloadnpc "Sade";
