@@ -246,6 +246,7 @@ struct Battle_Config
 	int32 pet_catch_rate;
 	int32 pet_rename;
 	int32 pet_friendly_rate;
+	int32 pet_disappear_on_low_intimacy;
 	int32 pet_hungry_delay_rate;
 	int32 pet_hungry_friendly_decrease;
 	int32 pet_status_support;

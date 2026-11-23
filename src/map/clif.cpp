@@ -8283,7 +8283,6 @@ void clif_send_petdata( const map_session_data* sd, const pet_data& pd, e_change
 
 	switch( data_type ) {
 		case CHANGESTATEPET_INIT:
-		case CHANGESTATEPET_DISAPPEAR:
 			value = 0;
 			break;
 		case CHANGESTATEPET_INTIMACY:
@@ -8313,8 +8312,19 @@ void clif_send_petdata( const map_session_data* sd, const pet_data& pd, e_change
 			value = battle_config.pet_hair_style;
 			break;
 		case CHANGESTATEPET_UPDATE_EGG:
+#if PACKETVER >= 20180704
 			value = ( pd.pet.intimate == 1 ) ? 0 : 1;
 			break;
+#else
+			return;
+#endif
+		case CHANGESTATEPET_DISAPPEAR:
+#if PACKETVER >= 20250618
+			value = 0;
+			break;
+#else
+			return;
+#endif
 		default:	// shouldn't happen
 			return;
 	}
@@ -8336,17 +8346,21 @@ void clif_send_petdata( const map_session_data* sd, const pet_data& pd, e_change
 /// Pet's base data.
 /// 01a2 <name>.24B <renamed>.B <level>.W <hunger>.W <intimacy>.W <accessory id>.W <class>.W (ZC_PROPERTY_PET)
 void clif_send_petstatus( const map_session_data& sd, const pet_data& pd ){
+	clif_send_petstatus( sd, pd.pet );
+}
+
+void clif_send_petstatus( const map_session_data& sd, const s_pet& pet ){
 	PACKET_ZC_PROPERTY_PET packet{};
 
 	packet.PacketType = HEADER_ZC_PROPERTY_PET;
-	safestrncpy( packet.szName, pd.pet.name, NAME_LENGTH );
-	packet.bModified = battle_config.pet_rename ? 0 : pd.pet.rename_flag;
-	packet.nLevel = pd.pet.level;
-	packet.nFullness = pd.pet.hungry;
-	packet.nRelationship = pd.pet.intimate;
-	packet.ITID = static_cast<decltype(packet.ITID)>( pd.pet.equip );
+	safestrncpy( packet.szName, pet.name, NAME_LENGTH );
+	packet.bModified = battle_config.pet_rename ? 0 : pet.rename_flag;
+	packet.nLevel = pet.level;
+	packet.nFullness = pet.hungry;
+	packet.nRelationship = pet.intimate;
+	packet.ITID = static_cast<decltype(packet.ITID)>( pet.equip );
 #if PACKETVER >= 20081126
-	packet.job = pd.pet.class_;
+	packet.job = pet.class_;
 #endif
 
 	clif_send( &packet, sizeof( packet ), &sd, SELF );

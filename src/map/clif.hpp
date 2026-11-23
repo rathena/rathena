@@ -1160,6 +1160,7 @@ void clif_catch_process( const map_session_data& sd );
 void clif_pet_roulette( const map_session_data& sd, bool success );
 void clif_sendegg( map_session_data* sd);
 void clif_send_petstatus( const map_session_data& sd, const pet_data& pd );
+void clif_send_petstatus( const map_session_data& sd, const s_pet& pet );
 void clif_send_petdata( const map_session_data* sd, const pet_data& pd, e_changestate_pet data_type );
 void clif_pet_emotion( const pet_data& pd, int32 param );
 void clif_pet_food( const map_session_data& sd, int32 foodid, bool success );
