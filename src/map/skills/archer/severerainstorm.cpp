@@ -17,15 +17,18 @@ void SkillSevereRainstorm::castendPos2(block_list* src, int32 x, int32 y, uint16
 	map_session_data* sd = BL_CAST(BL_PC, src);
 
 	flag |= 1;
-	if (sd != nullptr)
+	if (sd != nullptr) {
 		sd->canequip_tick = tick + skill_get_time(getSkillId(), skill_lv); // Can't switch equips for the duration of the skill.
 
-	std::shared_ptr<s_skill_unit_group> group = skill_unitsetting(src, getSkillId(), skill_lv, x, y, 0);
+		std::shared_ptr<s_skill_unit_group> group = skill_unitsetting(src, getSkillId(), skill_lv, x, y, 0);
 
-	if (group != nullptr && sd != nullptr && group->state.ammo_consume) {
-		// Consume the arrows now and skip the deferred charge when the group expires.
-		group->state.ammo_consume = false;
-		battle_consume_ammo(sd, getSkillId(), skill_lv);
+		if (group != nullptr && group->state.ammo_consume) {
+			// Consume the arrows now and skip the deferred charge when the group expires.
+			group->state.ammo_consume = false;
+			battle_consume_ammo(sd, getSkillId(), skill_lv);
+		}
+	} else {
+		skill_unitsetting(src, getSkillId(), skill_lv, x, y, 0);
 	}
 }
 
