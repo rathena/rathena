@@ -90,6 +90,35 @@ Header:
 
 # Custom Items
 Body:
+# Consumables
+
+# Equipables
+  - Id: 35001
+    AegisName: Yggdrasil_Hat
+    Name: Yggdrasil Hat
+    Type: Armor
+    Weight: 100
+    Defense: 4
+    Jobs:
+      All: true
+      Novice: false
+      SuperNovice: false
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 15
+    View: 758
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bAddMonsterDropItem,608,20;
+
+# Etc
   - Id: 35000
     AegisName: Meta_Coin
     Name: Midgard Coin
