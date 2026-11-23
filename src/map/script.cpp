@@ -21034,6 +21034,8 @@ BUILDIN_FUNC(questinfo)
 	if (mapdata && !util::vector_exists(mapdata->qi_npc, nd->id))
 		mapdata->qi_npc.push_back(nd->id);
 
+	pc_questinfo_refresh_map(nd->m);
+
 	return SCRIPT_CMD_SUCCESS;
 }
 

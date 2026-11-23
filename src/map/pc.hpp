@@ -1765,6 +1765,7 @@ void pc_validate_skill(map_session_data *sd);
 
 void pc_show_questinfo(map_session_data *sd);
 void pc_show_questinfo_reinit(map_session_data *sd);
+void pc_questinfo_refresh_map(int16 m);
 
 bool pc_job_can_entermap(enum e_job jobid, int32 m, int32 group_lv);
 

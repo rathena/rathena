@@ -4470,8 +4470,13 @@ void map_remove_questinfo(int32 m, npc_data *nd) {
 	nullpo_retv(nd);
 	nullpo_retv(mapdata);
 
+	bool removed = util::vector_exists(mapdata->qi_npc, nd->id);
+
 	util::vector_erase_if_exists(mapdata->qi_npc, nd->id);
 	nd->qi_data.clear();
+
+	if (removed)
+		pc_questinfo_refresh_map(m);
 }
 
 static void map_free_questinfo(struct map_data *mapdata) {
