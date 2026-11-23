@@ -12030,7 +12030,11 @@ bool pc_equipitem(map_session_data *sd,int16 n,int32 req_pos,bool equipswitch)
 		return false;
 	}
 	if( DIFF_TICK(sd->canequip_tick,gettick()) > 0 ) {
-		clif_msg_color( *sd, MSI_CAN_NOT_EQUIP_ITEM_FORBID, color_table[COLOR_RED] );
+		if( equipswitch ){
+			clif_equipswitch_add( sd, n, req_pos, ITEM_EQUIP_ACK_FAIL );
+		}else{
+			clif_equipitemack( *sd, ITEM_EQUIP_ACK_FAIL, n );
+		}
 		return false;
 	}
 
@@ -12403,11 +12407,6 @@ bool pc_unequipitem(map_session_data *sd, int32 n, int32 flag) {
 	if (!(pos = sd->inventory.u.items_inventory[n].equip)) {
 		clif_unequipitemack(*sd,n,0,false);
 		return false; //Nothing to unequip
-	}
-	// Skill equipment locks also prevent removing ammunition before its cost is paid.
-	if (!(flag & 2) && DIFF_TICK(sd->canequip_tick, gettick()) > 0) {
-		clif_msg_color( *sd, MSI_CAN_NOT_EQUIP_ITEM_FORBID, color_table[COLOR_RED] );
-		return false;
 	}
 	// status change that makes player cannot unequip equipment
 	if (!(flag&2) && !sd->sc.empty() &&( sd->sc.cant.unequip ||

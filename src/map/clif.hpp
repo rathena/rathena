@@ -606,9 +606,6 @@ enum e_clif_messages : uint16 {
 	// While boarding reins is not available for items.
 	MSI_FAIELD_RIDING_OVERLAPPED = 1932,
 
-	// Can't equip this item because you don't meet the requirements.
-	MSI_CAN_NOT_EQUIP_ITEM_FORBID = 1954,
-
 	// It is only possible to change the party leader while on the same map.
 	MSI_PARTY_MASTER_CHANGE_SAME_MAP = 2095,
 
@@ -626,9 +623,6 @@ enum e_clif_messages : uint16 {
 
 	// While boarding reins is not available for items.
 	MSI_FAIELD_RIDING_OVERLAPPED = 1931,
-
-	// Can't equip this item because you don't meet the requirements.
-	MSI_CAN_NOT_EQUIP_ITEM_FORBID = 1953,
 
 	// It is only possible to change the party leader while on the same map.
 	MSI_PARTY_MASTER_CHANGE_SAME_MAP = 2094,
