@@ -1,0 +1,201 @@
+//===== rAthena Script ======================================= 
+//= Yggdrasil Hat Quest
+//===== By: ================================================== 
+//= Metatr0n
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Enables players to obtain the Yggdrasil_Hat #35001
+//===== Additional Comments: ================================= 
+//= 1.0 First version.
+//============================================================ 
+
+prt_in,238,103,3	script	Solo Leveler	1_m_02,{
+    if (YGGDRASIL_HAT_QUEST == 1) goto L_MAKE;
+    if (YGGDRASIL_HAT_QUEST == 2) goto L_DONE;
+
+    mes "[Song Junwoo]";
+    mes "Greetings, adventurer!";
+    mes "My name is ^3366FFSong Junwoo^000000, and I was the strongest hunter of all mankind in my world.";
+    next;
+
+    mes "[Song Junwoo]";
+    mes "Well, as it turned out I was simply the only person who found out how to open the stat-menu...";
+    next;
+
+    menu "How did you get here?",-;
+    mes "[Song Junwoo]";
+    mes "How I got here? Well I was just minding my own business, walking across the street, when I was hit by a truck and transported to this world.";
+    next;
+
+    mes "[Song Junwoo]";
+    mes "Now it seems like I'm the only one who doesn't know how to open the stat-menu...";
+    next;
+
+    mes "[Song Junwoo]";
+    mes "Anyways, I just got comfortable living my everyday life here, trying to figure out how ^3366FFShining Plants^000000 work.";
+    next;
+
+    mes "[Song Junwoo]";
+    mes "You know, back in my world, I had this trick to defeat every enemy.";
+    next;
+
+    mes "[Song Junwoo]";
+    mes "Every time I was close to death, I simply restored my entire HP and continued fighting!";
+    mes "That trick served me very well!";
+    next;
+
+    mes "[Song Junwoo]";
+    mes "The other day while defeat...";
+    next;
+    
+    mes "[Song Junwoo]";
+    mes "...I mean harvesting different plants, I came across a Shining Plant!";
+    mes "It dropped an ^3366FFYggdrasil Berry^000000 that restored my entire HP and SP!";
+    next;
+
+    menu "Restore HP after harvesting plants?",-;
+    mes "[Song Junwoo]";
+    mes "Yeah, exactly! Restoring your HP is so important to become the strongest hunter of all mankind!";
+    next;
+
+    mes "[Song Junwoo]";
+    mes "That's why I try to harness the power of the Shining Plant to create an item I can carry with me at all times.";
+    mes "I hope it will restore my HP every time I need it.";
+    next;
+
+    mes "[Song Junwoo]";
+    mes "Can you help me gather the materials I need to create such an item?";
+    next;
+
+    menu "OK, what do you need?",-,"I have no time for this",M_NO;
+    set YGGDRASIL_HAT_QUEST,1;
+L_LIST:
+    mes "[Song Junwoo]";
+    mes "You need to bring me:";
+    mes "10x Feather";
+    mes "10x Fluff";
+    mes "2x Sticky Mucus";
+    mes "3x Yggdrasil Berry";
+    mes "3x Yggdrasil Seed";
+    next;
+
+    mes "[Song Junwoo]";
+    mes "Ah, you also need to bring me the following:";
+    mes "10x Meat";
+    mes "5x Grape";
+    mes "5x Apple";
+    mes "5x Milk";
+    next;
+
+    menu "These are all low level items...",-;
+    mes "[Song Junwoo]";
+    mes "Being the ^3366FFStrongest Hunter of all Mankind^000000 in a different world is a tough job, I need to eat while working on this project!";
+    next;
+
+    mes "[Song Junwoo]";
+    mes "I won't have the time or energy to deal with lowly monsters like Porings or Fabres!";
+    close;
+
+L_MAKE:
+    mes "[Song Junwoo]";
+    mes "You're back! OK, lets get started!";
+    next;
+    if(countitem(949) < 10 ||
+    countitem(914) < 10 ||
+    countitem(938) < 2 ||
+    countitem(607) < 3 ||
+    countitem(608) < 3 ||
+    countitem(517) < 10 ||
+    countitem(514) < 5 ||
+    countitem(512) < 5 ||
+    countitem(519) < 5) goto L_NOITEMS;
+    mes "[Song Junwoo]";
+    mes "The food looks delicious!";
+    mes "*chomp, chomp*";
+    delitem 517, 10;
+    delitem 514, 5;
+    delitem 512, 5;
+    delitem 519, 5;
+    next;
+
+    mes "[Song Junwoo]";
+    mes "OK, I'll start on the project right away!";
+    delitem 949, 10;
+    delitem 914, 10;
+    delitem 938, 2;
+    delitem 607, 3;
+    delitem 608, 3;
+    next;
+
+    mes "[Song Junwoo]";
+    mes "*fiddling*";
+    next;
+
+    mes "[Song Junwoo]";
+    mes "*fiddling some more*";
+    next;
+
+    mes "[Song Junwoo]";
+    mes "*fiddling for the final stretch*";
+    next;
+
+    mes "[Song Junwoo]";
+    mes "It's done! It looks amazing! Thank you my adventurer friend!";
+    next;
+
+    mes "[Song Junwoo]";
+    mes "Now I will finally be able to kill those Porin...";
+    next;
+
+    mes "[Song Junwoo]";
+    mes "Doppelganger!";
+    mes "I'm going to defeat Doppelganger!";
+    next;
+
+    mes "[Song Junwoo]";
+    mes "I just wish I could level up like everyone else here...";
+    next;
+    menu "Did you ever try Alt + A?",-;
+
+    mes "[Song Junwoo]";
+    mes "Wha...?";
+    next;
+
+    mes "[Song Junwoo]";
+    mes "You mean...";
+    next;
+
+    mes "[Song Junwoo]";
+    mes "OH MY GOD I HAVE ^3366FF7185^000000 UNUSED STAT-POINTS!!!";
+    next;
+
+    mes "[Song Junwoo]";
+    mes "I don't need this shitty thing anymore!";
+    next;
+
+    mes "[Song Junwoo]";
+    mes "Here you can have it! I'm pretty sure you need it!";
+    getitem 35001, 1;
+    set YGGDRASIL_HAT_QUEST, 2;
+    close;
+
+L_NOITEMS:
+    mes "[Song Junwoo]";
+    mes "You don't have all the items I need!";
+    mes "Here is the list again:";
+    next;
+    goto L_LIST;
+
+L_DONE:
+    mes "[Song Junwoo]";
+    mes "I don't talk to E Rank Hunters!";
+    close;
+
+M_NO:
+    mes "[Song Junwoo]";
+    mes "That's unfortunate... I didn't have anything to eat in 3 days...";
+    close;
+}
