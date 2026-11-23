@@ -42,7 +42,7 @@ OnWhisperGlobal:
 
 	if (@whispervar0$ == "start") {
 		dispbottom "Manually starting the Meta Poring Event...";
-		goto OnSat1800;
+		goto OnFri1800;
 	}
 	if (@whispervar0$ == "stop") {
 		dispbottom "Manually stopping and cleaning up the Meta Poring Event...";
