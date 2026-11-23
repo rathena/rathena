@@ -460,7 +460,7 @@ bool mapif_Mail_delete( int32 fd, uint32 char_id, int32 mail_id, uint32 account_
 		std::shared_ptr<struct online_char_data> character = util::umap_find( char_get_onlinedb(), account_id );
 
 		// Check for online players
-		if( character != nullptr && character->server >= 0 ){
+		if( character != nullptr && character->server >= 0 && character->char_id == char_id ){
 			fd = map_server[character->server].fd;
 		}else{
 			// The request was triggered inside the character server or the player is offline now
@@ -558,10 +558,10 @@ void mapif_Mail_return( int32 fd, uint32 char_id, int32 mail_id, uint32 account_
 
 	// If the char server triggered this, check if we have to notify a map server
 	if( fd <= 0 ){
-		std::shared_ptr<struct online_char_data> character = util::umap_find( char_get_onlinedb(), account_id_sender );
+		std::shared_ptr<struct online_char_data> character = util::umap_find( char_get_onlinedb(), account_id_receiver );
 
 		// Check for online players
-		if( character != nullptr && character->server >= 0 ){
+		if( character != nullptr && character->server >= 0 && character->char_id == char_id ){
 			fd = map_server[character->server].fd;
 		}else{
 			// The request was triggered inside the character server or the player is offline now
