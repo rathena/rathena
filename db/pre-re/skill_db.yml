@@ -33918,3 +33918,9 @@ Body:
       IsGuild: true
       IgnoreKagehumi: true
     Duration2: 300000
+  - Id: 10016
+    Name: GD_GUILD_STORAGE
+    Description: Guild Storage Expansion
+    MaxLevel: 5
+    Flags:
+      IsGuild: true
