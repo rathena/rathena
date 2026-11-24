@@ -15950,6 +15950,10 @@ void pc_macro_reporter_process(map_session_data &sd, int32 reporter_account_id) 
 	if (captcha_db.empty())
 		return;
 
+	// A captcha is already open
+	if (sd.macro_detect.timer != INVALID_TIMER)
+		return;
+
 	// Pick a random image from the database.
 	const std::shared_ptr<s_captcha_data> cd = captcha_db.random();
 
