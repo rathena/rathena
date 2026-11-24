@@ -4400,7 +4400,6 @@ dicastes01,112,248,5	script	Resting Piom#ep133_16	491,{
 		close;
 	}
 	if (ep13_3_secret == 4) {
-		mes "[Piom]";
 		mes "Phew.. I need to rest.";
 		mes "Huh? You're... human!";
 		mes "Why are you here?";
@@ -4444,7 +4443,6 @@ dicastes01,112,248,5	script	Resting Piom#ep133_16	491,{
 		mes "He is really beautiful.";
 		close;
 	}
-	mes "[Piom]";
 	mes "As you can see, I'm taking a rest.";
 	mes "I like my job but it is so tiresome.";
 	mes "But I'm happier than when I was a Knit.";
