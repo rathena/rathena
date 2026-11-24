@@ -11432,6 +11432,11 @@ int32 atcommand_macrochecker_sub( block_list* bl, va_list ap ){
 		return 0;
 	}
 
+	// Dont start it on players who are already answering a captcha
+	if( tsd->macro_detect.retry != 0 ){
+		return 0;
+	}
+
 	// Start the macro checking on the player
 	pc_macro_reporter_process( *tsd, reporter_aid );
 

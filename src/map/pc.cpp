@@ -15950,6 +15950,11 @@ void pc_macro_reporter_process(map_session_data &sd, int32 reporter_account_id) 
 	if (captcha_db.empty())
 		return;
 
+	// A captcha is already open: starting another would replace its timeout timer without
+	// deleting it, and that timer later fires for a player who may have logged out.
+	if (sd.macro_detect.retry != 0)
+		return;
+
 	// Pick a random image from the database.
 	const std::shared_ptr<s_captcha_data> cd = captcha_db.random();
 
