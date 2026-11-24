@@ -15665,7 +15665,7 @@ void pc_attendance_claim_reward( map_session_data* sd ){
 
 	intif_Mail_send(0, &msg);
 
-	clif_attendence_response( sd, attendance_counter );
+	clif_attendence_response( *sd, attendance_counter );
 }
 
 /**

@@ -53387,7 +53387,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 17475,10;
+      getitem 7776,10;
   - Id: 17477
     AegisName: Unlimited_Box2
     Name: Unlimited Box II

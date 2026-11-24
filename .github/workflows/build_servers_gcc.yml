@@ -12,12 +12,15 @@ on:
       - master
   pull_request:
     paths:
-      # Always trigger all Github Actions if an action or something CI related was changed
-      - '.github/workflows/**'
-      - 'tools/ci/**'
-      # This workflow should run when a file in a source directory has been modified.
+      # This workflow should run when
+      # 1) its own workflow configuration file was changed
+      - '.github/workflows/build_servers_gcc.yml'
+      # 2) a source code file in the src directory was changed
       - 'src/**'
+      # 3) a source code file in the 3rdparty directory was changed
       - '3rdparty/**'
+      # 4) a CMake related file was changed
+      - '**/CMakeLists.txt'
 
 jobs:
   build:
@@ -27,24 +30,19 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-          # The ubuntu-latest label currently points to ubuntu-24.04.
-          # Available: ubuntu-24.04, ubuntu-22.04
-          os: [ubuntu-latest]
+          # The ubuntu-latest label currently points to ubuntu-26.04.
+          # Available: ubuntu-24.04, ubuntu-26.04
+          os: [ubuntu-24.04]
           # Older versions of GCC are not available via unaltered aptitude repo lists.
-          gcc: ['9', '10', '11', '12']
-          # GCC 13 was removed from 22.04, include it as a separate job
-          include:
-            - os: ubuntu-24.04
-              gcc: 13
+          gcc: ['9', '10', '11', '12', '13', '14']
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Update & Install packages
+      - name: Install packages
         # Ubuntu runners already have most of the packages rAthena requires to build.
-        # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-Readme.md
+        # https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2604-Readme.md
         run: |
-          sudo apt update
           sudo apt install zlib1g-dev libpcre3-dev gcc-${{ matrix.gcc }} g++-${{ matrix.gcc }}
 
       - name: Command - configure
