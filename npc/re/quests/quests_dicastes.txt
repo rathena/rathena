@@ -40,9 +40,9 @@
 manuk,321,182,5	script	Entrance Manager#ep133	450,{
 	if (!isequipped(2782)) {
 		mes "[Average Galten]";
-		mes "â…³â—‹â†’? â…² â€»â—‹...";
-		mes "â˜…â—ŽâŒ’ â…³ ?";
-		mes "â—â˜…..?";
+		mes "¢¤¡ð¡ú? ¢£ ¡ù¡ð...";
+		mes "¡ï¡ò¡Ð ¢¤ ?";
+		mes "¡ñ¡ï..?";
 		close;
 	}
 	if (ep13_3_invite >= 4) {
@@ -69,7 +69,7 @@ manuk,321,182,5	script	Entrance Manager#ep133	450,{
 dic_dun01,266,113,5	script	Curious Sapha#ep13_3_	449,{
 	if (!isequipped(2782)) {
 		mes "[Curious Sapha]";
-		mes "â– â—âŒ’ â—Ž â–¡?";
+		mes "¡ö¡ñ¡Ð ¡ò ¡õ?";
 		next;
 		mes "- Cannot understand a word. -";
 		close;
@@ -196,8 +196,8 @@ sec_in02,16,43,5	script	Scaraba Dungeon Entrance	449,{
 	if (compare(strnpcinfo(0),"ep133_26")) {
 		if (!isequipped(2782)) {
 			mes "[Vigilante]";
-			mes "â—†â—‡â–  â–³ ã€“â€»â—‡?";
-			mes "â…³â– â–² â’Š â–³â…²â†‘ â–² âŒ’â–¡â†...";
+			mes "¡ô¡ó¡ö ¡÷ ¡þ¡ù¡ó?";
+			mes "¢¤¡ö¡ø ¢³ ¡÷¢£¡ü ¡ø ¡Ð¡õ¡û...";
 			next;
 			mes "The Vigilante says something and then shakes his head.";
 			mes "Looks like a negative reaction from the looks of his firm pose holding his shield in front of him.";
@@ -220,9 +220,9 @@ sec_in02,16,43,5	script	Scaraba Dungeon Entrance	449,{
 	}
 	if (!isequipped(2782)) {
 		mes "[Vigilante]";
-		mes "â—†â—‡â–  â–³ ã€“â€»â—‡?";
-		mes "â…³â– â–² â’Š â–³â…²â†‘ â–² âŒ’â–¡â†...";
-		mes "â—‹â†’â’ˆ â—† â—Žâ–¡â†’ â–¡..! ";
+		mes "¡ô¡ó¡ö ¡÷ ¡þ¡ù¡ó?";
+		mes "¢¤¡ö¡ø ¢³ ¡÷¢£¡ü ¡ø ¡Ð¡õ¡û...";
+		mes "¡ð¡ú¢± ¡ô ¡ò¡õ¡ú ¡õ..! ";
 		next;
 		mes "Cannot communicate with him.";
 		close;
@@ -256,8 +256,8 @@ dic_dun01,30,216,5	duplicate(Vigilante#main)	Vigilante#ep133_26	492
 dic_dun01,284,102,5	script	Dirty Vigilante#ep13_3	450,{
 	if (!isequipped(2782)) {
 		mes "[Vigilante]";
-		mes "â—†â—‡â–  â–³ ã€“â€»â—‡â…³â– â–² â’Š â–³â…²â†‘ â–² âŒ’â–¡â†.";
-		mes "â—‹â†’â’ˆ â—† â—Žâ–¡â†’ â–¡..! ";
+		mes "¡ô¡ó¡ö ¡÷ ¡þ¡ù¡ó¢¤¡ö¡ø ¢³ ¡÷¢£¡ü ¡ø ¡Ð¡õ¡û.";
+		mes "¡ð¡ú¢± ¡ô ¡ò¡õ¡ú ¡õ..! ";
 		next;
 		mes "Cannot understand a word.";
 		close;
@@ -350,8 +350,8 @@ OnEnable:
 -	script	Guard#ep133_11	492,{
 	if (!isequipped(2782)) {
 		mes "[Capital City Guard]";
-		mes "â—†â—‡â–  â–³ ã€“â€»â—‡?";
-		mes "â—‹â†’â’ˆ â—† â—Žâ–¡â†’ â–¡..!";
+		mes "¡ô¡ó¡ö ¡÷ ¡þ¡ù¡ó?";
+		mes "¡ð¡ú¢± ¡ô ¡ò¡õ¡ú ¡õ..!";
 		next;
 		mes "- Cannot communicate with him. -";
 		close;	
@@ -493,8 +493,8 @@ dic_in01,48,263,5	script	Hunting Dept. 1 Manager	449,{
 		close;
 	}
 	if (!isequipped(2782)) {
-		mes "â–¡â…²â—†";
-		mes "â– â–²â—‡ â…² â– â—â˜… â€» â—‹â’‰â…²";
+		mes "¡õ¢£¡ô";
+		mes "¡ö¡ø¡ó ¢£ ¡ö¡ñ¡ï ¡ù ¡ð¢²¢£";
 		next;
 		mes "I don't feel confident in talking since you wouldn't understand anything.";
 		close;
@@ -563,8 +563,8 @@ dic_in01,51,266,6	script	Hunting Dept. 2 Manager	449,{
 		close;
 	}
 	if (!isequipped(2782)) {
-		mes "â–¡â…²â—†";
-		mes "â– â–²â—‡ â…² â– â—â˜… â€» â—‹â’‰â…²";
+		mes "¡õ¢£¡ô";
+		mes "¡ö¡ø¡ó ¢£ ¡ö¡ñ¡ï ¡ù ¡ð¢²¢£";
 		next;
 		mes "I don't feel confident in talking since you wouldn't understand anything.";
 		close;
@@ -632,8 +632,8 @@ dic_in01,51,270,7	script	Supply Dept. 1 Manager	449,{
 		close;
 	}
 	if (!isequipped(2782)) {
-		mes "â–¡â…²â—†";
-		mes "â– â–²â—‡ â…² â– â—â˜… â€» â—‹â’‰â…²";
+		mes "¡õ¢£¡ô";
+		mes "¡ö¡ø¡ó ¢£ ¡ö¡ñ¡ï ¡ù ¡ð¢²¢£";
 		next;
 		mes "I don't feel confident in talking since you wouldn't understand anything.";
 		close;
@@ -703,8 +703,8 @@ dic_in01,48,273,8	script	Supply Dept. 2 Manager	449,{
 		close;
 	}
 	if (!isequipped(2782)) {
-		mes "â–¡â…²â—†";
-		mes "â– â–²â—‡ â…² â– â—â˜… â€» â—‹â’‰â…²";
+		mes "¡õ¢£¡ô";
+		mes "¡ö¡ø¡ó ¢£ ¡ö¡ñ¡ï ¡ù ¡ð¢²¢£";
 		next;
 		mes "I don't feel confident in talking since you wouldn't understand anything.";
 		close;
@@ -770,8 +770,8 @@ dic_in01,43,273,1	script	Transport Dept. 1 Mgr	449,{
 		close;
 	}
 	if (!isequipped(2782)) {
-		mes "â–¡â…²â—†";
-		mes "â– â–²â—‡ â…² â– â—â˜… â€» â—‹â’‰â…²";
+		mes "¡õ¢£¡ô";
+		mes "¡ö¡ø¡ó ¢£ ¡ö¡ñ¡ï ¡ù ¡ð¢²¢£";
 		next;
 		mes "I don't feel confident in talking since you wouldn't understand anything.";
 		close;
@@ -844,8 +844,8 @@ dic_in01,40,270,2	script	Transport Dept. 2 Mgr	449,{
 		close;
 	}
 	if (!isequipped(2782)) {
-		mes "â–¡â…²â—†";
-		mes "â– â–²â—‡ â…² â– â—â˜… â€» â—‹â’‰â…²";
+		mes "¡õ¢£¡ô";
+		mes "¡ö¡ø¡ó ¢£ ¡ö¡ñ¡ï ¡ù ¡ð¢²¢£";
 		next;
 		mes "I don't feel confident in talking since you wouldn't understand anything.";
 		close;
@@ -913,8 +913,8 @@ dic_in01,40,193,1	script	Papyrus#0001	453,{
 		close;
 	}
 	if (!isequipped(2782)) {
-		mes "â–¡â…²â—†";
-		mes "â– â–²â—‡ â…² â– â—â˜… â€» â—‹â’‰â…²";
+		mes "¡õ¢£¡ô";
+		mes "¡ö¡ø¡ó ¢£ ¡ö¡ñ¡ï ¡ù ¡ð¢²¢£";
 		next;
 		mes "I don't feel confident in talking since you wouldn't understand anything.";
 		close;
@@ -1198,9 +1198,9 @@ cmd_fild08,324,163,0	script	Stone Hearts	844,{ unknown_d(12215,953); }
 dic_in01,138,225,3	script	Diel Guard#ep133_19	492,{
 	if (!isequipped(2782)) {
 		mes "[Diel Guard]";
-		mes "â—†â—‡â–  â–³ ã€“â€»â—‡?";
-		mes "â…³â– â–² â’Š â–³â…²â†‘ â–² âŒ’â–¡â†...";
-		mes "â—‹â†’â’ˆ â—† â—Žâ–¡â†’ â–¡..!";
+		mes "¡ô¡ó¡ö ¡÷ ¡þ¡ù¡ó?";
+		mes "¢¤¡ö¡ø ¢³ ¡÷¢£¡ü ¡ø ¡Ð¡õ¡û...";
+		mes "¡ð¡ú¢± ¡ô ¡ò¡õ¡ú ¡õ..!";
 		next;
 		mes "Cannot communicate with him.";
 		close;
@@ -1261,9 +1261,9 @@ dic_in01,242,182,0	script	Elevator#5f_to_4f	844,{
 dic_in01,263,193,3	script	Diel Guard#ep133_20	450,{
 	if (!isequipped(2782)) {
 		mes "[Diel Guard]";
-		mes "â—†â—‡â–  â–³ ã€“â€»â—‡?";
-		mes "â…³â– â–² â’Š â–³â…²â†‘ â–² âŒ’â–¡â†...";
-		mes "â—‹â†’â’ˆ â—† â—Žâ–¡â†’ â–¡..!";
+		mes "¡ô¡ó¡ö ¡÷ ¡þ¡ù¡ó?";
+		mes "¢¤¡ö¡ø ¢³ ¡÷¢£¡ü ¡ø ¡Ð¡õ¡û...";
+		mes "¡ð¡ú¢± ¡ô ¡ò¡õ¡ú ¡õ..!";
 		next;
 		mes "Cannot communicate with him.";
 		close;
@@ -1798,8 +1798,8 @@ OnTouch_:
 	if (ep13_3_secret == 19) {
 		if (!isequipped(2782)) {
 			mes "[Quiet Voice]";
-			mes "ã€“â€»â—‡ â…³â– â–²....";
-			mes "â—Žâ–¡â†’ â–³â…²â†‘ â–² âŒ’â–¡â†...";
+			mes "¡þ¡ù¡ó ¢¤¡ö¡ø....";
+			mes "¡ò¡õ¡ú ¡÷¢£¡ü ¡ø ¡Ð¡õ¡û...";
 		}
 		else {
 			mes "[Quiet Voice]";
@@ -1815,9 +1815,9 @@ OnTouch_:
 dic_in01,158,188,3	script	Jarute HesLanta#ep133_2	451,{
 	if (!isequipped(2782)) {
 		mes "[Jarute HesLanta]";
-		mes "â—†â—‡â–  â–³ ã€“â€»â—‡?";
-		mes "â…³â– â–² â’Š â–³â…²â†‘ â–² âŒ’â–¡â†...";
-		mes "â—‹â†’â’ˆ â—† â—Žâ–¡â†’ â–¡..!";
+		mes "¡ô¡ó¡ö ¡÷ ¡þ¡ù¡ó?";
+		mes "¢¤¡ö¡ø ¢³ ¡÷¢£¡ü ¡ø ¡Ð¡õ¡û...";
+		mes "¡ð¡ú¢± ¡ô ¡ò¡õ¡ú ¡õ..!";
 		next;
 		mes "Cannot communicate with him.";
 		mes "Sapha's minister looks hopeless.";
@@ -2325,8 +2325,8 @@ dicastes01,223,190,1	script	Calyon#pa8029	453,{
 		close;
 	}
 	if (!isequipped(2782)) {
-		mes "â–¡â…²â—†";
-		mes "â– â–²â—‡ â…² â– â—â˜… â€» â—‹â’‰â…²";
+		mes "¡õ¢£¡ô";
+		mes "¡ö¡ø¡ó ¢£ ¡ö¡ñ¡ï ¡ù ¡ð¢²¢£";
 		next;
 		mes "I don't feel confident in talking since you wouldn't understand anything.";
 		close;
@@ -2498,8 +2498,8 @@ dicastes01,211,178,2	script	Moltuka#pa0829	453,{
 		close;
 	}
 	if (!isequipped(2782)) {
-		mes "â–¡â…²â—†";
-		mes "â– â–²â—‡ â…² â– â—â˜… â€» â—‹â’‰â…²";
+		mes "¡õ¢£¡ô";
+		mes "¡ö¡ø¡ó ¢£ ¡ö¡ñ¡ï ¡ù ¡ð¢²¢£";
 		next;
 		mes "I don't feel confident in talking since you wouldn't understand anything.";
 		close;
@@ -2722,8 +2722,8 @@ dicastes01,175,217,5	script	Kalipo#pa0829	453,{
 		close;
 	}
 	if (!isequipped(2782)) {
-		mes "â–¡â…²â—†";
-		mes "â– â–²â—‡ â…² â– â—â˜… â€» â—‹â’‰â…²";
+		mes "¡õ¢£¡ô";
+		mes "¡ö¡ø¡ó ¢£ ¡ö¡ñ¡ï ¡ù ¡ð¢²¢£";
 		next;
 		mes "I don't feel confident in talking since you wouldn't understand anything.";
 		close;
@@ -2864,8 +2864,8 @@ dicastes01,187,230,5	script	Laponte#pa0829	453,{
 		close;
 	}
 	if (!isequipped(2782)) {
-		mes "â–¡â…²â—†";
-		mes "â– â–²â—‡ â…² â– â—â˜… â€» â—‹â’‰â…²";
+		mes "¡õ¢£¡ô";
+		mes "¡ö¡ø¡ó ¢£ ¡ö¡ñ¡ï ¡ù ¡ð¢²¢£";
 		next;
 		mes "I don't feel confident in talking since you wouldn't understand anything.";
 		close;
@@ -3035,8 +3035,8 @@ dicastes01,208,230,3	script	Pura#pa0829	453,{
 		close;
 	}
 	if (!isequipped(2782)) {
-		mes "â–¡â…²â—†";
-		mes "â– â–²â—‡ â…² â– â—â˜… â€» â—‹â’‰â…²";
+		mes "¡õ¢£¡ô";
+		mes "¡ö¡ø¡ó ¢£ ¡ö¡ñ¡ï ¡ù ¡ð¢²¢£";
 		next;
 		mes "I don't feel confident in talking since you wouldn't understand anything.";
 		close;
@@ -3226,8 +3226,8 @@ dicastes01,225,211,3	script	Tragis#pa0829	453,{
 		close;
 	}
 	if (!isequipped(2782)) {
-		mes "â–¡â…²â—†";
-		mes "â– â–²â—‡ â…² â– â—â˜… â€» â—‹â’‰â…²";
+		mes "¡õ¢£¡ô";
+		mes "¡ö¡ø¡ó ¢£ ¡ö¡ñ¡ï ¡ù ¡ð¢²¢£";
 		next;
 		mes "I don't feel confident in talking since you wouldn't understand anything.";
 		close;
@@ -4294,8 +4294,8 @@ dic_in01,245,119,4	script	Shay#ep133_13	884,{
 dicastes01,207,210,5	script	Walking Knit#ep133_15	449,{
 	if (!isequipped(2782)) {
 		mes "[Knit]";
-		mes "â–¡â…²â—†";
-		mes "â– â–²â—‡ â…² â– â—â˜… â€» â—‹â’‰â…²";
+		mes "¡õ¢£¡ô";
+		mes "¡ö¡ø¡ó ¢£ ¡ö¡ñ¡ï ¡ù ¡ð¢²¢£";
 		next;
 		mes "Cannot communicate with him.";
 		close;
@@ -4391,16 +4391,16 @@ dicastes01,207,210,5	script	Walking Knit#ep133_15	449,{
 
 dicastes01,112,248,5	script	Resting Piom#ep133_16	491,{
 	if (!isequipped(2782)) {
-	 mes "[Piom]";
-		mes "â—â–³â…³ â–  â’ˆâ—â†’?";
-		mes "â—Žâ’Š~!";
-		mes "âŒ’â’‰â…³ â’ˆ â†‘â—â–¡ â’Š â—‹ !!!";
+		mes "[Piom]";
+		mes "¡ñ¡÷¢¤ ¡ö ¢±¡ñ¡ú?";
+		mes "¡ò¢³~!";
+		mes "¡Ð¢²¢¤ ¢± ¡ü¡ñ¡õ ¢³ ¡ð !!!";
 		next;
 		mes "Cannot communicate with him.";
 		close;
 	}
 	if (ep13_3_secret == 4) {
-	 mes "[Piom]";
+		mes "[Piom]";
 		mes "Phew.. I need to rest.";
 		mes "Huh? You're... human!";
 		mes "Why are you here?";
@@ -4465,8 +4465,8 @@ dicastes01,112,248,5	script	Resting Piom#ep133_16	491,{
 dicastes01,249,140,3	script	Training Galten#ep133_17	450,{
 	if (!isequipped(2782)) {
 		mes "[Galten]";
-		mes "â–²â—†â†‘ â–² â–²â—†â†‘";
-		mes "â–²â—†â†‘";
+		mes "¡ø¡ô¡ü ¡ø ¡ø¡ô¡ü";
+		mes "¡ø¡ô¡ü";
 		next;
 		mes "Cannot communicate with him.";
 		close;
@@ -5040,8 +5040,8 @@ dicastes01,117,262,0	script	Frede#13_3	491,2,2,{
 		close;
 	}
 	mes "[Frede]";
-	mes "â…²â—†â— â†"; 
-	mes "â†’â– â–² â…² â—†";
+	mes "¢£¡ô¡ñ ¡û"; 
+	mes "¡ú¡ö¡ø ¢£ ¡ô";
 	close;
 OnTouch:
 	if (isequipped(2782) && ep13_3_invite > 5 && ep13_3_bra < 1) {
@@ -5345,8 +5345,8 @@ dic_in01,165,104,0	script	Frede#13_3_in	454,{
 		close;
 	}
 	mes "[Frede]";
-	mes "â…²â—†â— â† ";
-	mes "â†’â– â–² â…² â—†";
+	mes "¢£¡ô¡ñ ¡û ";
+	mes "¡ú¡ö¡ø ¢£ ¡ô";
 	close;
 }
 
@@ -5443,9 +5443,9 @@ dic_dun01,205,43,5	script	Brian#ep13_3_	490,{
 		close;
 	}
 	mes "[Brian]";
-	mes "â—†â–¡â—‡ â–² â—‹â’ˆâ† â–  â—‹";
-	mes "â—‹ã€“ã€“ â€» âŒ’â—â˜… â…³";
-	mes "â—†â—Žâ’‰ â–²";
+	mes "¡ô¡õ¡ó ¡ø ¡ð¢±¡û ¡ö ¡ð";
+	mes "¡ð¡þ¡þ ¡ù ¡Ð¡ñ¡ï ¢¤";
+	mes "¡ô¡ò¢² ¡ø";
 	close;
 }
 
@@ -5569,9 +5569,9 @@ dic_dun01,153,107,4	script	Tyler#13_3	489,{
 		close;
 	}
 	mes "[Tyler]";
-	mes "â˜…ã€“â–³";
-	mes "ã€“â—‡âŒ’ ã€“ âŒ’â–²â’ˆ â†‘ ";
-	mes "â—‡â–²â…³ â—‡ ";
+	mes "¡ï¡þ¡÷";
+	mes "¡þ¡ó¡Ð ¡þ ¡Ð¡ø¢± ¡ü ";
+	mes "¡ó¡ø¢¤ ¡ó ";
 	close;
 }
 
@@ -5672,8 +5672,8 @@ dic_dun01,235,243,0	script	John#13_3	454,{
 		close;
 	}
 	mes "[John]";
-	mes "â€»â–¡âŒ’ â’Š â—‡";
-	mes "â˜…â˜…â—Ž â–³ ã€“â—‹â–  â…² â—â†‘â†’ â—‡ â…³â†‘ â—‡ ";
+	mes "¡ù¡õ¡Ð ¢³ ¡ó";
+	mes "¡ï¡ï¡ò ¡÷ ¡þ¡ð¡ö ¢£ ¡ñ¡ü¡ú ¡ó ¢¤¡ü ¡ó ";
 	close;
 }
 
@@ -5766,13 +5766,13 @@ dic_dun02,110,127,5	script	Rose#13_3	489,{
 		next;
 		mes "[Rose]";
 		mes "We must be connected?";
-		mes "^f57d7dHahahaâ’”^000000";
+		mes "^f57d7dHahaha¢½^000000";
 		close;
 	}
 	mes "[Rose]";
-	mes "â€»â—‡â—‹ â’‰ â—‹";
-	mes "â†â– â–³ â€» â’Š";
-	mes "â…²â—‡â’‰";
+	mes "¡ù¡ó¡ð ¢² ¡ð";
+	mes "¡û¡ö¡÷ ¡ù ¢³";
+	mes "¢£¡ó¢²";
 	close;
 }
 
@@ -5865,8 +5865,8 @@ dic_dun01,64,107,7	script	Bain#13_3	490,{
 		close;
 	}
 	mes "[Bain]";
-	mes "â—‡â–²â’ˆ â–³ ";
-	mes "â– â—âŒ’ â—Ž â–¡";
+	mes "¡ó¡ø¢± ¡÷ ";
+	mes "¡ö¡ñ¡Ð ¡ò ¡õ";
 	close;
 }
 
@@ -5963,11 +5963,11 @@ dic_dun01,58,225,4	script	Lash#13_3	491,{
 		close;
 	}
 	mes "[Lash]";
-	mes "â—†â–¡â—‡ â–² â—‹â’ˆâ† â–  â—‹";
-	mes "â—‹ã€“ã€“ â€» âŒ’â—â˜… â…³ ";
-	mes "â—†â—Žâ’‰ â–² ";
-	mes "â–³";
-	mes "â–¡â’Šâ— â–¡ â—";
+	mes "¡ô¡õ¡ó ¡ø ¡ð¢±¡û ¡ö ¡ð";
+	mes "¡ð¡þ¡þ ¡ù ¡Ð¡ñ¡ï ¢¤ ";
+	mes "¡ô¡ò¢² ¡ø ";
+	mes "¡÷";
+	mes "¡õ¢³¡ñ ¡õ ¡ñ";
 	close;
 }
 
@@ -6088,9 +6088,9 @@ dic_in01,349,129,5	script	Bouy#13_3	449,{
 		close;
 	}
 	mes "[Bouy]";
-	mes "â–²â– ã€“ â€» â†’â—‹â˜… â–²"; 
-	mes "â˜…â†’â–  â€»";
-	mes "â–¡â˜…â–¡ â—Ž";
+	mes "¡ø¡ö¡þ ¡ù ¡ú¡ð¡ï ¡ø"; 
+	mes "¡ï¡ú¡ö ¡ù";
+	mes "¡õ¡ï¡õ ¡ò";
 	close;
 }
 
@@ -6585,9 +6585,9 @@ mid_campin,168,128,3	script	Sapha from Manuk	451,{
 		mes "That is it.";
 	}
 	mes "[Sapha]";
-	mes "â…³â—‹â†’? â…² â€»â—‹...";
-	mes "â˜…â—ŽâŒ’ â…³ ?";
-	mes "â—â˜…..?";
+	mes "¢¤¡ð¡ú? ¢£ ¡ù¡ð...";
+	mes "¡ï¡ò¡Ð ¢¤ ?";
+	mes "¡ñ¡ï..?";
 	next;
 	mes "[Hound]";
 	mes "Where is your interpreter ring?";
@@ -6667,9 +6667,9 @@ OnInit:
 man_in01,315,52,3	script	Guard Captain Avalanche	450,{
 	mes "[Guard Captain Avalanche]";
 	if (!isequipped(2782)) {
-		mes "â…³â—‹â†’? â…² â€»â—‹...";
-		mes "â˜…â—ŽâŒ’ â…³ ?";
-		mes "â—â˜…..?";
+		mes "¢¤¡ð¡ú? ¢£ ¡ù¡ð...";
+		mes "¡ï¡ò¡Ð ¢¤ ?";
+		mes "¡ñ¡ï..?";
 		close;	
 	}
 	if (ep13_3_invite == 4) {
@@ -6745,8 +6745,8 @@ man_in01,315,52,3	script	Guard Captain Avalanche	450,{
 dic_in01,42,264,3	script	Adventurer Clerk#ep133	453,{
 	if (!isequipped(2782)) {
 		mes "[Clerk Knit]";
-		mes "â—‹â—â—† â–¡ â†‘â’ˆâ’Š â–  â—Ž...?";
-		mes "â…³â– â–² ... â’Š â–³â…²â†‘ â–² âŒ’â–¡â†...";
+		mes "¡ð¡ñ¡ô ¡õ ¡ü¢±¢³ ¡ö ¡ò...?";
+		mes "¢¤¡ö¡ø ... ¢³ ¡÷¢£¡ü ¡ø ¡Ð¡õ¡û...";
 		next;
 		mes "- Cannot communicate with him. -";
 		close;
