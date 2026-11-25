@@ -4344,7 +4344,7 @@ louyang,217,278,0	script	 #lou_path	111,{
 
 lou_in01,107,163,0	script	 #lou_drink1	111,{
 	if (ch_poison == 12) {
-		mes "^3355FFYou found a drink bottle that's possibly owned by Bai Long, lord of Luoyang.^00000";
+		mes "^3355FFYou found a drink bottle that's possibly owned by Bai Long, lord of Luoyang.^000000";
 		next;
 		mes "^3355FFYou put the deadly poison into the bottle.^000000";
 		delitem 678,1; //Poison_Bottle
