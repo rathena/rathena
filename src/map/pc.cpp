@@ -15446,6 +15446,25 @@ void pc_show_questinfo_reinit(map_session_data *sd) {
 #endif
 }
 
+void pc_questinfo_refresh_map(int16 m) {
+#if PACKETVER >= 20090218
+	if (m < 0)
+		return;
+
+	s_mapiterator *iter = mapit_getallusers();
+
+	for (map_session_data *sd = (map_session_data *)mapit_first(iter); mapit_exists(iter); sd = (map_session_data *)mapit_next(iter)) {
+		if (sd->m != m)
+			continue;
+
+		pc_show_questinfo_reinit(sd);
+		pc_show_questinfo(sd);
+	}
+
+	mapit_free(iter);
+#endif
+}
+
 /**
  * Check if a job is allowed to enter the map
  * @param jobid Job ID see enum e_job or sd->status.class_
