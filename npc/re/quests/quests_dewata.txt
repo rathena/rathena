@@ -712,7 +712,7 @@ dewata,78,192,6	script	Borobudur Temple Manager	536,{
 	mes "Still things have gone well with your help.";
 	next;
 	mes "[Borobudur Temple Manager]";
-	mes "Ah, it is the ^006400Satay^00000 that I sampled when the tribe invited me some time ago.";
+	mes "Ah, it is the ^006400Satay^000000 that I sampled when the tribe invited me some time ago.";
 	next;
 	mes "[Borobudur Temple Manager]";
 	mes "Good~~ This is the same taste I remember.";

@@ -23,7 +23,7 @@ alberta,240,103,5	script	Karam Pucci#alberta	4_M_SEAMAN,3,3,{
 				mes "[Karam Pucci]";
 				mes "On second look, you're too weak to go there, anyway.";
 				mes "Alright, go on your way.";
-				mes "If you have friends who are at least ^4d4dffLevel 100^00000, tell them to come talk to me, alright?";
+				mes "If you have friends who are at least ^4d4dffLevel 100^000000, tell them to come talk to me, alright?";
 				close;
 			}
 			mes "[Karam Pucci]";
