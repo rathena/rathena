@@ -11619,20 +11619,13 @@ void clif_parse_ChangeDir(int32 fd, map_session_data *sd)
 }
 
 
-/// Request to show an emotion 
-/// 00bf <type>.B (CZ_REQ_EMOTION).
-void clif_parse_Emotion(int32 fd, map_session_data *sd){
-	if( sd == nullptr ){
+/// Shows an emotion requested by the player (shared by CZ_REQ_EMOTION and CZ_REQ_EMOTION_EXPANSION).
+static void clif_process_emotion( map_session_data* sd, int32 emotion_id ){
+	if( emotion_id < 0 || emotion_id >= ET_MAX ){
 		return;
 	}
 
-	const PACKET_CZ_REQ_EMOTION* p = reinterpret_cast<PACKET_CZ_REQ_EMOTION*>( RFIFOP( fd, 0 ) );
-
-	if( p->emotion_type >= ET_MAX ){
-		return;
-	}
-	
-	emotion_type emoticon = static_cast<emotion_type>( p->emotion_type );
+	emotion_type emoticon = static_cast<emotion_type>( emotion_id );
 
 	if (battle_config.basic_skill_check == 0 || pc_checkskill(sd, NV_BASIC) >= 2 || pc_checkskill(sd, SU_BASIC_SKILL) >= 1) {
 		if (emoticon == ET_CHAT_PROHIBIT) {// prevent use of the mute emote [Valaris]
@@ -11666,6 +11659,35 @@ void clif_parse_Emotion(int32 fd, map_session_data *sd){
 		clif_emotion( *sd, emoticon );
 	} else
 		clif_skill_fail( *sd, 1, USESKILL_FAIL_LEVEL, 1 );
+}
+
+/// Request to show an emotion
+/// 00bf <type>.B (CZ_REQ_EMOTION)
+void clif_parse_Emotion(int32 fd, map_session_data *sd){
+	if( sd == nullptr ){
+		return;
+	}
+
+	const PACKET_CZ_REQ_EMOTION* p = reinterpret_cast<PACKET_CZ_REQ_EMOTION*>( RFIFOP( fd, 0 ) );
+
+	clif_process_emotion( sd, p->emotion_type );
+}
+
+/// Request to show an emotion (clients 2023-07-05 and newer)
+/// 0be9 <group id>.W <emotion id>.W (CZ_REQ_EMOTION_EXPANSION)
+/// Only the basic emotions (group 0) are supported; emotion packs are not implemented.
+void clif_parse_EmotionExpansion( int32 fd, map_session_data* sd ){
+	if( sd == nullptr ){
+		return;
+	}
+
+	const PACKET_CZ_REQ_EMOTION_EXPANSION* p = reinterpret_cast<PACKET_CZ_REQ_EMOTION_EXPANSION*>( RFIFOP( fd, 0 ) );
+
+	if( p->group_id != 0 ){
+		return;
+	}
+
+	clif_process_emotion( sd, p->emotion_id );
 }
 
 
