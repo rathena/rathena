@@ -4390,8 +4390,8 @@ dicastes01,207,210,5	script	Walking Knit#ep133_15	449,{
 }
 
 dicastes01,112,248,5	script	Resting Piom#ep133_16	491,{
-	mes "[Piom]";
 	if (!isequipped(2782)) {
+		mes "[Piom]";
 		mes "¡ñ¡÷¢¤ ¡ö ¢±¡ñ¡ú?";
 		mes "¡ò¢³~!";
 		mes "¡Ð¢²¢¤ ¢± ¡ü¡ñ¡õ ¢³ ¡ð !!!";
