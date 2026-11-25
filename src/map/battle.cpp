@@ -8644,6 +8644,7 @@ static const struct _battle_data {
 	{ "client_sort_storage",                &battle_config.client_sort_storage,             0,      0,      1,              },
 	{ "feature.buying_store",               &battle_config.feature_buying_store,            1,      0,      1,              },
 	{ "feature.search_stores",              &battle_config.feature_search_stores,           1,      0,      1,              },
+	{ "feature.questinfo",                  &battle_config.feature_questinfo,               1,      0,      1,              },
 	{ "searchstore_querydelay",             &battle_config.searchstore_querydelay,         10,      0,      INT_MAX,        },
 	{ "searchstore_maxresults",             &battle_config.searchstore_maxresults,         30,      1,      INT_MAX,        },
 	{ "display_party_name",                 &battle_config.display_party_name,              0,      0,      1,              },
@@ -8994,6 +8995,13 @@ void battle_adjust_conf()
 	if( battle_config.feature_mesitemlink ){
 		ShowWarning( "conf/battle/feature.conf:mesitemlink is enabled but it is broken on this specific PACKETVER, disabling...\n" );
 		battle_config.feature_mesitemlink = 0;
+	}
+#endif
+
+#if PACKETVER < 20090218
+	if (battle_config.feature_questinfo) {
+		ShowWarning("conf/battle/feature.conf:questinfo is enabled but it requires PACKETVER 2009-02-18 or newer, disabling...\n");
+		battle_config.feature_questinfo = 0;
 	}
 #endif
 

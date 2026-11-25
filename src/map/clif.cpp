@@ -18036,10 +18036,12 @@ void clif_quest_add ( const map_session_data* sd, const quest *qd )
 #endif
 
 	WFIFOHEAD(fd, packet_len(cmd));
+	// This packet has fixed space for all objectives, including unused entries.
+	memset(WFIFOP(fd, 0), 0, packet_len(cmd));
 	WFIFOW(fd, 0) = cmd;
 	WFIFOL(fd, 2) = qd->quest_id;
 	WFIFOB(fd, 6) = qd->state;
-	WFIFOB(fd, 7) = static_cast<uint8>(qd->time - qi->time);
+	WFIFOL(fd, 7) = static_cast<uint32>(qd->time - qi->time);
 	WFIFOL(fd, 11) = static_cast<uint32>(qd->time);
 	WFIFOW(fd, 15) = static_cast<uint16>(qi->objectives.size());
 
@@ -18084,7 +18086,8 @@ void clif_quest_add ( const map_session_data* sd, const quest *qd )
 	WFIFOW(fd, 2) = len;
 
 	for (int32 i = 0, offset = 4; i < qi->objectives.size(); i++, offset += 12) {
-		WFIFOL(fd, offset) = qd->quest_id * 1000 + i;
+		// This packet identifies the quest itself, not the objective's hunting identifier.
+		WFIFOL(fd, offset) = qd->quest_id;
 		WFIFOL(fd, offset + 4) = qi->objectives[i]->mob_id;
 		WFIFOW(fd, offset + 8) = qi->objectives[i]->count;
 		WFIFOW(fd, offset + 10) = qd->count[i];
@@ -18114,39 +18117,57 @@ void clif_quest_delete( const map_session_data* sd, int32 quest_id )
 /// 09fa <packet len>.W <mobs>.W { <quest id>.L <hunt identification>.L <total count>.W <current count>.W }*3 (ZC_UPDATE_MISSION_HUNT_EX)
 void clif_quest_update_objective( const map_session_data* sd, const quest* qd )
 {
-	int32 fd = sd->fd;
-	int32 offset = 6;
 	const std::shared_ptr<const s_quest_db> qi = quest_search(qd->quest_id);
-	int16 len;
-	len = static_cast<decltype(len)>( qi->objectives.size() * 12 + 6 );
+	if (!qi)
+		return;
+
+	std::vector<s_quest_objective_update> updates;
+	for (int32 i = 0; i < qi->objectives.size(); i++) {
+		updates.push_back({ qd->quest_id, i, qi->objectives[i]->mob_id,
+			qi->objectives[i]->count, static_cast<uint16>(qd->count[i]) });
+	}
+	clif_quest_update_objectives(sd, updates);
+}
+
+/// Send all objectives advanced by a kill together, preserving separate entries for each quest.
+void clif_quest_update_objectives( const map_session_data* sd, const std::vector<s_quest_objective_update>& updates )
+{
+	int32 fd = sd->fd;
 #if PACKETVER >= 20150513
 	int32 cmd = 0x9fa;
 #else
 	int32 cmd = 0x2b5;
 #endif
 
-	WFIFOHEAD(fd, len);
-	WFIFOW(fd, 0) = cmd;
-	WFIFOW(fd, 4) = static_cast<uint16>(qi->objectives.size());
+	// Split only when necessary to keep the packet length within the signed 16-bit limit.
+	const size_t max_entries = (INT16_MAX - 6) / 12;
+	for (size_t first = 0; first < updates.size(); first += max_entries) {
+		size_t count = std::min(max_entries, updates.size() - first);
+		int16 len = static_cast<int16>(6 + count * 12);
+		int32 offset = 6;
+		WFIFOHEAD(fd, len);
+		WFIFOW(fd, 0) = cmd;
+		WFIFOW(fd, 2) = len;
+		WFIFOW(fd, 4) = static_cast<uint16>(count);
 
-	for (int32 i = 0; i < qi->objectives.size(); i++) {
-		WFIFOL(fd, offset) = qd->quest_id;
-		offset += 4;
+		for (size_t i = first; i < first + count; i++) {
+			const auto& update = updates[i];
+			WFIFOL(fd, offset) = update.quest_id;
+			offset += 4;
 #if PACKETVER >= 20150513
-		WFIFOL(fd, offset) = qd->quest_id * 1000 + i;
-		offset += 4;
+			WFIFOL(fd, offset) = update.quest_id * 1000 + update.objective_index;
 #else
-		WFIFOL(fd, offset) = qi->objectives[i]->mob_id;
-		offset += 4;
+			WFIFOL(fd, offset) = update.mob_id;
 #endif
-		WFIFOW(fd, offset) = qi->objectives[i]->count;
-		offset += 2;
-		WFIFOW(fd, offset) = qd->count[i];
-		offset += 2;
-	}
+			offset += 4;
+			WFIFOW(fd, offset) = update.total_count;
+			offset += 2;
+			WFIFOW(fd, offset) = update.current_count;
+			offset += 2;
+		}
 
-	WFIFOW(fd, 2) = offset;
-	WFIFOSET(fd, offset);
+		WFIFOSET(fd, len);
+	}
 }
 
 

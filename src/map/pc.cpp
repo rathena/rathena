@@ -15370,6 +15370,9 @@ void pc_show_questinfo(map_session_data *sd) {
 #if PACKETVER >= 20090218
 	nullpo_retv(sd);
 
+	if (!battle_config.feature_questinfo)
+		return;
+
 	if (sd->m < 0 || sd->m >= MAX_MAPINDEX)
 		return;
 

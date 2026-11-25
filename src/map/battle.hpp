@@ -525,6 +525,7 @@ struct Battle_Config
 	int32 client_sort_storage;
 	int32 feature_buying_store;
 	int32 feature_search_stores;
+	int32 feature_questinfo;
 	int32 searchstore_querydelay;
 	int32 searchstore_maxresults;
 	int32 display_party_name;
