@@ -4507,6 +4507,7 @@ OnTouch:
 		next;
 		mes "You will be a great king.";
 		ep17_2_main = 35;
+		achievementcomplete(130005);
 		completequest 18021;
 		close2;
 		cutin "",255;
