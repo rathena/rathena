@@ -2950,6 +2950,10 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 
 	status = &md->status;
 
+	map_session_data* tamer_sd = md->tamer_id != 0 ? map_id2sd( md->tamer_id ) : nullptr;
+
+	md->tamer_id = 0;
+
 	if( src && src->type == BL_PC ) {
 		sd = (map_session_data *)src;
 		first_sd = sd;
@@ -3645,8 +3649,11 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 	}
 
 	// MvP tomb [GreenBox]
-	if (battle_config.mvp_tomb_enabled && md->spawn->state.boss && map_getmapflag(md->m, MF_NOTOMB) != 1)
-		mvptomb_create(md, mvp_sd != nullptr ? mvp_sd->status.name : (first_sd != nullptr ? first_sd->status.name : nullptr), time(nullptr));
+	if (battle_config.mvp_tomb_enabled && md->spawn->state.boss && map_getmapflag(md->m, MF_NOTOMB) != 1) {
+		map_session_data* killer_sd = mvp_sd != nullptr ? mvp_sd : ( first_sd != nullptr ? first_sd : tamer_sd );
+
+		mvptomb_create(md, killer_sd != nullptr ? killer_sd->status.name : nullptr, time(nullptr));
+	}
 
 	if( !rebirth )
 		mob_setdelayspawn(md); //Set respawning.

@@ -396,6 +396,7 @@ struct mob_data : public block_list {
 	 * MvP Tombstone NPC ID
 	 **/
 	int32 tomb_nid;
+	int32 tamer_id;
 	uint16 damagetaken;
 
 	e_mob_bosstype get_bosstype() const;

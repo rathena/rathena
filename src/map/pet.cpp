@@ -1341,6 +1341,7 @@ void pet_catch_process_end( map_session_data& sd, int32 target_id ){
 	if(rnd_chance(pet_catch_rate, 10000)) {
 		achievement_update_objective(&sd, AG_TAMING, 1, md->mob_id);
 		unit_remove_map(md,CLR_OUTSIGHT);
+		md->tamer_id = sd.id;
 		status_kill(md);
 		clif_pet_roulette( sd, true );
 
