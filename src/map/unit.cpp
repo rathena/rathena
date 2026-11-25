@@ -2243,7 +2243,6 @@ int32 unit_skilluse_id2(block_list *src, int32 target_id, uint16 skill_id, uint1
 					return 0;
 				}
 
-				sd->skill_id_old = skill_id;
 				break;
 			case BA_PANGVOICE:
 			case DC_WINKCHARM:
@@ -3444,6 +3443,10 @@ int32 unit_skillcastcancel(block_list *bl, char type)
 		ShowError("delete timer error : skill_id : %d\n",ret);
 
 	ud->skilltimer = INVALID_TIMER;
+
+	// Canceling an Encore song also cancels its one-use SP discount.
+	if (sd != nullptr && sd->skill_id_old == BD_ENCORE && skill_id == sd->skill_id_dance)
+		sd->skill_id_old = 0;
 
 	if( sd && (pc_checkskill(sd,SA_FREECAST) > 0 || skill_id == LG_EXEEDBREAK) )
 		status_calc_bl(sd, { SCB_SPEED, SCB_ASPD });
