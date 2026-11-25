@@ -6557,7 +6557,9 @@ int32 pc_useitem(map_session_data *sd,int32 n)
 
 	run_script( script, 0, sd->id, fake_nd->id );
 
-	if( sd->st != nullptr ){
+	// Keep the item's script if it is still waiting for the player (mes/close2, select, ...), so its dialog can continue.
+	// If the item was used during another script, that script is attached again below, so the item's script is freed.
+	if( sd->st != nullptr && ( sd->st->state == END || previous_st != nullptr ) ){
 		script_free_state( sd->st );
 		sd->st = nullptr;
 	}
