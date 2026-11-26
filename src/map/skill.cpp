@@ -2880,6 +2880,15 @@ int64 skill_attack (int32 attack_type, block_list* src, block_list *dsrc, block_
 
 	damage = dmg.damage + dmg.damage2;
 
+#ifdef RENEWAL
+	if (sd && skill_id == MO_FINGEROFFENSIVE && damage > 0) {
+		// Throw Spirit Sphere only consumes spheres when the attack deals damage.
+		const auto require = skill_get_requirement(sd, skill_id, skill_lv);
+		if (require.spiritball > 0)
+			pc_delspiritball(sd, require.spiritball, 0);
+	}
+#endif
+
 	if ((dmg.flag & BF_MAGIC) && tsc && tsc->getSCE(SC_MAXPAIN)) {
 		auto * sce = tsc->getSCE(SC_MAXPAIN);
 		sce->val3 = (int32)damage;
@@ -9611,8 +9620,10 @@ void skill_consume_requirement(map_session_data *sd, uint16 skill_id, uint16 ski
 				if(sd->sc.getSCE(SC_SPIRIT) && sd->sc.getSCE(SC_SPIRIT)->val2 == SL_PRIEST)
 					require.sp *= 5;
 				break;
-			case MO_KITRANSLATION:
-				//Spiritual Bestowment only uses spirit sphere when giving it to someone
+			case MO_KITRANSLATION: // Spiritual Bestowment consumes spheres when giving them to someone.
+#ifdef RENEWAL
+			case MO_FINGEROFFENSIVE: // Charged in skill_attack only when damage is dealt.
+#endif
 				require.spiritball = 0;
 				[[fallthrough]];
 			default:
