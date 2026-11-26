@@ -392,7 +392,7 @@ Body:
       Fist: 40
       Dagger: 50
       1hSword: 52
-      2hSword: 55
+      2hSword: 53 # TODO: Unconfirmed kRO value; local test value (2026-11-18)
       1hSpear: 60
       2hSpear: 58
       1hAxe: 48
