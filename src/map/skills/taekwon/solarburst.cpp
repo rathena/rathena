@@ -22,5 +22,5 @@ void SkillSolarBurst::calculateSkillRatio(const Damage *wd, const block_list *sr
 
 void SkillSolarBurst::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	clif_skill_nodamage(src,*target,getSkillId(),skill_lv);
-	skill_castend_damage_id(src, target, getSkillId(), skill_lv, tick, flag);
+	SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
 }
