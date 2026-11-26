@@ -114,7 +114,7 @@ prtg_cas01,15,208,0	script	#Lever_PR01	111,{
 	next;
 	if(select("Pull.:Do not.") == 1) {
 		close2;
-		warp "prtg_cas01",112,183;
+		warp "prtg_cas01",111,183;
 		end;
 	}
 	close;

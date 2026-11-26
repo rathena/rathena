@@ -25,8 +25,9 @@ ein_fild01,349,369,0	warp	hugel003	1,1,yuno_fild05,43,346
 yuno_fild05,41,350,0	warp	hugel003a	1,1,ein_fild01,345,367
 ein_fild01,106,34,0	warp	hugel004	1,1,ein_fild02,109,358
 ein_fild02,108,364,0	warp	hugel004a	1,1,ein_fild01,106,40
-ein_fild01,234,34,0	warp	hugel005	1,1,ein_fild02,258,343
-ein_fild02,257,350,0	warp	hugel005a	1,1,ein_fild01,231,40
+// Disabled: ein_fild01 has no passage at 234,34 (cells are not walkable), hugel005a put players into an obstacle
+//ein_fild01,234,34,0	warp	hugel005	1,1,ein_fild02,258,343
+//ein_fild02,257,350,0	warp	hugel005a	1,1,ein_fild01,231,40
 ein_fild02,170,29,0	warp	hugel006	1,1,ein_fild05,172,366
 ein_fild05,172,371,0	warp	hugel006a	1,1,ein_fild02,170,37
 hu_fild01,366,185,0	warp	hugel007	1,1,hu_fild02,22,168

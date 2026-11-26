@@ -6272,7 +6272,7 @@ OnTouch_:
 	if (KielHyreQuest == 50)
 		warp "kh_kiehl01",38,178;
 	else
-		warp "kh_kiehl01",47,171;
+		warp "kh_kiehl01",47,172;
 	end;
 }
 

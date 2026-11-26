@@ -49,5 +49,6 @@ hu_fild06,28,119,0	warp	hugel011a	1,1,hu_fild05,347,130
 
 // RE Addon
 ein_fild01,106,34,0	warp	EinF01Dn01_EinF05Up01	1,1,ein_fild05,172,366
-ein_fild01,234,34,0	warp	EinF01Dn02_EinF05Up02	1,1,ein_fild05,172,366
+// Disabled: ein_fild01 has no passage at 234,34 (cells are not walkable)
+//ein_fild01,234,34,0	warp	EinF01Dn02_EinF05Up02	1,1,ein_fild05,172,366
 ein_fild05,172,371,0	warp	EinF05Up01_EinF01Dn01	1,1,ein_fild01,106,40

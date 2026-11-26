@@ -2287,7 +2287,8 @@ OnTimer7200000:
 	end;
 }
 
-tha_scene01,30,30,0	warp	scene	1,1,tha_scene01,131,220
+// Disabled: 30,30 is not walkable
+//tha_scene01,30,30,0	warp	scene	1,1,tha_scene01,131,220
 tha_t04,81,36,0	warp	to 5th Floor	1,1,tha_t05,62,8
 tha_t06,119,120,0	script	to 7th Floor	45,1,1,{
 	end;

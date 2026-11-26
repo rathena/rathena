@@ -1066,7 +1066,7 @@ OnTouch_:
 		next;
 		mes "[Splendide Guard]";
 		mes "You'd better behave, Aide Arioss says that different races shall be treated the same way.";
-		warp "spl_in01",109,58;
+		warp "spl_in01",109,59;
 		close;
 	}
 	end;
@@ -1654,7 +1654,7 @@ OnTouch_:
 	} else {
 		mes "[World Tree Yggdrasil]";
 		mes "Those who want to taint the sacred Sanctuary of the Guardian... Get out.";
-		warp "mid_camp",100,100;
+		warp "mid_camp",95,100;
 	}
 	end;
 

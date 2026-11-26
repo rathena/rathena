@@ -295,7 +295,7 @@ lou_in01,25,23,5	script	Friendly Looking Lady#lo	817,{
 		mes "come again.";
 		next;
 		set Zeny, Zeny-500;
-		warp "lou_in01",17,19;
+		warp "lou_in01",16,19;
 		end;
 	case 3:
 		mes "[Hong Miao]";
