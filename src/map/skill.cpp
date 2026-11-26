@@ -97,9 +97,22 @@ int32 wallofthorn_unit_pos;
 
 struct s_skill_nounit_layout skill_nounit_layout[MAX_SKILL_UNIT_LAYOUT2];
 
+struct s_skill_partners {
+	int32 count;
+	map_session_data* first = nullptr;
+};
+
+#ifndef RENEWAL
+struct s_ensemble_cost {
+	map_session_data* partner = nullptr;
+	int32 sp = 0;
+};
+#endif
+
 char dir_ka = -1; // Holds temporary direction to the target for SR_KNUCKLEARROW
 
 //Early declaration
+static s_skill_partners skill_get_pc_partners(map_session_data* sd, uint16 skill_id, uint16* skill_lv, int32 range, int32 cast_flag);
 bool skill_strip_equip(block_list *src, block_list *target, uint16 skill_id, uint16 skill_lv);
 static int32 skill_check_unit_range (block_list *bl, int32 x, int32 y, uint16 skill_id, uint16 skill_lv);
 static int32 skill_check_unit_range2 (block_list *bl, int32 x, int32 y, uint16 skill_id, uint16 skill_lv, bool isNearNPC);
@@ -4842,6 +4855,30 @@ TIMER_FUNC( skill_keep_using ){
 	return 0;
 }
 
+#ifndef RENEWAL
+static bool skill_prepare_ensemble(map_session_data& sd, uint16 skill_id, uint16& skill_lv, s_ensemble_cost& cost){
+	if (!skill_get_inf2(skill_id, INF2_ISENSEMBLE))
+		return true;
+
+	// Resolve the partner again because they may have moved or changed equipment during the cast.
+	s_skill_partners partners = skill_get_pc_partners(&sd, skill_id, &skill_lv, 1, 0);
+	if (partners.count < 1) {
+		clif_skill_fail(sd, skill_id);
+		return false;
+	}
+
+	cost.partner = partners.first;
+	cost.sp = sd.state.autocast ? 0 : skill_get_requirement(&sd, skill_id, skill_lv).sp;
+	if (cost.sp > 0 && (sd.battle_status.sp < static_cast<uint32>(cost.sp) ||
+	    (cost.partner != nullptr && cost.partner->battle_status.sp < static_cast<uint32>(cost.sp)))) {
+		clif_skill_fail(sd, skill_id, USESKILL_FAIL_SP_INSUFFICIENT);
+		return false;
+	}
+
+	return true;
+}
+#endif
+
 /**
  * Check & process skill to target on castend. Determines if skill is 'damage' or 'nodamage'
  * @param tid
@@ -5011,10 +5048,19 @@ TIMER_FUNC(skill_castend_id){
 #endif
 		if( sd )
 		{
+#ifndef RENEWAL
+			s_ensemble_cost ensemble;
+			if (!skill_prepare_ensemble(*sd, ud->skill_id, ud->skill_lv, ensemble))
+				break;
+#endif
 			if( !skill_check_condition_castend(*sd, ud->skill_id, ud->skill_lv) )
 				break;
 			else {
 				skill_consume_requirement(sd,ud->skill_id,ud->skill_lv,1);
+#ifndef RENEWAL
+				if (ensemble.partner != nullptr && ensemble.sp > 0)
+					status_charge(ensemble.partner, 0, ensemble.sp);
+#endif
 
 				int32 add_ap = skill_get_giveap( ud->skill_id, ud->skill_lv );
 
@@ -5301,10 +5347,19 @@ TIMER_FUNC(skill_castend_pos){
 
 		if( sd )
 		{
+#ifndef RENEWAL
+			s_ensemble_cost ensemble;
+			if (!skill_prepare_ensemble(*sd, ud->skill_id, ud->skill_lv, ensemble))
+				break;
+#endif
 			if( ud->skill_id != AL_WARP && !skill_check_condition_castend(*sd, ud->skill_id, ud->skill_lv) )
 				break;
 			else {
 				skill_consume_requirement(sd, ud->skill_id, ud->skill_lv, 1);
+#ifndef RENEWAL
+				if (ensemble.partner != nullptr && ensemble.sp > 0)
+					status_charge(ensemble.partner, 0, ensemble.sp);
+#endif
 
 				int32 add_ap = skill_get_giveap(ud->skill_id, ud->skill_lv);
 
@@ -8001,19 +8056,20 @@ int32 skill_check_condition_char_sub (block_list *bl, va_list ap)
  * @param skill_lv
  * @param range Area range to check
  * @param cast_flag Special handle
+ * @return Partner count and the first partner found during a search
  */
-int32 skill_check_pc_partner(map_session_data *sd, uint16 skill_id, uint16 *skill_lv, int32 range, int32 cast_flag)
+static s_skill_partners skill_get_pc_partners(map_session_data* sd, uint16 skill_id, uint16* skill_lv, int32 range, int32 cast_flag)
 {
 	static int32 c=0;
 	static int32 p_sd[MAX_PARTY];
 	int32 i;
 	bool is_chorus = skill_get_inf2(skill_id, INF2_ISCHORUS);
 
-	if (!sd)
-		return 0;
+	if (sd == nullptr)
+		return { 0 };
 
 	if (!battle_config.player_skill_partner_check || pc_has_permission(sd, PC_PERM_SKILL_UNCONDITIONAL))
-		return is_chorus ? MAX_PARTY : 99; //As if there were infinite partners.
+		return { is_chorus ? MAX_PARTY : 99 }; //As if there were infinite partners.
 
 	if (cast_flag) {	//Execute the skill on the partners.
 		map_session_data* tsd;
@@ -8024,7 +8080,7 @@ int32 skill_check_pc_partner(map_session_data *sd, uint16 skill_id, uint16 *skil
 					if ((tsd = map_id2sd(p_sd[i])) != nullptr)
 						status_charge(tsd, 0, (skill_id == PR_BENEDICTIO) ? 10 : skill_get_sp(skill_id, *skill_lv) / 2);
 				}
-				return c;
+				return { c };
 			case AB_ADORAMUS:
 				if( c > 0 && (tsd = map_id2sd(p_sd[0])) != nullptr ) {
 					i = 2 * (*skill_lv);
@@ -8055,7 +8111,7 @@ int32 skill_check_pc_partner(map_session_data *sd, uint16 skill_id, uint16 *skil
 #endif
 					}
 				}
-				return c;
+				return { c };
 		}
 	}
 
@@ -8067,7 +8123,12 @@ int32 skill_check_pc_partner(map_session_data *sd, uint16 skill_id, uint16 *skil
 	if ( skill_id != PR_BENEDICTIO && skill_id != AB_ADORAMUS && skill_id != WM_GREAT_ECHO && 
 		!(skill_id >= TR_GEF_NOCTURN && skill_id <= TR_PRON_MARCH)) //Apply the average lv to encore skills.
 		*skill_lv = (i+(*skill_lv))/(c+1); //I know c should be one, but this shows how it could be used for the average of n partners.
-	return c;
+	return { c, c > 0 ? map_id2sd(p_sd[0]) : nullptr };
+}
+
+int32 skill_check_pc_partner(map_session_data* sd, uint16 skill_id, uint16* skill_lv, int32 range, int32 cast_flag)
+{
+	return skill_get_pc_partners(sd, skill_id, skill_lv, range, cast_flag).count;
 }
 
 /**
@@ -8352,10 +8413,18 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 		}
 	}
 	else if(inf2[INF2_ISENSEMBLE]) {
+#ifdef RENEWAL
 		if (skill_check_pc_partner(&sd, skill_id, &skill_lv, 1, 0) < 1 && !(sc && sc->getSCE(SC_KVASIR_SONATA))) {
+#else
+		if (skill_check_pc_partner(&sd, skill_id, &skill_lv, 1, 0) < 1) {
+#endif
 			clif_skill_fail( sd, skill_id );
 			return false;
 		}
+#ifndef RENEWAL
+		// Check the caster's requirements at the averaged level from the partner search.
+		require = skill_get_requirement(&sd, skill_id, skill_lv);
+#endif
 	}
 	// perform skill-specific checks (and actions)
 	switch( skill_id ) {
