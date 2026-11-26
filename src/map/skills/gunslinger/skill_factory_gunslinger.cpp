@@ -50,6 +50,7 @@
 #include "slugshot.cpp"
 #include "spiralshooting.cpp"
 #include "spreadattack.cpp"
+#include "tacticalrepositioning.cpp"
 #include "thevigilanteatnight.cpp"
 #include "tracking.cpp"
 #include "tripleaction.cpp"
@@ -126,6 +127,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryGunslinger::create(const e_skill sk
 			return std::make_unique<SkillOnlyOneBullet>();
 		case NW_SPIRAL_SHOOTING:
 			return std::make_unique<SkillSpiralShooting>();
+		case NW_TACTICAL_REPOSITIONING:
+			return std::make_unique<SkillTacticalRepositioning>();
 		case NW_THE_VIGILANTE_AT_NIGHT:
 			return std::make_unique<SkillTheVigilanteAtNight>();
 		case NW_WILD_FIRE:
