@@ -129,6 +129,7 @@ enum e_skill_inf2 : uint8 {
 	INF2_IGNOREGTB, // Skill ignores effect of GTB
 	INF2_TOGGLEABLE, // Skill can be toggled on and off (won't consume HP/SP when toggled off)
 	INF2_IGNORENONCRITATKBONUS, // Skill ignores the bonus of bNonCritAtkRate
+	INF2_DIAMONDSPLASH, // Skill uses diamond-shaped splash area.
 	INF2_MAX,
 };
 
@@ -592,6 +593,8 @@ int32 skill_break_equip(block_list *src,block_list *bl, uint16 where, int32 rate
 int32 skill_strip_equip(block_list *src,block_list *bl, uint16 where, int32 rate, int32 lv, int32 time);
 // Skills unit
 std::shared_ptr<s_skill_unit_group> skill_id2group(int32 group_id);
+// Ice Pillar fog tick helper (damage first, then buff refresh if in range).
+void skill_ice_pillar_apply_tick(const std::shared_ptr<s_skill_unit_group>& group, t_tick tick);
 std::shared_ptr<s_skill_unit_group> skill_unitsetting(block_list* src, uint16 skill_id, uint16 skill_lv, int16 x, int16 y, int32 flag);
 skill_unit* skill_initunit(std::shared_ptr<s_skill_unit_group> group, int32 idx, int32 x, int32 y, int32 val1, int32 val2, bool hidden, int32 range, t_tick limit);
 int32 skill_delunit(skill_unit *unit);
@@ -2439,6 +2442,91 @@ enum e_skill {
 	TR_RHYTHMICAL_WAVE,
 	ABC_ABYSS_FLAME_ATK,
 
+	DR_WEREWOLF = 6524,
+	DR_ENRAGE_WOLF,
+	DR_NOMERCY_CLAW,
+	DR_CRUEL_BITE,
+	DR_HUNGER,
+	DR_BLOOD_HOWLING,
+	DR_BEASTY_NOSE,
+	DR_WERERAPTOR,
+	DR_ENRAGE_RAPTOR,
+	DR_SHOOTING_FEATHER,
+	DR_FLICKING_TONADO,
+	DR_LOW_FLIGHT,
+	DR_PREENING,
+	DR_SHARPE_EYES,
+	DR_TRUTH_OF_ICE,
+	DR_ICE_TOTEM,
+	DR_ICE_CLOUD,
+	DR_TRUTH_OF_WIND,
+	DR_CUTTING_WIND,
+	DR_WIND_BOMB,
+	DR_TRUTH_OF_EARTH,
+	DR_EARTH_FLOWER,
+	DR_AROUND_FLOWER,
+	DR_NATURE_SHIELD,
+	DR_NATURE_LOGIC,
+	KR_NASTY_SLASH,
+	KR_DOUBLE_SLASH,
+	KR_CLAW_WAVE,
+	KR_CHOP_CHOP,
+	KR_IRON_HOWLING,
+	KR_WOLF_INSTINCT,
+	KR_SHARPEN_GUST,
+	KR_SHARPEN_HAIL,
+	KR_TYPHOON_WING,
+	KR_FEATHER_SPRINKLE,
+	KR_WIND_VEIL,
+	KR_RAPTORIAL_INSTINCT,
+	KR_ICE_PILLAR,
+	KR_ICE_SPLASH,
+	KR_THUNDERING_FOCUS,
+	KR_THUNDERING_FOCUS_S,
+	KR_THUNDERING_ORB,
+	KR_THUNDERING_ORB_S,
+	KR_THUNDERING_CALL,
+	KR_THUNDERING_CALL_S,
+	KR_EARTH_DRILL,
+	KR_EARTH_STAMP,
+	KR_EARTH_BUD,
+	KR_NATURE_VIGOUR,
+	KR_NATURE_PROTECTION,
+	KR_GROUND_BLOOM,
+	AT_SIXTH_SENSE,
+	AT_PULSE_OF_MADNESS,
+	AT_ALPHA_PHASE,
+	AT_PRIMAL_CLAW,
+	AT_FERAL_CLAW,
+	AT_ALPHA_CLAW,
+	AT_SAVAGE_LUNGE,
+	AT_FRENZY_FANG,
+	AT_FLIP_FLAP,
+	AT_FLIP_FLAP_TARGET,
+	AT_APEX_PHASE,
+	AT_PINION_SHOT,
+	AT_ZEPHYR_LINK,
+	AT_QUILL_SPEAR,
+	AT_QUILL_SPEAR_S,
+	AT_TEMPEST_FLAP,
+	AT_AERO_SYNC,
+	AT_GLACIER_MONOLITH,
+	AT_GLACIER_NOVA,
+	AT_GLACIER_SHARD,
+	AT_GLACIER_STOMP,
+	AT_CHILLING_BLAST,
+	AT_ROARING_PIERCER,
+	AT_ROARING_PIERCER_S,
+	AT_ROARING_CHARGE,
+	AT_ROARING_CHARGE_S,
+	AT_FURIOS_STORM,
+	AT_TERRA_WAVE,
+	AT_TERRA_HARVEST,
+	AT_SOLID_STOMP,
+	AT_GRAVITY_HOLE,
+	AT_NATURE_AID,
+	AT_NATURE_HARMONY,
+
 	HLIF_HEAL = 8001,
 	HLIF_AVOID,
 	HLIF_BRAIN,
@@ -2787,6 +2875,9 @@ enum e_skill_unit_id : uint16 {
 	UNT_KUNAIWAIKYOKU,// Kunai - Distortion
 	UNT_KUNAIKUSSETSU,// Kunai - Refraction
 	UNT_SEKIENHOU,// Red Flame Cannon
+
+	UNT_ICE_PILLAR = 313,
+	UNT_GLACIAL_MONOLITH,
 
 	UNT_STAR_BURST = 2409,
 
