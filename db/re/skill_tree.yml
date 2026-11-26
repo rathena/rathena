@@ -6725,6 +6725,11 @@ Body:
         Requires:
           - Name: DK_HACKANDSLASHER
             Level: 7
+      - Name: DK_SERVANT_W_CLEAVE
+        MaxLevel: 5
+        Requires:
+          - Name: DK_SERVANTWEAPON
+            Level: 3
   - Job: Meister
     Inherit:
       Novice: true
