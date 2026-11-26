@@ -441,7 +441,7 @@ OnTouch_:
 		case 1: warp "prontera",107,60; end;
 		case 2: warp "morocc",157,96; end;
 		case 3: warp "geffen",120,36; end;
-		case 4: warp "payon",96,100; end;
+		case 4: warp "payon",99,98; end;
 		case 5: warp "alberta",41,243; end;
 		case 6: close;
 	}

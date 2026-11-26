@@ -1427,7 +1427,7 @@ OnTimer50000:
 	end;
 }
 
-schg_que01,104,140,0	warp	back#sch_gd	1,1,schg_dun01,199,192
+schg_que01,104,140,0	warp	back#sch_gd	1,1,schg_dun01,196,146
 
 /*
 schg_que01,104,140,1	script	treg#sch_gd	844,{

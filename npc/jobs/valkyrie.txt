@@ -188,7 +188,7 @@ valkyrie,48,86,4	script	Valkyrie#	811,{
 			case 4012:
 			case 4020:
 			case 4021:
-				warp "payon",69,100; break;
+				warp "payon",70,100; break;
 			case 4013:
 			case 4018:
 				warp "morocc",154,50; break;

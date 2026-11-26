@@ -4240,10 +4240,10 @@ lhz_que01,99,74,5	script	#li_Man	1_M_02,{
 		changequest 2090,2091;
 		getitem 7341,1; //Worn_Out_Pendant
 		close2;
-		warp "lhz_in01",278,162;
+		warp "lhz_in01",278,161;
 	}
 	else {
-		warp "lhz_in01",278,162;
+		warp "lhz_in01",278,161;
 	}
 	end;
 }
@@ -4931,7 +4931,7 @@ lhz_in03,32,162,3	script	Crippled Girl#li_tre	1_M_INNKEEPER,{
 				mes "messenger.";
 				set lhz_curse,20;
 				close2;
-				warp "lighthalzen",322,323;
+				warp "lighthalzen",322,322;
 				end;
 			case 2:
 				if (countitem(7341) > 0) {

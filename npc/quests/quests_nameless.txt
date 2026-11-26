@@ -8471,7 +8471,7 @@ OnTouch_:
 		close2;
 		set $@monster_zgang,0;
 		set $@door2,0;
-		warp "moc_fild17",209,235;
+		warp "moc_fild17",208,235;
 	}
 	end;
 }
@@ -8500,7 +8500,7 @@ OnTouch_:
 		close2;
 		set $@monster_zgang,0;
 		set $@door2,0;
-		warp "moc_fild17",209,235;
+		warp "moc_fild17",208,235;
 	}
 	end;
 }
@@ -8569,7 +8569,7 @@ OnTimer300000:
 	end;
 
 OnTimer350000:
-	mapwarp "z_agit","moc_fild17",209,235;
+	mapwarp "z_agit","moc_fild17",208,235;
 	hideonnpc "Louis";
 	hideonnpc "Martha";
 	hideonnpc "Catfoii";
@@ -8640,7 +8640,7 @@ OnMyMobDead:
 	end;
 
 OnTimer300000:
-	mapwarp "z_agit","moc_fild17",209,235;
+	mapwarp "z_agit","moc_fild17",208,235;
 	donpcevent "#zdan_broad::OnDisable";
 	killmonster "z_agit","#ZGuard::OnMyMobDead";
 	set $@monster_zgang,0;
@@ -8742,7 +8742,7 @@ z_agit,97,101,3	script	Louis	931,{
 		getitem 7724,1; //Forbidden_Secret_Art
 		changequest 3133,3134;
 		set zdan_edq,18;
-		mapwarp "z_agit","moc_fild17",209,235;
+		mapwarp "z_agit","moc_fild17",208,235;
 		set $@monster_zgang,0;
 		set $@door2,0;
 		hideonnpc "Louis";
@@ -8761,7 +8761,7 @@ z_agit,97,101,3	script	Louis	931,{
 		set $@monster_zgang,0;
 		set $@door2,0;
 		close2;
-		warp "moc_fild17",209,235;
+		warp "moc_fild17",208,235;
 		end;
 	}
 
@@ -8865,7 +8865,7 @@ z_agit,99,101,3	script	Martha	101,{
 		getitem 7724,1; //Forbidden_Secret_Art
 		changequest 3133,3134;
 		set zdan_edq,18;
-		mapwarp "z_agit","moc_fild17",209,235;
+		mapwarp "z_agit","moc_fild17",208,235;
 		set $@monster_zgang,0;
 		set $@door2,0;
 		hideonnpc "Louis";
@@ -8885,7 +8885,7 @@ z_agit,99,101,3	script	Martha	101,{
 		set $@monster_zgang,0;
 		set $@door2,0;
 		close2;
-		warp "moc_fild17",209,235;
+		warp "moc_fild17",208,235;
 		end;
 	}
 
@@ -8985,7 +8985,7 @@ z_agit,95,101,3	script	Catfoii	876,{
 		getitem 7724,1; //Forbidden_Secret_Art
 		changequest 3133,3134;
 		set zdan_edq,18;
-		mapwarp "z_agit","moc_fild17",209,235;
+		mapwarp "z_agit","moc_fild17",208,235;
 		set $@monster_zgang,0;
 		set $@door2,0;
 		hideonnpc "Louis";
@@ -9005,7 +9005,7 @@ z_agit,95,101,3	script	Catfoii	876,{
 		set $@monster_zgang,0;
 		set $@door2,0;
 		close2;
-		warp "moc_fild17",209,235;
+		warp "moc_fild17",208,235;
 		end;
 	}
 
