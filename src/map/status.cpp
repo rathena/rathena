@@ -4208,7 +4208,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 
 		if (pet_db_ptr != nullptr && pet_db_ptr->pet_bonus_script)
 			run_script(pet_db_ptr->pet_bonus_script,0,sd->id,0);
-		if (pet_db_ptr != nullptr && pd->pet.intimate > 0 && (!battle_config.pet_equip_required || pd->pet.equip > 0) && pd->state.skillbonus == 1 && pd->bonus)
+		if (pet_db_ptr != nullptr && !pet_is_lost(*pd) && (!battle_config.pet_equip_required || pd->pet.equip > 0) && pd->state.skillbonus == 1 && pd->bonus != nullptr)
 			pc_bonus(sd,pd->bonus->type, pd->bonus->val);
 	}
 

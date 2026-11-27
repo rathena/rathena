@@ -631,32 +631,74 @@ int16 pet_get_card3_intimacy( int32 intimacy ){
 	}
 }
 
+static bool pet_disappears_on_low_intimacy()
+{
+#ifdef RENEWAL
+	return (battle_config.pet_disappear_on_low_intimacy & 1) != 0;
+#else
+	return (battle_config.pet_disappear_on_low_intimacy & 2) != 0;
+#endif
+}
+
+bool pet_is_lost(const pet_data& pd)
+{
+	return pd.pet.intimate <= (pet_disappears_on_low_intimacy() ? PET_INTIMATE_AWKWARD : PET_INTIMATE_NONE);
+}
+
+static TIMER_FUNC(pet_disappear)
+{
+	pet_data* pd = map_id2pd(id);
+	if (pd == nullptr || pd->pet.pet_id != data || !pet_is_lost(*pd) || !pet_disappears_on_low_intimacy())
+		return 0;
+
+	map_session_data* sd = pd->master;
+	if (sd == nullptr || sd->pd != pd || !sd->state.active)
+		return 0;
+
+	const s_pet pet = pd->pet;
+	clif_send_petdata(sd, *pd, CHANGESTATEPET_DISAPPEAR);
+	if (pd->prev != nullptr)
+		unit_remove_map(pd, CLR_OUTSIGHT);
+	else
+		unit_free(pd, CLR_OUTSIGHT);
+	clif_send_petstatus(*sd, pet);
+	return 0;
+}
+
 /**
  * Set the value of the pet's intimacy.
  * @param pd : pet requesting
- * @param value : new intimacy value. Will be bounded by PET_INTIMATE_NONE and PET_INTIMATE_MAX
+ * @param value : new intimacy value, bounded by the configured loss threshold and PET_INTIMATE_MAX.
  */
 void pet_set_intimate(pet_data *pd, int32 value)
 {
 	nullpo_retv(pd);
 
-	pd->pet.intimate = cap_value(value, PET_INTIMATE_NONE, PET_INTIMATE_MAX);
+	const bool disappear = pet_disappears_on_low_intimacy();
+	const int32 minimum = disappear ? PET_INTIMATE_AWKWARD : PET_INTIMATE_NONE;
+	if (disappear && pet_is_lost(*pd))
+		return;
+
+	pd->pet.intimate = cap_value(value, minimum, PET_INTIMATE_MAX);
 
 	map_session_data *sd = pd->master;
+	if (sd == nullptr)
+		return;
 
-	int32 index = pet_egg_search( sd, pd->pet.pet_id );
-
-	if( pd->pet.intimate <= PET_INTIMATE_NONE ){
-		pc_delitem( sd, index, 1, 0, 0, LOG_TYPE_OTHER );
-	}else{
-		// Remove everything except the rename flag
+	if (pet_is_lost(*pd)) {
+		if (int32 index = pet_egg_search(sd, pd->pet.pet_id); index >= 0)
+			pc_delitem(sd, index, 1, 0, 0, LOG_TYPE_OTHER);
+		// Callers still use pd after updating intimacy.
+		if (disappear)
+			add_timer(gettick() + 1, pet_disappear, pd->id, pd->pet.pet_id);
+	} else if (int32 index = pet_egg_search(sd, pd->pet.pet_id); index >= 0) {
+		// Remove everything except the rename flag.
 		sd->inventory.u.items_inventory[index].card[3] &= 1;
 
-		sd->inventory.u.items_inventory[index].card[3] |= pet_get_card3_intimacy( pd->pet.intimate );
+		sd->inventory.u.items_inventory[index].card[3] |= pet_get_card3_intimacy(pd->pet.intimate);
 	}
 
-	if (sd)
-		status_calc_pc(sd,SCO_NONE);
+	status_calc_pc(sd,SCO_NONE);
 }
 
 /**
@@ -849,7 +891,7 @@ static TIMER_FUNC(pet_hungry){
 
 	pd->pet_hungry_timer = INVALID_TIMER;
 
-	if (pd->pet.intimate <= PET_INTIMATE_NONE)
+	if (pet_is_lost(*pd))
 		return 1; //You lost the pet already, the rest is irrelevant.
 
 	std::shared_ptr<s_pet_db> pet_db_ptr = pd->get_pet_db();
@@ -866,7 +908,7 @@ static TIMER_FUNC(pet_hungry){
 		pd->pet.hungry = PET_HUNGRY_NONE;
 		pet_set_intimate(pd, pd->pet.intimate + pet_db_ptr->hungry_intimacy_dec);
 
-		if( pd->pet.intimate <= PET_INTIMATE_NONE ) {
+		if( pet_is_lost(*pd) ) {
 			pd->status.speed = pd->get_pet_walk_speed();
 		}
 
@@ -963,8 +1005,8 @@ bool pet_return_egg( map_session_data *sd, pet_data *pd ){
 	pd->pet.incubate = 1;
 #if PACKETVER >= 20180704
 	clif_inventorylist(sd);
-	clif_send_petdata( sd, *pd, CHANGESTATEPET_UPDATE_EGG );
 #endif
+	clif_send_petdata( sd, *pd, CHANGESTATEPET_UPDATE_EGG );
 	unit_free(pd,CLR_OUTSIGHT);
 
 	status_calc_pc(sd,SCO_NONE);
@@ -1107,9 +1149,7 @@ int32 pet_birth_process(map_session_data *sd, struct s_pet *pet)
 		clif_spawn(sd->pd);
 		clif_send_petdata( sd, *sd->pd, CHANGESTATEPET_INIT );
 		clif_send_petdata( sd, *sd->pd, CHANGESTATEPET_HAIRSTYLE );
-#if PACKETVER >= 20180704
 		clif_send_petdata( sd, *sd->pd, CHANGESTATEPET_UPDATE_EGG );
-#endif
 		clif_send_petdata( nullptr, *sd->pd, CHANGESTATEPET_ACCESSORY );
 		clif_send_petstatus( *sd, *sd->pd );
 		clif_pet_autofeed_status(sd,true);
@@ -1139,6 +1179,27 @@ int32 pet_recv_petdata(uint32 account_id,struct s_pet *p,int32 flag)
 	if(flag == 1) {
 		sd->status.pet_id = 0;
 
+		return 1;
+	}
+
+	if (pet_disappears_on_low_intimacy() && p->intimate <= PET_INTIMATE_AWKWARD) {
+		const int32 index = pet_egg_search(sd, p->pet_id);
+		if (sd->pd != nullptr)
+			return 1;
+
+		if (p->incubate == 1) {
+			if (index < 0 || sd->status.pet_id != 0)
+				return 1;
+		} else if (p->account_id != sd->status.account_id || p->char_id != sd->status.char_id || p->pet_id != sd->status.pet_id) {
+			return 1;
+		}
+
+		if (index >= 0)
+			pc_delitem(sd, index, 1, 0, 0, LOG_TYPE_OTHER);
+		intif_delete_petdata(p->pet_id);
+		sd->status.pet_id = 0;
+		if (save_settings & CHARSAVE_PET)
+			chrif_save(sd, CSAVE_INVENTORY);
 		return 1;
 	}
 
@@ -1427,7 +1488,7 @@ int32 pet_menu(map_session_data *sd,int32 menunum)
 		return 1;
 
 	//You lost the pet already.
-	if(!sd->status.pet_id || sd->pd->pet.intimate <= PET_INTIMATE_NONE || sd->pd->pet.incubate)
+	if(!sd->status.pet_id || pet_is_lost(*sd->pd) || sd->pd->pet.incubate)
 		return 1;
 
 	switch(menunum) {
@@ -1636,6 +1697,9 @@ int32 pet_food(map_session_data *sd, pet_data *pd)
 	nullpo_retr(1, sd);
 	nullpo_retr(1, pd);
 
+	if (pet_disappears_on_low_intimacy() && pet_is_lost(*pd))
+		return 1;
+
 	std::shared_ptr<s_pet_db> pet_db_ptr = pd->get_pet_db();
 	int32 i,k;
 
@@ -1651,7 +1715,7 @@ int32 pet_food(map_session_data *sd, pet_data *pd)
 
 	if (pd->pet.hungry > PET_HUNGRY_SATISFIED) {
 		pet_set_intimate(pd, pd->pet.intimate + pet_db_ptr->r_full);
-		if (pd->pet.intimate <= PET_INTIMATE_NONE) {
+		if (pet_is_lost(*pd)) {
 			unit_stop_attack( pd );
 			pd->status.speed = pd->get_pet_walk_speed();
 		}
@@ -1768,7 +1832,7 @@ static int32 pet_ai_sub_hard(pet_data *pd, map_session_data *sd, t_tick tick)
 	if(pd->ud.walktimer != INVALID_TIMER && pd->ud.walkpath.path_pos <= 2)
 		return 0; // No thinking when you just started to walk.
 
-	if(pd->pet.intimate <= PET_INTIMATE_NONE) {
+	if(pet_is_lost(*pd)) {
 		// Pet should just... well, random walk.
 		pet_randomwalk(pd,tick);
 
@@ -2047,7 +2111,7 @@ TIMER_FUNC(pet_skill_bonus_timer){
 	if (pd->state.skillbonus && pd->bonus->delay > 0) {
 		bonus = 0;
 		timer = pd->bonus->delay*1000;	// the duration until pet bonuses will be reactivated again
-	} else if (pd->pet.intimate) {
+	} else if (!pet_is_lost(*pd)) {
 		bonus = 1;
 		timer = pd->bonus->duration*1000;	// the duration for pet bonuses to be in effect
 	} else { //Lost pet...
@@ -2481,6 +2545,7 @@ void do_init_pet(void)
 	pet_db.load();
 
 	add_timer_func_list(pet_hungry,"pet_hungry");
+	add_timer_func_list(pet_disappear, "pet_disappear");
 	add_timer_func_list(pet_ai_hard,"pet_ai_hard");
 	add_timer_func_list(pet_skill_bonus_timer,"pet_skill_bonus_timer"); // [Valaris]
 	add_timer_func_list(pet_delay_item_drop,"pet_delay_item_drop");

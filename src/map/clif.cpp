@@ -1027,8 +1027,7 @@ static int32 clif_setlevel(const block_list* bl) {
 		return clif_setlevel_sub(lv);
 	switch( bl->type ) {
 		case BL_NPC:
-		case BL_PET:
-			// npcs and pets do not have level
+			// NPCs do not have a level.
 			return 0;
 	}
 	return lv;
@@ -8275,6 +8274,7 @@ void clif_sendegg( map_session_data* sd)
 ///     4 = performance (data = 1~3: normal, 4: special)
 ///     5 = hairstyle
 ///     6 = close egg selection ui and update egg in inventory (PACKETVER >= 20180704)
+///     7 = pet disappeared (opens the MSI_PET_DISAPPEAR message box; PACKETVER >= 20250618)
 ///
 /// If sd is null, the update is sent to nearby objects, otherwise it is sent only to that player.
 void clif_send_petdata( const map_session_data* sd, const pet_data& pd, e_changestate_pet data_type ){
@@ -8311,8 +8311,19 @@ void clif_send_petdata( const map_session_data* sd, const pet_data& pd, e_change
 			value = battle_config.pet_hair_style;
 			break;
 		case CHANGESTATEPET_UPDATE_EGG:
+#if PACKETVER >= 20180704
 			value = ( pd.pet.intimate == 1 ) ? 0 : 1;
 			break;
+#else
+			return;
+#endif
+		case CHANGESTATEPET_DISAPPEAR:
+#if PACKETVER >= 20250618
+			value = 0;
+			break;
+#else
+			return;
+#endif
 		default:	// shouldn't happen
 			return;
 	}
@@ -8334,17 +8345,21 @@ void clif_send_petdata( const map_session_data* sd, const pet_data& pd, e_change
 /// Pet's base data.
 /// 01a2 <name>.24B <renamed>.B <level>.W <hunger>.W <intimacy>.W <accessory id>.W <class>.W (ZC_PROPERTY_PET)
 void clif_send_petstatus( const map_session_data& sd, const pet_data& pd ){
+	clif_send_petstatus( sd, pd.pet );
+}
+
+void clif_send_petstatus( const map_session_data& sd, const s_pet& pet ){
 	PACKET_ZC_PROPERTY_PET packet{};
 
 	packet.PacketType = HEADER_ZC_PROPERTY_PET;
-	safestrncpy( packet.szName, pd.pet.name, NAME_LENGTH );
-	packet.bModified = battle_config.pet_rename ? 0 : pd.pet.rename_flag;
-	packet.nLevel = pd.pet.level;
-	packet.nFullness = pd.pet.hungry;
-	packet.nRelationship = pd.pet.intimate;
-	packet.ITID = static_cast<decltype(packet.ITID)>( pd.pet.equip );
+	safestrncpy( packet.szName, pet.name, NAME_LENGTH );
+	packet.bModified = battle_config.pet_rename ? 0 : pet.rename_flag;
+	packet.nLevel = pet.level;
+	packet.nFullness = pet.hungry;
+	packet.nRelationship = pet.intimate;
+	packet.ITID = static_cast<decltype(packet.ITID)>( pet.equip );
 #if PACKETVER >= 20081126
-	packet.job = pd.pet.class_;
+	packet.job = pet.class_;
 #endif
 
 	clif_send( &packet, sizeof( packet ), &sd, SELF );

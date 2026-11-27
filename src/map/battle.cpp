@@ -8352,6 +8352,7 @@ static const struct _battle_data {
 	{ "pet_catch_rate",                     &battle_config.pet_catch_rate,                  100,    0,      INT_MAX,        },
 	{ "pet_rename",                         &battle_config.pet_rename,                      0,      0,      1,              },
 	{ "pet_friendly_rate",                  &battle_config.pet_friendly_rate,               100,    0,      INT_MAX,        },
+	{ "pet_disappear_on_low_intimacy",      &battle_config.pet_disappear_on_low_intimacy,   1,      0,      3,              },
 	{ "pet_hungry_delay_rate",              &battle_config.pet_hungry_delay_rate,           100,    10,     INT_MAX,        },
 	{ "pet_hungry_friendly_decrease",       &battle_config.pet_hungry_friendly_decrease,    5,      0,      INT_MAX,        },
 	{ "pet_status_support",                 &battle_config.pet_status_support,              0,      0,      1,              },
