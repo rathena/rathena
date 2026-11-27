@@ -9952,3 +9952,13 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+  - Status: Elemental_Integration
+    Icon: EFST_ELEMENTAL_INTEGRATION
+    DurationLookup: EM_ELEMENTAL_INTEGRATION
+    Flags:
+      OverlapIgnoreLevel: true  # Cast level selects an element, not buff strength.
+      SendVal1: true
+      DisplayPc: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
