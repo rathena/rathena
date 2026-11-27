@@ -8303,6 +8303,16 @@ Body:
             Level: 5
           - Name: HN_SELFSTUDY_SOCERY
             Level: 5
+      - Name: HN_WIND_CUTTER_TURBO
+        MaxLevel: 10
+        Requires:
+          - Name: HN_SHIELD_CHAIN_RUSH
+            Level: 7
+      - Name: HN_HIGH_MAGNUM_BREAK
+        MaxLevel: 10
+        Requires:
+          - Name: HN_DOUBLEBOWLINGBASH
+            Level: 7
   - Job: Spirit_Handler
     Inherit:
       Summoner: true
