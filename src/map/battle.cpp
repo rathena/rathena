@@ -2740,8 +2740,8 @@ static int32 battle_range_type(const block_list* src, const block_list* target, 
 		return BF_LONG;
 	}
 
-	//based on used skill's range
-	if (skill_get_range2(src, skill_id, skill_lv, true) < 4)
+	// Vulture's Eye extends casting distance without changing melee/ranged damage.
+	if (skill_get_range2(src, skill_id, skill_lv, true, false) < 4)
 		return BF_SHORT;
 	return BF_LONG;
 }
