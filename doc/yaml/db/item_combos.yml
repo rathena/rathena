@@ -9,5 +9,6 @@
 #    - Combo:               Sequence of items to define a combo (minimum of 2 items).
 #       - <item name>       AEGIS name of the item
 #   Script                  Script to execute when one of the combos is equipped. (Default: null)
+#   UnEquipScript           Script to execute once when unequipping an item breaks an active combo. (Default: null)
 #   Clear                   Remove the defined combos from database. (Default: false)
 ###########################################################################
