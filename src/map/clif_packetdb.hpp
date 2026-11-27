@@ -1192,8 +1192,10 @@
 #endif
 
 // Renewal Clients
+#ifdef PACKETVER_RE_NUM
+
 // 2008-08-27aRagexeRE
-#if PACKETVER >= 20080827
+#if PACKETVER_RE_NUM >= 20080827
 	parseable_packet(0x0072,22,clif_parse_UseSkillToId,9,15,18);
 	packet(0x007c,44);
 	parseable_packet(0x007e,105,clif_parse_UseSkillToPosMoreInfo,10,14,18,23,25);
@@ -1217,7 +1219,7 @@
 #endif
 
 // 2008-09-10aRagexeRE
-#if PACKETVER >= 20080910
+#if PACKETVER_RE_NUM >= 20080910
 	parseable_packet(0x0436,19,clif_parse_WantToConnection,2,6,10,14,18);
 	parseable_packet(0x0437,7,clif_parse_ActionRequest,2,6);
 	parseable_packet(0x0438,10,clif_parse_UseSkillToId,2,4,6);
@@ -1225,23 +1227,25 @@
 #endif
 
 // 2008-11-12aRagexeRE
-#if PACKETVER >= 20081112
+#if PACKETVER_RE_NUM >= 20081112
 	packet(0x043f,8);
 #endif
 
 // 2008-12-17bRagexeRE
-#if PACKETVER >= 20081217
+#if PACKETVER_RE_NUM >= 20081217
 	packet(0x006d,114);
 #endif
 
 // 2009-01-21aRagexeRE
-#if PACKETVER >= 20090121
+#if PACKETVER_RE_NUM >= 20090121
 	packet(0x043f,25);
 #endif
 
 // 2009-05-20aRagexeRE
-#if PACKETVER >= 20090520
+#if PACKETVER_RE_NUM >= 20090520
 	parseable_packet( 0x0447, 2, clif_parse_blocking_playcancel, 0 );
+#endif
+
 #endif
 
 // 2009-06-03aRagexeRE
