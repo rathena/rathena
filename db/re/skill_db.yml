@@ -46090,6 +46090,35 @@ Body:
         Area: 3
       - Level: 5
         Area: 3
+  - Id: 6609
+    Name: IG_SHIELD_SLAM
+    Description: "Shield Slam"
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 7
+    Hit: Single
+    HitCount: 1
+    Element: Weapon
+    SplashArea: 3
+    GiveAp: 1
+    AfterCastActDelay: 1000
+    Cooldown: 700
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 65
+        - Level: 2
+          Amount: 69
+        - Level: 3
+          Amount: 73
+        - Level: 4
+          Amount: 77
+        - Level: 5
+          Amount: 81
+      State: Shield
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch
