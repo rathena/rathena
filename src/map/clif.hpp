@@ -23,6 +23,7 @@ struct item;
 struct s_storage;
 //#include "map.hpp"
 struct block_list;
+enum efst_type : int16;
 struct unit_data;
 class map_session_data;
 struct homun_data;
@@ -1014,6 +1015,7 @@ void clif_changemapcell( int16 m, int16 x, int16 y, int16 type, send_target targ
 
 #define clif_status_load(bl, type, flag) clif_status_change((bl), (type), (flag), 0, 0, 0, 0)
 void clif_status_change(const block_list* bl, int32 type, int32 flag, t_tick tick, int32 val1, int32 val2, int32 val3);
+void clif_efst_status_change(const block_list& bl, const block_list& tbl, enum send_target target, efst_type type, t_tick tick, int32 val1, int32 val2, int32 val3);
 void clif_efst_status_change_sub(const block_list* tbl, const block_list* bl, enum send_target target);
 
 void clif_wis_message( const map_session_data* sd, const char* nick, const char* mes, size_t mes_len, int32 gmlvl );

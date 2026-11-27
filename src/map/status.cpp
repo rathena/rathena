@@ -13095,6 +13095,7 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 				dval1 = 1;
 				break;
 			case SC_CLAN_INFO:
+			case SC_INTENSIVE_AIM_COUNT:
 				dval1 = val1;
 				dval2 = val2;
 				dval3 = val3;
@@ -13104,6 +13105,8 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 				break;
 		}
 		status_display_add(bl,type,dval1,dval2,dval3);
+		if (type == SC_INTENSIVE_AIM_COUNT)
+			clif_efst_status_change(*bl, *bl, AREA, static_cast<efst_type>(scdb->icon), tick, dval1, dval2, dval3);
 	}
 
 	//SC that force player to stand if is sitting
@@ -15170,7 +15173,7 @@ TIMER_FUNC(status_change_timer){
 			sce->val4 = 0;
 		if (sce->val4 < 10) {
 			sce->val4++;
-			sc_start(bl, bl, SC_INTENSIVE_AIM_COUNT, 100, sce->val4, INFINITE_TICK);
+			sc_start4(bl, bl, SC_INTENSIVE_AIM_COUNT, 100, sce->val4, sce->val4, sce->val4, 0, INFINITE_TICK);
 		}
 
 		sc_timer_next(500 + tick);
