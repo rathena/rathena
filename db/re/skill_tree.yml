@@ -7779,6 +7779,15 @@ Body:
         Requires:
           - Name: IQ_MASSIVE_F_BLASTER
             Level: 7
+      - Name: IQ_BROKENHEAVEN
+        MaxLevel: 5
+        Requires:
+          - Name: IQ_THIRD_PUNISH
+            Level: 1
+          - Name: IQ_THIRD_CONSECRATION
+            Level: 1
+          - Name: IQ_THIRD_FLAME_BOMB
+            Level: 1
   - Job: Troubadour
     Inherit:
       Novice: true
