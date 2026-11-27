@@ -660,7 +660,7 @@ pay_dun03,140,46,0	script	Shimmering Portal#ill_moon_in	4_ENERGY_BLUE,{
 		sleep2 500;
 		npctalk "Chunghae!","Junghee#ill_moon_pdun",bc_self;
 		sleep2 2000;
-		npctalk "That careless klutz!","Junghee#dun_dummy",bc_self;
+		npctalk "That careless klutz!","Junghee#ill_moon_pdun",bc_self;
 		sleep2 500;
 		specialeffect EF_SPINMOVE,AREA,"Junghee#ill_moon_pdun";
 		specialeffect EF_DQ9_CHARGE,AREA,"Junghee#ill_moon_pdun";
@@ -8290,7 +8290,7 @@ com_d02_i,43,219,4	script(CLOAKED)	Third Young#LuE07	4_M_THAIONGBAK,{
 		mes "[First Young]";
 		mes "Yeah, I guess so? That's a face I remember too.";
 		next;
-		npctalk "I heard that the stern-faced second warned you, but what a fearless outsider you are.", "The First Young#LuE07", bc_self;
+		npctalk "I heard that the stern-faced second warned you, but what a fearless outsider you are.", "First Young#LuE07", bc_self;
 		mes "[First Young]";
 		mes "I heard that the stern-faced second warned you, but what a fearless outsider you are.";
 		next;
@@ -12447,11 +12447,11 @@ OnTouch:
 		next;
 		mes "[??????]";
 		mes "Forget the shameful past of being trapped in the dark and damp ground.";
-		npctalk "?????? : Forget the shameful past of being trapped in the dark and damp ground.", "????????#IBT_inB01", bc_self;
+		npctalk "?????? : Forget the shameful past of being trapped in the dark and damp ground.", "??????#IBT_inB01", bc_self;
 		next;
 		mes "[??????]";
 		mes "This land!!!";
-		npctalk "?????? : This land!!!", "????????#IBT_inB01", bc_self;
+		npctalk "?????? : This land!!!", "??????#IBT_inB01", bc_self;
 		sleep2 500;
 		mes "This world!!!!";
 		npctalk "?????? : This world!!!!", "??????#IBT_inB01", bc_self;
