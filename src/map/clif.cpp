@@ -25059,7 +25059,14 @@ void clif_parse_itempackage_select( int32 fd, map_session_data* sd ){
 		return;
 	}
 
-	if( pc_delitem( sd, index, 1, 0, 0, LOG_TYPE_PACKAGE ) != 0 ){
+	if( sd->inventory.u.items_inventory[index].nameid == 0 || sd->inventory.u.items_inventory[index].amount < 1 ){
+		return;
+	}
+
+	// Acknowledge use before deletion clears the last package's inventory slot.
+	clif_useitemack( sd, index, sd->inventory.u.items_inventory[index].amount - 1, true );
+
+	if( pc_delitem( sd, index, 1, 1, 0, LOG_TYPE_PACKAGE ) != 0 ){
 		return;
 	}
 
