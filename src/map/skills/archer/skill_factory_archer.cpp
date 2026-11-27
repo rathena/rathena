@@ -30,6 +30,7 @@
 #include "dancewithawarg.cpp"
 #include "dazzler.cpp"
 #include "deepblindtrap.cpp"
+#include "deepblindtrapattack.cpp"
 #include "deepsleeplullaby.cpp"
 #include "detect.cpp"
 #include "detonator.cpp"
@@ -43,9 +44,11 @@
 #include "fearbreeze.cpp"
 #include "firingtrap.cpp"
 #include "flametrap.cpp"
+#include "flametrapattack.cpp"
 #include "flasher.cpp"
 #include "focusballet.cpp"
 #include "focusedarrowstrike.cpp"
+#include "fragmentbolt.cpp"
 #include "freezingtrap.cpp"
 #include "friggssong.cpp"
 #include "galestorm.cpp"
@@ -105,12 +108,14 @@
 #include "slingingarrow.cpp"
 #include "slowgrace.cpp"
 #include "solidtrap.cpp"
+#include "solidtrapattack.cpp"
 #include "songoflutie.cpp"
 #include "songofmana.cpp"
 #include "soundblend.cpp"
 #include "soundofdestruction.cpp"
 #include "springtrap.cpp"
 #include "swifttrap.cpp"
+#include "swifttrapattack.cpp"
 #include "swingdance.cpp"
 #include "symphonyoflovers.cpp"
 #include "talkiebox.cpp"
@@ -342,8 +347,14 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<SkillCresciveBolt>();
 		case WH_DEEPBLINDTRAP:
 			return std::make_unique<SkillDeepBlindTrap>();
+		case WH_DEEPBLINDTRAP_ATK:
+			return std::make_unique<SkillDeepBlindTrapAttack>();
 		case WH_FLAMETRAP:
 			return std::make_unique<SkillFlameTrap>();
+		case WH_FLAMETRAP_ATK:
+			return std::make_unique<SkillFlameTrapAttack>();
+		case WH_FRAGMENT_BOLT:
+			return std::make_unique<SkillFragmentBolt>();
 		case WH_GALESTORM:
 			return std::make_unique<SkillGaleStorm>();
 		case WH_HAWKBOOMERANG:
@@ -352,10 +363,16 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<SkillHawkRush>();
 		case WH_HAWK_M:
 			return std::make_unique<SkillHawkMastery>();
+		case WH_PRIMED_TRAP:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case WH_SOLIDTRAP:
 			return std::make_unique<SkillSolidTrap>();
+		case WH_SOLIDTRAP_ATK:
+			return std::make_unique<SkillSolidTrapAttack>();
 		case WH_SWIFTTRAP:
 			return std::make_unique<SkillSwiftTrap>();
+		case WH_SWIFTTRAP_ATK:
+			return std::make_unique<SkillSwiftTrapAttack>();
 		case WH_WILD_WALK:
 			return std::make_unique<SkillWildWalk>();
 		case WH_WIND_SIGN:
