@@ -7290,6 +7290,7 @@ Body:
     Type: Weapon
     Flags:
       TargetTrap: true
+      MultiHitOnPlants: true
     Range: -1
     Hit: Multi_Hit
     HitCount: -3
@@ -7361,6 +7362,7 @@ Body:
     TargetType: Attack
     Flags:
       TargetTrap: true
+      MultiHitOnPlants: true
     Range: 9
     Hit: Multi_Hit
     HitCount: -5
@@ -45921,8 +45923,8 @@ Body:
     TargetType: Attack
     DamageFlags:
       Splash: true
-    #Flags:
-      #MultiHitOnPlants: true
+    Flags:
+      MultiHitOnPlants: true
     Range: 9
     Hit: Multi_Hit
     HitCount: -5

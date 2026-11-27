@@ -4940,6 +4940,25 @@ static void battle_calc_attack_post_defense(struct Damage* wd, block_list *src,b
 #endif
 }
 
+/**
+ * Apply hit-count scaling to damage already reduced for plant mode.
+ * Negative hit counts normally split a fixed total across the displayed hits.
+ * MultiHitOnPlants makes them positive so each hit deals the plant damage instead.
+ * As with weapon attacks, pre-renewal requires the target to have exactly 100 DEF.
+ * Call once in place of battle_apply_div_fix; blocking and map checks remain in the caller.
+ */
+static void battle_apply_plant_div_fix(struct Damage* d, const block_list* target, uint16 skill_id)
+{
+	if (std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id); skill != nullptr && skill->inf2[INF2_MULTIHITONPLANTS] && d->div_ < 0
+#ifndef RENEWAL
+		&& status_get_status_data(*target)->def == 100
+#endif
+		)
+		d->div_ *= -1;
+
+	battle_apply_div_fix(d, skill_id);
+}
+
 /*=================================================================================
  * "Plant"-type (mobs that only take 1 damage from all sources) damage calculation
  *---------------------------------------------------------------------------------
@@ -4997,17 +5016,8 @@ static void battle_calc_attack_plant(struct Damage* wd, block_list *src,block_li
 		return;
 	}
 
-	// Triple Attack and Finger Offensive have a special property, they do not split damage on plant mode
-	// In pre-renewal, it requires the monster to have exactly 100 def
-	if ((skill_id == MO_TRIPLEATTACK || skill_id == MO_FINGEROFFENSIVE) && wd->div_ < 0
-#ifndef RENEWAL
-		&& tstatus->def == 100
-#endif
-		)
-		wd->div_ *= -1;
-
 	//For plants we don't continue with the weapon attack code, so we have to apply DAMAGE_DIV_FIX here
-	battle_apply_div_fix(wd, skill_id);
+	battle_apply_plant_div_fix(wd, target, skill_id);
 
 	//If there is left hand damage, total damage can never exceed 2, even on multiple hits
 	if(wd->damage > 1 && wd->damage2 > 0) {
@@ -6260,7 +6270,10 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 	} //Hint: Against plants damage will still be 1 at this point
 
 	//Apply DAMAGE_DIV_FIX and check for min damage
-	battle_apply_div_fix(&ad, skill_id);
+	if (flag.infdef)
+		battle_apply_plant_div_fix(&ad, target, skill_id);
+	else
+		battle_apply_div_fix(&ad, skill_id);
 
 	struct map_data *mapdata = map_getmapdata(target->m);
 
@@ -6651,19 +6664,25 @@ struct Damage battle_calc_misc_attack(block_list *src,block_list *target,uint16 
 		md.damage=battle_attr_fix(src, target, md.damage, s_ele, tstatus->def_ele, tstatus->ele_lv);
 
 	//Plant damage
+	const bool infdef = is_infinite_defense(target, md.flag);
+
 	if(md.damage < 0)
 		md.damage = 0;
-	else if(md.damage && is_infinite_defense(target, md.flag)) {
+	else if(md.damage && infdef) {
 		md.damage = 1;
 	}
 
 	//Apply DAMAGE_DIV_FIX and check for min damage
-	battle_apply_div_fix(&md, skill_id);
+	if (infdef)
+		battle_apply_plant_div_fix(&md, target, skill_id);
+	else
+		battle_apply_div_fix(&md, skill_id);
 
 	switch(skill_id) {
 		case RA_FIRINGTRAP:
  		case RA_ICEBOUNDTRAP:
-			if (md.damage == 1)
+			// MultiHitOnPlants can produce more than 1 damage without adding a weapon component.
+			if (md.damage == 1 || (infdef && md.damage > 0))
 				break;
 			[[fallthrough]];
 		case RA_CLUSTERBOMB:
