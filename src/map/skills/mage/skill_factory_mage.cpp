@@ -151,6 +151,7 @@
 #include "whirlwind.cpp"
 #include "whiteimprison.cpp"
 #include "windinsignia.cpp"
+#include "wraithdash.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id) const {
 	switch (skill_id) {
@@ -204,6 +205,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<SkillViolentQuake>();
 		case AG_VIOLENT_QUAKE_ATK:
 			return std::make_unique<SkillViolentQuakeAttack>();
+		case AG_WRAITH_DASH:
+			return std::make_unique<SkillWraithDash>();
 		case EM_ACTIVITY_BURN:
 			return std::make_unique<SkillActivityBurn>();
 		case EM_CONFLAGRATION:
