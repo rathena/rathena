@@ -48,6 +48,7 @@
 #include "focusedarrowstrike.cpp"
 #include "freezingtrap.cpp"
 #include "friggssong.cpp"
+#include "fuguedesfleches.cpp"
 #include "galestorm.cpp"
 #include "geffenianocturn.cpp"
 #include "gloomyday.cpp"
@@ -300,6 +301,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<SkillWindWalker>();
 		case TR_AIN_RHAPSODY:
 			return std::make_unique<SkillAinRhapsody>();
+		case TR_FUGUE_DES_FLECHES:
+			return std::make_unique<SkillFugueDesFleches>();
 		case TR_GEF_NOCTURN:
 			return std::make_unique<SkillGeffeniaNocturn>();
 		case TR_JAWAII_SERENADE:
